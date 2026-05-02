@@ -71,24 +71,43 @@ export default function Home() {
             <br />
             <BubbleLogo />
           </h1>
-          <div className="mt-5 flex flex-col items-center gap-3">
+          <div className="mt-5 flex flex-col items-center gap-4">
             {/* Primary tagline */}
-            <div className="inline-block bg-white border-[4px] border-black shadow-[5px_5px_0_#000] px-5 py-3">
+            <div className="flex items-center gap-3">
+              <StarDoodle aria-hidden="true" className="w-6 h-6 md:w-8 md:h-8 text-[#FFD700] shrink-0" />
+              <div className="inline-block bg-white border-[4px] border-black shadow-[4px_4px_0_#000] px-5 py-3">
+                <p
+                  className="font-display font-black tracking-tight comic-headline flex flex-wrap items-center justify-center gap-x-2 gap-y-1"
+                  style={{ fontSize: "clamp(1.1rem, 3vw, 2rem)", lineHeight: 1.1 }}
+                >
+                  <span style={{ color: "#FF1493" }}>Your</span>
+                  <span style={{ color: "#FF6B35" }}>group</span>
+                  <span style={{ color: "#00E5FF" }}>chat's</span>
+                  <span style={{ color: "#00F5A0" }}>new</span>
+                  <span style={{ color: "#FF006E" }}>favorite</span>
+                  <span style={{ color: "#FFD700" }}>game</span>
+                </p>
+              </div>
+              <StarDoodle aria-hidden="true" className="w-6 h-6 md:w-8 md:h-8 text-[#FF1493] shrink-0" />
+            </div>
+            {/* Secondary tagline */}
+            <div className="inline-block bg-white border-[4px] border-black shadow-[4px_4px_0_#000] px-5 py-3">
               <p
                 className="font-display font-black tracking-tight comic-headline flex flex-wrap items-center justify-center gap-x-2 gap-y-1"
-                style={{ fontSize: "clamp(1.1rem, 3vw, 2rem)", lineHeight: 1.1 }}
+                style={{ fontSize: "clamp(0.85rem, 2.2vw, 1.4rem)", lineHeight: 1.1 }}
               >
-                <StarDoodle aria-hidden="true" className="w-6 h-6 md:w-8 md:h-8 text-[#FFD700] shrink-0" />
-                <span style={{ color: "#FF5577" }}>Your</span>
-                <span style={{ color: "#FF6B35" }}>group</span>
-                <span style={{ color: "#00E5FF" }}>chat's</span>
-                <span style={{ color: "#00F5A0" }}>new</span>
-                <span style={{ color: "#FF5577" }}>favorite</span>
-                <span style={{ color: "#FF6B35" }}>game</span>
-                <StarDoodle aria-hidden="true" className="w-6 h-6 md:w-8 md:h-8 text-[#FF1493] shrink-0" />
+                <span style={{ color: "#FF6B35" }}>If</span>
+                <span style={{ color: "#00E5FF" }}>Bar</span>
+                <span style={{ color: "#FF1493" }}>Trivia</span>
+                <span style={{ color: "#00F5A0" }}>was</span>
+                <span style={{ color: "#FFD700" }}>hosted</span>
+                <span style={{ color: "#FF006E" }}>by</span>
+                <span style={{ color: "#FF6B35" }}>your</span>
+                <span style={{ color: "#00E5FF" }}>For</span>
+                <span style={{ color: "#FF1493" }}>You</span>
+                <span style={{ color: "#00F5A0" }}>page</span>
               </p>
             </div>
-
           </div>
         </div>
       </header>
