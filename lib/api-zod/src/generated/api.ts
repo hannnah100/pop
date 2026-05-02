@@ -92,14 +92,138 @@ export const GetCrosswordArchiveResponse = zod.array(
 );
 
 /**
+ * @summary Get today's Pop Box grid
+ */
+export const GetTodayPopBoxResponse = zod.object({
+  id: zod.string(),
+  date: zod.string(),
+  difficulty: zod.enum(["easy", "medium", "hard"]),
+  rowCategories: zod.array(
+    zod.object({
+      id: zod.string(),
+      label: zod.string(),
+      group: zod.string(),
+    }),
+  ),
+  columnCategories: zod.array(
+    zod.object({
+      id: zod.string(),
+      label: zod.string(),
+      group: zod.string(),
+    }),
+  ),
+});
+
+/**
+ * @summary Get archive of Pop Box grids
+ */
+export const GetPopBoxArchiveResponseItem = zod.object({
+  id: zod.string(),
+  date: zod.string(),
+  difficulty: zod.string(),
+});
+export const GetPopBoxArchiveResponse = zod.array(GetPopBoxArchiveResponseItem);
+
+/**
+ * @summary Get a specific Pop Box grid by ID (for archive replay)
+ */
+export const GetPopBoxByIdParams = zod.object({
+  id: zod.coerce.string(),
+});
+
+export const GetPopBoxByIdResponse = zod.object({
+  id: zod.string(),
+  date: zod.string(),
+  difficulty: zod.enum(["easy", "medium", "hard"]),
+  rowCategories: zod.array(
+    zod.object({
+      id: zod.string(),
+      label: zod.string(),
+      group: zod.string(),
+    }),
+  ),
+  columnCategories: zod.array(
+    zod.object({
+      id: zod.string(),
+      label: zod.string(),
+      group: zod.string(),
+    }),
+  ),
+});
+
+/**
+ * @summary Get all valid celebrities for each cell of a Pop Box grid, plus rarity stats
+ */
+export const GetPopBoxAnswersParams = zod.object({
+  id: zod.coerce.string(),
+});
+
+export const GetPopBoxAnswersResponse = zod.object({
+  id: zod.string(),
+  date: zod.string(),
+  totalGuesses: zod.number(),
+  cells: zod.array(
+    zod.object({
+      squareIndex: zod.number(),
+      rowCategoryId: zod.string(),
+      columnCategoryId: zod.string(),
+      validCelebrities: zod.array(
+        zod.object({
+          id: zod.string(),
+          name: zod.string(),
+          guessCount: zod.number(),
+          rarityPercent: zod.number(),
+        }),
+      ),
+    }),
+  ),
+});
+
+/**
+ * @summary Submit a celebrity guess for a Pop Box cell
+ */
+export const PopBoxGuessParams = zod.object({
+  id: zod.coerce.string(),
+});
+
+export const popBoxGuessBodySquareIndexMin = 0;
+export const popBoxGuessBodySquareIndexMax = 8;
+
+export const popBoxGuessBodyGuessMax = 100;
+
+export const PopBoxGuessBody = zod.object({
+  squareIndex: zod
+    .number()
+    .min(popBoxGuessBodySquareIndexMin)
+    .max(popBoxGuessBodySquareIndexMax),
+  guess: zod.string().min(1).max(popBoxGuessBodyGuessMax),
+});
+
+export const PopBoxGuessResponse = zod.object({
+  correct: zod.boolean(),
+  reason: zod
+    .union([
+      zod.literal("unknown_celebrity"),
+      zod.literal("wrong_cell"),
+      zod.literal(null),
+    ])
+    .nullish(),
+  celebrityId: zod.string().nullish(),
+  celebrityName: zod.string().nullish(),
+  rarityPercent: zod.number().nullish(),
+});
+
+/**
  * @summary Get today's completion status summary (wow endpoint)
  */
 export const GetDailyStatusResponse = zod.object({
   date: zod.string(),
   threeStrikesAvailable: zod.boolean(),
   crosswordAvailable: zod.boolean(),
+  popBoxAvailable: zod.boolean(),
   threeStrikesTitle: zod.string().optional(),
   crosswordDate: zod.string().optional(),
+  popBoxDate: zod.string().optional(),
 });
 
 /**

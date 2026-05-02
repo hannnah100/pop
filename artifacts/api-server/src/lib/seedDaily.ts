@@ -2,12 +2,14 @@ import {
   db,
   threeStrikesChallengesTable,
   crosswordPuzzlesTable,
+  popBoxGridsTable,
 } from "@workspace/db";
 import { inArray } from "drizzle-orm";
 import { logger } from "./logger";
 import {
   THREE_STRIKES_SEED,
   CROSSWORD_SEED,
+  POP_BOX_SEED,
 } from "../data/daily";
 
 /**
@@ -29,12 +31,38 @@ const STALE_CROSSWORD_IDS = [
  */
 export async function seedDailyContent(): Promise<void> {
   try {
-    await Promise.all([seedThreeStrikes(), seedCrossword()]);
+    await Promise.all([seedThreeStrikes(), seedCrossword(), seedPopBox()]);
   } catch (err) {
     // Don't crash the server if seeding fails — just log it. The API still
     // works; the Archive page will show whatever rows are present.
     logger.error({ err }, "Failed to seed daily content");
   }
+}
+
+async function seedPopBox(): Promise<void> {
+  if (POP_BOX_SEED.length === 0) return;
+
+  const ids = POP_BOX_SEED.map((r) => r.id);
+  const existing = await db
+    .select({ id: popBoxGridsTable.id })
+    .from(popBoxGridsTable)
+    .where(inArray(popBoxGridsTable.id, ids));
+  const have = new Set(existing.map((r) => r.id));
+
+  const missing = POP_BOX_SEED.filter((r) => !have.has(r.id));
+  if (missing.length === 0) {
+    logger.info(
+      { total: POP_BOX_SEED.length },
+      "Pop Box archive already up to date",
+    );
+    return;
+  }
+
+  await db.insert(popBoxGridsTable).values(missing);
+  logger.info(
+    { inserted: missing.length, total: POP_BOX_SEED.length },
+    "Seeded Pop Box archive",
+  );
 }
 
 async function seedThreeStrikes(): Promise<void> {

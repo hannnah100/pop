@@ -1,6 +1,10 @@
 import { useState } from "react";
 import { Link } from "wouter";
-import { useGetThreeStrikesArchive, useGetCrosswordArchive } from "@workspace/api-client-react";
+import {
+  useGetThreeStrikesArchive,
+  useGetCrosswordArchive,
+  useGetPopBoxArchive,
+} from "@workspace/api-client-react";
 import { motion } from "framer-motion";
 import { PlayCircle, Calendar, CheckCircle2, Trophy, Sparkles, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -10,14 +14,19 @@ import { Badge } from "@/components/ui/badge";
 import { ShimmerGrid } from "@/components/fx";
 import { staggerContainer, staggerItem } from "@/lib/motion";
 
-type Filter = "all" | "three-strikes" | "crossword";
+type Filter = "all" | "three-strikes" | "crossword" | "pop-box";
 
-function getArchiveStats(id: string, type: "three-strikes" | "crossword") {
+function getArchiveStats(id: string, type: "three-strikes" | "crossword" | "pop-box") {
   try {
-    const key = type === "three-strikes" ? `ptq-archive-ts-${id}` : `ptq-archive-cw-${id}`;
+    const key =
+      type === "three-strikes"
+        ? `ptq-archive-ts-${id}`
+        : type === "crossword"
+          ? `ptq-archive-cw-${id}`
+          : `ptq-archive-pb-${id}`;
     const raw = localStorage.getItem(key);
     if (!raw) return null;
-    return JSON.parse(raw) as { completed: boolean; score: number; total: number; strikes?: number };
+    return JSON.parse(raw) as { completed: boolean; score: number; total?: number; strikes?: number };
   } catch {
     return null;
   }
@@ -26,9 +35,10 @@ function getArchiveStats(id: string, type: "three-strikes" | "crossword") {
 export default function Archive() {
   const { data: tsArchive, isLoading: tsLoading } = useGetThreeStrikesArchive();
   const { data: cwArchive, isLoading: cwLoading } = useGetCrosswordArchive();
+  const { data: pbArchive, isLoading: pbLoading } = useGetPopBoxArchive();
   const [filter, setFilter] = useState<Filter>("all");
 
-  const isLoading = tsLoading || cwLoading;
+  const isLoading = tsLoading || cwLoading || pbLoading;
 
   const tsItems = (tsArchive ?? []).map((item) => ({
     ...item,
@@ -45,14 +55,24 @@ export default function Archive() {
     stats: getArchiveStats(item.id, "crossword"),
   }));
 
-  const allItems = [...tsItems, ...cwItems].sort(
+  const pbItems = (pbArchive ?? []).map((item) => ({
+    ...item,
+    type: "pop-box" as const,
+    title: `Pop Box · ${item.difficulty}`,
+    prompt: "9-cell celebrity-grid game. One pick per cell.",
+    totalCount: 9,
+    stats: getArchiveStats(item.id, "pop-box"),
+  }));
+
+  const allItems = [...tsItems, ...cwItems, ...pbItems].sort(
     (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
   );
 
   const displayed =
     filter === "all" ? allItems :
     filter === "three-strikes" ? tsItems :
-    cwItems;
+    filter === "crossword" ? cwItems :
+    pbItems;
 
   return (
     <div className="flex-1 max-w-5xl mx-auto w-full px-4 py-12">
@@ -142,7 +162,7 @@ export default function Archive() {
       </motion.header>
 
       <div className="flex gap-2 mb-8 flex-wrap">
-        {(["all", "three-strikes", "crossword"] as Filter[]).map((f) => (
+        {(["all", "three-strikes", "crossword", "pop-box"] as Filter[]).map((f) => (
           <Button
             key={f}
             variant={filter === f ? "default" : "outline"}
@@ -150,7 +170,13 @@ export default function Archive() {
             className={filter === f ? "bg-primary text-primary-foreground" : ""}
             onClick={() => setFilter(f)}
           >
-            {f === "all" ? "All" : f === "three-strikes" ? "Three Strikes" : "Mini Crossword"}
+            {f === "all"
+              ? "All"
+              : f === "three-strikes"
+                ? "Three Strikes"
+                : f === "crossword"
+                  ? "Mini Crossword"
+                  : "Pop Box"}
           </Button>
         ))}
         <span className="ml-auto text-sm text-muted-foreground self-center">
@@ -171,10 +197,41 @@ export default function Archive() {
         >
           {displayed.map((item) => {
             const isTS = item.type === "three-strikes";
+            const isPB = item.type === "pop-box";
             const stats = item.stats;
-            const playHref = isTS
-              ? `/daily/three-strikes?id=${item.id}`
-              : `/daily/crossword`;
+            const playHref =
+              item.type === "three-strikes"
+                ? `/daily/three-strikes?id=${item.id}`
+                : item.type === "pop-box"
+                  ? `/daily/pop-box?id=${item.id}`
+                  : `/daily/crossword`;
+
+            const accentClasses = isTS
+              ? {
+                  cardHover:
+                    "hover:border-primary/60 hover:shadow-[0_16px_50px_-20px_hsl(var(--primary)/0.6)]",
+                  badge: "border-primary/30 text-primary",
+                  heading: "group-hover:text-primary",
+                  button:
+                    "bg-primary/10 text-primary hover:bg-primary hover:text-primary-foreground group-hover:bg-primary group-hover:text-primary-foreground",
+                }
+              : isPB
+                ? {
+                    cardHover:
+                      "hover:border-accent/60 hover:shadow-[0_16px_50px_-20px_hsl(var(--accent)/0.6)]",
+                    badge: "border-accent/30 text-accent",
+                    heading: "group-hover:text-accent",
+                    button:
+                      "bg-accent/10 text-accent hover:bg-accent hover:text-accent-foreground group-hover:bg-accent group-hover:text-accent-foreground",
+                  }
+                : {
+                    cardHover:
+                      "hover:border-secondary/60 hover:shadow-[0_16px_50px_-20px_hsl(var(--secondary)/0.6)]",
+                    badge: "border-secondary/30 text-secondary",
+                    heading: "group-hover:text-secondary",
+                    button:
+                      "bg-secondary/10 text-secondary hover:bg-secondary hover:text-secondary-foreground group-hover:bg-secondary group-hover:text-secondary-foreground",
+                  };
 
             return (
               <motion.div
@@ -182,11 +239,7 @@ export default function Archive() {
                 variants={staggerItem}
               >
                 <Card
-                  className={`p-6 flex flex-col h-full group transition-all duration-300
-                    ${isTS
-                      ? "bg-card/60 hover:bg-card border-border hover:border-primary/60 hover:shadow-[0_16px_50px_-20px_hsl(var(--primary)/0.6)]"
-                      : "bg-card/60 hover:bg-card border-border hover:border-secondary/60 hover:shadow-[0_16px_50px_-20px_hsl(var(--secondary)/0.6)]"
-                    }
+                  className={`p-6 flex flex-col h-full group transition-all duration-300 bg-card/60 hover:bg-card border-border ${accentClasses.cardHover}
                     ${stats?.completed ? "border-success/30" : ""}
                   `}
                 >
@@ -198,9 +251,9 @@ export default function Archive() {
                     <div className="flex items-center gap-1.5">
                       <Badge
                         variant="outline"
-                        className={`text-xs ${isTS ? "border-primary/30 text-primary" : "border-secondary/30 text-secondary"}`}
+                        className={`text-xs ${accentClasses.badge}`}
                       >
-                        {isTS ? "Three Strikes" : "Crossword"}
+                        {isTS ? "Three Strikes" : isPB ? "Pop Box" : "Crossword"}
                       </Badge>
                       {stats?.completed && (
                         <CheckCircle2 className="w-4 h-4 text-success" />
@@ -208,36 +261,35 @@ export default function Archive() {
                     </div>
                   </div>
 
-                  <h3
-                    className={`text-lg font-bold mb-1 transition-colors
-                      ${isTS ? "group-hover:text-primary" : "group-hover:text-secondary"}
-                    `}
-                  >
+                  <h3 className={`text-lg font-bold mb-1 transition-colors ${accentClasses.heading}`}>
                     {item.title}
                   </h3>
                   <p className="text-muted-foreground text-sm line-clamp-2 mb-4 flex-1">
                     {"prompt" in item ? item.prompt : ""}
                   </p>
 
-                  {stats?.completed && isTS && (
+                  {stats?.completed && (isTS || isPB) && (
                     <div className="flex items-center gap-2 mb-3 text-sm">
                       <Trophy className="w-4 h-4 text-yellow-400" />
                       <span className="text-muted-foreground">
                         Best: <span className="text-foreground font-bold">{stats.score}</span>
-                        {"totalCount" in item && item.totalCount ? `/${item.totalCount}` : ""} •{" "}
-                        {stats.strikes ?? 0} strike{(stats.strikes ?? 0) !== 1 ? "s" : ""}
+                        {isPB
+                          ? "/9"
+                          : "totalCount" in item && item.totalCount
+                            ? `/${item.totalCount}`
+                            : ""}
+                        {isTS && (
+                          <>
+                            {" "}• {stats.strikes ?? 0} strike{(stats.strikes ?? 0) !== 1 ? "s" : ""}
+                          </>
+                        )}
                       </span>
                     </div>
                   )}
 
                   <Link href={playHref}>
                     <Button
-                      className={`w-full transition-colors
-                        ${isTS
-                          ? "bg-primary/10 text-primary hover:bg-primary hover:text-white group-hover:bg-primary group-hover:text-white"
-                          : "bg-secondary/10 text-secondary hover:bg-secondary hover:text-secondary-foreground group-hover:bg-secondary group-hover:text-secondary-foreground"
-                        }
-                      `}
+                      className={`w-full transition-colors ${accentClasses.button}`}
                       data-testid={`btn-play-${item.type}-${item.id}`}
                     >
                       <PlayCircle className="w-4 h-4 mr-2" />

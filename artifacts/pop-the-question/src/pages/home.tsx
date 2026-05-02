@@ -25,6 +25,7 @@ export default function Home() {
 
   const [tsCompleted, setTsCompleted] = useState(false);
   const [cwCompleted, setCwCompleted] = useState(false);
+  const [pbCompleted, setPbCompleted] = useState(false);
 
   useEffect(() => {
     try {
@@ -32,6 +33,8 @@ export default function Home() {
       if (tsState) setTsCompleted(JSON.parse(tsState).completed);
       const cwState = localStorage.getItem(`ptq-crossword-${todayDate}`);
       if (cwState) setCwCompleted(JSON.parse(cwState).completed);
+      const pbState = localStorage.getItem(`ptq-pop-box-${todayDate}`);
+      if (pbState) setPbCompleted(JSON.parse(pbState).completed);
     } catch {
       /* ignore */
     }
@@ -92,7 +95,7 @@ export default function Home() {
           </div>
           <p className="text-black font-medium mb-6 font-sans">Fresh pop culture puzzles every day. Come back tomorrow for more!</p>
 
-          <div className="grid md:grid-cols-2 gap-5">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
             {/* Three Strikes */}
             <div className="bg-white border-[3px] border-black shadow-[4px_4px_0_#000] p-5 relative overflow-hidden">
               <LightningDoodle className="absolute top-2 right-3 w-6 h-8 text-[#FF6B35] opacity-40" />
@@ -139,6 +142,31 @@ export default function Home() {
                   data-testid="link-crossword"
                 >
                   {cwCompleted ? "View Results" : "Play Now"}
+                </Button>
+              </Link>
+            </div>
+
+            {/* Pop Box */}
+            <div className="bg-white border-[3px] border-black shadow-[4px_4px_0_#000] p-5 relative overflow-hidden">
+              <StarDoodle className="absolute top-2 right-3 w-7 h-7 text-[#FF1493] opacity-50" />
+              <div className="flex justify-between items-start mb-3">
+                <div>
+                  <h3 className="font-display text-2xl font-black text-black uppercase tracking-tight">Pop Box</h3>
+                  <p className="text-sm text-black/60 font-sans mt-1">Match a celeb to each row × column</p>
+                </div>
+                {pbCompleted ? (
+                  <Badge variant="secondary" className="ml-2 flex-shrink-0">Done ✓</Badge>
+                ) : (
+                  <Badge variant="outline" className="ml-2 flex-shrink-0">New</Badge>
+                )}
+              </div>
+              <Link href="/daily/pop-box">
+                <Button
+                  className="w-full font-display text-base uppercase tracking-wide"
+                  variant={pbCompleted ? "outline" : "default"}
+                  data-testid="link-pop-box"
+                >
+                  {pbCompleted ? "View Results" : "Play Now"}
                 </Button>
               </Link>
             </div>

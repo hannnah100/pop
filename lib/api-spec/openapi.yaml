@@ -124,6 +124,121 @@ paths:
                 items:
                   $ref: "#/components/schemas/CrosswordSummary"
 
+  /daily/pop-box:
+    get:
+      operationId: getTodayPopBox
+      tags: [daily]
+      summary: Get today's Pop Box grid
+      responses:
+        "200":
+          description: Today's Pop Box
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PopBoxGrid"
+        "404":
+          description: No Pop Box for today
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /daily/pop-box/archive:
+    get:
+      operationId: getPopBoxArchive
+      tags: [daily]
+      summary: Get archive of Pop Box grids
+      responses:
+        "200":
+          description: List of past Pop Box grids
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/PopBoxSummary"
+
+  /daily/pop-box/{id}:
+    get:
+      operationId: getPopBoxById
+      tags: [daily]
+      summary: Get a specific Pop Box grid by ID (for archive replay)
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: The grid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PopBoxGrid"
+        "404":
+          description: Grid not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /daily/pop-box/{id}/answers:
+    get:
+      operationId: getPopBoxAnswers
+      tags: [daily]
+      summary: Get all valid celebrities for each cell of a Pop Box grid, plus rarity stats
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Cell answers and rarity stats
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PopBoxAnswers"
+        "404":
+          description: Grid not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /daily/pop-box/{id}/guess:
+    post:
+      operationId: popBoxGuess
+      tags: [daily]
+      summary: Submit a celebrity guess for a Pop Box cell
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PopBoxGuessRequest"
+      responses:
+        "200":
+          description: Guess result
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PopBoxGuessResult"
+        "404":
+          description: Grid not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
   /daily/status:
     get:
       operationId: getDailyStatus
@@ -345,14 +460,163 @@ components:
           type: boolean
         crosswordAvailable:
           type: boolean
+        popBoxAvailable:
+          type: boolean
         threeStrikesTitle:
           type: string
         crosswordDate:
+          type: string
+        popBoxDate:
           type: string
       required:
         - date
         - threeStrikesAvailable
         - crosswordAvailable
+        - popBoxAvailable
+
+    PopBoxCategory:
+      type: object
+      properties:
+        id:
+          type: string
+        label:
+          type: string
+        group:
+          type: string
+      required:
+        - id
+        - label
+        - group
+
+    PopBoxGrid:
+      type: object
+      properties:
+        id:
+          type: string
+        date:
+          type: string
+        difficulty:
+          type: string
+          enum: [easy, medium, hard]
+        rowCategories:
+          type: array
+          items:
+            $ref: "#/components/schemas/PopBoxCategory"
+        columnCategories:
+          type: array
+          items:
+            $ref: "#/components/schemas/PopBoxCategory"
+      required:
+        - id
+        - date
+        - difficulty
+        - rowCategories
+        - columnCategories
+
+    PopBoxSummary:
+      type: object
+      properties:
+        id:
+          type: string
+        date:
+          type: string
+        difficulty:
+          type: string
+      required:
+        - id
+        - date
+        - difficulty
+
+    PopBoxValidCelebrity:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        guessCount:
+          type: integer
+        rarityPercent:
+          type: number
+      required:
+        - id
+        - name
+        - guessCount
+        - rarityPercent
+
+    PopBoxCellAnswers:
+      type: object
+      properties:
+        squareIndex:
+          type: integer
+        rowCategoryId:
+          type: string
+        columnCategoryId:
+          type: string
+        validCelebrities:
+          type: array
+          items:
+            $ref: "#/components/schemas/PopBoxValidCelebrity"
+      required:
+        - squareIndex
+        - rowCategoryId
+        - columnCategoryId
+        - validCelebrities
+
+    PopBoxAnswers:
+      type: object
+      properties:
+        id:
+          type: string
+        date:
+          type: string
+        totalGuesses:
+          type: integer
+        cells:
+          type: array
+          items:
+            $ref: "#/components/schemas/PopBoxCellAnswers"
+      required:
+        - id
+        - date
+        - totalGuesses
+        - cells
+
+    PopBoxGuessRequest:
+      type: object
+      properties:
+        squareIndex:
+          type: integer
+          minimum: 0
+          maximum: 8
+        guess:
+          type: string
+          minLength: 1
+          maxLength: 100
+      required:
+        - squareIndex
+        - guess
+
+    PopBoxGuessResult:
+      type: object
+      properties:
+        correct:
+          type: boolean
+        reason:
+          type: string
+          nullable: true
+          enum: [unknown_celebrity, wrong_cell, null]
+        celebrityId:
+          type: string
+          nullable: true
+        celebrityName:
+          type: string
+          nullable: true
+        rarityPercent:
+          type: number
+          nullable: true
+      required:
+        - correct
 
     CreateRoomRequest:
       type: object

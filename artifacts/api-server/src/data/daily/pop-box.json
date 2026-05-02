@@ -1,0 +1,632 @@
+[
+  {
+    "id": "pop-box-2026-04-02",
+    "date": "2026-04-02",
+    "difficulty": "easy",
+    "rowCategoryIds": "[\"billboard-1\",\"oscar-winner\",\"ig-100m\"]",
+    "columnCategoryIds": "[\"publicly-divorced\",\"born-1980s\",\"blonde\"]"
+  },
+  {
+    "id": "pop-box-2026-04-03",
+    "date": "2026-04-03",
+    "difficulty": "easy",
+    "rowCategoryIds": "[\"publicly-divorced\",\"music-to-acting\",\"american\"]",
+    "columnCategoryIds": "[\"blonde\",\"beauty-brand-owner\",\"grammy-winner\"]"
+  },
+  {
+    "id": "pop-box-2026-04-04",
+    "date": "2026-04-04",
+    "difficulty": "easy",
+    "rowCategoryIds": "[\"grammy-winner\",\"billboard-1\",\"pop\"]",
+    "columnCategoryIds": "[\"billionaire\",\"born-1990s\",\"music-to-acting\"]"
+  },
+  {
+    "id": "pop-box-2026-04-05",
+    "date": "2026-04-05",
+    "difficulty": "medium",
+    "rowCategoryIds": "[\"rap\",\"blonde\",\"canadian\"]",
+    "columnCategoryIds": "[\"ig-100m\",\"billboard-1\",\"born-1980s\"]"
+  },
+  {
+    "id": "pop-box-2026-04-06",
+    "date": "2026-04-06",
+    "difficulty": "easy",
+    "rowCategoryIds": "[\"born-1980s\",\"rnb\",\"beauty-brand-owner\"]",
+    "columnCategoryIds": "[\"music-to-acting\",\"grammy-winner\",\"american\"]"
+  },
+  {
+    "id": "pop-box-2026-04-07",
+    "date": "2026-04-07",
+    "difficulty": "easy",
+    "rowCategoryIds": "[\"american\",\"billionaire\",\"pop\"]",
+    "columnCategoryIds": "[\"ig-100m\",\"blonde\",\"grammy-winner\"]"
+  },
+  {
+    "id": "pop-box-2026-04-08",
+    "date": "2026-04-08",
+    "difficulty": "easy",
+    "rowCategoryIds": "[\"born-1990s\",\"pop\",\"oscar-winner\"]",
+    "columnCategoryIds": "[\"world-tour\",\"british\",\"blonde\"]"
+  },
+  {
+    "id": "pop-box-2026-04-09",
+    "date": "2026-04-09",
+    "difficulty": "easy",
+    "rowCategoryIds": "[\"blonde\",\"rnb\",\"disney-channel-alum\"]",
+    "columnCategoryIds": "[\"born-1990s\",\"american\",\"grammy-winner\"]"
+  },
+  {
+    "id": "pop-box-2026-04-10",
+    "date": "2026-04-10",
+    "difficulty": "easy",
+    "rowCategoryIds": "[\"born-1990s\",\"publicly-divorced\",\"pop\"]",
+    "columnCategoryIds": "[\"british\",\"grammy-winner\",\"oscar-winner\"]"
+  },
+  {
+    "id": "pop-box-2026-04-11",
+    "date": "2026-04-11",
+    "difficulty": "medium",
+    "rowCategoryIds": "[\"rnb\",\"ig-100m\",\"billboard-1\"]",
+    "columnCategoryIds": "[\"music-to-acting\",\"billionaire\",\"born-1980s\"]"
+  },
+  {
+    "id": "pop-box-2026-04-12",
+    "date": "2026-04-12",
+    "difficulty": "easy",
+    "rowCategoryIds": "[\"rap\",\"disney-channel-alum\",\"grammy-winner\"]",
+    "columnCategoryIds": "[\"born-1980s\",\"music-to-acting\",\"billboard-1\"]"
+  },
+  {
+    "id": "pop-box-2026-04-13",
+    "date": "2026-04-13",
+    "difficulty": "easy",
+    "rowCategoryIds": "[\"grammy-winner\",\"disney-channel-alum\",\"pop\"]",
+    "columnCategoryIds": "[\"american\",\"music-to-acting\",\"billboard-1\"]"
+  },
+  {
+    "id": "pop-box-2026-04-14",
+    "date": "2026-04-14",
+    "difficulty": "easy",
+    "rowCategoryIds": "[\"grammy-winner\",\"world-tour\",\"music-to-acting\"]",
+    "columnCategoryIds": "[\"ig-100m\",\"born-1990s\",\"rap\"]"
+  },
+  {
+    "id": "pop-box-2026-04-15",
+    "date": "2026-04-15",
+    "difficulty": "medium",
+    "rowCategoryIds": "[\"british\",\"rap\",\"music-to-acting\"]",
+    "columnCategoryIds": "[\"born-1990s\",\"publicly-divorced\",\"world-tour\"]"
+  },
+  {
+    "id": "pop-box-2026-04-16",
+    "date": "2026-04-16",
+    "difficulty": "medium",
+    "rowCategoryIds": "[\"music-to-acting\",\"billionaire\",\"disney-channel-alum\"]",
+    "columnCategoryIds": "[\"pop\",\"american\",\"blonde\"]"
+  },
+  {
+    "id": "pop-box-2026-04-17",
+    "date": "2026-04-17",
+    "difficulty": "easy",
+    "rowCategoryIds": "[\"american\",\"pop\",\"ig-100m\"]",
+    "columnCategoryIds": "[\"billionaire\",\"music-to-acting\",\"publicly-divorced\"]"
+  },
+  {
+    "id": "pop-box-2026-04-18",
+    "date": "2026-04-18",
+    "difficulty": "easy",
+    "rowCategoryIds": "[\"pop\",\"american\",\"grammy-winner\"]",
+    "columnCategoryIds": "[\"disney-channel-alum\",\"born-1980s\",\"oscar-winner\"]"
+  },
+  {
+    "id": "pop-box-2026-04-19",
+    "date": "2026-04-19",
+    "difficulty": "medium",
+    "rowCategoryIds": "[\"born-1990s\",\"pop\",\"american\"]",
+    "columnCategoryIds": "[\"disney-channel-alum\",\"social-to-mainstream\",\"publicly-divorced\"]"
+  },
+  {
+    "id": "pop-box-2026-04-20",
+    "date": "2026-04-20",
+    "difficulty": "hard",
+    "rowCategoryIds": "[\"music-to-acting\",\"canadian\",\"oscar-winner\"]",
+    "columnCategoryIds": "[\"grammy-winner\",\"born-1990s\",\"rnb\"]"
+  },
+  {
+    "id": "pop-box-2026-04-21",
+    "date": "2026-04-21",
+    "difficulty": "medium",
+    "rowCategoryIds": "[\"rnb\",\"ig-100m\",\"married-another-celeb\"]",
+    "columnCategoryIds": "[\"american\",\"blonde\",\"grammy-winner\"]"
+  },
+  {
+    "id": "pop-box-2026-04-22",
+    "date": "2026-04-22",
+    "difficulty": "easy",
+    "rowCategoryIds": "[\"latin\",\"blonde\",\"grammy-winner\"]",
+    "columnCategoryIds": "[\"american\",\"born-1990s\",\"billboard-1\"]"
+  },
+  {
+    "id": "pop-box-2026-04-23",
+    "date": "2026-04-23",
+    "difficulty": "easy",
+    "rowCategoryIds": "[\"ig-100m\",\"music-to-acting\",\"american\"]",
+    "columnCategoryIds": "[\"publicly-divorced\",\"billionaire\",\"world-tour\"]"
+  },
+  {
+    "id": "pop-box-2026-04-24",
+    "date": "2026-04-24",
+    "difficulty": "medium",
+    "rowCategoryIds": "[\"rap\",\"canadian\",\"beauty-brand-owner\"]",
+    "columnCategoryIds": "[\"billboard-1\",\"grammy-winner\",\"born-1980s\"]"
+  },
+  {
+    "id": "pop-box-2026-04-25",
+    "date": "2026-04-25",
+    "difficulty": "medium",
+    "rowCategoryIds": "[\"music-to-acting\",\"billboard-1\",\"ig-100m\"]",
+    "columnCategoryIds": "[\"born-1980s\",\"beauty-brand-owner\",\"rap\"]"
+  },
+  {
+    "id": "pop-box-2026-04-26",
+    "date": "2026-04-26",
+    "difficulty": "easy",
+    "rowCategoryIds": "[\"born-1990s\",\"grammy-winner\",\"billboard-1\"]",
+    "columnCategoryIds": "[\"publicly-divorced\",\"rap\",\"american\"]"
+  },
+  {
+    "id": "pop-box-2026-04-27",
+    "date": "2026-04-27",
+    "difficulty": "easy",
+    "rowCategoryIds": "[\"pop\",\"world-tour\",\"born-1980s\"]",
+    "columnCategoryIds": "[\"grammy-winner\",\"music-to-acting\",\"canadian\"]"
+  },
+  {
+    "id": "pop-box-2026-04-28",
+    "date": "2026-04-28",
+    "difficulty": "medium",
+    "rowCategoryIds": "[\"rnb\",\"disney-channel-alum\",\"publicly-divorced\"]",
+    "columnCategoryIds": "[\"ig-100m\",\"world-tour\",\"blonde\"]"
+  },
+  {
+    "id": "pop-box-2026-04-29",
+    "date": "2026-04-29",
+    "difficulty": "easy",
+    "rowCategoryIds": "[\"snl-cast\",\"pop\",\"mcu-actor\"]",
+    "columnCategoryIds": "[\"publicly-divorced\",\"american\",\"blonde\"]"
+  },
+  {
+    "id": "pop-box-2026-04-30",
+    "date": "2026-04-30",
+    "difficulty": "easy",
+    "rowCategoryIds": "[\"publicly-divorced\",\"born-1990s\",\"beauty-brand-owner\"]",
+    "columnCategoryIds": "[\"billboard-1\",\"rnb\",\"american\"]"
+  },
+  {
+    "id": "pop-box-2026-05-01",
+    "date": "2026-05-01",
+    "difficulty": "hard",
+    "rowCategoryIds": "[\"publicly-divorced\",\"born-1990s\",\"world-tour\"]",
+    "columnCategoryIds": "[\"disney-channel-alum\",\"music-to-acting\",\"oscar-winner\"]"
+  },
+  {
+    "id": "pop-box-2026-05-02",
+    "date": "2026-05-02",
+    "difficulty": "easy",
+    "rowCategoryIds": "[\"blonde\",\"pop\",\"american\"]",
+    "columnCategoryIds": "[\"music-to-acting\",\"world-tour\",\"disney-channel-alum\"]"
+  },
+  {
+    "id": "pop-box-2026-05-03",
+    "date": "2026-05-03",
+    "difficulty": "easy",
+    "rowCategoryIds": "[\"american\",\"pop\",\"world-tour\"]",
+    "columnCategoryIds": "[\"oscar-winner\",\"music-to-acting\",\"grammy-winner\"]"
+  },
+  {
+    "id": "pop-box-2026-05-04",
+    "date": "2026-05-04",
+    "difficulty": "easy",
+    "rowCategoryIds": "[\"blonde\",\"american\",\"music-to-acting\"]",
+    "columnCategoryIds": "[\"pop\",\"world-tour\",\"publicly-divorced\"]"
+  },
+  {
+    "id": "pop-box-2026-05-05",
+    "date": "2026-05-05",
+    "difficulty": "easy",
+    "rowCategoryIds": "[\"pop\",\"american\",\"world-tour\"]",
+    "columnCategoryIds": "[\"oscar-winner\",\"ig-100m\",\"music-to-acting\"]"
+  },
+  {
+    "id": "pop-box-2026-05-06",
+    "date": "2026-05-06",
+    "difficulty": "easy",
+    "rowCategoryIds": "[\"canadian\",\"music-to-acting\",\"billboard-1\"]",
+    "columnCategoryIds": "[\"born-1990s\",\"pop\",\"grammy-winner\"]"
+  },
+  {
+    "id": "pop-box-2026-05-07",
+    "date": "2026-05-07",
+    "difficulty": "hard",
+    "rowCategoryIds": "[\"disney-channel-alum\",\"music-to-acting\",\"british\"]",
+    "columnCategoryIds": "[\"publicly-divorced\",\"born-1990s\",\"pop\"]"
+  },
+  {
+    "id": "pop-box-2026-05-08",
+    "date": "2026-05-08",
+    "difficulty": "easy",
+    "rowCategoryIds": "[\"billionaire\",\"disney-channel-alum\",\"pop\"]",
+    "columnCategoryIds": "[\"ig-100m\",\"grammy-winner\",\"music-to-acting\"]"
+  },
+  {
+    "id": "pop-box-2026-05-09",
+    "date": "2026-05-09",
+    "difficulty": "medium",
+    "rowCategoryIds": "[\"blonde\",\"billboard-1\",\"pop\"]",
+    "columnCategoryIds": "[\"social-to-mainstream\",\"publicly-divorced\",\"disney-channel-alum\"]"
+  },
+  {
+    "id": "pop-box-2026-05-10",
+    "date": "2026-05-10",
+    "difficulty": "easy",
+    "rowCategoryIds": "[\"world-tour\",\"born-1980s\",\"publicly-divorced\"]",
+    "columnCategoryIds": "[\"ig-100m\",\"blonde\",\"american\"]"
+  },
+  {
+    "id": "pop-box-2026-05-11",
+    "date": "2026-05-11",
+    "difficulty": "easy",
+    "rowCategoryIds": "[\"rnb\",\"born-1980s\",\"british\"]",
+    "columnCategoryIds": "[\"grammy-winner\",\"billboard-1\",\"ig-100m\"]"
+  },
+  {
+    "id": "pop-box-2026-05-12",
+    "date": "2026-05-12",
+    "difficulty": "easy",
+    "rowCategoryIds": "[\"billboard-1\",\"american\",\"grammy-winner\"]",
+    "columnCategoryIds": "[\"oscar-winner\",\"billionaire\",\"ig-100m\"]"
+  },
+  {
+    "id": "pop-box-2026-05-13",
+    "date": "2026-05-13",
+    "difficulty": "easy",
+    "rowCategoryIds": "[\"american\",\"born-1980s\",\"billboard-1\"]",
+    "columnCategoryIds": "[\"pop\",\"blonde\",\"oscar-winner\"]"
+  },
+  {
+    "id": "pop-box-2026-05-14",
+    "date": "2026-05-14",
+    "difficulty": "easy",
+    "rowCategoryIds": "[\"world-tour\",\"grammy-winner\",\"married-another-celeb\"]",
+    "columnCategoryIds": "[\"born-1980s\",\"rnb\",\"american\"]"
+  },
+  {
+    "id": "pop-box-2026-05-15",
+    "date": "2026-05-15",
+    "difficulty": "easy",
+    "rowCategoryIds": "[\"born-1980s\",\"ig-100m\",\"american\"]",
+    "columnCategoryIds": "[\"rap\",\"beauty-brand-owner\",\"billboard-1\"]"
+  },
+  {
+    "id": "pop-box-2026-05-16",
+    "date": "2026-05-16",
+    "difficulty": "easy",
+    "rowCategoryIds": "[\"pop\",\"world-tour\",\"music-to-acting\"]",
+    "columnCategoryIds": "[\"billionaire\",\"born-1990s\",\"american\"]"
+  },
+  {
+    "id": "pop-box-2026-05-17",
+    "date": "2026-05-17",
+    "difficulty": "easy",
+    "rowCategoryIds": "[\"disney-channel-alum\",\"american\",\"pop\"]",
+    "columnCategoryIds": "[\"publicly-divorced\",\"born-1990s\",\"grammy-winner\"]"
+  },
+  {
+    "id": "pop-box-2026-05-18",
+    "date": "2026-05-18",
+    "difficulty": "easy",
+    "rowCategoryIds": "[\"beauty-brand-owner\",\"billboard-1\",\"born-1980s\"]",
+    "columnCategoryIds": "[\"music-to-acting\",\"ig-100m\",\"american\"]"
+  },
+  {
+    "id": "pop-box-2026-05-19",
+    "date": "2026-05-19",
+    "difficulty": "easy",
+    "rowCategoryIds": "[\"billionaire\",\"rap\",\"music-to-acting\"]",
+    "columnCategoryIds": "[\"american\",\"world-tour\",\"grammy-winner\"]"
+  },
+  {
+    "id": "pop-box-2026-05-20",
+    "date": "2026-05-20",
+    "difficulty": "easy",
+    "rowCategoryIds": "[\"grammy-winner\",\"born-1990s\",\"american\"]",
+    "columnCategoryIds": "[\"disney-channel-alum\",\"oscar-winner\",\"blonde\"]"
+  },
+  {
+    "id": "pop-box-2026-05-21",
+    "date": "2026-05-21",
+    "difficulty": "easy",
+    "rowCategoryIds": "[\"billboard-1\",\"born-1990s\",\"blonde\"]",
+    "columnCategoryIds": "[\"grammy-winner\",\"disney-channel-alum\",\"oscar-winner\"]"
+  },
+  {
+    "id": "pop-box-2026-05-22",
+    "date": "2026-05-22",
+    "difficulty": "easy",
+    "rowCategoryIds": "[\"pop\",\"world-tour\",\"blonde\"]",
+    "columnCategoryIds": "[\"grammy-winner\",\"ig-100m\",\"beauty-brand-owner\"]"
+  },
+  {
+    "id": "pop-box-2026-05-23",
+    "date": "2026-05-23",
+    "difficulty": "easy",
+    "rowCategoryIds": "[\"disney-channel-alum\",\"pop\",\"beauty-brand-owner\"]",
+    "columnCategoryIds": "[\"music-to-acting\",\"world-tour\",\"american\"]"
+  },
+  {
+    "id": "pop-box-2026-05-24",
+    "date": "2026-05-24",
+    "difficulty": "medium",
+    "rowCategoryIds": "[\"world-tour\",\"ig-100m\",\"blonde\"]",
+    "columnCategoryIds": "[\"married-another-celeb\",\"disney-channel-alum\",\"born-1990s\"]"
+  },
+  {
+    "id": "pop-box-2026-05-25",
+    "date": "2026-05-25",
+    "difficulty": "medium",
+    "rowCategoryIds": "[\"born-1980s\",\"disney-channel-alum\",\"music-to-acting\"]",
+    "columnCategoryIds": "[\"world-tour\",\"blonde\",\"publicly-divorced\"]"
+  },
+  {
+    "id": "pop-box-2026-05-26",
+    "date": "2026-05-26",
+    "difficulty": "easy",
+    "rowCategoryIds": "[\"billboard-1\",\"reality-tv-star\",\"rnb\"]",
+    "columnCategoryIds": "[\"american\",\"ig-100m\",\"born-1990s\"]"
+  },
+  {
+    "id": "pop-box-2026-05-27",
+    "date": "2026-05-27",
+    "difficulty": "medium",
+    "rowCategoryIds": "[\"ig-100m\",\"born-1980s\",\"grammy-winner\"]",
+    "columnCategoryIds": "[\"disney-channel-alum\",\"music-to-acting\",\"rap\"]"
+  },
+  {
+    "id": "pop-box-2026-05-28",
+    "date": "2026-05-28",
+    "difficulty": "easy",
+    "rowCategoryIds": "[\"world-tour\",\"blonde\",\"rnb\"]",
+    "columnCategoryIds": "[\"american\",\"beauty-brand-owner\",\"publicly-divorced\"]"
+  },
+  {
+    "id": "pop-box-2026-05-29",
+    "date": "2026-05-29",
+    "difficulty": "easy",
+    "rowCategoryIds": "[\"pop\",\"world-tour\",\"publicly-divorced\"]",
+    "columnCategoryIds": "[\"beauty-brand-owner\",\"oscar-winner\",\"american\"]"
+  },
+  {
+    "id": "pop-box-2026-05-30",
+    "date": "2026-05-30",
+    "difficulty": "easy",
+    "rowCategoryIds": "[\"beauty-brand-owner\",\"grammy-winner\",\"country\"]",
+    "columnCategoryIds": "[\"born-1990s\",\"blonde\",\"world-tour\"]"
+  },
+  {
+    "id": "pop-box-2026-05-31",
+    "date": "2026-05-31",
+    "difficulty": "medium",
+    "rowCategoryIds": "[\"beauty-brand-owner\",\"rnb\",\"ig-100m\"]",
+    "columnCategoryIds": "[\"blonde\",\"american\",\"publicly-divorced\"]"
+  },
+  {
+    "id": "pop-box-2026-06-01",
+    "date": "2026-06-01",
+    "difficulty": "easy",
+    "rowCategoryIds": "[\"american\",\"ig-100m\",\"born-1980s\"]",
+    "columnCategoryIds": "[\"married-another-celeb\",\"rnb\",\"world-tour\"]"
+  },
+  {
+    "id": "pop-box-2026-06-02",
+    "date": "2026-06-02",
+    "difficulty": "easy",
+    "rowCategoryIds": "[\"music-to-acting\",\"born-1980s\",\"billionaire\"]",
+    "columnCategoryIds": "[\"billboard-1\",\"rnb\",\"grammy-winner\"]"
+  },
+  {
+    "id": "pop-box-2026-06-03",
+    "date": "2026-06-03",
+    "difficulty": "medium",
+    "rowCategoryIds": "[\"rnb\",\"disney-channel-alum\",\"social-to-mainstream\"]",
+    "columnCategoryIds": "[\"world-tour\",\"american\",\"grammy-winner\"]"
+  },
+  {
+    "id": "pop-box-2026-06-04",
+    "date": "2026-06-04",
+    "difficulty": "easy",
+    "rowCategoryIds": "[\"billionaire\",\"born-1980s\",\"publicly-divorced\"]",
+    "columnCategoryIds": "[\"american\",\"rnb\",\"grammy-winner\"]"
+  },
+  {
+    "id": "pop-box-2026-06-05",
+    "date": "2026-06-05",
+    "difficulty": "easy",
+    "rowCategoryIds": "[\"born-1980s\",\"ig-100m\",\"blonde\"]",
+    "columnCategoryIds": "[\"reality-tv-star\",\"american\",\"mcu-actor\"]"
+  },
+  {
+    "id": "pop-box-2026-06-06",
+    "date": "2026-06-06",
+    "difficulty": "easy",
+    "rowCategoryIds": "[\"world-tour\",\"rnb\",\"beauty-brand-owner\"]",
+    "columnCategoryIds": "[\"american\",\"born-1980s\",\"ig-100m\"]"
+  },
+  {
+    "id": "pop-box-2026-06-07",
+    "date": "2026-06-07",
+    "difficulty": "easy",
+    "rowCategoryIds": "[\"american\",\"world-tour\",\"ig-100m\"]",
+    "columnCategoryIds": "[\"latin\",\"blonde\",\"grammy-winner\"]"
+  },
+  {
+    "id": "pop-box-2026-06-08",
+    "date": "2026-06-08",
+    "difficulty": "easy",
+    "rowCategoryIds": "[\"grammy-winner\",\"pop\",\"american\"]",
+    "columnCategoryIds": "[\"ig-100m\",\"born-1990s\",\"blonde\"]"
+  },
+  {
+    "id": "pop-box-2026-06-09",
+    "date": "2026-06-09",
+    "difficulty": "easy",
+    "rowCategoryIds": "[\"billboard-1\",\"beauty-brand-owner\",\"ig-100m\"]",
+    "columnCategoryIds": "[\"blonde\",\"publicly-divorced\",\"grammy-winner\"]"
+  },
+  {
+    "id": "pop-box-2026-06-10",
+    "date": "2026-06-10",
+    "difficulty": "easy",
+    "rowCategoryIds": "[\"ig-100m\",\"billboard-1\",\"grammy-winner\"]",
+    "columnCategoryIds": "[\"american\",\"publicly-divorced\",\"rap\"]"
+  },
+  {
+    "id": "pop-box-2026-06-11",
+    "date": "2026-06-11",
+    "difficulty": "medium",
+    "rowCategoryIds": "[\"disney-channel-alum\",\"rnb\",\"music-to-acting\"]",
+    "columnCategoryIds": "[\"grammy-winner\",\"ig-100m\",\"billboard-1\"]"
+  },
+  {
+    "id": "pop-box-2026-06-12",
+    "date": "2026-06-12",
+    "difficulty": "easy",
+    "rowCategoryIds": "[\"pop\",\"grammy-winner\",\"american\"]",
+    "columnCategoryIds": "[\"married-another-celeb\",\"born-1990s\",\"world-tour\"]"
+  },
+  {
+    "id": "pop-box-2026-06-13",
+    "date": "2026-06-13",
+    "difficulty": "easy",
+    "rowCategoryIds": "[\"billboard-1\",\"grammy-winner\",\"born-1980s\"]",
+    "columnCategoryIds": "[\"married-another-celeb\",\"rap\",\"ig-100m\"]"
+  },
+  {
+    "id": "pop-box-2026-06-14",
+    "date": "2026-06-14",
+    "difficulty": "medium",
+    "rowCategoryIds": "[\"oscar-winner\",\"country\",\"social-to-mainstream\"]",
+    "columnCategoryIds": "[\"grammy-winner\",\"american\",\"billboard-1\"]"
+  },
+  {
+    "id": "pop-box-2026-06-15",
+    "date": "2026-06-15",
+    "difficulty": "easy",
+    "rowCategoryIds": "[\"born-1980s\",\"country\",\"married-another-celeb\"]",
+    "columnCategoryIds": "[\"grammy-winner\",\"billboard-1\",\"blonde\"]"
+  },
+  {
+    "id": "pop-box-2026-06-16",
+    "date": "2026-06-16",
+    "difficulty": "medium",
+    "rowCategoryIds": "[\"pop\",\"born-1990s\",\"world-tour\"]",
+    "columnCategoryIds": "[\"beauty-brand-owner\",\"blonde\",\"canadian\"]"
+  },
+  {
+    "id": "pop-box-2026-06-17",
+    "date": "2026-06-17",
+    "difficulty": "easy",
+    "rowCategoryIds": "[\"pop\",\"beauty-brand-owner\",\"ig-100m\"]",
+    "columnCategoryIds": "[\"born-1980s\",\"american\",\"grammy-winner\"]"
+  },
+  {
+    "id": "pop-box-2026-06-18",
+    "date": "2026-06-18",
+    "difficulty": "medium",
+    "rowCategoryIds": "[\"pop\",\"born-1980s\",\"ig-100m\"]",
+    "columnCategoryIds": "[\"blonde\",\"disney-channel-alum\",\"billionaire\"]"
+  },
+  {
+    "id": "pop-box-2026-06-19",
+    "date": "2026-06-19",
+    "difficulty": "easy",
+    "rowCategoryIds": "[\"pop\",\"beauty-brand-owner\",\"disney-channel-alum\"]",
+    "columnCategoryIds": "[\"billboard-1\",\"american\",\"ig-100m\"]"
+  },
+  {
+    "id": "pop-box-2026-06-20",
+    "date": "2026-06-20",
+    "difficulty": "medium",
+    "rowCategoryIds": "[\"music-to-acting\",\"grammy-winner\",\"beauty-brand-owner\"]",
+    "columnCategoryIds": "[\"born-1990s\",\"blonde\",\"publicly-divorced\"]"
+  },
+  {
+    "id": "pop-box-2026-06-21",
+    "date": "2026-06-21",
+    "difficulty": "medium",
+    "rowCategoryIds": "[\"oscar-winner\",\"publicly-divorced\",\"music-to-acting\"]",
+    "columnCategoryIds": "[\"rnb\",\"grammy-winner\",\"billboard-1\"]"
+  },
+  {
+    "id": "pop-box-2026-06-22",
+    "date": "2026-06-22",
+    "difficulty": "medium",
+    "rowCategoryIds": "[\"born-1980s\",\"music-to-acting\",\"rnb\"]",
+    "columnCategoryIds": "[\"world-tour\",\"blonde\",\"beauty-brand-owner\"]"
+  },
+  {
+    "id": "pop-box-2026-06-23",
+    "date": "2026-06-23",
+    "difficulty": "easy",
+    "rowCategoryIds": "[\"american\",\"music-to-acting\",\"publicly-divorced\"]",
+    "columnCategoryIds": "[\"pop\",\"billboard-1\",\"born-1980s\"]"
+  },
+  {
+    "id": "pop-box-2026-06-24",
+    "date": "2026-06-24",
+    "difficulty": "easy",
+    "rowCategoryIds": "[\"blonde\",\"billboard-1\",\"american\"]",
+    "columnCategoryIds": "[\"born-1980s\",\"grammy-winner\",\"married-another-celeb\"]"
+  },
+  {
+    "id": "pop-box-2026-06-25",
+    "date": "2026-06-25",
+    "difficulty": "medium",
+    "rowCategoryIds": "[\"american\",\"billboard-1\",\"pop\"]",
+    "columnCategoryIds": "[\"music-to-acting\",\"married-another-celeb\",\"billionaire\"]"
+  },
+  {
+    "id": "pop-box-2026-06-26",
+    "date": "2026-06-26",
+    "difficulty": "easy",
+    "rowCategoryIds": "[\"ig-100m\",\"world-tour\",\"born-1990s\"]",
+    "columnCategoryIds": "[\"rnb\",\"grammy-winner\",\"publicly-divorced\"]"
+  },
+  {
+    "id": "pop-box-2026-06-27",
+    "date": "2026-06-27",
+    "difficulty": "easy",
+    "rowCategoryIds": "[\"billionaire\",\"rnb\",\"born-1980s\"]",
+    "columnCategoryIds": "[\"music-to-acting\",\"american\",\"world-tour\"]"
+  },
+  {
+    "id": "pop-box-2026-06-28",
+    "date": "2026-06-28",
+    "difficulty": "easy",
+    "rowCategoryIds": "[\"world-tour\",\"married-another-celeb\",\"born-1980s\"]",
+    "columnCategoryIds": "[\"grammy-winner\",\"rnb\",\"blonde\"]"
+  },
+  {
+    "id": "pop-box-2026-06-29",
+    "date": "2026-06-29",
+    "difficulty": "easy",
+    "rowCategoryIds": "[\"music-to-acting\",\"pop\",\"disney-channel-alum\"]",
+    "columnCategoryIds": "[\"born-1990s\",\"american\",\"grammy-winner\"]"
+  },
+  {
+    "id": "pop-box-2026-06-30",
+    "date": "2026-06-30",
+    "difficulty": "easy",
+    "rowCategoryIds": "[\"born-1990s\",\"grammy-winner\",\"blonde\"]",
+    "columnCategoryIds": "[\"pop\",\"publicly-divorced\",\"beauty-brand-owner\"]"
+  }
+]

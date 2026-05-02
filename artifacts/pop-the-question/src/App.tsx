@@ -12,6 +12,7 @@ import { pageTransition } from "@/lib/motion";
 import Home from "@/pages/home";
 import ThreeStrikes from "@/pages/daily/three-strikes";
 import Crossword from "@/pages/daily/crossword";
+import PopBox from "@/pages/daily/pop-box";
 import Host from "@/pages/host";
 import Join from "@/pages/join";
 import GameHost from "@/pages/game/host";
@@ -44,6 +45,7 @@ function AnimatedRoutes() {
           <Route path="/" component={Home} />
           <Route path="/daily/three-strikes" component={ThreeStrikes} />
           <Route path="/daily/crossword" component={Crossword} />
+          <Route path="/daily/pop-box" component={PopBox} />
           <Route path="/host" component={Host} />
           <Route path="/join" component={Join} />
           <Route path="/game/:roomCode/host" component={GameHost} />

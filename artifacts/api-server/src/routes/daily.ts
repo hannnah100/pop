@@ -1,5 +1,5 @@
 import { Router, type IRouter } from "express";
-import { db, threeStrikesChallengesTable, crosswordPuzzlesTable } from "@workspace/db";
+import { db, threeStrikesChallengesTable, crosswordPuzzlesTable, popBoxGridsTable } from "@workspace/db";
 import { eq, desc } from "drizzle-orm";
 import {
   GetTodayThreeStrikesResponse,
@@ -141,7 +141,7 @@ router.get("/daily/crossword/archive", async (_req, res): Promise<void> => {
 router.get("/daily/status", async (_req, res): Promise<void> => {
   const today = todayDate();
 
-  const [tsRow, cwRow] = await Promise.all([
+  const [tsRow, cwRow, pbRow] = await Promise.all([
     db.select({ id: threeStrikesChallengesTable.id, title: threeStrikesChallengesTable.title })
       .from(threeStrikesChallengesTable)
       .orderBy(desc(threeStrikesChallengesTable.date))
@@ -152,14 +152,21 @@ router.get("/daily/status", async (_req, res): Promise<void> => {
       .orderBy(desc(crosswordPuzzlesTable.date))
       .limit(1)
       .then((r) => r[0]),
+    db.select({ id: popBoxGridsTable.id, date: popBoxGridsTable.date })
+      .from(popBoxGridsTable)
+      .orderBy(desc(popBoxGridsTable.date))
+      .limit(1)
+      .then((r) => r[0]),
   ]);
 
   const data = GetDailyStatusResponse.parse({
     date: today,
     threeStrikesAvailable: !!tsRow,
     crosswordAvailable: !!cwRow,
-    threeStrikesTitle: tsRow?.title ?? null,
-    crosswordDate: cwRow?.date ?? null,
+    popBoxAvailable: !!pbRow,
+    ...(tsRow?.title ? { threeStrikesTitle: tsRow.title } : {}),
+    ...(cwRow?.date ? { crosswordDate: cwRow.date } : {}),
+    ...(pbRow?.date ? { popBoxDate: pbRow.date } : {}),
   });
 
   res.json(data);

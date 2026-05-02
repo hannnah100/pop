@@ -58,8 +58,90 @@ export interface DailyStatus {
   date: string;
   threeStrikesAvailable: boolean;
   crosswordAvailable: boolean;
+  popBoxAvailable: boolean;
   threeStrikesTitle?: string;
   crosswordDate?: string;
+  popBoxDate?: string;
+}
+
+export interface PopBoxCategory {
+  id: string;
+  label: string;
+  group: string;
+}
+
+export type PopBoxGridDifficulty =
+  (typeof PopBoxGridDifficulty)[keyof typeof PopBoxGridDifficulty];
+
+export const PopBoxGridDifficulty = {
+  easy: "easy",
+  medium: "medium",
+  hard: "hard",
+} as const;
+
+export interface PopBoxGrid {
+  id: string;
+  date: string;
+  difficulty: PopBoxGridDifficulty;
+  rowCategories: PopBoxCategory[];
+  columnCategories: PopBoxCategory[];
+}
+
+export interface PopBoxSummary {
+  id: string;
+  date: string;
+  difficulty: string;
+}
+
+export interface PopBoxValidCelebrity {
+  id: string;
+  name: string;
+  guessCount: number;
+  rarityPercent: number;
+}
+
+export interface PopBoxCellAnswers {
+  squareIndex: number;
+  rowCategoryId: string;
+  columnCategoryId: string;
+  validCelebrities: PopBoxValidCelebrity[];
+}
+
+export interface PopBoxAnswers {
+  id: string;
+  date: string;
+  totalGuesses: number;
+  cells: PopBoxCellAnswers[];
+}
+
+export interface PopBoxGuessRequest {
+  /**
+   * @minimum 0
+   * @maximum 8
+   */
+  squareIndex: number;
+  /**
+   * @minLength 1
+   * @maxLength 100
+   */
+  guess: string;
+}
+
+export type PopBoxGuessResultReason =
+  | (typeof PopBoxGuessResultReason)[keyof typeof PopBoxGuessResultReason]
+  | null;
+
+export const PopBoxGuessResultReason = {
+  unknown_celebrity: "unknown_celebrity",
+  wrong_cell: "wrong_cell",
+} as const;
+
+export interface PopBoxGuessResult {
+  correct: boolean;
+  reason?: PopBoxGuessResultReason;
+  celebrityId?: string | null;
+  celebrityName?: string | null;
+  rarityPercent?: number | null;
 }
 
 export type CreateRoomRequestGameType =

@@ -23,6 +23,11 @@ import type {
   DailyStatus,
   ErrorResponse,
   HealthStatus,
+  PopBoxAnswers,
+  PopBoxGrid,
+  PopBoxGuessRequest,
+  PopBoxGuessResult,
+  PopBoxSummary,
   QuestionPrompt,
   RoastQuestion,
   Room,
@@ -502,6 +507,417 @@ export function useGetCrosswordArchive<
 
   return { ...query, queryKey: queryOptions.queryKey };
 }
+
+/**
+ * @summary Get today's Pop Box grid
+ */
+export const getGetTodayPopBoxUrl = () => {
+  return `/api/daily/pop-box`;
+};
+
+export const getTodayPopBox = async (
+  options?: RequestInit,
+): Promise<PopBoxGrid> => {
+  return customFetch<PopBoxGrid>(getGetTodayPopBoxUrl(), {
+    ...options,
+    method: "GET",
+  });
+};
+
+export const getGetTodayPopBoxQueryKey = () => {
+  return [`/api/daily/pop-box`] as const;
+};
+
+export const getGetTodayPopBoxQueryOptions = <
+  TData = Awaited<ReturnType<typeof getTodayPopBox>>,
+  TError = ErrorType<ErrorResponse>,
+>(options?: {
+  query?: UseQueryOptions<
+    Awaited<ReturnType<typeof getTodayPopBox>>,
+    TError,
+    TData
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
+
+  const queryKey = queryOptions?.queryKey ?? getGetTodayPopBoxQueryKey();
+
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getTodayPopBox>>> = ({
+    signal,
+  }) => getTodayPopBox({ signal, ...requestOptions });
+
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof getTodayPopBox>>,
+    TError,
+    TData
+  > & { queryKey: QueryKey };
+};
+
+export type GetTodayPopBoxQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getTodayPopBox>>
+>;
+export type GetTodayPopBoxQueryError = ErrorType<ErrorResponse>;
+
+/**
+ * @summary Get today's Pop Box grid
+ */
+
+export function useGetTodayPopBox<
+  TData = Awaited<ReturnType<typeof getTodayPopBox>>,
+  TError = ErrorType<ErrorResponse>,
+>(options?: {
+  query?: UseQueryOptions<
+    Awaited<ReturnType<typeof getTodayPopBox>>,
+    TError,
+    TData
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+  const queryOptions = getGetTodayPopBoxQueryOptions(options);
+
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: QueryKey;
+  };
+
+  return { ...query, queryKey: queryOptions.queryKey };
+}
+
+/**
+ * @summary Get archive of Pop Box grids
+ */
+export const getGetPopBoxArchiveUrl = () => {
+  return `/api/daily/pop-box/archive`;
+};
+
+export const getPopBoxArchive = async (
+  options?: RequestInit,
+): Promise<PopBoxSummary[]> => {
+  return customFetch<PopBoxSummary[]>(getGetPopBoxArchiveUrl(), {
+    ...options,
+    method: "GET",
+  });
+};
+
+export const getGetPopBoxArchiveQueryKey = () => {
+  return [`/api/daily/pop-box/archive`] as const;
+};
+
+export const getGetPopBoxArchiveQueryOptions = <
+  TData = Awaited<ReturnType<typeof getPopBoxArchive>>,
+  TError = ErrorType<unknown>,
+>(options?: {
+  query?: UseQueryOptions<
+    Awaited<ReturnType<typeof getPopBoxArchive>>,
+    TError,
+    TData
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
+
+  const queryKey = queryOptions?.queryKey ?? getGetPopBoxArchiveQueryKey();
+
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof getPopBoxArchive>>
+  > = ({ signal }) => getPopBoxArchive({ signal, ...requestOptions });
+
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof getPopBoxArchive>>,
+    TError,
+    TData
+  > & { queryKey: QueryKey };
+};
+
+export type GetPopBoxArchiveQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getPopBoxArchive>>
+>;
+export type GetPopBoxArchiveQueryError = ErrorType<unknown>;
+
+/**
+ * @summary Get archive of Pop Box grids
+ */
+
+export function useGetPopBoxArchive<
+  TData = Awaited<ReturnType<typeof getPopBoxArchive>>,
+  TError = ErrorType<unknown>,
+>(options?: {
+  query?: UseQueryOptions<
+    Awaited<ReturnType<typeof getPopBoxArchive>>,
+    TError,
+    TData
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+  const queryOptions = getGetPopBoxArchiveQueryOptions(options);
+
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: QueryKey;
+  };
+
+  return { ...query, queryKey: queryOptions.queryKey };
+}
+
+/**
+ * @summary Get a specific Pop Box grid by ID (for archive replay)
+ */
+export const getGetPopBoxByIdUrl = (id: string) => {
+  return `/api/daily/pop-box/${id}`;
+};
+
+export const getPopBoxById = async (
+  id: string,
+  options?: RequestInit,
+): Promise<PopBoxGrid> => {
+  return customFetch<PopBoxGrid>(getGetPopBoxByIdUrl(id), {
+    ...options,
+    method: "GET",
+  });
+};
+
+export const getGetPopBoxByIdQueryKey = (id: string) => {
+  return [`/api/daily/pop-box/${id}`] as const;
+};
+
+export const getGetPopBoxByIdQueryOptions = <
+  TData = Awaited<ReturnType<typeof getPopBoxById>>,
+  TError = ErrorType<ErrorResponse>,
+>(
+  id: string,
+  options?: {
+    query?: UseQueryOptions<
+      Awaited<ReturnType<typeof getPopBoxById>>,
+      TError,
+      TData
+    >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
+
+  const queryKey = queryOptions?.queryKey ?? getGetPopBoxByIdQueryKey(id);
+
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getPopBoxById>>> = ({
+    signal,
+  }) => getPopBoxById(id, { signal, ...requestOptions });
+
+  return {
+    queryKey,
+    queryFn,
+    enabled: !!id,
+    ...queryOptions,
+  } as UseQueryOptions<
+    Awaited<ReturnType<typeof getPopBoxById>>,
+    TError,
+    TData
+  > & { queryKey: QueryKey };
+};
+
+export type GetPopBoxByIdQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getPopBoxById>>
+>;
+export type GetPopBoxByIdQueryError = ErrorType<ErrorResponse>;
+
+/**
+ * @summary Get a specific Pop Box grid by ID (for archive replay)
+ */
+
+export function useGetPopBoxById<
+  TData = Awaited<ReturnType<typeof getPopBoxById>>,
+  TError = ErrorType<ErrorResponse>,
+>(
+  id: string,
+  options?: {
+    query?: UseQueryOptions<
+      Awaited<ReturnType<typeof getPopBoxById>>,
+      TError,
+      TData
+    >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+  const queryOptions = getGetPopBoxByIdQueryOptions(id, options);
+
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: QueryKey;
+  };
+
+  return { ...query, queryKey: queryOptions.queryKey };
+}
+
+/**
+ * @summary Get all valid celebrities for each cell of a Pop Box grid, plus rarity stats
+ */
+export const getGetPopBoxAnswersUrl = (id: string) => {
+  return `/api/daily/pop-box/${id}/answers`;
+};
+
+export const getPopBoxAnswers = async (
+  id: string,
+  options?: RequestInit,
+): Promise<PopBoxAnswers> => {
+  return customFetch<PopBoxAnswers>(getGetPopBoxAnswersUrl(id), {
+    ...options,
+    method: "GET",
+  });
+};
+
+export const getGetPopBoxAnswersQueryKey = (id: string) => {
+  return [`/api/daily/pop-box/${id}/answers`] as const;
+};
+
+export const getGetPopBoxAnswersQueryOptions = <
+  TData = Awaited<ReturnType<typeof getPopBoxAnswers>>,
+  TError = ErrorType<ErrorResponse>,
+>(
+  id: string,
+  options?: {
+    query?: UseQueryOptions<
+      Awaited<ReturnType<typeof getPopBoxAnswers>>,
+      TError,
+      TData
+    >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
+
+  const queryKey = queryOptions?.queryKey ?? getGetPopBoxAnswersQueryKey(id);
+
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof getPopBoxAnswers>>
+  > = ({ signal }) => getPopBoxAnswers(id, { signal, ...requestOptions });
+
+  return {
+    queryKey,
+    queryFn,
+    enabled: !!id,
+    ...queryOptions,
+  } as UseQueryOptions<
+    Awaited<ReturnType<typeof getPopBoxAnswers>>,
+    TError,
+    TData
+  > & { queryKey: QueryKey };
+};
+
+export type GetPopBoxAnswersQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getPopBoxAnswers>>
+>;
+export type GetPopBoxAnswersQueryError = ErrorType<ErrorResponse>;
+
+/**
+ * @summary Get all valid celebrities for each cell of a Pop Box grid, plus rarity stats
+ */
+
+export function useGetPopBoxAnswers<
+  TData = Awaited<ReturnType<typeof getPopBoxAnswers>>,
+  TError = ErrorType<ErrorResponse>,
+>(
+  id: string,
+  options?: {
+    query?: UseQueryOptions<
+      Awaited<ReturnType<typeof getPopBoxAnswers>>,
+      TError,
+      TData
+    >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+  const queryOptions = getGetPopBoxAnswersQueryOptions(id, options);
+
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: QueryKey;
+  };
+
+  return { ...query, queryKey: queryOptions.queryKey };
+}
+
+/**
+ * @summary Submit a celebrity guess for a Pop Box cell
+ */
+export const getPopBoxGuessUrl = (id: string) => {
+  return `/api/daily/pop-box/${id}/guess`;
+};
+
+export const popBoxGuess = async (
+  id: string,
+  popBoxGuessRequest: PopBoxGuessRequest,
+  options?: RequestInit,
+): Promise<PopBoxGuessResult> => {
+  return customFetch<PopBoxGuessResult>(getPopBoxGuessUrl(id), {
+    ...options,
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...options?.headers },
+    body: JSON.stringify(popBoxGuessRequest),
+  });
+};
+
+export const getPopBoxGuessMutationOptions = <
+  TError = ErrorType<ErrorResponse>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof popBoxGuess>>,
+    TError,
+    { id: string; data: BodyType<PopBoxGuessRequest> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof popBoxGuess>>,
+  TError,
+  { id: string; data: BodyType<PopBoxGuessRequest> },
+  TContext
+> => {
+  const mutationKey = ["popBoxGuess"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof popBoxGuess>>,
+    { id: string; data: BodyType<PopBoxGuessRequest> }
+  > = (props) => {
+    const { id, data } = props ?? {};
+
+    return popBoxGuess(id, data, requestOptions);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type PopBoxGuessMutationResult = NonNullable<
+  Awaited<ReturnType<typeof popBoxGuess>>
+>;
+export type PopBoxGuessMutationBody = BodyType<PopBoxGuessRequest>;
+export type PopBoxGuessMutationError = ErrorType<ErrorResponse>;
+
+/**
+ * @summary Submit a celebrity guess for a Pop Box cell
+ */
+export const usePopBoxGuess = <
+  TError = ErrorType<ErrorResponse>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof popBoxGuess>>,
+    TError,
+    { id: string; data: BodyType<PopBoxGuessRequest> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof popBoxGuess>>,
+  TError,
+  { id: string; data: BodyType<PopBoxGuessRequest> },
+  TContext
+> => {
+  return useMutation(getPopBoxGuessMutationOptions(options));
+};
 
 /**
  * @summary Get today's completion status summary (wow endpoint)

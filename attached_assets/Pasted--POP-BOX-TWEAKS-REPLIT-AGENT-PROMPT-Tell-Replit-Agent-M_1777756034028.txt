@@ -1,0 +1,68 @@
+## **POP BOX TWEAKS - REPLIT AGENT PROMPT**
+
+---
+
+**Tell Replit Agent:**
+
+"Make these fixes to Pop Box:
+
+**Fix 1: Bigger Answer Text**
+
+When a player submits a correct answer and it appears in the green box, make the celebrity name text MUCH bigger. It's currently too small to read easily.
+
+- Increase font size for submitted answers to at least 18-20px
+- Make the text bold
+- Ensure it fits well in the box even on mobile
+
+**Fix 2: Expand Celebrity Database**
+
+The database is too small - it didn't recognize 'Nick Jonas' as a valid answer. This needs a much more comprehensive celebrity list.
+
+Add at least 500+ celebrities to the database, including:
+
+**Pop Music (add more):**
+- Jonas Brothers (Nick Jonas, Joe Jonas, Kevin Jonas individually)
+- One Direction members (Harry Styles, Zayn Malik, Niall Horan, Liam Payne, Louis Tomlinson)
+- Fifth Harmony members (Camila Cabello, Normani, etc.)
+- All major pop stars from 2000s-2020s
+- K-pop groups and soloists (BTS members, Blackpink members, etc.)
+
+**Actors/Actresses (expand):**
+- Marvel cast (all Avengers actors, supporting cast)
+- Disney Channel alumni (Zendaya, Selena Gomez, Miley Cyrus, Demi Lovato, Vanessa Hudgens, etc.)
+- Nickelodeon alumni (Ariana Grande, Victoria Justice, etc.)
+- Netflix series stars
+- Popular TV show casts (Friends, The Office, Stranger Things, Euphoria, etc.)
+
+**Reality TV:**
+- Kardashian-Jenner family (all of them)
+- Bachelor/Bachelorette contestants who became famous
+- Love Island UK/US stars
+- RuPaul's Drag Race winners
+- Real Housewives stars
+
+**Social Media Stars Who Crossed Over:**
+- Charli D'Amelio, Addison Rae
+- Emma Chamberlain
+- MrBeast
+- Logan Paul, Jake Paul
+
+**Athletes Turned Entertainers:**
+- Dwayne 'The Rock' Johnson
+- John Cena
+- Shaquille O'Neal
+- etc.
+
+**For each celebrity, properly tag ALL their categories:**
+
+Example - Nick Jonas should have:
+- pop-artist
+- has-collabed-with-[various artists]
+- disney-channel-kid (Jonas Brothers on Disney)
+- married-to-celebrity (Priyanka Chopra)
+- has-podcast (if applicable)
+- etc.
+
+**Research and verify the categories for each person accurately. Don't guess - look up the facts.**
+
+The database should be comprehensive enough that most recognizable pop culture figures from the last 25 years are included."

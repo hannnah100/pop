@@ -1,7 +1,8 @@
-// Bundled archive content for the Daily Three Strikes and Mini Crossword
-// games. This is the source of truth for what shows up on the published
-// site's Archive page — it gets seeded into the database on server startup
-// (idempotently) so production has the same library of challenges as dev.
+// Bundled archive content for the Daily Three Strikes, Mini Crossword, and
+// Pop Box games. This is the source of truth for what shows up on the
+// published site's Archive page — it gets seeded into the database on server
+// startup (idempotently) so production has the same library of challenges as
+// dev.
 //
 // To add a new daily challenge: edit the JSON files in this folder and
 // republish. The seeder only inserts rows whose `id` is not already present,
@@ -9,6 +10,9 @@
 
 import threeStrikesJson from "./three-strikes.json" with { type: "json" };
 import crosswordJson from "./crossword.json" with { type: "json" };
+import popBoxJson from "./pop-box.json" with { type: "json" };
+import popBoxCategoriesJson from "./pop-box-categories.json" with { type: "json" };
+import popBoxCelebritiesJson from "./pop-box-celebrities.json" with { type: "json" };
 
 export interface ThreeStrikesSeed {
   id: string;
@@ -33,5 +37,31 @@ export interface CrosswordSeed {
   cluesDown: string;
 }
 
+export interface PopBoxSeed {
+  id: string;
+  date: string;
+  difficulty: string;
+  /** JSON-encoded string[] */
+  rowCategoryIds: string;
+  /** JSON-encoded string[] */
+  columnCategoryIds: string;
+}
+
+export interface PopBoxCategory {
+  id: string;
+  label: string;
+  group: string;
+}
+
+export interface PopBoxCelebrity {
+  id: string;
+  name: string;
+  alternateNames: string[];
+  categories: string[];
+}
+
 export const THREE_STRIKES_SEED: ThreeStrikesSeed[] = threeStrikesJson as ThreeStrikesSeed[];
 export const CROSSWORD_SEED: CrosswordSeed[] = crosswordJson as CrosswordSeed[];
+export const POP_BOX_SEED: PopBoxSeed[] = popBoxJson as PopBoxSeed[];
+export const POP_BOX_CATEGORIES: PopBoxCategory[] = popBoxCategoriesJson as PopBoxCategory[];
+export const POP_BOX_CELEBRITIES: PopBoxCelebrity[] = popBoxCelebritiesJson as PopBoxCelebrity[];

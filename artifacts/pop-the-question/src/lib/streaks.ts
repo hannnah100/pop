@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from "react";
 const STORAGE_KEY = "ptq-streaks-v1";
 const SEEN_BANNERS_KEY = "ptq-seen-banners-v1";
 
-export type GameKey = "three-strikes" | "crossword" | "pop-the-question" | "roast-roulette";
+export type GameKey = "three-strikes" | "crossword" | "pop-box" | "pop-the-question" | "roast-roulette";
 
 export interface StreakState {
   totalGames: number;
