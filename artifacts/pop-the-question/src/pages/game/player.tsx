@@ -2518,27 +2518,40 @@ export default function GamePlayer() {
                 </motion.div>
               )}
 
-              {/* Buy vowel — always shown during active turn, disabled when unaffordable */}
+              {/* Buy vowel — explicit action button leading into vowel picker */}
               {isMyTurn && wofPhase === "spinning" && !wofSolvePending && (
                 <div>
-                  <p className={`font-display font-black uppercase text-xs tracking-widest mb-2 ${canBuyVowel ? "text-black/60" : "text-black/30"}`}>
-                    Buy a Vowel ($250){!canBuyVowel && " — need more funds"}
-                  </p>
-                  <div className="flex gap-1">
-                    {["A","E","I","O","U"].map(l => {
-                      const used = wofGuessedLetters.includes(l);
-                      const disabled = used || !canBuyVowel;
-                      return (
-                        <button key={l} onClick={() => !disabled && socket?.emit("wof-buy-vowel", { roomCode, letter: l })} disabled={disabled}
-                          className={`flex-1 h-12 flex items-center justify-center border-[2px] border-black font-display font-black text-lg
-                            ${used ? "bg-black text-white/30 cursor-not-allowed"
-                              : !canBuyVowel ? "bg-gray-200 text-black/30 cursor-not-allowed border-black/30"
-                              : "bg-[#00E5FF] hover:bg-[#00E5FF]/80 active:scale-95 shadow-[2px_2px_0_#000] text-black"}`}>
-                          {l}
-                        </button>
-                      );
-                    })}
-                  </div>
+                  {!wofVowelMode ? (
+                    <Button
+                      onClick={() => canBuyVowel && setWofVowelMode(true)}
+                      disabled={!canBuyVowel}
+                      className={`w-full py-5 text-base font-display font-black uppercase border-[3px] border-black
+                        ${canBuyVowel
+                          ? "bg-[#00E5FF] hover:bg-[#00E5FF]/80 text-black shadow-[4px_4px_0_#000]"
+                          : "bg-gray-200 text-black/30 cursor-not-allowed border-black/30"}`}
+                    >
+                      🔤 Buy a Vowel — $250{!canBuyVowel && " (need more funds)"}
+                    </Button>
+                  ) : (
+                    <div>
+                      <div className="flex items-center justify-between mb-2">
+                        <p className="font-display font-black text-black/60 uppercase text-xs tracking-widest">Pick a Vowel ($250)</p>
+                        <button onClick={() => setWofVowelMode(false)} className="text-black/40 text-xs font-display font-black uppercase hover:text-black">✕ Cancel</button>
+                      </div>
+                      <div className="flex gap-1">
+                        {["A","E","I","O","U"].map(l => {
+                          const used = wofGuessedLetters.includes(l);
+                          return (
+                            <button key={l} onClick={() => { if (!used) { setWofVowelMode(false); socket?.emit("wof-buy-vowel", { roomCode, letter: l }); } }} disabled={used}
+                              className={`flex-1 h-12 flex items-center justify-center border-[2px] border-black font-display font-black text-lg
+                                ${used ? "bg-black text-white/30 cursor-not-allowed" : "bg-[#00E5FF] hover:bg-[#00E5FF]/80 active:scale-95 shadow-[2px_2px_0_#000] text-black"}`}>
+                              {l}
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  )}
                 </div>
               )}
             </div>

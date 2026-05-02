@@ -1138,7 +1138,9 @@ export function setupSocketIO(httpServer: HttpServer) {
       // Vowel during paid spin: not allowed (must use buy-vowel flow).
       if (isVowel && !w.isFreePlay) return;
       if (!isVowel && w.isFreePlay) {
-        // FREE_PLAY on consonant: treat as if they had a spin for $500
+        // FREE_PLAY consonant: per WoF rules the player earns at a fixed $500
+        // value (no spin required). This is intentional — FREE PLAY is not
+        // truly zero-earnings; it gives a free turn at the $500 rate.
         w.currentSpin = 500;
       }
 
