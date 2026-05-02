@@ -1,0 +1,26 @@
+[
+  {
+    "id": "crossword-2025-04-30",
+    "date": "2025-04-30",
+    "grid": "[[\"T\",\"A\",\"Y\",\"L\",\"O\"],[\"\",\"\",\"E\",\"\",\"U\"],[\"S\",\"W\",\"I\",\"F\",\"T\"],[\"\",\"\",\"L\",\"\",\"\"],[\"E\",\"R\",\"A\",\"S\",\"\"]]",
+    "blackSquares": "[[1,0],[1,1],[1,3],[3,0],[3,3],[3,4],[4,4]]",
+    "cluesAcross": "{\"1\":\"Pop star Taylor's first name (5)\",\"3\":\"___ Taylor Swift's last name (5)\",\"5\":\"Taylor's '___' Tour (4)\"}",
+    "cluesDown": "{\"1\":\"Taylor Swift's era type (5)\",\"2\":\"Year cycle in Taylor-speak (4)\",\"4\":\"Taylor's fandom color: Swiftie ___ (4)\"}"
+  },
+  {
+    "id": "crossword-2025-05-01",
+    "date": "2025-05-01",
+    "grid": "[[\"V\",\"I\",\"R\",\"A\",\"L\"],[\"\",\"\",\"E\",\"\",\"O\"],[\"R\",\"E\",\"E\",\"L\",\"S\"],[\"\",\"\",\"L\",\"\",\"T\"],[\"T\",\"R\",\"E\",\"N\",\"D\"]]",
+    "blackSquares": "[[1,0],[1,1],[1,3],[3,0],[3,3]]",
+    "cluesAcross": "{\"1\":\"Went ___ on social media (5)\",\"3\":\"Instagram short videos (5)\",\"5\":\"Social media ___; what's hot (5)\"}",
+    "cluesDown": "{\"1\":\"Instagram short clips (5)\",\"2\":\"Viral content channel (4)\",\"4\":\"Popular on TikTok (4)\"}"
+  },
+  {
+    "id": "crossword-2025-05-02",
+    "date": "2025-05-02",
+    "grid": "[[\"S\",\"P\",\"O\",\"T\",\"I\"],[\"P\",\"\",\"P\",\"\",\"F\"],[\"O\",\"S\",\"C\",\"A\",\"R\"],[\"T\",\"\",\"A\",\"\",\"\"],[\"S\",\"T\",\"R\",\"E\",\"M\"]]",
+    "blackSquares": "[[1,1],[1,3],[3,1],[3,3],[3,4]]",
+    "cluesAcross": "{\"1\":\"Green music streaming app (5)\",\"3\":\"Movie award statuette (5)\",\"5\":\"Streaming (5)\"}",
+    "cluesDown": "{\"1\":\"Green music streaming service (5)\",\"2\":\"Short video app (4)\",\"4\":\"Biopics film star (4)\"}"
+  }
+]

@@ -2,6 +2,7 @@ import { createServer } from "http";
 import app from "./app";
 import { logger } from "./lib/logger";
 import { setupSocketIO } from "./socket/events";
+import { seedDailyContent } from "./lib/seedDaily";
 
 const rawPort = process.env["PORT"];
 
@@ -27,4 +28,10 @@ httpServer.listen(port, (err?: Error) => {
   }
 
   logger.info({ port }, "Server listening");
+
+  // Seed daily archive content (Three Strikes + Mini Crossword) into
+  // whatever DB this server is talking to. Idempotent — it skips rows
+  // that already exist. This is what populates the Archive page on the
+  // published site.
+  void seedDailyContent();
 });

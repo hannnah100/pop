@@ -1,0 +1,47 @@
+#24 - Y2K Cartoon Back Arrows
+
+What & Why
+
+Add fun, on-brand cartoon back arrows to pages so users can navigate back without relying on the browser's back button. The arrows should fit the bold Y2K / Nickelodeon look (chunky black borders, hard offset shadows, doodle-style accents) that the rest of the app uses.
+
+Done looks like
+
+A reusable cartoon back-arrow button is used across the app's interior pages.
+Tapping the arrow takes the user to the logical previous step (Home, or the parent flow), not just history.back(), so it works even on a fresh page load or shared link.
+The arrow has a clear hover/press state with the signature hard-shadow "pop" animation and feels playful (e.g. slight wiggle, doodle accent, or sticker-style chevron).
+The arrow appears on these pages:
+Daily games: Three Strikes, Crossword (in a non-intrusive header spot, not just at game over)
+Party setup: Host, Join (replacing the current text "← Back" links)
+Secondary pages: Stats, Archive (replacing the current text "← Back Home" links)
+Not Found page
+Live game routes (/game/:roomCode/host and /game/:roomCode/player) intentionally do not get the arrow, to avoid accidental disconnects — the existing End/Leave flow stays as-is.
+The arrow is keyboard accessible (focus ring, Enter/Space activate) and has an aria-label like "Back to home".
+Visual language matches the current Y2K palette and the existing doodles/thick-border/shadow-bold patterns; no new fonts or colors introduced.
+Out of scope
+
+Adding any forward / next arrows.
+Changing in-game navigation on the live host/player screens.
+Restyling existing primary CTAs or unrelated header content.
+Building a global header or nav bar — pages keep their own headers; only the back arrow is shared.
+Steps
+
+Build the shared cartoon back-arrow component — Create a single reusable button (e.g. BackArrow) that renders a chunky cartoon chevron sticker using the existing thick-border + bold-shadow + doodle styling. It should accept a destination (href) and an optional label, default to navigating Home, animate on hover/press, and be fully keyboard accessible.
+Wire the arrow into eligible pages — Drop the component into Three Strikes, Crossword, Host, Join, Stats, Archive, and Not Found, replacing the current text-only "← Back" links. Pick a consistent corner placement (e.g. top-left of each page header) and make sure it doesn't overlap existing controls like the mute toggle. Confirm the live game routes are left untouched.
+Verify with the testing skill — Run an end-to-end test that navigates into each page where the arrow was added, clicks/taps the arrow, and confirms it routes to the expected destination, is visible at mobile and desktop sizes, and doesn't appear on the in-game host/player screens.
+Relevant files
+
+artifacts/pop-the-question/src/App.tsx
+artifacts/pop-the-question/src/pages/home.tsx
+artifacts/pop-the-question/src/pages/host.tsx
+artifacts/pop-the-question/src/pages/join.tsx
+artifacts/pop-the-question/src/pages/stats.tsx
+artifacts/pop-the-question/src/pages/archive.tsx
+artifacts/pop-the-question/src/pages/not-found.tsx
+artifacts/pop-the-question/src/pages/daily/three-strikes.tsx
+artifacts/pop-the-question/src/pages/daily/crossword.tsx
+artifacts/pop-the-question/src/components/fx/Doodles.tsx
+artifacts/pop-the-question/src/components/ui
+artifacts/pop-the-question/src/index.css
+Dependencies
+
+Bold Y2K / Nickelodeon Visual Redesign
