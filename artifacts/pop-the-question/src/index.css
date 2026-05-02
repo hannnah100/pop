@@ -364,3 +364,152 @@
     animation: none !important;
   }
 }
+
+/* ============================================================
+ * Dual Host Mode (Task #5)
+ * Typography scaling, In-Person vs Remote density, high-contrast
+ * palette, and safe-zone padding for screen-share readability.
+ * ============================================================ */
+
+/* Typography scale — applied via CSS `zoom` on the host content area
+   so question/answer/scoreboard text grows in unison without breaking
+   layout flow (works in all modern browsers including Firefox 126+). */
+.host-shell {
+  --host-typo-scale: 1;
+}
+.host-shell-content {
+  zoom: var(--host-typo-scale);
+}
+
+/* Remote mode safe-zone: keeps critical content away from screen-share
+   window edges (host overlays, video conferencing chrome, etc). */
+.host-mode-remote .host-safe-zone {
+  padding-block: clamp(80px, 8vh, 140px);
+  padding-inline: clamp(48px, 5vw, 96px);
+}
+.host-mode-in-person .host-safe-zone {
+  padding-block: clamp(24px, 3vh, 64px);
+  padding-inline: clamp(24px, 3vw, 64px);
+}
+
+/* High-contrast palette — overrides foundational color tokens for
+   maximum legibility (yellow-on-black scheme used by accessibility
+   guidance for low-vision viewers and projectors with poor contrast). */
+.host-high-contrast {
+  --background: 0 0% 0%;
+  --foreground: 60 100% 96%;
+  --border: 60 100% 70% / 0.6;
+
+  --card: 0 0% 4%;
+  --card-foreground: 60 100% 96%;
+  --card-border: 60 100% 70% / 0.6;
+
+  --popover: 0 0% 4%;
+  --popover-foreground: 60 100% 96%;
+
+  --muted: 0 0% 10%;
+  --muted-foreground: 60 70% 88%;
+
+  --primary: 60 100% 70%;
+  --primary-foreground: 0 0% 0%;
+
+  --secondary: 60 100% 70%;
+  --secondary-foreground: 0 0% 0%;
+
+  --accent: 30 100% 65%;
+  --accent-foreground: 0 0% 0%;
+
+  --destructive: 0 100% 65%;
+  --destructive-foreground: 0 0% 0%;
+
+  --success: 120 100% 60%;
+  --warm: 60 100% 70%;
+  --gold: 60 100% 70%;
+  --magenta: 60 100% 70%;
+  --pink: 60 100% 70%;
+
+  --ring: 60 100% 70%;
+}
+
+/* Persistent host controls bar — bottom of the host view, kept above
+   page chrome and game content. Frosted to stay readable over any
+   game background. */
+.host-controls-bar {
+  position: fixed;
+  inset-inline: 0;
+  bottom: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  background: hsl(var(--background) / 0.85);
+  backdrop-filter: blur(12px);
+  border-top: 1px solid hsl(var(--border));
+}
+.host-mode-in-person .host-controls-bar {
+  /* In-person: minimal chrome, smaller bottom bar */
+  padding: 0.5rem 0.75rem;
+}
+
+/* Reserve space at the bottom of host content so the controls bar
+   never overlaps game content. */
+.host-shell-content {
+  padding-bottom: 6.5rem;
+}
+.host-mode-in-person .host-shell-content {
+  padding-bottom: 5rem;
+}
+
+/* "Press ESC to exit fullscreen" entry tooltip */
+.host-fullscreen-hint {
+  position: fixed;
+  top: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 70;
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+  background: hsl(var(--background) / 0.92);
+  border: 1px solid hsl(var(--border));
+  color: hsl(var(--muted-foreground));
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  pointer-events: none;
+}
+
+/* Player-side paused overlay (Task #5).
+   Toggled via body[data-game-paused="true"] from the player page so it
+   spans every game-state branch without per-branch JSX changes. */
+body[data-game-paused="true"]::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  background: hsl(var(--background) / 0.92);
+  backdrop-filter: blur(4px);
+  pointer-events: none;
+}
+body[data-game-paused="true"]::after {
+  content: "⏸ PAUSED";
+  position: fixed;
+  inset: 0;
+  z-index: 91;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display, "Manrope"), sans-serif;
+  font-weight: 900;
+  font-size: clamp(3rem, 12vw, 6rem);
+  letter-spacing: 0.05em;
+  color: hsl(var(--primary));
+  text-shadow: 0 0 32px hsl(var(--primary) / 0.6);
+  pointer-events: none;
+  animation: paused-pulse 2.4s ease-in-out infinite;
+}
+@keyframes paused-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.75; transform: scale(0.98); }
+}

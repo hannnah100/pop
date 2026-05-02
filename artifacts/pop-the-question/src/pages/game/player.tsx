@@ -6,7 +6,8 @@ import type { Player } from "@/types/game";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Loader2, Send, CheckCircle2, Eye, Sparkles } from "lucide-react";
+import { Loader2, Send, CheckCircle2, Eye, Sparkles, Mic } from "lucide-react";
+import type { HostAnswerMethod } from "@/lib/hostSettings";
 import { useToast } from "@/hooks/use-toast";
 import {
   CountUp,
@@ -41,6 +42,15 @@ interface PlayerJoinedPayload {
 interface RoomStatePayload {
   players: Player[];
   gameType?: string;
+  hostSettings?: { answerMethod?: HostAnswerMethod };
+}
+
+interface HostSettingsChangedPayload {
+  settings: { answerMethod?: HostAnswerMethod };
+}
+
+interface HostPausedChangedPayload {
+  paused: boolean;
 }
 
 interface GameStartedPayload {
@@ -142,6 +152,13 @@ export default function GamePlayer() {
 
   const finishedRef = useRef(false);
 
+  // Task #5: host-driven settings + state
+  const [answerMethod, setAnswerMethod] = useState<HostAnswerMethod>("both");
+  const [hostPaused, setHostPaused] = useState(false);
+  const [selfMuted, setSelfMuted] = useState(false);
+  const typingTimerRef = useRef<number | null>(null);
+  const lastTypingEmitRef = useRef<boolean>(false);
+
   useEffect(() => {
     rrPickForRef.current = rrPickFor ? { color: rrPickFor.color } : null;
   }, [rrPickFor]);
@@ -159,9 +176,18 @@ export default function GamePlayer() {
       if (player.name === playerNameParam) setMe(player);
     });
 
-    newSocket.on("room-state", ({ players: ps, gameType: gt }: RoomStatePayload) => {
+    newSocket.on("room-state", ({ players: ps, gameType: gt, hostSettings }: RoomStatePayload) => {
       setPlayers(ps.filter((p) => !p.isHost));
       if (gt) setGameType(gt);
+      if (hostSettings?.answerMethod) setAnswerMethod(hostSettings.answerMethod);
+    });
+
+    newSocket.on("host-settings-changed", ({ settings }: HostSettingsChangedPayload) => {
+      if (settings.answerMethod) setAnswerMethod(settings.answerMethod);
+    });
+
+    newSocket.on("host-paused-changed", ({ paused }: HostPausedChangedPayload) => {
+      setHostPaused(Boolean(paused));
     });
 
     newSocket.on("game-started", ({ gameType: gt, questions, questionIndex }: GameStartedPayload) => {
@@ -260,9 +286,59 @@ export default function GamePlayer() {
 
     return () => {
       newSocket.disconnect();
+      if (typingTimerRef.current !== null) {
+        window.clearTimeout(typingTimerRef.current);
+        typingTimerRef.current = null;
+      }
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [roomCode, playerNameParam]);
+
+  // Emit player-typing (debounced) when the roast input changes; clear
+  // typing flag 1.2s after the last keystroke or immediately on submit.
+  const emitTyping = (isTyping: boolean) => {
+    if (lastTypingEmitRef.current === isTyping) return;
+    lastTypingEmitRef.current = isTyping;
+    socket?.emit("player-typing", { roomCode, isTyping });
+  };
+
+  const handleAnswerInput = (value: string) => {
+    setRrCurrentAnswer(value);
+    if (value.length > 0) {
+      emitTyping(true);
+      if (typingTimerRef.current !== null) window.clearTimeout(typingTimerRef.current);
+      typingTimerRef.current = window.setTimeout(() => {
+        emitTyping(false);
+        typingTimerRef.current = null;
+      }, 1200);
+    } else {
+      emitTyping(false);
+      if (typingTimerRef.current !== null) {
+        window.clearTimeout(typingTimerRef.current);
+        typingTimerRef.current = null;
+      }
+    }
+  };
+
+  const toggleSelfMute = () => {
+    const next = !selfMuted;
+    setSelfMuted(next);
+    socket?.emit("player-muted", { roomCode, muted: next });
+  };
+
+  // Toggle a body data attribute when host pauses — drives the global
+  // paused overlay defined in index.css (works across every render branch).
+  useEffect(() => {
+    if (typeof document === "undefined") return;
+    if (hostPaused) {
+      document.body.dataset.gamePaused = "true";
+    } else {
+      delete document.body.dataset.gamePaused;
+    }
+    return () => {
+      delete document.body.dataset.gamePaused;
+    };
+  }, [hostPaused]);
 
   useEffect(() => {
     if (gameState === "finished" && !finishedRef.current) {
@@ -275,6 +351,10 @@ export default function GamePlayer() {
 
   const handleVote = (playerId: string) => {
     if (votedFor || resultsRevealed) return;
+    if (hostPaused) {
+      toast({ title: "Game paused", description: "Wait for the host to resume.", variant: "destructive" });
+      return;
+    }
     setVotedFor(playerId);
     playTap();
     hapticTap();
@@ -293,8 +373,18 @@ export default function GamePlayer() {
       return;
     }
     if (!rrTargetId || !currentRoastQ || submittedThisRound) return;
+    if (hostPaused) {
+      toast({ title: "Game paused", description: "Wait for the host to resume.", variant: "destructive" });
+      return;
+    }
     playTap();
     hapticTap();
+    // Clear typing flag on submit so host doesn't see a stale "typing…" badge.
+    if (typingTimerRef.current !== null) {
+      window.clearTimeout(typingTimerRef.current);
+      typingTimerRef.current = null;
+    }
+    emitTyping(false);
     socket?.emit("submit-roast", {
       roomCode,
       targetPlayerId: rrTargetId,
@@ -506,34 +596,83 @@ export default function GamePlayer() {
                   </div>
                 </Card>
 
-                <Input
-                  value={rrCurrentAnswer}
-                  onChange={(e) => setRrCurrentAnswer(e.target.value)}
-                  placeholder="Type your roast…"
-                  maxLength={140}
-                  className="text-base py-6 min-h-12 bg-card border-2 border-primary/20 focus-visible:border-primary focus-visible:ring-primary/30 focus-visible:shadow-[0_0_24px_-4px_hsl(var(--primary))] transition-shadow"
-                  autoFocus
-                  data-testid="input-roast-answer"
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter" && !e.shiftKey) {
-                      e.preventDefault();
-                      handleSubmitRoast();
-                    }
-                  }}
-                />
-                <div className="text-right text-xs text-muted-foreground mt-1 mb-4 font-mono">
-                  {rrCurrentAnswer.length}/140
-                </div>
+                {answerMethod === "voice" ? (
+                  <div
+                    className="rounded-2xl border-2 border-accent/40 bg-accent/10 p-6 text-center mb-4"
+                    data-testid="voice-mode-prompt"
+                  >
+                    <Mic className="w-12 h-12 text-accent mx-auto mb-3 drop-shadow-[0_0_12px_hsl(var(--accent))]" />
+                    <p className="text-lg font-bold text-accent mb-1">Shout your roast!</p>
+                    <p className="text-sm text-muted-foreground mb-4">
+                      Say it out loud, then tap below so the round can advance.
+                    </p>
+                    <Button
+                      size="lg"
+                      onClick={() => {
+                        if (submittedThisRound || !rrTargetId || !currentRoastQ) return;
+                        if (hostPaused) {
+                          toast({ title: "Game paused", description: "Wait for the host to resume.", variant: "destructive" });
+                          return;
+                        }
+                        playTap();
+                        hapticTap();
+                        socket?.emit("submit-roast", {
+                          roomCode,
+                          targetPlayerId: rrTargetId,
+                          color: currentRoastQ.color,
+                          answer: "(spoken aloud)",
+                        });
+                        setRrSubmittedColors((prev) => {
+                          const next = new Set(prev);
+                          next.add(currentRoastQ.color);
+                          return next;
+                        });
+                        fireConfetti("rainbow", { particleCount: 30, spread: 60, origin: { y: 0.7 } });
+                      }}
+                      disabled={submittedThisRound}
+                      className="w-full bg-accent hover:bg-accent/90 text-accent-foreground"
+                      data-testid="btn-mark-spoken"
+                    >
+                      <Mic className="w-5 h-5 mr-2" /> I said it — next!
+                    </Button>
+                  </div>
+                ) : (
+                  <>
+                    <Input
+                      value={rrCurrentAnswer}
+                      onChange={(e) => handleAnswerInput(e.target.value)}
+                      onBlur={() => emitTyping(false)}
+                      placeholder={
+                        answerMethod === "text"
+                          ? "Type your roast (text-only mode)…"
+                          : "Type your roast…"
+                      }
+                      maxLength={140}
+                      className="text-base py-6 min-h-12 bg-card border-2 border-primary/20 focus-visible:border-primary focus-visible:ring-primary/30 focus-visible:shadow-[0_0_24px_-4px_hsl(var(--primary))] transition-shadow"
+                      autoFocus
+                      data-testid="input-roast-answer"
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" && !e.shiftKey) {
+                          e.preventDefault();
+                          handleSubmitRoast();
+                        }
+                      }}
+                    />
+                    <div className="text-right text-xs text-muted-foreground mt-1 mb-4 font-mono">
+                      {rrCurrentAnswer.length}/140
+                    </div>
 
-                <Button
-                  size="lg"
-                  onClick={handleSubmitRoast}
-                  disabled={!rrCurrentAnswer.trim()}
-                  className="w-full"
-                  data-testid="btn-submit-roast"
-                >
-                  <Send className="w-5 h-5 mr-2" /> Send Roast
-                </Button>
+                    <Button
+                      size="lg"
+                      onClick={handleSubmitRoast}
+                      disabled={!rrCurrentAnswer.trim()}
+                      className="w-full"
+                      data-testid="btn-submit-roast"
+                    >
+                      <Send className="w-5 h-5 mr-2" /> Send Roast
+                    </Button>
+                  </>
+                )}
               </motion.div>
             )}
           </main>

@@ -1,0 +1,70 @@
+Color Blocking:
+
+Bold, bright solid color sections (bright yellow, hot pink, electric orange, bright blue)
+High saturation colors, nothing muted or pastel
+Each section/card gets its own distinct bright color
+Color combinations are loud and energetic (yellow + pink, orange + blue)
+
+Typography:
+
+THICK, BOLD, all-caps text with heavy outlines
+White text with black outlines/strokes for maximum impact
+Text sits directly on bright colored backgrounds
+Mix of huge scale and smaller text
+Condensed bold fonts for headlines
+
+Layout Style:
+
+Bento box/grid layout with different sized colorful rectangles
+Thick black borders separating all sections (3-5px)
+Sections are different sizes and proportions (not uniform)
+Everything contained in frames/boxes with thick borders
+No floating elements or subtle shadows
+
+Sticker/Badge Elements:
+
+Cartoon stickers overlaid on design (smiley faces, flowers, badges)
+Thick black outlines on all illustrated elements
+Mix of illustrated and photographic elements
+Playful icons and graphics scattered throughout
+Everything has that bold outlined 'sticker' quality
+
+Overall Aesthetic:
+
+Y2K/Gen Z energy
+Bold, loud, confident
+Nothing subtle - everything demands attention
+Retro cartoon meets modern branding
+Feels like skateboard stickers meets streetwear meets 2000s pop culture
+
+Apply this to Pop: The Question:
+Homepage:
+
+Use bento box grid layout with thick black borders between sections
+Each game mode gets its own bright color box (Three Strikes = yellow, Crossword = pink, Pop the Question = orange, etc.)
+Add cartoon sticker elements: smiley faces, stars, speech bubbles with thick black outlines
+Bold white text with black strokes/outlines
+Different sized sections (not all the same)
+
+Buttons:
+
+Thick black borders (4-5px)
+Solid bright color fills
+Bold all-caps white text with black outline
+Chunky, substantial looking
+
+General Style:
+
+Thick black outlines on EVERYTHING (text, buttons, sections, illustrations)
+Bright saturated solid colors (no subtle gradients)
+Add playful illustrated stickers scattered around (smiley faces, stars, flowers, badges)
+Grid-based layout with thick borders
+Everything feels like a sticker or patch you could peel off
+
+Remove:
+
+Subtle effects, glows, blurs
+Thin delicate borders
+Muted colors
+Floating elements without borders
+Any remaining AI/corporate aesthetic

@@ -1,0 +1,125 @@
+"The entire interface looks too much like a generic AI app. Complete visual redesign needed. I'm uploading 5 reference images that show the exact visual style I want. Study these carefully and redesign the entire site to match this aesthetic.
+Current Problems:
+
+Too many nested boxes (black cards with pills inside black cards with more boxes)
+Hover effects that make boxes glow
+Glassmorphism (blurred transparent boxes)
+Dark mode with subtle gradients everywhere
+Feels like a corporate dashboard or AI chatbot interface
+Boring, sterile, lifeless
+
+Key Elements from Reference Images:
+From Image 1 (Koala Color - Kids site):
+
+Bright pastel backgrounds (cream, light pink)
+Organic blob shapes as decorative elements (not boxes!)
+Hand-drawn illustration style
+Colorful scattered elements (coral, teal, yellow blobs)
+Clean white space with playful accents
+Rainbow logo treatment that feels organic, not digital
+Curved, flowing shapes instead of rectangles
+
+From Image 2 (Creative Design - Orange site):
+
+BOLD solid color backgrounds (bright yellow/orange)
+Thick black borders/frames around sections
+Hand-drawn doodle illustrations mixed with clean UI
+Cartoon style icons and decorative elements (light bulbs, smiley faces, rainbows, clouds)
+Typography with thick outlines and drop shadows
+Illustrated stickers/badges scattered around
+Halftone dot patterns for texture
+Mix of photos with illustrated elements overlaid
+
+From Image 3 (College Humor - Split screen):
+
+Bold color blocking (blue checkered pattern vs solid orange)
+Large, impactful typography
+Bright, saturated colors with high contrast
+Simple geometric patterns (checkerboard)
+Full bleed color sections
+Clean white buttons with strong CTAs
+
+From Image 4 (Saved by the 90s):
+
+Neon bright colors (hot pink, cyan, lime green, purple)
+90s party/rave aesthetic
+Energetic, loud color combinations
+Diagonal stripe patterns
+Retro logo styling
+Party/event vibe with movement
+Bold white text on bright backgrounds
+
+From Image 5 (Frans Hals Museum):
+
+Massive bold typography (HUGE letters)
+Bright yellow dominant background
+Black side navigation panel
+Color-coded sections (yellow, pink/coral, mint green)
+Simple, bold geometric shapes
+Museum/gallery aesthetic but playful
+Minimal decorative elements, maximum impact through scale and color
+
+STOP Doing These AI Design Clichés:
+
+Hover effects that make boxes glow
+Glassmorphism and blur effects
+Subtle gradients on everything
+Cards with rounded corners floating on dark backgrounds
+Gentle shadow effects
+Smooth fade-in animations
+Gradient borders that shimmer
+Dark mode as the only option
+Nested semi-transparent containers
+Pill-shaped buttons
+Skeleton loading screens with shimmer
+Micro-interactions everywhere
+
+START Doing This Instead:
+Interaction Style:
+
+Hover = color change (bright to brighter), not glow
+Click = satisfying snap/pop animation, not smooth fade
+No subtle transitions - everything should be snappy and instant
+Think video game feedback, not elegant website
+
+Visual Style:
+
+FLAT colors or BOLD gradients (nothing subtle)
+Hard edges and shapes, not soft glows
+Patterns and textures (halftone dots, stripes, checkerboard), not blur effects
+Hand-drawn illustrations and cartoon icons everywhere
+Solid colors that POP, not muted tones with transparency
+Thick black borders (3-5px) to frame sections
+
+Layout Approach:
+
+Magazine/poster layout, not floating cards
+Use BRIGHT solid color backgrounds for sections (not dark mode)
+Color blocking: Daily Games section = bright yellow background, Hosted Games section = hot pink background
+Content sections butt against each other or use thick borders to separate
+Organic blob shapes as decorative elements
+Everything feels printed/tangible, not floating in space
+Add decorative hand-drawn doodles: game controllers, dice, playing cards, confetti, stars, lightning bolts
+
+Color Palette:
+
+Hot Pink: #FF1493
+Electric Orange: #FF6B35
+Bright Yellow: #FFD700
+Lime Green: #00FF7F
+Cyan: #00FFFF
+Purple: #9D4EDD
+Coral: #FF6F61
+Cream/Off-white: #FFF8E7
+Black: #000000 (for borders and text)
+
+Typography:
+
+Go BIGGER on headlines (think Frans Hals Museum scale)
+Add drop shadows or thick outlines for impact (like Creative Design)
+Mix of sizes: tiny and HUGE, not all medium
+Bold, impactful fonts
+Black text on bright backgrounds for readability
+
+Homepage Redesign:
+Instead of: Dark background with gray cards containing game options

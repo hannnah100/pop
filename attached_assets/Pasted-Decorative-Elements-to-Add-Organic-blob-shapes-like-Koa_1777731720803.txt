@@ -1,0 +1,62 @@
+Decorative Elements to Add:
+
+Organic blob shapes (like Koala Color)
+Hand-drawn doodle illustrations: smiley faces, stars, lightning bolts, hearts, arrows
+Halftone dot patterns for texture
+Diagonal stripe patterns
+Illustrated stickers/badges
+Cartoon style icons
+Geometric patterns (checkerboard, polka dots, zigzags)
+
+Examples of Correct Interactions:
+Bad (AI vibes):
+
+Hovering over a game card makes it glow softly with a purple aura and lift slightly
+
+Good (Fun vibes):
+
+Hovering over a game makes the entire section snap to a different bright color instantly, maybe a playful illustration pops in
+
+Bad:
+
+Dark background with semi-transparent cards that have subtle gradients
+
+Good:
+
+Bright yellow section with bold black text, thick black border on the bottom, hand-drawn stars scattered around
+
+Bad:
+
+Button with gradient background that glows on hover
+
+Good:
+
+Button is solid HOT PINK with thick black border. On hover it becomes ELECTRIC YELLOW and the text turns black. Instant change. Maybe it tilts 2 degrees.
+
+The Test:
+If someone screenshots this app and it looks like it could be ChatGPT, Claude, Notion AI, or any other AI tool - you failed. It should look like a 90s Nickelodeon show meets a modern indie game meets a colorful museum meets a party flyer.
+DO NOT USE:
+
+Dark backgrounds as primary
+Subtle grays or muted tones
+Glassmorphism or blur
+Perfect geometric boxes everywhere
+Subtle shadows and glows
+Smooth elegant transitions
+
+DO USE:
+
+Bright, saturated solid color backgrounds
+Hand-drawn illustration elements
+Thick black borders and outlines
+Bold drop shadows (not glows)
+Organic shapes (blobs, curves, irregular forms)
+Patterns and textures (dots, stripes, checkerboard)
+Playful doodles and cartoon icons
+Color blocking (full sections in solid bright colors)
+Typography at extreme scales
+Thick borders separating everything
+
+Overall Vibe:
+90s Nickelodeon meets modern museum meets indie game meets party flyer. Energetic, colorful, hand-crafted feeling, NOT digital/AI/corporate. Think Jackbox Party Pack, Poolsuite, old Spotify Wrapped pages - bold graphics, playful but sophisticated.
+Make it look FUN and BOLD and DIFFERENT. If someone saw this and thought 'that looks fun' instead of 'that looks professional' - you nailed it."

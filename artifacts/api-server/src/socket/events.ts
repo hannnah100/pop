@@ -11,6 +11,14 @@ interface Player {
   burns: number;
   roasts: number;
   guesses: number;
+  /** ms since epoch — last time this player did anything (vote, type, etc). */
+  lastActivity: number;
+  /** Self-reported microphone-mute toggle from the player phone. */
+  muted?: boolean;
+}
+
+interface HostSettingsBroadcast {
+  answerMethod: "voice" | "text" | "both";
 }
 
 interface RoastCard {
@@ -39,6 +47,7 @@ interface Room {
   botAssignments: Record<string, { targetId: string; colors: string[] }>;
   createdAt: number;
   lastActivity: number;
+  hostSettings: HostSettingsBroadcast;
 }
 
 export const rooms = new Map<string, Room>();
@@ -148,10 +157,11 @@ export function createRoom(gameType: "pop-the-question" | "roast-roulette", isDe
     botAssignments: {},
     createdAt: Date.now(),
     lastActivity: Date.now(),
+    hostSettings: { answerMethod: "both" },
   };
 
   if (isDemo) {
-    BOT_NAMES.forEach((name, i) => {
+    BOT_NAMES.forEach((name) => {
       room.players.push({
         id: `bot-${name.toLowerCase()}`,
         name,
@@ -161,6 +171,7 @@ export function createRoom(gameType: "pop-the-question" | "roast-roulette", isDe
         burns: 0,
         roasts: 0,
         guesses: 0,
+        lastActivity: Date.now(),
       });
     });
   }
@@ -435,6 +446,7 @@ export function setupSocketIO(httpServer: HttpServer) {
         burns: 0,
         roasts: 0,
         guesses: 0,
+        lastActivity: Date.now(),
       };
 
       room.players.push(player);
@@ -456,7 +468,66 @@ export function setupSocketIO(httpServer: HttpServer) {
         isDemo: room.isDemo,
         currentQuestion: room.questions[room.currentQuestionIndex],
         questionIndex: room.currentQuestionIndex,
+        hostSettings: room.hostSettings,
       });
+    });
+
+    // ====== Dual Host Mode plumbing (Task #5) ======
+
+    // Player phone reports they are typing into an answer box. Host derives
+    // the "Typing…" status badge from this transient signal.
+    socket.on("player-typing", ({ roomCode, isTyping }: { roomCode: string; isTyping: boolean }) => {
+      const room = rooms.get(roomCode);
+      if (!room) return;
+      const player = room.players.find((p) => p.id === socket.id);
+      if (!player) return;
+      player.lastActivity = Date.now();
+      if (room.hostId) {
+        io.to(room.hostId).emit("player-typing-changed", {
+          playerId: socket.id,
+          isTyping: Boolean(isTyping),
+        });
+      }
+    });
+
+    // Player phone toggles its self-mute. Host shows the "Muted" badge.
+    socket.on("player-muted", ({ roomCode, muted }: { roomCode: string; muted: boolean }) => {
+      const room = rooms.get(roomCode);
+      if (!room) return;
+      const player = room.players.find((p) => p.id === socket.id);
+      if (!player) return;
+      player.muted = Boolean(muted);
+      player.lastActivity = Date.now();
+      if (room.hostId) {
+        io.to(room.hostId).emit("player-muted-changed", {
+          playerId: socket.id,
+          muted: player.muted,
+        });
+      }
+    });
+
+    // Host updates settings that affect player UI (currently: answerMethod).
+    // Persisted on the room so late-joining players get the current value.
+    socket.on(
+      "host-settings-update",
+      ({ roomCode, settings }: { roomCode: string; settings: Partial<HostSettingsBroadcast> }) => {
+        const room = rooms.get(roomCode);
+        if (!room || room.hostId !== socket.id) return;
+        room.lastActivity = Date.now();
+        if (settings.answerMethod) {
+          room.hostSettings.answerMethod = settings.answerMethod;
+        }
+        io.to(roomCode).emit("host-settings-changed", { settings: room.hostSettings });
+      },
+    );
+
+    // Host pause / resume — gates bot timers and shows a player-side
+    // "Paused" overlay so nobody keeps frantically typing.
+    socket.on("host-pause", ({ roomCode, paused }: { roomCode: string; paused: boolean }) => {
+      const room = rooms.get(roomCode);
+      if (!room || room.hostId !== socket.id) return;
+      room.lastActivity = Date.now();
+      io.to(roomCode).emit("host-paused-changed", { paused: Boolean(paused) });
     });
 
     socket.on("start-game", ({ roomCode }: { roomCode: string }) => {
@@ -530,6 +601,8 @@ export function setupSocketIO(httpServer: HttpServer) {
       const room = rooms.get(roomCode);
       if (!room) return;
       room.lastActivity = Date.now();
+      const submitter = room.players.find((p) => p.id === socket.id);
+      if (submitter) submitter.lastActivity = Date.now();
 
       room.currentVotes[socket.id] = votedForId;
       const nonHostCount = room.players.filter((p) => !p.isHost).length;
@@ -618,6 +691,8 @@ export function setupSocketIO(httpServer: HttpServer) {
       const room = rooms.get(roomCode);
       if (!room) return;
       room.lastActivity = Date.now();
+      const submitter = room.players.find((p) => p.id === socket.id);
+      if (submitter) submitter.lastActivity = Date.now();
 
       if (!room.cards[targetPlayerId]) room.cards[targetPlayerId] = {};
 
@@ -697,6 +772,8 @@ export function setupSocketIO(httpServer: HttpServer) {
       const room = rooms.get(roomCode);
       if (!room) return;
       room.lastActivity = Date.now();
+      const picker = room.players.find((p) => p.id === socket.id);
+      if (picker) picker.lastActivity = Date.now();
 
       const card = room.cards[socket.id];
       if (!card || !card[color]) return;

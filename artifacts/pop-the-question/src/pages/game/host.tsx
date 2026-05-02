@@ -1,10 +1,20 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { useRoute } from "wouter";
 import { io, Socket } from "socket.io-client";
 import { motion, AnimatePresence } from "framer-motion";
 import type { Player } from "@/types/game";
 import { Button } from "@/components/ui/button";
-import { Users, Play, Crown, Trophy, Bot, Flame } from "lucide-react";
+import {
+  Users,
+  Play,
+  Crown,
+  Trophy,
+  Bot,
+  Flame,
+  Mic,
+  ChevronRight,
+  Eye,
+} from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import {
   CountUp,
@@ -16,9 +26,18 @@ import {
 } from "@/components/fx";
 import { useSfx } from "@/lib/sfx";
 import { staggerContainer, staggerItem } from "@/lib/motion";
+import { HostShell } from "@/components/host/HostShell";
+import {
+  PlayerStatusBadge,
+  type PlayerStatusState,
+} from "@/components/host/PlayerStatusBadge";
+import type { HostNotificationsHandle } from "@/components/host/HostNotifications";
+import { useHostSettings, type HostAnswerMethod } from "@/lib/hostSettings";
 
 interface PlayerWithBot extends Player {
   isBot?: boolean;
+  lastActivity?: number;
+  muted?: boolean;
 }
 
 interface RoastQuestion {
@@ -31,6 +50,7 @@ interface RoastCard {
 }
 
 interface PlayerJoinedPayload {
+  player?: PlayerWithBot;
   players: PlayerWithBot[];
   isDemo: boolean;
 }
@@ -89,15 +109,33 @@ interface PlayersOnlyPayload {
   players: PlayerWithBot[];
 }
 
+interface PlayerLeftPayload {
+  playerId: string;
+  players: PlayerWithBot[];
+}
+
+interface PlayerTypingChangedPayload {
+  playerId: string;
+  isTyping: boolean;
+}
+
+interface PlayerMutedChangedPayload {
+  playerId: string;
+  muted: boolean;
+}
+
 interface ErrorPayload {
   message: string;
 }
+
+const AWAY_THRESHOLD_MS = 30_000;
 
 export default function GameHost() {
   const [, params] = useRoute("/game/:roomCode/host");
   const roomCode = params?.roomCode || "";
   const { toast } = useToast();
   const { playWhoosh, playVictory, playCorrect } = useSfx();
+  const settings = useHostSettings();
 
   const [socket, setSocket] = useState<Socket | null>(null);
   const [gameState, setGameState] = useState<"lobby" | "playing" | "finished">("lobby");
@@ -118,13 +156,27 @@ export default function GameHost() {
   const [rrTotal, setRrTotal] = useState(0);
   const [rrRound, setRrRound] = useState(1);
   const [rrTotalRounds, setRrTotalRounds] = useState(1);
+  const [rrCurrentRevealId, setRrCurrentRevealId] = useState<string | null>(null);
   const [rrCurrentRevealName, setRrCurrentRevealName] = useState("");
   const [rrCard, setRrCard] = useState<Record<string, { answer: string; author: string; answerId: string }>>({});
   const [rrQuestions, setRrQuestions] = useState<Array<{ color?: string; question?: string }>>([]);
   const [rrRevealIndex, setRrRevealIndex] = useState(0);
   const [rrTotalReveals, setRrTotalReveals] = useState(0);
 
+  // Per-player transient state (Task #5)
+  const [typingPlayers, setTypingPlayers] = useState<Set<string>>(new Set());
+  const [submittedPlayers, setSubmittedPlayers] = useState<Set<string>>(new Set());
+  const [, setAwayTick] = useState(0);
+
   const finishedRef = useRef(false);
+  const notificationsRef = useRef<HostNotificationsHandle | null>(null);
+  const knownPlayerIds = useRef<Set<string>>(new Set());
+
+  // Force-recompute Away status on a 5s tick (status derived from lastActivity).
+  useEffect(() => {
+    const id = window.setInterval(() => setAwayTick((t) => t + 1), 5000);
+    return () => window.clearInterval(id);
+  }, []);
 
   useEffect(() => {
     if (!roomCode) return;
@@ -134,13 +186,45 @@ export default function GameHost() {
 
     newSocket.emit("join-room", { roomCode, playerName: "HOST", isHost: true });
 
-    newSocket.on("player-joined", ({ players: ps, isDemo: demo }: PlayerJoinedPayload) => {
-      setPlayers(ps.filter((p) => !p.isHost));
+    newSocket.on("player-joined", ({ player, players: ps, isDemo: demo }: PlayerJoinedPayload) => {
+      const visible = ps.filter((p) => !p.isHost);
+      setPlayers(visible);
       if (demo) setIsDemo(true);
+
+      // Notify on real (non-bot, non-host) joins after the initial population.
+      if (player && !player.isHost && !player.isBot) {
+        if (knownPlayerIds.current.has(player.id)) return;
+        knownPlayerIds.current.add(player.id);
+        notificationsRef.current?.push({
+          message: `🎉 ${player.name} joined the room`,
+          variant: "success",
+          duration: 3500,
+        });
+      }
+    });
+
+    newSocket.on("player-left", ({ playerId, players: ps }: PlayerLeftPayload) => {
+      const left = players.find((p) => p.id === playerId);
+      knownPlayerIds.current.delete(playerId);
+      setPlayers(ps.filter((p) => !p.isHost));
+      setTypingPlayers((prev) => {
+        const next = new Set(prev);
+        next.delete(playerId);
+        return next;
+      });
+      if (left && !left.isBot) {
+        notificationsRef.current?.push({
+          message: `👋 ${left.name} left`,
+          variant: "warn",
+          duration: 3000,
+        });
+      }
     });
 
     newSocket.on("room-state", ({ players: ps, isDemo: demo, gameType: gt }: RoomStatePayload) => {
-      setPlayers(ps.filter((p) => !p.isHost));
+      const visible = ps.filter((p) => !p.isHost);
+      setPlayers(visible);
+      visible.forEach((p) => knownPlayerIds.current.add(p.id));
       if (demo) setIsDemo(true);
       if (gt) setGameType(gt);
     });
@@ -150,6 +234,8 @@ export default function GameHost() {
       setGameType(gt);
       if (demo) setIsDemo(true);
       playWhoosh();
+      setSubmittedPlayers(new Set());
+      setTypingPlayers(new Set());
 
       if (gt === "pop-the-question") {
         setCurrentQuestion(question ?? "");
@@ -179,6 +265,8 @@ export default function GameHost() {
       setVoteCounts({});
       setResultsRevealed(false);
       setBurnedPlayerId(null);
+      setSubmittedPlayers(new Set());
+      setTypingPlayers(new Set());
       playWhoosh();
     });
 
@@ -210,11 +298,23 @@ export default function GameHost() {
       setRrRound(nextRound);
       setRrTotalRounds(totalRounds);
       setRrSubmitted(0);
+      setSubmittedPlayers(new Set());
+      setTypingPlayers(new Set());
+      notificationsRef.current?.push({
+        message: `Round ${nextRound} of ${totalRounds}`,
+        variant: "info",
+        duration: 2500,
+      });
     });
 
     newSocket.on("writing-complete", () => {
       setRrPhase("revealing");
       playWhoosh();
+      notificationsRef.current?.push({
+        message: "📝 All roasts written — time for reveals!",
+        variant: "success",
+        duration: 3500,
+      });
     });
 
     newSocket.on("start-reveals", ({ currentRevealName, card, questions: qs, revealOrder, currentRevealId }: StartRevealsPayload) => {
@@ -223,6 +323,7 @@ export default function GameHost() {
       setRrCard(card ?? {});
       if (qs) setRrQuestions(qs);
       if (revealOrder && currentRevealId) {
+        setRrCurrentRevealId(currentRevealId);
         setRrRevealIndex((prev) => {
           const idx = revealOrder.indexOf(currentRevealId);
           return idx >= 0 ? idx : prev;
@@ -241,12 +342,29 @@ export default function GameHost() {
       if (ps) setPlayers(ps.filter((p) => !p.isHost));
     });
 
+    // ====== Task #5: per-player status events ======
+    newSocket.on("player-typing-changed", ({ playerId, isTyping }: PlayerTypingChangedPayload) => {
+      setTypingPlayers((prev) => {
+        const next = new Set(prev);
+        if (isTyping) next.add(playerId);
+        else next.delete(playerId);
+        return next;
+      });
+    });
+
+    newSocket.on("player-muted-changed", ({ playerId, muted }: PlayerMutedChangedPayload) => {
+      setPlayers((prev) =>
+        prev.map((p) => (p.id === playerId ? { ...p, muted } : p)),
+      );
+    });
+
     newSocket.on("error", ({ message }: ErrorPayload) => {
       toast({ title: "Game Error", description: message, variant: "destructive" });
     });
 
     return () => { newSocket.disconnect(); };
-  }, [roomCode, toast, playWhoosh, playCorrect]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [roomCode]);
 
   useEffect(() => {
     if (gameState === "finished" && !finishedRef.current) {
@@ -256,11 +374,73 @@ export default function GameHost() {
     }
   }, [gameState, playVictory]);
 
+  // Track who has submitted this round so we can render Answered badges.
+  useEffect(() => {
+    // PtQ: each player in voteCounts has answered; before reveal we don't have
+    // per-player vote info, so we rely on votesIn (count) only.
+    if (gameType === "pop-the-question" && resultsRevealed) {
+      setSubmittedPlayers(new Set(Object.keys(voteCounts)));
+    }
+  }, [voteCounts, resultsRevealed, gameType]);
+
   const handleStartGame = () => socket?.emit("start-game", { roomCode });
   const handleRevealResults = () => socket?.emit("reveal-results", { roomCode });
   const handleNextQuestion = () => socket?.emit("next-question", { roomCode });
   const handleEndGame = () => socket?.emit("end-game", { roomCode });
   const handleNextReveal = () => socket?.emit("next-reveal", { roomCode });
+
+  const handlePauseChange = useCallback(
+    (paused: boolean) => {
+      socket?.emit("host-pause", { roomCode, paused });
+      notificationsRef.current?.push({
+        message: paused ? "⏸ Game paused" : "▶ Game resumed",
+        variant: paused ? "warn" : "success",
+        duration: 2500,
+      });
+    },
+    [socket, roomCode],
+  );
+
+  const handleAnswerMethodChange = useCallback(
+    (method: HostAnswerMethod) => {
+      socket?.emit("host-settings-update", {
+        roomCode,
+        settings: { answerMethod: method },
+      });
+    },
+    [socket, roomCode],
+  );
+
+  // Publish the host's locally-persisted settings to the room on connect
+  // so players read the host's actual preferences, not server defaults.
+  // Re-publishes if the host changes mode/answerMethod locally between games.
+  const lastPublishedRef = useRef<string>("");
+  useEffect(() => {
+    if (!socket) return;
+    const payload = {
+      mode: settings.mode,
+      answerMethod: settings.answerMethod,
+    };
+    const key = JSON.stringify(payload);
+    if (key === lastPublishedRef.current) return;
+    lastPublishedRef.current = key;
+    socket.emit("host-settings-update", { roomCode, settings: payload });
+  }, [socket, roomCode, settings.mode, settings.answerMethod]);
+
+  // Derive per-player status for Task #5 status badges.
+  const getPlayerStatus = useCallback(
+    (p: PlayerWithBot): PlayerStatusState => {
+      if (p.muted) return "muted";
+      if (submittedPlayers.has(p.id)) return "answered";
+      if (typingPlayers.has(p.id)) return "typing";
+      // Bots are never "away"; humans go away after AWAY_THRESHOLD_MS.
+      if (!p.isBot && p.lastActivity && Date.now() - p.lastActivity > AWAY_THRESHOLD_MS) {
+        return "away";
+      }
+      return "thinking";
+    },
+    [submittedPlayers, typingPlayers],
+  );
 
   const DemoBadge = () =>
     isDemo ? (
@@ -289,78 +469,106 @@ export default function GameHost() {
     </motion.div>
   );
 
-  // LOBBY
-  if (gameState === "lobby") {
-    const canStart = isDemo ? players.length >= 1 : players.filter((p) => !p.isBot).length >= 3;
-
+  /**
+   * Status bar shown during gameplay in Remote mode (Task #5).
+   * Compact in In-Person mode to avoid TV chrome clutter.
+   */
+  const PlayerStatusBar = () => {
+    if (players.length === 0) return null;
+    const isRemote = settings.mode === "remote";
     return (
-      <div className="flex flex-col min-h-[100dvh] text-foreground p-8">
-        <div className="flex-1 flex flex-col items-center justify-center">
-          <div className="flex items-center gap-4 mb-6">
-            <DemoBadge />
-          </div>
-          <p className="text-3xl font-bold text-muted-foreground uppercase tracking-[0.2em] mb-4">
-            <TypingText text="Go to popthequestion.com and enter code" speedMs={28} caret={false} />
-          </p>
+      <motion.div
+        layout
+        initial={{ opacity: 0, y: -8 }}
+        animate={{ opacity: 1, y: 0 }}
+        className={
+          isRemote
+            ? "flex flex-wrap gap-2 justify-center max-w-5xl mx-auto mb-6"
+            : "flex flex-wrap gap-1.5 justify-center max-w-4xl mx-auto mb-3 opacity-80"
+        }
+        data-testid="player-status-bar"
+      >
+        {players.map((p) => {
+          const state = getPlayerStatus(p);
+          return (
+            <div
+              key={p.id}
+              className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 font-bold ${
+                state === "answered"
+                  ? "bg-success/10 border-success/40 text-success"
+                  : "bg-card/60 border-border text-foreground"
+              } ${isRemote ? "text-sm" : "text-xs"}`}
+            >
+              {p.isBot && <Bot className="w-3.5 h-3.5 text-primary/60" />}
+              <span className="truncate max-w-[140px]">{p.name}</span>
+              <PlayerStatusBadge state={state} compact={!isRemote} />
+            </div>
+          );
+        })}
+      </motion.div>
+    );
+  };
 
-          <motion.h1
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ type: "spring", stiffness: 220, damping: 18 }}
-            className="text-[8rem] sm:text-[10rem] md:text-[12rem] font-black font-display tracking-[0.18em] leading-none mb-12 drop-shadow-[0_0_60px_hsl(var(--primary)/0.4)]"
-          >
-            <RainbowText text={roomCode} glow />
-          </motion.h1>
+  // ============================================================
+  //   CONTENT RENDERERS — each returns the phase-specific JSX
+  //   without an outer min-h container. HostShell wraps them.
+  // ============================================================
+
+  const renderLobby = () => {
+    return (
+      <div className="flex-1 flex flex-col items-center justify-center text-foreground px-4">
+        <div className="flex items-center gap-4 mb-6">
+          <DemoBadge />
+        </div>
+        <p className="text-3xl font-bold text-muted-foreground uppercase tracking-[0.2em] mb-4 text-center">
+          <TypingText text="Go to popthequestion.com and enter code" speedMs={28} caret={false} />
+        </p>
+
+        <motion.h1
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ type: "spring", stiffness: 220, damping: 18 }}
+          className="text-[8rem] sm:text-[10rem] md:text-[12rem] font-black font-display tracking-[0.18em] leading-none mb-12 drop-shadow-[0_0_60px_hsl(var(--primary)/0.4)]"
+        >
+          <RainbowText text={roomCode} glow />
+        </motion.h1>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="w-full max-w-5xl bg-card/85 backdrop-blur rounded-3xl p-8 border-2 border-border/50 surface-elevated mb-12"
+        >
+          <div className="flex items-center gap-4 mb-6 pb-4 border-b border-border">
+            <Users className="w-8 h-8 text-secondary drop-shadow-[0_0_8px_hsl(var(--secondary))]" />
+            <h2 className="text-2xl md:text-3xl font-bold font-display tracking-tight">
+              Players (<CountUp value={players.length} duration={0.4} />)
+              {isDemo && <span className="ml-3 text-lg font-normal text-muted-foreground">· {players.filter(p => p.isBot).length} AI</span>}
+            </h2>
+          </div>
 
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="w-full max-w-5xl bg-card/85 backdrop-blur rounded-3xl p-8 border-2 border-border/50 surface-elevated mb-12"
+            className="flex flex-wrap gap-4 min-h-[120px]"
+            variants={staggerContainer(0.06)}
+            initial="hidden"
+            animate="show"
           >
-            <div className="flex items-center gap-4 mb-6 pb-4 border-b border-border">
-              <Users className="w-8 h-8 text-secondary drop-shadow-[0_0_8px_hsl(var(--secondary))]" />
-              <h2 className="text-2xl md:text-3xl font-bold font-display tracking-tight">
-                Players (<CountUp value={players.length} duration={0.4} />)
-                {isDemo && <span className="ml-3 text-lg font-normal text-muted-foreground">· {players.filter(p => p.isBot).length} AI</span>}
-              </h2>
-            </div>
-
-            <motion.div
-              className="flex flex-wrap gap-4 min-h-[120px]"
-              variants={staggerContainer(0.06)}
-              initial="hidden"
-              animate="show"
-            >
-              <AnimatePresence>
-                {players.length === 0 ? (
-                  <div className="w-full flex items-center justify-center text-2xl text-muted-foreground animate-pulse">
-                    Waiting for players to join...
-                  </div>
-                ) : (
-                  players.map((p) => <PlayerChip key={p.id} p={p} />)
-                )}
-              </AnimatePresence>
-            </motion.div>
+            <AnimatePresence>
+              {players.length === 0 ? (
+                <div className="w-full flex items-center justify-center text-2xl text-muted-foreground animate-pulse">
+                  Waiting for players to join...
+                </div>
+              ) : (
+                players.map((p) => <PlayerChip key={p.id} p={p} />)
+              )}
+            </AnimatePresence>
           </motion.div>
-
-          <Button
-            size="lg"
-            onClick={handleStartGame}
-            disabled={!canStart}
-            className="text-2xl md:text-3xl px-12 md:px-16 py-8 md:py-10 rounded-xl font-bold font-sans"
-            data-testid="btn-start-game"
-          >
-            <Play className="w-10 h-10 mr-4 fill-current" />
-            {canStart ? "Start Game" : `Need ${3 - players.filter(p => !p.isBot).length} more real players`}
-          </Button>
-        </div>
+        </motion.div>
       </div>
     );
-  }
+  };
 
-  // FINISHED
-  if (gameState === "finished") {
+  const renderFinished = () => {
     const sortedPlayers = [...players].sort((a, b) => (b.score ?? 0) - (a.score ?? 0));
     const top3 = sortedPlayers.slice(0, 3);
     const rest = sortedPlayers.slice(3);
@@ -374,7 +582,7 @@ export default function GameHost() {
     const ranks = ["2nd", "1st", "3rd"];
 
     return (
-      <div className="flex flex-col min-h-[100dvh] text-foreground p-8 items-center justify-center relative overflow-hidden">
+      <div className="flex-1 flex flex-col text-foreground items-center justify-center relative overflow-hidden">
         {isDemo && (<div className="absolute top-6 right-6"><DemoBadge /></div>)}
         <Trophy className="w-24 h-24 text-[hsl(var(--gold))] mb-6 drop-shadow-[0_0_24px_hsl(var(--gold)/0.5)]" />
         <h1 className="text-4xl md:text-6xl font-extrabold font-display tracking-tight text-foreground text-center mb-3">
@@ -385,7 +593,6 @@ export default function GameHost() {
         <div className="w-full max-w-4xl mb-12 flex items-end justify-center gap-4 md:gap-8">
           {podiumOrder.map((p, idx) => {
             if (!p) return null;
-            const rank = idx === 0 ? 1 : idx === 1 ? 0 : 2;
             return (
               <motion.div
                 key={p.id}
@@ -438,14 +645,17 @@ export default function GameHost() {
         )}
       </div>
     );
-  }
+  };
 
-  // PLAYING — Pop the Question
-  if (gameState === "playing" && gameType === "pop-the-question") {
+  const renderPtQ = () => {
     const sortedVotes = Object.entries(voteCounts).sort(([, a], [, b]) => b - a);
+    const total = totalVoters || players.length;
+    const showRemoteWaiting =
+      settings.mode === "remote" && !resultsRevealed && total > 0;
+
     return (
-      <div className="flex flex-col min-h-[100dvh] text-foreground p-8 relative overflow-hidden">
-        <header className="flex justify-between items-center mb-16 relative z-10">
+      <div className="flex-1 flex flex-col text-foreground relative overflow-hidden">
+        <header className="flex justify-between items-center mb-8 relative z-10">
           <div className="text-2xl font-bold text-muted-foreground tracking-widest bg-card/80 backdrop-blur px-6 py-3 rounded-full border border-border surface-elevated">
             ROOM: <span className="text-foreground">{roomCode}</span>
           </div>
@@ -455,6 +665,31 @@ export default function GameHost() {
           </div>
         </header>
 
+        {/* Remote-mode "Waiting for votes" indicator */}
+        {showRemoteWaiting && (
+          <div className="flex justify-center mb-4">
+            <div
+              className="inline-flex items-center gap-2 rounded-full bg-secondary/15 border border-secondary/40 px-4 py-2 text-base font-bold text-secondary"
+              data-testid="remote-waiting-indicator"
+            >
+              <span className="inline-block w-2 h-2 rounded-full bg-secondary animate-pulse" />
+              ⏱ Waiting for votes {votesIn}/{total}
+            </div>
+          </div>
+        )}
+
+        {/* Player status bar — visible during voting and results */}
+        <PlayerStatusBar />
+
+        {/* Voice-only host hint */}
+        {settings.answerMethod === "voice" && !resultsRevealed && (
+          <div className="flex justify-center mb-3">
+            <div className="inline-flex items-center gap-2 rounded-full bg-accent/15 border border-accent/40 px-4 py-2 text-sm font-bold text-accent">
+              <Mic className="w-4 h-4" /> Voice mode — players shout, you'll mark correct
+            </div>
+          </div>
+        )}
+
         <main className="flex-1 flex flex-col items-center justify-center relative z-10 max-w-6xl mx-auto w-full">
           <AnimatePresence mode="wait">
             <motion.h2
@@ -463,7 +698,7 @@ export default function GameHost() {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -50, scale: 0.95 }}
               transition={{ type: "spring", stiffness: 180, damping: 22 }}
-              className="text-5xl md:text-[4.5rem] leading-tight font-extrabold font-display tracking-tight text-center mb-16"
+              className="text-5xl md:text-[4.5rem] leading-tight font-extrabold font-display tracking-tight text-center mb-12"
             >
               {currentQuestion || "Loading question..."}
             </motion.h2>
@@ -473,12 +708,12 @@ export default function GameHost() {
             <div className="flex flex-col items-center w-full">
               <div className="text-4xl font-bold mb-8">
                 <span className="text-secondary text-glow-secondary"><CountUp value={votesIn} duration={0.5} /></span>
-                <span className="text-muted-foreground"> / {totalVoters || players.length} Votes In</span>
+                <span className="text-muted-foreground"> / {total} Votes In</span>
               </div>
               <div className="w-full max-w-3xl bg-card rounded-full h-8 overflow-hidden border border-border mb-12 surface-elevated">
                 <motion.div
                   className="bg-gradient-to-r from-secondary via-primary to-accent h-full shimmer-sweep"
-                  animate={{ width: `${(votesIn / Math.max(1, totalVoters || players.length)) * 100}%` }}
+                  animate={{ width: `${(votesIn / Math.max(1, total)) * 100}%` }}
                   transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
                 />
               </div>
@@ -503,7 +738,6 @@ export default function GameHost() {
                 {sortedVotes.map(([playerId, count], i) => {
                   const player = players.find((p) => p.id === playerId);
                   if (!player) return null;
-                  const total = totalVoters || players.length;
                   const percentage = (count / Math.max(1, total)) * 100;
                   const isBurned = playerId === burnedPlayerId;
                   return (
@@ -532,34 +766,36 @@ export default function GameHost() {
                   );
                 })}
               </div>
-              <div className="flex gap-6 justify-center">
-                <Button size="lg" onClick={handleNextQuestion} className="text-2xl px-8 py-8" data-testid="btn-next">
-                  Next Question
-                </Button>
-                <Button size="lg" variant="outline" onClick={handleEndGame} className="text-2xl px-8 py-8" data-testid="btn-end">
-                  End Game
-                </Button>
-              </div>
             </motion.div>
           )}
         </main>
       </div>
     );
-  }
+  };
 
-  // PLAYING — Roast Roulette
-  if (gameState === "playing" && gameType === "roast-roulette") {
+  const renderRR = () => {
     if (rrPhase === "writing") {
+      const showRemoteWaiting = settings.mode === "remote" && rrTotal > 0;
       return (
-        <div className="flex flex-col min-h-[100dvh] text-foreground p-8 items-center justify-center relative">
+        <div className="flex-1 flex flex-col text-foreground items-center justify-center relative">
           {isDemo && <div className="absolute top-6 right-6"><DemoBadge /></div>}
-          <div className="text-2xl font-bold text-muted-foreground mb-8 uppercase tracking-widest">
+          <div className="text-2xl font-bold text-muted-foreground mb-6 uppercase tracking-widest">
             Round <span className="text-foreground"><CountUp value={rrRound} duration={0.4} /></span> of {rrTotalRounds}
           </div>
           <h1 className="text-4xl md:text-5xl font-extrabold font-display tracking-tight text-foreground mb-3">
             WRITING ROASTS
           </h1>
-          <div className="heading-divider heading-divider--orange w-20 h-1 mb-12" />
+          <div className="heading-divider heading-divider--orange w-20 h-1 mb-8" />
+
+          {showRemoteWaiting && (
+            <div className="mb-6 inline-flex items-center gap-2 rounded-full bg-accent/15 border border-accent/40 px-4 py-2 text-base font-bold text-accent">
+              <span className="inline-block w-2 h-2 rounded-full bg-accent animate-pulse" />
+              ⏱ Waiting for roasts {rrSubmitted}/{rrTotal}
+            </div>
+          )}
+
+          <PlayerStatusBar />
+
           <div className="w-full max-w-2xl bg-card/85 backdrop-blur rounded-3xl p-8 border-2 border-border surface-elevated mb-8">
             <div className="flex justify-between text-3xl font-bold mb-6">
               <span>Submitted</span>
@@ -598,10 +834,16 @@ export default function GameHost() {
     }
 
     if (rrPhase === "revealing") {
+      const isPickingBot = (() => {
+        if (!rrCurrentRevealId) return null;
+        const reveal = players.find((p) => p.id === rrCurrentRevealId);
+        return reveal?.isBot ? reveal : null;
+      })();
+
       return (
-        <div className="flex flex-col min-h-[100dvh] text-foreground p-8 relative overflow-hidden">
+        <div className="flex-1 flex flex-col text-foreground relative overflow-hidden">
           {isDemo && <div className="absolute top-6 right-6"><DemoBadge /></div>}
-          <header className="flex justify-between items-center mb-8 relative z-10">
+          <header className="flex justify-between items-center mb-6 relative z-10">
             <div className="text-2xl font-bold text-muted-foreground bg-card/80 backdrop-blur px-6 py-3 rounded-full border border-border surface-elevated">
               ROOM: <span className="text-foreground">{roomCode}</span>
             </div>
@@ -609,6 +851,19 @@ export default function GameHost() {
               Reveal <span className="text-foreground"><CountUp value={rrRevealIndex + 1} duration={0.4} /></span> of {rrTotalReveals}
             </div>
           </header>
+
+          {/* Remote-mode picker indicator */}
+          {settings.mode === "remote" && rrCurrentRevealName && (
+            <div className="flex justify-center mb-4">
+              <div
+                className="inline-flex items-center gap-2 rounded-full bg-secondary/15 border border-secondary/40 px-4 py-2 text-base font-bold text-secondary"
+                data-testid="remote-picker-indicator"
+              >
+                <Eye className="w-4 h-4" />
+                {isPickingBot ? "🤖" : "🎤"} {rrCurrentRevealName} is picking favorites…
+              </div>
+            </div>
+          )}
 
           <main className="flex-1 flex flex-col items-center justify-center relative z-10">
             <p className="text-2xl text-muted-foreground mb-4 font-semibold uppercase tracking-widest">Roasting</p>
@@ -660,20 +915,102 @@ export default function GameHost() {
                 })}
               </AnimatePresence>
             </div>
-
-            <Button
-              size="lg"
-              onClick={handleNextReveal}
-              className="text-3xl px-12 py-8 bg-primary hover:bg-primary/90 shadow-[0_8px_40px_-8px_hsl(var(--primary)/0.7)]"
-              data-testid="btn-next-reveal"
-            >
-              {rrRevealIndex + 1 >= rrTotalReveals ? "Finish Game" : "Next Player →"}
-            </Button>
           </main>
         </div>
       );
     }
-  }
 
-  return null;
+    return null;
+  };
+
+  // ============================================================
+  //   CONTROLS — game-contextual buttons rendered in the bar
+  // ============================================================
+  const renderControls = () => {
+    if (gameState === "lobby") {
+      const canStart = isDemo
+        ? players.length >= 1
+        : players.filter((p) => !p.isBot).length >= 3;
+      return (
+        <Button
+          size="lg"
+          onClick={handleStartGame}
+          disabled={!canStart}
+          className="text-xl px-8 py-6 font-bold gap-2"
+          data-testid="btn-start-game"
+        >
+          <Play className="w-5 h-5 fill-current" />
+          {canStart
+            ? "Start Game"
+            : `Need ${3 - players.filter((p) => !p.isBot).length} more`}
+        </Button>
+      );
+    }
+    if (gameState === "finished") return null;
+
+    if (gameType === "pop-the-question") {
+      if (!resultsRevealed) {
+        return (
+          <Button
+            size="lg"
+            onClick={handleRevealResults}
+            disabled={votesIn === 0}
+            className="text-lg px-6 py-5 font-bold gap-2 bg-accent hover:bg-accent/90 text-accent-foreground"
+            data-testid="btn-reveal-bar"
+          >
+            Reveal Results
+            <ChevronRight className="w-5 h-5" />
+          </Button>
+        );
+      }
+      return (
+        <Button
+          size="lg"
+          onClick={handleNextQuestion}
+          className="text-lg px-6 py-5 font-bold gap-2"
+          data-testid="btn-next-bar"
+        >
+          Next Question
+          <ChevronRight className="w-5 h-5" />
+        </Button>
+      );
+    }
+
+    if (gameType === "roast-roulette" && rrPhase === "revealing") {
+      const isLast = rrRevealIndex + 1 >= rrTotalReveals;
+      return (
+        <Button
+          size="lg"
+          onClick={handleNextReveal}
+          className="text-lg px-6 py-5 font-bold gap-2 bg-primary hover:bg-primary/90"
+          data-testid="btn-next-reveal-bar"
+        >
+          {isLast ? "Finish Game" : "Next Player"}
+          <ChevronRight className="w-5 h-5" />
+        </Button>
+      );
+    }
+
+    return null;
+  };
+
+  let content: React.ReactNode = null;
+  if (gameState === "lobby") content = renderLobby();
+  else if (gameState === "finished") content = renderFinished();
+  else if (gameType === "pop-the-question") content = renderPtQ();
+  else if (gameType === "roast-roulette") content = renderRR();
+
+  return (
+    <HostShell
+      playerCount={players.length}
+      controls={renderControls()}
+      onEndGame={handleEndGame}
+      onPauseChange={handlePauseChange}
+      onAnswerMethodChange={handleAnswerMethodChange}
+      notificationsRef={notificationsRef}
+      hideEndGame={gameState === "lobby" || gameState === "finished"}
+    >
+      {content}
+    </HostShell>
+  );
 }
