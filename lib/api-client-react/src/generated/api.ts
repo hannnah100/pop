@@ -32,6 +32,7 @@ import type {
   PopOrDropLeaderboard,
   PopOrDropScoreRequest,
   PopOrDropSequence,
+  PopOrDropSummary,
   QuestionPrompt,
   RoastQuestion,
   Room,
@@ -923,6 +924,168 @@ export const usePopBoxGuess = <
 > => {
   return useMutation(getPopBoxGuessMutationOptions(options));
 };
+
+/**
+ * @summary Get archive of past Pop or Drop daily challenges (excludes today)
+ */
+export const getGetPopOrDropArchiveUrl = () => {
+  return `/api/daily/pop-or-drop/archive`;
+};
+
+export const getPopOrDropArchive = async (
+  options?: RequestInit,
+): Promise<PopOrDropSummary[]> => {
+  return customFetch<PopOrDropSummary[]>(getGetPopOrDropArchiveUrl(), {
+    ...options,
+    method: "GET",
+  });
+};
+
+export const getGetPopOrDropArchiveQueryKey = () => {
+  return [`/api/daily/pop-or-drop/archive`] as const;
+};
+
+export const getGetPopOrDropArchiveQueryOptions = <
+  TData = Awaited<ReturnType<typeof getPopOrDropArchive>>,
+  TError = ErrorType<unknown>,
+>(options?: {
+  query?: UseQueryOptions<
+    Awaited<ReturnType<typeof getPopOrDropArchive>>,
+    TError,
+    TData
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
+
+  const queryKey = queryOptions?.queryKey ?? getGetPopOrDropArchiveQueryKey();
+
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof getPopOrDropArchive>>
+  > = ({ signal }) => getPopOrDropArchive({ signal, ...requestOptions });
+
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof getPopOrDropArchive>>,
+    TError,
+    TData
+  > & { queryKey: QueryKey };
+};
+
+export type GetPopOrDropArchiveQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getPopOrDropArchive>>
+>;
+export type GetPopOrDropArchiveQueryError = ErrorType<unknown>;
+
+/**
+ * @summary Get archive of past Pop or Drop daily challenges (excludes today)
+ */
+
+export function useGetPopOrDropArchive<
+  TData = Awaited<ReturnType<typeof getPopOrDropArchive>>,
+  TError = ErrorType<unknown>,
+>(options?: {
+  query?: UseQueryOptions<
+    Awaited<ReturnType<typeof getPopOrDropArchive>>,
+    TError,
+    TData
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+  const queryOptions = getGetPopOrDropArchiveQueryOptions(options);
+
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: QueryKey;
+  };
+
+  return { ...query, queryKey: queryOptions.queryKey };
+}
+
+/**
+ * @summary Get the item sequence for a specific Pop or Drop date (read-only, for archive)
+ */
+export const getGetPopOrDropByIdUrl = (id: string) => {
+  return `/api/daily/pop-or-drop/${id}`;
+};
+
+export const getPopOrDropById = async (
+  id: string,
+  options?: RequestInit,
+): Promise<PopOrDropSequence> => {
+  return customFetch<PopOrDropSequence>(getGetPopOrDropByIdUrl(id), {
+    ...options,
+    method: "GET",
+  });
+};
+
+export const getGetPopOrDropByIdQueryKey = (id: string) => {
+  return [`/api/daily/pop-or-drop/${id}`] as const;
+};
+
+export const getGetPopOrDropByIdQueryOptions = <
+  TData = Awaited<ReturnType<typeof getPopOrDropById>>,
+  TError = ErrorType<ErrorResponse>,
+>(
+  id: string,
+  options?: {
+    query?: UseQueryOptions<
+      Awaited<ReturnType<typeof getPopOrDropById>>,
+      TError,
+      TData
+    >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
+
+  const queryKey = queryOptions?.queryKey ?? getGetPopOrDropByIdQueryKey(id);
+
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof getPopOrDropById>>
+  > = ({ signal }) => getPopOrDropById(id, { signal, ...requestOptions });
+
+  return {
+    queryKey,
+    queryFn,
+    enabled: !!id,
+    ...queryOptions,
+  } as UseQueryOptions<
+    Awaited<ReturnType<typeof getPopOrDropById>>,
+    TError,
+    TData
+  > & { queryKey: QueryKey };
+};
+
+export type GetPopOrDropByIdQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getPopOrDropById>>
+>;
+export type GetPopOrDropByIdQueryError = ErrorType<ErrorResponse>;
+
+/**
+ * @summary Get the item sequence for a specific Pop or Drop date (read-only, for archive)
+ */
+
+export function useGetPopOrDropById<
+  TData = Awaited<ReturnType<typeof getPopOrDropById>>,
+  TError = ErrorType<ErrorResponse>,
+>(
+  id: string,
+  options?: {
+    query?: UseQueryOptions<
+      Awaited<ReturnType<typeof getPopOrDropById>>,
+      TError,
+      TData
+    >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+  const queryOptions = getGetPopOrDropByIdQueryOptions(id, options);
+
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: QueryKey;
+  };
+
+  return { ...query, queryKey: queryOptions.queryKey };
+}
 
 /**
  * @summary Get today's Pop or Drop item sequence

@@ -239,6 +239,46 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
 
+  /daily/pop-or-drop/archive:
+    get:
+      operationId: getPopOrDropArchive
+      tags: [daily]
+      summary: Get archive of past Pop or Drop daily challenges (excludes today)
+      responses:
+        "200":
+          description: List of past Pop or Drop challenges
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/PopOrDropSummary"
+
+  /daily/pop-or-drop/{id}:
+    get:
+      operationId: getPopOrDropById
+      tags: [daily]
+      summary: Get the item sequence for a specific Pop or Drop date (read-only, for archive)
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: The sequence for that date
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PopOrDropSequence"
+        "400":
+          description: Invalid date
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
   /daily/pop-or-drop:
     get:
       operationId: getTodayPopOrDrop
@@ -752,6 +792,23 @@ components:
       required:
         - id
         - question
+
+    PopOrDropSummary:
+      type: object
+      properties:
+        id:
+          type: string
+        date:
+          type: string
+        title:
+          type: string
+        prompt:
+          type: string
+      required:
+        - id
+        - date
+        - title
+        - prompt
 
     PopOrDropItem:
       type: object

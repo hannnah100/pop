@@ -4,9 +4,10 @@ import {
   useGetThreeStrikesArchive,
   useGetCrosswordArchive,
   useGetPopBoxArchive,
+  useGetPopOrDropArchive,
 } from "@workspace/api-client-react";
 import { motion } from "framer-motion";
-import { PlayCircle, Calendar, CheckCircle2, Trophy, Sparkles, Star } from "lucide-react";
+import { PlayCircle, Calendar, CheckCircle2, Trophy, Sparkles, Star, Eye, Flame } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { BackArrow } from "@/components/ui/BackArrow";
 import { Card } from "@/components/ui/card";
@@ -14,7 +15,7 @@ import { Badge } from "@/components/ui/badge";
 import { ShimmerGrid } from "@/components/fx";
 import { staggerContainer, staggerItem } from "@/lib/motion";
 
-type Filter = "all" | "three-strikes" | "crossword" | "pop-box";
+type Filter = "all" | "three-strikes" | "crossword" | "pop-box" | "pop-or-drop";
 
 function getArchiveStats(id: string, type: "three-strikes" | "crossword" | "pop-box") {
   try {
@@ -32,13 +33,26 @@ function getArchiveStats(id: string, type: "three-strikes" | "crossword" | "pop-
   }
 }
 
+function getPodStats(date: string) {
+  try {
+    const raw = localStorage.getItem(`ptq-pop-or-drop-${date}`);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw) as { done: boolean; streak: number; date: string };
+    if (!parsed.done) return null;
+    return parsed;
+  } catch {
+    return null;
+  }
+}
+
 export default function Archive() {
   const { data: tsArchive, isLoading: tsLoading } = useGetThreeStrikesArchive();
   const { data: cwArchive, isLoading: cwLoading } = useGetCrosswordArchive();
   const { data: pbArchive, isLoading: pbLoading } = useGetPopBoxArchive();
+  const { data: podArchive, isLoading: podLoading } = useGetPopOrDropArchive();
   const [filter, setFilter] = useState<Filter>("all");
 
-  const isLoading = tsLoading || cwLoading || pbLoading;
+  const isLoading = tsLoading || cwLoading || pbLoading || podLoading;
 
   const tsItems = (tsArchive ?? []).map((item) => ({
     ...item,
@@ -64,7 +78,13 @@ export default function Archive() {
     stats: getArchiveStats(item.id, "pop-box"),
   }));
 
-  const allItems = [...tsItems, ...cwItems, ...pbItems].sort(
+  const podItems = (podArchive ?? []).map((item) => ({
+    ...item,
+    type: "pop-or-drop" as const,
+    podStats: getPodStats(item.date),
+  }));
+
+  const allItems = [...tsItems, ...cwItems, ...pbItems, ...podItems].sort(
     (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
   );
 
@@ -72,6 +92,7 @@ export default function Archive() {
     filter === "all" ? allItems :
     filter === "three-strikes" ? tsItems :
     filter === "crossword" ? cwItems :
+    filter === "pop-or-drop" ? podItems :
     pbItems;
 
   return (
@@ -162,7 +183,7 @@ export default function Archive() {
       </motion.header>
 
       <div className="flex gap-2 mb-8 flex-wrap">
-        {(["all", "three-strikes", "crossword", "pop-box"] as Filter[]).map((f) => (
+        {(["all", "three-strikes", "crossword", "pop-box", "pop-or-drop"] as Filter[]).map((f) => (
           <Button
             key={f}
             variant={filter === f ? "default" : "outline"}
@@ -176,7 +197,9 @@ export default function Archive() {
                 ? "Three Strikes"
                 : f === "crossword"
                   ? "Mini Crossword"
-                  : "Pop Box"}
+                  : f === "pop-box"
+                    ? "Pop Box"
+                    : "Pop or Drop"}
           </Button>
         ))}
         <span className="ml-auto text-sm text-muted-foreground self-center">
@@ -198,13 +221,19 @@ export default function Archive() {
           {displayed.map((item) => {
             const isTS = item.type === "three-strikes";
             const isPB = item.type === "pop-box";
-            const stats = item.stats;
+            const isPOD = item.type === "pop-or-drop";
+            const stats = "stats" in item ? item.stats : undefined;
+            const podStats = "podStats" in item ? item.podStats : undefined;
+            const played = isPOD ? !!podStats : !!stats?.completed;
+
             const playHref =
               item.type === "three-strikes"
                 ? `/daily/three-strikes?id=${item.id}`
                 : item.type === "pop-box"
                   ? `/daily/pop-box?id=${item.id}`
-                  : `/daily/crossword`;
+                  : item.type === "pop-or-drop"
+                    ? `/daily/pop-or-drop/archive/${item.id}`
+                    : `/daily/crossword`;
 
             const accentClasses = isTS
               ? {
@@ -224,14 +253,31 @@ export default function Archive() {
                     button:
                       "bg-accent/10 text-accent hover:bg-accent hover:text-accent-foreground group-hover:bg-accent group-hover:text-accent-foreground",
                   }
-                : {
-                    cardHover:
-                      "hover:border-secondary/60 hover:shadow-[0_16px_50px_-20px_hsl(var(--secondary)/0.6)]",
-                    badge: "border-secondary/30 text-secondary",
-                    heading: "group-hover:text-secondary",
-                    button:
-                      "bg-secondary/10 text-secondary hover:bg-secondary hover:text-secondary-foreground group-hover:bg-secondary group-hover:text-secondary-foreground",
-                  };
+                : isPOD
+                  ? {
+                      cardHover:
+                        "hover:border-[#FF1493]/60 hover:shadow-[0_16px_50px_-20px_rgba(255,20,147,0.5)]",
+                      badge: "border-[#FF1493]/40 text-[#FF1493]",
+                      heading: "group-hover:text-[#FF1493]",
+                      button:
+                        "bg-[#FF1493]/10 text-[#FF1493] hover:bg-[#FF1493] hover:text-white group-hover:bg-[#FF1493] group-hover:text-white",
+                    }
+                  : {
+                      cardHover:
+                        "hover:border-secondary/60 hover:shadow-[0_16px_50px_-20px_hsl(var(--secondary)/0.6)]",
+                      badge: "border-secondary/30 text-secondary",
+                      heading: "group-hover:text-secondary",
+                      button:
+                        "bg-secondary/10 text-secondary hover:bg-secondary hover:text-secondary-foreground group-hover:bg-secondary group-hover:text-secondary-foreground",
+                    };
+
+            const badgeLabel = isTS
+              ? "Three Strikes"
+              : isPB
+                ? "Pop Box"
+                : isPOD
+                  ? "Pop or Drop"
+                  : "Crossword";
 
             return (
               <motion.div
@@ -240,7 +286,7 @@ export default function Archive() {
               >
                 <Card
                   className={`p-6 flex flex-col h-full group transition-all duration-300 bg-card/60 hover:bg-card border-border ${accentClasses.cardHover}
-                    ${stats?.completed ? "border-success/30" : ""}
+                    ${played ? "border-success/30" : ""}
                   `}
                 >
                   <div className="flex items-center justify-between mb-3">
@@ -253,9 +299,9 @@ export default function Archive() {
                         variant="outline"
                         className={`text-xs ${accentClasses.badge}`}
                       >
-                        {isTS ? "Three Strikes" : isPB ? "Pop Box" : "Crossword"}
+                        {badgeLabel}
                       </Badge>
-                      {stats?.completed && (
+                      {played && (
                         <CheckCircle2 className="w-4 h-4 text-success" />
                       )}
                     </div>
@@ -287,13 +333,34 @@ export default function Archive() {
                     </div>
                   )}
 
+                  {isPOD && podStats && (
+                    <div className="flex items-center gap-2 mb-3 text-sm">
+                      <Flame className="w-4 h-4 text-[#FF1493]" />
+                      <span className="text-muted-foreground">
+                        Streak: <span className="text-foreground font-bold">{podStats.streak}/20</span>
+                        {podStats.streak === 20 && (
+                          <span className="ml-1.5 text-yellow-400 font-bold">Perfect!</span>
+                        )}
+                      </span>
+                    </div>
+                  )}
+
                   <Link href={playHref}>
                     <Button
                       className={`w-full transition-colors ${accentClasses.button}`}
                       data-testid={`btn-play-${item.type}-${item.id}`}
                     >
-                      <PlayCircle className="w-4 h-4 mr-2" />
-                      {stats?.completed ? "Play Again" : "Play"}
+                      {isPOD ? (
+                        <>
+                          <Eye className="w-4 h-4 mr-2" />
+                          {played ? "View Results" : "View"}
+                        </>
+                      ) : (
+                        <>
+                          <PlayCircle className="w-4 h-4 mr-2" />
+                          {stats?.completed ? "Play Again" : "Play"}
+                        </>
+                      )}
                     </Button>
                   </Link>
                 </Card>

@@ -127,6 +127,34 @@ router.get("/daily/pop-or-drop/leaderboard", async (req, res): Promise<void> => 
   });
 });
 
+router.get("/daily/pop-or-drop/archive", (_req, res): void => {
+  const today = todayDate();
+  const entries: { id: string; date: string; title: string; prompt: string }[] = [];
+  for (let i = 1; i <= 30; i++) {
+    const d = new Date();
+    d.setDate(d.getDate() - i);
+    const date = d.toISOString().split("T")[0];
+    if (date === today) continue;
+    entries.push({
+      id: date,
+      date,
+      title: `Pop or Drop · ${date}`,
+      prompt: "Higher or Lower — pop culture edition",
+    });
+  }
+  res.json(entries);
+});
+
+router.get("/daily/pop-or-drop/:id", (req, res): void => {
+  const { id } = req.params;
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(id)) {
+    res.status(400).json({ error: "Invalid date format" });
+    return;
+  }
+  const items = generateSequence(id);
+  res.json({ date: id, items });
+});
+
 router.post("/daily/pop-or-drop/score", async (req, res): Promise<void> => {
   const { playerToken, streak, date } = req.body as {
     playerToken?: unknown;

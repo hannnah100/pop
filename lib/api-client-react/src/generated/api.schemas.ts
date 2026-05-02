@@ -193,6 +193,13 @@ export interface RoastQuestion {
   color?: string;
 }
 
+export interface PopOrDropSummary {
+  id: string;
+  date: string;
+  title: string;
+  prompt: string;
+}
+
 export interface PopOrDropItem {
   id: string;
   name: string;

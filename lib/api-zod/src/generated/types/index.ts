@@ -31,6 +31,7 @@ export * from "./popOrDropLeaderboard";
 export * from "./popOrDropLeaderboardEntry";
 export * from "./popOrDropScoreRequest";
 export * from "./popOrDropSequence";
+export * from "./popOrDropSummary";
 export * from "./questionPrompt";
 export * from "./roastQuestion";
 export * from "./room";

@@ -214,6 +214,40 @@ export const PopBoxGuessResponse = zod.object({
 });
 
 /**
+ * @summary Get archive of past Pop or Drop daily challenges (excludes today)
+ */
+export const GetPopOrDropArchiveResponseItem = zod.object({
+  id: zod.string(),
+  date: zod.string(),
+  title: zod.string(),
+  prompt: zod.string(),
+});
+export const GetPopOrDropArchiveResponse = zod.array(
+  GetPopOrDropArchiveResponseItem,
+);
+
+/**
+ * @summary Get the item sequence for a specific Pop or Drop date (read-only, for archive)
+ */
+export const GetPopOrDropByIdParams = zod.object({
+  id: zod.coerce.string(),
+});
+
+export const GetPopOrDropByIdResponse = zod.object({
+  date: zod.string(),
+  items: zod.array(
+    zod.object({
+      id: zod.string(),
+      name: zod.string(),
+      value: zod.number(),
+      unit: zod.string(),
+      metricLabel: zod.string(),
+      category: zod.string(),
+    }),
+  ),
+});
+
+/**
  * @summary Get today's Pop or Drop item sequence
  */
 export const GetTodayPopOrDropResponse = zod.object({
