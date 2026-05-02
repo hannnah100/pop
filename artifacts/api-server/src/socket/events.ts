@@ -1152,6 +1152,9 @@ export function setupSocketIO(httpServer: HttpServer) {
         w.isFreePlay = false;
 
         if (isPuzzleSolved(w)) {
+          // Award controller's accumulated round earnings to their total
+          const ctrl2 = room.players.find((p) => p.id === w.controllerId);
+          if (ctrl2) ctrl2.score += w.roundEarnings[w.controllerId ?? ""] ?? 0;
           w.phase = "puzzle-over";
           io.to(room.code).emit("wof-letter-result", {
             letter: l,
@@ -2621,6 +2624,9 @@ function scheduleBotWofGuess(io: SocketIOServer, room: Room) {
       }
       live.wof.isFreePlay = false;
       if (isPuzzleSolved(live.wof)) {
+        // Award controller's accumulated round earnings to their total
+        const ctrl2 = live.players.find((p) => p.id === controllerId);
+        if (ctrl2) ctrl2.score += live.wof.roundEarnings[controllerId ?? ""] ?? 0;
         live.wof.phase = "puzzle-over";
         io.to(live.code).emit("wof-letter-result", { letter, count, correct: true, scoreEarned: earned, board: wofPublicBoard(live.wof), revealedLetters: Array.from(live.wof.revealedLetters), guessedLetters: Array.from(live.wof.guessedLetters), controllerId, scores: wofScoresWire(live, live.wof) });
         setTimeout(() => {

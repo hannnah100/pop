@@ -891,7 +891,9 @@ export default function GameHost() {
       isFreePlay?: boolean;
       scores: WofScoreRow[];
     }) => {
-      // Set spin index immediately so WofWheel knows where to land after animation
+      // Start the wheel animation immediately (works for both host-spin and player/bot spins)
+      setWofSpinning(true);
+      // Set spin index so WofWheel knows the target segment to snap to after animation
       setWofSpinIndex(payload.spinIndex ?? null);
       // Clear any previous pending spin timeout
       if (wofSpinTimeoutRef.current) clearTimeout(wofSpinTimeoutRef.current);

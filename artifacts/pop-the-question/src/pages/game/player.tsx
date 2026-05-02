@@ -2262,7 +2262,7 @@ export default function GamePlayer() {
 
     const canSpin = isMyTurn && wofPhase === "spinning";
     const canGuessConsonant = isMyTurn && wofPhase === "guessing";
-    const canBuyVowel = isMyTurn && wofPhase === "spinning" && (myScore?.score ?? 0) >= 250;
+    const canBuyVowel = isMyTurn && wofPhase === "spinning" && (myScore?.roundEarnings ?? 0) >= 250;
     const canSolve = isMyTurn && wofPhase === "spinning";
 
     const spinValueLabel = (v: WofWheelValue | null): string => {
