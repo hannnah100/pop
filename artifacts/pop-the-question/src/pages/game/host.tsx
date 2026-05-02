@@ -1267,7 +1267,7 @@ export default function GameHost() {
       initial={{ opacity: 0, scale: 0.7, y: 12 }}
       animate={{ opacity: 1, scale: 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.8 }}
-      transition={{ type: "spring", stiffness: 360, damping: 18 }}
+      transition={{ type: "spring", stiffness: 260, damping: 30 }}
       className={`font-display font-black text-2xl uppercase px-6 py-4 border-[3px] border-black shadow-[4px_4px_0_#000] flex items-center gap-2
         ${p.isBot
           ? "bg-[#FFF8E7] text-black/50"
@@ -1451,7 +1451,7 @@ export default function GameHost() {
         <motion.h1
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ type: "spring", stiffness: 220, damping: 18 }}
+          transition={{ type: "spring", stiffness: 180, damping: 26 }}
           className="font-display font-black text-[8rem] sm:text-[10rem] md:text-[12rem] tracking-[0.18em] leading-none mb-4 comic-headline"
         >
           {roomCode}
@@ -2522,7 +2522,7 @@ export default function GameHost() {
             <motion.div
               initial={{ scale: 0, rotate: -90 }}
               animate={{ scale: 1, rotate: 0 }}
-              transition={{ type: "spring", stiffness: 200, damping: 16 }}
+              transition={{ type: "spring", stiffness: 180, damping: 26 }}
               className="bg-gradient-to-br from-yellow-500 to-amber-600 rounded-3xl p-12 mb-6 shadow-[0_0_80px_-10px_hsl(48_100%_60%/0.7)] border-4 border-yellow-300"
             >
               <Star className="w-20 h-20 mx-auto text-yellow-100 fill-yellow-100 mb-3" />
@@ -2604,7 +2604,7 @@ export default function GameHost() {
               <motion.div
                 initial={{ scale: 0.7, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
-                transition={{ type: "spring", stiffness: 250, damping: 18 }}
+                transition={{ type: "spring", stiffness: 210, damping: 28 }}
                 className="flex flex-col items-center gap-3"
               >
                 <div className="flex items-center gap-3 px-10 py-5 rounded-2xl bg-yellow-400/20 border-2 border-yellow-400 shadow-[0_0_40px_-6px_hsl(48_100%_60%/0.7)]">

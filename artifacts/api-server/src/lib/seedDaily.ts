@@ -3,12 +3,23 @@ import {
   threeStrikesChallengesTable,
   crosswordPuzzlesTable,
 } from "@workspace/db";
-import { inArray } from "drizzle-orm";
+import { inArray, notInArray } from "drizzle-orm";
 import { logger } from "./logger";
 import {
   THREE_STRIKES_SEED,
   CROSSWORD_SEED,
 } from "../data/daily";
+
+/**
+ * IDs of crossword puzzles that were shipped with bad data and must be removed
+ * from the database on every server start. Add an id here whenever a puzzle
+ * needs to be retracted from production.
+ */
+const STALE_CROSSWORD_IDS = [
+  "crossword-2025-04-30",
+  "crossword-2025-05-01",
+  "crossword-2025-05-02",
+];
 
 /**
  * Idempotently seed the daily-challenge tables from bundled JSON content.
@@ -53,6 +64,19 @@ async function seedThreeStrikes(): Promise<void> {
 }
 
 async function seedCrossword(): Promise<void> {
+  // Purge any stale/broken puzzles that were previously shipped.
+  if (STALE_CROSSWORD_IDS.length > 0) {
+    const deleted = await db
+      .delete(crosswordPuzzlesTable)
+      .where(inArray(crosswordPuzzlesTable.id, STALE_CROSSWORD_IDS));
+    if (deleted.rowCount && deleted.rowCount > 0) {
+      logger.info(
+        { count: deleted.rowCount, ids: STALE_CROSSWORD_IDS },
+        "Purged stale crossword puzzles",
+      );
+    }
+  }
+
   if (CROSSWORD_SEED.length === 0) return;
 
   const ids = CROSSWORD_SEED.map((r) => r.id);

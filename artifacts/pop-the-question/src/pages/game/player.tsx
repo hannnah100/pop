@@ -1213,7 +1213,7 @@ export default function GamePlayer() {
               <motion.div
                 initial={{ scale: 0, rotate: -90 }}
                 animate={{ scale: 1, rotate: 0 }}
-                transition={{ type: "spring", stiffness: 280, damping: 16 }}
+                transition={{ type: "spring", stiffness: 220, damping: 28 }}
                 className="w-24 h-24 bg-[#00C853] border-[3px] border-black shadow-[4px_4px_0_#000] flex items-center justify-center"
               >
                 <span className="text-4xl">👍</span>
@@ -1280,7 +1280,7 @@ export default function GamePlayer() {
                 <motion.div
                   initial={{ scale: 0, rotate: -90 }}
                   animate={{ scale: 1, rotate: 0 }}
-                  transition={{ type: "spring", stiffness: 280, damping: 16, delay: 0.05 }}
+                  transition={{ type: "spring", stiffness: 220, damping: 28, delay: 0.05 }}
                   className="w-24 h-24 bg-[#00C853] border-[3px] border-black shadow-[4px_4px_0_#000] flex items-center justify-center"
                 >
                   <CheckCircle2 className="w-12 h-12 text-white" />
@@ -1410,7 +1410,7 @@ export default function GamePlayer() {
           <motion.div
             initial={{ scale: 0, rotate: -180 }}
             animate={{ scale: 1, rotate: 0 }}
-            transition={{ type: "spring", stiffness: 220, damping: 18 }}
+            transition={{ type: "spring", stiffness: 180, damping: 26 }}
             className="w-28 h-28 bg-[#FF1493] border-[3px] border-black shadow-[5px_5px_0_#000] flex items-center justify-center"
           >
             <Sparkles className="w-14 h-14 text-white" />
@@ -1555,7 +1555,7 @@ export default function GamePlayer() {
           <motion.div
             initial={{ scale: 0, rotate: -90 }}
             animate={{ scale: 1, rotate: 0 }}
-            transition={{ type: "spring", stiffness: 220, damping: 18 }}
+            transition={{ type: "spring", stiffness: 180, damping: 26 }}
             className="w-24 h-24 bg-white border-[3px] border-black shadow-[4px_4px_0_#000] flex items-center justify-center"
           >
             <Eye className="w-12 h-12 text-black" />
@@ -1581,7 +1581,7 @@ export default function GamePlayer() {
           <motion.div
             initial={{ scale: 0, rotate: -90 }}
             animate={{ scale: 1, rotate: 0 }}
-            transition={{ type: "spring", stiffness: 220, damping: 18 }}
+            transition={{ type: "spring", stiffness: 180, damping: 26 }}
             className="w-24 h-24 bg-white border-[3px] border-black shadow-[4px_4px_0_#000] flex items-center justify-center"
           >
             <Beer className="w-12 h-12 text-black" />
@@ -1622,7 +1622,7 @@ export default function GamePlayer() {
           <motion.div
             initial={{ scale: 0, rotate: -90 }}
             animate={{ scale: 1, rotate: 0 }}
-            transition={{ type: "spring", stiffness: 240, damping: 18 }}
+            transition={{ type: "spring", stiffness: 200, damping: 26 }}
             className="w-28 h-28 bg-white border-[3px] border-black shadow-[5px_5px_0_#000] flex items-center justify-center"
           >
             {wasCorrect
@@ -1661,7 +1661,7 @@ export default function GamePlayer() {
           <motion.div
             initial={{ scale: 0, rotate: -45 }}
             animate={{ scale: 1, rotate: 0 }}
-            transition={{ type: "spring", stiffness: 280, damping: 18 }}
+            transition={{ type: "spring", stiffness: 220, damping: 28 }}
             className="w-24 h-24 bg-white border-[3px] border-black shadow-[4px_4px_0_#000] flex items-center justify-center"
           >
             {showResult ? (
@@ -2330,7 +2330,7 @@ export default function GamePlayer() {
       return (
         <div className="flex flex-col min-h-[100dvh] bg-[#7C3AED] items-center justify-center text-center p-6 space-y-5">
           <motion.div initial={{ scale: 0.7, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}
-            transition={{ type: "spring", stiffness: 220, damping: 18 }} className="space-y-3">
+            transition={{ type: "spring", stiffness: 180, damping: 26 }} className="space-y-3">
             <p className="font-display font-black text-white/70 uppercase tracking-widest text-lg">Puzzle Solved!</p>
             <h1 className="font-display font-black text-white text-4xl uppercase">{wofPuzzleOver.answer}</h1>
             {myScore && (
