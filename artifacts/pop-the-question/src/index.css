@@ -196,6 +196,17 @@
     text-stroke: inherit;
     paint-order: inherit;
   }
+  /* Balloon / bubble letter fill — overrides comic-headline span defaults */
+  .comic-headline .bubble-letter {
+    display: inline-block;
+    background: linear-gradient(to bottom, #ffffff 0%, #f0eee8 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -webkit-text-stroke: 6px #000;
+    text-stroke: 6px #000;
+    paint-order: stroke fill;
+  }
 
   /* Y2K bold border + shadow utilities */
   .thick-border  { border: 3px solid #000; }
