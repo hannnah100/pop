@@ -54,7 +54,7 @@ export default function Home() {
     <div className="flex-1 flex flex-col w-full overflow-x-hidden">
 
       {/* ===== HERO ===== */}
-      <header className="relative bg-[#FFD700] border-b-[4px] border-black px-4 pt-10 pb-8 text-center overflow-hidden">
+      <header className="relative bg-[#FFF8E7] border-b-[4px] border-black px-4 pt-10 pb-8 text-center overflow-hidden">
         <StarDoodle className="absolute top-3 left-4 w-10 h-10 text-[#FF1493] opacity-90" />
         <StarDoodle className="absolute top-6 right-6 w-7 h-7 text-[#00E5FF] opacity-90" />
         <ConfettiDoodle className="absolute bottom-2 left-8 w-14 h-14 opacity-80" />
@@ -272,19 +272,78 @@ export default function Home() {
       </section>
 
       {/* ===== FOOTER ===== */}
-      <footer className="bg-[#FFF8E7] px-4 py-6 border-t-[4px] border-black">
-        <div className="max-w-4xl mx-auto flex flex-col md:flex-row justify-center items-center gap-4 md:gap-8 text-sm font-bold">
-          <Link href="/stats" className="flex items-center gap-2 text-black hover:text-[#FF1493] transition-none" data-testid="link-stats">
-            <BarChart2 className="w-4 h-4" />
-            Personal Stats
+      <footer className="bg-[#FFF8E7] px-4 py-8 border-t-[4px] border-black">
+        <div className="max-w-4xl mx-auto flex flex-col md:flex-row justify-center items-center gap-5 md:gap-8">
+          {/* Personal Stats — hot-pink pill */}
+          <Link href="/stats" data-testid="link-stats">
+            <span
+              className="group relative flex items-center gap-2 px-5 py-2.5 border-[3px] border-black shadow-[4px_4px_0_#000] hover:shadow-[2px_2px_0_#000] hover:translate-x-[2px] hover:translate-y-[2px] active:shadow-none active:translate-x-[4px] active:translate-y-[4px] transition-all cursor-pointer select-none"
+              style={{
+                background: "#FF1493",
+                borderRadius: "999px",
+              }}
+            >
+              <StarDoodle className="w-4 h-4 text-white shrink-0" />
+              <span
+                className="font-display font-black text-sm uppercase tracking-wide"
+                style={{
+                  color: "#fff",
+                  WebkitTextFillColor: "#fff",
+                  WebkitTextStroke: "1px #000",
+                  paintOrder: "stroke fill",
+                }}
+              >
+                Personal Stats
+              </span>
+            </span>
           </Link>
-          <Link href="/archive" className="flex items-center gap-2 text-black hover:text-[#FF6B35] transition-none" data-testid="link-archive">
-            <ArchiveIcon className="w-4 h-4" />
-            Past Puzzles
+
+          {/* Past Puzzles — electric cyan rounded rectangle, slightly skewed */}
+          <Link href="/archive" data-testid="link-archive">
+            <span
+              className="group relative flex items-center gap-2 px-5 py-2.5 border-[3px] border-black shadow-[4px_4px_0_#000] hover:shadow-[2px_2px_0_#000] hover:translate-x-[2px] hover:translate-y-[2px] active:shadow-none active:translate-x-[4px] active:translate-y-[4px] transition-all cursor-pointer select-none"
+              style={{
+                background: "#00E5FF",
+                borderRadius: "8px",
+                transform: "skewX(-3deg)",
+              }}
+            >
+              <ArchiveIcon className="w-4 h-4 text-black shrink-0" style={{ transform: "skewX(3deg)" }} />
+              <span
+                className="font-display font-black text-sm uppercase tracking-wide"
+                style={{
+                  color: "#fff",
+                  WebkitTextFillColor: "#fff",
+                  WebkitTextStroke: "1px #000",
+                  paintOrder: "stroke fill",
+                  transform: "skewX(3deg)",
+                  display: "inline-block",
+                }}
+              >
+                Past Puzzles
+              </span>
+            </span>
           </Link>
-          <button className="flex items-center gap-2 text-black hover:text-[#00C853] transition-none" data-testid="link-how-to-play">
-            <HelpCircle className="w-4 h-4" />
-            How to Play
+
+          {/* How to Play — lime green square badge */}
+          <button
+            data-testid="link-how-to-play"
+            className="relative flex items-center gap-2 px-5 py-2.5 border-[3px] border-black shadow-[4px_4px_0_#000] hover:shadow-[2px_2px_0_#000] hover:translate-x-[2px] hover:translate-y-[2px] active:shadow-none active:translate-x-[4px] active:translate-y-[4px] transition-all cursor-pointer select-none"
+            style={{ background: "#00C853", borderRadius: "6px" }}
+          >
+            <HelpCircle className="w-4 h-4 text-white shrink-0" />
+            <span
+              className="font-display font-black text-sm uppercase tracking-wide"
+              style={{
+                color: "#fff",
+                WebkitTextFillColor: "#fff",
+                WebkitTextStroke: "1px #000",
+                paintOrder: "stroke fill",
+              }}
+            >
+              How to Play
+            </span>
+            <StarDoodle className="w-3 h-3 text-[#FFD700] ml-0.5 shrink-0" />
           </button>
         </div>
       </footer>

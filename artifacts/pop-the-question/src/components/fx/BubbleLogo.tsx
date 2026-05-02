@@ -11,16 +11,16 @@ const containerStyle: CSSProperties = {
 
 const letterStyle: CSSProperties = {
   display: "inline-block",
-  color: "#00c853",
-  WebkitTextFillColor: "#00c853",
+  color: "#FFD700",
+  WebkitTextFillColor: "#FFD700",
   WebkitTextStroke: "3px #000000",
   // @ts-expect-error: text-stroke is not yet in TS CSSProperties
   textStroke: "3px #000000",
   paintOrder: "stroke fill",
   textShadow: [
-    "1px 1px 0 #007a30",
-    "2px 2px 0 #007a30",
-    "3px 4px 8px rgba(0,100,40,0.35)",
+    "1px 1px 0 #b8860b",
+    "2px 2px 0 #b8860b",
+    "3px 4px 8px rgba(150,100,0,0.35)",
   ].join(", "),
 };
 
