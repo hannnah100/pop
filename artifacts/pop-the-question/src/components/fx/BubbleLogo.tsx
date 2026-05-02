@@ -13,9 +13,9 @@ const letterStyle: CSSProperties = {
   display: "inline-block",
   color: "#FFD700",
   WebkitTextFillColor: "#FFD700",
-  WebkitTextStroke: "3px #000000",
+  WebkitTextStroke: "5px #000000",
   // @ts-expect-error: text-stroke is not yet in TS CSSProperties
-  textStroke: "3px #000000",
+  textStroke: "5px #000000",
   paintOrder: "stroke fill",
   textShadow: [
     "1px 1px 0 #b8860b",

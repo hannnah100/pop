@@ -71,22 +71,42 @@ export default function Home() {
             <br />
             <BubbleLogo />
           </h1>
-          <div className="mt-5 inline-block bg-white border-[4px] border-black shadow-[5px_5px_0_#000] px-5 py-3">
-            <p
-              className="font-display font-black tracking-tight comic-headline flex flex-wrap items-center justify-center gap-x-2 gap-y-1"
-              style={{ fontSize: "clamp(1.1rem, 3vw, 2rem)", lineHeight: 1.1 }}
-            >
-              <StarDoodle aria-hidden="true" className="w-6 h-6 md:w-8 md:h-8 text-[#FFD700] shrink-0" />
-              <span style={{ color: "#FF1493" }}>Who</span>
-              <span style={{ color: "#FF6B35" }}>knows</span>
-              <span style={{ color: "#00E5FF" }}>the</span>
-              <span style={{ color: "#00F5A0" }}>most</span>
-              <span style={{ color: "#FF006E" }}>about</span>
-              <span style={{ color: "#FFD700" }}>your</span>
-              <span style={{ color: "#FF1493" }}>group</span>
-              <span style={{ color: "#FF6B35" }}>chat?</span>
-              <StarDoodle aria-hidden="true" className="w-6 h-6 md:w-8 md:h-8 text-[#FF1493] shrink-0" />
-            </p>
+          <div className="mt-5 flex flex-col items-center gap-3">
+            {/* Primary tagline */}
+            <div className="inline-block bg-white border-[4px] border-black shadow-[5px_5px_0_#000] px-5 py-3">
+              <p
+                className="font-display font-black tracking-tight comic-headline flex flex-wrap items-center justify-center gap-x-2 gap-y-1"
+                style={{ fontSize: "clamp(1.1rem, 3vw, 2rem)", lineHeight: 1.1 }}
+              >
+                <StarDoodle aria-hidden="true" className="w-6 h-6 md:w-8 md:h-8 text-[#FFD700] shrink-0" />
+                <span style={{ color: "#00C853" }}>Your</span>
+                <span style={{ color: "#00E5FF" }}>group</span>
+                <span style={{ color: "#00E5FF" }}>chat's</span>
+                <span style={{ color: "#00C853" }}>new</span>
+                <span style={{ color: "#00C853" }}>favorite</span>
+                <span style={{ color: "#00C853" }}>game</span>
+                <StarDoodle aria-hidden="true" className="w-6 h-6 md:w-8 md:h-8 text-[#FF1493] shrink-0" />
+              </p>
+            </div>
+
+            {/* Secondary tagline */}
+            <div className="inline-block bg-white border-[4px] border-black shadow-[5px_5px_0_#000] px-5 py-2">
+              <p
+                className="font-display font-black tracking-tight comic-headline flex flex-wrap items-center justify-center gap-x-2 gap-y-1"
+                style={{ fontSize: "clamp(0.8rem, 2.2vw, 1.35rem)", lineHeight: 1.2 }}
+              >
+                <span style={{ color: "#FF1493" }}>If</span>
+                <span style={{ color: "#FF6B35" }}>Bar</span>
+                <span style={{ color: "#FFD700" }}>Trivia</span>
+                <span style={{ color: "#00E5FF" }}>was</span>
+                <span style={{ color: "#00C853" }}>hosted</span>
+                <span style={{ color: "#FF1493" }}>by</span>
+                <span style={{ color: "#FF6B35" }}>your</span>
+                <span style={{ color: "#00E5FF" }}>For</span>
+                <span style={{ color: "#FFD700" }}>You</span>
+                <span style={{ color: "#FF1493" }}>page</span>
+              </p>
+            </div>
           </div>
         </div>
       </header>
