@@ -1299,7 +1299,7 @@ export function setupSocketIO(httpServer: HttpServer) {
       const room = rooms.get(roomCode);
       if (!room || !room.wof) return;
       const w = room.wof;
-      if (w.phase !== "spinning") return;
+      if (w.phase !== "spinning" && w.phase !== "guessing") return;
       if (socket.id !== w.controllerId) return; // only controller can attempt solve
       if (w.pendingSolve) return; // already a pending solve
       room.lastActivity = Date.now();
@@ -1343,7 +1343,7 @@ export function setupSocketIO(httpServer: HttpServer) {
       const room = rooms.get(roomCode);
       if (!room || !room.wof) return;
       const w = room.wof;
-      if (w.phase !== "spinning") return;
+      if (w.phase !== "spinning" && w.phase !== "guessing") return;
       if (socket.id !== w.controllerId) return;
       if (w.pendingSolve) return;
       room.lastActivity = Date.now();
