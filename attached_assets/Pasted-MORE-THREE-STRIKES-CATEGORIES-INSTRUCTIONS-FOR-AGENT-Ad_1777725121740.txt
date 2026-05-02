@@ -1,0 +1,72 @@
+MORE THREE STRIKES CATEGORIES - INSTRUCTIONS FOR AGENT
+Add these new Three Strikes challenges to the database with the same structure as Marvel Movies (display name, hint, accepted answer variations):
+Categories to Add:
+
+Drake Albums (9 albums, 2010-2023)
+
+Hints show release year
+Albums: Thank Me Later, Take Care, Nothing Was the Same, Views, More Life, Scorpion, Certified Lover Boy, Honestly Nevermind, For All The Dogs
+
+
+Super Bowl Champions 2000-2026 (27 teams)
+
+Hints show year and Super Bowl number (e.g., "2020 • LIV")
+Include all winning teams from 2000 onwards
+
+
+Grammy Album of the Year Winners 2000-2025 (26 winners)
+
+Hints show year
+Accept both artist name AND album title as correct answers
+Examples: "Taylor Swift - Fearless (2010)", "Adele - 21 (2012)", etc.
+
+
+Pixar Movies (all theatrical releases)
+
+Hints show release year
+Toy Story, Finding Nemo, The Incredibles, Up, Coco, etc.
+
+
+Beyoncé Solo Albums
+
+Hints show release year
+Dangerously in Love, B'Day, I Am... Sasha Fierce, 4, Beyoncé, Lemonade, Renaissance, Cowboy Carter
+
+
+Countries in Europe (50 countries)
+
+Hints show capital city
+Germany (Berlin), France (Paris), etc.
+
+
+Countries in Africa (54 countries)
+
+Hints show capital city
+
+
+Best Picture Oscar Winners 1990-1999
+
+Hints show year and director
+Dances with Wolves, Unforgiven, Schindler's List, Forrest Gump, etc.
+
+
+Kanye West Albums
+
+Hints show release year
+The College Dropout, Late Registration, Graduation, 808s & Heartbreak, My Beautiful Dark Twisted Fantasy, Yeezus, The Life of Pablo, ye, Jesus Is King, Donda
+
+
+NBA Champions 2000-2024
+
+Hints show year and Finals MVP
+Lakers, Spurs, Heat, Warriors, Cavaliers, Raptors, Bucks, etc.
+
+
+
+Important Notes for All Categories:
+
+Use the fuzzy matching system so people don't need perfect spelling
+For music categories: accept artist name OR album title OR both
+For sports: accept team city name OR team nickname (e.g., "Lakers" or "Los Angeles Lakers")
+Sort the hint boxes chronologically (earliest year first)
+Each box shows a "?" until answered correctly, then reveals the full answer

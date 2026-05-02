@@ -267,6 +267,93 @@ export function useGetThreeStrikesArchive<
 }
 
 /**
+ * @summary Get a specific Three Strikes challenge by ID (for archive replay)
+ */
+export const getGetThreeStrikesByIdUrl = (id: string) => {
+  return `/api/daily/three-strikes/${id}`;
+};
+
+export const getThreeStrikesById = async (
+  id: string,
+  options?: RequestInit,
+): Promise<ThreeStrikesChallenge> => {
+  return customFetch<ThreeStrikesChallenge>(getGetThreeStrikesByIdUrl(id), {
+    ...options,
+    method: "GET",
+  });
+};
+
+export const getGetThreeStrikesByIdQueryKey = (id: string) => {
+  return [`/api/daily/three-strikes/${id}`] as const;
+};
+
+export const getGetThreeStrikesByIdQueryOptions = <
+  TData = Awaited<ReturnType<typeof getThreeStrikesById>>,
+  TError = ErrorType<ErrorResponse>,
+>(
+  id: string,
+  options?: {
+    query?: UseQueryOptions<
+      Awaited<ReturnType<typeof getThreeStrikesById>>,
+      TError,
+      TData
+    >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
+
+  const queryKey = queryOptions?.queryKey ?? getGetThreeStrikesByIdQueryKey(id);
+
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof getThreeStrikesById>>
+  > = ({ signal }) => getThreeStrikesById(id, { signal, ...requestOptions });
+
+  return {
+    queryKey,
+    queryFn,
+    enabled: !!id,
+    ...queryOptions,
+  } as UseQueryOptions<
+    Awaited<ReturnType<typeof getThreeStrikesById>>,
+    TError,
+    TData
+  > & { queryKey: QueryKey };
+};
+
+export type GetThreeStrikesByIdQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getThreeStrikesById>>
+>;
+export type GetThreeStrikesByIdQueryError = ErrorType<ErrorResponse>;
+
+/**
+ * @summary Get a specific Three Strikes challenge by ID (for archive replay)
+ */
+
+export function useGetThreeStrikesById<
+  TData = Awaited<ReturnType<typeof getThreeStrikesById>>,
+  TError = ErrorType<ErrorResponse>,
+>(
+  id: string,
+  options?: {
+    query?: UseQueryOptions<
+      Awaited<ReturnType<typeof getThreeStrikesById>>,
+      TError,
+      TData
+    >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+  const queryOptions = getGetThreeStrikesByIdQueryOptions(id, options);
+
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: QueryKey;
+  };
+
+  return { ...query, queryKey: queryOptions.queryKey };
+}
+
+/**
  * @summary Get today's crossword puzzle
  */
 export const getGetTodayCrosswordUrl = () => {

@@ -65,6 +65,31 @@ router.get("/daily/three-strikes/archive", async (_req, res): Promise<void> => {
   res.json(rows);
 });
 
+router.get("/daily/three-strikes/:id", async (req, res): Promise<void> => {
+  const row = await db
+    .select()
+    .from(threeStrikesChallengesTable)
+    .where(eq(threeStrikesChallengesTable.id, req.params.id))
+    .limit(1)
+    .then((r) => r[0]);
+
+  if (!row) {
+    res.status(404).json({ error: "Challenge not found" });
+    return;
+  }
+
+  const data = GetTodayThreeStrikesResponse.parse({
+    id: row.id,
+    date: row.date,
+    title: row.title,
+    prompt: row.prompt,
+    totalCount: row.totalCount,
+    answers: JSON.parse(row.answers),
+  });
+
+  res.json(data);
+});
+
 router.get("/daily/crossword", async (req, res): Promise<void> => {
   const today = todayDate();
 

@@ -65,6 +65,31 @@ paths:
                 items:
                   $ref: "#/components/schemas/ThreeStrikesSummary"
 
+  /daily/three-strikes/{id}:
+    get:
+      operationId: getThreeStrikesById
+      tags: [daily]
+      summary: Get a specific Three Strikes challenge by ID (for archive replay)
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: The challenge
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ThreeStrikesChallenge"
+        "404":
+          description: Challenge not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
   /daily/crossword:
     get:
       operationId: getTodayCrossword

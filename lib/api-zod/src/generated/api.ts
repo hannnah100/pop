@@ -47,6 +47,28 @@ export const GetThreeStrikesArchiveResponse = zod.array(
 );
 
 /**
+ * @summary Get a specific Three Strikes challenge by ID (for archive replay)
+ */
+export const GetThreeStrikesByIdParams = zod.object({
+  id: zod.coerce.string(),
+});
+
+export const GetThreeStrikesByIdResponse = zod.object({
+  id: zod.string(),
+  date: zod.string(),
+  title: zod.string(),
+  prompt: zod.string(),
+  totalCount: zod.number(),
+  answers: zod.array(
+    zod.object({
+      display: zod.string(),
+      hint: zod.string(),
+      correct: zod.array(zod.string()),
+    }),
+  ),
+});
+
+/**
  * @summary Get today's crossword puzzle
  */
 export const GetTodayCrosswordResponse = zod.object({
