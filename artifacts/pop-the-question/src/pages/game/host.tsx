@@ -194,10 +194,20 @@ interface PlayerJoinedPayload {
 interface RoomStatePayload {
   players: PlayerWithBot[];
   isDemo: boolean;
+  status?: string;
   gameType: string;
   quizPackId?: string | null;
   quizPackSummary?: QuizPackSummary | null;
   wofPackId?: string | null;
+  wofRoundCount?: number;
+  wofBoard?: WofBoardWord[] | null;
+  wofPhase?: "spinning" | "guessing" | "puzzle-over" | "ended" | null;
+  wofControllerId?: string | null;
+  wofRevealedLetters?: string[];
+  wofGuessedLetters?: string[];
+  wofCategory?: string | null;
+  wofHint?: string | null;
+  wofPendingSolve?: { solverId: string | null; solverName: string; answer: string; isVerbal?: boolean } | null;
 }
 
 interface GameStartedPayload {
@@ -453,6 +463,24 @@ export default function GameHost() {
           setWofSelectedPackId(wofPackId ?? null);
           if (data.wofRoundCount) setWofRoundCount(data.wofRoundCount);
           newSocket.emit("wof-list-packs");
+          // Rehydrate mid-game state on reconnect
+          if (data.status === "playing" && data.wofBoard) {
+            setGameState("playing");
+            setWofBoard(data.wofBoard);
+            setWofCategory(data.wofCategory ?? "");
+            setWofHint(data.wofHint ?? null);
+            setWofControllerId(data.wofControllerId ?? null);
+            setWofRevealedLetters(data.wofRevealedLetters ?? []);
+            setWofGuessedLetters(data.wofGuessedLetters ?? []);
+            setWofPhase(data.wofPhase ?? "spinning");
+            setWofPendingSolve(data.wofPendingSolve ?? null);
+            setWofSpinning(false);
+            setWofSpinIndex(null);
+            setWofLastSpin(null);
+            setWofLastLetter(null);
+            setWofSolveResult(null);
+            setWofPuzzleOver(null);
+          }
         }
       }
     });

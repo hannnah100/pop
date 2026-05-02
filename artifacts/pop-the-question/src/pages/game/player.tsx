@@ -41,8 +41,17 @@ interface PlayerJoinedPayload {
 
 interface RoomStatePayload {
   players: Player[];
+  status?: string;
   gameType?: string;
   hostSettings?: { answerMethod?: HostAnswerMethod };
+  wofBoard?: WofBoardWord[] | null;
+  wofPhase?: "spinning" | "guessing" | "puzzle-over" | "ended" | null;
+  wofControllerId?: string | null;
+  wofRevealedLetters?: string[];
+  wofGuessedLetters?: string[];
+  wofCategory?: string | null;
+  wofHint?: string | null;
+  wofPendingSolve?: { solverId: string | null; solverName: string; answer: string; isVerbal?: boolean } | null;
 }
 
 interface HostSettingsChangedPayload {
@@ -314,10 +323,27 @@ export default function GamePlayer() {
       if (player.name === playerNameParam) setMe(player);
     });
 
-    newSocket.on("room-state", ({ players: ps, gameType: gt, hostSettings }: RoomStatePayload) => {
+    newSocket.on("room-state", (data: RoomStatePayload) => {
+      const { players: ps, gameType: gt, hostSettings } = data;
       setPlayers(ps.filter((p) => !p.isHost));
       if (gt) setGameType(gt);
       if (hostSettings?.answerMethod) setAnswerMethod(hostSettings.answerMethod);
+      // Rehydrate WoF mid-game state on reconnect
+      if (gt === "wheel-of-fortune" && data.status === "playing" && data.wofBoard) {
+        setGameState("playing");
+        setWofBoard(data.wofBoard);
+        setWofCategory(data.wofCategory ?? "");
+        setWofHint(data.wofHint ?? null);
+        setWofControllerId(data.wofControllerId ?? null);
+        setWofRevealedLetters(data.wofRevealedLetters ?? []);
+        setWofGuessedLetters(data.wofGuessedLetters ?? []);
+        setWofPhase(data.wofPhase ?? "spinning");
+        setWofSolvePending(!!data.wofPendingSolve);
+        setWofLastSpin(null);
+        setWofLastLetter(null);
+        setWofSolveResult(null);
+        setWofPuzzleOver(null);
+      }
     });
 
     newSocket.on("host-settings-changed", ({ settings }: HostSettingsChangedPayload) => {
