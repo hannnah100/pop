@@ -54,6 +54,7 @@ interface RoomStatePayload {
   wofPendingSolve?: { solverId: string | null; solverName: string; answer: string; isVerbal?: boolean } | null;
   wofPuzzleIndex?: number;
   wofTotalPuzzles?: number;
+  wofScores?: WofScoreRow[];
 }
 
 interface HostSettingsChangedPayload {
@@ -343,6 +344,7 @@ export default function GamePlayer() {
         setWofSolvePending(!!data.wofPendingSolve);
         setWofPuzzleIndex(data.wofPuzzleIndex ?? 0);
         setWofTotalPuzzles(data.wofTotalPuzzles ?? 0);
+        if (data.wofScores) setWofScores(data.wofScores);
         setWofLastSpin(null);
         setWofLastLetter(null);
         setWofSolveResult(null);

@@ -591,6 +591,7 @@ export function setupSocketIO(httpServer: HttpServer) {
         wofPendingSolve: room.wof?.pendingSolve ?? null,
         wofPuzzleIndex: room.wof?.puzzleIndex ?? 0,
         wofTotalPuzzles: room.wof?.roundCount ?? 0,
+        wofScores: room.wof ? wofScoresWire(room, room.wof) : [],
       });
     });
 

@@ -115,8 +115,25 @@ export interface SpinResult {
   spinIndex: number;
 }
 
+// Weight map: special segments appear less often, high-dollar segments slightly more
+const SEGMENT_WEIGHTS: number[] = WHEEL.map((seg) => {
+  if (seg === "BANKRUPT") return 0.4;
+  if (seg === "LOSE_A_TURN") return 0.4;
+  if (seg === "FREE_PLAY") return 1.4;
+  if (typeof seg === "number" && seg >= 2000) return 1.3;
+  if (typeof seg === "number" && seg >= 1000) return 1.1;
+  return 1.0;
+});
+const TOTAL_WEIGHT = SEGMENT_WEIGHTS.reduce((a, b) => a + b, 0);
+
 export function spinWheel(): SpinResult {
-  const spinIndex = Math.floor(Math.random() * WHEEL.length);
+  const rand = Math.random() * TOTAL_WEIGHT;
+  let acc = 0;
+  for (let i = 0; i < WHEEL.length; i++) {
+    acc += SEGMENT_WEIGHTS[i]!;
+    if (rand < acc) return { value: WHEEL[i]!, spinIndex: i };
+  }
+  const spinIndex = WHEEL.length - 1;
   return { value: WHEEL[spinIndex]!, spinIndex };
 }
 
