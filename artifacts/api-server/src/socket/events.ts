@@ -1049,10 +1049,7 @@ export function setupSocketIO(httpServer: HttpServer) {
       const controllerName = controller?.name ?? "Player";
 
       if (value === "BANKRUPT") {
-        const lost = w.roundEarnings[w.controllerId ?? ""] ?? 0;
         if (w.controllerId) {
-          const player = room.players.find((p) => p.id === w.controllerId);
-          if (player) player.score = Math.max(0, player.score - lost);
           w.roundEarnings[w.controllerId] = 0;
         }
         const nonHostIds = room.players.filter((p) => !p.isHost).map((p) => p.id);
@@ -1149,11 +1146,7 @@ export function setupSocketIO(httpServer: HttpServer) {
         const spinValue = typeof w.currentSpin === "number" ? w.currentSpin : 0;
         const earned = isVowel ? 0 : spinValue * count;
         if (!isVowel && earned > 0) {
-          const player = room.players.find((p) => p.id === w.controllerId);
-          if (player) {
-            player.score += earned;
-            w.roundEarnings[w.controllerId ?? ""] = (w.roundEarnings[w.controllerId ?? ""] ?? 0) + earned;
-          }
+          w.roundEarnings[w.controllerId ?? ""] = (w.roundEarnings[w.controllerId ?? ""] ?? 0) + earned;
         }
         const board = wofPublicBoard(w);
         w.isFreePlay = false;
@@ -1229,10 +1222,11 @@ export function setupSocketIO(httpServer: HttpServer) {
       if (w.guessedLetters.has(l)) return;
 
       const controller = room.players.find((p) => p.id === w.controllerId);
-      if (!controller || controller.score < VOWEL_COST) return;
+      if (!controller) return;
+      const controllerRoundEarnings = w.roundEarnings[w.controllerId ?? ""] ?? 0;
+      if (controllerRoundEarnings < VOWEL_COST) return;
 
-      controller.score -= VOWEL_COST;
-      w.roundEarnings[w.controllerId ?? ""] = (w.roundEarnings[w.controllerId ?? ""] ?? 0) - VOWEL_COST;
+      w.roundEarnings[w.controllerId ?? ""] = controllerRoundEarnings - VOWEL_COST;
       w.guessedLetters.add(l);
       w.currentSpin = null;
 
@@ -1263,6 +1257,10 @@ export function setupSocketIO(httpServer: HttpServer) {
       }
 
       w.phase = "spinning";
+      if (count === 0) {
+        const nonHostIds = room.players.filter((p) => !p.isHost).map((p) => p.id);
+        w.controllerId = advanceController(w.controllerId, nonHostIds);
+      }
       io.to(room.code).emit("wof-vowel-result", {
         letter: l,
         count,
@@ -1274,8 +1272,6 @@ export function setupSocketIO(httpServer: HttpServer) {
         scores: wofScoresWire(room, w),
       });
       if (count === 0) {
-        const nonHostIds = room.players.filter((p) => !p.isHost).map((p) => p.id);
-        w.controllerId = advanceController(w.controllerId, nonHostIds);
         const nextController = room.players.find((p) => p.id === w.controllerId);
         if (nextController?.isBot) scheduleBotWofTurn(io, room);
       } else {
@@ -2383,10 +2379,8 @@ function applyWofSolveResult(
   correct: boolean,
 ) {
   if (correct) {
-    const bonus = 1000;
     if (solver) {
-      solver.score += bonus;
-      w.roundEarnings[solverId] = (w.roundEarnings[solverId] ?? 0) + bonus;
+      solver.score += w.roundEarnings[solverId] ?? 0;
     }
     puzzle.answer.toUpperCase().replace(/\s/g, "").split("").forEach((l) => w.revealedLetters.add(l));
     w.phase = "puzzle-over";
@@ -2521,10 +2515,8 @@ function scheduleBotWofTurn(io: SocketIOServer, room: Room) {
       const solverId = controllerId;
       const solver = live.players.find((p) => p.id === solverId);
       if (correct) {
-        const bonus = 1000;
         if (solver) {
-          solver.score += bonus;
-          live.wof.roundEarnings[solverId ?? ""] = (live.wof.roundEarnings[solverId ?? ""] ?? 0) + bonus;
+          solver.score += live.wof.roundEarnings[solverId ?? ""] ?? 0;
         }
         puzzle.answer.toUpperCase().replace(/\s/g, "").split("").forEach((l) => live.wof!.revealedLetters.add(l));
         live.wof.phase = "puzzle-over";
@@ -2568,8 +2560,6 @@ function scheduleBotWofTurn(io: SocketIOServer, room: Room) {
     const controllerName = ctrl.name;
 
     if (value === "BANKRUPT") {
-      const lost = live.wof.roundEarnings[controllerId ?? ""] ?? 0;
-      if (ctrl) ctrl.score = Math.max(0, ctrl.score - lost);
       live.wof.roundEarnings[controllerId ?? ""] = 0;
       const nonHostIds = live.players.filter((p) => !p.isHost).map((p) => p.id);
       live.wof.controllerId = advanceController(live.wof.controllerId, nonHostIds);
@@ -2627,7 +2617,6 @@ function scheduleBotWofGuess(io: SocketIOServer, room: Room) {
       const spinValue = typeof live.wof.currentSpin === "number" ? live.wof.currentSpin : 500;
       const earned = live.wof.isFreePlay ? 0 : spinValue * count;
       if (earned > 0) {
-        ctrl.score += earned;
         live.wof.roundEarnings[controllerId ?? ""] = (live.wof.roundEarnings[controllerId ?? ""] ?? 0) + earned;
       }
       live.wof.isFreePlay = false;

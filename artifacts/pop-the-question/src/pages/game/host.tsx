@@ -381,6 +381,7 @@ export default function GameHost() {
   const [wofSpinIndex, setWofSpinIndex] = useState<number | null>(null);
   const [wofIsFreePlay, setWofIsFreePlay] = useState(false);
   const [wofPendingSolve, setWofPendingSolve] = useState<{ solverId: string | null; solverName: string; answer: string; isVerbal?: boolean } | null>(null);
+  const wofSpinTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const finishedRef = useRef(false);
   const notificationsRef = useRef<HostNotificationsHandle | null>(null);
@@ -890,21 +891,27 @@ export default function GameHost() {
       isFreePlay?: boolean;
       scores: WofScoreRow[];
     }) => {
-      setWofLastSpin(payload.value);
+      // Set spin index immediately so WofWheel knows where to land after animation
       setWofSpinIndex(payload.spinIndex ?? null);
-      setWofSpinType(payload.type);
-      setWofSpinning(false);
-      setWofControllerId(payload.controllerId);
-      setWofScores(payload.scores);
-      setWofPendingSolve(null);
-      setWofIsFreePlay(payload.isFreePlay ?? false);
-      if (payload.type === "bankrupt" || payload.type === "lose-a-turn") {
-        setWofPhase("spinning");
-      } else {
-        setWofPhase("guessing");
-      }
-      setWofLastLetter(null);
-      setWofSolveResult(null);
+      // Clear any previous pending spin timeout
+      if (wofSpinTimeoutRef.current) clearTimeout(wofSpinTimeoutRef.current);
+      // Delay applying game state until the 3.5s spin animation completes
+      wofSpinTimeoutRef.current = setTimeout(() => {
+        setWofLastSpin(payload.value);
+        setWofSpinType(payload.type);
+        setWofSpinning(false);
+        setWofControllerId(payload.controllerId);
+        setWofScores(payload.scores);
+        setWofPendingSolve(null);
+        setWofIsFreePlay(payload.isFreePlay ?? false);
+        if (payload.type === "bankrupt" || payload.type === "lose-a-turn") {
+          setWofPhase("spinning");
+        } else {
+          setWofPhase("guessing");
+        }
+        setWofLastLetter(null);
+        setWofSolveResult(null);
+      }, 3600);
     });
 
     newSocket.on("wof-solve-pending", (payload: { solverId: string | null; solverName: string; answer: string }) => {
