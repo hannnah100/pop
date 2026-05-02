@@ -337,7 +337,7 @@ export default function Archive() {
                     <div className="flex items-center gap-2 mb-3 text-sm">
                       <Flame className="w-4 h-4 text-[#FF1493]" />
                       <span className="text-muted-foreground">
-                        Streak: <span className="text-foreground font-bold">{podStats.streak}/20</span>
+                        Best: <span className="text-foreground font-bold">{podStats.streak}/20</span>
                         {podStats.streak === 20 && (
                           <span className="ml-1.5 text-yellow-400 font-bold">Perfect!</span>
                         )}
@@ -353,7 +353,7 @@ export default function Archive() {
                       {isPOD ? (
                         <>
                           <Eye className="w-4 h-4 mr-2" />
-                          {played ? "View Results" : "View"}
+                          View Results
                         </>
                       ) : (
                         <>
