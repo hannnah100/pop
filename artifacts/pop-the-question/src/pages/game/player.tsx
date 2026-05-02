@@ -1243,13 +1243,13 @@ export default function GamePlayer() {
           transition={{ type: "spring", stiffness: 220, damping: 20 }}
           className="bg-white border-[3px] border-black shadow-[6px_6px_0_#000] p-8 w-full max-w-sm"
         >
-          <p className="text-lg text-muted-foreground mb-2">You scored</p>
-          <div className="text-6xl font-black text-primary text-glow-primary">
+          <p className="text-black/60 font-sans mb-2">You scored</p>
+          <div className="font-display font-black text-black text-6xl uppercase">
             <CountUp value={myScore} duration={1.6} />
           </div>
-          <p className="text-lg text-muted-foreground mt-2">points</p>
+          <p className="text-black/60 font-sans mt-2">points</p>
         </motion.div>
-        <p className="text-xl text-muted-foreground">Look at the big screen for final standings.</p>
+        <p className="text-black/60 font-sans">Look at the big screen for final standings.</p>
       </div>
     );
   }

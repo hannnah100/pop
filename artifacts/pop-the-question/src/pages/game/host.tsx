@@ -675,13 +675,13 @@ export default function GameHost() {
           return (
             <div
               key={p.id}
-              className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 font-bold ${
+              className={`inline-flex items-center gap-2 border-[2px] border-black px-3 py-1.5 font-display font-black uppercase shadow-[2px_2px_0_#000] ${
                 state === "answered"
-                  ? "bg-success/10 border-success/40 text-success"
-                  : "bg-card/60 border-border text-foreground"
+                  ? "bg-[#00C853] text-white"
+                  : "bg-white text-black"
               } ${isRemote ? "text-sm" : "text-xs"}`}
             >
-              {p.isBot && <Bot className="w-3.5 h-3.5 text-primary/60" />}
+              {p.isBot && <Bot className="w-3.5 h-3.5 text-black/40" />}
               <span className="truncate max-w-[140px]">{p.name}</span>
               <PlayerStatusBadge state={state} compact={!isRemote} />
             </div>
@@ -739,33 +739,33 @@ export default function GameHost() {
         onClick={onSelect}
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
-        className={`relative w-full text-left rounded-2xl border-2 p-4 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary
+        className={`relative w-full text-left border-[3px] border-black p-4 transition-all duration-200 focus-visible:outline-none
           ${selected
-            ? "border-secondary bg-secondary/10 shadow-[0_0_24px_-6px_hsl(var(--secondary)/0.6)]"
-            : "border-border bg-card/60 hover:border-border/80 hover:bg-card/80"
+            ? "bg-[#FFD700] shadow-[5px_5px_0_#000]"
+            : "bg-white shadow-[4px_4px_0_#000] hover:bg-[#FFF8E7]"
           }`}
         data-testid={`pack-card-${id ?? "random"}`}
         aria-pressed={selected}
       >
         {selected && (
-          <span className="absolute top-3 right-3 w-6 h-6 rounded-full bg-secondary flex items-center justify-center shadow-[0_0_12px_-2px_hsl(var(--secondary))]">
-            <Check className="w-3.5 h-3.5 text-secondary-foreground font-black" />
+          <span className="absolute top-3 right-3 w-6 h-6 bg-black flex items-center justify-center">
+            <Check className="w-3.5 h-3.5 text-[#FFD700]" />
           </span>
         )}
 
         <div className="flex items-start gap-2 mb-2">
           {isRandom
-            ? <Shuffle className="w-4 h-4 text-secondary mt-0.5 flex-shrink-0" />
-            : <Beer className="w-4 h-4 text-secondary mt-0.5 flex-shrink-0" />
+            ? <Shuffle className="w-4 h-4 text-black mt-0.5 flex-shrink-0" />
+            : <Beer className="w-4 h-4 text-black mt-0.5 flex-shrink-0" />
           }
-          <h3 className="font-bold text-base text-foreground leading-tight pr-6">{title}</h3>
+          <h3 className="font-display font-black text-black uppercase text-sm leading-tight pr-6">{title}</h3>
         </div>
 
-        <p className="text-xs text-muted-foreground mb-3 leading-relaxed line-clamp-2">{description}</p>
+        <p className="text-xs text-black/60 mb-3 leading-relaxed line-clamp-2 font-sans">{description}</p>
 
         {!isRandom && (
           <div className="space-y-1">
-            <div className="flex items-center gap-3 text-xs text-muted-foreground font-medium">
+            <div className="flex items-center gap-3 text-xs text-black/50 font-sans">
               <span>{roundCount} {roundCount === 1 ? "round" : "rounds"}</span>
               <span>·</span>
               <span>{questionCount} questions</span>
@@ -775,9 +775,9 @@ export default function GameHost() {
                 {rounds.map((r, i) => {
                   const meta = ROUND_TYPE_META[r.type];
                   return (
-                    <div key={i} className={`flex items-center gap-1.5 text-xs ${meta?.color ?? "text-muted-foreground"}`}>
+                    <div key={i} className="flex items-center gap-1.5 text-xs text-black/60 font-sans">
                       {meta?.icon}
-                      <span className="truncate opacity-90">{r.name}</span>
+                      <span className="truncate">{r.name}</span>
                     </div>
                   );
                 })}
@@ -796,11 +796,11 @@ export default function GameHost() {
 
   const renderLobby = () => {
     return (
-      <div className="flex-1 flex flex-col items-center justify-center text-foreground px-4">
+      <div className="flex-1 flex flex-col items-center justify-center px-4 bg-[#FFF8E7]">
         <div className="flex items-center gap-4 mb-6">
           <DemoBadge />
         </div>
-        <p className="text-3xl font-bold text-muted-foreground uppercase tracking-[0.2em] mb-4 text-center">
+        <p className="font-display font-black text-black/50 text-2xl uppercase tracking-[0.2em] mb-4 text-center">
           <TypingText text="Go to popthequestion.com and enter code" speedMs={28} caret={false} />
         </p>
 
@@ -808,22 +808,23 @@ export default function GameHost() {
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ type: "spring", stiffness: 220, damping: 18 }}
-          className="text-[8rem] sm:text-[10rem] md:text-[12rem] font-black font-display tracking-[0.18em] leading-none mb-12 drop-shadow-[0_0_60px_hsl(var(--primary)/0.4)]"
+          className="font-display font-black text-black text-[8rem] sm:text-[10rem] md:text-[12rem] tracking-[0.18em] leading-none mb-4"
+          style={{ textShadow: "8px 8px 0 #FF1493, 12px 12px 0 #000" }}
         >
-          <RainbowText text={roomCode} glow />
+          {roomCode}
         </motion.h1>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="w-full max-w-5xl bg-card/85 backdrop-blur rounded-3xl p-8 border-2 border-border/50 surface-elevated mb-12"
+          className="w-full max-w-5xl bg-white border-[4px] border-black shadow-[8px_8px_0_#000] p-8 mb-12"
         >
-          <div className="flex items-center gap-4 mb-6 pb-4 border-b border-border">
-            <Users className="w-8 h-8 text-secondary drop-shadow-[0_0_8px_hsl(var(--secondary))]" />
-            <h2 className="text-2xl md:text-3xl font-bold font-display tracking-tight">
+          <div className="flex items-center gap-4 mb-6 pb-4 border-b-[3px] border-black">
+            <Users className="w-8 h-8 text-black" />
+            <h2 className="font-display font-black text-black text-2xl md:text-3xl uppercase">
               Players (<CountUp value={players.length} duration={0.4} />)
-              {isDemo && <span className="ml-3 text-lg font-normal text-muted-foreground">· {players.filter(p => p.isBot).length} AI</span>}
+              {isDemo && <span className="ml-3 text-lg font-sans font-normal text-black/50">· {players.filter(p => p.isBot).length} AI</span>}
             </h2>
           </div>
 
@@ -835,7 +836,7 @@ export default function GameHost() {
           >
             <AnimatePresence>
               {players.length === 0 ? (
-                <div className="w-full flex items-center justify-center text-2xl text-muted-foreground animate-pulse">
+                <div className="w-full flex items-center justify-center text-2xl text-black/40 font-display font-black uppercase animate-pulse">
                   Waiting for players to join...
                 </div>
               ) : (
@@ -854,22 +855,21 @@ export default function GameHost() {
             className="w-full max-w-5xl mb-8"
           >
             <div className="flex items-center gap-3 mb-4">
-              <Beer className="w-6 h-6 text-secondary drop-shadow-[0_0_8px_hsl(var(--secondary))]" />
-              <h2 className="text-2xl font-bold font-display tracking-tight text-foreground">
+              <Beer className="w-6 h-6 text-black" />
+              <h2 className="font-display font-black text-black text-2xl uppercase">
                 Choose a Pack
               </h2>
               {selectedPackId === null && (
-                <span className="text-sm text-muted-foreground border border-border rounded-full px-3 py-1">
+                <span className="text-sm text-black/50 border-[2px] border-black px-3 py-1 font-sans">
                   Random is selected
                 </span>
               )}
             </div>
 
             {availablePacks.length === 0 ? (
-              <div className="text-muted-foreground animate-pulse text-lg">Loading packs…</div>
+              <div className="text-black/50 animate-pulse text-lg font-display font-black uppercase">Loading packs…</div>
             ) : (
               <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-                {/* Random option */}
                 <PackCard
                   id={null}
                   title="🎲 Random"
@@ -907,21 +907,21 @@ export default function GameHost() {
     const rest = sortedPlayers.slice(3);
     const podiumOrder = [top3[1], top3[0], top3[2]].filter(Boolean);
     const heights = ["h-44", "h-60", "h-32"];
-    const colors = [
-      "bg-gradient-to-t from-zinc-500 to-zinc-300 text-zinc-900",
-      "bg-gradient-to-t from-yellow-600 to-yellow-300 text-yellow-950 shadow-[0_0_60px_-10px_hsl(48_100%_60%/0.8)]",
-      "bg-gradient-to-t from-amber-700 to-amber-400 text-amber-950",
+    const podiumColors = [
+      "bg-[#C0C0C0] border-[3px] border-black text-black",
+      "bg-[#FFD700] border-[3px] border-black text-black shadow-[6px_6px_0_#000]",
+      "bg-[#CD7F32] border-[3px] border-black text-black",
     ];
     const ranks = ["2nd", "1st", "3rd"];
 
     return (
-      <div className="flex-1 flex flex-col text-foreground items-center justify-center relative overflow-hidden">
+      <div className="flex-1 flex flex-col items-center justify-center relative overflow-hidden bg-[#FFF8E7]">
         {isDemo && (<div className="absolute top-6 right-6"><DemoBadge /></div>)}
-        <Trophy className="w-24 h-24 text-[hsl(var(--gold))] mb-6 drop-shadow-[0_0_24px_hsl(var(--gold)/0.5)]" />
-        <h1 className="text-4xl md:text-6xl font-extrabold font-display tracking-tight text-foreground text-center mb-3">
+        <Trophy className="w-24 h-24 text-[#FFD700] mb-4" style={{ filter: "drop-shadow(4px 4px 0 #000)" }} />
+        <h1 className="font-display font-black text-black text-4xl md:text-6xl uppercase text-center mb-2" style={{ textShadow: "5px 5px 0 #FF1493, 7px 7px 0 #000" }}>
           FINAL STANDINGS
         </h1>
-        <div className="heading-divider heading-divider--gold w-24 h-1 mb-12" />
+        <div className="h-1 w-24 bg-[#FFD700] border-y border-black mb-12" />
 
         <div className="w-full max-w-4xl mb-12 flex items-end justify-center gap-4 md:gap-8">
           {podiumOrder.map((p, idx) => {
@@ -934,14 +934,14 @@ export default function GameHost() {
                 transition={{ type: "spring", stiffness: 180, damping: 18, delay: idx * 0.18 }}
                 className="flex flex-col items-center flex-1 max-w-[200px]"
               >
-                <div className="text-2xl md:text-3xl font-extrabold font-display tracking-tight mb-3 flex items-center gap-2">
-                  {p.isBot && <Bot className="w-5 h-5 text-primary/60" />}
-                  <RainbowText text={p.name} startIndex={idx} />
+                <div className="font-display font-black text-black text-2xl md:text-3xl uppercase mb-3 flex items-center gap-2 text-center">
+                  {p.isBot && <Bot className="w-5 h-5 text-black/40" />}
+                  {p.name}
                 </div>
-                <div className="text-3xl font-black text-accent mb-2 drop-shadow-[0_0_8px_hsl(var(--accent))]">
+                <div className="font-display font-black text-[#FF1493] text-3xl mb-2" style={{ textShadow: "2px 2px 0 #000" }}>
                   <CountUp value={p.score ?? 0} duration={1.6} /> pts
                 </div>
-                <div className={`w-full ${heights[idx]} ${colors[idx]} rounded-t-2xl flex items-center justify-center font-black text-4xl md:text-5xl font-display border-t-4 border-white/40`}>
+                <div className={`w-full ${heights[idx]} ${podiumColors[idx]} flex items-center justify-center font-display font-black text-4xl md:text-5xl uppercase`}>
                   {ranks[idx]}
                 </div>
               </motion.div>
@@ -960,16 +960,16 @@ export default function GameHost() {
               <motion.div
                 key={p.id}
                 variants={staggerItem}
-                className="flex items-center justify-between p-4 rounded-xl bg-card/80 border border-border surface-elevated"
+                className="flex items-center justify-between p-4 bg-white border-[3px] border-black shadow-[4px_4px_0_#000]"
               >
                 <div className="flex items-center gap-4">
-                  <span className="text-3xl font-black text-muted-foreground w-12 text-center">#{i + 4}</span>
-                  <span className="text-2xl font-bold flex items-center gap-2">
-                    {p.isBot && <Bot className="w-5 h-5 text-primary/60" />}
+                  <span className="font-display font-black text-black/40 text-3xl w-12 text-center">#{i + 4}</span>
+                  <span className="font-display font-black text-black text-2xl uppercase flex items-center gap-2">
+                    {p.isBot && <Bot className="w-5 h-5 text-black/40" />}
                     {p.name}
                   </span>
                 </div>
-                <span className="text-2xl font-bold text-accent">
+                <span className="font-display font-black text-[#FF1493] text-2xl">
                   <CountUp value={p.score ?? 0} /> pts
                 </span>
               </motion.div>
@@ -987,14 +987,14 @@ export default function GameHost() {
       settings.mode === "remote" && !resultsRevealed && total > 0;
 
     return (
-      <div className="flex-1 flex flex-col text-foreground relative overflow-hidden">
+      <div className="flex-1 flex flex-col relative overflow-hidden bg-[#FFF8E7]">
         <header className="flex justify-between items-center mb-8 relative z-10">
-          <div className="text-2xl font-bold text-muted-foreground tracking-widest bg-card/80 backdrop-blur px-6 py-3 rounded-full border border-border surface-elevated">
-            ROOM: <span className="text-foreground">{roomCode}</span>
+          <div className="font-display font-black text-black text-xl bg-white border-[3px] border-black shadow-[3px_3px_0_#000] px-6 py-3 uppercase tracking-widest">
+            ROOM: <span className="text-[#FF1493]">{roomCode}</span>
           </div>
           {isDemo && <DemoBadge />}
-          <div className="text-2xl font-bold text-muted-foreground bg-card/80 backdrop-blur px-6 py-3 rounded-full border border-border surface-elevated">
-            Question <span className="text-foreground"><CountUp value={questionIndex + 1} duration={0.4} /></span>
+          <div className="font-display font-black text-black text-xl bg-white border-[3px] border-black shadow-[3px_3px_0_#000] px-6 py-3 uppercase">
+            Q <span className="text-[#FF1493]"><CountUp value={questionIndex + 1} duration={0.4} /></span>
           </div>
         </header>
 
@@ -1002,23 +1002,21 @@ export default function GameHost() {
         {showRemoteWaiting && (
           <div className="flex justify-center mb-4">
             <div
-              className="inline-flex items-center gap-2 rounded-full bg-secondary/15 border border-secondary/40 px-4 py-2 text-base font-bold text-secondary"
+              className="inline-flex items-center gap-2 bg-[#FFD700] border-[3px] border-black shadow-[3px_3px_0_#000] px-4 py-2 font-display font-black text-black uppercase text-sm"
               data-testid="remote-waiting-indicator"
             >
-              <span className="inline-block w-2 h-2 rounded-full bg-secondary animate-pulse" />
-              ⏱ Waiting for votes {votesIn}/{total}
+              <span className="inline-block w-2 h-2 bg-black animate-pulse" />
+              Waiting for votes {votesIn}/{total}
             </div>
           </div>
         )}
 
-        {/* Player status bar — visible during voting and results */}
         <PlayerStatusBar />
 
-        {/* Voice-only host hint */}
         {settings.answerMethod === "voice" && !resultsRevealed && (
           <div className="flex justify-center mb-3">
-            <div className="inline-flex items-center gap-2 rounded-full bg-accent/15 border border-accent/40 px-4 py-2 text-sm font-bold text-accent">
-              <Mic className="w-4 h-4" /> Voice mode — players shout, you'll mark correct
+            <div className="inline-flex items-center gap-2 bg-[#00E5FF] border-[2px] border-black shadow-[2px_2px_0_#000] px-4 py-2 font-display font-black text-black uppercase text-sm">
+              <Mic className="w-4 h-4" /> Voice mode — players shout
             </div>
           </div>
         )}
@@ -1031,7 +1029,8 @@ export default function GameHost() {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -50, scale: 0.95 }}
               transition={{ type: "spring", stiffness: 180, damping: 22 }}
-              className="text-5xl md:text-[4.5rem] leading-tight font-extrabold font-display tracking-tight text-center mb-12"
+              className="font-display font-black text-black text-5xl md:text-[4.5rem] leading-tight uppercase text-center mb-12"
+              style={{ textShadow: "4px 4px 0 #FF1493, 6px 6px 0 #000" }}
             >
               {currentQuestion || "Loading question..."}
             </motion.h2>
@@ -1039,13 +1038,13 @@ export default function GameHost() {
 
           {!resultsRevealed ? (
             <div className="flex flex-col items-center w-full">
-              <div className="text-4xl font-bold mb-8">
-                <span className="text-secondary text-glow-secondary"><CountUp value={votesIn} duration={0.5} /></span>
-                <span className="text-muted-foreground"> / {total} Votes In</span>
+              <div className="font-display font-black text-black text-4xl mb-8 uppercase">
+                <span className="text-[#FF1493]"><CountUp value={votesIn} duration={0.5} /></span>
+                <span className="text-black/40"> / {total} Votes In</span>
               </div>
-              <div className="w-full max-w-3xl bg-card rounded-full h-8 overflow-hidden border border-border mb-12 surface-elevated">
+              <div className="w-full max-w-3xl bg-white border-[3px] border-black h-10 overflow-hidden mb-12">
                 <motion.div
-                  className="bg-gradient-to-r from-secondary via-primary to-accent h-full shimmer-sweep"
+                  className="bg-[#FF1493] h-full"
                   animate={{ width: `${(votesIn / Math.max(1, total)) * 100}%` }}
                   transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
                 />
@@ -1054,7 +1053,7 @@ export default function GameHost() {
                 size="lg"
                 onClick={handleRevealResults}
                 disabled={votesIn === 0}
-                className="text-3xl px-12 py-8 bg-accent hover:bg-accent/90 text-accent-foreground shadow-[0_8px_40px_-8px_hsl(var(--accent)/0.7)]"
+                className="text-3xl px-12 py-8"
                 data-testid="btn-reveal"
               >
                 Reveal Results
@@ -1067,7 +1066,7 @@ export default function GameHost() {
               transition={{ type: "spring", stiffness: 220, damping: 22 }}
               className="w-full max-w-4xl"
             >
-              <div className="space-y-6 mb-12">
+              <div className="space-y-4 mb-12">
                 {sortedVotes.map(([playerId, count], i) => {
                   const player = players.find((p) => p.id === playerId);
                   if (!player) return null;
@@ -1075,16 +1074,16 @@ export default function GameHost() {
                   const isBurned = playerId === burnedPlayerId;
                   return (
                     <div key={playerId} className="relative">
-                      <div className="flex justify-between text-3xl font-bold mb-2 relative z-10 px-4">
+                      <div className="flex justify-between font-display font-black text-black text-3xl uppercase mb-2 relative z-10">
                         <span className="flex items-center gap-2">
-                          {i === 0 && <Crown className="w-8 h-8 text-yellow-400 drop-shadow-[0_0_8px_hsl(48_100%_60%)]" />}
-                          {player.isBot && <Bot className="w-6 h-6 text-primary/60" />}
-                          <span className={isBurned ? "text-accent text-glow-accent animate-fire" : ""}>{player.name}</span>
-                          {isBurned && <Flame className="w-7 h-7 text-accent drop-shadow-[0_0_8px_hsl(var(--accent))]" />}
+                          {i === 0 && <Crown className="w-8 h-8 text-[#FFD700]" style={{ filter: "drop-shadow(2px 2px 0 #000)" }} />}
+                          {player.isBot && <Bot className="w-6 h-6 text-black/40" />}
+                          <span className={isBurned ? "text-[#FF6B35]" : ""}>{player.name}</span>
+                          {isBurned && <Flame className="w-7 h-7 text-[#FF6B35]" />}
                         </span>
                         <span><CountUp value={count} duration={1} /> {count === 1 ? "vote" : "votes"}</span>
                       </div>
-                      <div className="relative h-16 bg-card rounded-2xl overflow-hidden border border-border">
+                      <div className="relative h-16 bg-white border-[3px] border-black overflow-hidden">
                         {isBurned && (
                           <ParticleRain emoji="🔥" variant="fire" density={1} />
                         )}
@@ -1092,7 +1091,7 @@ export default function GameHost() {
                           initial={{ width: 0 }}
                           animate={{ width: `${percentage}%` }}
                           transition={{ duration: 1, delay: i * 0.18, ease: [0.16, 1, 0.3, 1] }}
-                          className={`relative h-full ${i === 0 ? "bg-gradient-to-r from-primary to-accent shimmer-sweep" : "bg-muted"}`}
+                          className={`relative h-full ${i === 0 ? "bg-[#FF1493]" : "bg-[#FFD700]"}`}
                         />
                       </div>
                     </div>
@@ -1110,37 +1109,37 @@ export default function GameHost() {
     if (rrPhase === "writing") {
       const showRemoteWaiting = settings.mode === "remote" && rrTotal > 0;
       return (
-        <div className="flex-1 flex flex-col text-foreground items-center justify-center relative">
+        <div className="flex-1 flex flex-col items-center justify-center relative bg-[#FF6B35]">
           {isDemo && <div className="absolute top-6 right-6"><DemoBadge /></div>}
-          <div className="text-2xl font-bold text-muted-foreground mb-6 uppercase tracking-widest">
-            Round <span className="text-foreground"><CountUp value={rrRound} duration={0.4} /></span> of {rrTotalRounds}
+          <div className="font-display font-black text-white text-2xl uppercase tracking-widest mb-6" style={{ textShadow: "2px 2px 0 rgba(0,0,0,0.3)" }}>
+            Round <CountUp value={rrRound} duration={0.4} /> of {rrTotalRounds}
           </div>
-          <h1 className="text-4xl md:text-5xl font-extrabold font-display tracking-tight text-foreground mb-3">
+          <h1 className="font-display font-black text-white text-4xl md:text-5xl uppercase mb-4" style={{ textShadow: "4px 4px 0 #000" }}>
             WRITING ROASTS
           </h1>
-          <div className="heading-divider heading-divider--orange w-20 h-1 mb-8" />
+          <div className="h-1 w-20 bg-white border border-black mb-8" />
 
           {showRemoteWaiting && (
-            <div className="mb-6 inline-flex items-center gap-2 rounded-full bg-accent/15 border border-accent/40 px-4 py-2 text-base font-bold text-accent">
-              <span className="inline-block w-2 h-2 rounded-full bg-accent animate-pulse" />
-              ⏱ Waiting for roasts {rrSubmitted}/{rrTotal}
+            <div className="mb-6 bg-white border-[3px] border-black shadow-[3px_3px_0_#000] inline-flex items-center gap-2 px-4 py-2 font-display font-black text-black uppercase text-sm">
+              <span className="inline-block w-2 h-2 bg-black animate-pulse" />
+              Waiting for roasts {rrSubmitted}/{rrTotal}
             </div>
           )}
 
           <PlayerStatusBar />
 
-          <div className="w-full max-w-2xl bg-card/85 backdrop-blur rounded-3xl p-8 border-2 border-border surface-elevated mb-8">
-            <div className="flex justify-between text-3xl font-bold mb-6">
+          <div className="w-full max-w-2xl bg-white border-[4px] border-black shadow-[6px_6px_0_#000] p-8 mb-8">
+            <div className="flex justify-between font-display font-black text-black text-3xl uppercase mb-6">
               <span>Submitted</span>
-              <span className="text-primary text-glow-primary">
+              <span className="text-[#FF6B35]">
                 <CountUp value={rrSubmitted} duration={0.5} />/{rrTotal}
               </span>
             </div>
-            <div className="w-full bg-muted rounded-full h-6 overflow-hidden">
+            <div className="w-full bg-black/10 border-[2px] border-black h-6 overflow-hidden">
               <motion.div
                 animate={{ width: `${(rrSubmitted / Math.max(1, rrTotal)) * 100}%` }}
                 transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                className="h-full bg-gradient-to-r from-primary via-accent to-secondary shimmer-sweep"
+                className="h-full bg-[#FF6B35]"
               />
             </div>
           </div>
@@ -1154,8 +1153,8 @@ export default function GameHost() {
               <motion.div
                 key={p.id}
                 variants={staggerItem}
-                className={`px-5 py-3 rounded-full font-bold text-xl flex items-center gap-2 border surface-elevated
-                  ${p.isBot ? "bg-primary/10 border-primary/30 text-muted-foreground" : "bg-card border-border"}`}
+                className={`px-5 py-3 border-[2px] border-black shadow-[2px_2px_0_#000] font-display font-black uppercase text-xl flex items-center gap-2
+                  ${p.isBot ? "bg-white/50 text-black/50" : "bg-white text-black"}`}
               >
                 {p.isBot && <Bot className="w-4 h-4" />}
                 {p.name}
@@ -1174,22 +1173,21 @@ export default function GameHost() {
       })();
 
       return (
-        <div className="flex-1 flex flex-col text-foreground relative overflow-hidden">
+        <div className="flex-1 flex flex-col relative overflow-hidden bg-[#FFF8E7]">
           {isDemo && <div className="absolute top-6 right-6"><DemoBadge /></div>}
           <header className="flex justify-between items-center mb-6 relative z-10">
-            <div className="text-2xl font-bold text-muted-foreground bg-card/80 backdrop-blur px-6 py-3 rounded-full border border-border surface-elevated">
-              ROOM: <span className="text-foreground">{roomCode}</span>
+            <div className="font-display font-black text-black text-xl bg-white border-[3px] border-black shadow-[3px_3px_0_#000] px-6 py-3 uppercase">
+              ROOM: <span className="text-[#FF1493]">{roomCode}</span>
             </div>
-            <div className="text-2xl font-bold text-muted-foreground bg-card/80 backdrop-blur px-6 py-3 rounded-full border border-border surface-elevated">
-              Reveal <span className="text-foreground"><CountUp value={rrRevealIndex + 1} duration={0.4} /></span> of {rrTotalReveals}
+            <div className="font-display font-black text-black text-xl bg-white border-[3px] border-black shadow-[3px_3px_0_#000] px-6 py-3 uppercase">
+              Reveal <span className="text-[#FF1493]"><CountUp value={rrRevealIndex + 1} duration={0.4} /></span> of {rrTotalReveals}
             </div>
           </header>
 
-          {/* Remote-mode picker indicator */}
           {settings.mode === "remote" && rrCurrentRevealName && (
             <div className="flex justify-center mb-4">
               <div
-                className="inline-flex items-center gap-2 rounded-full bg-secondary/15 border border-secondary/40 px-4 py-2 text-base font-bold text-secondary"
+                className="inline-flex items-center gap-2 bg-[#00E5FF] border-[2px] border-black shadow-[2px_2px_0_#000] px-4 py-2 font-display font-black text-black uppercase text-sm"
                 data-testid="remote-picker-indicator"
               >
                 <Eye className="w-4 h-4" />
@@ -1199,7 +1197,7 @@ export default function GameHost() {
           )}
 
           <main className="flex-1 flex flex-col items-center justify-center relative z-10">
-            <p className="text-2xl text-muted-foreground mb-4 font-semibold uppercase tracking-widest">Roasting</p>
+            <p className="font-display font-black text-black/50 text-2xl uppercase tracking-widest mb-4">Roasting</p>
             <AnimatePresence mode="wait">
               <motion.h1
                 key={rrCurrentRevealName}
@@ -1207,13 +1205,14 @@ export default function GameHost() {
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.95, y: -20 }}
                 transition={{ type: "spring", stiffness: 220, damping: 20 }}
-                className="text-5xl md:text-7xl lg:text-[6rem] font-extrabold font-display tracking-tight mb-12 text-center text-foreground"
+                className="font-display font-black text-black text-5xl md:text-7xl lg:text-[6rem] uppercase mb-12 text-center"
+                style={{ textShadow: "5px 5px 0 #FF6B35, 7px 7px 0 #000" }}
               >
                 {rrCurrentRevealName}
               </motion.h1>
             </AnimatePresence>
 
-            <div className="w-full max-w-5xl grid gap-6 mb-12">
+            <div className="w-full max-w-5xl grid gap-4 mb-12">
               <AnimatePresence mode="popLayout">
                 {Object.entries(rrCard).map(([color, entry], idx) => {
                   const question = rrQuestions.find((q) => q.color === color);
@@ -1223,24 +1222,19 @@ export default function GameHost() {
                       initial={{ opacity: 0, x: 80 }}
                       animate={{ opacity: 1, x: 0 }}
                       exit={{ opacity: 0, x: -80 }}
-                      transition={{
-                        type: "spring",
-                        stiffness: 240,
-                        damping: 22,
-                        delay: idx * 0.08,
-                      }}
-                      className="bg-card/85 backdrop-blur rounded-2xl p-6 border-2 border-border surface-elevated"
+                      transition={{ type: "spring", stiffness: 240, damping: 22, delay: idx * 0.08 }}
+                      className="bg-white border-[3px] border-black shadow-[4px_4px_0_#000] p-6"
                     >
                       <div className="flex items-start gap-4">
                         <div
-                          className="w-4 self-stretch min-h-[48px] rounded-full flex-shrink-0"
+                          className="w-4 self-stretch min-h-[48px] flex-shrink-0 border border-black/20"
                           style={{ backgroundColor: color === "gray" ? "#6b7280" : color }}
                         />
                         <div>
                           {question && (
-                            <p className="text-xl text-muted-foreground mb-2">{question.question}</p>
+                            <p className="text-black/50 mb-2 font-sans">{question.question}</p>
                           )}
-                          <p className="text-3xl font-bold">{entry.answer}</p>
+                          <p className="font-display font-black text-black text-3xl uppercase">{entry.answer}</p>
                         </div>
                       </div>
                     </motion.div>
@@ -1268,23 +1262,23 @@ export default function GameHost() {
     if (pqRoundSummary) {
       const top = pqRoundSummary.leaderboard[0];
       return (
-        <div className="flex-1 flex flex-col text-foreground relative overflow-hidden">
+        <div className="flex-1 flex flex-col relative overflow-hidden bg-[#00C853]">
           {isDemo && <div className="absolute top-6 right-6 z-20"><DemoBadge /></div>}
           <header className="flex justify-between items-center mb-8 relative z-10">
-            <div className="text-2xl font-bold text-muted-foreground bg-card/80 backdrop-blur px-6 py-3 rounded-full border border-border surface-elevated">
-              ROOM: <span className="text-foreground">{roomCode}</span>
+            <div className="font-display font-black text-black text-xl bg-white border-[3px] border-black shadow-[3px_3px_0_#000] px-6 py-3 uppercase">
+              ROOM: <span className="text-[#FF1493]">{roomCode}</span>
             </div>
-            <div className="text-2xl font-bold text-muted-foreground bg-card/80 backdrop-blur px-6 py-3 rounded-full border border-border surface-elevated">
-              Round <span className="text-foreground">{pqRoundSummary.roundIndex + 1}</span> / {pqRoundSummary.totalRounds}
+            <div className="font-display font-black text-black text-xl bg-white border-[3px] border-black shadow-[3px_3px_0_#000] px-6 py-3 uppercase">
+              Round <span className="text-[#FF1493]">{pqRoundSummary.roundIndex + 1}</span> / {pqRoundSummary.totalRounds}
             </div>
           </header>
 
           <main className="flex-1 flex flex-col items-center justify-center max-w-5xl mx-auto w-full relative z-10">
-            <p className="text-2xl text-muted-foreground uppercase tracking-widest font-bold mb-2">Round Complete</p>
-            <h1 className="text-5xl md:text-7xl font-extrabold font-display tracking-tight text-center mb-2">
-              <RainbowText text={pqRoundSummary.roundName} />
+            <p className="font-display font-black text-white text-2xl uppercase tracking-widest mb-2" style={{ textShadow: "2px 2px 0 rgba(0,0,0,0.3)" }}>Round Complete</p>
+            <h1 className="font-display font-black text-white text-5xl md:text-7xl uppercase text-center mb-2" style={{ textShadow: "5px 5px 0 #000" }}>
+              {pqRoundSummary.roundName}
             </h1>
-            <div className="heading-divider heading-divider--green w-20 h-1 mb-12" />
+            <div className="h-1 w-20 bg-white border border-black mb-12" />
 
             <div className="w-full max-w-3xl space-y-3 mb-12">
               {pqRoundSummary.leaderboard.slice(0, 8).map((row, i) => (
@@ -1293,21 +1287,19 @@ export default function GameHost() {
                   initial={{ opacity: 0, x: -30 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.07, type: "spring", stiffness: 200, damping: 22 }}
-                  className={`flex items-center justify-between bg-card/85 backdrop-blur rounded-2xl p-5 border-2 surface-elevated ${
-                    i === 0 ? "border-primary/60 shadow-[0_0_40px_-10px_hsl(var(--primary)/0.7)]" : "border-border"
+                  className={`flex items-center justify-between p-5 border-[3px] border-black ${
+                    i === 0 ? "bg-[#FFD700] shadow-[5px_5px_0_#000]" : "bg-white shadow-[3px_3px_0_#000]"
                   }`}
                 >
                   <div className="flex items-center gap-4">
-                    <div className={`w-10 h-10 rounded-full flex items-center justify-center font-extrabold text-xl ${
-                      i === 0 ? "bg-primary/30 text-primary" : "bg-muted text-muted-foreground"
-                    }`}>
+                    <div className="w-10 h-10 bg-black flex items-center justify-center font-display font-black text-white text-xl">
                       {i + 1}
                     </div>
-                    {i === 0 && <Crown className="w-7 h-7 text-yellow-400 drop-shadow-[0_0_8px_hsl(48_100%_60%)]" />}
-                    {row.isBot && <Bot className="w-5 h-5 text-primary/60" />}
-                    <span className="text-2xl font-bold">{row.name}</span>
+                    {i === 0 && <Crown className="w-7 h-7 text-black" />}
+                    {row.isBot && <Bot className="w-5 h-5 text-black/40" />}
+                    <span className="font-display font-black text-black text-2xl uppercase">{row.name}</span>
                   </div>
-                  <div className="text-3xl font-extrabold text-primary text-glow-primary">
+                  <div className="font-display font-black text-[#FF1493] text-3xl" style={{ textShadow: "1px 1px 0 #000" }}>
                     <CountUp value={row.score} duration={1} />
                   </div>
                 </motion.div>
@@ -1315,8 +1307,8 @@ export default function GameHost() {
             </div>
 
             {top && (
-              <p className="text-lg text-muted-foreground mt-2">
-                Leading: <span className="font-bold text-foreground">{top.name}</span> with {top.score} pts
+              <p className="text-white/80 font-sans mt-2">
+                Leading: <span className="font-black">{top.name}</span> with {top.score} pts
               </p>
             )}
           </main>
@@ -1327,36 +1319,35 @@ export default function GameHost() {
     // ---- Loading state ----
     if (!pqQuestion) {
       return (
-        <div className="flex-1 flex flex-col items-center justify-center relative">
+        <div className="flex-1 flex flex-col items-center justify-center relative bg-[#FFF8E7]">
           {isDemo && <div className="absolute top-6 right-6"><DemoBadge /></div>}
-          <Beer className="w-20 h-20 text-secondary mb-6" />
-          <h1 className="text-4xl font-extrabold font-display">Loading next question…</h1>
+          <Beer className="w-20 h-20 text-black mb-6" />
+          <h1 className="font-display font-black text-black text-4xl uppercase">Loading next question…</h1>
         </div>
       );
     }
 
     return (
-      <div className="flex-1 flex flex-col text-foreground relative overflow-hidden">
+      <div className="flex-1 flex flex-col relative overflow-hidden bg-[#FFF8E7]">
         {isDemo && <div className="absolute top-6 right-6 z-20"><DemoBadge /></div>}
 
         <header className="flex justify-between items-center mb-6 relative z-10">
-          <div className="text-2xl font-bold text-muted-foreground bg-card/80 backdrop-blur px-6 py-3 rounded-full border border-border surface-elevated">
-            ROOM: <span className="text-foreground">{roomCode}</span>
+          <div className="font-display font-black text-black text-xl bg-white border-[3px] border-black shadow-[3px_3px_0_#000] px-6 py-3 uppercase">
+            ROOM: <span className="text-[#FF1493]">{roomCode}</span>
           </div>
-          <div className="text-xl font-bold uppercase tracking-widest text-secondary bg-card/80 backdrop-blur px-6 py-3 rounded-full border border-secondary/40 surface-elevated">
+          <div className="font-display font-black text-black text-xl bg-[#00E5FF] border-[3px] border-black shadow-[3px_3px_0_#000] px-6 py-3 uppercase">
             <Beer className="w-5 h-5 inline mr-2 -mt-1" />
             {pqQuestion.roundName}
           </div>
-          <div className="text-2xl font-bold text-muted-foreground bg-card/80 backdrop-blur px-6 py-3 rounded-full border border-border surface-elevated">
-            Q <span className="text-foreground">{pqQuestion.questionIndex + 1}</span>
-            <span className="text-muted-foreground/60">/{pqQuestion.questionsInRound}</span>
-            <span className="mx-3 text-muted-foreground/40">·</span>
-            R <span className="text-foreground">{pqQuestion.roundIndex + 1}</span>
-            <span className="text-muted-foreground/60">/{pqQuestion.totalRounds}</span>
+          <div className="font-display font-black text-black text-xl bg-white border-[3px] border-black shadow-[3px_3px_0_#000] px-6 py-3 uppercase">
+            Q <span className="text-[#FF1493]">{pqQuestion.questionIndex + 1}</span>
+            <span className="text-black/40">/{pqQuestion.questionsInRound}</span>
+            <span className="mx-3 text-black/30">·</span>
+            R <span className="text-[#FF1493]">{pqQuestion.roundIndex + 1}</span>
+            <span className="text-black/40">/{pqQuestion.totalRounds}</span>
           </div>
         </header>
 
-        {/* Player status bar — visible during the question */}
         <PlayerStatusBar />
 
         <main className="flex-1 flex flex-col items-center justify-center relative z-10 max-w-6xl mx-auto w-full">
@@ -1367,7 +1358,8 @@ export default function GameHost() {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -50, scale: 0.95 }}
               transition={{ type: "spring", stiffness: 180, damping: 22 }}
-              className="text-4xl md:text-6xl leading-tight font-extrabold font-display tracking-tight text-center mb-10"
+              className="font-display font-black text-black text-4xl md:text-6xl leading-tight uppercase text-center mb-10"
+              style={{ textShadow: "4px 4px 0 #FF1493, 6px 6px 0 #000" }}
             >
               {pqQuestion.prompt}
             </motion.h2>
@@ -1378,29 +1370,28 @@ export default function GameHost() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-4xl mb-10">
               {pqQuestion.options.map((opt, idx) => {
                 const isCorrect = pqReveal && pqReveal.correctOptionIndex === idx;
-                const isWrong = pqReveal && pqReveal.correctOptionIndex !== idx;
                 return (
                   <motion.div
                     key={idx}
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: idx * 0.06 }}
-                    className={`rounded-2xl p-6 border-2 surface-elevated text-2xl font-bold flex items-center gap-4 transition-all ${
+                    className={`border-[3px] border-black p-6 font-display font-black text-2xl uppercase flex items-center gap-4 transition-all ${
                       pqReveal
                         ? isCorrect
-                          ? "bg-success/20 border-success shadow-[0_0_30px_-8px_hsl(var(--success))]"
-                          : "bg-card/40 border-border opacity-50"
-                        : "bg-card/85 border-border"
+                          ? "bg-[#00C853] text-white shadow-[4px_4px_0_#000]"
+                          : "bg-white opacity-40"
+                        : "bg-white shadow-[4px_4px_0_#000]"
                     }`}
                   >
-                    <div className={`w-10 h-10 rounded-full flex items-center justify-center font-black ${
-                      pqReveal && isCorrect ? "bg-success text-success-foreground" : "bg-muted text-muted-foreground"
+                    <div className={`w-10 h-10 border-[2px] border-black flex items-center justify-center font-black text-sm flex-shrink-0 ${
+                      pqReveal && isCorrect ? "bg-white text-[#00C853]" : "bg-black text-white"
                     }`}>
                       {String.fromCharCode(65 + idx)}
                     </div>
                     <span className="flex-1">{opt}</span>
-                    {pqReveal && isCorrect && <Check className="w-7 h-7 text-success" />}
-                    {pqReveal && isWrong && <X className="w-6 h-6 text-muted-foreground/40" />}
+                    {pqReveal && isCorrect && <Check className="w-7 h-7 flex-shrink-0" />}
+                    {pqReveal && !isCorrect && <X className="w-6 h-6 flex-shrink-0 opacity-40" />}
                   </motion.div>
                 );
               })}
@@ -1416,16 +1407,18 @@ export default function GameHost() {
                 return (
                   <div
                     key={label}
-                    className={`rounded-3xl p-12 border-2 text-center text-5xl font-black surface-elevated transition-all ${
+                    className={`border-[3px] border-black p-12 text-center font-display font-black text-5xl uppercase transition-all ${
                       pqReveal
                         ? isCorrect
-                          ? "bg-success/20 border-success shadow-[0_0_40px_-8px_hsl(var(--success))]"
-                          : "bg-card/40 border-border opacity-40"
-                        : val ? "bg-success/10 border-success/40" : "bg-destructive/10 border-destructive/40"
+                          ? "bg-[#00C853] text-white shadow-[6px_6px_0_#000]"
+                          : "bg-white opacity-40"
+                        : val
+                          ? "bg-[#00C853] text-white shadow-[4px_4px_0_#000]"
+                          : "bg-[#FF1493] text-white shadow-[4px_4px_0_#000]"
                     }`}
                   >
                     {label}
-                    {pqReveal && isCorrect && <div className="mt-3"><Check className="w-12 h-12 text-success mx-auto" /></div>}
+                    {pqReveal && isCorrect && <div className="mt-3"><Check className="w-12 h-12 mx-auto" /></div>}
                   </div>
                 );
               })}
@@ -1439,19 +1432,19 @@ export default function GameHost() {
                 <motion.div
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  className="rounded-3xl p-10 bg-success/15 border-2 border-success text-center shadow-[0_0_40px_-8px_hsl(var(--success))]"
+                  className="bg-[#00C853] border-[4px] border-black shadow-[6px_6px_0_#000] p-10 text-center"
                 >
-                  <p className="text-lg text-muted-foreground uppercase tracking-widest font-bold mb-3">Answer</p>
-                  <p className="text-5xl font-extrabold text-success">{pqReveal.correctAnswer}</p>
+                  <p className="font-display font-black text-white text-lg uppercase tracking-widest mb-3" style={{ textShadow: "1px 1px 0 rgba(0,0,0,0.3)" }}>Answer</p>
+                  <p className="font-display font-black text-white text-5xl uppercase" style={{ textShadow: "3px 3px 0 #000" }}>{pqReveal.correctAnswer}</p>
                   {pqReveal.acceptedAnswers && pqReveal.acceptedAnswers.length > 1 && (
-                    <p className="text-sm text-muted-foreground mt-4">
+                    <p className="text-white/70 font-sans text-sm mt-4">
                       Also accepted: {pqReveal.acceptedAnswers.filter((a) => a !== pqReveal.correctAnswer).join(", ")}
                     </p>
                   )}
                 </motion.div>
               ) : (
-                <div className="rounded-3xl p-10 bg-card/60 border-2 border-dashed border-border text-center">
-                  <p className="text-2xl text-muted-foreground">Players are typing on their phones…</p>
+                <div className="bg-white border-[3px] border-black border-dashed p-10 text-center">
+                  <p className="font-display font-black text-black/40 text-2xl uppercase">Players are typing on their phones…</p>
                 </div>
               )}
             </div>
@@ -1469,20 +1462,20 @@ export default function GameHost() {
                   label={`${secsLeft}s`}
                 />
                 <div className="text-center">
-                  <div className="text-7xl font-black">
-                    <span className="text-secondary text-glow-secondary"><CountUp value={pqAnsweredCount} duration={0.4} /></span>
-                    <span className="text-muted-foreground text-5xl"> / {pqTotalAnswerers}</span>
+                  <div className="font-display font-black text-7xl text-black">
+                    <span className="text-[#FF1493]"><CountUp value={pqAnsweredCount} duration={0.4} /></span>
+                    <span className="text-black/40 text-5xl"> / {pqTotalAnswerers}</span>
                   </div>
-                  <p className="text-xl text-muted-foreground uppercase tracking-widest font-bold mt-2">Answers In</p>
+                  <p className="font-display font-black text-black/50 text-xl uppercase tracking-widest mt-2">Answers In</p>
                 </div>
               </div>
             </div>
           ) : (
             <div className="w-full max-w-4xl">
-              <div className="bg-card/85 backdrop-blur rounded-2xl p-6 border-2 border-border surface-elevated">
+              <div className="bg-white border-[3px] border-black shadow-[4px_4px_0_#000] p-6">
                 <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-xl font-bold uppercase tracking-widest text-muted-foreground">Live Standings</h3>
-                  <div className="text-sm text-muted-foreground">
+                  <h3 className="font-display font-black text-black text-xl uppercase tracking-widest">Live Standings</h3>
+                  <div className="text-sm text-black/50 font-sans">
                     {pqReveal.correctCount}/{pqReveal.totalAnswered} got it right
                   </div>
                 </div>
@@ -1491,27 +1484,25 @@ export default function GameHost() {
                     const ans = pqReveal.perPlayerAnswers.find((a) => a.playerId === row.id);
                     const isFirst = pqReveal.firstCorrectPlayerId === row.id;
                     return (
-                      <div key={row.id} className="flex items-center justify-between gap-4 px-4 py-3 rounded-xl bg-background/40">
+                      <div key={row.id} className={`flex items-center justify-between gap-4 px-4 py-3 border-[2px] border-black ${i === 0 ? "bg-[#FFD700]" : "bg-[#FFF8E7]"}`}>
                         <div className="flex items-center gap-3 min-w-0">
-                          <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm ${
-                            i === 0 ? "bg-primary/30 text-primary" : "bg-muted text-muted-foreground"
-                          }`}>
+                          <div className="w-8 h-8 bg-black flex items-center justify-center font-display font-black text-white text-sm">
                             {i + 1}
                           </div>
-                          {row.isBot && <Bot className="w-4 h-4 text-primary/60 flex-shrink-0" />}
-                          <span className="font-bold text-lg truncate">{row.name}</span>
+                          {row.isBot && <Bot className="w-4 h-4 text-black/40 flex-shrink-0" />}
+                          <span className="font-display font-black text-black text-lg uppercase truncate">{row.name}</span>
                           {ans && (
                             ans.correct
-                              ? <Check className="w-5 h-5 text-success flex-shrink-0" />
-                              : <X className="w-5 h-5 text-destructive/70 flex-shrink-0" />
+                              ? <Check className="w-5 h-5 text-[#00C853] flex-shrink-0" />
+                              : <X className="w-5 h-5 text-black/30 flex-shrink-0" />
                           )}
                           {isFirst && (
-                            <span className="text-xs font-bold uppercase bg-yellow-400/20 text-yellow-400 px-2 py-0.5 rounded-full whitespace-nowrap">
+                            <span className="font-display font-black text-xs uppercase bg-[#FFD700] border border-black px-2 py-0.5 whitespace-nowrap">
                               +0.5 First
                             </span>
                           )}
                         </div>
-                        <div className="text-2xl font-extrabold text-primary text-glow-primary">
+                        <div className="font-display font-black text-[#FF1493] text-2xl">
                           {row.score}
                         </div>
                       </div>
