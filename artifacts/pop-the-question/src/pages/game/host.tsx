@@ -3006,6 +3006,17 @@ export default function GameHost() {
               size={300}
             />
 
+            {/* Host SPIN button — active when controller needs to spin */}
+            {wofPhase === "spinning" && !wofSpinning && !wofPendingSolve && !wofPuzzleOver && (
+              <Button
+                onClick={handleWofSpin}
+                className="w-full max-w-xs py-6 text-2xl font-display font-black uppercase bg-[#FFD700] hover:bg-[#FFD700]/90 text-black border-[4px] border-black shadow-[6px_6px_0_#000]"
+                data-testid="btn-wof-spin"
+              >
+                🎡 SPIN
+              </Button>
+            )}
+
             {/* Pending solve — host judge controls */}
             <AnimatePresence>
               {wofPendingSolve && (

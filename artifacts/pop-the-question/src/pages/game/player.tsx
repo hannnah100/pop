@@ -2486,16 +2486,22 @@ export default function GamePlayer() {
                 </motion.div>
               )}
 
-              {/* Buy vowel */}
-              {canBuyVowel && (
+              {/* Buy vowel — always shown during active turn, disabled when unaffordable */}
+              {isMyTurn && wofPhase === "spinning" && !wofSolvePending && (
                 <div>
-                  <p className="font-display font-black text-black/60 uppercase text-xs tracking-widest mb-2">Buy a Vowel ($250)</p>
+                  <p className={`font-display font-black uppercase text-xs tracking-widest mb-2 ${canBuyVowel ? "text-black/60" : "text-black/30"}`}>
+                    Buy a Vowel ($250){!canBuyVowel && " — need more funds"}
+                  </p>
                   <div className="flex gap-1">
                     {["A","E","I","O","U"].map(l => {
                       const used = wofGuessedLetters.includes(l);
+                      const disabled = used || !canBuyVowel;
                       return (
-                        <button key={l} onClick={() => !used && socket?.emit("wof-buy-vowel", { roomCode, letter: l })} disabled={used}
-                          className={`flex-1 h-12 flex items-center justify-center border-[2px] border-black font-display font-black text-lg ${used ? "bg-black text-white/30 cursor-not-allowed" : "bg-[#00E5FF] hover:bg-[#00E5FF]/80 active:scale-95 shadow-[2px_2px_0_#000] text-black"}`}>
+                        <button key={l} onClick={() => !disabled && socket?.emit("wof-buy-vowel", { roomCode, letter: l })} disabled={disabled}
+                          className={`flex-1 h-12 flex items-center justify-center border-[2px] border-black font-display font-black text-lg
+                            ${used ? "bg-black text-white/30 cursor-not-allowed"
+                              : !canBuyVowel ? "bg-gray-200 text-black/30 cursor-not-allowed border-black/30"
+                              : "bg-[#00E5FF] hover:bg-[#00E5FF]/80 active:scale-95 shadow-[2px_2px_0_#000] text-black"}`}>
                           {l}
                         </button>
                       );
