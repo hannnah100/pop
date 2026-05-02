@@ -131,17 +131,16 @@ before committing it.
    `artifacts/api-server/src/lib/seedDaily.ts`. The seeder deletes those rows
    on every server start so they are purged from production on the next deploy.
 
-### Temporary kill-switch (hide without deleting)
+### Temporary kill-switch (hide without deleting) — planned, not yet wired up
 
-If you need to hide the crossword tile on the home/archive pages immediately
-without touching the database, set the env variable:
+If you need to hide the crossword tile on the home/archive pages without
+deleting database rows, the recommended approach is a manual code patch:
 
-```
-DISABLE_CROSSWORD=true
-```
+1. In `artifacts/pop-the-question/src/pages/home.tsx`, comment out or guard
+   the crossword card with a feature flag check.
+2. Do the same in `src/pages/archive.tsx` for the crossword tab/section.
+3. Deploy, fix the puzzle, re-enable the card, and redeploy.
 
-The home page and archive check this flag and omit the crossword card when it
-is set. Remove the flag once a replacement puzzle is ready and deployed.
-
-> Note: the `DISABLE_CROSSWORD` env-var kill-switch is a planned escape hatch;
-> wire it up in `home.tsx` and the archive route if you need it.
+As a future convenience, a `DISABLE_CROSSWORD` env variable could be wired up
+to skip rendering these cards at runtime — but that logic does **not** exist
+yet. Do not rely on an env flag without implementing it first.
