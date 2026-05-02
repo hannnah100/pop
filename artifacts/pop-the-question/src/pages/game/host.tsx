@@ -739,7 +739,7 @@ export default function GameHost() {
         onClick={onSelect}
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
-        className={`relative w-full text-left border-[3px] border-black p-4 transition-all duration-200 focus-visible:outline-none
+        className={`relative w-full text-left border-[3px] border-black p-4 focus-visible:outline-none
           ${selected
             ? "bg-[#FFD700] shadow-[5px_5px_0_#000]"
             : "bg-white shadow-[4px_4px_0_#000] hover:bg-[#FFF8E7]"
@@ -1376,7 +1376,7 @@ export default function GameHost() {
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: idx * 0.06 }}
-                    className={`border-[3px] border-black p-6 font-display font-black text-2xl uppercase flex items-center gap-4 transition-all ${
+                    className={`border-[3px] border-black p-6 font-display font-black text-2xl uppercase flex items-center gap-4 ${
                       pqReveal
                         ? isCorrect
                           ? "bg-[#00C853] text-white shadow-[4px_4px_0_#000]"
@@ -1407,7 +1407,7 @@ export default function GameHost() {
                 return (
                   <div
                     key={label}
-                    className={`border-[3px] border-black p-12 text-center font-display font-black text-5xl uppercase transition-all ${
+                    className={`border-[3px] border-black p-12 text-center font-display font-black text-5xl uppercase ${
                       pqReveal
                         ? isCorrect
                           ? "bg-[#00C853] text-white shadow-[6px_6px_0_#000]"
