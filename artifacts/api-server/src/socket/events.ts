@@ -1037,6 +1037,7 @@ export function setupSocketIO(httpServer: HttpServer) {
       if (!room || !room.wof) return;
       const w = room.wof;
       if (w.phase !== "spinning") return;
+      if (w.pendingSolve) return; // block while awaiting host judgment
       // Only controller or host can spin.
       if (socket.id !== w.controllerId && socket.id !== room.hostId) return;
       room.lastActivity = Date.now();
@@ -1119,6 +1120,7 @@ export function setupSocketIO(httpServer: HttpServer) {
       if (!room || !room.wof) return;
       const w = room.wof;
       if (w.phase !== "guessing") return;
+      if (w.pendingSolve) return; // block while awaiting host judgment
       if (socket.id !== w.controllerId && socket.id !== room.hostId) return;
       room.lastActivity = Date.now();
 
@@ -1217,6 +1219,7 @@ export function setupSocketIO(httpServer: HttpServer) {
       if (!room || !room.wof) return;
       const w = room.wof;
       if (w.phase !== "spinning") return;
+      if (w.pendingSolve) return; // block while awaiting host judgment
       if (socket.id !== w.controllerId && socket.id !== room.hostId) return;
       room.lastActivity = Date.now();
 

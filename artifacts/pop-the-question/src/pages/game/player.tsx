@@ -278,6 +278,7 @@ export default function GamePlayer() {
   const [wofIsFreePlay, setWofIsFreePlay] = useState(false);
   const [wofSolveSubmitted, setWofSolveSubmitted] = useState(false);
   const [wofSpeakNow, setWofSpeakNow] = useState(false);
+  const [wofSolvePending, setWofSolvePending] = useState(false);
   const [wofPuzzleIndex, setWofPuzzleIndex] = useState(0);
   const [wofTotalPuzzles, setWofTotalPuzzles] = useState(0);
   const [wofLastLetter, setWofLastLetter] = useState<{ letter: string; count: number; correct: boolean } | null>(null);
@@ -441,7 +442,7 @@ export default function GamePlayer() {
     });
 
     newSocket.on("wof-solve-submitted", () => {
-      // Show waiting message on player screen after submitting
+      setWofSolvePending(true);
     });
 
     newSocket.on("wof-letter-result", (payload: {
@@ -504,6 +505,7 @@ export default function GamePlayer() {
       setWofSolveInput("");
       setWofSolveSubmitted(false);
       setWofSpeakNow(false);
+      setWofSolvePending(false);
       if (payload.correct) hapticVictory();
       else hapticWrong();
     });
@@ -554,6 +556,7 @@ export default function GamePlayer() {
       setWofIsFreePlay(false);
       setWofSolveSubmitted(false);
       setWofSpeakNow(false);
+      setWofSolvePending(false);
     });
 
     // ============ Jeopardy socket handlers ============
@@ -2260,9 +2263,9 @@ export default function GamePlayer() {
     const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
     const myScore = wofScores.find(s => s.id === me?.id);
 
-    const canSpin = isMyTurn && wofPhase === "spinning";
-    const canGuessConsonant = isMyTurn && wofPhase === "guessing";
-    const canBuyVowel = isMyTurn && wofPhase === "spinning" && (myScore?.roundEarnings ?? 0) >= 250;
+    const canSpin = isMyTurn && wofPhase === "spinning" && !wofSolvePending;
+    const canGuessConsonant = isMyTurn && wofPhase === "guessing" && !wofSolvePending;
+    const canBuyVowel = isMyTurn && wofPhase === "spinning" && !wofSolvePending && (myScore?.roundEarnings ?? 0) >= 250;
     const canSolve = isMyTurn && wofPhase === "spinning";
 
     const spinValueLabel = (v: WofWheelValue | null): string => {

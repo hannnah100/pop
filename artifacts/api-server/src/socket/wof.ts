@@ -92,14 +92,18 @@ export function publicBoard(w: WofState): WofBoardWire {
   return answer.split(" ").map((word) =>
     word.split("").map((letter) => ({
       letter,
-      revealed: w.revealedLetters.has(letter),
+      // Non-alpha chars (hyphens, apostrophes, etc.) are always revealed
+      revealed: /[^A-Z]/.test(letter) || w.revealedLetters.has(letter),
     })),
   );
 }
 
 export function isPuzzleSolved(w: WofState): boolean {
   const puzzle = currentPuzzle(w);
-  const letters = new Set(puzzle.answer.toUpperCase().replace(/\s/g, "").split(""));
+  // Only A-Z letters need to be revealed; non-alpha separators are auto-revealed
+  const letters = new Set(
+    puzzle.answer.toUpperCase().replace(/[^A-Z]/g, "").split("").filter(Boolean)
+  );
   for (const letter of letters) {
     if (!w.revealedLetters.has(letter)) return false;
   }
