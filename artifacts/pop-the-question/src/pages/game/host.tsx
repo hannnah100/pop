@@ -39,6 +39,7 @@ import {
   TimerRing,
 } from "@/components/fx";
 import { WofWheel } from "@/components/WofWheel";
+import { WofBoard } from "@/components/WofBoard";
 import { useSfx } from "@/lib/sfx";
 import { staggerContainer, staggerItem } from "@/lib/motion";
 import { HostShell } from "@/components/host/HostShell";
@@ -3007,28 +3008,9 @@ export default function GameHost() {
         <div className="flex-1 flex flex-col lg:flex-row gap-6 p-6 overflow-auto">
           {/* Main area — board + wheel result */}
           <div className="flex-1 flex flex-col items-center gap-6">
-            {/* Category + hint */}
-            <div className="text-center">
-              <p className="font-display font-black uppercase tracking-widest text-black/50 text-lg">{wofCategory}</p>
-              {wofHint && <p className="text-sm text-black/40 font-sans mt-0.5">{wofHint}</p>}
-            </div>
-
             {/* Board */}
             <div className="w-full max-w-3xl bg-black/5 border-[3px] border-black p-4 shadow-[4px_4px_0_#000]">
-              {wofBoard.map((word, wi) => (
-                <div key={wi} className="flex flex-wrap justify-center gap-1 mb-2">
-                  {word.map((cell, ci) => (
-                    <motion.div
-                      key={`${wi}-${ci}`}
-                      animate={{ backgroundColor: cell.revealed ? "#FFD700" : "#fff" }}
-                      transition={{ duration: 0.3 }}
-                      className="w-9 h-11 md:w-11 md:h-14 flex items-center justify-center border-[3px] border-black shadow-[2px_2px_0_#000] font-display font-black text-lg md:text-xl"
-                    >
-                      {cell.revealed ? cell.letter : ""}
-                    </motion.div>
-                  ))}
-                </div>
-              ))}
+              <WofBoard board={wofBoard} category={wofCategory} hint={wofHint ?? undefined} />
             </div>
 
             {/* Animated WofWheel */}

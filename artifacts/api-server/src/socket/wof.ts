@@ -32,7 +32,7 @@ export interface WofState {
   guessedLetters: Set<string>;
   roundEarnings: Record<string, number>;
   isFreePlay: boolean;
-  pendingSolve: { solverId: string; solverName: string; answer: string } | null;
+  pendingSolve: { solverId: string; solverName: string; answer: string; isVerbal?: boolean } | null;
 }
 
 export interface WofBoardCell {

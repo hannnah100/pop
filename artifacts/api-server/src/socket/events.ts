@@ -1348,7 +1348,7 @@ export function setupSocketIO(httpServer: HttpServer) {
 
       const solverId = w.controllerId;
       const solver = room.players.find((p) => p.id === solverId);
-      w.pendingSolve = { solverId: solverId ?? "", solverName: solver?.name ?? "Player", answer: "(Say It Out Loud)" };
+      w.pendingSolve = { solverId: solverId ?? "", solverName: solver?.name ?? "Player", answer: "(Say It Out Loud)", isVerbal: true };
 
       io.to(room.hostId).emit("wof-solve-pending", {
         solverId,
