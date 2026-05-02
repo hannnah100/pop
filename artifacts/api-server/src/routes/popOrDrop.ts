@@ -1,6 +1,6 @@
 import { Router, type IRouter } from "express";
 import { db, popOrDropScoresTable } from "@workspace/db";
-import { eq, desc, and } from "drizzle-orm";
+import { eq, desc, sql } from "drizzle-orm";
 import POP_OR_DROP_ITEMS_JSON from "../data/daily/pop-or-drop-items.json" with { type: "json" };
 
 const router: IRouter = Router();
@@ -18,6 +18,7 @@ const ITEMS: PopOrDropItem[] = POP_OR_DROP_ITEMS_JSON as PopOrDropItem[];
 
 // 21 items = 20 pairs / 20 rounds
 const SEQUENCE_LENGTH = 21;
+const MAX_STREAK = SEQUENCE_LENGTH - 1; // 20
 
 function lcgRng(seed: number) {
   let s = seed;
@@ -55,7 +56,8 @@ router.get("/daily/pop-or-drop/leaderboard", async (req, res): Promise<void> => 
   const date = (req.query.date as string) || todayDate();
   const playerToken = (req.query.playerToken as string) || "";
 
-  const rows = await db
+  // Fetch top 10 via DB ordering — no artificial limit needed for top10
+  const top10Rows = await db
     .select({
       playerToken: popOrDropScoresTable.playerToken,
       streak: popOrDropScoresTable.streak,
@@ -63,45 +65,66 @@ router.get("/daily/pop-or-drop/leaderboard", async (req, res): Promise<void> => 
     .from(popOrDropScoresTable)
     .where(eq(popOrDropScoresTable.date, date))
     .orderBy(desc(popOrDropScoresTable.streak))
-    .limit(500);
+    .limit(10);
 
-  // De-duplicate by playerToken, keep highest streak per token
-  const best = new Map<string, { playerToken: string; streak: number }>();
-  for (const row of rows) {
-    const existing = best.get(row.playerToken);
-    if (!existing || row.streak > existing.streak) {
-      best.set(row.playerToken, { playerToken: row.playerToken, streak: row.streak });
-    }
-  }
-
-  const sorted = [...best.values()].sort((a, b) => b.streak - a.streak);
-  const top10 = sorted.slice(0, 10).map((r, i) => ({
+  const top10 = top10Rows.map((r, i) => ({
     rank: i + 1,
     playerToken: r.playerToken,
     streak: r.streak,
   }));
 
-  const allStreaks = sorted.map((r) => r.streak);
-  const totalPlayers = allStreaks.length;
-  const avgStreak =
-    totalPlayers > 0
-      ? Math.round(allStreaks.reduce((a, b) => a + b, 0) / totalPlayers)
-      : 0;
-  const medianStreak =
-    totalPlayers > 0
-      ? allStreaks[Math.floor(totalPlayers / 2)]
-      : 0;
+  // Aggregate stats from DB (avoids loading all rows into memory)
+  const agg = await db
+    .select({
+      totalPlayers: sql<number>`count(*)::int`,
+      avgStreak: sql<number>`round(avg(streak))::int`,
+    })
+    .from(popOrDropScoresTable)
+    .where(eq(popOrDropScoresTable.date, date))
+    .then((r) => r[0] ?? { totalPlayers: 0, avgStreak: 0 });
 
-  // Find caller's rank (may be outside top 10)
+  // Median via percentile_cont window function
+  const medianRow = await db
+    .select({
+      medianStreak: sql<number>`percentile_cont(0.5) within group (order by streak)::int`,
+    })
+    .from(popOrDropScoresTable)
+    .where(eq(popOrDropScoresTable.date, date))
+    .then((r) => r[0]);
+  const medianStreak = medianRow?.medianStreak ?? 0;
+
+  // Player's exact rank via COUNT — works for any number of players
   let playerRank: number | null = null;
   if (playerToken) {
-    const idx = sorted.findIndex((r) => r.playerToken === playerToken);
-    if (idx !== -1) {
-      playerRank = idx + 1;
+    const playerRow = await db
+      .select({ streak: popOrDropScoresTable.streak })
+      .from(popOrDropScoresTable)
+      .where(
+        sql`${popOrDropScoresTable.date} = ${date} AND ${popOrDropScoresTable.playerToken} = ${playerToken}`,
+      )
+      .limit(1)
+      .then((rows) => rows[0]);
+
+    if (playerRow !== undefined) {
+      const above = await db
+        .select({ cnt: sql<number>`count(*)::int` })
+        .from(popOrDropScoresTable)
+        .where(
+          sql`${popOrDropScoresTable.date} = ${date} AND ${popOrDropScoresTable.streak} > ${playerRow.streak}`,
+        )
+        .then((r) => r[0]?.cnt ?? 0);
+      playerRank = above + 1;
     }
   }
 
-  res.json({ date, top10, totalPlayers, avgStreak, medianStreak, playerRank });
+  res.json({
+    date,
+    top10,
+    totalPlayers: agg.totalPlayers,
+    avgStreak: agg.avgStreak,
+    medianStreak,
+    playerRank,
+  });
 });
 
 router.post("/daily/pop-or-drop/score", async (req, res): Promise<void> => {
@@ -112,39 +135,31 @@ router.post("/daily/pop-or-drop/score", async (req, res): Promise<void> => {
   };
 
   if (
-    typeof playerToken !== "string" || playerToken.length < 1 || playerToken.length > 64 ||
-    typeof streak !== "number" || !Number.isInteger(streak) || streak < 0 ||
-    typeof date !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(date)
+    typeof playerToken !== "string" ||
+    playerToken.length < 1 ||
+    playerToken.length > 64 ||
+    typeof streak !== "number" ||
+    !Number.isInteger(streak) ||
+    streak < 0 ||
+    streak > MAX_STREAK ||
+    typeof date !== "string" ||
+    !/^\d{4}-\d{2}-\d{2}$/.test(date)
   ) {
     res.status(400).json({ error: "Invalid request body" });
     return;
   }
 
-  const existing = await db
-    .select({ streak: popOrDropScoresTable.streak })
-    .from(popOrDropScoresTable)
-    .where(
-      and(
-        eq(popOrDropScoresTable.date, date),
-        eq(popOrDropScoresTable.playerToken, playerToken),
-      ),
-    )
-    .limit(1)
-    .then((r) => r[0]);
-
-  if (!existing) {
-    await db.insert(popOrDropScoresTable).values({ date, playerToken, streak });
-  } else if (streak > existing.streak) {
-    await db
-      .delete(popOrDropScoresTable)
-      .where(
-        and(
-          eq(popOrDropScoresTable.date, date),
-          eq(popOrDropScoresTable.playerToken, playerToken),
-        ),
-      );
-    await db.insert(popOrDropScoresTable).values({ date, playerToken, streak });
-  }
+  // Atomic upsert: insert or update if new streak is better
+  await db
+    .insert(popOrDropScoresTable)
+    .values({ date, playerToken, streak })
+    .onConflictDoUpdate({
+      target: [popOrDropScoresTable.date, popOrDropScoresTable.playerToken],
+      set: {
+        streak: sql`greatest(${popOrDropScoresTable.streak}, excluded.streak)`,
+        createdAt: sql`${popOrDropScoresTable.createdAt}`,
+      },
+    });
 
   res.json({ ok: true });
 });
