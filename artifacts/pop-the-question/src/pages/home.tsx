@@ -92,19 +92,12 @@ export default function Home() {
             {/* Secondary tagline */}
             <div className="inline-block bg-white border-[4px] border-black shadow-[5px_5px_0_#000] px-5 py-2">
               <p
-                className="font-display font-black tracking-tight comic-headline flex flex-wrap items-center justify-center gap-x-2 gap-y-1"
-                style={{ fontSize: "clamp(0.8rem, 2.2vw, 1.35rem)", lineHeight: 1.2 }}
+                className="font-display font-black tracking-tight flex flex-wrap items-center justify-center gap-x-2 gap-y-1"
+                style={{ fontSize: "clamp(0.8rem, 2.2vw, 1.35rem)", lineHeight: 1.2, color: "#000" }}
               >
-                <span style={{ color: "#000" }}>If</span>
-                <span style={{ color: "#000" }}>Bar</span>
-                <span style={{ color: "#000" }}>Trivia</span>
-                <span style={{ color: "#000" }}>was</span>
-                <span style={{ color: "#000" }}>hosted</span>
-                <span style={{ color: "#000" }}>by</span>
-                <span style={{ color: "#000" }}>your</span>
-                <span style={{ color: "#FF1493" }}>For</span>
-                <span style={{ color: "#FF1493" }}>You</span>
-                <span style={{ color: "#000" }}>page</span>
+                If Bar Trivia was hosted by your{" "}
+                <span style={{ color: "#FF1493" }}>For You</span>{" "}
+                page
               </p>
             </div>
           </div>
