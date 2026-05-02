@@ -5,6 +5,7 @@
  * Pop The Question API specification
  * OpenAPI spec version: 0.1.0
  */
+import type { ThreeStrikesAnswer } from "./threeStrikesAnswer";
 
 export interface ThreeStrikesChallenge {
   id: string;
@@ -12,5 +13,5 @@ export interface ThreeStrikesChallenge {
   title: string;
   prompt: string;
   totalCount: number;
-  answers: string[][];
+  answers: ThreeStrikesAnswer[];
 }

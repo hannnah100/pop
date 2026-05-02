@@ -1,0 +1,143 @@
+import { Router, type IRouter } from "express";
+import { db, threeStrikesChallengesTable, crosswordPuzzlesTable } from "@workspace/db";
+import { eq, desc } from "drizzle-orm";
+import {
+  GetTodayThreeStrikesResponse,
+  GetTodayCrosswordResponse,
+  GetDailyStatusResponse,
+} from "@workspace/api-zod";
+
+const router: IRouter = Router();
+
+function todayDate(): string {
+  return new Date().toISOString().split("T")[0];
+}
+
+router.get("/daily/three-strikes", async (req, res): Promise<void> => {
+  const today = todayDate();
+
+  let row = await db
+    .select()
+    .from(threeStrikesChallengesTable)
+    .where(eq(threeStrikesChallengesTable.date, today))
+    .limit(1)
+    .then((r) => r[0]);
+
+  // If no challenge today, fall back to the most recent one
+  if (!row) {
+    row = await db
+      .select()
+      .from(threeStrikesChallengesTable)
+      .orderBy(desc(threeStrikesChallengesTable.date))
+      .limit(1)
+      .then((r) => r[0]);
+  }
+
+  if (!row) {
+    res.status(404).json({ error: "No challenge available" });
+    return;
+  }
+
+  const data = GetTodayThreeStrikesResponse.parse({
+    id: row.id,
+    date: row.date,
+    title: row.title,
+    prompt: row.prompt,
+    totalCount: row.totalCount,
+    answers: JSON.parse(row.answers),
+  });
+
+  res.json(data);
+});
+
+router.get("/daily/three-strikes/archive", async (_req, res): Promise<void> => {
+  const rows = await db
+    .select({
+      id: threeStrikesChallengesTable.id,
+      date: threeStrikesChallengesTable.date,
+      title: threeStrikesChallengesTable.title,
+      prompt: threeStrikesChallengesTable.prompt,
+      totalCount: threeStrikesChallengesTable.totalCount,
+    })
+    .from(threeStrikesChallengesTable)
+    .orderBy(desc(threeStrikesChallengesTable.date));
+
+  res.json(rows);
+});
+
+router.get("/daily/crossword", async (req, res): Promise<void> => {
+  const today = todayDate();
+
+  let row = await db
+    .select()
+    .from(crosswordPuzzlesTable)
+    .where(eq(crosswordPuzzlesTable.date, today))
+    .limit(1)
+    .then((r) => r[0]);
+
+  if (!row) {
+    row = await db
+      .select()
+      .from(crosswordPuzzlesTable)
+      .orderBy(desc(crosswordPuzzlesTable.date))
+      .limit(1)
+      .then((r) => r[0]);
+  }
+
+  if (!row) {
+    res.status(404).json({ error: "No puzzle available" });
+    return;
+  }
+
+  const data = GetTodayCrosswordResponse.parse({
+    id: row.id,
+    date: row.date,
+    grid: JSON.parse(row.grid),
+    blackSquares: JSON.parse(row.blackSquares),
+    cluesAcross: JSON.parse(row.cluesAcross),
+    cluesDown: JSON.parse(row.cluesDown),
+  });
+
+  res.json(data);
+});
+
+router.get("/daily/crossword/archive", async (_req, res): Promise<void> => {
+  const rows = await db
+    .select({
+      id: crosswordPuzzlesTable.id,
+      date: crosswordPuzzlesTable.date,
+    })
+    .from(crosswordPuzzlesTable)
+    .orderBy(desc(crosswordPuzzlesTable.date));
+
+  res.json(rows);
+});
+
+router.get("/daily/status", async (_req, res): Promise<void> => {
+  const today = todayDate();
+
+  const [tsRow, cwRow] = await Promise.all([
+    db.select({ id: threeStrikesChallengesTable.id, title: threeStrikesChallengesTable.title })
+      .from(threeStrikesChallengesTable)
+      .orderBy(desc(threeStrikesChallengesTable.date))
+      .limit(1)
+      .then((r) => r[0]),
+    db.select({ id: crosswordPuzzlesTable.id, date: crosswordPuzzlesTable.date })
+      .from(crosswordPuzzlesTable)
+      .orderBy(desc(crosswordPuzzlesTable.date))
+      .limit(1)
+      .then((r) => r[0]),
+  ]);
+
+  const data = GetDailyStatusResponse.parse({
+    date: today,
+    threeStrikesAvailable: !!tsRow,
+    crosswordAvailable: !!cwRow,
+    threeStrikesTitle: tsRow?.title ?? null,
+    crosswordDate: cwRow?.date ?? null,
+  });
+
+  res.json(data);
+});
+
+export default router;

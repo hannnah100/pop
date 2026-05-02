@@ -20,5 +20,6 @@ export * from "./roastQuestion";
 export * from "./room";
 export * from "./roomCreated";
 export * from "./roomStatus";
+export * from "./threeStrikesAnswer";
 export * from "./threeStrikesChallenge";
 export * from "./threeStrikesSummary";

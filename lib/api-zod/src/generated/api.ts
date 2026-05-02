@@ -23,7 +23,13 @@ export const GetTodayThreeStrikesResponse = zod.object({
   title: zod.string(),
   prompt: zod.string(),
   totalCount: zod.number(),
-  answers: zod.array(zod.array(zod.string())),
+  answers: zod.array(
+    zod.object({
+      display: zod.string(),
+      hint: zod.string(),
+      correct: zod.array(zod.string()),
+    }),
+  ),
 });
 
 /**

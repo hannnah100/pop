@@ -204,6 +204,22 @@ components:
       required:
         - error
 
+    ThreeStrikesAnswer:
+      type: object
+      properties:
+        display:
+          type: string
+        hint:
+          type: string
+        correct:
+          type: array
+          items:
+            type: string
+      required:
+        - display
+        - hint
+        - correct
+
     ThreeStrikesChallenge:
       type: object
       properties:
@@ -220,9 +236,7 @@ components:
         answers:
           type: array
           items:
-            type: array
-            items:
-              type: string
+            $ref: "#/components/schemas/ThreeStrikesAnswer"
       required:
         - id
         - date

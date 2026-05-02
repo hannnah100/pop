@@ -13,13 +13,19 @@ export interface ErrorResponse {
   error: string;
 }
 
+export interface ThreeStrikesAnswer {
+  display: string;
+  hint: string;
+  correct: string[];
+}
+
 export interface ThreeStrikesChallenge {
   id: string;
   date: string;
   title: string;
   prompt: string;
   totalCount: number;
-  answers: string[][];
+  answers: ThreeStrikesAnswer[];
 }
 
 export interface ThreeStrikesSummary {
