@@ -526,6 +526,9 @@ export function setupSocketIO(httpServer: HttpServer) {
       if (room.hostId !== socket.id) return;
       if (room.gameType !== "pub-quiz") return;
 
+      // Validate packId is either null (random) or a known pack.
+      if (packId !== null && !getQuizPack(packId)) return;
+
       room.quizPackId = packId ?? undefined;
       const chosenPack = packId ? getQuizPack(packId) : null;
       const summary: PackSummary | null = chosenPack ? packSummary(chosenPack) : null;
