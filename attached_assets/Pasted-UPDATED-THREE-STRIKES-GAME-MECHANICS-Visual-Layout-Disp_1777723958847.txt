@@ -1,0 +1,426 @@
+UPDATED: THREE STRIKES GAME MECHANICS
+Visual Layout:
+Display the challenge as a grid of boxes (not a list). Each box represents one possible answer.
+Box Layout:
+┌─────────────────────────────────────────────────┐
+│  Name all Marvel Cinematic Universe Movies      │
+│  33 total answers                               │
+├─────────────────────────────────────────────────┤
+│                                                 │
+│  [?]    [?]    [?]    [?]    [?]    [?]        │
+│  2008   2008   2010   2011   2011   2012       │
+│                                                 │
+│  [?]    [?]    [?]    [?]    [?]    [?]        │
+│  2013   2013   2014   2014   2015   2015       │
+│                                                 │
+│  [?]    [?]    [?]    [?]    [?]    [?]        │
+│  2016   2016   2017   2017   2018   2018       │
+│                                                 │
+│  [... more boxes ...]                          │
+│                                                 │
+│  Strikes: ⚠️⚠️                                 │
+│                                                 │
+│  ┌───────────────────────────────────────────┐ │
+│  │ Type your answer...                       │ │
+│  └───────────────────────────────────────────┘ │
+│            [SUBMIT] or press Enter            │
+│                                                 │
+└─────────────────────────────────────────────────┘
+When a correct answer is submitted:
+
+The corresponding box reveals the answer
+Box changes from [?] to the actual title
+Box gets a success color (green border/background)
+Example: [?] 2008 becomes Iron Man 2008 with green styling
+
+Box Styling:
+
+Unrevealed: Question mark ? symbol, hint text below (year, category, etc.), neutral gray color
+Revealed (correct): Full answer text, hint below, green border and background
+Grid layout: Responsive (4-5 boxes per row on desktop, 2-3 on mobile)
+Sorted by hint: Boxes appear in chronological order (earliest year first)
+
+
+Data Structure Update:
+Each Three Strikes challenge needs:
+
+id: Challenge identifier
+date: Date this challenge is active
+title: Display title ("Marvel Cinematic Universe Movies")
+prompt: What players see ("Name all MCU movies")
+totalCount: Number of answers
+answers: Array of answer objects with:
+
+correct: Array of accepted variations
+hint: The hint text shown below the box
+display: The canonical answer to show when revealed
+
+
+
+Updated Sample Data:
+json{
+  "id": "marvel-movies",
+  "date": "2025-01-15",
+  "title": "Marvel Cinematic Universe Movies",
+  "prompt": "Name all MCU movies",
+  "totalCount": 33,
+  "answers": [
+    {
+      "display": "Iron Man",
+      "hint": "2008",
+      "correct": ["Iron Man", "ironman", "iron man"]
+    },
+    {
+      "display": "The Incredible Hulk",
+      "hint": "2008",
+      "correct": ["The Incredible Hulk", "incredible hulk", "hulk"]
+    },
+    {
+      "display": "Iron Man 2",
+      "hint": "2010",
+      "correct": ["Iron Man 2", "ironman 2", "iron man two", "iron man 2"]
+    },
+    {
+      "display": "Thor",
+      "hint": "2011",
+      "correct": ["Thor"]
+    },
+    {
+      "display": "Captain America: The First Avenger",
+      "hint": "2011",
+      "correct": ["Captain America: The First Avenger", "captain america", "first avenger", "captain america 1"]
+    },
+    {
+      "display": "The Avengers",
+      "hint": "2012",
+      "correct": ["The Avengers", "avengers", "avengers 1"]
+    },
+    {
+      "display": "Iron Man 3",
+      "hint": "2013",
+      "correct": ["Iron Man 3", "ironman 3", "iron man three"]
+    },
+    {
+      "display": "Thor: The Dark World",
+      "hint": "2013",
+      "correct": ["Thor: The Dark World", "dark world", "thor 2"]
+    },
+    {
+      "display": "Captain America: The Winter Soldier",
+      "hint": "2014",
+      "correct": ["Captain America: The Winter Soldier", "winter soldier", "captain america 2"]
+    },
+    {
+      "display": "Guardians of the Galaxy",
+      "hint": "2014",
+      "correct": ["Guardians of the Galaxy", "guardians", "gotg", "guardians of the galaxy 1"]
+    },
+    {
+      "display": "Avengers: Age of Ultron",
+      "hint": "2015",
+      "correct": ["Avengers: Age of Ultron", "age of ultron", "avengers 2"]
+    },
+    {
+      "display": "Ant-Man",
+      "hint": "2015",
+      "correct": ["Ant-Man", "antman", "ant man", "ant-man 1"]
+    },
+    {
+      "display": "Captain America: Civil War",
+      "hint": "2016",
+      "correct": ["Captain America: Civil War", "civil war", "captain america 3"]
+    },
+    {
+      "display": "Doctor Strange",
+      "hint": "2016",
+      "correct": ["Doctor Strange", "dr strange", "dr. strange"]
+    },
+    {
+      "display": "Guardians of the Galaxy Vol. 2",
+      "hint": "2017",
+      "correct": ["Guardians of the Galaxy Vol. 2", "guardians 2", "gotg 2", "guardians of the galaxy 2"]
+    },
+    {
+      "display": "Spider-Man: Homecoming",
+      "hint": "2017",
+      "correct": ["Spider-Man: Homecoming", "spiderman homecoming", "homecoming", "spider man homecoming"]
+    },
+    {
+      "display": "Thor: Ragnarok",
+      "hint": "2017",
+      "correct": ["Thor: Ragnarok", "ragnarok", "thor 3"]
+    },
+    {
+      "display": "Black Panther",
+      "hint": "2018",
+      "correct": ["Black Panther", "black panther 1"]
+    },
+    {
+      "display": "Avengers: Infinity War",
+      "hint": "2018",
+      "correct": ["Avengers: Infinity War", "infinity war", "avengers 3"]
+    },
+    {
+      "display": "Ant-Man and the Wasp",
+      "hint": "2018",
+      "correct": ["Ant-Man and the Wasp", "ant man 2", "ant-man 2"]
+    },
+    {
+      "display": "Captain Marvel",
+      "hint": "2019",
+      "correct": ["Captain Marvel"]
+    },
+    {
+      "display": "Avengers: Endgame",
+      "hint": "2019",
+      "correct": ["Avengers: Endgame", "endgame", "avengers 4"]
+    },
+    {
+      "display": "Spider-Man: Far From Home",
+      "hint": "2019",
+      "correct": ["Spider-Man: Far From Home", "far from home", "spiderman 2", "spider man far from home"]
+    },
+    {
+      "display": "Black Widow",
+      "hint": "2021",
+      "correct": ["Black Widow"]
+    },
+    {
+      "display": "Shang-Chi and the Legend of the Ten Rings",
+      "hint": "2021",
+      "correct": ["Shang-Chi and the Legend of the Ten Rings", "shang chi", "shang-chi", "ten rings"]
+    },
+    {
+      "display": "Eternals",
+      "hint": "2021",
+      "correct": ["Eternals", "the eternals"]
+    },
+    {
+      "display": "Spider-Man: No Way Home",
+      "hint": "2021",
+      "correct": ["Spider-Man: No Way Home", "no way home", "spiderman 3", "spider man no way home"]
+    },
+    {
+      "display": "Doctor Strange in the Multiverse of Madness",
+      "hint": "2022",
+      "correct": ["Doctor Strange in the Multiverse of Madness", "multiverse of madness", "doctor strange 2", "dr strange 2"]
+    },
+    {
+      "display": "Thor: Love and Thunder",
+      "hint": "2022",
+      "correct": ["Thor: Love and Thunder", "love and thunder", "thor 4"]
+    },
+    {
+      "display": "Black Panther: Wakanda Forever",
+      "hint": "2022",
+      "correct": ["Black Panther: Wakanda Forever", "wakanda forever", "black panther 2"]
+    },
+    {
+      "display": "Ant-Man and the Wasp: Quantumania",
+      "hint": "2023",
+      "correct": ["Ant-Man and the Wasp: Quantumania", "quantumania", "ant man 3", "ant-man 3"]
+    },
+    {
+      "display": "Guardians of the Galaxy Vol. 3",
+      "hint": "2023",
+      "correct": ["Guardians of the Galaxy Vol. 3", "guardians 3", "gotg 3", "guardians of the galaxy 3"]
+    },
+    {
+      "display": "The Marvels",
+      "hint": "2023",
+      "correct": ["The Marvels", "marvels"]
+    }
+  ]
+}
+
+Additional Challenge Examples:
+Taylor Swift Albums:
+json{
+  "id": "taylor-swift-albums",
+  "title": "Taylor Swift Studio Albums",
+  "prompt": "Name all Taylor Swift studio albums",
+  "totalCount": 11,
+  "answers": [
+    {"display": "Taylor Swift", "hint": "2006", "correct": ["Taylor Swift", "debut", "self titled"]},
+    {"display": "Fearless", "hint": "2008", "correct": ["Fearless"]},
+    {"display": "Speak Now", "hint": "2010", "correct": ["Speak Now"]},
+    {"display": "Red", "hint": "2012", "correct": ["Red"]},
+    {"display": "1989", "hint": "2014", "correct": ["1989", "nineteen eighty nine"]},
+    {"display": "Reputation", "hint": "2017", "correct": ["Reputation", "rep"]},
+    {"display": "Lover", "hint": "2019", "correct": ["Lover"]},
+    {"display": "Folklore", "hint": "2020", "correct": ["Folklore"]},
+    {"display": "Evermore", "hint": "2020", "correct": ["Evermore"]},
+    {"display": "Midnights", "hint": "2022", "correct": ["Midnights"]},
+    {"display": "The Tortured Poets Department", "hint": "2024", "correct": ["The Tortured Poets Department", "TTPD", "tortured poets"]}
+  ]
+}
+Best Actress Oscar Winners:
+json{
+  "id": "best-actress-oscars",
+  "title": "Best Actress Oscar Winners (2000-2024)",
+  "prompt": "Name all Best Actress Oscar winners since 2000",
+  "totalCount": 25,
+  "answers": [
+    {"display": "Julia Roberts", "hint": "2001 • Erin Brockovich", "correct": ["Julia Roberts"]},
+    {"display": "Halle Berry", "hint": "2002 • Monster's Ball", "correct": ["Halle Berry"]},
+    {"display": "Nicole Kidman", "hint": "2003 • The Hours", "correct": ["Nicole Kidman"]},
+    {"display": "Charlize Theron", "hint": "2004 • Monster", "correct": ["Charlize Theron"]},
+    {"display": "Hilary Swank", "hint": "2005 • Million Dollar Baby", "correct": ["Hilary Swank"]},
+    {"display": "Reese Witherspoon", "hint": "2006 • Walk the Line", "correct": ["Reese Witherspoon"]},
+    {"display": "Helen Mirren", "hint": "2007 • The Queen", "correct": ["Helen Mirren"]},
+    {"display": "Marion Cotillard", "hint": "2008 • La Vie en Rose", "correct": ["Marion Cotillard"]},
+    {"display": "Kate Winslet", "hint": "2009 • The Reader", "correct": ["Kate Winslet"]},
+    {"display": "Sandra Bullock", "hint": "2010 • The Blind Side", "correct": ["Sandra Bullock"]},
+    {"display": "Natalie Portman", "hint": "2011 • Black Swan", "correct": ["Natalie Portman"]},
+    {"display": "Meryl Streep", "hint": "2012 • The Iron Lady", "correct": ["Meryl Streep"]},
+    {"display": "Jennifer Lawrence", "hint": "2013 • Silver Linings Playbook", "correct": ["Jennifer Lawrence"]},
+    {"display": "Cate Blanchett", "hint": "2014 • Blue Jasmine", "correct": ["Cate Blanchett"]},
+    {"display": "Julianne Moore", "hint": "2015 • Still Alice", "correct": ["Julianne Moore"]},
+    {"display": "Brie Larson", "hint": "2016 • Room", "correct": ["Brie Larson"]},
+    {"display": "Emma Stone", "hint": "2017 • La La Land", "correct": ["Emma Stone"]},
+    {"display": "Frances McDormand", "hint": "2018 • Three Billboards", "correct": ["Frances McDormand"]},
+    {"display": "Olivia Colman", "hint": "2019 • The Favourite", "correct": ["Olivia Colman"]},
+    {"display": "Renée Zellweger", "hint": "2020 • Judy", "correct": ["Renée Zellweger", "Renee Zellweger"]},
+    {"display": "Frances McDormand", "hint": "2021 • Nomadland", "correct": ["Frances McDormand"]},
+    {"display": "Jessica Chastain", "hint": "2022 • The Eyes of Tammy Faye", "correct": ["Jessica Chastain"]},
+    {"display": "Michelle Yeoh", "hint": "2023 • Everything Everywhere All at Once", "correct": ["Michelle Yeoh"]},
+    {"display": "Emma Stone", "hint": "2024 • Poor Things", "correct": ["Emma Stone"]},
+    {"display": "Mikey Madison", "hint": "2025 • Anora", "correct": ["Mikey Madison"]}
+  ]
+}
+US States:
+json{
+  "id": "us-states",
+  "title": "US States",
+  "prompt": "Name all 50 US States",
+  "totalCount": 50,
+  "answers": [
+    {"display": "Alabama", "hint": "AL", "correct": ["Alabama"]},
+    {"display": "Alaska", "hint": "AK", "correct": ["Alaska"]},
+    {"display": "Arizona", "hint": "AZ", "correct": ["Arizona"]},
+    // ... (abbreviated postal codes as hints)
+  ]
+}
+
+UI Component Code Example:
+jsx// ThreeStrikes.jsx component snippet
+
+const ThreeStrikesGame = () => {
+  const [answers, setAnswers] = useState([]); // from API
+  const [revealed, setRevealed] = useState(new Set()); // indices of correct answers
+  const [strikes, setStrikes] = useState(0);
+  const [input, setInput] = useState('');
+  
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const guess = input.trim().toLowerCase();
+    
+    // Check if already guessed
+    if (guessedAnswers.has(guess)) {
+      showMessage("Already guessed!");
+      return;
+    }
+    
+    // Find matching answer
+    const matchIndex = answers.findIndex(answer => 
+      answer.correct.some(variant => 
+        variant.toLowerCase() === guess
+      )
+    );
+    
+    if (matchIndex !== -1 && !revealed.has(matchIndex)) {
+      // Correct!
+      setRevealed(new Set([...revealed, matchIndex]));
+      setInput('');
+      // Success animation
+    } else {
+      // Wrong!
+      setStrikes(strikes + 1);
+      setInput('');
+      // Shake animation
+      
+      if (strikes + 1 >= 3) {
+        // Game over
+        handleGameOver();
+      }
+    }
+    
+    setGuessedAnswers(new Set([...guessedAnswers, guess]));
+  };
+  
+  return (
+    <div className="p-6">
+      <h1 className="text-3xl font-display mb-2">{challenge.title}</h1>
+      <p className="text-pop-cyan mb-6">{challenge.totalCount} total answers</p>
+      
+      {/* Grid of boxes */}
+      <div className="grid grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-4 mb-8">
+        {answers.map((answer, index) => (
+          <div
+            key={index}
+            className={`
+              aspect-square rounded-lg p-3 flex flex-col items-center justify-center
+              ${revealed.has(index) 
+                ? 'bg-success/20 border-2 border-success' 
+                : 'bg-white/10 border-2 border-white/20'
+              }
+            `}
+          >
+            <div className="text-2xl font-display mb-1">
+              {revealed.has(index) ? '✓' : '?'}
+            </div>
+            <div className={`text-xs text-center ${revealed.has(index) ? 'text-success' : 'text-white/60'}`}>
+              {answer.hint}
+            </div>
+            {revealed.has(index) && (
+              <div className="text-sm text-center mt-2 font-medium">
+                {answer.display}
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+      
+      {/* Strikes display */}
+      <div className="mb-6 text-center">
+        <span className="text-lg">Strikes: </span>
+        {[...Array(3)].map((_, i) => (
+          <span key={i} className={i < strikes ? 'text-error' : 'text-white/20'}>
+            ⚠️
+          </span>
+        ))}
+      </div>
+      
+      {/* Input */}
+      <form onSubmit={handleSubmit} className="max-w-md mx-auto">
+        <input
+          type="text"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          placeholder="Type your answer..."
+          className="input w-full mb-4"
+          autoFocus
+          disabled={strikes >= 3}
+        />
+        <button type="submit" className="btn btn-primary w-full">
+          Submit
+        </button>
+      </form>
+      
+      {/* Progress */}
+      <div className="text-center mt-6 text-white/60">
+        {revealed.size}/{answers.length} correct
+      </div>
+    </div>
+  );
+};
+
+YES - THIS FULL PROMPT IS READY FOR REPLIT AGENT
+Copy the entire prompt (the original one I wrote + this updated Three Strikes section) and paste it into Replit Agent to build the platform.
+The key changes:
+
+Three Strikes now shows a grid of hint boxes
+Each box has a hint (year, postal code, movie title, etc.)
+Boxes are sorted by hint (chronological or alphabetical)
+When correct answer given, box reveals the full answer
+Data structure includes display, hint, and correct variations for each answer

@@ -1,0 +1,1588 @@
+Complete Replit Agent Build Prompt
+Features to Build:
+DAILY SOLO GAMES
+1. Three Strikes
+
+Daily challenge (same list for everyone)
+Example: "Name all Best Picture Oscar winners"
+Players type answers
+3 wrong guesses = game over
+Track: correct answers, strikes used, completion
+Shareable results with emojis
+Personal stats: current streak, best score, average
+Archive of past days' challenges
+
+2. Mini Pop Crossword
+
+5×5 grid, pop culture clues only
+Daily puzzle (new one every day at midnight)
+Timer tracks personal best
+Click/tap cells to fill in answers
+Auto-check on completion
+Shareable completion time + grid
+Archive of past puzzles
+Stats: streak, average time, fastest solve
+
+
+HOSTED PARTY GAMES
+3. Pop the Question (voting burns)
+
+Host creates room → gets 4-letter code (e.g., "BUZZ")
+Players join by entering code on phones
+Lobby shows all connected players in real-time
+Host controls game from dashboard:
+
+Select question: "Most likely to become a reality TV star?"
+Start voting round
+Reveal results
+Next question
+
+
+Player phone view:
+
+See the question
+Vote for someone (tap their name)
+Can't vote for yourself
+Submit vote
+
+
+Results screen (projected):
+
+"Sarah - 5 votes 🔥"
+"Mike - 2 votes"
+"Tom - 1 vote"
+Shows who got "burned"
+
+
+Leaderboard tracks most burns per player
+10-15 pre-loaded question prompts (pop culture themed)
+Host can end game, see final stats
+
+4. Roast Roulette (writing burns)
+
+Host creates room → gets code
+Players join on phones
+Number of colored questions = players - 1
+
+5 players = 4 colors (🟡🔵🔴🟢)
+8 players = 7 colors (🟡🔵🔴🟢🟣🟠⚫)
+
+
+Host screen (projected) shows all colored question cards:
+
+"🟡 What's their most embarrassing Spotify playlist?"
+"🔵 What would their drunk tattoo be?"
+"🔴 Which reality show would they get kicked off first?"
+"🟢 What's their worst dating app bio?"
+
+
+Writing Phase:
+
+Each player gets assigned someone's "card" (round-robin)
+Phone shows: "You're roasting: SARAH"
+4 colored text boxes (one per question)
+Player picks ONE color to write in (leaves others blank)
+Timer: 60-90 seconds
+Submit → card passes to next player
+Repeat until each player has written on everyone else's card
+Each card ends up with one answer per color (from different people)
+
+
+Reveal Phase:
+
+Each player sees their own card with all roasts
+For each color, player:
+
+Reads all answers for that color
+Picks favorite answer
+Guesses who wrote it (dropdown of other players)
+
+
+Points awarded:
+
++1 if your roast was picked as favorite
++1 if you guess correctly who wrote your favorite
+
+
+
+
+Final leaderboard: Best Roaster, Best Detective, Overall Winner
+15-20 pre-loaded question sets (pop culture themed, spicy but not mean)
+
+
+HOMEPAGE & NAVIGATION
+Landing Page:
+┌─────────────────────────────────────┐
+│                                     │
+│         POP: THE QUESTION           │
+│   "Where pop culture gets personal" │
+│                                     │
+│   ┌─────────────────────────────┐   │
+│   │   DAILY GAMES               │   │
+│   │   Play Today's Challenges   │   │
+│   │   ────────────────────      │   │
+│   │   Three Strikes        ✓    │   │
+│   │   Mini Crossword       —    │   │
+│   └─────────────────────────────┘   │
+│                                     │
+│   ┌─────────────────────────────┐   │
+│   │   HOSTED PARTY GAMES        │   │
+│   │   ────────────────────      │   │
+│   │   Host a Game         →     │   │
+│   │   Join a Game         →     │   │
+│   └─────────────────────────────┘   │
+│                                     │
+│   Stats | Archive | How to Play    │
+└─────────────────────────────────────┘
+Navigation Flow:
+
+Daily Games → Game picker → Play game → Results → Share
+Host a Game → Choose format (Pop the Question / Roast Roulette) → Get room code → Lobby → Game → Results
+Join a Game → Enter code → Enter name → Lobby → Game → Results
+
+
+DESIGN DIRECTION
+Visual Style:
+
+Vibe: Game show meets magazine editorial - bold, confident, pop culture energy
+NOT: Generic trivia app, corporate, kiddie, outdated web 2.0
+Think: Spotify Wrapped + Netflix thumbnails + Apple Fitness rings + Letterboxd
+
+Color Palette:
+Primary:
+
+Deep Purple: #6B46C1 (rich, confident)
+Hot Pink: #FF006E (energy, pop culture)
+Electric Cyan: #00D9FF (modern, digital)
+
+Neutrals:
+
+Background Dark: #0A0A0F (rich black, not pure black)
+Background Light: #F8F8FC (soft white for light mode)
+Text Dark: #1A1A24
+Text Light: #E8E8F0
+
+Accent/Game Colors:
+
+Success Green: #00F5A0
+Warning Orange: #FF6B35
+Error Red: #FF0054
+
+For Roast Roulette colored cards:
+
+🟡 Yellow: #FFD700
+🔵 Blue: #4169E1
+🔴 Red: #FF4444
+🟢 Green: #00C851
+🟣 Purple: #9B59B6
+🟠 Orange: #FF8C00
+⚫ Black: #2C2C2C
+
+Typography:
+Headlines/Display:
+
+Font: Space Grotesk (geometric, modern, confident)
+Weight: Bold (700) for main headings
+Usage: Game titles, scores, big numbers
+
+Body/UI:
+
+Font: Inter (clean, readable, professional)
+Weight: Regular (400) for body, Medium (500) for buttons
+Usage: Questions, answers, all readable text
+
+Special/Playful:
+
+Font: Cabinet Grotesk or Clash Display (for logo, special moments)
+Usage: "POP: THE QUESTION" logo, celebration screens
+
+Layout Principles:
+Mobile-First (Player View):
+
+Large tap targets (min 48px)
+Thumb-zone friendly buttons (bottom of screen)
+Big, readable text (18px minimum)
+High contrast for readability
+Single-column layouts
+Generous spacing (avoid cramped UI)
+
+Projector-Friendly (Host View):
+
+MASSIVE text (72px+ headlines)
+Ultra-high contrast
+Minimal UI chrome
+Full-screen question displays
+Dark backgrounds with bright text
+Readable from 15 feet away
+
+Desktop:
+
+Centered content (max-width 1200px)
+Card-based layouts
+Plenty of whitespace
+Subtle shadows and borders
+Smooth transitions
+
+UI Components Style:
+Buttons:
+
+Rounded corners (12px border-radius)
+Bold, chunky style
+Hover states with scale transform (1.05x)
+Shadow on hover
+Primary: Gradient (purple → pink)
+Secondary: Outline style
+Destructive: Solid red
+
+Cards:
+
+Soft shadows (0 4px 12px rgba(0,0,0,0.1))
+Rounded (16px border-radius)
+Padding: 24px
+Background: subtle gradient or solid color
+Hover: lift effect (translate + shadow)
+
+Input Fields:
+
+Clean, minimal borders
+Focus state: thick colored border
+Large text inside (16px+)
+Placeholder text in muted color
+Error states: red border + shake animation
+
+Timers:
+
+Circular progress ring (like Apple Fitness)
+Color changes as time runs low (green → orange → red)
+Pulse animation at 10 seconds
+Big numbers in center
+
+Leaderboards:
+
+Podium style (1st place elevated)
+Profile pictures (or initials in colored circles)
+Animated count-up for scores
+Trophy/medal icons for top 3
+Striped rows for readability
+
+Loading States:
+
+Skeleton screens (no spinners)
+Shimmer effect on placeholders
+Smooth fade-ins when content loads
+Progress indicators for multi-step flows
+
+Animations & Micro-interactions:
+
+Page transitions: Slide + fade (300ms ease-out)
+Button clicks: Scale down (0.95x) then bounce back
+Card reveals: Flip animation (for roast reveals)
+Score updates: Count-up animation with easing
+Success moments: Confetti burst (canvas particles)
+Wrong answers: Gentle shake (Three Strikes)
+Voting results: Bars grow from left with easing
+All animations: Respect prefers-reduced-motion
+
+Iconography:
+
+Style: Phosphor Icons (clean, modern, consistent)
+Size: 24px default, 32px for primary actions
+Usage: Navigation, buttons, status indicators
+Custom icons for game modes (design in style)
+
+Illustrations/Graphics:
+
+NOT: Generic stock illustrations, clipart, 3D renders
+YES: Bold graphic shapes, duotone images, abstract patterns
+Pattern backgrounds: Subtle noise texture, grid overlays
+Game mode icons: Custom, colorful, distinctive
+Empty states: Playful but minimal illustrations
+
+Dark Mode:
+
+Default mode for hosted games (bar/projector friendly)
+Light mode for daily solo games (optional toggle)
+Smooth transition between modes
+Adjusted colors (not just inverted)
+Maintain contrast ratios (WCAG AA minimum)
+
+
+TECH STACK
+Frontend:
+
+React (Vite for build)
+React Router for navigation
+Socket.io-client for real-time (hosted games)
+Framer Motion for animations
+Tailwind CSS for styling (with custom config for our colors)
+Lucide React for icons
+
+Backend:
+
+Node.js + Express
+Socket.io for real-time communication
+SQLite for database (questions, daily puzzles, user stats)
+JSON files for question packs (easy to edit)
+
+File Structure:
+/pop-the-question
+├── /client
+│   ├── /src
+│   │   ├── /pages
+│   │   │   ├── Home.jsx
+│   │   │   ├── DailyGames.jsx
+│   │   │   ├── HostedGames.jsx
+│   │   │   ├── Stats.jsx
+│   │   │   └── Archive.jsx
+│   │   ├── /games
+│   │   │   ├── /solo
+│   │   │   │   ├── ThreeStrikes.jsx
+│   │   │   │   └── MiniCrossword.jsx
+│   │   │   └── /hosted
+│   │   │       ├── PopTheQuestion
+│   │   │       │   ├── Host.jsx
+│   │   │       │   └── Player.jsx
+│   │   │       └── RoastRoulette
+│   │   │           ├── Host.jsx
+│   │   │           └── Player.jsx
+│   │   ├── /components
+│   │   │   ├── Lobby.jsx
+│   │   │   ├── Leaderboard.jsx
+│   │   │   ├── Timer.jsx
+│   │   │   ├── ShareResults.jsx
+│   │   │   └── RoomCode.jsx
+│   │   ├── /styles
+│   │   │   └── tailwind.config.js
+│   │   └── App.jsx
+│   └── index.html
+├── /server
+│   ├── /routes
+│   │   ├── daily.js (fetch daily challenges)
+│   │   ├── rooms.js (create/join hosted games)
+│   │   └── stats.js (user stats, streaks)
+│   ├── /game-logic
+│   │   ├── popTheQuestion.js
+│   │   └── roastRoulette.js
+│   ├── /socket
+│   │   └── events.js (real-time game events)
+│   ├── /db
+│   │   └── database.js (SQLite setup)
+│   └── server.js
+├── /data
+│   ├── /questions
+│   │   ├── three-strikes.json
+│   │   ├── crossword-clues.json
+│   │   ├── pop-the-question-prompts.json
+│   │   └── roast-roulette-questions.json
+│   └── daily-seed.json (tracks current day's puzzles)
+└── package.json
+
+CONTENT EXAMPLES
+Three Strikes Lists:
+json{
+  "id": "marvel-movies",
+  "title": "Marvel Cinematic Universe Movies",
+  "prompt": "Name all MCU movies",
+  "acceptedAnswers": [
+    ["Iron Man", "ironman"],
+    ["The Incredible Hulk", "incredible hulk", "hulk"],
+    ["Iron Man 2", "ironman 2"],
+    ["Thor"],
+    ["Captain America: The First Avenger", "captain america", "first avenger"],
+    // ... all 33 movies
+  ],
+  "totalCount": 33
+}
+Mini Crossword Clues:
+json{
+  "id": "crossword-jan-15-2025",
+  "grid": [
+    ["N", "E", "T", "F", "L"],
+    ["E", "", "I", "", "O"],
+    ["T", "A", "T", "O", "O"],
+    ["", "", "O", "", "K"],
+    ["", "", "", "", ""]
+  ],
+  "clues": {
+    "across": {
+      "1": "Streaming giant (7)",
+      "3": "Permanent ink (6)",
+    },
+    "down": {
+      "1": "Streaming service",
+      "2": "Short video app"
+    }
+  }
+}
+Pop the Question Prompts:
+json[
+  "Most likely to become a reality TV star",
+  "Most likely to cry during a Pixar movie",
+  "Worst Spotify Wrapped of the group",
+  "Most likely to quote TikTok sounds in real life",
+  "Would survive longest in a horror movie",
+  "Most likely to text their ex",
+  "Belongs on Love Island",
+  "Has the most unhinged Netflix watch history",
+  "Most likely to go viral for the wrong reasons",
+  "Main character energy (derogatory)"
+]
+Roast Roulette Questions:
+json[
+  "What's their most embarrassing Spotify playlist?",
+  "What would their drunk tattoo be?",
+  "Which reality show would they get kicked off first?",
+  "What's their worst dating app bio?",
+  "What sitcom character are they?",
+  "What's their secret toxic trait?",
+  "What would they be famous for?",
+  "What's the worst thing in their search history?",
+  "Which Disney villain are they?",
+  "What's their karaoke go-to song?"
+]
+
+KEY FEATURES TO IMPLEMENT
+Room Code System (Hosted Games):
+
+Generate unique 4-letter codes (e.g., BUZZ, ROFL, YEET)
+Codes expire after 2 hours of inactivity
+Prevent duplicate codes
+Easy to type on mobile
+Display code LARGE on host screen
+
+Real-Time Sync (Socket.io):
+Events needed:
+
+join-room (player → server)
+player-joined (server → all)
+player-left (server → all)
+start-game (host → server)
+game-started (server → all)
+submit-vote (player → server) [Pop the Question]
+submit-answer (player → server) [Roast Roulette]
+reveal-results (host → server)
+results-update (server → all)
+next-round (host → server)
+end-game (host → server)
+
+Stats Tracking (Daily Games):
+
+Current streak (consecutive days played)
+Longest streak
+Total games played
+Best scores
+Average scores
+Completion calendar (visual grid)
+Store in localStorage (no login required for MVP)
+
+Share Functionality:
+Three Strikes:
+Pop: The Question - Three Strikes
+Jan 15, 2025
+Marvel Movies: 28/33 ⚠️⚠️⚠️
+
+popthequestion.com
+Mini Crossword:
+Pop: The Question - Mini Crossword
+Jan 15, 2025
+⬛🟩🟩🟩🟩
+🟩⬛🟩⬛🟩
+🟩🟩🟩🟩🟩
+🟩⬛🟩⬛🟩
+🟩🟩🟩🟩🟩
+Time: 2:14
+
+popthequestion.com
+Copy to clipboard + "Share to Twitter/Instagram Story" functionality
+Responsive Breakpoints:
+
+Mobile: 375px - 767px (primary player view)
+Tablet: 768px - 1023px
+Desktop: 1024px+ (host dashboard, solo games)
+Projector: 1920px+ (fullscreen host view)
+
+
+NICE-TO-HAVES (Phase 2)
+
+User accounts (save stats across devices)
+Custom question creator
+Team mode (players pair up)
+Sound effects toggle
+Music during gameplay
+Animated confetti on wins
+Player avatars/profile pics
+Kick player (host control)
+Spectator mode
+Game replays
+Analytics dashboard (host sees which questions were most popular)
+
+
+This is the complete build spec. Ready to turn this into a Replit Agent prompt?You said: yesyes13:06Claude responded: REPLIT AGENT BUILD PROMPTREPLIT AGENT BUILD PROMPT
+
+PROJECT OVERVIEW
+Build Pop: The Question - a pop culture trivia platform with daily solo games and hosted party games for bars and gatherings.
+Tech Stack:
+
+Frontend: React (Vite), React Router, Socket.io-client, Framer Motion, Tailwind CSS, Lucide React icons
+Backend: Node.js, Express, Socket.io, SQLite
+Deploy on Replit with real-time capabilities
+
+
+CORE FEATURES TO BUILD
+1. HOMEPAGE & NAVIGATION
+Create a landing page with:
+
+Large "POP: THE QUESTION" logo at top
+Tagline: "Where pop culture gets personal"
+Two main sections:
+
+DAILY GAMES card with:
+
+"Play Today's Challenges" heading
+Three Strikes (show ✓ if completed today, — if not)
+Mini Crossword (show ✓ if completed today, — if not)
+
+
+HOSTED PARTY GAMES card with:
+
+"Host a Game" button
+"Join a Game" button
+
+
+
+
+Footer links: Stats | Archive | How to Play
+
+Navigation routes:
+
+/ - Homepage
+/daily/three-strikes - Three Strikes game
+/daily/crossword - Mini Crossword game
+/host - Choose game format to host
+/join - Enter room code to join
+/stats - Personal stats page
+/archive - Past daily puzzles
+/game/:roomCode/host - Host view for active game
+/game/:roomCode/player - Player view for active game
+
+
+2. DAILY SOLO GAME: THREE STRIKES
+Game Mechanics:
+
+Display today's challenge at top: "Name all [category]" (e.g., "Name all Marvel Cinematic Universe movies")
+Show total possible answers: "33 total answers"
+Text input field for typing answers
+Submit button (or press Enter)
+Display area showing:
+
+Correct answers in a list (as player gets them right)
+Strike counter: ⚠️ indicators (max 3)
+Progress: "15/33 correct"
+
+
+When answer is correct: add to list, clear input
+When answer is wrong: add a strike, show feedback
+When 3 strikes reached: game over, show final score
+Timer is optional (not required for MVP)
+
+After Game Completion:
+
+Show results screen:
+
+"You got X/Y before striking out"
+Your strikes used
+Shareable text (copy to clipboard):
+
+
+
+    Pop: The Question - Three Strikes
+    [Date]
+    [Category]: X/Y ⚠️⚠️⚠️
+    
+    popthequestion.com
+
+Button to play again (loads a different challenge from archive)
+Button to return home
+
+Data Requirements:
+
+Store in SQLite:
+
+daily_challenges table with: id, date, category, challenge_title, total_count
+three_strikes_answers table with: challenge_id, accepted_answers (JSON array of variations)
+
+
+Store in localStorage:
+
+Completion status for today
+User's best score per challenge
+Current streak
+Stats (total plays, average score, best score)
+
+
+
+Answer Matching:
+
+Case-insensitive matching
+Accept multiple variations (e.g., "Iron Man", "ironman", "iron man 1")
+Trim whitespace
+Show "Already guessed!" if duplicate
+
+Sample Data (include in initial database):
+json{
+  "id": "marvel-movies",
+  "date": "2025-01-15",
+  "title": "Marvel Cinematic Universe Movies",
+  "prompt": "Name all MCU movies",
+  "totalCount": 33,
+  "answers": [
+    ["Iron Man", "ironman"],
+    ["The Incredible Hulk", "incredible hulk", "hulk"],
+    ["Iron Man 2", "ironman 2", "iron man two"],
+    ["Thor"],
+    ["Captain America: The First Avenger", "captain america", "first avenger"],
+    ["The Avengers", "avengers"],
+    ["Iron Man 3", "ironman 3"],
+    ["Thor: The Dark World", "dark world", "thor 2"],
+    ["Captain America: The Winter Soldier", "winter soldier", "captain america 2"],
+    ["Guardians of the Galaxy", "guardians", "gotg"],
+    ["Avengers: Age of Ultron", "age of ultron", "avengers 2"],
+    ["Ant-Man", "antman", "ant man"],
+    ["Captain America: Civil War", "civil war", "captain america 3"],
+    ["Doctor Strange", "dr strange"],
+    ["Guardians of the Galaxy Vol. 2", "guardians 2", "gotg 2"],
+    ["Spider-Man: Homecoming", "spiderman homecoming", "homecoming"],
+    ["Thor: Ragnarok", "ragnarok", "thor 3"],
+    ["Black Panther"],
+    ["Avengers: Infinity War", "infinity war", "avengers 3"],
+    ["Ant-Man and the Wasp", "ant man 2"],
+    ["Captain Marvel"],
+    ["Avengers: Endgame", "endgame", "avengers 4"],
+    ["Spider-Man: Far From Home", "far from home", "spiderman 2"],
+    ["Black Widow"],
+    ["Shang-Chi and the Legend of the Ten Rings", "shang chi", "shang-chi"],
+    ["Eternals"],
+    ["Spider-Man: No Way Home", "no way home", "spiderman 3"],
+    ["Doctor Strange in the Multiverse of Madness", "multiverse of madness", "doctor strange 2"],
+    ["Thor: Love and Thunder", "love and thunder", "thor 4"],
+    ["Black Panther: Wakanda Forever", "wakanda forever", "black panther 2"],
+    ["Ant-Man and the Wasp: Quantumania", "quantumania", "ant man 3"],
+    ["Guardians of the Galaxy Vol. 3", "guardians 3", "gotg 3"],
+    ["The Marvels", "marvels"]
+  ]
+}
+Create 5 different Three Strikes challenges with pop culture themes (Taylor Swift albums, Best Picture winners, US States, Countries in Europe, Disney animated movies).
+
+3. DAILY SOLO GAME: MINI POP CROSSWORD
+Game Mechanics:
+
+Display a 5x5 crossword grid
+Click/tap a cell to select it
+Type to fill in letters
+Arrow keys to move between cells (desktop)
+Clue panel showing:
+
+ACROSS clues (numbered)
+DOWN clues (numbered)
+
+
+Highlight current word being filled
+Auto-advance to next cell after typing
+Check button to verify answers
+Timer showing elapsed time (starts when page loads)
+When complete and correct: show success screen
+
+After Completion:
+
+Show results:
+
+Completion time
+Grid with correct answers highlighted
+Shareable text (copy to clipboard):
+
+
+
+    Pop: The Question - Mini Crossword
+    [Date]
+    🟩🟩🟩🟩🟩
+    🟩⬛🟩⬛🟩
+    🟩🟩🟩🟩🟩
+    🟩⬛🟩⬛🟩
+    🟩🟩🟩🟩🟩
+    Time: 2:14
+    
+    popthequestion.com
+
+Compare to personal best time
+Button to play again (archive puzzle)
+
+Data Requirements:
+
+Store in SQLite:
+
+crossword_puzzles table with: id, date, grid (JSON), clues_across (JSON), clues_down (JSON)
+
+
+Store in localStorage:
+
+Completion status for today
+Best time
+Current streak
+Average time
+
+
+
+Sample Data (include 3 crossword puzzles):
+json{
+  "id": "crossword-1",
+  "date": "2025-01-15",
+  "grid": [
+    ["S", "P", "O", "T", "I"],
+    ["P", "", "P", "", "F"],
+    ["O", "S", "C", "A", "R"],
+    ["T", "", "A", "", ""],
+    ["S", "T", "R", "E", "A", "M"]
+  ],
+  "blackSquares": [[1,1], [1,3], [3,1], [3,3], [3,4]],
+  "clues": {
+    "across": {
+      "1": "Music streaming app with green logo (7)",
+      "3": "Academy Award statuette (5)",
+      "5": "Netflix, Hulu, etc. (6)"
+    },
+    "down": {
+      "1": "Swedish music streaming service (7)",
+      "2": "Short video app (6)",
+      "4": "Award for movies (5)"
+    }
+  }
+}
+
+4. HOSTED GAME: POP THE QUESTION (Voting Burns)
+Host Flow:
+
+Game Selection (/host):
+
+Show two game cards: "Pop the Question" and "Roast Roulette"
+Click "Pop the Question" to create room
+
+
+Room Creation:
+
+Generate 4-letter room code (e.g., BUZZ, ROFL, YEET, VIBE)
+Navigate to /game/:roomCode/host
+Show lobby screen with:
+
+Large room code display
+List of connected players (real-time updates)
+"Start Game" button (disabled until at least 3 players)
+
+
+
+
+Game Screen (/game/:roomCode/host):
+
+Display current question LARGE (72px+ font): "Most likely to become a reality TV star?"
+Show voting status: "Waiting for votes... 5/7 players voted"
+"Reveal Results" button (appears when all votes in)
+Results screen shows:
+
+Player names with vote counts (bars growing animation)
+"🔥" emoji next to player with most votes
+Leaderboard: most burns throughout game
+
+
+"Next Question" button
+"End Game" button (shows final stats)
+
+
+
+Player Flow:
+
+Join Game (/join):
+
+Input field for room code
+"Join" button
+Navigate to /game/:roomCode/player
+
+
+Lobby Screen:
+
+Show room code
+Enter nickname (text input)
+See other players joining (real-time)
+Wait for host to start
+
+
+Voting Screen:
+
+Show question at top
+List all other players as buttons (can't vote for self)
+Tap player name to select
+"Submit Vote" button
+After submitting: "Waiting for others..."
+Results appear when host reveals
+
+
+Results Screen:
+
+Show who got burned (vote counts)
+Current leaderboard
+Wait for next question
+
+
+
+Socket Events:
+
+create-room → returns roomCode
+join-room (roomCode, playerName)
+player-joined → broadcast to all in room
+start-game (host only)
+game-started → broadcast new game state
+submit-vote (votedForPlayerId)
+all-votes-in → notify host
+reveal-results (host only)
+results-revealed → broadcast vote counts
+next-question (host only)
+question-update → broadcast new question
+end-game (host only)
+
+Data Requirements:
+
+In-memory room state (no database persistence needed):
+
+javascript  {
+    roomCode: "BUZZ",
+    hostId: "socket-abc123",
+    gameType: "pop-the-question",
+    status: "lobby | playing | finished",
+    players: [
+      {id: "socket-123", name: "Sarah", burns: 0},
+      {id: "socket-456", name: "Mike", burns: 0}
+    ],
+    currentQuestion: "Most likely to...",
+    currentVotes: {
+      "socket-123": "socket-456", // Sarah voted for Mike
+    },
+    questionIndex: 0
+  }
+Sample Questions (include 15 prompts):
+json[
+  "Most likely to become a reality TV star",
+  "Most likely to cry during a Pixar movie",
+  "Worst Spotify Wrapped of the group",
+  "Most likely to quote TikTok sounds in real life",
+  "Would survive longest in a horror movie",
+  "Most likely to text their ex",
+  "Belongs on Love Island",
+  "Has the most unhinged Netflix watch history",
+  "Most likely to go viral for the wrong reasons",
+  "Main character energy (derogatory)",
+  "Most likely to sleep through their alarm",
+  "Would get voted off a reality show first",
+  "Most chronically online",
+  "Takes the longest to get ready",
+  "Most likely to fall in love with someone they just met"
+]
+
+5. HOSTED GAME: ROAST ROULETTE (Writing Burns)
+Host Flow:
+
+Room Creation (same as Pop the Question):
+
+Generate room code
+Navigate to /game/:roomCode/host
+Lobby with player list
+"Start Game" button (need at least 4 players)
+
+
+Game Screen:
+
+Calculate number of questions = players - 1
+Assign colors to questions:
+
+4 questions: 🟡 Yellow, 🔵 Blue, 🔴 Red, 🟢 Green
+5 questions: add 🟣 Purple
+6 questions: add 🟠 Orange
+7 questions: add ⚫ Gray
+
+
+Display all colored question cards on screen (static, visible throughout):
+
+
+
+     🟡 What's their most embarrassing Spotify playlist?
+     🔵 What would their drunk tattoo be?
+     🔴 Which reality show would they get kicked off first?
+     🟢 What's their worst dating app bio?
+
+Show writing phase status: "Round 1/4 - Writing... 5/6 done"
+After all rounds: "Writing Complete - Starting Reveals"
+Reveal phase: Show current player's card being read
+"Next Player" button to move through reveals
+End game shows final leaderboard
+
+Player Flow:
+
+Join & Lobby (same as Pop the Question)
+Writing Phase:
+
+Phone shows: "You're roasting: SARAH"
+Display all colored question boxes (one per question)
+Each box shows:
+
+Color indicator (🟡, 🔵, etc.)
+Question text
+Text input area (multi-line)
+
+
+Player picks ONE color to write in (leaves others blank)
+Timer: 90 seconds per round
+"Submit" button (can only submit if exactly 1 answer filled)
+After submit: "Card submitted - waiting for next round..."
+Repeat for each round (total rounds = players - 1)
+
+
+Reveal Phase:
+
+When it's YOUR card being revealed:
+
+See all your roasts organized by color
+For each color:
+
+Show the one answer written about you
+"Pick Favorite" button
+Dropdown: "Who wrote this?" (list of all other players)
+"Submit Guess" button
+
+
+See results: "Correct! Mike wrote it" or "Wrong - it was Tom"
+Points awarded shown
+
+
+When it's SOMEONE ELSE's card:
+
+Show "Waiting for [Player Name] to pick favorites..."
+See results when they're done
+
+
+
+
+
+Socket Events:
+
+(All same join/create events as Pop the Question)
+assign-card → tells player whose card they're writing on
+submit-roast (targetPlayerId, color, answer)
+round-complete → broadcast when all submitted
+next-round → assign new cards
+writing-complete → all rounds done
+start-reveals
+pick-favorite (color, answerId, guessedPlayerId)
+favorite-picked → broadcast results
+next-reveal (host control)
+
+Game State:
+javascript{
+  roomCode: "ROFL",
+  players: [...],
+  questions: [
+    {color: "yellow", text: "What's their most embarrassing Spotify playlist?"},
+    {color: "blue", text: "What would their drunk tattoo be?"},
+    {color: "red", text: "Which reality show..."},
+    {color: "green", text: "What's their worst dating app bio?"}
+  ],
+  currentRound: 1, // 1-4 for 5 players
+  cards: {
+    "player-sarah-id": {
+      yellow: {author: "player-mike-id", answer: "2000s emo anthems"},
+      blue: {author: "player-tom-id", answer: "No Regerts"},
+      red: {author: "player-jess-id", answer: "The Bachelor"},
+      green: {author: "player-alex-id", answer: "Just gym selfies"}
+    },
+    // ... one card per player
+  },
+  scores: {
+    "player-mike-id": {roasts: 2, guesses: 1, total: 3},
+    // ...
+  }
+}
+Sample Questions (include 15):
+json[
+  "What's their most embarrassing Spotify playlist?",
+  "What would their drunk tattoo be?",
+  "Which reality show would they get kicked off first?",
+  "What's their worst dating app bio?",
+  "What sitcom character are they?",
+  "What's their secret toxic trait?",
+  "What would they be famous for?",
+  "What's the worst thing in their search history?",
+  "Which Disney villain are they?",
+  "What's their karaoke go-to song?",
+  "What's their most unhinged take?",
+  "Which rom-com trope are they?",
+  "What's their celebrity doppelgänger?",
+  "What's their biggest irrational fear?",
+  "What would their memoir be titled?"
+]
+
+DESIGN IMPLEMENTATION
+Tailwind Config:
+javascript// tailwind.config.js
+module.exports = {
+  content: ['./index.html', './src/**/*.{js,jsx}'],
+  theme: {
+    extend: {
+      colors: {
+        'pop-purple': '#6B46C1',
+        'pop-pink': '#FF006E',
+        'pop-cyan': '#00D9FF',
+        'bg-dark': '#0A0A0F',
+        'bg-light': '#F8F8FC',
+        'text-dark': '#1A1A24',
+        'text-light': '#E8E8F0',
+        'success': '#00F5A0',
+        'warning': '#FF6B35',
+        'error': '#FF0054',
+      },
+      fontFamily: {
+        'display': ['Space Grotesk', 'sans-serif'],
+        'body': ['Inter', 'sans-serif'],
+      },
+      fontSize: {
+        'huge': '72px',
+        'xxl': '48px',
+      },
+      borderRadius: {
+        'card': '16px',
+        'button': '12px',
+      },
+      boxShadow: {
+        'card': '0 4px 12px rgba(0, 0, 0, 0.1)',
+        'card-hover': '0 8px 24px rgba(0, 0, 0, 0.15)',
+      },
+    },
+  },
+  plugins: [],
+}
+Global Styles:
+css/* src/index.css */
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&family=Inter:wght@400;500;600&display=swap');
+
+body {
+  @apply bg-bg-dark text-text-light font-body;
+}
+
+h1, h2, h3 {
+  @apply font-display;
+}
+
+/* Smooth transitions */
+* {
+  @apply transition-all duration-300 ease-out;
+}
+
+/* Button base styles */
+.btn {
+  @apply px-6 py-3 rounded-button font-medium;
+  @apply hover:scale-105 active:scale-95;
+}
+
+.btn-primary {
+  @apply bg-gradient-to-r from-pop-purple to-pop-pink text-white;
+  @apply shadow-lg hover:shadow-xl;
+}
+
+.btn-secondary {
+  @apply border-2 border-pop-cyan text-pop-cyan;
+  @apply hover:bg-pop-cyan hover:text-bg-dark;
+}
+
+/* Card styles */
+.card {
+  @apply bg-white/5 backdrop-blur-sm rounded-card p-6;
+  @apply shadow-card hover:shadow-card-hover;
+}
+
+/* Input styles */
+.input {
+  @apply bg-white/10 border-2 border-white/20 rounded-button;
+  @apply px-4 py-3 text-lg text-text-light;
+  @apply focus:border-pop-cyan focus:outline-none;
+}
+
+/* Host view (projector) overrides */
+.host-view {
+  @apply bg-bg-dark text-text-light;
+}
+
+.host-view h1 {
+  @apply text-huge;
+}
+
+.host-view .question {
+  @apply text-xxl font-bold text-center py-12;
+}
+
+/* Mobile-first responsive */
+@media (max-width: 768px) {
+  .host-view h1 {
+    @apply text-4xl;
+  }
+}
+Component Styling Guidelines:
+Homepage Cards:
+jsx<div className="card hover:scale-105 cursor-pointer">
+  <h2 className="text-2xl font-display text-pop-cyan mb-4">
+    DAILY GAMES
+  </h2>
+  <p className="text-text-light/70 mb-6">
+    Play Today's Challenges
+  </p>
+  {/* ... */}
+</div>
+Room Code Display:
+jsx<div className="text-center bg-gradient-to-r from-pop-purple to-pop-pink p-8 rounded-card">
+  <p className="text-sm uppercase tracking-wide opacity-70">Room Code</p>
+  <h1 className="text-6xl font-display mt-2 tracking-widest">
+    {roomCode}
+  </h1>
+</div>
+Timer Component:
+jsx<div className="relative w-24 h-24">
+  <svg className="transform -rotate-90">
+    <circle 
+      className="text-white/20"
+      strokeWidth="8"
+      stroke="currentColor"
+      fill="transparent"
+      r="36"
+      cx="48"
+      cy="48"
+    />
+    <circle
+      className="text-pop-cyan"
+      strokeWidth="8"
+      strokeDasharray={`${circumference} ${circumference}`}
+      strokeDashoffset={offset}
+      stroke="currentColor"
+      fill="transparent"
+      r="36"
+      cx="48"
+      cy="48"
+    />
+  </svg>
+  <div className="absolute inset-0 flex items-center justify-center">
+    <span className="text-3xl font-display">{seconds}</span>
+  </div>
+</div>
+Leaderboard:
+jsx<div className="space-y-3">
+  {players.map((player, index) => (
+    <div 
+      key={player.id}
+      className={`flex items-center justify-between p-4 rounded-card ${
+        index === 0 ? 'bg-gradient-to-r from-yellow-500/20 to-orange-500/20' :
+        index === 1 ? 'bg-white/10' :
+        index === 2 ? 'bg-white/5' :
+        'bg-white/3'
+      }`}
+    >
+      <div className="flex items-center gap-4">
+        <span className="text-2xl font-display text-pop-cyan">
+          #{index + 1}
+        </span>
+        <span className="text-lg">{player.name}</span>
+      </div>
+      <span className="text-2xl font-display text-pop-pink">
+        {player.score}
+      </span>
+    </div>
+  ))}
+</div>
+Loading States:
+jsx<div className="animate-pulse space-y-4">
+  <div className="h-8 bg-white/10 rounded w-3/4"></div>
+  <div className="h-8 bg-white/10 rounded w-1/2"></div>
+</div>
+
+DATABASE SCHEMA (SQLite)
+sql-- Daily challenges for Three Strikes
+CREATE TABLE three_strikes_challenges (
+  id TEXT PRIMARY KEY,
+  date TEXT NOT NULL,
+  title TEXT NOT NULL,
+  prompt TEXT NOT NULL,
+  total_count INTEGER NOT NULL,
+  answers TEXT NOT NULL, -- JSON array of accepted answer variations
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Crossword puzzles
+CREATE TABLE crossword_puzzles (
+  id TEXT PRIMARY KEY,
+  date TEXT NOT NULL,
+  grid TEXT NOT NULL, -- JSON 2D array
+  black_squares TEXT, -- JSON array of [row, col] positions
+  clues_across TEXT NOT NULL, -- JSON object
+  clues_down TEXT NOT NULL, -- JSON object
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Question prompts for Pop the Question
+CREATE TABLE pop_question_prompts (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  prompt TEXT NOT NULL,
+  category TEXT, -- optional categorization
+  is_active BOOLEAN DEFAULT TRUE
+);
+
+-- Questions for Roast Roulette
+CREATE TABLE roast_questions (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  question TEXT NOT NULL,
+  color TEXT, -- yellow, blue, red, green, purple, orange, gray
+  category TEXT, -- optional
+  is_active BOOLEAN DEFAULT TRUE
+);
+
+-- Optional: User stats (if you add accounts later)
+CREATE TABLE user_stats (
+  user_id TEXT PRIMARY KEY,
+  three_strikes_streak INTEGER DEFAULT 0,
+  three_strikes_best_score INTEGER DEFAULT 0,
+  crossword_streak INTEGER DEFAULT 0,
+  crossword_best_time INTEGER, -- in seconds
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+BACKEND SERVER STRUCTURE
+server.js (Main Entry Point):
+javascriptconst express = require('express');
+const http = require('http');
+const { Server } = require('socket.io');
+const cors = require('cors');
+const path = require('path');
+
+const app = express();
+const server = http.createServer(app);
+const io = new Server(server, {
+  cors: {
+    origin: "*",
+    methods: ["GET", "POST"]
+  }
+});
+
+app.use(cors());
+app.use(express.json());
+
+// Serve static files from Vite build
+app.use(express.static(path.join(__dirname, '../client/dist')));
+
+// API Routes
+app.use('/api/daily', require('./routes/daily'));
+app.use('/api/rooms', require('./routes/rooms'));
+
+// Socket.io connection handling
+require('./socket/events')(io);
+
+// Catch-all route for React Router
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../client/dist/index.html'));
+});
+
+const PORT = process.env.PORT || 3000;
+server.listen(PORT, () => {
+  console.log(`Pop: The Question running on port ${PORT}`);
+});
+routes/daily.js:
+javascriptconst express = require('express');
+const router = express.Router();
+const db = require('../db/database');
+
+// Get today's Three Strikes challenge
+router.get('/three-strikes', (req, res) => {
+  const today = new Date().toISOString().split('T')[0];
+  db.get(
+    'SELECT * FROM three_strikes_challenges WHERE date = ?',
+    [today],
+    (err, row) => {
+      if (err) return res.status(500).json({ error: err.message });
+      if (!row) return res.status(404).json({ error: 'No challenge for today' });
+      
+      res.json({
+        id: row.id,
+        title: row.title,
+        prompt: row.prompt,
+        totalCount: row.total_count,
+        answers: JSON.parse(row.answers)
+      });
+    }
+  );
+});
+
+// Get today's crossword
+router.get('/crossword', (req, res) => {
+  const today = new Date().toISOString().split('T')[0];
+  db.get(
+    'SELECT * FROM crossword_puzzles WHERE date = ?',
+    [today],
+    (err, row) => {
+      if (err) return res.status(500).json({ error: err.message });
+      if (!row) return res.status(404).json({ error: 'No puzzle for today' });
+      
+      res.json({
+        id: row.id,
+        grid: JSON.parse(row.grid),
+        blackSquares: JSON.parse(row.black_squares),
+        cluesAcross: JSON.parse(row.clues_across),
+        cluesDown: JSON.parse(row.clues_down)
+      });
+    }
+  );
+});
+
+module.exports = router;
+routes/rooms.js:
+javascriptconst express = require('express');
+const router = express.Router();
+
+// In-memory storage for active rooms
+const rooms = new Map();
+
+// Generate unique room code
+function generateRoomCode() {
+  const words = ['BUZZ', 'ROFL', 'YEET', 'VIBE', 'EPIC', 'FLEX', 'SLAY', 'MOOD'];
+  let code;
+  do {
+    code = words[Math.floor(Math.random() * words.length)];
+  } while (rooms.has(code));
+  return code;
+}
+
+// Create new room
+router.post('/create', (req, res) => {
+  const { gameType } = req.body; // 'pop-the-question' or 'roast-roulette'
+  const roomCode = generateRoomCode();
+  
+  rooms.set(roomCode, {
+    code: roomCode,
+    gameType,
+    status: 'lobby',
+    players: [],
+    createdAt: Date.now()
+  });
+  
+  res.json({ roomCode });
+});
+
+// Get room info
+router.get('/:code', (req, res) => {
+  const room = rooms.get(req.params.code);
+  if (!room) return res.status(404).json({ error: 'Room not found' });
+  res.json(room);
+});
+
+module.exports = router;
+module.exports.rooms = rooms; // Export for socket handlers
+socket/events.js:
+javascriptconst { rooms } = require('../routes/rooms');
+
+module.exports = (io) => {
+  io.on('connection', (socket) => {
+    console.log('User connected:', socket.id);
+    
+    // Join room
+    socket.on('join-room', ({ roomCode, playerName, isHost }) => {
+      const room = rooms.get(roomCode);
+      if (!room) {
+        socket.emit('error', { message: 'Room not found' });
+        return;
+      }
+      
+      socket.join(roomCode);
+      
+      const player = {
+        id: socket.id,
+        name: playerName,
+        isHost: isHost || false,
+        score: 0
+      };
+      
+      room.players.push(player);
+      
+      if (isHost) {
+        room.hostId = socket.id;
+      }
+      
+      io.to(roomCode).emit('player-joined', {
+        player,
+        players: room.players
+      });
+    });
+    
+    // Start game (host only)
+    socket.on('start-game', ({ roomCode }) => {
+      const room = rooms.get(roomCode);
+      if (!room || room.hostId !== socket.id) return;
+      
+      room.status = 'playing';
+      
+      if (room.gameType === 'pop-the-question') {
+        // Load first question
+        room.currentQuestionIndex = 0;
+        room.currentVotes = {};
+        // TODO: Load questions from database
+        room.questions = [
+          "Most likely to become a reality TV star",
+          "Most likely to cry during a Pixar movie",
+          // ... more questions
+        ];
+      } else if (room.gameType === 'roast-roulette') {
+        // Setup Roast Roulette
+        const numQuestions = room.players.length - 1;
+        const colors = ['yellow', 'blue', 'red', 'green', 'purple', 'orange', 'gray'];
+        // TODO: Load questions from database
+        room.questions = []; // Array of {color, text}
+        room.currentRound = 1;
+        room.cards = {}; // Will store roasts
+      }
+      
+      io.to(roomCode).emit('game-started', {
+        gameType: room.gameType,
+        status: room.status
+      });
+    });
+    
+    // Pop the Question: Submit vote
+    socket.on('submit-vote', ({ roomCode, votedForId }) => {
+      const room = rooms.get(roomCode);
+      if (!room) return;
+      
+      room.currentVotes[socket.id] = votedForId;
+      
+      // Check if all votes in
+      if (Object.keys(room.currentVotes).length === room.players.length) {
+        io.to(roomCode).emit('all-votes-in');
+      }
+    });
+    
+    // Pop the Question: Reveal results (host only)
+    socket.on('reveal-results', ({ roomCode }) => {
+      const room = rooms.get(roomCode);
+      if (!room || room.hostId !== socket.id) return;
+      
+      // Count votes
+      const voteCounts = {};
+      room.players.forEach(p => voteCounts[p.id] = 0);
+      
+      Object.values(room.currentVotes).forEach(votedId => {
+        voteCounts[votedId]++;
+      });
+      
+      // Update burn counts
+      room.players.forEach(player => {
+        player.burns = (player.burns || 0) + voteCounts[player.id];
+      });
+      
+      io.to(roomCode).emit('results-revealed', {
+        voteCounts,
+        players: room.players
+      });
+      
+      // Reset for next round
+      room.currentVotes = {};
+    });
+    
+    // Roast Roulette: Submit roast
+    socket.on('submit-roast', ({ roomCode, targetPlayerId, color, answer }) => {
+      const room = rooms.get(roomCode);
+      if (!room) return;
+      
+      if (!room.cards[targetPlayerId]) {
+        room.cards[targetPlayerId] = {};
+      }
+      
+      room.cards[targetPlayerId][color] = {
+        author: socket.id,
+        answer: answer
+      };
+      
+      // Check if round complete
+      // (all players have submitted)
+      // TODO: Implement round completion logic
+    });
+    
+    // Disconnect
+    socket.on('disconnect', () => {
+      console.log('User disconnected:', socket.id);
+      
+      // Remove from all rooms
+      rooms.forEach((room, code) => {
+        const playerIndex = room.players.findIndex(p => p.id === socket.id);
+        if (playerIndex !== -1) {
+          room.players.splice(playerIndex, 1);
+          io.to(code).emit('player-left', {
+            playerId: socket.id,
+            players: room.players
+          });
+          
+          // Delete empty rooms
+          if (room.players.length === 0) {
+            rooms.delete(code);
+          }
+        }
+      });
+    });
+  });
+};
+
+KEY IMPLEMENTATION NOTES
+
+Room Codes: Use simple, memorable 4-letter words. Store rooms in-memory (Map). Add cleanup for rooms older than 2 hours with no activity.
+Real-time Sync: Use Socket.io for all hosted games. Emit events to entire room with io.to(roomCode).emit().
+Answer Validation (Three Strikes): Normalize answers (lowercase, trim, remove special chars) before comparing. Accept multiple variations per answer.
+Crossword Grid: Represent as 2D array. Black squares stored separately. Clues use numbering system (1 Across, 2 Down, etc.).
+Roast Roulette Card Assignment: Use modulo arithmetic to rotate cards. Player at index i writes on player at index (i + roundNumber) % totalPlayers.
+Mobile Optimization: All player views must work on 375px width. Use large tap targets (48px minimum). Test on actual phones.
+Projector View: Host screens use dark background, huge text, high contrast. Should be readable from 15 feet away.
+LocalStorage Keys:
+
+ptq-three-strikes-{date} - completion status
+ptq-crossword-{date} - completion status
+ptq-stats - user stats object
+ptq-streak-three-strikes - current streak
+ptq-streak-crossword - current streak
+
+
+Animations: Use Framer Motion for page transitions, results reveals, confetti on wins. Keep animations under 500ms.
+Error Handling: Show user-friendly error messages. Network errors: "Connection lost - trying to reconnect...". Invalid room codes: "Room not found - check your code".
+
+
+TESTING CHECKLIST
+Before marking as complete, test:
+
+ Homepage loads and both sections are clickable
+ Three Strikes: Can submit answers, get correct/incorrect feedback, strikes display, game ends at 3 strikes
+ Three Strikes: Share button copies formatted text
+ Crossword: Grid is interactive, clues display, timer works, completion detected
+ Pop the Question: Host can create room and get code
+ Pop the Question: Player can join with code
+ Pop the Question: Voting works, results reveal shows vote counts
+ Roast Roulette: Questions display with colors
+ Roast Roulette: Writing phase allows one answer per color per round
+ Roast Roulette: Reveal phase shows roasts and allows voting
+ Roast Roulette: Scoring works correctly
+ Mobile view works (test on 375px width)
+ Host view readable on projector (large text, high contrast)
+ Socket.io connections stable, reconnects on disconnect
+ localStorage persists stats and completion status
+ All animations smooth (no jank)
+
+
+BUILD THIS IN REPLIT. CREATE A NEW NODE.JS REPL. START WITH THE BACKEND SERVER, THEN BUILD THE REACT FRONTEND. USE VITE FOR THE FRONTEND BUILD. IMPLEMENT SOCKET.IO FOR REAL-TIME FEATURES. STYLE WITH TAILWIND CSS USING THE PROVIDED CONFIG. TEST THOROUGHLY BEFORE MARKING COMPLETE.

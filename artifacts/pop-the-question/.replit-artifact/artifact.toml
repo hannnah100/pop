@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "Pop: The Question"
+version = "1.0.0"
+id = "artifacts/pop-the-question"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 23247
+
+[services.development]
+run = "pnpm --filter @workspace/pop-the-question run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/pop-the-question", "run", "build" ]
+publicDir = "artifacts/pop-the-question/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "23247"
+BASE_PATH = "/"

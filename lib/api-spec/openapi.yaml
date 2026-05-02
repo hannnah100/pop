@@ -3,20 +3,26 @@ info:
   # Do not change the title, if the title changes, the import paths will be broken
   title: Api
   version: 0.1.0
-  description: API specification
+  description: Pop The Question API specification
 servers:
   - url: /api
     description: Base API path
 tags:
   - name: health
     description: Health operations
+  - name: daily
+    description: Daily games
+  - name: rooms
+    description: Hosted game rooms
+  - name: questions
+    description: Question packs
+
 paths:
   /healthz:
     get:
       operationId: healthCheck
       tags: [health]
       summary: Health check
-      description: Returns server health status
       responses:
         "200":
           description: Healthy
@@ -24,6 +30,162 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+
+  /daily/three-strikes:
+    get:
+      operationId: getTodayThreeStrikes
+      tags: [daily]
+      summary: Get today's Three Strikes challenge
+      responses:
+        "200":
+          description: Today's challenge
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ThreeStrikesChallenge"
+        "404":
+          description: No challenge for today
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /daily/three-strikes/archive:
+    get:
+      operationId: getThreeStrikesArchive
+      tags: [daily]
+      summary: Get archive of Three Strikes challenges
+      responses:
+        "200":
+          description: List of past challenges
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ThreeStrikesSummary"
+
+  /daily/crossword:
+    get:
+      operationId: getTodayCrossword
+      tags: [daily]
+      summary: Get today's crossword puzzle
+      responses:
+        "200":
+          description: Today's crossword
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CrosswordPuzzle"
+        "404":
+          description: No puzzle for today
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /daily/crossword/archive:
+    get:
+      operationId: getCrosswordArchive
+      tags: [daily]
+      summary: Get archive of crossword puzzles
+      responses:
+        "200":
+          description: List of past puzzles
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/CrosswordSummary"
+
+  /daily/status:
+    get:
+      operationId: getDailyStatus
+      tags: [daily]
+      summary: Get today's completion status summary (wow endpoint)
+      responses:
+        "200":
+          description: Today's game status
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DailyStatus"
+
+  /rooms/create:
+    post:
+      operationId: createRoom
+      tags: [rooms]
+      summary: Create a new hosted game room
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateRoomRequest"
+      responses:
+        "200":
+          description: Room created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RoomCreated"
+
+  /rooms/{code}:
+    get:
+      operationId: getRoom
+      tags: [rooms]
+      summary: Get room info
+      parameters:
+        - name: code
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Room info
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Room"
+        "404":
+          description: Room not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /questions/pop-the-question:
+    get:
+      operationId: getPopTheQuestionPrompts
+      tags: [questions]
+      summary: Get Pop the Question prompts
+      responses:
+        "200":
+          description: List of prompts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/QuestionPrompt"
+
+  /questions/roast-roulette:
+    get:
+      operationId: getRoastRouletteQuestions
+      tags: [questions]
+      summary: Get Roast Roulette questions
+      responses:
+        "200":
+          description: List of questions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/RoastQuestion"
+
 components:
   schemas:
     HealthStatus:
@@ -34,3 +196,185 @@ components:
       required:
         - status
 
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+      required:
+        - error
+
+    ThreeStrikesChallenge:
+      type: object
+      properties:
+        id:
+          type: string
+        date:
+          type: string
+        title:
+          type: string
+        prompt:
+          type: string
+        totalCount:
+          type: integer
+        answers:
+          type: array
+          items:
+            type: array
+            items:
+              type: string
+      required:
+        - id
+        - date
+        - title
+        - prompt
+        - totalCount
+        - answers
+
+    ThreeStrikesSummary:
+      type: object
+      properties:
+        id:
+          type: string
+        date:
+          type: string
+        title:
+          type: string
+        prompt:
+          type: string
+        totalCount:
+          type: integer
+      required:
+        - id
+        - date
+        - title
+        - prompt
+        - totalCount
+
+    CrosswordPuzzle:
+      type: object
+      properties:
+        id:
+          type: string
+        date:
+          type: string
+        grid:
+          type: array
+          items:
+            type: array
+            items:
+              type: string
+        blackSquares:
+          type: array
+          items:
+            type: array
+            items:
+              type: integer
+        cluesAcross:
+          type: object
+          additionalProperties:
+            type: string
+        cluesDown:
+          type: object
+          additionalProperties:
+            type: string
+      required:
+        - id
+        - date
+        - grid
+        - blackSquares
+        - cluesAcross
+        - cluesDown
+
+    CrosswordSummary:
+      type: object
+      properties:
+        id:
+          type: string
+        date:
+          type: string
+      required:
+        - id
+        - date
+
+    DailyStatus:
+      type: object
+      properties:
+        date:
+          type: string
+        threeStrikesAvailable:
+          type: boolean
+        crosswordAvailable:
+          type: boolean
+        threeStrikesTitle:
+          type: string
+        crosswordDate:
+          type: string
+      required:
+        - date
+        - threeStrikesAvailable
+        - crosswordAvailable
+
+    CreateRoomRequest:
+      type: object
+      properties:
+        gameType:
+          type: string
+          enum: [pop-the-question, roast-roulette]
+      required:
+        - gameType
+
+    RoomCreated:
+      type: object
+      properties:
+        roomCode:
+          type: string
+        gameType:
+          type: string
+      required:
+        - roomCode
+        - gameType
+
+    Room:
+      type: object
+      properties:
+        code:
+          type: string
+        gameType:
+          type: string
+        status:
+          type: string
+          enum: [lobby, playing, finished]
+        playerCount:
+          type: integer
+      required:
+        - code
+        - gameType
+        - status
+        - playerCount
+
+    QuestionPrompt:
+      type: object
+      properties:
+        id:
+          type: integer
+        prompt:
+          type: string
+        category:
+          type: string
+      required:
+        - id
+        - prompt
+
+    RoastQuestion:
+      type: object
+      properties:
+        id:
+          type: integer
+        question:
+          type: string
+        color:
+          type: string
+      required:
+        - id
+        - question
