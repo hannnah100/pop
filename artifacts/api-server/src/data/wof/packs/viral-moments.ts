@@ -17,5 +17,13 @@ export const viralMoments: WofPack = {
     { answer: "ROMAN EMPIRE THOUGHT", category: "Phrase" },
     { answer: "BESTIE NO CAP", category: "Phrase" },
     { answer: "GIRL DINNER VIBES", category: "Phrase" },
+    { answer: "DEMURE AND MINDFUL", category: "Phrase" },
+    { answer: "ERA TOUR CONCERT", category: "Phrase" },
+    { answer: "VILLAIN ERA UNLOCKED", category: "Phrase" },
+    { answer: "SOFT LAUNCH SEASON", category: "Phrase" },
+    { answer: "HOT GIRL WALK", category: "Phrase" },
+    { answer: "DELULU IS THE SOLULU", category: "Phrase" },
+    { answer: "TOUCH GRASS CHALLENGE", category: "Phrase" },
+    { answer: "RIZZ LEVEL MAXED OUT", category: "Phrase" },
   ],
 };

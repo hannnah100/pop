@@ -38,6 +38,7 @@ import {
   RainbowText,
   TimerRing,
 } from "@/components/fx";
+import { WofWheel } from "@/components/WofWheel";
 import { useSfx } from "@/lib/sfx";
 import { staggerContainer, staggerItem } from "@/lib/motion";
 import { HostShell } from "@/components/host/HostShell";
@@ -376,6 +377,9 @@ export default function GameHost() {
   // Pack selection
   const [wofAvailablePacks, setWofAvailablePacks] = useState<WofPackSummaryWire[]>([]);
   const [wofSelectedPackId, setWofSelectedPackId] = useState<string | null>(null);
+  const [wofRoundCount, setWofRoundCount] = useState<number>(5);
+  const [wofSpinIndex, setWofSpinIndex] = useState<number | null>(null);
+  const [wofPendingSolve, setWofPendingSolve] = useState<{ solverId: string | null; solverName: string; answer: string } | null>(null);
 
   const finishedRef = useRef(false);
   const notificationsRef = useRef<HostNotificationsHandle | null>(null);
@@ -430,7 +434,8 @@ export default function GameHost() {
       }
     });
 
-    newSocket.on("room-state", ({ players: ps, isDemo: demo, gameType: gt, quizPackId, wofPackId }: RoomStatePayload) => {
+    newSocket.on("room-state", (data: RoomStatePayload & { wofRoundCount?: number }) => {
+      const { players: ps, isDemo: demo, gameType: gt, quizPackId, wofPackId } = data;
       const visible = ps.filter((p) => !p.isHost);
       setPlayers(visible);
       visible.forEach((p) => knownPlayerIds.current.add(p.id));
@@ -444,6 +449,7 @@ export default function GameHost() {
         }
         if (gt === "wheel-of-fortune") {
           setWofSelectedPackId(wofPackId ?? null);
+          if (data.wofRoundCount) setWofRoundCount(data.wofRoundCount);
           newSocket.emit("wof-list-packs");
         }
       }
@@ -870,18 +876,26 @@ export default function GameHost() {
       setWofSelectedPackId(packId);
     });
 
+    newSocket.on("wof-round-count-changed", ({ roundCount }: { roundCount: number }) => {
+      setWofRoundCount(roundCount);
+    });
+
     newSocket.on("wof-spun", (payload: {
       value: WofWheelValue;
+      spinIndex: number;
       type: string;
       controllerId: string | null;
       controllerName: string;
+      isFreePlay?: boolean;
       scores: WofScoreRow[];
     }) => {
       setWofLastSpin(payload.value);
+      setWofSpinIndex(payload.spinIndex ?? null);
       setWofSpinType(payload.type);
       setWofSpinning(false);
       setWofControllerId(payload.controllerId);
       setWofScores(payload.scores);
+      setWofPendingSolve(null);
       if (payload.type === "bankrupt" || payload.type === "lose-a-turn") {
         setWofPhase("spinning");
       } else {
@@ -889,6 +903,18 @@ export default function GameHost() {
       }
       setWofLastLetter(null);
       setWofSolveResult(null);
+    });
+
+    newSocket.on("wof-solve-pending", (payload: { solverId: string | null; solverName: string; answer: string }) => {
+      setWofPendingSolve(payload);
+    });
+
+    newSocket.on("wof-solve-submitted", (payload: { solverName: string }) => {
+      notificationsRef.current?.push({
+        message: `📝 ${payload.solverName} is attempting to solve!`,
+        variant: "info",
+        duration: 3000,
+      });
     });
 
     newSocket.on("wof-letter-result", (payload: {
@@ -949,6 +975,7 @@ export default function GameHost() {
       setWofRevealedLetters(payload.revealedLetters);
       setWofScores(payload.scores);
       setWofSolveResult({ correct: payload.correct, answer: payload.answer, solverName: payload.solverName });
+      setWofPendingSolve(null);
       if (payload.correct) {
         playCorrect();
         setTimeout(() => fireBigCelebration(), 300);
@@ -1119,10 +1146,22 @@ export default function GameHost() {
   // Wheel of Fortune: handlers
   const handleWofSpin = () => {
     setWofSpinning(true);
+    setWofSpinIndex(null);
     socket?.emit("wof-spin", { roomCode });
   };
-  const handleWofNextPuzzle = () => socket?.emit("wof-next-puzzle", { roomCode });
+  const handleWofNextPuzzle = () => {
+    setWofPendingSolve(null);
+    socket?.emit("wof-next-puzzle", { roomCode });
+  };
   const handleWofEndGame = () => socket?.emit("wof-end-game", { roomCode });
+  const handleWofSetRoundCount = (count: number) => {
+    setWofRoundCount(count);
+    socket?.emit("wof-set-round-count", { roomCode, roundCount: count });
+  };
+  const handleWofJudge = (correct: boolean) => {
+    setWofPendingSolve(null);
+    socket?.emit("wof-judge", { roomCode, correct });
+  };
 
   // Pub Quiz handlers
   const handlePqReveal = () => socket?.emit("quiz-reveal-answer", { roomCode });
@@ -1444,69 +1483,100 @@ export default function GameHost() {
           </motion.div>
         )}
 
-        {/* ===== Wheel of Fortune pack picker ===== */}
+        {/* ===== Wheel of Fortune lobby settings ===== */}
         {gameType === "wheel-of-fortune" && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className="w-full max-w-5xl mb-8"
+            className="w-full max-w-5xl mb-8 space-y-8"
           >
-            <div className="flex items-center gap-3 mb-4">
-              <Grid3x3 className="w-6 h-6 text-black" />
-              <h2 className="font-display font-black text-black text-2xl uppercase">
-                Choose a Puzzle Pack
-              </h2>
-              {wofSelectedPackId === null && (
-                <span className="text-sm text-black/50 border-[2px] border-black px-3 py-1 font-sans">
-                  Random is selected
-                </span>
-              )}
-            </div>
-            {wofAvailablePacks.length === 0 ? (
-              <div className="text-black/50 animate-pulse text-lg font-display font-black uppercase">Loading packs…</div>
-            ) : (
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-                <motion.button
-                  layout
-                  onClick={() => handleWofSetPack(null)}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className={`w-full text-left border-[3px] border-black p-4 focus-visible:outline-none ${wofSelectedPackId === null ? "bg-[#FFD700] shadow-[5px_5px_0_#000]" : "bg-white shadow-[4px_4px_0_#000] hover:bg-[#FFF8E7]"}`}
-                >
-                  <div className="flex items-start gap-2 mb-2">
-                    <Shuffle className="w-4 h-4 text-black mt-0.5 flex-shrink-0" />
-                    <h3 className="font-display font-black text-black uppercase text-sm leading-tight">🎲 Random</h3>
-                  </div>
-                  <p className="text-xs text-black/60 leading-relaxed font-sans">Let fate decide — a puzzle pack will be chosen at random.</p>
-                </motion.button>
-                {wofAvailablePacks.map((pack) => (
+            {/* Pack picker */}
+            <div>
+              <div className="flex items-center gap-3 mb-4">
+                <Grid3x3 className="w-6 h-6 text-black" />
+                <h2 className="font-display font-black text-black text-2xl uppercase">
+                  Choose a Puzzle Pack
+                </h2>
+                {wofSelectedPackId === null && (
+                  <span className="text-sm text-black/50 border-[2px] border-black px-3 py-1 font-sans">
+                    Random is selected
+                  </span>
+                )}
+              </div>
+              {wofAvailablePacks.length === 0 ? (
+                <div className="text-black/50 animate-pulse text-lg font-display font-black uppercase">Loading packs…</div>
+              ) : (
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                   <motion.button
-                    key={pack.id}
                     layout
-                    onClick={() => handleWofSetPack(pack.id)}
+                    onClick={() => handleWofSetPack(null)}
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
-                    className={`relative w-full text-left border-[3px] border-black p-4 focus-visible:outline-none ${wofSelectedPackId === pack.id ? "bg-[#7C3AED] shadow-[5px_5px_0_#000]" : "bg-white shadow-[4px_4px_0_#000] hover:bg-[#FFF8E7]"}`}
+                    className={`w-full text-left border-[3px] border-black p-4 focus-visible:outline-none ${wofSelectedPackId === null ? "bg-[#FFD700] shadow-[5px_5px_0_#000]" : "bg-white shadow-[4px_4px_0_#000] hover:bg-[#FFF8E7]"}`}
                   >
-                    {wofSelectedPackId === pack.id && (
-                      <span className="absolute top-3 right-3 w-6 h-6 bg-black flex items-center justify-center">
-                        <Check className="w-3.5 h-3.5 text-[#FFD700]" />
+                    <div className="flex items-start gap-2 mb-2">
+                      <Shuffle className="w-4 h-4 text-black mt-0.5 flex-shrink-0" />
+                      <h3 className="font-display font-black text-black uppercase text-sm leading-tight">🎲 Random</h3>
+                    </div>
+                    <p className="text-xs text-black/60 leading-relaxed font-sans">Let fate decide — a puzzle pack will be chosen at random.</p>
+                  </motion.button>
+                  {wofAvailablePacks.map((pack) => (
+                    <motion.button
+                      key={pack.id}
+                      layout
+                      onClick={() => handleWofSetPack(pack.id)}
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      className={`relative w-full text-left border-[3px] border-black p-4 focus-visible:outline-none ${wofSelectedPackId === pack.id ? "bg-[#7C3AED] shadow-[5px_5px_0_#000]" : "bg-white shadow-[4px_4px_0_#000] hover:bg-[#FFF8E7]"}`}
+                    >
+                      {wofSelectedPackId === pack.id && (
+                        <span className="absolute top-3 right-3 w-6 h-6 bg-black flex items-center justify-center">
+                          <Check className="w-3.5 h-3.5 text-[#FFD700]" />
+                        </span>
+                      )}
+                      <h3 className={`font-display font-black uppercase text-sm leading-tight mb-1 ${wofSelectedPackId === pack.id ? "text-white" : "text-black"}`}>
+                        {pack.title}
+                      </h3>
+                      <p className={`text-xs mb-2 leading-relaxed line-clamp-2 font-sans ${wofSelectedPackId === pack.id ? "text-white/80" : "text-black/60"}`}>
+                        {pack.description}
+                      </p>
+                      <span className={`text-xs font-sans ${wofSelectedPackId === pack.id ? "text-white/70" : "text-black/40"}`}>
+                        {pack.puzzleCount} puzzles
                       </span>
-                    )}
-                    <h3 className={`font-display font-black uppercase text-sm leading-tight mb-1 ${wofSelectedPackId === pack.id ? "text-white" : "text-black"}`}>
-                      {pack.title}
-                    </h3>
-                    <p className={`text-xs mb-2 leading-relaxed line-clamp-2 font-sans ${wofSelectedPackId === pack.id ? "text-white/80" : "text-black/60"}`}>
-                      {pack.description}
-                    </p>
-                    <span className={`text-xs font-sans ${wofSelectedPackId === pack.id ? "text-white/70" : "text-black/40"}`}>
-                      {pack.puzzleCount} puzzles
-                    </span>
+                    </motion.button>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Round count picker */}
+            <div>
+              <div className="flex items-center gap-3 mb-4">
+                <Star className="w-6 h-6 text-black" />
+                <h2 className="font-display font-black text-black text-2xl uppercase">
+                  Number of Rounds
+                </h2>
+                <span className="text-sm text-black/50 border-[2px] border-black px-3 py-1 font-sans">
+                  {wofRoundCount} puzzle{wofRoundCount !== 1 ? "s" : ""}
+                </span>
+              </div>
+              <div className="flex gap-3">
+                {[3, 4, 5, 6, 7].map((n) => (
+                  <motion.button
+                    key={n}
+                    onClick={() => handleWofSetRoundCount(n)}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.96 }}
+                    className={`w-16 h-16 font-display font-black text-2xl border-[3px] border-black focus-visible:outline-none
+                      ${wofRoundCount === n ? "bg-[#FFD700] shadow-[5px_5px_0_#000]" : "bg-white shadow-[4px_4px_0_#000] hover:bg-[#FFF8E7]"}`}
+                    data-testid={`btn-wof-rounds-${n}`}
+                  >
+                    {n}
                   </motion.button>
                 ))}
               </div>
-            )}
+            </div>
           </motion.div>
         )}
       </div>
@@ -2916,15 +2986,59 @@ export default function GameHost() {
               ))}
             </div>
 
-            {/* Spin result */}
-            <AnimatePresence mode="wait">
-              {wofSpinning ? (
-                <motion.div key="spinning" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-                  className="flex items-center gap-3 bg-white border-[3px] border-black shadow-[4px_4px_0_#000] px-6 py-4">
-                  <div className="w-6 h-6 border-4 border-black border-t-[#7C3AED] animate-spin" />
-                  <span className="font-display font-black text-xl uppercase tracking-wide">{controllerName} is spinning…</span>
+            {/* Animated WofWheel */}
+            <WofWheel
+              spinning={wofSpinning}
+              spinIndex={wofSpinIndex}
+              value={wofSpinning ? null : wofLastSpin}
+              spinnerName={controllerName}
+              size={300}
+            />
+
+            {/* Pending solve — host judge controls */}
+            <AnimatePresence>
+              {wofPendingSolve && (
+                <motion.div
+                  key="pending-solve"
+                  initial={{ scale: 0.8, opacity: 0, y: -10 }}
+                  animate={{ scale: 1, opacity: 1, y: 0 }}
+                  exit={{ scale: 0.8, opacity: 0 }}
+                  className="w-full max-w-md bg-[#FF1493] border-[4px] border-black shadow-[6px_6px_0_#000] p-5 flex flex-col gap-3"
+                >
+                  <p className="font-display font-black text-white uppercase text-xl tracking-widest text-center">
+                    Solve Attempt!
+                  </p>
+                  <p className="text-white/80 font-sans text-sm text-center">
+                    <span className="font-black text-white">{wofPendingSolve.solverName}</span> says:
+                  </p>
+                  <div className="bg-white border-[3px] border-black px-4 py-3 text-center">
+                    <p className="font-display font-black text-2xl uppercase text-black tracking-wider">
+                      {wofPendingSolve.answer}
+                    </p>
+                  </div>
+                  <div className="flex gap-3">
+                    <Button
+                      onClick={() => handleWofJudge(true)}
+                      className="flex-1 bg-[#00C853] hover:bg-[#00C853]/90 text-white border-[3px] border-black font-display font-black text-xl uppercase shadow-[4px_4px_0_#000]"
+                      data-testid="btn-wof-judge-correct"
+                    >
+                      <Check className="w-5 h-5 mr-2" /> CORRECT
+                    </Button>
+                    <Button
+                      onClick={() => handleWofJudge(false)}
+                      className="flex-1 bg-black hover:bg-black/80 text-white border-[3px] border-[#FF1493] font-display font-black text-xl uppercase shadow-[4px_4px_0_#000]"
+                      data-testid="btn-wof-judge-wrong"
+                    >
+                      <X className="w-5 h-5 mr-2" /> WRONG
+                    </Button>
+                  </div>
                 </motion.div>
-              ) : wofPuzzleOver ? (
+              )}
+            </AnimatePresence>
+
+            {/* Solve / letter result feedback */}
+            <AnimatePresence mode="wait">
+              {!wofSpinning && !wofPendingSolve && wofPuzzleOver ? (
                 <motion.div key="puzzleover" initial={{ scale: 0.7, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}
                   className="flex flex-col items-center gap-2 bg-[#7C3AED] border-[3px] border-black shadow-[6px_6px_0_#000] px-8 py-5 text-white text-center">
                   <p className="font-display font-black text-2xl uppercase tracking-wide">Puzzle Solved!</p>
@@ -2940,28 +3054,21 @@ export default function GameHost() {
                     </Button>
                   )}
                 </motion.div>
-              ) : wofLastSpin !== null ? (
-                <motion.div key={String(wofLastSpin)} initial={{ scale: 0.6, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}
-                  className={`flex flex-col items-center gap-1 px-8 py-4 border-[3px] border-black shadow-[4px_4px_0_#000] ${wofSpinType === "bankrupt" ? "bg-black text-white" : wofSpinType === "free-play" ? "bg-[#00C853] text-white" : "bg-[#FFD700] text-black"}`}>
-                  <p className="font-display font-black uppercase text-base tracking-widest">{controllerName}</p>
-                  <p className="font-display font-black text-3xl uppercase">{spinValueLabel(wofLastSpin)}</p>
-                  {wofLastLetter && (
-                    <p className="font-display text-lg font-black uppercase mt-1">
-                      "{wofLastLetter.letter}" — {wofLastLetter.count > 0 ? `${wofLastLetter.count} found! +$${wofLastLetter.scoreEarned}` : "Not in puzzle"}
-                    </p>
-                  )}
-                  {wofSolveResult && (
-                    <p className="font-display text-lg font-black uppercase mt-1">
-                      {wofSolveResult.correct ? `✓ ${wofSolveResult.solverName} solved it!` : `✗ Wrong — turn passes`}
-                    </p>
-                  )}
+              ) : !wofSpinning && !wofPendingSolve && wofLastLetter ? (
+                <motion.div key={`letter-${wofLastLetter.letter}`} initial={{ scale: 0.7, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}
+                  className={`px-6 py-3 border-[3px] border-black text-center ${wofLastLetter.correct ? "bg-[#FFD700] text-black" : "bg-black text-white"}`}>
+                  <p className="font-display font-black text-2xl uppercase">
+                    "{wofLastLetter.letter}" — {wofLastLetter.count > 0 ? `${wofLastLetter.count} found! +$${wofLastLetter.scoreEarned}` : "Not in puzzle"}
+                  </p>
                 </motion.div>
-              ) : (
-                <motion.div key="waiting" initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-                  className="font-display font-black text-xl uppercase text-black/50 tracking-widest">
-                  {controllerName}'s turn — spin to start!
+              ) : !wofSpinning && !wofPendingSolve && wofSolveResult ? (
+                <motion.div key="solve" initial={{ scale: 0.7, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}
+                  className={`px-6 py-3 border-[3px] border-black text-center ${wofSolveResult.correct ? "bg-[#00C853] text-white" : "bg-black text-white"}`}>
+                  <p className="font-display font-black text-xl uppercase">
+                    {wofSolveResult.correct ? `✓ ${wofSolveResult.solverName} solved it!` : `✗ ${wofSolveResult.solverName} — wrong answer`}
+                  </p>
                 </motion.div>
-              )}
+              ) : null}
             </AnimatePresence>
 
             {/* Guessed letters */}

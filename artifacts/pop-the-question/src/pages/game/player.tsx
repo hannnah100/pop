@@ -275,6 +275,8 @@ export default function GamePlayer() {
   const [wofPhase, setWofPhase] = useState<"spinning" | "guessing" | "puzzle-over" | "ended">("spinning");
   const [wofLastSpin, setWofLastSpin] = useState<WofWheelValue | null>(null);
   const [wofSpinType, setWofSpinType] = useState<string | null>(null);
+  const [wofIsFreePlay, setWofIsFreePlay] = useState(false);
+  const [wofSolveSubmitted, setWofSolveSubmitted] = useState(false);
   const [wofPuzzleIndex, setWofPuzzleIndex] = useState(0);
   const [wofTotalPuzzles, setWofTotalPuzzles] = useState(0);
   const [wofLastLetter, setWofLastLetter] = useState<{ letter: string; count: number; correct: boolean } | null>(null);
@@ -415,6 +417,7 @@ export default function GamePlayer() {
       value: WofWheelValue;
       type: string;
       controllerId: string | null;
+      isFreePlay?: boolean;
       scores: WofScoreRow[];
     }) => {
       setWofLastSpin(payload.value);
@@ -425,6 +428,8 @@ export default function GamePlayer() {
       setWofSolveResult(null);
       setWofGuessInput("");
       setWofVowelMode(false);
+      setWofIsFreePlay(payload.isFreePlay ?? false);
+      setWofSolveSubmitted(false);
       if (payload.type === "bankrupt" || payload.type === "lose-a-turn") {
         setWofPhase("spinning");
         hapticWrong();
@@ -432,6 +437,10 @@ export default function GamePlayer() {
         setWofPhase("guessing");
         hapticTap();
       }
+    });
+
+    newSocket.on("wof-solve-submitted", () => {
+      // Show waiting message on player screen after submitting
     });
 
     newSocket.on("wof-letter-result", (payload: {
@@ -492,6 +501,7 @@ export default function GamePlayer() {
       setWofScores(payload.scores);
       setWofSolveResult({ correct: payload.correct, answer: payload.answer, solverName: payload.solverName });
       setWofSolveInput("");
+      setWofSolveSubmitted(false);
       if (payload.correct) hapticVictory();
       else hapticWrong();
     });
@@ -539,6 +549,8 @@ export default function GamePlayer() {
       setWofGuessInput("");
       setWofSolveInput("");
       setWofVowelMode(false);
+      setWofIsFreePlay(false);
+      setWofSolveSubmitted(false);
     });
 
     // ============ Jeopardy socket handlers ============
@@ -2272,6 +2284,7 @@ export default function GamePlayer() {
     const handleSolve = () => {
       if (!wofSolveInput.trim()) return;
       socket?.emit("wof-solve-attempt", { roomCode, answer: wofSolveInput.trim() });
+      setWofSolveSubmitted(true);
       hapticTap();
     };
 
@@ -2379,16 +2392,25 @@ export default function GamePlayer() {
                 </Button>
               )}
 
-              {/* Guess consonant keyboard */}
+              {/* Guess consonant keyboard (or all letters on FREE PLAY) */}
               {canGuessConsonant && (
                 <div>
-                  <p className="font-display font-black text-black/60 uppercase text-xs tracking-widest mb-2">Pick a Consonant</p>
+                  <p className="font-display font-black text-black/60 uppercase text-xs tracking-widest mb-2">
+                    {wofIsFreePlay ? "FREE PLAY — Pick Any Letter!" : "Pick a Consonant"}
+                  </p>
+                  {wofIsFreePlay && (
+                    <p className="text-xs text-[#00C853] font-display font-black uppercase tracking-widest mb-2">Vowels included — no charge!</p>
+                  )}
                   <div className="grid grid-cols-7 gap-1">
-                    {alphabet.filter(l => !VOWELS_SET.has(l)).map(l => {
+                    {(wofIsFreePlay ? alphabet : alphabet.filter(l => !VOWELS_SET.has(l))).map(l => {
                       const used = wofGuessedLetters.includes(l);
+                      const isVowel = VOWELS_SET.has(l);
                       return (
                         <button key={l} onClick={() => !used && handleGuessLetter(l)} disabled={used}
-                          className={`h-10 flex items-center justify-center border-[2px] border-black font-display font-black text-base ${used ? "bg-black text-white/30 cursor-not-allowed" : "bg-white hover:bg-[#FFD700] active:scale-95 shadow-[2px_2px_0_#000]"}`}
+                          className={`h-10 flex items-center justify-center border-[2px] border-black font-display font-black text-base
+                            ${used ? "bg-black text-white/30 cursor-not-allowed"
+                              : isVowel && wofIsFreePlay ? "bg-[#00C853] hover:bg-[#00C853]/80 active:scale-95 shadow-[2px_2px_0_#000] text-white"
+                              : "bg-white hover:bg-[#FFD700] active:scale-95 shadow-[2px_2px_0_#000]"}`}
                           data-testid={`btn-wof-letter-${l}`}>
                           {l}
                         </button>
@@ -2399,7 +2421,7 @@ export default function GamePlayer() {
               )}
 
               {/* Solve attempt */}
-              {canSolve && (
+              {canSolve && !wofSolveSubmitted && (
                 <div>
                   <p className="font-display font-black text-black/60 uppercase text-xs tracking-widest mb-2">Try to Solve</p>
                   <div className="flex gap-2">
@@ -2414,6 +2436,21 @@ export default function GamePlayer() {
                     </Button>
                   </div>
                 </div>
+              )}
+
+              {/* Waiting for host to judge solve */}
+              {canSolve && wofSolveSubmitted && (
+                <motion.div
+                  initial={{ scale: 0.9, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  className="bg-[#FF1493] border-[3px] border-black shadow-[4px_4px_0_#000] px-4 py-4 text-center"
+                >
+                  <p className="font-display font-black text-white uppercase text-lg tracking-widest">Answer Submitted!</p>
+                  <p className="text-white/80 font-sans text-sm mt-1">Waiting for host to judge…</p>
+                  <div className="flex justify-center mt-2">
+                    <div className="w-5 h-5 border-4 border-white border-t-transparent animate-spin rounded-full" />
+                  </div>
+                </motion.div>
               )}
 
               {/* Buy vowel */}

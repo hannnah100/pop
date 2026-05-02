@@ -17,5 +17,13 @@ export const popCulture: WofPack = {
     { answer: "GRANDE ICED COFFEE", category: "Thing" },
     { answer: "SEND IT TO THE CHAT", category: "Phrase" },
     { answer: "HARRY POTTER", category: "Movie Character" },
+    { answer: "BARBIE WORLD", category: "Phrase" },
+    { answer: "BREAKING BAD", category: "TV Show" },
+    { answer: "BEYONCE RENAISSANCE", category: "Album" },
+    { answer: "SQUID GAME", category: "TV Show" },
+    { answer: "OPPENHEIMER", category: "Movie" },
+    { answer: "THE OFFICE", category: "TV Show" },
+    { answer: "WEDNESDAY ADDAMS", category: "TV Character" },
+    { answer: "DUNE PART TWO", category: "Movie" },
   ],
 };

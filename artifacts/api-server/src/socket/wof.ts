@@ -7,10 +7,12 @@ export const VOWELS = new Set(["A", "E", "I", "O", "U"]);
 export const VOWEL_COST = 250;
 
 export const WHEEL: WofWheelSegment[] = [
-  300, 500, 800, 1000, 1500, 2000, 500, 1000, 300, 2500,
-  "BANKRUPT", 500, 1000, "LOSE_A_TURN", 800, "FREE_PLAY",
-  "BANKRUPT", 1500, "LOSE_A_TURN",
-];
+  300, "BANKRUPT", 600, "LOSE_A_TURN", 500, 300, 900,
+  "FREE_PLAY", 700, 500, 1000, "BANKRUPT", 600, 800,
+  "LOSE_A_TURN", 500, 1500, 300, 2000, "FREE_PLAY",
+  800, 500, 2500, "BANKRUPT", 700, 1000, "LOSE_A_TURN",
+  300, 1500, 500,
+]; // 30 segments
 
 export type WofPhase =
   | "spinning"
@@ -21,13 +23,16 @@ export interface WofState {
   pack: WofPack;
   puzzleOrder: number[];
   puzzleIndex: number;
+  roundCount: number;
   phase: WofPhase;
   controllerId: string | null;
   currentSpin: WofWheelSegment | null;
+  currentSpinIndex: number | null;
   revealedLetters: Set<string>;
   guessedLetters: Set<string>;
   roundEarnings: Record<string, number>;
   isFreePlay: boolean;
+  pendingSolve: { solverId: string; solverName: string; answer: string } | null;
 }
 
 export interface WofBoardCell {
@@ -57,19 +62,23 @@ export function wofPackSummaryWire(pack: WofPack): WofPackSummaryWire {
   return { id: s.id, title: s.title, description: s.description, puzzleCount: s.puzzleCount };
 }
 
-export function makeWofState(pack: WofPack): WofState {
+export function makeWofState(pack: WofPack, roundCount = 5): WofState {
   const puzzleOrder = shuffle(Array.from({ length: pack.puzzles.length }, (_, i) => i));
+  const clamped = Math.min(Math.max(roundCount, 1), pack.puzzles.length);
   return {
     pack,
     puzzleOrder,
     puzzleIndex: 0,
+    roundCount: clamped,
     phase: "spinning",
     controllerId: null,
     currentSpin: null,
+    currentSpinIndex: null,
     revealedLetters: new Set(),
     guessedLetters: new Set(),
     roundEarnings: {},
     isFreePlay: false,
+    pendingSolve: null,
   };
 }
 
@@ -97,8 +106,14 @@ export function isPuzzleSolved(w: WofState): boolean {
   return true;
 }
 
-export function spinWheel(): WofWheelSegment {
-  return WHEEL[Math.floor(Math.random() * WHEEL.length)]!;
+export interface SpinResult {
+  value: WofWheelSegment;
+  spinIndex: number;
+}
+
+export function spinWheel(): SpinResult {
+  const spinIndex = Math.floor(Math.random() * WHEEL.length);
+  return { value: WHEEL[spinIndex]!, spinIndex };
 }
 
 export function getLetterPositions(answer: string, letter: string): number[] {
