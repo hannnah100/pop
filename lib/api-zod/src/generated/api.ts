@@ -106,7 +106,12 @@ export const GetDailyStatusResponse = zod.object({
  * @summary Create a new hosted game room
  */
 export const CreateRoomBody = zod.object({
-  gameType: zod.enum(["pop-the-question", "roast-roulette", "pub-quiz"]),
+  gameType: zod.enum([
+    "pop-the-question",
+    "roast-roulette",
+    "pub-quiz",
+    "jeopardy",
+  ]),
   demo: zod.boolean().optional(),
   packId: zod.string().optional(),
 });

@@ -25,6 +25,36 @@ import {
   resetForNextQuestion,
   scheduleBotQuizAnswers,
 } from "./quiz";
+import {
+  JEOPARDY_PACKS,
+  getJeopardyPack,
+  getRandomJeopardyPack,
+} from "../data/jeopardy";
+import {
+  type JeopardyState,
+  type JeopardyPackSummaryWire,
+  JEOPARDY_TIMING,
+  JEOPARDY_BOT_DELAYS,
+  activeClueWire,
+  botDailyDoubleWager,
+  botFinalGuessesCorrect,
+  botFinalWager,
+  botGuessesCorrect,
+  clampWager,
+  clearJeopardyTimer,
+  getClue,
+  isBoardCleared,
+  isDailyDouble,
+  isJeopardyAnswerCorrect,
+  jeopardyLeaderboard,
+  jeopardyPackSummary,
+  makeJeopardyState,
+  maxDailyDoubleWager,
+  maxFinalWager,
+  publicBoard,
+  rand as jrand,
+  setJeopardyTimer,
+} from "./jeopardy";
 
 interface Player {
   id: string;
@@ -45,7 +75,7 @@ interface HostSettingsBroadcast {
   answerMethod: "voice" | "text" | "both";
 }
 
-export type GameType = "pop-the-question" | "roast-roulette" | "pub-quiz";
+export type GameType = "pop-the-question" | "roast-roulette" | "pub-quiz" | "jeopardy";
 
 interface RoastCard {
   [color: string]: {
@@ -75,6 +105,10 @@ interface Room {
   quiz?: QuizState;
   /** For pub-quiz host UI: the chosen pack id (set on createRoom or first start-game). */
   quizPackId?: string;
+  /** Jeopardy state (only set when gameType === "jeopardy" and game has started). */
+  jeopardy?: JeopardyState;
+  /** For jeopardy host UI: the chosen pack id. */
+  jeopardyPackId?: string;
   createdAt: number;
   lastActivity: number;
   hostSettings: HostSettingsBroadcast;
@@ -185,7 +219,8 @@ export function createRoom(gameType: GameType, isDemo = false, packId?: string):
     revealOrder: [],
     currentRevealIndex: 0,
     botAssignments: {},
-    quizPackId: packId,
+    quizPackId: gameType === "pub-quiz" ? packId : undefined,
+    jeopardyPackId: gameType === "jeopardy" ? packId : undefined,
     createdAt: Date.now(),
     lastActivity: Date.now(),
     hostSettings: { answerMethod: "both" },
@@ -505,6 +540,14 @@ export function setupSocketIO(httpServer: HttpServer) {
         quizQuestion: room.quiz ? publicQuestionFromState(room.quiz) : null,
         quizRevealed: room.quiz?.revealed ?? false,
         quizTimerEndAt: room.quiz?.timerEndAt ?? 0,
+        jeopardyPackId: room.jeopardyPackId,
+        jeopardyPackSummary: room.jeopardy ? jeopardyPackSummary(room.jeopardy.pack) : null,
+        jeopardyBoard: room.jeopardy ? publicBoard(room.jeopardy) : null,
+        jeopardyPhase: room.jeopardy?.phase ?? null,
+        jeopardyControllerId: room.jeopardy?.controllerId ?? null,
+        jeopardyActive: room.jeopardy?.active ? activeClueWire(room.jeopardy.active) : null,
+        jeopardyBuzzedInId: room.jeopardy?.buzzedInId ?? null,
+        jeopardyTimerEndAt: room.jeopardy?.timerEndAt ?? 0,
       });
     });
 
@@ -534,6 +577,15 @@ export function setupSocketIO(httpServer: HttpServer) {
       const summary: PackSummary | null = chosenPack ? packSummary(chosenPack) : null;
       // Broadcast so host UI stays in sync on reconnect / multi-tab.
       io.to(roomCode).emit("quiz-pack-changed", { packId, summary });
+    });
+
+    // ===========================================
+    // Jeopardy: list available packs (for host UI)
+    // ===========================================
+    socket.on("jeopardy-list-packs", () => {
+      socket.emit("jeopardy-packs", {
+        packs: JEOPARDY_PACKS.map(jeopardyPackSummary) satisfies JeopardyPackSummaryWire[],
+      });
     });
 
     // ====== Dual Host Mode plumbing (Task #5) ======
@@ -677,7 +729,195 @@ export function setupSocketIO(httpServer: HttpServer) {
 
         // Immediately start question 1 of round 1
         startQuizQuestion(io, room);
+      } else if (room.gameType === "jeopardy") {
+        const pack =
+          (room.jeopardyPackId && getJeopardyPack(room.jeopardyPackId)) ||
+          getRandomJeopardyPack();
+        room.jeopardyPackId = pack.id;
+        room.jeopardy = makeJeopardyState(pack);
+
+        // Jeopardy uses raw scores that can go negative — reset everyone.
+        room.players.forEach((p) => { p.score = 0; });
+
+        const nonHosts = room.players.filter((p) => !p.isHost);
+        // First controller: a real player if available, else the first bot.
+        const firstHuman = nonHosts.find((p) => !p.isBot);
+        room.jeopardy.controllerId = (firstHuman ?? nonHosts[0])?.id ?? null;
+
+        io.to(roomCode).emit("game-started", {
+          gameType: room.gameType,
+          status: room.status,
+          isDemo: room.isDemo,
+          pack: jeopardyPackSummary(pack),
+          board: publicBoard(room.jeopardy),
+          controllerId: room.jeopardy.controllerId,
+          scores: nonHosts.map((p) => ({
+            id: p.id,
+            name: p.name,
+            score: 0,
+            isBot: p.isBot,
+          })),
+        });
+
+        // If a bot is the first picker, schedule its pick.
+        const controller = room.players.find((p) => p.id === room.jeopardy!.controllerId);
+        if (controller?.isBot) scheduleBotJeopardyPick(io, room);
       }
+    });
+
+    // ===========================================
+    // Jeopardy: socket handlers
+    // ===========================================
+    socket.on("jeopardy-pick-square", ({ roomCode, cat, clue }: { roomCode: string; cat: number; clue: number }) => {
+      const room = rooms.get(roomCode);
+      if (!room || !room.jeopardy) return;
+      const j = room.jeopardy;
+      if (j.phase !== "picking") return;
+      // Only the controller may pick (or the host as a fallback to keep things flowing).
+      if (socket.id !== j.controllerId && socket.id !== room.hostId) return;
+      jeopardyRevealSquare(io, room, cat, clue);
+    });
+
+    socket.on("jeopardy-buzz-in", ({ roomCode }: { roomCode: string }) => {
+      const room = rooms.get(roomCode);
+      if (!room || !room.jeopardy) return;
+      const j = room.jeopardy;
+      if (j.phase !== "buzzer-open") return;
+      if (j.buzzedInId) return; // someone already won the race
+      const player = room.players.find((p) => p.id === socket.id);
+      if (!player || player.isHost) return;
+      if (j.lockedOut.has(socket.id)) return;
+      acceptJeopardyBuzz(io, room, socket.id);
+    });
+
+    // Host marks the buzzed-in player correct.
+    socket.on("jeopardy-mark-correct", ({ roomCode }: { roomCode: string }) => {
+      const room = rooms.get(roomCode);
+      if (!room || !room.jeopardy || room.hostId !== socket.id) return;
+      resolveJeopardyAnswer(io, room, true);
+    });
+
+    // Host marks the buzzed-in player incorrect.
+    socket.on("jeopardy-mark-incorrect", ({ roomCode }: { roomCode: string }) => {
+      const room = rooms.get(roomCode);
+      if (!room || !room.jeopardy || room.hostId !== socket.id) return;
+      resolveJeopardyAnswer(io, room, false);
+    });
+
+    // Host skips the active clue (no penalty) — reveals the answer and moves on.
+    socket.on("jeopardy-skip-clue", ({ roomCode }: { roomCode: string }) => {
+      const room = rooms.get(roomCode);
+      if (!room || !room.jeopardy || room.hostId !== socket.id) return;
+      finishJeopardyClue(io, room, /*revealAnswer=*/ true);
+    });
+
+    // Player submits Daily Double wager (only the controller, who triggered the DD).
+    socket.on(
+      "jeopardy-submit-dd-wager",
+      ({ roomCode, wager }: { roomCode: string; wager: number }) => {
+        const room = rooms.get(roomCode);
+        if (!room || !room.jeopardy) return;
+        const j = room.jeopardy;
+        if (j.phase !== "dd-wager") return;
+        if (socket.id !== j.controllerId) return;
+        const player = room.players.find((p) => p.id === socket.id);
+        if (!player) return;
+        const max = maxDailyDoubleWager(player.score, j.active?.value ?? 0);
+        j.ddWager = clampWager(wager, max);
+        startDailyDoubleClue(io, room);
+      },
+    );
+
+    // Player (the DD controller) submits a typed Daily Double answer (text mode).
+    socket.on(
+      "jeopardy-submit-dd-answer",
+      ({ roomCode, answer }: { roomCode: string; answer: string }) => {
+        const room = rooms.get(roomCode);
+        if (!room || !room.jeopardy) return;
+        const j = room.jeopardy;
+        if (j.phase !== "dd-clue") return;
+        if (socket.id !== j.controllerId) return;
+        const correct =
+          j.active != null &&
+          isJeopardyAnswerCorrect(
+            answer,
+            j.active.answer,
+            getClue(j, j.active.cat, j.active.clue)?.acceptedAnswers,
+          );
+        // Surface to host for confirmation, but auto-resolve to keep the flow snappy.
+        resolveDailyDouble(io, room, correct);
+      },
+    );
+
+    // Host starts the Final Jeopardy round (only valid once the board is cleared).
+    socket.on("jeopardy-start-final", ({ roomCode }: { roomCode: string }) => {
+      const room = rooms.get(roomCode);
+      if (!room || !room.jeopardy || room.hostId !== socket.id) return;
+      startJeopardyFinal(io, room);
+    });
+
+    socket.on(
+      "jeopardy-submit-final-wager",
+      ({ roomCode, wager }: { roomCode: string; wager: number }) => {
+        const room = rooms.get(roomCode);
+        if (!room || !room.jeopardy) return;
+        const j = room.jeopardy;
+        if (j.phase !== "final-wager") return;
+        const player = room.players.find((p) => p.id === socket.id);
+        if (!player || player.isHost) return;
+        const max = maxFinalWager(player.score);
+        j.finalWagers[socket.id] = clampWager(wager, max);
+        broadcastFinalProgress(io, room);
+      },
+    );
+
+    socket.on(
+      "jeopardy-submit-final-answer",
+      ({ roomCode, answer }: { roomCode: string; answer: string }) => {
+        const room = rooms.get(roomCode);
+        if (!room || !room.jeopardy) return;
+        const j = room.jeopardy;
+        if (j.phase !== "final-clue") return;
+        const player = room.players.find((p) => p.id === socket.id);
+        if (!player || player.isHost) return;
+        const correct = isJeopardyAnswerCorrect(
+          answer,
+          j.pack.final.answer,
+          j.pack.final.acceptedAnswers,
+        );
+        j.finalAnswers[socket.id] = { raw: answer, correct };
+        broadcastFinalProgress(io, room);
+      },
+    );
+
+    // Host clicks: reveal the Final Jeopardy answers and apply scores.
+    socket.on("jeopardy-reveal-final", ({ roomCode }: { roomCode: string }) => {
+      const room = rooms.get(roomCode);
+      if (!room || !room.jeopardy || room.hostId !== socket.id) return;
+      revealJeopardyFinal(io, room);
+    });
+
+    // Host overrides server's auto-judging on a player's final answer.
+    socket.on(
+      "jeopardy-override-final",
+      ({ roomCode, playerId, correct }: { roomCode: string; playerId: string; correct: boolean }) => {
+        const room = rooms.get(roomCode);
+        if (!room || !room.jeopardy || room.hostId !== socket.id) return;
+        const j = room.jeopardy;
+        if (j.phase !== "final-reveal" || j.finalResolved) return;
+        const ans = j.finalAnswers[playerId];
+        if (!ans) return;
+        ans.correct = correct;
+        // Note: scores are applied once on reveal, so we recompute on override.
+        applyFinalScores(io, room);
+      },
+    );
+
+    // Host ends the Jeopardy game (after Final reveal or anytime to bail out).
+    socket.on("jeopardy-end-game", ({ roomCode }: { roomCode: string }) => {
+      const room = rooms.get(roomCode);
+      if (!room || !room.jeopardy || room.hostId !== socket.id) return;
+      endJeopardyGame(io, room);
     });
 
     // ===========================================
@@ -1174,6 +1414,488 @@ function endQuizGame(io: SocketIOServer, room: Room) {
   io.to(room.code).emit("game-ended", {
     gameType: "pub-quiz",
     pack: room.quiz ? packSummary(room.quiz.pack) : null,
+    players: room.players,
+    finalScores: sorted.map((p, idx) => ({
+      id: p.id,
+      name: p.name,
+      score: p.score,
+      isBot: p.isBot,
+      rank: idx + 1,
+    })),
+  });
+}
+
+// =====================================================================
+// Jeopardy helpers — share `rooms`/`io`. Mirror the Pub Quiz pattern.
+// =====================================================================
+function scoresWire(room: Room) {
+  return room.players
+    .filter((p) => !p.isHost)
+    .map((p) => ({ id: p.id, name: p.name, score: p.score, isBot: p.isBot }));
+}
+
+function emitBoardUpdate(io: SocketIOServer, room: Room) {
+  if (!room.jeopardy) return;
+  io.to(room.code).emit("jeopardy-board-update", {
+    board: publicBoard(room.jeopardy),
+    phase: room.jeopardy.phase,
+    controllerId: room.jeopardy.controllerId,
+    scores: scoresWire(room),
+  });
+}
+
+function jeopardyRevealSquare(io: SocketIOServer, room: Room, cat: number, clue: number) {
+  if (!room.jeopardy) return;
+  const j = room.jeopardy;
+  const square = getClue(j, cat, clue);
+  if (!square) return;
+  if (j.revealed[cat]?.[clue]) return;
+
+  j.revealed[cat]![clue] = true;
+  const isDD = isDailyDouble(j, cat, clue);
+  j.active = {
+    cat,
+    clue,
+    category: j.pack.categories[cat]!.name,
+    value: square.value,
+    question: square.question,
+    answer: square.answer,
+    isDailyDouble: isDD,
+  };
+  j.lockedOut = new Set();
+  j.buzzedInId = null;
+  j.ddWager = 0;
+
+  if (isDD) {
+    j.phase = "dd-wager";
+    const controller = room.players.find((p) => p.id === j.controllerId);
+    const max = controller
+      ? maxDailyDoubleWager(controller.score, square.value)
+      : square.value;
+    io.to(room.code).emit("jeopardy-daily-double", {
+      cat,
+      clue,
+      category: j.pack.categories[cat]!.name,
+      value: square.value,
+      controllerId: j.controllerId,
+      controllerName: controller?.name ?? "Player",
+      maxWager: max,
+      timerEndAt: 0,
+    });
+    setJeopardyTimer(j, JEOPARDY_TIMING.dailyDoubleWagerMs, () => {
+      const live = rooms.get(room.code);
+      if (!live?.jeopardy || live.jeopardy.phase !== "dd-wager") return;
+      // Default a non-responding player to a minimum wager (the value of the square).
+      live.jeopardy.ddWager = Math.min(square.value, controller ? maxDailyDoubleWager(controller.score, square.value) : square.value);
+      startDailyDoubleClue(io, live);
+    });
+    j.timerEndAt = Date.now() + JEOPARDY_TIMING.dailyDoubleWagerMs;
+
+    // Bot DD wager?
+    if (controller?.isBot) {
+      setTimeout(() => {
+        const live = rooms.get(room.code);
+        if (!live?.jeopardy || live.jeopardy.phase !== "dd-wager") return;
+        const bot = live.players.find((p) => p.id === controller.id);
+        if (!bot) return;
+        live.jeopardy.ddWager = botDailyDoubleWager(bot.score, square.value);
+        startDailyDoubleClue(io, live);
+      }, jrand(JEOPARDY_BOT_DELAYS.ddWagerMinMs, JEOPARDY_BOT_DELAYS.ddWagerMaxMs));
+    }
+    return;
+  }
+
+  // Regular clue — show it, then arm the buzzer after a short suspense delay.
+  j.phase = "clue-reveal";
+  io.to(room.code).emit("jeopardy-clue-revealed", {
+    active: activeClueWire(j.active),
+    buzzerArmDelayMs: JEOPARDY_TIMING.buzzerArmDelayMs,
+  });
+
+  setJeopardyTimer(j, JEOPARDY_TIMING.buzzerArmDelayMs, () => {
+    const live = rooms.get(room.code);
+    if (!live?.jeopardy || live.jeopardy.phase !== "clue-reveal") return;
+    openJeopardyBuzzer(io, live);
+  });
+}
+
+function openJeopardyBuzzer(io: SocketIOServer, room: Room) {
+  if (!room.jeopardy) return;
+  const j = room.jeopardy;
+  j.phase = "buzzer-open";
+  io.to(room.code).emit("jeopardy-buzzer-open", {
+    timerEndAt: Date.now() + JEOPARDY_TIMING.buzzerWindowMs,
+  });
+  setJeopardyTimer(j, JEOPARDY_TIMING.buzzerWindowMs, () => {
+    const live = rooms.get(room.code);
+    if (!live?.jeopardy || live.jeopardy.phase !== "buzzer-open") return;
+    // Nobody buzzed → reveal the answer and move on (no penalties).
+    finishJeopardyClue(io, live, /*revealAnswer=*/ true);
+  });
+
+  // Schedule each unlocked bot to attempt a buzz with a small jitter.
+  const bots = room.players.filter((p) => p.isBot && !p.isHost && !j.lockedOut.has(p.id));
+  bots.forEach((bot) => {
+    const delay = jrand(JEOPARDY_BOT_DELAYS.buzzMinMs, JEOPARDY_BOT_DELAYS.buzzMaxMs);
+    setTimeout(() => {
+      const live = rooms.get(room.code);
+      if (!live?.jeopardy || live.jeopardy.phase !== "buzzer-open") return;
+      if (live.jeopardy.buzzedInId) return; // someone already won
+      if (live.jeopardy.lockedOut.has(bot.id)) return;
+      acceptJeopardyBuzz(io, live, bot.id);
+    }, delay);
+  });
+}
+
+function acceptJeopardyBuzz(io: SocketIOServer, room: Room, playerId: string) {
+  if (!room.jeopardy || !room.jeopardy.active) return;
+  const j = room.jeopardy;
+  j.buzzedInId = playerId;
+  j.phase = "answering";
+  const player = room.players.find((p) => p.id === playerId);
+  io.to(room.code).emit("jeopardy-buzzed", {
+    playerId,
+    playerName: player?.name ?? "Player",
+    timerEndAt: Date.now() + JEOPARDY_TIMING.answerWindowMs,
+  });
+  setJeopardyTimer(j, JEOPARDY_TIMING.answerWindowMs, () => {
+    const live = rooms.get(room.code);
+    if (!live?.jeopardy || live.jeopardy.phase !== "answering") return;
+    // Treat timeout as incorrect.
+    resolveJeopardyAnswer(io, live, false);
+  });
+
+  // If a bot buzzed, auto-judge after a short "thinking" delay.
+  if (player?.isBot) {
+    setTimeout(() => {
+      const live = rooms.get(room.code);
+      if (!live?.jeopardy || live.jeopardy.phase !== "answering") return;
+      if (live.jeopardy.buzzedInId !== playerId) return;
+      resolveJeopardyAnswer(io, live, botGuessesCorrect());
+    }, jrand(800, 2200));
+  }
+}
+
+function resolveJeopardyAnswer(io: SocketIOServer, room: Room, correct: boolean) {
+  if (!room.jeopardy || !room.jeopardy.active || !room.jeopardy.buzzedInId) return;
+  const j = room.jeopardy;
+  const active = j.active!;
+  const playerId: string = j.buzzedInId!;
+  const value = active.value;
+  const player = room.players.find((p) => p.id === playerId);
+
+  if (player) {
+    if (correct) player.score += value;
+    else player.score -= value;
+  }
+
+  io.to(room.code).emit("jeopardy-answer-resolved", {
+    playerId,
+    playerName: player?.name ?? "Player",
+    correct,
+    delta: correct ? value : -value,
+    correctAnswer: correct ? active.answer : undefined,
+    scores: scoresWire(room),
+  });
+
+  if (correct) {
+    // Picker keeps control; clear the clue and return to picking (or Final).
+    j.controllerId = playerId;
+    finishJeopardyClue(io, room, /*revealAnswer=*/ false);
+    return;
+  }
+
+  // Wrong — lock this player out, reopen the buzzer if anyone is still eligible.
+  j.lockedOut.add(playerId);
+  j.buzzedInId = null;
+  clearJeopardyTimer(j);
+
+  const eligible = room.players.filter(
+    (p) => !p.isHost && !j.lockedOut.has(p.id),
+  );
+  if (eligible.length === 0) {
+    finishJeopardyClue(io, room, /*revealAnswer=*/ true);
+    return;
+  }
+  openJeopardyBuzzer(io, room);
+}
+
+function finishJeopardyClue(io: SocketIOServer, room: Room, revealAnswer: boolean) {
+  if (!room.jeopardy) return;
+  const j = room.jeopardy;
+  clearJeopardyTimer(j);
+  const finishedAnswer = j.active?.answer;
+
+  io.to(room.code).emit("jeopardy-clue-ended", {
+    correctAnswer: revealAnswer ? finishedAnswer : null,
+    scores: scoresWire(room),
+  });
+
+  j.active = null;
+  j.buzzedInId = null;
+  j.lockedOut = new Set();
+
+  if (isBoardCleared(j)) {
+    j.phase = "final-intro";
+    io.to(room.code).emit("jeopardy-final-intro", {
+      category: j.pack.final.category,
+      scores: scoresWire(room),
+    });
+    return;
+  }
+
+  // If nobody got the last clue right, the controller keeps control. If they
+  // did, controllerId was already updated. If we never had a controller (game
+  // start) fall back to the highest scoring player.
+  if (!j.controllerId) {
+    const lead = scoresWire(room).slice().sort((a, b) => b.score - a.score)[0];
+    j.controllerId = lead?.id ?? null;
+  }
+
+  // Add a short "between clues" pause so the host TV can show the answer.
+  j.phase = "between-clues";
+  emitBoardUpdate(io, room);
+
+  setTimeout(() => {
+    const live = rooms.get(room.code);
+    if (!live?.jeopardy || live.jeopardy.phase !== "between-clues") return;
+    live.jeopardy.phase = "picking";
+    emitBoardUpdate(io, live);
+    const ctrl = live.players.find((p) => p.id === live.jeopardy!.controllerId);
+    if (ctrl?.isBot) scheduleBotJeopardyPick(io, live);
+  }, 2000);
+}
+
+function scheduleBotJeopardyPick(io: SocketIOServer, room: Room) {
+  if (!room.jeopardy) return;
+  const j = room.jeopardy;
+  setTimeout(() => {
+    const live = rooms.get(room.code);
+    if (!live?.jeopardy || live.jeopardy.phase !== "picking") return;
+    if (live.jeopardy.controllerId !== j.controllerId) return;
+    // Pick a random unrevealed square.
+    const choices: Array<{ cat: number; clue: number }> = [];
+    live.jeopardy.revealed.forEach((row, ci) => {
+      row.forEach((rev, qi) => { if (!rev) choices.push({ cat: ci, clue: qi }); });
+    });
+    if (choices.length === 0) return;
+    const pick = choices[Math.floor(Math.random() * choices.length)]!;
+    jeopardyRevealSquare(io, live, pick.cat, pick.clue);
+  }, jrand(1200, 2800));
+}
+
+function startDailyDoubleClue(io: SocketIOServer, room: Room) {
+  if (!room.jeopardy || !room.jeopardy.active) return;
+  const j = room.jeopardy;
+  const active = j.active!;
+  clearJeopardyTimer(j);
+  j.phase = "dd-clue";
+  io.to(room.code).emit("jeopardy-dd-clue", {
+    active: activeClueWire(active),
+    wager: j.ddWager,
+    controllerId: j.controllerId,
+    timerEndAt: Date.now() + JEOPARDY_TIMING.dailyDoubleAnswerMs,
+  });
+
+  setJeopardyTimer(j, JEOPARDY_TIMING.dailyDoubleAnswerMs, () => {
+    const live = rooms.get(room.code);
+    if (!live?.jeopardy || live.jeopardy.phase !== "dd-clue") return;
+    resolveDailyDouble(io, live, false);
+  });
+
+  // Bot auto-answer
+  const controller = room.players.find((p) => p.id === j.controllerId);
+  if (controller?.isBot) {
+    setTimeout(() => {
+      const live = rooms.get(room.code);
+      if (!live?.jeopardy || live.jeopardy.phase !== "dd-clue") return;
+      resolveDailyDouble(io, live, botGuessesCorrect());
+    }, jrand(1200, 3200));
+  }
+}
+
+function resolveDailyDouble(io: SocketIOServer, room: Room, correct: boolean) {
+  if (!room.jeopardy || !room.jeopardy.active) return;
+  const j = room.jeopardy;
+  const active = j.active!;
+  const playerId = j.controllerId;
+  const player = playerId ? room.players.find((p) => p.id === playerId) : undefined;
+  const wager = j.ddWager;
+  if (player) {
+    if (correct) player.score += wager;
+    else player.score -= wager;
+  }
+  io.to(room.code).emit("jeopardy-answer-resolved", {
+    playerId,
+    playerName: player?.name ?? "Player",
+    correct,
+    delta: correct ? wager : -wager,
+    correctAnswer: active.answer,
+    scores: scoresWire(room),
+    isDailyDouble: true,
+  });
+  // Whether right or wrong, the controller keeps control on a Daily Double.
+  finishJeopardyClue(io, room, /*revealAnswer=*/ true);
+}
+
+function startJeopardyFinal(io: SocketIOServer, room: Room) {
+  if (!room.jeopardy) return;
+  const j = room.jeopardy;
+  j.phase = "final-wager";
+  j.finalWagers = {};
+  j.finalAnswers = {};
+  j.finalResolved = false;
+  const eligible = room.players.filter((p) => !p.isHost && p.score > 0);
+  // Anyone non-positive wagers 0 by default.
+  room.players.filter((p) => !p.isHost && p.score <= 0).forEach((p) => {
+    j.finalWagers[p.id] = 0;
+  });
+
+  io.to(room.code).emit("jeopardy-final-wager-open", {
+    category: j.pack.final.category,
+    timerEndAt: Date.now() + JEOPARDY_TIMING.finalWagerMs,
+    eligiblePlayerIds: eligible.map((p) => p.id),
+  });
+
+  setJeopardyTimer(j, JEOPARDY_TIMING.finalWagerMs, () => {
+    const live = rooms.get(room.code);
+    if (!live?.jeopardy || live.jeopardy.phase !== "final-wager") return;
+    // Default any missing wagers to 0 and proceed.
+    live.players.filter((p) => !p.isHost).forEach((p) => {
+      if (live.jeopardy!.finalWagers[p.id] == null) live.jeopardy!.finalWagers[p.id] = 0;
+    });
+    revealFinalQuestion(io, live);
+  });
+
+  // Bot wagers
+  const leader = Math.max(0, ...eligible.map((p) => p.score));
+  room.players.filter((p) => p.isBot && !p.isHost && p.score > 0).forEach((bot) => {
+    setTimeout(() => {
+      const live = rooms.get(room.code);
+      if (!live?.jeopardy || live.jeopardy.phase !== "final-wager") return;
+      live.jeopardy.finalWagers[bot.id] = botFinalWager(bot.score, leader);
+      broadcastFinalProgress(io, live);
+    }, jrand(JEOPARDY_BOT_DELAYS.finalWagerMinMs, JEOPARDY_BOT_DELAYS.finalWagerMaxMs));
+  });
+}
+
+function broadcastFinalProgress(io: SocketIOServer, room: Room) {
+  if (!room.jeopardy) return;
+  const j = room.jeopardy;
+  const nonHosts = room.players.filter((p) => !p.isHost);
+  if (j.phase === "final-wager") {
+    const wagered = nonHosts.filter((p) => j.finalWagers[p.id] != null).length;
+    io.to(room.code).emit("jeopardy-final-progress", {
+      stage: "wager",
+      submitted: wagered,
+      total: nonHosts.length,
+    });
+    if (wagered >= nonHosts.length) revealFinalQuestion(io, room);
+  } else if (j.phase === "final-clue") {
+    const answered = nonHosts.filter((p) => j.finalAnswers[p.id] != null).length;
+    io.to(room.code).emit("jeopardy-final-progress", {
+      stage: "answer",
+      submitted: answered,
+      total: nonHosts.length,
+    });
+    if (answered >= nonHosts.length) revealJeopardyFinal(io, room);
+  }
+}
+
+function revealFinalQuestion(io: SocketIOServer, room: Room) {
+  if (!room.jeopardy) return;
+  const j = room.jeopardy;
+  clearJeopardyTimer(j);
+  j.phase = "final-clue";
+  io.to(room.code).emit("jeopardy-final-clue", {
+    category: j.pack.final.category,
+    question: j.pack.final.question,
+    timerEndAt: Date.now() + JEOPARDY_TIMING.finalAnswerMs,
+  });
+
+  setJeopardyTimer(j, JEOPARDY_TIMING.finalAnswerMs, () => {
+    const live = rooms.get(room.code);
+    if (!live?.jeopardy || live.jeopardy.phase !== "final-clue") return;
+    revealJeopardyFinal(io, live);
+  });
+
+  // Bot final answers.
+  room.players.filter((p) => p.isBot && !p.isHost).forEach((bot) => {
+    setTimeout(() => {
+      const live = rooms.get(room.code);
+      if (!live?.jeopardy || live.jeopardy.phase !== "final-clue") return;
+      const correct = botFinalGuessesCorrect();
+      live.jeopardy.finalAnswers[bot.id] = {
+        raw: correct ? "(bot guess: correct)" : "(bot guess: incorrect)",
+        correct,
+      };
+      broadcastFinalProgress(io, live);
+    }, jrand(JEOPARDY_BOT_DELAYS.finalAnswerMinMs, JEOPARDY_BOT_DELAYS.finalAnswerMaxMs));
+  });
+}
+
+function applyFinalScores(io: SocketIOServer, room: Room) {
+  if (!room.jeopardy) return;
+  const j = room.jeopardy;
+  // Scores are applied off the original scores from before final.
+  // To make this idempotent, recompute from the deltas implied by current state.
+  // We track a pre-final snapshot the first time we apply.
+  if (!j.finalResolved) {
+    (j as JeopardyState & { _preFinalScores?: Record<string, number> })._preFinalScores =
+      Object.fromEntries(room.players.map((p) => [p.id, p.score]));
+  }
+  const snap = (j as JeopardyState & { _preFinalScores?: Record<string, number> })._preFinalScores!;
+  room.players.forEach((p) => {
+    if (p.isHost) return;
+    const before = snap[p.id] ?? 0;
+    const wager = j.finalWagers[p.id] ?? 0;
+    const ans = j.finalAnswers[p.id];
+    const delta = ans?.correct ? wager : -wager;
+    p.score = before + delta;
+  });
+  j.finalResolved = true;
+  io.to(room.code).emit("jeopardy-final-scored", {
+    scores: scoresWire(room),
+    perPlayer: room.players
+      .filter((p) => !p.isHost)
+      .map((p) => ({
+        id: p.id,
+        name: p.name,
+        wager: j.finalWagers[p.id] ?? 0,
+        answer: j.finalAnswers[p.id]?.raw ?? "",
+        correct: j.finalAnswers[p.id]?.correct ?? false,
+        score: p.score,
+      })),
+  });
+}
+
+function revealJeopardyFinal(io: SocketIOServer, room: Room) {
+  if (!room.jeopardy) return;
+  const j = room.jeopardy;
+  clearJeopardyTimer(j);
+  j.phase = "final-reveal";
+  io.to(room.code).emit("jeopardy-final-reveal", {
+    correctAnswer: j.pack.final.answer,
+    perPlayer: room.players
+      .filter((p) => !p.isHost)
+      .map((p) => ({
+        id: p.id,
+        name: p.name,
+        wager: j.finalWagers[p.id] ?? 0,
+        answer: j.finalAnswers[p.id]?.raw ?? "(no answer)",
+        correct: j.finalAnswers[p.id]?.correct ?? false,
+      })),
+  });
+  applyFinalScores(io, room);
+}
+
+function endJeopardyGame(io: SocketIOServer, room: Room) {
+  if (room.jeopardy) clearJeopardyTimer(room.jeopardy);
+  room.status = "finished";
+  const sorted = jeopardyLeaderboard(room.players);
+  io.to(room.code).emit("game-ended", {
+    gameType: "jeopardy",
+    pack: room.jeopardy ? jeopardyPackSummary(room.jeopardy.pack) : null,
     players: room.players,
     finalScores: sorted.map((p, idx) => ({
       id: p.id,

@@ -6,7 +6,7 @@ import type { Player } from "@/types/game";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Loader2, Send, CheckCircle2, Eye, Sparkles, Mic, Beer, Check, X, Trophy } from "lucide-react";
+import { Loader2, Send, CheckCircle2, Eye, Sparkles, Mic, Beer, Check, X, Trophy, Grid3x3, Star, Zap, Award } from "lucide-react";
 import type { HostAnswerMethod } from "@/lib/hostSettings";
 import { useToast } from "@/hooks/use-toast";
 import {
@@ -132,6 +132,44 @@ interface QuizRevealPayload {
 
 type RrPhase = "writing" | "writing-complete" | "revealing";
 
+// ---- Jeopardy types ----
+interface JBoardWire {
+  categories: Array<{ name: string; clues: Array<{ value: number; revealed: boolean }> }>;
+}
+interface JActiveClueWire {
+  cat: number;
+  clue: number;
+  category: string;
+  value: number;
+  question: string;
+  isDailyDouble: boolean;
+}
+interface JScoreRow { id: string; name: string; score: number; isBot: boolean }
+type JPhase =
+  | "picking"
+  | "clue-reveal"
+  | "buzzer-open"
+  | "answering"
+  | "judging"
+  | "dd-wager"
+  | "dd-clue"
+  | "dd-judging"
+  | "between-clues"
+  | "final-intro"
+  | "final-wager"
+  | "final-clue"
+  | "final-reveal"
+  | "ended";
+interface JDailyDoublePayload {
+  cat: number;
+  clue: number;
+  category: string;
+  value: number;
+  controllerId: string;
+  controllerName: string;
+  maxWager: number;
+}
+
 const colorHex = (color: string): string => {
   switch (color) {
     case "yellow": return "#FFD700";
@@ -194,6 +232,32 @@ export default function GamePlayer() {
   const [pqRoundSummary, setPqRoundSummary] = useState<{ roundName: string; isLastRound: boolean } | null>(null);
   const [pqNow, setPqNow] = useState(Date.now());
 
+  // Jeopardy state
+  const [jBoard, setJBoard] = useState<JBoardWire | null>(null);
+  const [jPhase, setJPhase] = useState<JPhase>("picking");
+  const [jControllerId, setJControllerId] = useState<string | null>(null);
+  const [jActive, setJActive] = useState<JActiveClueWire | null>(null);
+  const [jBuzzedInId, setJBuzzedInId] = useState<string | null>(null);
+  const [jBuzzedInName, setJBuzzedInName] = useState<string>("");
+  const [jScores, setJScores] = useState<JScoreRow[]>([]);
+  const [jClueRevealedAnswer, setJClueRevealedAnswer] = useState<string | null>(null);
+  const [jDailyDouble, setJDailyDouble] = useState<JDailyDoublePayload | null>(null);
+  const [jDdWagerInput, setJDdWagerInput] = useState<string>("");
+  const [jDdSubmitted, setJDdSubmitted] = useState(false);
+  const [jFinalCategory, setJFinalCategory] = useState<string>("");
+  const [jFinalQuestion, setJFinalQuestion] = useState<string>("");
+  const [jFinalEligibleIds, setJFinalEligibleIds] = useState<string[]>([]);
+  const [jFinalWagerInput, setJFinalWagerInput] = useState<string>("");
+  const [jFinalAnswerInput, setJFinalAnswerInput] = useState<string>("");
+  const [jFinalWagerSubmitted, setJFinalWagerSubmitted] = useState(false);
+  const [jFinalAnswerSubmitted, setJFinalAnswerSubmitted] = useState(false);
+  const [jFinalReveal, setJFinalReveal] = useState<{ correctAnswer: string; perPlayer: Array<{ id: string; name: string; wager: number; answer: string; correct: boolean }> } | null>(null);
+  const [jLastResolved, setJLastResolved] = useState<{ playerId: string | null; correct: boolean; delta: number } | null>(null);
+  const [jBuzzerArmed, setJBuzzerArmed] = useState(false);
+  const [jMyBuzzLockedOut, setJMyBuzzLockedOut] = useState(false);
+  const [jTimerEndAt, setJTimerEndAt] = useState<number>(0);
+  const [jNow, setJNow] = useState(Date.now());
+
   const finishedRef = useRef(false);
 
   // Task #5: host-driven settings + state
@@ -234,7 +298,12 @@ export default function GamePlayer() {
       setHostPaused(Boolean(paused));
     });
 
-    newSocket.on("game-started", ({ gameType: gt, questions, questionIndex }: GameStartedPayload) => {
+    newSocket.on("game-started", (payload: GameStartedPayload & {
+      board?: JBoardWire;
+      controllerId?: string | null;
+      scores?: JScoreRow[];
+    }) => {
+      const { gameType: gt, questions, questionIndex } = payload;
       setGameState("playing");
       setGameType(gt);
       playWhoosh();
@@ -258,7 +327,212 @@ export default function GamePlayer() {
         setPqMyResult(null);
         setPqMyAnswer("");
         setPqOpenAnswerInput("");
+      } else if (gt === "jeopardy") {
+        setJBoard(payload.board ?? null);
+        setJControllerId(payload.controllerId ?? null);
+        setJScores(payload.scores ?? []);
+        setJPhase("picking");
+        setJActive(null);
+        setJBuzzedInId(null);
+        setJBuzzedInName("");
+        setJClueRevealedAnswer(null);
+        setJDailyDouble(null);
+        setJDdWagerInput("");
+        setJDdSubmitted(false);
+        setJFinalCategory("");
+        setJFinalQuestion("");
+        setJFinalEligibleIds([]);
+        setJFinalWagerInput("");
+        setJFinalAnswerInput("");
+        setJFinalWagerSubmitted(false);
+        setJFinalAnswerSubmitted(false);
+        setJFinalReveal(null);
+        setJLastResolved(null);
+        setJBuzzerArmed(false);
+        setJMyBuzzLockedOut(false);
+        setJTimerEndAt(0);
       }
+    });
+
+    // ============ Jeopardy socket handlers ============
+    newSocket.on("jeopardy-board-update", (payload: {
+      board: JBoardWire;
+      phase: JPhase;
+      controllerId: string | null;
+      scores: JScoreRow[];
+    }) => {
+      setJBoard(payload.board);
+      setJPhase(payload.phase);
+      setJControllerId(payload.controllerId);
+      setJScores(payload.scores);
+      if (payload.phase === "picking") {
+        setJActive(null);
+        setJBuzzedInId(null);
+        setJBuzzedInName("");
+        setJClueRevealedAnswer(null);
+        setJDailyDouble(null);
+        setJDdWagerInput("");
+        setJDdSubmitted(false);
+        setJBuzzerArmed(false);
+        setJMyBuzzLockedOut(false);
+        setJLastResolved(null);
+        setJTimerEndAt(0);
+      }
+    });
+
+    newSocket.on("jeopardy-clue-revealed", (payload: {
+      active: JActiveClueWire;
+    }) => {
+      setJActive(payload.active);
+      setJPhase("clue-reveal");
+      setJBuzzedInId(null);
+      setJBuzzedInName("");
+      setJClueRevealedAnswer(null);
+      setJBuzzerArmed(false);
+      setJMyBuzzLockedOut(false);
+      setJLastResolved(null);
+      setJTimerEndAt(0);
+      playWhoosh();
+    });
+
+    newSocket.on("jeopardy-buzzer-open", (payload: { timerEndAt: number }) => {
+      setJPhase("buzzer-open");
+      setJBuzzedInId(null);
+      setJBuzzedInName("");
+      setJBuzzerArmed(true);
+      setJMyBuzzLockedOut(false);
+      setJTimerEndAt(payload.timerEndAt);
+    });
+
+    newSocket.on("jeopardy-buzzed", (payload: {
+      playerId: string;
+      playerName: string;
+      timerEndAt: number;
+    }) => {
+      setJPhase("answering");
+      setJBuzzedInId(payload.playerId);
+      setJBuzzedInName(payload.playerName);
+      setJBuzzerArmed(false);
+      setJTimerEndAt(payload.timerEndAt);
+      // If someone else buzzed before me, lock me out for this clue
+      if (me?.id && payload.playerId !== me.id) {
+        setJMyBuzzLockedOut(true);
+      }
+    });
+
+    newSocket.on("jeopardy-answer-resolved", (payload: {
+      playerId: string | null;
+      playerName: string;
+      correct: boolean;
+      delta: number;
+      scores: JScoreRow[];
+    }) => {
+      setJScores(payload.scores);
+      setJLastResolved({
+        playerId: payload.playerId,
+        correct: payload.correct,
+        delta: payload.delta,
+      });
+      if (payload.playerId === me?.id) {
+        if (payload.correct) {
+          playCorrect();
+          hapticCorrect();
+        } else {
+          playWrong();
+          hapticWrong();
+        }
+      }
+    });
+
+    newSocket.on("jeopardy-clue-ended", (payload: {
+      correctAnswer: string | null;
+      scores: JScoreRow[];
+    }) => {
+      setJScores(payload.scores);
+      setJClueRevealedAnswer(payload.correctAnswer);
+      setJBuzzedInId(null);
+      setJBuzzedInName("");
+      setJBuzzerArmed(false);
+      setJTimerEndAt(0);
+    });
+
+    newSocket.on("jeopardy-daily-double", (payload: JDailyDoublePayload & { timerEndAt: number }) => {
+      setJDailyDouble(payload);
+      setJPhase("dd-wager");
+      setJDdWagerInput("");
+      setJDdSubmitted(false);
+      setJControllerId(payload.controllerId);
+      setJTimerEndAt(payload.timerEndAt);
+      playWhoosh();
+    });
+
+    newSocket.on("jeopardy-dd-clue", (payload: {
+      active: JActiveClueWire;
+      wager: number;
+      controllerId: string;
+      timerEndAt: number;
+    }) => {
+      setJActive(payload.active);
+      setJControllerId(payload.controllerId);
+      setJPhase("dd-clue");
+      setJTimerEndAt(payload.timerEndAt);
+    });
+
+    newSocket.on("jeopardy-final-intro", (payload: { category: string; scores: JScoreRow[] }) => {
+      setJFinalCategory(payload.category);
+      setJScores(payload.scores);
+      setJPhase("final-intro");
+      setJActive(null);
+      setJFinalWagerInput("");
+      setJFinalAnswerInput("");
+      setJFinalWagerSubmitted(false);
+      setJFinalAnswerSubmitted(false);
+      setJFinalReveal(null);
+      setJTimerEndAt(0);
+      playWhoosh();
+    });
+
+    newSocket.on("jeopardy-final-wager-open", (payload: {
+      category: string;
+      timerEndAt: number;
+      eligiblePlayerIds: string[];
+    }) => {
+      setJFinalCategory(payload.category);
+      setJFinalEligibleIds(payload.eligiblePlayerIds);
+      setJPhase("final-wager");
+      setJTimerEndAt(payload.timerEndAt);
+      setJFinalWagerSubmitted(false);
+    });
+
+    newSocket.on("jeopardy-final-clue", (payload: {
+      category: string;
+      question: string;
+      timerEndAt: number;
+    }) => {
+      setJFinalCategory(payload.category);
+      setJFinalQuestion(payload.question);
+      setJPhase("final-clue");
+      setJTimerEndAt(payload.timerEndAt);
+      setJFinalAnswerSubmitted(false);
+      playWhoosh();
+    });
+
+    newSocket.on("jeopardy-final-reveal", (payload: {
+      correctAnswer: string;
+      perPlayer: Array<{ id: string; name: string; wager: number; answer: string; correct: boolean }>;
+    }) => {
+      setJFinalReveal(payload);
+      setJPhase("final-reveal");
+      setJTimerEndAt(0);
+      const mine = payload.perPlayer.find((p) => p.id === me?.id);
+      if (mine) {
+        if (mine.correct) { playCorrect(); hapticCorrect(); }
+        else { playWrong(); hapticWrong(); }
+      }
+    });
+
+    newSocket.on("jeopardy-final-scored", (payload: { scores: JScoreRow[] }) => {
+      setJScores(payload.scores);
     });
 
     // ============ Pub Quiz handlers ============
@@ -545,6 +819,80 @@ export default function GamePlayer() {
     if (pqAnswered) return;
     submitQuizAnswer(val ? "true" : "false");
   };
+
+  // ============ Jeopardy handlers ============
+  const handleJBuzz = () => {
+    if (!socket || jPhase !== "buzzer-open" || jMyBuzzLockedOut) return;
+    if (hostPaused) return;
+    playTap();
+    hapticTap();
+    socket.emit("jeopardy-buzz-in", { roomCode });
+  };
+
+  const handleJPickSquare = (cat: number, clue: number) => {
+    if (!socket || jPhase !== "picking") return;
+    if (me?.id !== jControllerId) return;
+    if (hostPaused) return;
+    playTap();
+    hapticTap();
+    socket.emit("jeopardy-pick-square", { roomCode, cat, clue });
+  };
+
+  const handleJSubmitDdWager = () => {
+    if (!socket || !jDailyDouble || jDdSubmitted) return;
+    const wager = parseInt(jDdWagerInput, 10);
+    if (Number.isNaN(wager) || wager < 5 || wager > jDailyDouble.maxWager) {
+      toast({
+        title: "Invalid wager",
+        description: `Must be between $5 and $${jDailyDouble.maxWager}.`,
+        variant: "destructive",
+      });
+      return;
+    }
+    setJDdSubmitted(true);
+    playTap();
+    hapticTap();
+    socket.emit("jeopardy-submit-dd-wager", { roomCode, wager });
+  };
+
+  const handleJSubmitFinalWager = () => {
+    if (!socket || jFinalWagerSubmitted) return;
+    const myScore = jScores.find((s) => s.id === me?.id)?.score ?? 0;
+    const max = Math.max(0, myScore);
+    const wager = parseInt(jFinalWagerInput, 10);
+    if (Number.isNaN(wager) || wager < 0 || wager > max) {
+      toast({
+        title: "Invalid wager",
+        description: `Must be between $0 and $${max}.`,
+        variant: "destructive",
+      });
+      return;
+    }
+    setJFinalWagerSubmitted(true);
+    playTap();
+    hapticTap();
+    socket.emit("jeopardy-submit-final-wager", { roomCode, wager });
+  };
+
+  const handleJSubmitFinalAnswer = () => {
+    if (!socket || jFinalAnswerSubmitted) return;
+    const answer = jFinalAnswerInput.trim();
+    if (!answer) {
+      toast({ title: "Type your answer first", variant: "destructive" });
+      return;
+    }
+    setJFinalAnswerSubmitted(true);
+    playTap();
+    hapticTap();
+    socket.emit("jeopardy-submit-final-answer", { roomCode, answer });
+  };
+
+  // Jeopardy: timer tick whenever a timer is active
+  useEffect(() => {
+    if (gameType !== "jeopardy" || jTimerEndAt === 0) return;
+    const id = setInterval(() => setJNow(Date.now()), 250);
+    return () => clearInterval(id);
+  }, [gameType, jTimerEndAt]);
 
   const handlePqSubmitOpen = () => {
     const ans = pqOpenAnswerInput.trim();
@@ -1226,6 +1574,479 @@ export default function GamePlayer() {
             </div>
           )}
         </main>
+      </div>
+    );
+  }
+
+  // ============ PLAYING — Jeopardy ============
+  if (gameState === "playing" && gameType === "jeopardy") {
+    const myScore = jScores.find((s) => s.id === me?.id)?.score ?? 0;
+    const isController = me?.id != null && me.id === jControllerId;
+    const isBuzzedIn = jBuzzedInId != null && jBuzzedInId === me?.id;
+    const remainingMs = Math.max(0, jTimerEndAt - jNow);
+    const secsLeft = Math.ceil(remainingMs / 1000);
+
+    const ScoreBadge = () => (
+      <div className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full font-black text-sm border-2 ${
+        myScore < 0
+          ? "bg-destructive/15 border-destructive/50 text-destructive"
+          : "bg-yellow-400/15 border-yellow-400/50 text-yellow-300"
+      }`}>
+        <span className="text-xs uppercase opacity-70">You</span>
+        {myScore < 0 ? "-" : ""}${Math.abs(myScore)}
+      </div>
+    );
+
+    // ---- Final reveal (read-only screen) ----
+    if (jFinalReveal) {
+      const mine = jFinalReveal.perPlayer.find((p) => p.id === me?.id);
+      return (
+        <div className="flex flex-col min-h-[100dvh] p-6 items-center justify-center text-center space-y-4">
+          <Award className="w-16 h-16 text-yellow-400" />
+          <h1 className="text-3xl font-extrabold font-display">Final Jeopardy</h1>
+          <p className="text-sm uppercase font-bold tracking-widest text-muted-foreground">Correct Answer</p>
+          <p className="text-3xl font-black text-yellow-300">{jFinalReveal.correctAnswer}</p>
+          {mine && (
+            <div className={`p-5 rounded-2xl border-2 w-full max-w-sm surface-elevated ${
+              mine.correct ? "bg-success/10 border-success/50" : "bg-destructive/10 border-destructive/50"
+            }`}>
+              <div className="flex items-center justify-center gap-2 mb-2">
+                {mine.correct
+                  ? <Check className="w-6 h-6 text-success" />
+                  : <X className="w-6 h-6 text-destructive" />}
+                <p className={`text-xl font-extrabold ${mine.correct ? "text-success" : "text-destructive"}`}>
+                  {mine.correct ? "Correct!" : "Wrong"}
+                </p>
+              </div>
+              <p className="text-xs uppercase font-bold tracking-widest text-muted-foreground">Your Answer</p>
+              <p className="text-lg font-bold text-foreground italic">"{mine.answer}"</p>
+              <p className="text-xs uppercase font-bold tracking-widest text-muted-foreground mt-3">Wager</p>
+              <p className="text-2xl font-black text-foreground">${mine.wager}</p>
+            </div>
+          )}
+          <p className="text-sm text-muted-foreground">Look at the big screen for standings.</p>
+        </div>
+      );
+    }
+
+    // ---- Final clue: answer input ----
+    if (jPhase === "final-clue") {
+      const eligible = jFinalEligibleIds.includes(me?.id ?? "");
+      if (!eligible) {
+        return (
+          <div className="flex flex-col min-h-[100dvh] p-6 items-center justify-center text-center space-y-4">
+            <Award className="w-12 h-12 text-yellow-400" />
+            <h1 className="text-2xl font-extrabold font-display">Final Jeopardy</h1>
+            <p className="text-muted-foreground max-w-sm">You're not eligible for Final (score must be positive). Watch on the big screen.</p>
+          </div>
+        );
+      }
+      return (
+        <div className="flex flex-col min-h-[100dvh] p-5 sm:p-6">
+          <header className="mb-4 flex items-center justify-between">
+            <div>
+              <p className="text-xs uppercase font-bold tracking-widest text-yellow-400 flex items-center gap-1">
+                <Award className="w-3.5 h-3.5" />Final Jeopardy
+              </p>
+              <p className="text-sm text-muted-foreground mt-0.5">{jFinalCategory}</p>
+            </div>
+            <TimerRing value={remainingMs / 1000} total={30} size={56} thickness={6} label={`${secsLeft}s`} />
+          </header>
+          <main className="flex-1 flex flex-col">
+            <Card className="p-5 mb-4 border-2 border-yellow-400/40 bg-card/85">
+              <h2 className="text-xl sm:text-2xl font-extrabold font-display leading-snug">{jFinalQuestion}</h2>
+            </Card>
+            {jFinalAnswerSubmitted ? (
+              <div className="flex-1 flex flex-col items-center justify-center text-center space-y-3 py-8">
+                <CheckCircle2 className="w-16 h-16 text-success" />
+                <h2 className="text-2xl font-extrabold">Answer locked in</h2>
+                <p className="text-muted-foreground">"{jFinalAnswerInput.trim()}"</p>
+                <p className="text-sm text-muted-foreground">Waiting for everyone else…</p>
+              </div>
+            ) : (
+              <div className="space-y-3 pb-6">
+                <Input
+                  value={jFinalAnswerInput}
+                  onChange={(e) => setJFinalAnswerInput(e.target.value)}
+                  placeholder="Your answer…"
+                  maxLength={120}
+                  className="text-lg py-6 min-h-12 bg-card border-2 border-yellow-400/40 focus-visible:border-yellow-400 focus-visible:ring-yellow-400/30"
+                  autoFocus
+                  data-testid="input-j-final-answer"
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" && !e.shiftKey) {
+                      e.preventDefault();
+                      handleJSubmitFinalAnswer();
+                    }
+                  }}
+                />
+                <Button
+                  size="lg"
+                  className="w-full bg-yellow-500 hover:bg-yellow-500/90 text-yellow-950 font-bold"
+                  onClick={handleJSubmitFinalAnswer}
+                  disabled={!jFinalAnswerInput.trim()}
+                  data-testid="btn-j-final-answer-submit"
+                >
+                  <Send className="w-5 h-5 mr-2" /> Submit Answer
+                </Button>
+              </div>
+            )}
+          </main>
+        </div>
+      );
+    }
+
+    // ---- Final wager ----
+    if (jPhase === "final-wager") {
+      const eligible = jFinalEligibleIds.includes(me?.id ?? "");
+      const max = Math.max(0, myScore);
+      if (!eligible) {
+        return (
+          <div className="flex flex-col min-h-[100dvh] p-6 items-center justify-center text-center space-y-4">
+            <Award className="w-12 h-12 text-yellow-400" />
+            <h1 className="text-2xl font-extrabold font-display">Final Jeopardy</h1>
+            <p className="text-muted-foreground max-w-sm">You're not eligible for Final (score must be positive). Watch on the big screen.</p>
+          </div>
+        );
+      }
+      return (
+        <div className="flex flex-col min-h-[100dvh] p-5 sm:p-6">
+          <header className="mb-4 flex items-center justify-between">
+            <div>
+              <p className="text-xs uppercase font-bold tracking-widest text-yellow-400 flex items-center gap-1">
+                <Award className="w-3.5 h-3.5" />Final Jeopardy
+              </p>
+              <p className="text-sm text-muted-foreground mt-0.5">Wager phase</p>
+            </div>
+            <TimerRing value={remainingMs / 1000} total={30} size={56} thickness={6} label={`${secsLeft}s`} />
+          </header>
+          <main className="flex-1 flex flex-col">
+            <Card className="p-5 mb-4 border-2 border-yellow-400/40 bg-card/85 text-center">
+              <p className="text-xs uppercase font-bold tracking-widest text-muted-foreground">Category</p>
+              <h2 className="text-3xl font-extrabold font-display text-yellow-300 mt-1">{jFinalCategory}</h2>
+            </Card>
+            {jFinalWagerSubmitted ? (
+              <div className="flex-1 flex flex-col items-center justify-center text-center space-y-3 py-8">
+                <CheckCircle2 className="w-16 h-16 text-success" />
+                <h2 className="text-2xl font-extrabold">Wager locked in</h2>
+                <p className="text-3xl font-black text-yellow-300">${parseInt(jFinalWagerInput, 10) || 0}</p>
+                <p className="text-sm text-muted-foreground">Waiting for the clue…</p>
+              </div>
+            ) : (
+              <div className="space-y-3 pb-6">
+                <div className="text-center mb-2">
+                  <p className="text-sm text-muted-foreground">Your score</p>
+                  <p className="text-3xl font-black text-foreground">${myScore}</p>
+                  <p className="text-xs text-muted-foreground mt-1">Wager $0 – ${max}</p>
+                </div>
+                <Input
+                  type="number"
+                  inputMode="numeric"
+                  value={jFinalWagerInput}
+                  onChange={(e) => setJFinalWagerInput(e.target.value)}
+                  placeholder="0"
+                  min={0}
+                  max={max}
+                  className="text-2xl py-6 text-center font-black bg-card border-2 border-yellow-400/40 focus-visible:border-yellow-400 focus-visible:ring-yellow-400/30"
+                  autoFocus
+                  data-testid="input-j-final-wager"
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      e.preventDefault();
+                      handleJSubmitFinalWager();
+                    }
+                  }}
+                />
+                <Button
+                  size="lg"
+                  className="w-full bg-yellow-500 hover:bg-yellow-500/90 text-yellow-950 font-bold"
+                  onClick={handleJSubmitFinalWager}
+                  data-testid="btn-j-final-wager-submit"
+                >
+                  <Send className="w-5 h-5 mr-2" /> Lock in wager
+                </Button>
+              </div>
+            )}
+          </main>
+        </div>
+      );
+    }
+
+    // ---- Final intro: just waiting ----
+    if (jPhase === "final-intro") {
+      return (
+        <div className="flex flex-col min-h-[100dvh] p-6 items-center justify-center text-center space-y-4">
+          <Award className="w-16 h-16 text-yellow-400 drop-shadow-[0_0_24px_hsl(48_100%_60%)]" />
+          <h1 className="text-3xl font-extrabold font-display">Final Jeopardy</h1>
+          <p className="text-xs uppercase font-bold tracking-widest text-muted-foreground">Category</p>
+          <p className="text-2xl font-extrabold text-yellow-300">{jFinalCategory}</p>
+          <Loader2 className="w-6 h-6 text-muted-foreground animate-spin" />
+          <p className="text-sm text-muted-foreground">Waiting for the host to start wagering…</p>
+        </div>
+      );
+    }
+
+    // ---- Daily Double: controller wagers ----
+    if (jPhase === "dd-wager" && jDailyDouble) {
+      if (jDailyDouble.controllerId !== me?.id) {
+        return (
+          <div className="flex flex-col min-h-[100dvh] p-6 items-center justify-center text-center space-y-4">
+            <Star className="w-16 h-16 text-yellow-400 fill-yellow-400 drop-shadow-[0_0_18px_hsl(48_100%_60%)]" />
+            <h1 className="text-3xl font-extrabold font-display text-yellow-300">DAILY DOUBLE</h1>
+            <p className="text-muted-foreground">
+              <span className="font-bold text-foreground">{jDailyDouble.controllerName}</span> is wagering…
+            </p>
+            <ScoreBadge />
+          </div>
+        );
+      }
+      return (
+        <div className="flex flex-col min-h-[100dvh] p-5 sm:p-6">
+          <header className="mb-4 flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <Star className="w-5 h-5 text-yellow-400 fill-yellow-400" />
+              <p className="text-sm uppercase font-bold tracking-widest text-yellow-400">Daily Double</p>
+            </div>
+            <TimerRing value={remainingMs / 1000} total={20} size={56} thickness={6} label={`${secsLeft}s`} />
+          </header>
+          <main className="flex-1 flex flex-col">
+            <Card className="p-5 mb-4 border-2 border-yellow-400/40 bg-card/85 text-center">
+              <p className="text-xs uppercase font-bold tracking-widest text-muted-foreground">Category</p>
+              <h2 className="text-2xl font-extrabold font-display text-yellow-300 mt-1">{jDailyDouble.category}</h2>
+            </Card>
+            {jDdSubmitted ? (
+              <div className="flex-1 flex flex-col items-center justify-center text-center space-y-3 py-8">
+                <CheckCircle2 className="w-16 h-16 text-success" />
+                <h2 className="text-2xl font-extrabold">Wager locked in</h2>
+                <p className="text-3xl font-black text-yellow-300">${parseInt(jDdWagerInput, 10) || 0}</p>
+                <p className="text-sm text-muted-foreground">Get ready for the clue…</p>
+              </div>
+            ) : (
+              <div className="space-y-3 pb-6">
+                <div className="text-center mb-2">
+                  <p className="text-sm text-muted-foreground">Your score: <span className="font-bold text-foreground">${myScore}</span></p>
+                  <p className="text-xs text-muted-foreground mt-1">Wager $5 – ${jDailyDouble.maxWager}</p>
+                </div>
+                <Input
+                  type="number"
+                  inputMode="numeric"
+                  value={jDdWagerInput}
+                  onChange={(e) => setJDdWagerInput(e.target.value)}
+                  placeholder="0"
+                  min={5}
+                  max={jDailyDouble.maxWager}
+                  className="text-2xl py-6 text-center font-black bg-card border-2 border-yellow-400/40 focus-visible:border-yellow-400 focus-visible:ring-yellow-400/30"
+                  autoFocus
+                  data-testid="input-j-dd-wager"
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      e.preventDefault();
+                      handleJSubmitDdWager();
+                    }
+                  }}
+                />
+                <Button
+                  size="lg"
+                  className="w-full bg-yellow-500 hover:bg-yellow-500/90 text-yellow-950 font-bold"
+                  onClick={handleJSubmitDdWager}
+                  data-testid="btn-j-dd-wager-submit"
+                >
+                  <Send className="w-5 h-5 mr-2" /> Lock in wager
+                </Button>
+              </div>
+            )}
+          </main>
+        </div>
+      );
+    }
+
+    // ---- Daily Double clue: only controller answers (verbally to host) ----
+    if (jPhase === "dd-clue" && jActive) {
+      const isCtrl = me?.id === jControllerId;
+      return (
+        <div className="flex flex-col min-h-[100dvh] p-6 items-center justify-center text-center space-y-4">
+          <Star className="w-12 h-12 text-yellow-400 fill-yellow-400" />
+          <h1 className="text-2xl font-extrabold font-display text-yellow-300">Daily Double</h1>
+          {isCtrl ? (
+            <>
+              <p className="text-lg font-bold text-foreground">Your turn — answer out loud!</p>
+              <p className="text-muted-foreground text-sm">The host is judging.</p>
+              <TimerRing value={remainingMs / 1000} total={15} size={80} thickness={8} label={`${secsLeft}s`} />
+            </>
+          ) : (
+            <>
+              <p className="text-muted-foreground">
+                <span className="font-bold text-foreground">{jScores.find((s) => s.id === jControllerId)?.name ?? "Player"}</span> is answering on stage.
+              </p>
+              <ScoreBadge />
+            </>
+          )}
+        </div>
+      );
+    }
+
+    // ---- Active clue: buzzer / answering / between-clues ----
+    if (jActive && (jPhase === "clue-reveal" || jPhase === "buzzer-open" || jPhase === "answering" || jPhase === "between-clues")) {
+      // Speaking-to-host moment when player is answering
+      if (jPhase === "answering" && isBuzzedIn) {
+        return (
+          <div className="flex flex-col min-h-[100dvh] p-6 items-center justify-center text-center space-y-4">
+            <motion.div
+              animate={{ scale: [1, 1.08, 1] }}
+              transition={{ duration: 0.9, repeat: Infinity }}
+              className="w-32 h-32 rounded-full flex items-center justify-center bg-yellow-400/20 border-4 border-yellow-400 shadow-[0_0_60px_-4px_hsl(48_100%_60%/0.7)]"
+            >
+              <Mic className="w-16 h-16 text-yellow-400" />
+            </motion.div>
+            <h1 className="text-3xl font-extrabold font-display text-yellow-300">You're up!</h1>
+            <p className="text-lg text-foreground">Answer out loud — host is judging.</p>
+            <TimerRing value={remainingMs / 1000} total={12} size={80} thickness={8} label={`${secsLeft}s`} />
+            <ScoreBadge />
+          </div>
+        );
+      }
+
+      return (
+        <div className="flex flex-col min-h-[100dvh] p-5 sm:p-6 items-center">
+          <header className="w-full mb-4 flex items-center justify-between">
+            <div>
+              <p className="text-xs uppercase font-bold tracking-widest text-muted-foreground">{jActive.category}</p>
+              <p className="text-2xl font-black text-yellow-300">${jActive.value}</p>
+            </div>
+            {jPhase === "buzzer-open" && (
+              <TimerRing value={remainingMs / 1000} total={12} size={56} thickness={6} label={`${secsLeft}s`} />
+            )}
+          </header>
+
+          <Card className="p-4 mb-6 border-2 border-yellow-400/40 bg-card/85 text-center w-full">
+            <h2 className="text-xl font-extrabold font-display leading-snug">{jActive.question}</h2>
+          </Card>
+
+          {/* The big BUZZ button */}
+          {(jPhase === "clue-reveal" || jPhase === "buzzer-open") && (
+            <div className="flex-1 flex flex-col items-center justify-center w-full">
+              <motion.button
+                whileTap={{ scale: 0.92 }}
+                onClick={handleJBuzz}
+                disabled={jPhase !== "buzzer-open" || jMyBuzzLockedOut}
+                className={`w-56 h-56 rounded-full font-black text-4xl font-display border-4 transition-all ${
+                  jPhase === "buzzer-open" && !jMyBuzzLockedOut
+                    ? "bg-gradient-to-br from-yellow-400 to-amber-600 border-yellow-200 text-yellow-950 shadow-[0_0_60px_-4px_hsl(48_100%_60%/0.9)] animate-pulse"
+                    : jMyBuzzLockedOut
+                    ? "bg-muted/40 border-muted text-muted-foreground cursor-not-allowed"
+                    : "bg-card/40 border-border text-muted-foreground cursor-not-allowed"
+                }`}
+                data-testid="btn-j-buzz"
+              >
+                <Zap className="w-16 h-16 mx-auto mb-1" />
+                {jPhase === "buzzer-open" ? (jMyBuzzLockedOut ? "LOCKED" : "BUZZ!") : "WAIT…"}
+              </motion.button>
+              <p className="text-sm text-muted-foreground mt-6 text-center max-w-xs">
+                {jPhase === "clue-reveal"
+                  ? "Read the clue. Buzzer is arming…"
+                  : jMyBuzzLockedOut
+                  ? "Someone else buzzed first. Sit tight!"
+                  : "Buzzer open — tap as fast as you can!"}
+              </p>
+            </div>
+          )}
+
+          {jPhase === "answering" && jBuzzedInName && !isBuzzedIn && (
+            <div className="flex-1 flex flex-col items-center justify-center w-full space-y-3">
+              <Zap className="w-12 h-12 text-yellow-400" />
+              <p className="text-2xl font-extrabold">
+                <span className="text-yellow-300">{jBuzzedInName}</span> buzzed in
+              </p>
+              <p className="text-muted-foreground">Host is judging…</p>
+            </div>
+          )}
+
+          {jPhase === "between-clues" && jClueRevealedAnswer && (
+            <div className="flex-1 flex flex-col items-center justify-center w-full space-y-2">
+              <p className="text-xs uppercase font-bold tracking-widest text-yellow-400">Correct Answer</p>
+              <p className="text-2xl font-extrabold text-yellow-300 text-center">{jClueRevealedAnswer}</p>
+              {jLastResolved && (
+                <p className={`text-sm font-bold ${jLastResolved.correct ? "text-success" : "text-destructive"}`}>
+                  {jLastResolved.correct ? "+" : "−"}${Math.abs(jLastResolved.delta)}
+                </p>
+              )}
+            </div>
+          )}
+
+          <div className="mt-6"><ScoreBadge /></div>
+        </div>
+      );
+    }
+
+    // ---- Picking phase: controller sees pickable board, others wait ----
+    if (jBoard) {
+      const ctrl = jScores.find((s) => s.id === jControllerId);
+      return (
+        <div className="flex flex-col min-h-[100dvh] p-4">
+          <header className="mb-3 flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <Grid3x3 className="w-5 h-5 text-yellow-400" />
+              <p className="text-sm font-bold uppercase tracking-widest text-yellow-400">Jeopardy</p>
+            </div>
+            <ScoreBadge />
+          </header>
+          {isController ? (
+            <p className="text-center text-sm text-foreground mb-3">
+              <span className="font-extrabold text-yellow-300">Your pick!</span> Tap any open square.
+            </p>
+          ) : (
+            <p className="text-center text-sm text-muted-foreground mb-3">
+              <span className="font-bold text-foreground">{ctrl?.name ?? "Player"}</span> is picking the next clue.
+            </p>
+          )}
+
+          <div className="grid grid-cols-6 gap-1 w-full mb-3">
+            {jBoard.categories.map((cat, ci) => (
+              <div
+                key={ci}
+                className="bg-gradient-to-b from-blue-700 to-blue-900 rounded px-1 py-1.5 text-center border border-blue-400/40"
+              >
+                <p className="text-[8px] sm:text-[10px] font-extrabold uppercase tracking-tight text-yellow-200 leading-tight line-clamp-2">
+                  {cat.name}
+                </p>
+              </div>
+            ))}
+            {[0, 1, 2, 3, 4].map((row) =>
+              jBoard.categories.map((cat, ci) => {
+                const clue = cat.clues[row];
+                if (!clue) return null;
+                const disabled = clue.revealed || !isController;
+                return (
+                  <button
+                    key={`${ci}-${row}`}
+                    onClick={() => handleJPickSquare(ci, row)}
+                    disabled={disabled}
+                    className={`aspect-[3/2] rounded font-black border transition-all ${
+                      clue.revealed
+                        ? "bg-blue-950/40 border-blue-900/40 text-transparent"
+                        : isController
+                        ? "bg-gradient-to-b from-blue-700 to-blue-900 border-blue-400/40 text-yellow-300 active:scale-95 hover:border-yellow-300"
+                        : "bg-gradient-to-b from-blue-800 to-blue-950 border-blue-600/30 text-yellow-300/60 cursor-not-allowed"
+                    }`}
+                    data-testid={`btn-j-square-${ci}-${row}`}
+                  >
+                    {!clue.revealed && (
+                      <span className="text-xs sm:text-sm">${clue.value}</span>
+                    )}
+                  </button>
+                );
+              }),
+            )}
+          </div>
+        </div>
+      );
+    }
+
+    // Fallback
+    return (
+      <div className="flex flex-col min-h-[100dvh] p-6 items-center justify-center text-center space-y-3">
+        <Loader2 className="w-12 h-12 text-yellow-400 animate-spin" />
+        <p className="text-lg text-muted-foreground">Loading Jeopardy…</p>
       </div>
     );
   }

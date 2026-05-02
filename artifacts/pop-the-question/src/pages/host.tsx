@@ -3,7 +3,7 @@ import { useLocation } from "wouter";
 import { useCreateRoom, CreateRoomRequestGameType } from "@workspace/api-client-react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { MessageSquare, Flame, Loader2, Bot, Beer } from "lucide-react";
+import { MessageSquare, Flame, Loader2, Bot, Beer, Grid3x3 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import {
@@ -46,6 +46,17 @@ const GAME_CARDS = [
     bg: "#00C853",
     accent: "#FFD700",
     testId: "btn-host-pq",
+  },
+  {
+    type: "jeopardy" as CreateRoomRequestGameType,
+    label: "Jeopardy",
+    tagline: "Six categories. Daily Doubles. Final Jeopardy.",
+    description:
+      "Buzz in fast, judge bold wagers, and bet it all on Final Jeopardy. Five hand-authored category packs of pure pop trivia.",
+    Icon: Grid3x3,
+    bg: "#FFC107",
+    accent: "#1565C0",
+    testId: "btn-host-jp",
   },
 ];
 
@@ -135,7 +146,7 @@ export default function Host() {
 
       {/* Game cards */}
       <div className="flex-1 bg-[#FFF8E7] px-4 py-8">
-        <div className="max-w-5xl mx-auto grid md:grid-cols-3 gap-6">
+        <div className="max-w-6xl mx-auto grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           {GAME_CARDS.map((game) => {
             const { Icon } = game;
             const creating = isCreating === game.type;

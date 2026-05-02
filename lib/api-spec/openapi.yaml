@@ -359,7 +359,7 @@ components:
       properties:
         gameType:
           type: string
-          enum: [pop-the-question, roast-roulette, pub-quiz]
+          enum: [pop-the-question, roast-roulette, pub-quiz, jeopardy]
         demo:
           type: boolean
         packId:
