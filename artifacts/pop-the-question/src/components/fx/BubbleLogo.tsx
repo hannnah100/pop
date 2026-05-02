@@ -13,14 +13,14 @@ const letterStyle: CSSProperties = {
   display: "inline-block",
   color: "#ffffff",
   WebkitTextFillColor: "#ffffff",
-  WebkitTextStroke: "3px #000",
+  WebkitTextStroke: "3px #00c853",
   // @ts-expect-error: text-stroke is not yet in TS CSSProperties
-  textStroke: "3px #000",
+  textStroke: "3px #00c853",
   paintOrder: "stroke fill",
   textShadow: [
-    "1px 1px 0 #1a0a00",
-    "2px 2px 0 #1a0a00",
-    "3px 4px 8px rgba(0,0,0,0.35)",
+    "1px 1px 0 #007a30",
+    "2px 2px 0 #007a30",
+    "3px 4px 8px rgba(0,100,40,0.35)",
   ].join(", "),
 };
 
