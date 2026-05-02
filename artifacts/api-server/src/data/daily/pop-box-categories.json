@@ -15,6 +15,7 @@
   { "id": "disney-channel-alum", "label": "Disney Channel Alum", "group": "film-tv" },
   { "id": "reality-tv-star", "label": "Reality TV Star", "group": "film-tv" },
   { "id": "mcu-actor", "label": "Marvel Cinematic Universe", "group": "film-franchise" },
+  { "id": "born-1970s", "label": "Born in the 1970s", "group": "age" },
   { "id": "born-1980s", "label": "Born in the 1980s", "group": "age" },
   { "id": "born-1990s", "label": "Born in the 1990s", "group": "age" },
   { "id": "born-2000s", "label": "Born in the 2000s", "group": "age" },

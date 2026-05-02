@@ -5,12 +5,13 @@ import {
   useGetPopBoxById,
   usePopBoxGuess,
   useGetPopBoxAnswers,
+  useGetPopBoxArchive,
   getGetTodayPopBoxQueryKey,
   getGetPopBoxByIdQueryKey,
   getGetPopBoxAnswersQueryKey,
 } from "@workspace/api-client-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Share2, Home as HomeIcon, ArrowRight, Eye, X } from "lucide-react";
+import { Share2, Home as HomeIcon, ArrowRight, Eye, X, Shuffle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
@@ -56,21 +57,22 @@ function useQueryParam(key: string): string | null {
   return new URLSearchParams(window.location.search).get(key);
 }
 
+// Higher rarity % = pick was more unique among other players.
 function rarityLabel(p: number | null): string {
   if (p == null) return "";
-  if (p < 5) return "Iconic pick";
-  if (p < 15) return "Rare grab";
-  if (p < 35) return "Solid";
-  if (p < 60) return "Common";
+  if (p >= 95) return "Iconic pick";
+  if (p >= 80) return "Rare grab";
+  if (p >= 50) return "Solid";
+  if (p >= 25) return "Common";
   return "Most picked";
 }
 
 function rarityColor(p: number | null): string {
   if (p == null) return "bg-white";
-  if (p < 5) return "bg-[#FFD700]";
-  if (p < 15) return "bg-[#00E5FF]";
-  if (p < 35) return "bg-[#00C853]";
-  if (p < 60) return "bg-[#FFF8E7]";
+  if (p >= 95) return "bg-[#FFD700]";
+  if (p >= 80) return "bg-[#00E5FF]";
+  if (p >= 50) return "bg-[#00C853]";
+  if (p >= 25) return "bg-[#FFF8E7]";
   return "bg-[#FF6B6B]";
 }
 
@@ -117,6 +119,18 @@ export default function PopBox() {
     ? `ptq-archive-pb-${archiveId}`
     : `ptq-pop-box-${todayDateStr}`;
 
+  // Pre-fetch archive list so the "Play Again" button is instant.
+  const archiveQueryList = useGetPopBoxArchive();
+  const archiveList = archiveQueryList.data ?? [];
+
+  function playRandomArchive() {
+    if (!grid || archiveList.length === 0) return;
+    const others = archiveList.filter((g) => g.id !== grid.id);
+    const pool = others.length > 0 ? others : archiveList;
+    const next = pool[Math.floor(Math.random() * pool.length)];
+    setLocation(`/daily/pop-box?id=${encodeURIComponent(next.id)}`);
+  }
+
   // Load saved state
   useEffect(() => {
     if (!grid) return;
@@ -145,6 +159,13 @@ export default function PopBox() {
     () => cells.filter((c) => c.guess != null).length,
     [cells],
   );
+  const avgRarity = useMemo(() => {
+    const rs = cells
+      .map((c) => c.rarityPercent)
+      .filter((r): r is number => r != null);
+    if (rs.length === 0) return null;
+    return Math.round((rs.reduce((s, r) => s + r, 0) / rs.length) * 10) / 10;
+  }, [cells]);
 
   // Persist + record on game over
   useEffect(() => {
@@ -179,10 +200,14 @@ export default function PopBox() {
         const statsStr = localStorage.getItem("ptq-stats");
         const stats = statsStr ? JSON.parse(statsStr) : {};
         stats.popBoxTotalPlays = (stats.popBoxTotalPlays ?? 0) + 1;
+        stats.popBoxScoreSum = (stats.popBoxScoreSum ?? 0) + correctCount;
+        if (correctCount === 9) {
+          stats.popBoxPerfectGames = (stats.popBoxPerfectGames ?? 0) + 1;
+        }
         if (correctCount > (stats.popBoxBestScore ?? 0)) {
           stats.popBoxBestScore = correctCount;
         }
-        // Track average rarity (lower = rarer = better)
+        // Track best average rarity (HIGHER = rarer picks = better).
         const rarities = cells
           .map((c) => c.rarityPercent)
           .filter((r): r is number => r != null);
@@ -190,7 +215,7 @@ export default function PopBox() {
           const avg = rarities.reduce((s, r) => s + r, 0) / rarities.length;
           if (
             stats.popBoxBestRarity == null ||
-            avg < stats.popBoxBestRarity
+            avg > stats.popBoxBestRarity
           ) {
             stats.popBoxBestRarity = Math.round(avg * 10) / 10;
           }
@@ -333,14 +358,9 @@ export default function PopBox() {
     for (let r = 0; r < 3; r++) {
       rows.push([0, 1, 2].map((c) => emoji(cells[r * 3 + c])).join(""));
     }
-    const avgRarity = (() => {
-      const rs = cells.map((c) => c.rarityPercent).filter((r): r is number => r != null);
-      if (rs.length === 0) return null;
-      return Math.round((rs.reduce((s, r) => s + r, 0) / rs.length) * 10) / 10;
-    })();
     const text = [
       `Pop: The Question – Pop Box (${grid.date})`,
-      `Score: ${correctCount}/9${avgRarity != null ? ` • Avg rarity ${avgRarity}%` : ""}`,
+      `Score: ${correctCount}/9${avgRarity != null ? ` • Rarity ${avgRarity}%` : ""}`,
       "",
       ...rows,
       "",
@@ -545,11 +565,23 @@ export default function PopBox() {
                   ? "Solid"
                   : "Tough Box"}
           </h2>
-          <p className="text-lg text-black/80 font-sans mb-6">
+          <p className="text-lg text-black/80 font-sans mb-2">
             <CountUp className="font-black text-black" value={correctCount} /> of{" "}
             <span className="font-black text-black">9</span> cells filled
           </p>
-          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+          {avgRarity != null && (
+            <p
+              className="text-base sm:text-lg text-black/90 font-sans mb-6"
+              data-testid="text-pop-box-avg-rarity"
+            >
+              Overall rarity:{" "}
+              <span className="font-black text-black text-xl sm:text-2xl">
+                {avgRarity}%
+              </span>{" "}
+              <span className="text-sm text-black/70">({rarityLabel(avgRarity)})</span>
+            </p>
+          )}
+          <div className="flex flex-col sm:flex-row gap-3 justify-center flex-wrap">
             <Button
               size="lg"
               onClick={handleShare}
@@ -567,6 +599,16 @@ export default function PopBox() {
             >
               <Eye className="w-5 h-5 mr-2" />
               {showAnswers ? "Hide" : "Show"} all answers
+            </Button>
+            <Button
+              size="lg"
+              variant="outline"
+              onClick={playRandomArchive}
+              disabled={!archiveList || archiveList.length === 0}
+              data-testid="btn-pop-box-play-again"
+              className="border-[3px] border-black bg-[#00E5FF]/30 hover:bg-[#00E5FF]/60"
+            >
+              <Shuffle className="w-5 h-5 mr-2" /> Play Again
             </Button>
             {isArchive ? (
               <Button

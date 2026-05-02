@@ -15,6 +15,8 @@ export default function Stats() {
     popBoxTotalPlays: 0,
     popBoxBestScore: 0,
     popBoxBestRarity: null as number | null,
+    popBoxPerfectGames: 0,
+    popBoxScoreSum: 0,
   });
   const [tsStreak, setTsStreak] = useState(0);
   const [cwStreak, setCwStreak] = useState(0);
@@ -154,6 +156,22 @@ export default function Stats() {
                     <CountUp value={stats.popBoxTotalPlays} /> <CalendarDays className="w-6 h-6 text-muted-foreground" />
                   </div>
                 </div>
+                <div className="bg-background/60 rounded-xl p-4 border border-border">
+                  <p className="text-sm text-muted-foreground mb-1">Perfect Games</p>
+                  <div className="text-3xl font-black flex items-center gap-2">
+                    <CountUp value={stats.popBoxPerfectGames ?? 0} />
+                    <Trophy className={`w-6 h-6 ${(stats.popBoxPerfectGames ?? 0) > 0 ? "text-yellow-400" : "text-muted"}`} />
+                  </div>
+                </div>
+                <div className="bg-background/60 rounded-xl p-4 border border-border">
+                  <p className="text-sm text-muted-foreground mb-1">Avg Score</p>
+                  <div className="text-3xl font-black flex items-center gap-2">
+                    {stats.popBoxTotalPlays > 0
+                      ? (Math.round(((stats.popBoxScoreSum ?? 0) / stats.popBoxTotalPlays) * 10) / 10).toFixed(1)
+                      : "—"}
+                    <span className="text-base text-muted-foreground">/9</span>
+                  </div>
+                </div>
                 <div className="col-span-2 bg-accent/10 rounded-xl p-4 border border-accent/30">
                   <p className="text-sm text-accent/80 font-bold uppercase tracking-wider mb-1">Personal Best</p>
                   <div className="text-4xl font-black text-accent flex items-center gap-2">
@@ -162,7 +180,7 @@ export default function Stats() {
                   </div>
                   {stats.popBoxBestRarity != null && (
                     <p className="text-xs text-accent/70 mt-1">
-                      Rarest avg: {stats.popBoxBestRarity}%
+                      Best avg rarity: {stats.popBoxBestRarity}% (higher = rarer)
                     </p>
                   )}
                 </div>

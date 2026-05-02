@@ -216,8 +216,11 @@ router.get("/daily/pop-box/:id/answers", async (req, res): Promise<void> => {
         validCelebrities: valid
           .map((celeb) => {
             const guesses = countMap.get(`${idx}:${celeb.id}`) ?? 0;
+            // Higher % = rarer pick. Neutral 50 when there is no data yet.
             const rarityPercent =
-              totalCellGuesses > 0 ? (guesses / totalCellGuesses) * 100 : 0;
+              totalCellGuesses <= 0
+                ? 50
+                : ((totalCellGuesses - guesses) / totalCellGuesses) * 100;
             return {
               id: celeb.id,
               name: celeb.name,
@@ -349,6 +352,8 @@ router.post("/daily/pop-box/:id/guess", async (req, res): Promise<void> => {
   }
 
   // Compute rarity for this cell after the increment.
+  // Rarity = % of correct submissions on this square that picked
+  // SOMEONE DIFFERENT. Higher % = rarer pick = better.
   const cellCounts = await db
     .select()
     .from(popBoxAnswerCountsTable)
@@ -361,7 +366,10 @@ router.post("/daily/pop-box/:id/guess", async (req, res): Promise<void> => {
   const total = cellCounts.reduce((sum, c) => sum + c.count, 0);
   const myCount =
     cellCounts.find((c) => c.celebrityId === celebId)?.count ?? 1;
-  const rarityPercent = total > 0 ? (myCount / total) * 100 : 100;
+  // If this is the only submission so far, rarity isn't meaningful yet —
+  // call it 50 (neutral) to avoid awarding/penalizing the first player.
+  const rarityPercent =
+    total <= 1 ? 50 : ((total - myCount) / total) * 100;
 
   const celeb = celebById.get(celebId);
   res.json(
