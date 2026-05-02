@@ -214,6 +214,59 @@ export const PopBoxGuessResponse = zod.object({
 });
 
 /**
+ * @summary Get today's Pop or Drop item sequence
+ */
+export const GetTodayPopOrDropResponse = zod.object({
+  date: zod.string(),
+  items: zod.array(
+    zod.object({
+      id: zod.string(),
+      name: zod.string(),
+      value: zod.number(),
+      unit: zod.string(),
+      metricLabel: zod.string(),
+      category: zod.string(),
+    }),
+  ),
+});
+
+/**
+ * @summary Get today's Pop or Drop leaderboard
+ */
+export const GetPopOrDropLeaderboardQueryParams = zod.object({
+  date: zod.coerce.string().optional(),
+});
+
+export const GetPopOrDropLeaderboardResponse = zod.object({
+  date: zod.string(),
+  top10: zod.array(
+    zod.object({
+      rank: zod.number(),
+      playerToken: zod.string(),
+      streak: zod.number(),
+    }),
+  ),
+  totalPlayers: zod.number(),
+  avgStreak: zod.number(),
+  medianStreak: zod.number(),
+});
+
+/**
+ * @summary Submit a Pop or Drop streak score
+ */
+export const submitPopOrDropScoreBodyStreakMin = 0;
+
+export const SubmitPopOrDropScoreBody = zod.object({
+  playerToken: zod.string(),
+  streak: zod.number().min(submitPopOrDropScoreBodyStreakMin),
+  date: zod.string(),
+});
+
+export const SubmitPopOrDropScoreResponse = zod.object({
+  ok: zod.boolean(),
+});
+
+/**
  * @summary Get today's completion status summary (wow endpoint)
  */
 export const GetDailyStatusResponse = zod.object({

@@ -22,16 +22,21 @@ import type {
   CrosswordSummary,
   DailyStatus,
   ErrorResponse,
+  GetPopOrDropLeaderboardParams,
   HealthStatus,
   PopBoxAnswers,
   PopBoxGrid,
   PopBoxGuessRequest,
   PopBoxGuessResult,
   PopBoxSummary,
+  PopOrDropLeaderboard,
+  PopOrDropScoreRequest,
+  PopOrDropSequence,
   QuestionPrompt,
   RoastQuestion,
   Room,
   RoomCreated,
+  SubmitPopOrDropScore200,
   ThreeStrikesChallenge,
   ThreeStrikesSummary,
 } from "./api.schemas";
@@ -917,6 +922,273 @@ export const usePopBoxGuess = <
   TContext
 > => {
   return useMutation(getPopBoxGuessMutationOptions(options));
+};
+
+/**
+ * @summary Get today's Pop or Drop item sequence
+ */
+export const getGetTodayPopOrDropUrl = () => {
+  return `/api/daily/pop-or-drop`;
+};
+
+export const getTodayPopOrDrop = async (
+  options?: RequestInit,
+): Promise<PopOrDropSequence> => {
+  return customFetch<PopOrDropSequence>(getGetTodayPopOrDropUrl(), {
+    ...options,
+    method: "GET",
+  });
+};
+
+export const getGetTodayPopOrDropQueryKey = () => {
+  return [`/api/daily/pop-or-drop`] as const;
+};
+
+export const getGetTodayPopOrDropQueryOptions = <
+  TData = Awaited<ReturnType<typeof getTodayPopOrDrop>>,
+  TError = ErrorType<unknown>,
+>(options?: {
+  query?: UseQueryOptions<
+    Awaited<ReturnType<typeof getTodayPopOrDrop>>,
+    TError,
+    TData
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
+
+  const queryKey = queryOptions?.queryKey ?? getGetTodayPopOrDropQueryKey();
+
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof getTodayPopOrDrop>>
+  > = ({ signal }) => getTodayPopOrDrop({ signal, ...requestOptions });
+
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof getTodayPopOrDrop>>,
+    TError,
+    TData
+  > & { queryKey: QueryKey };
+};
+
+export type GetTodayPopOrDropQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getTodayPopOrDrop>>
+>;
+export type GetTodayPopOrDropQueryError = ErrorType<unknown>;
+
+/**
+ * @summary Get today's Pop or Drop item sequence
+ */
+
+export function useGetTodayPopOrDrop<
+  TData = Awaited<ReturnType<typeof getTodayPopOrDrop>>,
+  TError = ErrorType<unknown>,
+>(options?: {
+  query?: UseQueryOptions<
+    Awaited<ReturnType<typeof getTodayPopOrDrop>>,
+    TError,
+    TData
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+  const queryOptions = getGetTodayPopOrDropQueryOptions(options);
+
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: QueryKey;
+  };
+
+  return { ...query, queryKey: queryOptions.queryKey };
+}
+
+/**
+ * @summary Get today's Pop or Drop leaderboard
+ */
+export const getGetPopOrDropLeaderboardUrl = (
+  params?: GetPopOrDropLeaderboardParams,
+) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? "null" : value.toString());
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0
+    ? `/api/daily/pop-or-drop/leaderboard?${stringifiedParams}`
+    : `/api/daily/pop-or-drop/leaderboard`;
+};
+
+export const getPopOrDropLeaderboard = async (
+  params?: GetPopOrDropLeaderboardParams,
+  options?: RequestInit,
+): Promise<PopOrDropLeaderboard> => {
+  return customFetch<PopOrDropLeaderboard>(
+    getGetPopOrDropLeaderboardUrl(params),
+    {
+      ...options,
+      method: "GET",
+    },
+  );
+};
+
+export const getGetPopOrDropLeaderboardQueryKey = (
+  params?: GetPopOrDropLeaderboardParams,
+) => {
+  return [
+    `/api/daily/pop-or-drop/leaderboard`,
+    ...(params ? [params] : []),
+  ] as const;
+};
+
+export const getGetPopOrDropLeaderboardQueryOptions = <
+  TData = Awaited<ReturnType<typeof getPopOrDropLeaderboard>>,
+  TError = ErrorType<unknown>,
+>(
+  params?: GetPopOrDropLeaderboardParams,
+  options?: {
+    query?: UseQueryOptions<
+      Awaited<ReturnType<typeof getPopOrDropLeaderboard>>,
+      TError,
+      TData
+    >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
+
+  const queryKey =
+    queryOptions?.queryKey ?? getGetPopOrDropLeaderboardQueryKey(params);
+
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof getPopOrDropLeaderboard>>
+  > = ({ signal }) =>
+    getPopOrDropLeaderboard(params, { signal, ...requestOptions });
+
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof getPopOrDropLeaderboard>>,
+    TError,
+    TData
+  > & { queryKey: QueryKey };
+};
+
+export type GetPopOrDropLeaderboardQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getPopOrDropLeaderboard>>
+>;
+export type GetPopOrDropLeaderboardQueryError = ErrorType<unknown>;
+
+/**
+ * @summary Get today's Pop or Drop leaderboard
+ */
+
+export function useGetPopOrDropLeaderboard<
+  TData = Awaited<ReturnType<typeof getPopOrDropLeaderboard>>,
+  TError = ErrorType<unknown>,
+>(
+  params?: GetPopOrDropLeaderboardParams,
+  options?: {
+    query?: UseQueryOptions<
+      Awaited<ReturnType<typeof getPopOrDropLeaderboard>>,
+      TError,
+      TData
+    >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+  const queryOptions = getGetPopOrDropLeaderboardQueryOptions(params, options);
+
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: QueryKey;
+  };
+
+  return { ...query, queryKey: queryOptions.queryKey };
+}
+
+/**
+ * @summary Submit a Pop or Drop streak score
+ */
+export const getSubmitPopOrDropScoreUrl = () => {
+  return `/api/daily/pop-or-drop/score`;
+};
+
+export const submitPopOrDropScore = async (
+  popOrDropScoreRequest: PopOrDropScoreRequest,
+  options?: RequestInit,
+): Promise<SubmitPopOrDropScore200> => {
+  return customFetch<SubmitPopOrDropScore200>(getSubmitPopOrDropScoreUrl(), {
+    ...options,
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...options?.headers },
+    body: JSON.stringify(popOrDropScoreRequest),
+  });
+};
+
+export const getSubmitPopOrDropScoreMutationOptions = <
+  TError = ErrorType<ErrorResponse>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof submitPopOrDropScore>>,
+    TError,
+    { data: BodyType<PopOrDropScoreRequest> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof submitPopOrDropScore>>,
+  TError,
+  { data: BodyType<PopOrDropScoreRequest> },
+  TContext
+> => {
+  const mutationKey = ["submitPopOrDropScore"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof submitPopOrDropScore>>,
+    { data: BodyType<PopOrDropScoreRequest> }
+  > = (props) => {
+    const { data } = props ?? {};
+
+    return submitPopOrDropScore(data, requestOptions);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type SubmitPopOrDropScoreMutationResult = NonNullable<
+  Awaited<ReturnType<typeof submitPopOrDropScore>>
+>;
+export type SubmitPopOrDropScoreMutationBody = BodyType<PopOrDropScoreRequest>;
+export type SubmitPopOrDropScoreMutationError = ErrorType<ErrorResponse>;
+
+/**
+ * @summary Submit a Pop or Drop streak score
+ */
+export const useSubmitPopOrDropScore = <
+  TError = ErrorType<ErrorResponse>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof submitPopOrDropScore>>,
+    TError,
+    { data: BodyType<PopOrDropScoreRequest> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof submitPopOrDropScore>>,
+  TError,
+  { data: BodyType<PopOrDropScoreRequest> },
+  TContext
+> => {
+  return useMutation(getSubmitPopOrDropScoreMutationOptions(options));
 };
 
 /**

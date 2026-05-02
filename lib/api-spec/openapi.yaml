@@ -239,6 +239,68 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
 
+  /daily/pop-or-drop:
+    get:
+      operationId: getTodayPopOrDrop
+      tags: [daily]
+      summary: Get today's Pop or Drop item sequence
+      responses:
+        "200":
+          description: Today's sequence
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PopOrDropSequence"
+
+  /daily/pop-or-drop/leaderboard:
+    get:
+      operationId: getPopOrDropLeaderboard
+      tags: [daily]
+      summary: Get today's Pop or Drop leaderboard
+      parameters:
+        - name: date
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Leaderboard data
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PopOrDropLeaderboard"
+
+  /daily/pop-or-drop/score:
+    post:
+      operationId: submitPopOrDropScore
+      tags: [daily]
+      summary: Submit a Pop or Drop streak score
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PopOrDropScoreRequest"
+      responses:
+        "200":
+          description: Score submitted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                required:
+                  - ok
+        "400":
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
   /daily/status:
     get:
       operationId: getDailyStatus
@@ -685,3 +747,90 @@ components:
       required:
         - id
         - question
+
+    PopOrDropItem:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        value:
+          type: number
+        unit:
+          type: string
+        metricLabel:
+          type: string
+        category:
+          type: string
+      required:
+        - id
+        - name
+        - value
+        - unit
+        - metricLabel
+        - category
+
+    PopOrDropSequence:
+      type: object
+      properties:
+        date:
+          type: string
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/PopOrDropItem"
+      required:
+        - date
+        - items
+
+    PopOrDropLeaderboardEntry:
+      type: object
+      properties:
+        rank:
+          type: integer
+        playerToken:
+          type: string
+        streak:
+          type: integer
+      required:
+        - rank
+        - playerToken
+        - streak
+
+    PopOrDropLeaderboard:
+      type: object
+      properties:
+        date:
+          type: string
+        top10:
+          type: array
+          items:
+            $ref: "#/components/schemas/PopOrDropLeaderboardEntry"
+        totalPlayers:
+          type: integer
+        avgStreak:
+          type: integer
+        medianStreak:
+          type: integer
+      required:
+        - date
+        - top10
+        - totalPlayers
+        - avgStreak
+        - medianStreak
+
+    PopOrDropScoreRequest:
+      type: object
+      properties:
+        playerToken:
+          type: string
+        streak:
+          type: integer
+          minimum: 0
+        date:
+          type: string
+      required:
+        - playerToken
+        - streak
+        - date

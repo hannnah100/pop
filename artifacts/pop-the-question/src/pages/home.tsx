@@ -26,6 +26,8 @@ export default function Home() {
   const [tsCompleted, setTsCompleted] = useState(false);
   const [cwCompleted, setCwCompleted] = useState(false);
   const [pbCompleted, setPbCompleted] = useState(false);
+  const [podCompleted, setPodCompleted] = useState(false);
+  const [podStreak, setPodStreak] = useState(0);
 
   useEffect(() => {
     try {
@@ -35,6 +37,14 @@ export default function Home() {
       if (cwState) setCwCompleted(JSON.parse(cwState).completed);
       const pbState = localStorage.getItem(`ptq-pop-box-${todayDate}`);
       if (pbState) setPbCompleted(JSON.parse(pbState).completed);
+      const podState = localStorage.getItem(`ptq-pop-or-drop-${todayDate}`);
+      if (podState) {
+        const parsed = JSON.parse(podState);
+        if (parsed.done) {
+          setPodCompleted(true);
+          setPodStreak(parsed.streak ?? 0);
+        }
+      }
     } catch {
       /* ignore */
     }
@@ -167,6 +177,33 @@ export default function Home() {
                   data-testid="link-pop-box"
                 >
                   {pbCompleted ? "View Results" : "Play Now"}
+                </Button>
+              </Link>
+            </div>
+
+            {/* Pop or Drop */}
+            <div className="bg-white border-[3px] border-black shadow-[4px_4px_0_#000] p-5 relative overflow-hidden">
+              <LightningDoodle className="absolute top-2 right-3 w-5 h-7 text-[#FF6B35] opacity-50" />
+              <div className="flex justify-between items-start mb-3">
+                <div>
+                  <h3 className="font-display text-2xl font-black text-black uppercase tracking-tight">Pop or Drop</h3>
+                  <p className="text-sm text-black/60 font-sans mt-1">Higher or Lower — pop culture edition</p>
+                </div>
+                {podCompleted ? (
+                  <Badge variant="secondary" className="ml-2 flex-shrink-0">
+                    {podStreak > 0 ? `🔥 ${podStreak}` : "Done ✓"}
+                  </Badge>
+                ) : (
+                  <Badge className="ml-2 flex-shrink-0 bg-[#FF1493] text-white border-[#FF1493]">HOT 🔥</Badge>
+                )}
+              </div>
+              <Link href="/daily/pop-or-drop">
+                <Button
+                  className="w-full font-display text-base uppercase tracking-wide"
+                  variant={podCompleted ? "outline" : "default"}
+                  data-testid="link-pop-or-drop"
+                >
+                  {podCompleted ? "View Results" : "Play Today's Challenge"}
                 </Button>
               </Link>
             </div>

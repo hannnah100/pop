@@ -192,3 +192,46 @@ export interface RoastQuestion {
   question: string;
   color?: string;
 }
+
+export interface PopOrDropItem {
+  id: string;
+  name: string;
+  value: number;
+  unit: string;
+  metricLabel: string;
+  category: string;
+}
+
+export interface PopOrDropSequence {
+  date: string;
+  items: PopOrDropItem[];
+}
+
+export interface PopOrDropLeaderboardEntry {
+  rank: number;
+  playerToken: string;
+  streak: number;
+}
+
+export interface PopOrDropLeaderboard {
+  date: string;
+  top10: PopOrDropLeaderboardEntry[];
+  totalPlayers: number;
+  avgStreak: number;
+  medianStreak: number;
+}
+
+export interface PopOrDropScoreRequest {
+  playerToken: string;
+  /** @minimum 0 */
+  streak: number;
+  date: string;
+}
+
+export type GetPopOrDropLeaderboardParams = {
+  date?: string;
+};
+
+export type SubmitPopOrDropScore200 = {
+  ok: boolean;
+};
