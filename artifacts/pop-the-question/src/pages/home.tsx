@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import {
-  BarChart2,
   Archive as ArchiveIcon,
   HelpCircle,
   Bot,
@@ -300,27 +299,31 @@ export default function Home() {
 
           {/* Past Puzzles — electric cyan rounded rectangle, slightly skewed */}
           <Link href="/archive" data-testid="link-archive">
-            <span
-              className="group relative flex items-center gap-2 px-5 py-2.5 border-[3px] border-black shadow-[4px_4px_0_#000] hover:shadow-[2px_2px_0_#000] hover:translate-x-[2px] hover:translate-y-[2px] active:shadow-none active:translate-x-[4px] active:translate-y-[4px] transition-all cursor-pointer select-none"
-              style={{
-                background: "#00E5FF",
-                borderRadius: "8px",
-                transform: "skewX(-3deg)",
-              }}
-            >
-              <ArchiveIcon className="w-4 h-4 text-black shrink-0" style={{ transform: "skewX(3deg)" }} />
+            {/* Outer wrapper handles translate press animation; inner wrapper handles the skew */}
+            <span className="block hover:translate-x-[2px] hover:translate-y-[2px] active:translate-x-[4px] active:translate-y-[4px] transition-transform cursor-pointer select-none">
               <span
-                className="font-display font-black text-sm uppercase tracking-wide"
+                className="relative flex items-center gap-2 px-5 py-2.5 border-[3px] border-black shadow-[4px_4px_0_#000] hover:shadow-[2px_2px_0_#000] active:shadow-none transition-shadow"
                 style={{
-                  color: "#fff",
-                  WebkitTextFillColor: "#fff",
-                  WebkitTextStroke: "1px #000",
-                  paintOrder: "stroke fill",
-                  transform: "skewX(3deg)",
-                  display: "inline-block",
+                  background: "#00E5FF",
+                  borderRadius: "8px",
+                  transform: "skewX(-3deg)",
+                  display: "flex",
                 }}
               >
-                Past Puzzles
+                <ArchiveIcon className="w-4 h-4 text-black shrink-0" style={{ transform: "skewX(3deg)" }} />
+                <span
+                  className="font-display font-black text-sm uppercase tracking-wide"
+                  style={{
+                    color: "#fff",
+                    WebkitTextFillColor: "#fff",
+                    WebkitTextStroke: "1px #000",
+                    paintOrder: "stroke fill",
+                    transform: "skewX(3deg)",
+                    display: "inline-block",
+                  }}
+                >
+                  Past Puzzles
+                </span>
               </span>
             </span>
           </Link>
