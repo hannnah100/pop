@@ -2,11 +2,8 @@ import { Router, type IRouter } from "express";
 import { db, popOrDropScoresTable } from "@workspace/db";
 import { eq, desc, and } from "drizzle-orm";
 import POP_OR_DROP_ITEMS_JSON from "../data/daily/pop-or-drop-items.json" with { type: "json" };
-const router: IRouter = Router();
 
-// ──────────────────────────────────────────────────────
-// Helpers
-// ──────────────────────────────────────────────────────
+const router: IRouter = Router();
 
 interface PopOrDropItem {
   id: string;
@@ -18,9 +15,10 @@ interface PopOrDropItem {
 }
 
 const ITEMS: PopOrDropItem[] = POP_OR_DROP_ITEMS_JSON as PopOrDropItem[];
-const SEQUENCE_LENGTH = 20;
 
-/** Simple LCG seeded by a date integer (YYYYMMDD). Returns [0,1). */
+// 21 items = 20 pairs / 20 rounds
+const SEQUENCE_LENGTH = 21;
+
 function lcgRng(seed: number) {
   let s = seed;
   return () => {
@@ -40,7 +38,6 @@ function dateSeed(date: string): number {
 function generateSequence(date: string): PopOrDropItem[] {
   const rng = lcgRng(dateSeed(date));
   const pool = [...ITEMS];
-  // Fisher-Yates shuffle using LCG
   for (let i = pool.length - 1; i > 0; i--) {
     const j = Math.floor(rng() * (i + 1));
     [pool[i], pool[j]] = [pool[j], pool[i]];
@@ -48,33 +45,25 @@ function generateSequence(date: string): PopOrDropItem[] {
   return pool.slice(0, SEQUENCE_LENGTH);
 }
 
-// ──────────────────────────────────────────────────────
-// GET /daily/pop-or-drop  — today's sequence
-// ──────────────────────────────────────────────────────
-
 router.get("/daily/pop-or-drop", (_req, res): void => {
   const today = todayDate();
   const items = generateSequence(today);
   res.json({ date: today, items });
 });
 
-// ──────────────────────────────────────────────────────
-// GET /daily/pop-or-drop/leaderboard?date=YYYY-MM-DD
-// ──────────────────────────────────────────────────────
-
 router.get("/daily/pop-or-drop/leaderboard", async (req, res): Promise<void> => {
   const date = (req.query.date as string) || todayDate();
+  const playerToken = (req.query.playerToken as string) || "";
 
   const rows = await db
     .select({
       playerToken: popOrDropScoresTable.playerToken,
       streak: popOrDropScoresTable.streak,
-      createdAt: popOrDropScoresTable.createdAt,
     })
     .from(popOrDropScoresTable)
     .where(eq(popOrDropScoresTable.date, date))
     .orderBy(desc(popOrDropScoresTable.streak))
-    .limit(100);
+    .limit(500);
 
   // De-duplicate by playerToken, keep highest streak per token
   const best = new Map<string, { playerToken: string; streak: number }>();
@@ -103,12 +92,17 @@ router.get("/daily/pop-or-drop/leaderboard", async (req, res): Promise<void> => 
       ? allStreaks[Math.floor(totalPlayers / 2)]
       : 0;
 
-  res.json({ date, top10, totalPlayers, avgStreak, medianStreak });
-});
+  // Find caller's rank (may be outside top 10)
+  let playerRank: number | null = null;
+  if (playerToken) {
+    const idx = sorted.findIndex((r) => r.playerToken === playerToken);
+    if (idx !== -1) {
+      playerRank = idx + 1;
+    }
+  }
 
-// ──────────────────────────────────────────────────────
-// POST /daily/pop-or-drop/score  — submit streak
-// ──────────────────────────────────────────────────────
+  res.json({ date, top10, totalPlayers, avgStreak, medianStreak, playerRank });
+});
 
 router.post("/daily/pop-or-drop/score", async (req, res): Promise<void> => {
   const { playerToken, streak, date } = req.body as {
@@ -126,7 +120,6 @@ router.post("/daily/pop-or-drop/score", async (req, res): Promise<void> => {
     return;
   }
 
-  // Upsert: insert only if player hasn't submitted a better score for the day
   const existing = await db
     .select({ streak: popOrDropScoresTable.streak })
     .from(popOrDropScoresTable)
@@ -142,7 +135,6 @@ router.post("/daily/pop-or-drop/score", async (req, res): Promise<void> => {
   if (!existing) {
     await db.insert(popOrDropScoresTable).values({ date, playerToken, streak });
   } else if (streak > existing.streak) {
-    // Replace with better score (shouldn't happen with 1-attempt rules, but handle gracefully)
     await db
       .delete(popOrDropScoresTable)
       .where(

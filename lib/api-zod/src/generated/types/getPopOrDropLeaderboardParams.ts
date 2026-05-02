@@ -8,4 +8,5 @@
 
 export type GetPopOrDropLeaderboardParams = {
   date?: string;
+  playerToken?: string;
 };

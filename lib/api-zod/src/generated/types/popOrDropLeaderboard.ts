@@ -13,4 +13,5 @@ export interface PopOrDropLeaderboard {
   totalPlayers: number;
   avgStreak: number;
   medianStreak: number;
+  playerRank?: number | null;
 }

@@ -219,6 +219,7 @@ export interface PopOrDropLeaderboard {
   totalPlayers: number;
   avgStreak: number;
   medianStreak: number;
+  playerRank?: number | null;
 }
 
 export interface PopOrDropScoreRequest {
@@ -230,6 +231,7 @@ export interface PopOrDropScoreRequest {
 
 export type GetPopOrDropLeaderboardParams = {
   date?: string;
+  playerToken?: string;
 };
 
 export type SubmitPopOrDropScore200 = {

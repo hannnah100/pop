@@ -235,6 +235,7 @@ export const GetTodayPopOrDropResponse = zod.object({
  */
 export const GetPopOrDropLeaderboardQueryParams = zod.object({
   date: zod.coerce.string().optional(),
+  playerToken: zod.coerce.string().optional(),
 });
 
 export const GetPopOrDropLeaderboardResponse = zod.object({
@@ -249,6 +250,7 @@ export const GetPopOrDropLeaderboardResponse = zod.object({
   totalPlayers: zod.number(),
   avgStreak: zod.number(),
   medianStreak: zod.number(),
+  playerRank: zod.number().nullish(),
 });
 
 /**

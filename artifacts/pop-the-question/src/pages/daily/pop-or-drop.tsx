@@ -28,10 +28,6 @@ import { hapticCorrect, hapticWrong, hapticVictory } from "@/lib/haptics";
 import { useReducedMotion } from "@/lib/motion";
 import { useLocation } from "wouter";
 
-// ──────────────────────────────────────────────────────
-// Types
-// ──────────────────────────────────────────────────────
-
 interface Item {
   id: string;
   name: string;
@@ -49,23 +45,18 @@ interface SavedState {
   date: string;
 }
 
-// ──────────────────────────────────────────────────────
-// Y2K colour palette per card (fixed, deterministic)
-// ──────────────────────────────────────────────────────
 const CARD_COLORS = [
   "#FF6B35", "#00E5FF", "#FF1493", "#FFD700", "#00C853",
   "#7C4DFF", "#FF6EC7", "#00BCD4", "#FF5722", "#76FF03",
   "#FF9800", "#E91E63", "#03A9F4", "#CDDC39", "#9C27B0",
   "#FF3D00", "#1DE9B6", "#FF4081", "#C6FF00", "#40C4FF",
+  "#FF6B35",
 ];
 
 function cardColor(index: number): string {
   return CARD_COLORS[index % CARD_COLORS.length];
 }
 
-// ──────────────────────────────────────────────────────
-// Countdown to midnight helper
-// ──────────────────────────────────────────────────────
 function useCountdown() {
   const [seconds, setSeconds] = useState(0);
   useEffect(() => {
@@ -85,9 +76,6 @@ function useCountdown() {
   return `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
 }
 
-// ──────────────────────────────────────────────────────
-// Get/create a stable playerToken (anonymous UUID)
-// ──────────────────────────────────────────────────────
 function getPlayerToken(): string {
   let token = localStorage.getItem("ptq-player-token");
   if (!token) {
@@ -97,20 +85,13 @@ function getPlayerToken(): string {
   return token;
 }
 
-// ──────────────────────────────────────────────────────
-// Format value for display
-// ──────────────────────────────────────────────────────
-function formatValue(value: number, unit: string): string {
+function formatValue(value: number, _unit: string): string {
   const abs = Math.abs(value);
   const sign = value < 0 ? "-" : "";
   if (abs >= 1000000) return `${sign}${(abs / 1000000).toFixed(1)}T`;
-  if (abs >= 1000) return `${sign}${abs.toLocaleString()}`;
   return `${sign}${abs.toLocaleString()}`;
 }
 
-// ──────────────────────────────────────────────────────
-// ItemCard component
-// ──────────────────────────────────────────────────────
 interface ItemCardProps {
   item: Item;
   colorIndex: number;
@@ -157,9 +138,6 @@ function ItemCard({ item, colorIndex, revealed, isRight, flash }: ItemCardProps)
   );
 }
 
-// ──────────────────────────────────────────────────────
-// Main component
-// ──────────────────────────────────────────────────────
 export default function PopOrDrop() {
   const [, setLocation] = useLocation();
   const { toast } = useToast();
@@ -169,27 +147,28 @@ export default function PopOrDrop() {
 
   const todayDate = new Date().toISOString().split("T")[0];
   const storageKey = `ptq-pop-or-drop-${todayDate}`;
+  const startedKey = `ptq-pod-started-${todayDate}`;
 
-  // ── Queries ────────────────────────────────────────
   const seqQuery = useGetTodayPopOrDrop({
     query: { queryKey: getGetTodayPopOrDropQueryKey() },
   });
   const items: Item[] = seqQuery.data?.items ?? [];
 
   const [leaderboardEnabled, setLeaderboardEnabled] = useState(false);
+  const playerToken = typeof window !== "undefined" ? getPlayerToken() : "";
+
   const leaderboardQuery = useGetPopOrDropLeaderboard(
-    { date: todayDate },
+    { date: todayDate, playerToken },
     {
       query: {
-        queryKey: getGetPopOrDropLeaderboardQueryKey({ date: todayDate }),
+        queryKey: getGetPopOrDropLeaderboardQueryKey({ date: todayDate, playerToken }),
         enabled: leaderboardEnabled,
       },
     },
   );
   const scoresMutation = useSubmitPopOrDropScore();
 
-  // ── Game state ─────────────────────────────────────
-  const [currentIndex, setCurrentIndex] = useState(1); // right card index
+  const [currentIndex, setCurrentIndex] = useState(1);
   const [streak, setStreak] = useState(0);
   const [phase, setPhase] = useState<Phase>("guessing");
   const [flash, setFlash] = useState<"correct" | "wrong" | null>(null);
@@ -197,7 +176,7 @@ export default function PopOrDrop() {
   const [alreadyPlayed, setAlreadyPlayed] = useState<SavedState | null>(null);
   const recordedRef = useRef(false);
 
-  // ── Restore from localStorage ───────────────────────
+  // Restore from localStorage — check both "done" state and "started" state (mid-game lock)
   useEffect(() => {
     try {
       const saved = localStorage.getItem(storageKey);
@@ -208,14 +187,33 @@ export default function PopOrDrop() {
           setStreak(parsed.streak);
           setPhase("gameover");
           setLeaderboardEnabled(true);
+          return;
         }
+      }
+      // If the player started but didn't finish (e.g. refreshed mid-game),
+      // treat it as a forfeit and show game-over with streak 0.
+      const started = localStorage.getItem(startedKey);
+      if (started === "1") {
+        const forfeit: SavedState = { done: true, streak: 0, date: todayDate };
+        localStorage.setItem(storageKey, JSON.stringify(forfeit));
+        setAlreadyPlayed(forfeit);
+        setStreak(0);
+        setPhase("gameover");
+        setLeaderboardEnabled(true);
       }
     } catch {
       /* ignore */
     }
-  }, [storageKey]);
+  }, [storageKey, startedKey, todayDate]);
 
-  // ── Save to localStorage when game over ────────────
+  // Lock: mark the attempt as "started" the moment the player makes their first guess.
+  // This prevents replaying by refreshing before game-over is recorded.
+  const lockAttempt = useCallback(() => {
+    try {
+      localStorage.setItem(startedKey, "1");
+    } catch {/* ignore */}
+  }, [startedKey]);
+
   const saveResult = useCallback((finalStreak: number) => {
     if (recordedRef.current) return;
     recordedRef.current = true;
@@ -224,24 +222,28 @@ export default function PopOrDrop() {
       localStorage.setItem(storageKey, JSON.stringify(state));
     } catch {/* ignore */}
 
-    // Submit to leaderboard
-    const playerToken = getPlayerToken();
-    scoresMutation.mutate({ data: { playerToken, streak: finalStreak, date: todayDate } });
+    scoresMutation.mutate(
+      { data: { playerToken, streak: finalStreak, date: todayDate } },
+      {
+        onSuccess: () => {
+          setLeaderboardEnabled(true);
+        },
+      },
+    );
     setLeaderboardEnabled(true);
 
-    // Update personal stats
     try {
       const raw = localStorage.getItem("ptq-stats");
       const stats = raw ? JSON.parse(raw) : {};
+      const maxRounds = items.length - 1;
       stats.popOrDropTotalPlays = (stats.popOrDropTotalPlays ?? 0) + 1;
       stats.popOrDropBestStreak = Math.max(stats.popOrDropBestStreak ?? 0, finalStreak);
       stats.popOrDropStreakSum = (stats.popOrDropStreakSum ?? 0) + finalStreak;
       stats.popOrDropPerfectGames =
-        (stats.popOrDropPerfectGames ?? 0) + (finalStreak >= items.length - 1 ? 1 : 0);
+        (stats.popOrDropPerfectGames ?? 0) + (finalStreak >= maxRounds ? 1 : 0);
       localStorage.setItem("ptq-stats", JSON.stringify(stats));
     } catch {/* ignore */}
 
-    // Update play streak
     try {
       const lastKey = "ptq-last-pop-or-drop";
       const last = localStorage.getItem(lastKey);
@@ -257,18 +259,18 @@ export default function PopOrDrop() {
       }
       localStorage.setItem(lastKey, todayDate);
     } catch {/* ignore */}
-  }, [storageKey, todayDate, scoresMutation, items.length]);
+  }, [storageKey, todayDate, scoresMutation, playerToken, items.length]);
 
-  // ── Guess handler ───────────────────────────────────
   const handleGuess = useCallback((guess: "higher" | "lower") => {
     if (phase !== "guessing" || items.length < 2) return;
+
+    // Lock the attempt on first guess to prevent mid-game refresh exploits
+    lockAttempt();
 
     const leftItem = items[currentIndex - 1];
     const rightItem = items[currentIndex];
     const isHigher = rightItem.value > leftItem.value;
     const isCorrect = guess === "higher" ? isHigher : !isHigher;
-
-    // Equal values: always correct (generous rule)
     const actuallyCorrect = rightItem.value === leftItem.value ? true : isCorrect;
 
     if (actuallyCorrect) {
@@ -278,8 +280,7 @@ export default function PopOrDrop() {
       playCorrect();
       hapticCorrect();
 
-      // Confetti milestones
-      if (newStreak === 10 || newStreak === 25 || newStreak === 50) {
+      if (newStreak === 10 || newStreak === 20) {
         fireBigCelebration();
       } else if (newStreak % 5 === 0) {
         fireConfetti("rainbow");
@@ -295,7 +296,6 @@ export default function PopOrDrop() {
         setFlash(null);
         const nextIndex = currentIndex + 1;
         if (nextIndex >= items.length) {
-          // Completed all items — perfect game!
           setStreak(newStreak);
           setPhase("gameover");
           playVictory();
@@ -328,9 +328,8 @@ export default function PopOrDrop() {
         saveResult(streak);
       }, reduced ? 600 : 1400);
     }
-  }, [phase, items, currentIndex, streak, reduced, playCorrect, playWrong, playVictory, toast, saveResult]);
+  }, [phase, items, currentIndex, streak, reduced, playCorrect, playWrong, playVictory, toast, saveResult, lockAttempt]);
 
-  // ── Share handler ────────────────────────────────────
   const handleShare = useCallback(() => {
     const maxPossible = items.length - 1;
     const text = [
@@ -345,19 +344,19 @@ export default function PopOrDrop() {
     });
   }, [streak, items.length, todayDate, toast]);
 
-  // ── Derived ─────────────────────────────────────────
   const leaderboard = leaderboardQuery.data;
-  const playerToken = typeof window !== "undefined" ? getPlayerToken() : "";
-  const myRank = leaderboard
-    ? leaderboard.top10.findIndex((e) => e.playerToken === playerToken) + 1 ||
-      leaderboard.totalPlayers + 1
-    : null;
+
+  // Use server-returned rank; fall back to position outside top 10 only if player exists
+  const serverRank = leaderboard?.playerRank ?? null;
+  const myRankInTop10 = leaderboard
+    ? leaderboard.top10.findIndex((e) => e.playerToken === playerToken) + 1
+    : 0;
+  const myRank = serverRank ?? (myRankInTop10 > 0 ? myRankInTop10 : null);
   const rankPercentile =
-    leaderboard && leaderboard.totalPlayers > 0
-      ? Math.round((1 - (myRank! - 1) / leaderboard.totalPlayers) * 100)
+    myRank !== null && leaderboard && leaderboard.totalPlayers > 0
+      ? Math.round((1 - (myRank - 1) / leaderboard.totalPlayers) * 100)
       : null;
 
-  // ── Loading ──────────────────────────────────────────
   if (seqQuery.isLoading) {
     return (
       <div className="flex-1 flex items-center justify-center">
@@ -413,7 +412,6 @@ export default function PopOrDrop() {
       </div>
 
       <div className="flex-1 flex flex-col p-4 gap-4 max-w-2xl mx-auto w-full">
-        {/* Game area */}
         <AnimatePresence mode="wait">
           {!isGameOver ? (
             <motion.div
@@ -484,7 +482,7 @@ export default function PopOrDrop() {
               </p>
             </motion.div>
           ) : (
-            /* ── GAME OVER panel ── */
+            /* Game over panel */
             <motion.div
               initial={reduced ? {} : { opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -529,7 +527,6 @@ export default function PopOrDrop() {
                 )}
               </div>
 
-              {/* Personal best from localStorage */}
               <PersonalBestCard streak={streak} />
 
               {/* Countdown */}
@@ -574,6 +571,17 @@ export default function PopOrDrop() {
                         </div>
                       );
                     })}
+                    {/* Show player's entry if outside top 10 */}
+                    {myRank !== null && myRankInTop10 === 0 && (
+                      <div className="flex items-center gap-3 px-4 py-2 bg-[#FFD700] border-l-4 border-[#FF1493]">
+                        <span className="font-display font-black text-sm w-6 text-center">#{myRank}</span>
+                        <span className="flex-1 font-bold text-sm">You</span>
+                        <div className="flex items-center gap-1">
+                          <Flame className="w-3 h-3 text-[#FF1493]" />
+                          <span className="font-display font-black text-sm">{streak}</span>
+                        </div>
+                      </div>
+                    )}
                   </div>
                   {leaderboard.avgStreak > 0 && (
                     <div className="bg-black/5 px-4 py-2 flex gap-4 text-xs font-bold text-black/60">
@@ -617,9 +625,6 @@ export default function PopOrDrop() {
   );
 }
 
-// ──────────────────────────────────────────────────────
-// PersonalBestCard
-// ──────────────────────────────────────────────────────
 function PersonalBestCard({ streak }: { streak: number }) {
   const [stats, setStats] = useState<{
     popOrDropTotalPlays?: number;

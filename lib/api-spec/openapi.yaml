@@ -263,6 +263,11 @@ paths:
           required: false
           schema:
             type: string
+        - name: playerToken
+          in: query
+          required: false
+          schema:
+            type: string
       responses:
         "200":
           description: Leaderboard data
@@ -813,6 +818,9 @@ components:
           type: integer
         medianStreak:
           type: integer
+        playerRank:
+          type: integer
+          nullable: true
       required:
         - date
         - top10
