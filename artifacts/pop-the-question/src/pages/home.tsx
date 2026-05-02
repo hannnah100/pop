@@ -90,24 +90,6 @@ export default function Home() {
               </div>
               <StarDoodle aria-hidden="true" className="w-6 h-6 md:w-8 md:h-8 text-[#FF1493] shrink-0" />
             </div>
-            {/* Secondary tagline */}
-            <div className="inline-block bg-white border-[4px] border-black shadow-[4px_4px_0_#000] px-5 py-3">
-              <p
-                className="font-display font-black tracking-tight comic-headline flex flex-wrap items-center justify-center gap-x-2 gap-y-1"
-                style={{ fontSize: "clamp(0.85rem, 2.2vw, 1.4rem)", lineHeight: 1.1 }}
-              >
-                <span style={{ color: "#FF6B35" }}>If</span>
-                <span style={{ color: "#00E5FF" }}>Bar</span>
-                <span style={{ color: "#FF1493" }}>Trivia</span>
-                <span style={{ color: "#00F5A0" }}>was</span>
-                <span style={{ color: "#FFD700" }}>hosted</span>
-                <span style={{ color: "#FF006E" }}>by</span>
-                <span style={{ color: "#FF6B35" }}>your</span>
-                <span style={{ color: "#00E5FF" }}>For</span>
-                <span style={{ color: "#FF1493" }}>You</span>
-                <span style={{ color: "#00F5A0" }}>page</span>
-              </p>
-            </div>
           </div>
         </div>
       </header>
