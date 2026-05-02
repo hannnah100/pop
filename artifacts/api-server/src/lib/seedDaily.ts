@@ -3,7 +3,7 @@ import {
   threeStrikesChallengesTable,
   crosswordPuzzlesTable,
 } from "@workspace/db";
-import { inArray, notInArray } from "drizzle-orm";
+import { inArray } from "drizzle-orm";
 import { logger } from "./logger";
 import {
   THREE_STRIKES_SEED,

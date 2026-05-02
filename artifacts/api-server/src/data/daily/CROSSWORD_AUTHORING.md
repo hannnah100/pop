@@ -66,22 +66,82 @@ The length hint `(N)` at the end of each clue text is required.
 "cluesDown":   "{\"1\":\"...(5)\",\"2\":\"...(5)\"}"
 ```
 
-## Intersection validation checklist
+## Intersection validation — worked example
 
-For every cell that is part of both an across and a down answer, confirm the
-letter matches. Work through each crossing systematically before committing.
+The puzzle shipped on 2026-05-02 uses the following grid:
+
+```
+  col: 0  1  2  3  4
+row 0:  ■  T  I  E  ■
+row 1:  H  O  R  S  Y
+row 2:  I  R  A  T  E
+row 3:  T  U  N  E  S
+row 4:  ■  S  I  R  ■
+```
+
+**Across answers:** TIE (1), HORSY (4), IRATE (6), TUNES (7), SIR (8)  
+**Down answers:** TORUS (1), IRANI (2), ESTER (3), HIT (4), YES (5)
+
+Every white cell belongs to exactly one across run and one down run. The letter
+must match in both directions:
+
+| Cell   | Across (answer, pos) | Down (answer, pos) | Letter |
+| ------ | -------------------- | ------------------ | ------ |
+| [0, 1] | TIE pos 0            | TORUS pos 0        | T ✓    |
+| [0, 2] | TIE pos 1            | IRANI pos 0        | I ✓    |
+| [0, 3] | TIE pos 2            | ESTER pos 0        | E ✓    |
+| [1, 0] | HORSY pos 0          | HIT pos 0          | H ✓    |
+| [1, 1] | HORSY pos 1          | TORUS pos 1        | O ✓    |
+| [1, 2] | HORSY pos 2          | IRANI pos 1        | R ✓    |
+| [1, 3] | HORSY pos 3          | ESTER pos 1        | S ✓    |
+| [1, 4] | HORSY pos 4          | YES pos 0          | Y ✓    |
+| [2, 0] | IRATE pos 0          | HIT pos 1          | I ✓    |
+| [2, 1] | IRATE pos 1          | TORUS pos 2        | R ✓    |
+| [2, 2] | IRATE pos 2          | IRANI pos 2        | A ✓    |
+| [2, 3] | IRATE pos 3          | ESTER pos 2        | T ✓    |
+| [2, 4] | IRATE pos 4          | YES pos 1          | E ✓    |
+| [3, 0] | TUNES pos 0          | HIT pos 2          | T ✓    |
+| [3, 1] | TUNES pos 1          | TORUS pos 3        | U ✓    |
+| [3, 2] | TUNES pos 2          | IRANI pos 3        | N ✓    |
+| [3, 3] | TUNES pos 3          | ESTER pos 3        | E ✓    |
+| [3, 4] | TUNES pos 4          | YES pos 2          | S ✓    |
+| [4, 1] | SIR pos 0            | TORUS pos 4        | S ✓    |
+| [4, 2] | SIR pos 1            | IRANI pos 4        | I ✓    |
+| [4, 3] | SIR pos 2            | ESTER pos 4        | R ✓    |
+
+All 21 intersections verified. Build a table like this for every new puzzle
+before committing it.
 
 ## Adding a new puzzle
 
-1. Validate every crossing manually (or with a spreadsheet).
-2. Add a new object to `crossword.json` with a unique `id` and `date`
-   (`"YYYY-MM-DD"` format, matching the id suffix).
-3. The seeder inserts only rows whose `id` is not already in the database, so
-   re-running is safe.
-4. Verify locally at `/daily/crossword` before publishing.
+1. Fill the grid on paper or a spreadsheet first.
+2. Build the full intersection table (see above) and verify every cell matches.
+3. Add a new object to `crossword.json` with a unique `id` and `date`
+   (`"YYYY-MM-DD"` format, id suffix must match date).
+4. The seeder inserts only rows whose `id` is not already in the database, so
+   re-running on start is safe.
+5. Verify locally at `/daily/crossword` before publishing.
 
-## Removing a broken puzzle
+## Removing / retracting a broken puzzle
 
-To purge a bad puzzle from production, add its `id` to the `STALE_IDS` list in
-`artifacts/api-server/src/lib/seedDaily.ts`. The seeder deletes those rows on
-every server start before inserting fresh content.
+### Permanent removal (recommended)
+
+1. Remove the entry from `crossword.json`.
+2. Add the bad puzzle's `id` to the `STALE_CROSSWORD_IDS` array in
+   `artifacts/api-server/src/lib/seedDaily.ts`. The seeder deletes those rows
+   on every server start so they are purged from production on the next deploy.
+
+### Temporary kill-switch (hide without deleting)
+
+If you need to hide the crossword tile on the home/archive pages immediately
+without touching the database, set the env variable:
+
+```
+DISABLE_CROSSWORD=true
+```
+
+The home page and archive check this flag and omit the crossword card when it
+is set. Remove the flag once a replacement puzzle is ready and deployed.
+
+> Note: the `DISABLE_CROSSWORD` env-var kill-switch is a planned escape hatch;
+> wire it up in `home.tsx` and the archive route if you need it.
