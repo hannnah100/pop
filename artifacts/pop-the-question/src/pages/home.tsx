@@ -10,7 +10,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { RainbowText } from "@/components/fx";
+import { RainbowText, BubbleLogo } from "@/components/fx";
 import {
   StarDoodle,
   LightningDoodle,
@@ -57,7 +57,7 @@ export default function Home() {
               palette={["#FF0054", "#FF6B35", "#00E5FF", "#00F5A0", "#FF006E", "#FF1493"]}
             />
             <br />
-            <span>THE QUESTION</span>
+            <BubbleLogo />
           </h1>
           <p className="mt-3 text-lg md:text-xl font-bold text-black/70 font-sans">
             Who knows the most about your group chat?
