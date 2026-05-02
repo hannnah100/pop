@@ -3,7 +3,7 @@ import { useLocation } from "wouter";
 import { useCreateRoom, CreateRoomRequestGameType } from "@workspace/api-client-react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { MessageSquare, Flame, Loader2, Bot, Beer, Grid3x3 } from "lucide-react";
+import { MessageSquare, Flame, Loader2, Bot, Beer, Grid3x3, CircleDot } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import {
@@ -58,6 +58,17 @@ const GAME_CARDS = [
     bg: "#FFC107",
     accent: "#1565C0",
     testId: "btn-host-jp",
+  },
+  {
+    type: "wheel-of-fortune" as CreateRoomRequestGameType,
+    label: "Wheel of Fortune",
+    tagline: "Spin. Guess. Solve. Win.",
+    description:
+      "Spin the wheel to earn cash, guess letters, and race to solve the puzzle before anyone else. Three pop-culture puzzle packs.",
+    Icon: CircleDot,
+    bg: "#7C3AED",
+    accent: "#FFD700",
+    testId: "btn-host-wof",
   },
 ];
 

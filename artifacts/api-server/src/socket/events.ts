@@ -55,6 +55,29 @@ import {
   rand as jrand,
   setJeopardyTimer,
 } from "./jeopardy";
+import {
+  WOF_PACKS,
+  getWofPack,
+  getRandomWofPack,
+} from "../data/wof";
+import {
+  type WofState,
+  type WofBoardWire,
+  type WofPackSummaryWire,
+  VOWELS,
+  VOWEL_COST,
+  advanceController,
+  botGuessesCorrect as wofBotGuessesCorrect,
+  botPickConsonant,
+  currentPuzzle,
+  getLetterPositions,
+  isPuzzleSolved,
+  makeWofState,
+  publicBoard as wofPublicBoard,
+  rand as wofRand,
+  spinWheel,
+  wofPackSummaryWire,
+} from "./wof";
 
 interface Player {
   id: string;
@@ -75,7 +98,7 @@ interface HostSettingsBroadcast {
   answerMethod: "voice" | "text" | "both";
 }
 
-export type GameType = "pop-the-question" | "roast-roulette" | "pub-quiz" | "jeopardy";
+export type GameType = "pop-the-question" | "roast-roulette" | "pub-quiz" | "jeopardy" | "wheel-of-fortune";
 
 interface RoastCard {
   [color: string]: {
@@ -109,6 +132,10 @@ interface Room {
   jeopardy?: JeopardyState;
   /** For jeopardy host UI: the chosen pack id. */
   jeopardyPackId?: string;
+  /** Wheel of Fortune state (only set when gameType === "wheel-of-fortune" and game has started). */
+  wof?: WofState;
+  /** For wof host UI: the chosen pack id. */
+  wofPackId?: string;
   createdAt: number;
   lastActivity: number;
   hostSettings: HostSettingsBroadcast;
@@ -221,6 +248,7 @@ export function createRoom(gameType: GameType, isDemo = false, packId?: string):
     botAssignments: {},
     quizPackId: gameType === "pub-quiz" ? packId : undefined,
     jeopardyPackId: gameType === "jeopardy" ? packId : undefined,
+    wofPackId: gameType === "wheel-of-fortune" ? packId : undefined,
     createdAt: Date.now(),
     lastActivity: Date.now(),
     hostSettings: { answerMethod: "both" },
@@ -548,6 +576,15 @@ export function setupSocketIO(httpServer: HttpServer) {
         jeopardyActive: room.jeopardy?.active ? activeClueWire(room.jeopardy.active) : null,
         jeopardyBuzzedInId: room.jeopardy?.buzzedInId ?? null,
         jeopardyTimerEndAt: room.jeopardy?.timerEndAt ?? 0,
+        wofPackId: room.wofPackId,
+        wofPackSummary: room.wof ? wofPackSummaryWire(room.wof.pack) : null,
+        wofBoard: room.wof ? wofPublicBoard(room.wof) : null,
+        wofPhase: room.wof?.phase ?? null,
+        wofControllerId: room.wof?.controllerId ?? null,
+        wofRevealedLetters: room.wof ? Array.from(room.wof.revealedLetters) : [],
+        wofGuessedLetters: room.wof ? Array.from(room.wof.guessedLetters) : [],
+        wofCategory: room.wof ? currentPuzzle(room.wof).category : null,
+        wofHint: room.wof ? currentPuzzle(room.wof).hint ?? null : null,
       });
     });
 
@@ -586,6 +623,30 @@ export function setupSocketIO(httpServer: HttpServer) {
       socket.emit("jeopardy-packs", {
         packs: JEOPARDY_PACKS.map(jeopardyPackSummary) satisfies JeopardyPackSummaryWire[],
       });
+    });
+
+    // ===========================================
+    // Wheel of Fortune: list available packs (for host UI)
+    // ===========================================
+    socket.on("wof-list-packs", () => {
+      socket.emit("wof-packs", {
+        packs: WOF_PACKS.map(wofPackSummaryWire) satisfies WofPackSummaryWire[],
+      });
+    });
+
+    // ===========================================
+    // Wheel of Fortune: host selects a pack (lobby only, host-only)
+    // ===========================================
+    socket.on("wof-set-pack", ({ roomCode, packId }: { roomCode: string; packId: string | null }) => {
+      const room = rooms.get(roomCode);
+      if (!room || room.status !== "lobby") return;
+      if (room.hostId !== socket.id) return;
+      if (room.gameType !== "wheel-of-fortune") return;
+      if (packId !== null && !getWofPack(packId)) return;
+      room.wofPackId = packId ?? undefined;
+      const chosenPack = packId ? getWofPack(packId) : null;
+      const summary = chosenPack ? wofPackSummaryWire(chosenPack) : null;
+      io.to(roomCode).emit("wof-pack-changed", { packId, summary });
     });
 
     // ====== Dual Host Mode plumbing (Task #5) ======
@@ -762,6 +823,39 @@ export function setupSocketIO(httpServer: HttpServer) {
         // If a bot is the first picker, schedule its pick.
         const controller = room.players.find((p) => p.id === room.jeopardy!.controllerId);
         if (controller?.isBot) scheduleBotJeopardyPick(io, room);
+
+      } else if (room.gameType === "wheel-of-fortune") {
+        const pack =
+          (room.wofPackId && getWofPack(room.wofPackId)) || getRandomWofPack();
+        room.wofPackId = pack.id;
+        room.wof = makeWofState(pack);
+
+        room.players.forEach((p) => { p.score = 0; });
+
+        const nonHosts = room.players.filter((p) => !p.isHost);
+        const firstHuman = nonHosts.find((p) => !p.isBot);
+        room.wof.controllerId = (firstHuman ?? nonHosts[0])?.id ?? null;
+
+        const puzzle = currentPuzzle(room.wof);
+
+        io.to(roomCode).emit("game-started", {
+          gameType: room.gameType,
+          status: room.status,
+          isDemo: room.isDemo,
+          pack: wofPackSummaryWire(pack),
+          board: wofPublicBoard(room.wof),
+          category: puzzle.category,
+          hint: puzzle.hint ?? null,
+          controllerId: room.wof.controllerId,
+          revealedLetters: [],
+          guessedLetters: [],
+          puzzleIndex: 0,
+          totalPuzzles: pack.puzzles.length,
+          scores: wofScoresWire(room, room.wof),
+        });
+
+        const firstController = room.players.find((p) => p.id === room.wof!.controllerId);
+        if (firstController?.isBot) scheduleBotWofTurn(io, room);
       }
     });
 
@@ -918,6 +1012,330 @@ export function setupSocketIO(httpServer: HttpServer) {
       const room = rooms.get(roomCode);
       if (!room || !room.jeopardy || room.hostId !== socket.id) return;
       endJeopardyGame(io, room);
+    });
+
+    // ===========================================
+    // Wheel of Fortune: socket handlers
+    // ===========================================
+
+    socket.on("wof-spin", ({ roomCode }: { roomCode: string }) => {
+      const room = rooms.get(roomCode);
+      if (!room || !room.wof) return;
+      const w = room.wof;
+      if (w.phase !== "spinning") return;
+      // Only controller or host can spin.
+      if (socket.id !== w.controllerId && socket.id !== room.hostId) return;
+      room.lastActivity = Date.now();
+
+      const value = spinWheel();
+      w.currentSpin = value;
+
+      const controller = room.players.find((p) => p.id === w.controllerId);
+      const controllerName = controller?.name ?? "Player";
+
+      if (value === "BANKRUPT") {
+        const lost = w.roundEarnings[w.controllerId ?? ""] ?? 0;
+        if (w.controllerId) {
+          const player = room.players.find((p) => p.id === w.controllerId);
+          if (player) player.score = Math.max(0, player.score - lost);
+          w.roundEarnings[w.controllerId] = 0;
+        }
+        const nonHostIds = room.players.filter((p) => !p.isHost).map((p) => p.id);
+        w.controllerId = advanceController(w.controllerId, nonHostIds);
+        w.isFreePlay = false;
+        io.to(room.code).emit("wof-spun", {
+          value,
+          type: "bankrupt",
+          controllerId: w.controllerId,
+          controllerName,
+          scores: wofScoresWire(room, w),
+        });
+        const nextController = room.players.find((p) => p.id === w.controllerId);
+        if (nextController?.isBot) scheduleBotWofTurn(io, room);
+        return;
+      }
+
+      if (value === "LOSE_A_TURN") {
+        const nonHostIds = room.players.filter((p) => !p.isHost).map((p) => p.id);
+        w.controllerId = advanceController(w.controllerId, nonHostIds);
+        w.isFreePlay = false;
+        io.to(room.code).emit("wof-spun", {
+          value,
+          type: "lose-a-turn",
+          controllerId: w.controllerId,
+          controllerName,
+          scores: wofScoresWire(room, w),
+        });
+        const nextController = room.players.find((p) => p.id === w.controllerId);
+        if (nextController?.isBot) scheduleBotWofTurn(io, room);
+        return;
+      }
+
+      if (value === "FREE_PLAY") {
+        w.isFreePlay = true;
+        w.phase = "guessing";
+        io.to(room.code).emit("wof-spun", {
+          value,
+          type: "free-play",
+          controllerId: w.controllerId,
+          controllerName,
+          scores: wofScoresWire(room, w),
+        });
+        const ctrl = room.players.find((p) => p.id === w.controllerId);
+        if (ctrl?.isBot) scheduleBotWofGuess(io, room);
+        return;
+      }
+
+      // Dollar value
+      w.phase = "guessing";
+      w.isFreePlay = false;
+      io.to(room.code).emit("wof-spun", {
+        value,
+        type: "dollar",
+        controllerId: w.controllerId,
+        controllerName,
+        scores: wofScoresWire(room, w),
+      });
+      const ctrl = room.players.find((p) => p.id === w.controllerId);
+      if (ctrl?.isBot) scheduleBotWofGuess(io, room);
+    });
+
+    socket.on("wof-guess-letter", ({ roomCode, letter }: { roomCode: string; letter: string }) => {
+      const room = rooms.get(roomCode);
+      if (!room || !room.wof) return;
+      const w = room.wof;
+      if (w.phase !== "guessing") return;
+      if (socket.id !== w.controllerId && socket.id !== room.hostId) return;
+      room.lastActivity = Date.now();
+
+      const l = letter.toUpperCase().trim();
+      if (!l || l.length !== 1 || !/[A-Z]/.test(l)) return;
+      if (w.guessedLetters.has(l)) return;
+
+      const puzzle = currentPuzzle(w);
+      const isVowel = VOWELS.has(l);
+
+      // Vowel during free play: allow. Consonant during free play: allow too.
+      // Vowel during paid spin: not allowed (must use buy-vowel flow).
+      if (isVowel && !w.isFreePlay) return;
+      if (!isVowel && w.isFreePlay) {
+        // FREE_PLAY on consonant: treat as if they had a spin for $500
+        w.currentSpin = 500;
+      }
+
+      w.guessedLetters.add(l);
+      const positions = getLetterPositions(puzzle.answer, l);
+      const count = positions.length;
+
+      if (count > 0) {
+        w.revealedLetters.add(l);
+        const spinValue = typeof w.currentSpin === "number" ? w.currentSpin : 0;
+        const earned = isVowel ? 0 : spinValue * count;
+        if (!isVowel && earned > 0) {
+          const player = room.players.find((p) => p.id === w.controllerId);
+          if (player) {
+            player.score += earned;
+            w.roundEarnings[w.controllerId ?? ""] = (w.roundEarnings[w.controllerId ?? ""] ?? 0) + earned;
+          }
+        }
+        const board = wofPublicBoard(w);
+        w.isFreePlay = false;
+
+        if (isPuzzleSolved(w)) {
+          w.phase = "puzzle-over";
+          io.to(room.code).emit("wof-letter-result", {
+            letter: l,
+            count,
+            correct: true,
+            scoreEarned: earned,
+            board,
+            revealedLetters: Array.from(w.revealedLetters),
+            guessedLetters: Array.from(w.guessedLetters),
+            controllerId: w.controllerId,
+            scores: wofScoresWire(room, w),
+          });
+          setTimeout(() => {
+            const live = rooms.get(room.code);
+            if (!live?.wof || live.wof.phase !== "puzzle-over") return;
+            finishWofPuzzle(io, live);
+          }, 1500);
+          return;
+        }
+
+        // Stay on controller's turn — they can spin again or solve
+        w.phase = "spinning";
+        io.to(room.code).emit("wof-letter-result", {
+          letter: l,
+          count,
+          correct: true,
+          scoreEarned: earned,
+          board,
+          revealedLetters: Array.from(w.revealedLetters),
+          guessedLetters: Array.from(w.guessedLetters),
+          controllerId: w.controllerId,
+          scores: wofScoresWire(room, w),
+        });
+        const ctrl = room.players.find((p) => p.id === w.controllerId);
+        if (ctrl?.isBot) scheduleBotWofTurn(io, room);
+      } else {
+        // No letters found — pass turn
+        w.isFreePlay = false;
+        const nonHostIds = room.players.filter((p) => !p.isHost).map((p) => p.id);
+        w.controllerId = advanceController(w.controllerId, nonHostIds);
+        w.phase = "spinning";
+        io.to(room.code).emit("wof-letter-result", {
+          letter: l,
+          count: 0,
+          correct: false,
+          scoreEarned: 0,
+          board: wofPublicBoard(w),
+          revealedLetters: Array.from(w.revealedLetters),
+          guessedLetters: Array.from(w.guessedLetters),
+          controllerId: w.controllerId,
+          scores: wofScoresWire(room, w),
+        });
+        const nextController = room.players.find((p) => p.id === w.controllerId);
+        if (nextController?.isBot) scheduleBotWofTurn(io, room);
+      }
+    });
+
+    socket.on("wof-buy-vowel", ({ roomCode, letter }: { roomCode: string; letter: string }) => {
+      const room = rooms.get(roomCode);
+      if (!room || !room.wof) return;
+      const w = room.wof;
+      if (w.phase !== "spinning") return;
+      if (socket.id !== w.controllerId && socket.id !== room.hostId) return;
+      room.lastActivity = Date.now();
+
+      const l = letter.toUpperCase().trim();
+      if (!VOWELS.has(l)) return;
+      if (w.guessedLetters.has(l)) return;
+
+      const controller = room.players.find((p) => p.id === w.controllerId);
+      if (!controller || controller.score < VOWEL_COST) return;
+
+      controller.score -= VOWEL_COST;
+      w.roundEarnings[w.controllerId ?? ""] = (w.roundEarnings[w.controllerId ?? ""] ?? 0) - VOWEL_COST;
+      w.guessedLetters.add(l);
+      w.currentSpin = null;
+
+      const puzzle = currentPuzzle(w);
+      const count = getLetterPositions(puzzle.answer, l).length;
+      if (count > 0) w.revealedLetters.add(l);
+
+      const board = wofPublicBoard(w);
+
+      if (isPuzzleSolved(w)) {
+        w.phase = "puzzle-over";
+        io.to(room.code).emit("wof-vowel-result", {
+          letter: l,
+          count,
+          found: count > 0,
+          board,
+          revealedLetters: Array.from(w.revealedLetters),
+          guessedLetters: Array.from(w.guessedLetters),
+          controllerId: w.controllerId,
+          scores: wofScoresWire(room, w),
+        });
+        setTimeout(() => {
+          const live = rooms.get(room.code);
+          if (!live?.wof || live.wof.phase !== "puzzle-over") return;
+          finishWofPuzzle(io, live);
+        }, 1500);
+        return;
+      }
+
+      w.phase = "spinning";
+      io.to(room.code).emit("wof-vowel-result", {
+        letter: l,
+        count,
+        found: count > 0,
+        board,
+        revealedLetters: Array.from(w.revealedLetters),
+        guessedLetters: Array.from(w.guessedLetters),
+        controllerId: w.controllerId,
+        scores: wofScoresWire(room, w),
+      });
+      if (count === 0) {
+        const nonHostIds = room.players.filter((p) => !p.isHost).map((p) => p.id);
+        w.controllerId = advanceController(w.controllerId, nonHostIds);
+        const nextController = room.players.find((p) => p.id === w.controllerId);
+        if (nextController?.isBot) scheduleBotWofTurn(io, room);
+      } else {
+        const ctrl = room.players.find((p) => p.id === w.controllerId);
+        if (ctrl?.isBot) scheduleBotWofTurn(io, room);
+      }
+    });
+
+    socket.on("wof-solve-attempt", ({ roomCode, answer }: { roomCode: string; answer: string }) => {
+      const room = rooms.get(roomCode);
+      if (!room || !room.wof) return;
+      const w = room.wof;
+      if (w.phase !== "spinning") return;
+      if (socket.id !== w.controllerId && socket.id !== room.hostId) return;
+      room.lastActivity = Date.now();
+
+      const puzzle = currentPuzzle(w);
+      const normalized = (s: string) => s.toUpperCase().replace(/[^A-Z ]/g, "").trim().replace(/\s+/g, " ");
+      const correct = normalized(answer) === normalized(puzzle.answer);
+
+      const solverId = w.controllerId;
+      const solver = room.players.find((p) => p.id === solverId);
+
+      if (correct) {
+        // Bonus for solving: $1000
+        const bonus = 1000;
+        if (solver) {
+          solver.score += bonus;
+          w.roundEarnings[solverId ?? ""] = (w.roundEarnings[solverId ?? ""] ?? 0) + bonus;
+        }
+        // Reveal all letters
+        puzzle.answer.toUpperCase().replace(/\s/g, "").split("").forEach((l) => w.revealedLetters.add(l));
+        w.phase = "puzzle-over";
+        io.to(room.code).emit("wof-solve-result", {
+          correct: true,
+          answer: puzzle.answer,
+          solverId,
+          solverName: solver?.name ?? "Player",
+          board: wofPublicBoard(w),
+          revealedLetters: Array.from(w.revealedLetters),
+          scores: wofScoresWire(room, w),
+        });
+        setTimeout(() => {
+          const live = rooms.get(room.code);
+          if (!live?.wof || live.wof.phase !== "puzzle-over") return;
+          finishWofPuzzle(io, live);
+        }, 2000);
+      } else {
+        // Wrong guess — pass turn
+        const nonHostIds = room.players.filter((p) => !p.isHost).map((p) => p.id);
+        w.controllerId = advanceController(w.controllerId, nonHostIds);
+        io.to(room.code).emit("wof-solve-result", {
+          correct: false,
+          answer: null,
+          solverId,
+          solverName: solver?.name ?? "Player",
+          board: wofPublicBoard(w),
+          revealedLetters: Array.from(w.revealedLetters),
+          scores: wofScoresWire(room, w),
+        });
+        const nextController = room.players.find((p) => p.id === w.controllerId);
+        if (nextController?.isBot) scheduleBotWofTurn(io, room);
+      }
+    });
+
+    socket.on("wof-next-puzzle", ({ roomCode }: { roomCode: string }) => {
+      const room = rooms.get(roomCode);
+      if (!room || !room.wof || room.hostId !== socket.id) return;
+      room.lastActivity = Date.now();
+      advanceWofPuzzle(io, room);
+    });
+
+    socket.on("wof-end-game", ({ roomCode }: { roomCode: string }) => {
+      const room = rooms.get(roomCode);
+      if (!room || !room.wof || room.hostId !== socket.id) return;
+      room.lastActivity = Date.now();
+      endWofGame(io, room);
     });
 
     // ===========================================
@@ -1905,4 +2323,252 @@ function endJeopardyGame(io: SocketIOServer, room: Room) {
       rank: idx + 1,
     })),
   });
+}
+
+// ============================================================
+// Wheel of Fortune helpers
+// ============================================================
+
+function wofScoresWire(room: Room, w: WofState) {
+  return room.players
+    .filter((p) => !p.isHost)
+    .map((p) => ({
+      id: p.id,
+      name: p.name,
+      score: p.score,
+      roundEarnings: w.roundEarnings[p.id] ?? 0,
+      isBot: p.isBot,
+    }));
+}
+
+function finishWofPuzzle(io: SocketIOServer, room: Room) {
+  if (!room.wof) return;
+  const w = room.wof;
+  const puzzle = currentPuzzle(w);
+  const isLastPuzzle = w.puzzleIndex >= w.puzzleOrder.length - 1;
+
+  io.to(room.code).emit("wof-puzzle-over", {
+    answer: puzzle.answer,
+    category: puzzle.category,
+    board: wofPublicBoard(w),
+    scores: wofScoresWire(room, w),
+    puzzleIndex: w.puzzleIndex,
+    totalPuzzles: w.puzzleOrder.length,
+    isLastPuzzle,
+  });
+}
+
+function advanceWofPuzzle(io: SocketIOServer, room: Room) {
+  if (!room.wof) return;
+  const w = room.wof;
+
+  if (w.puzzleIndex >= w.puzzleOrder.length - 1) {
+    endWofGame(io, room);
+    return;
+  }
+
+  w.puzzleIndex++;
+  w.revealedLetters = new Set();
+  w.guessedLetters = new Set();
+  w.roundEarnings = {};
+  w.currentSpin = null;
+  w.isFreePlay = false;
+  w.phase = "spinning";
+
+  // Rotate controller to next player
+  const nonHostIds = room.players.filter((p) => !p.isHost).map((p) => p.id);
+  w.controllerId = advanceController(w.controllerId, nonHostIds);
+
+  const puzzle = currentPuzzle(w);
+  io.to(room.code).emit("wof-next-puzzle", {
+    board: wofPublicBoard(w),
+    category: puzzle.category,
+    hint: puzzle.hint ?? null,
+    controllerId: w.controllerId,
+    puzzleIndex: w.puzzleIndex,
+    totalPuzzles: w.puzzleOrder.length,
+    revealedLetters: [],
+    guessedLetters: [],
+    scores: wofScoresWire(room, w),
+  });
+
+  const ctrl = room.players.find((p) => p.id === w.controllerId);
+  if (ctrl?.isBot) scheduleBotWofTurn(io, room);
+}
+
+function endWofGame(io: SocketIOServer, room: Room) {
+  room.status = "finished";
+  const sorted = [...room.players]
+    .filter((p) => !p.isHost)
+    .sort((a, b) => b.score - a.score);
+  io.to(room.code).emit("game-ended", {
+    gameType: "wheel-of-fortune",
+    players: room.players,
+    finalScores: sorted.map((p, idx) => ({
+      id: p.id,
+      name: p.name,
+      score: p.score,
+      isBot: p.isBot,
+      rank: idx + 1,
+    })),
+  });
+}
+
+function scheduleBotWofTurn(io: SocketIOServer, room: Room) {
+  if (!room.isDemo || !room.wof) return;
+  const w = room.wof;
+  const controllerId = w.controllerId;
+
+  setTimeout(() => {
+    const live = rooms.get(room.code);
+    if (!live?.wof || live.wof.controllerId !== controllerId) return;
+    if (live.wof.phase !== "spinning") return;
+    const ctrl = live.players.find((p) => p.id === controllerId);
+    if (!ctrl?.isBot) return;
+
+    // Bots sometimes try to solve if enough letters are revealed
+    const puzzle = currentPuzzle(live.wof);
+    const totalLetters = new Set(puzzle.answer.toUpperCase().replace(/\s/g, "").split("")).size;
+    const revealedCount = live.wof.revealedLetters.size;
+    if (revealedCount >= Math.floor(totalLetters * 0.6) && Math.random() < 0.4) {
+      live.wof.phase = "spinning"; // ensure phase is right before fake solve
+      // Emit a bot solve attempt
+      const normalized = (s: string) => s.toUpperCase().replace(/[^A-Z ]/g, "").trim().replace(/\s+/g, " ");
+      const correct = Math.random() < 0.55;
+      const answer = correct ? puzzle.answer : "WRONG ANSWER";
+      const solverId = controllerId;
+      const solver = live.players.find((p) => p.id === solverId);
+      if (correct) {
+        const bonus = 1000;
+        if (solver) {
+          solver.score += bonus;
+          live.wof.roundEarnings[solverId ?? ""] = (live.wof.roundEarnings[solverId ?? ""] ?? 0) + bonus;
+        }
+        puzzle.answer.toUpperCase().replace(/\s/g, "").split("").forEach((l) => live.wof!.revealedLetters.add(l));
+        live.wof.phase = "puzzle-over";
+        io.to(live.code).emit("wof-solve-result", {
+          correct: true,
+          answer: puzzle.answer,
+          solverId,
+          solverName: solver?.name ?? "Bot",
+          board: wofPublicBoard(live.wof),
+          revealedLetters: Array.from(live.wof.revealedLetters),
+          scores: wofScoresWire(live, live.wof),
+        });
+        setTimeout(() => {
+          const l2 = rooms.get(room.code);
+          if (!l2?.wof || l2.wof.phase !== "puzzle-over") return;
+          finishWofPuzzle(io, l2);
+        }, 2000);
+        return;
+      } else {
+        const nonHostIds = live.players.filter((p) => !p.isHost).map((p) => p.id);
+        live.wof.controllerId = advanceController(live.wof.controllerId, nonHostIds);
+        io.to(live.code).emit("wof-solve-result", {
+          correct: false,
+          answer: null,
+          solverId,
+          solverName: solver?.name ?? "Bot",
+          board: wofPublicBoard(live.wof),
+          revealedLetters: Array.from(live.wof.revealedLetters),
+          scores: wofScoresWire(live, live.wof),
+        });
+        const next = live.players.find((p) => p.id === live.wof!.controllerId);
+        if (next?.isBot) scheduleBotWofTurn(io, live);
+        return;
+      }
+    }
+
+    // Spin the wheel
+    const value = spinWheel();
+    live.wof.currentSpin = value;
+    const controllerName = ctrl.name;
+
+    if (value === "BANKRUPT") {
+      const lost = live.wof.roundEarnings[controllerId ?? ""] ?? 0;
+      if (ctrl) ctrl.score = Math.max(0, ctrl.score - lost);
+      live.wof.roundEarnings[controllerId ?? ""] = 0;
+      const nonHostIds = live.players.filter((p) => !p.isHost).map((p) => p.id);
+      live.wof.controllerId = advanceController(live.wof.controllerId, nonHostIds);
+      live.wof.isFreePlay = false;
+      io.to(live.code).emit("wof-spun", { value, type: "bankrupt", controllerId: live.wof.controllerId, controllerName, scores: wofScoresWire(live, live.wof) });
+      const next = live.players.find((p) => p.id === live.wof!.controllerId);
+      if (next?.isBot) scheduleBotWofTurn(io, live);
+      return;
+    }
+    if (value === "LOSE_A_TURN") {
+      const nonHostIds = live.players.filter((p) => !p.isHost).map((p) => p.id);
+      live.wof.controllerId = advanceController(live.wof.controllerId, nonHostIds);
+      live.wof.isFreePlay = false;
+      io.to(live.code).emit("wof-spun", { value, type: "lose-a-turn", controllerId: live.wof.controllerId, controllerName, scores: wofScoresWire(live, live.wof) });
+      const next = live.players.find((p) => p.id === live.wof!.controllerId);
+      if (next?.isBot) scheduleBotWofTurn(io, live);
+      return;
+    }
+    if (value === "FREE_PLAY") {
+      live.wof.isFreePlay = true;
+      live.wof.phase = "guessing";
+      io.to(live.code).emit("wof-spun", { value, type: "free-play", controllerId: live.wof.controllerId, controllerName, scores: wofScoresWire(live, live.wof) });
+      scheduleBotWofGuess(io, live);
+      return;
+    }
+    live.wof.phase = "guessing";
+    live.wof.isFreePlay = false;
+    io.to(live.code).emit("wof-spun", { value, type: "dollar", controllerId: live.wof.controllerId, controllerName, scores: wofScoresWire(live, live.wof) });
+    scheduleBotWofGuess(io, live);
+  }, wofRand(1200, 2800));
+}
+
+function scheduleBotWofGuess(io: SocketIOServer, room: Room) {
+  if (!room.isDemo || !room.wof) return;
+  const w = room.wof;
+  const controllerId = w.controllerId;
+
+  setTimeout(() => {
+    const live = rooms.get(room.code);
+    if (!live?.wof || live.wof.controllerId !== controllerId) return;
+    if (live.wof.phase !== "guessing") return;
+    const ctrl = live.players.find((p) => p.id === controllerId);
+    if (!ctrl?.isBot) return;
+
+    const letter = botPickConsonant(live.wof.guessedLetters);
+    if (!letter) return;
+
+    live.wof.guessedLetters.add(letter);
+    const puzzle = currentPuzzle(live.wof);
+    const positions = getLetterPositions(puzzle.answer, letter);
+    const count = positions.length;
+
+    if (count > 0) {
+      live.wof.revealedLetters.add(letter);
+      const spinValue = typeof live.wof.currentSpin === "number" ? live.wof.currentSpin : 500;
+      const earned = live.wof.isFreePlay ? 0 : spinValue * count;
+      if (earned > 0) {
+        ctrl.score += earned;
+        live.wof.roundEarnings[controllerId ?? ""] = (live.wof.roundEarnings[controllerId ?? ""] ?? 0) + earned;
+      }
+      live.wof.isFreePlay = false;
+      if (isPuzzleSolved(live.wof)) {
+        live.wof.phase = "puzzle-over";
+        io.to(live.code).emit("wof-letter-result", { letter, count, correct: true, scoreEarned: earned, board: wofPublicBoard(live.wof), revealedLetters: Array.from(live.wof.revealedLetters), guessedLetters: Array.from(live.wof.guessedLetters), controllerId, scores: wofScoresWire(live, live.wof) });
+        setTimeout(() => {
+          const l2 = rooms.get(room.code);
+          if (!l2?.wof || l2.wof.phase !== "puzzle-over") return;
+          finishWofPuzzle(io, l2);
+        }, 1500);
+        return;
+      }
+      live.wof.phase = "spinning";
+      io.to(live.code).emit("wof-letter-result", { letter, count, correct: true, scoreEarned: earned, board: wofPublicBoard(live.wof), revealedLetters: Array.from(live.wof.revealedLetters), guessedLetters: Array.from(live.wof.guessedLetters), controllerId, scores: wofScoresWire(live, live.wof) });
+      scheduleBotWofTurn(io, live);
+    } else {
+      live.wof.isFreePlay = false;
+      const nonHostIds = live.players.filter((p) => !p.isHost).map((p) => p.id);
+      live.wof.controllerId = advanceController(live.wof.controllerId, nonHostIds);
+      live.wof.phase = "spinning";
+      io.to(live.code).emit("wof-letter-result", { letter, count: 0, correct: false, scoreEarned: 0, board: wofPublicBoard(live.wof), revealedLetters: Array.from(live.wof.revealedLetters), guessedLetters: Array.from(live.wof.guessedLetters), controllerId: live.wof.controllerId, scores: wofScoresWire(live, live.wof) });
+      const next = live.players.find((p) => p.id === live.wof!.controllerId);
+      if (next?.isBot) scheduleBotWofTurn(io, live);
+    }
+  }, wofRand(800, 2200));
 }

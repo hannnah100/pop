@@ -132,6 +132,12 @@ interface QuizRevealPayload {
 
 type RrPhase = "writing" | "writing-complete" | "revealing";
 
+// ---- Wheel of Fortune types ----
+interface WofBoardCell { letter: string; revealed: boolean }
+type WofBoardWord = WofBoardCell[];
+interface WofScoreRow { id: string; name: string; score: number; roundEarnings: number; isBot: boolean }
+type WofWheelValue = number | "BANKRUPT" | "LOSE_A_TURN" | "FREE_PLAY";
+
 // ---- Jeopardy types ----
 interface JBoardWire {
   categories: Array<{ name: string; clues: Array<{ value: number; revealed: boolean }> }>;
@@ -258,6 +264,26 @@ export default function GamePlayer() {
   const [jTimerEndAt, setJTimerEndAt] = useState<number>(0);
   const [jNow, setJNow] = useState(Date.now());
 
+  // Wheel of Fortune state
+  const [wofBoard, setWofBoard] = useState<WofBoardWord[]>([]);
+  const [wofCategory, setWofCategory] = useState("");
+  const [wofHint, setWofHint] = useState<string | null>(null);
+  const [wofControllerId, setWofControllerId] = useState<string | null>(null);
+  const [wofRevealedLetters, setWofRevealedLetters] = useState<string[]>([]);
+  const [wofGuessedLetters, setWofGuessedLetters] = useState<string[]>([]);
+  const [wofScores, setWofScores] = useState<WofScoreRow[]>([]);
+  const [wofPhase, setWofPhase] = useState<"spinning" | "guessing" | "puzzle-over" | "ended">("spinning");
+  const [wofLastSpin, setWofLastSpin] = useState<WofWheelValue | null>(null);
+  const [wofSpinType, setWofSpinType] = useState<string | null>(null);
+  const [wofPuzzleIndex, setWofPuzzleIndex] = useState(0);
+  const [wofTotalPuzzles, setWofTotalPuzzles] = useState(0);
+  const [wofLastLetter, setWofLastLetter] = useState<{ letter: string; count: number; correct: boolean } | null>(null);
+  const [wofSolveResult, setWofSolveResult] = useState<{ correct: boolean; answer: string | null; solverName: string } | null>(null);
+  const [wofPuzzleOver, setWofPuzzleOver] = useState<{ answer: string; isLastPuzzle: boolean } | null>(null);
+  const [wofGuessInput, setWofGuessInput] = useState("");
+  const [wofSolveInput, setWofSolveInput] = useState("");
+  const [wofVowelMode, setWofVowelMode] = useState(false);
+
   const finishedRef = useRef(false);
 
   // Task #5: host-driven settings + state
@@ -351,7 +377,168 @@ export default function GamePlayer() {
         setJBuzzerArmed(false);
         setJMyBuzzLockedOut(false);
         setJTimerEndAt(0);
+      } else if (gt === "wheel-of-fortune") {
+        const w = payload as unknown as {
+          board: WofBoardWord[];
+          category: string;
+          hint?: string | null;
+          controllerId: string | null;
+          revealedLetters: string[];
+          guessedLetters: string[];
+          puzzleIndex: number;
+          totalPuzzles: number;
+          scores: WofScoreRow[];
+        };
+        setWofBoard(w.board ?? []);
+        setWofCategory(w.category ?? "");
+        setWofHint(w.hint ?? null);
+        setWofControllerId(w.controllerId ?? null);
+        setWofRevealedLetters(w.revealedLetters ?? []);
+        setWofGuessedLetters(w.guessedLetters ?? []);
+        setWofPuzzleIndex(w.puzzleIndex ?? 0);
+        setWofTotalPuzzles(w.totalPuzzles ?? 0);
+        setWofScores(w.scores ?? []);
+        setWofPhase("spinning");
+        setWofLastSpin(null);
+        setWofSpinType(null);
+        setWofLastLetter(null);
+        setWofSolveResult(null);
+        setWofPuzzleOver(null);
+        setWofGuessInput("");
+        setWofSolveInput("");
+        setWofVowelMode(false);
       }
+    });
+
+    // ============ Wheel of Fortune socket handlers ============
+    newSocket.on("wof-spun", (payload: {
+      value: WofWheelValue;
+      type: string;
+      controllerId: string | null;
+      scores: WofScoreRow[];
+    }) => {
+      setWofLastSpin(payload.value);
+      setWofSpinType(payload.type);
+      setWofControllerId(payload.controllerId);
+      setWofScores(payload.scores);
+      setWofLastLetter(null);
+      setWofSolveResult(null);
+      setWofGuessInput("");
+      setWofVowelMode(false);
+      if (payload.type === "bankrupt" || payload.type === "lose-a-turn") {
+        setWofPhase("spinning");
+        hapticWrong();
+      } else {
+        setWofPhase("guessing");
+        hapticTap();
+      }
+    });
+
+    newSocket.on("wof-letter-result", (payload: {
+      letter: string;
+      count: number;
+      correct: boolean;
+      scoreEarned: number;
+      board: WofBoardWord[];
+      revealedLetters: string[];
+      guessedLetters: string[];
+      controllerId: string | null;
+      scores: WofScoreRow[];
+    }) => {
+      setWofBoard(payload.board);
+      setWofRevealedLetters(payload.revealedLetters);
+      setWofGuessedLetters(payload.guessedLetters);
+      setWofControllerId(payload.controllerId);
+      setWofScores(payload.scores);
+      setWofLastLetter({ letter: payload.letter, count: payload.count, correct: payload.correct });
+      setWofGuessInput("");
+      setWofPhase("spinning");
+      if (payload.correct && payload.count > 0) hapticCorrect();
+      else hapticWrong();
+    });
+
+    newSocket.on("wof-vowel-result", (payload: {
+      letter: string;
+      count: number;
+      found: boolean;
+      board: WofBoardWord[];
+      revealedLetters: string[];
+      guessedLetters: string[];
+      controllerId: string | null;
+      scores: WofScoreRow[];
+    }) => {
+      setWofBoard(payload.board);
+      setWofRevealedLetters(payload.revealedLetters);
+      setWofGuessedLetters(payload.guessedLetters);
+      setWofControllerId(payload.controllerId);
+      setWofScores(payload.scores);
+      setWofLastLetter({ letter: payload.letter, count: payload.count, correct: payload.found });
+      setWofGuessInput("");
+      setWofVowelMode(false);
+      setWofPhase("spinning");
+    });
+
+    newSocket.on("wof-solve-result", (payload: {
+      correct: boolean;
+      answer: string | null;
+      solverId: string | null;
+      solverName: string;
+      board: WofBoardWord[];
+      revealedLetters: string[];
+      scores: WofScoreRow[];
+    }) => {
+      setWofBoard(payload.board);
+      setWofRevealedLetters(payload.revealedLetters);
+      setWofScores(payload.scores);
+      setWofSolveResult({ correct: payload.correct, answer: payload.answer, solverName: payload.solverName });
+      setWofSolveInput("");
+      if (payload.correct) hapticVictory();
+      else hapticWrong();
+    });
+
+    newSocket.on("wof-puzzle-over", (payload: {
+      answer: string;
+      category: string;
+      board: WofBoardWord[];
+      scores: WofScoreRow[];
+      isLastPuzzle: boolean;
+    }) => {
+      setWofBoard(payload.board);
+      setWofScores(payload.scores);
+      setWofPhase("puzzle-over");
+      setWofPuzzleOver({ answer: payload.answer, isLastPuzzle: payload.isLastPuzzle });
+      hapticVictory();
+    });
+
+    newSocket.on("wof-next-puzzle", (payload: {
+      board: WofBoardWord[];
+      category: string;
+      hint: string | null;
+      controllerId: string | null;
+      puzzleIndex: number;
+      totalPuzzles: number;
+      revealedLetters: string[];
+      guessedLetters: string[];
+      scores: WofScoreRow[];
+    }) => {
+      setWofBoard(payload.board);
+      setWofCategory(payload.category);
+      setWofHint(payload.hint);
+      setWofControllerId(payload.controllerId);
+      setWofPuzzleIndex(payload.puzzleIndex);
+      setWofTotalPuzzles(payload.totalPuzzles);
+      setWofRevealedLetters(payload.revealedLetters);
+      setWofGuessedLetters(payload.guessedLetters);
+      setWofScores(payload.scores);
+      setWofPhase("spinning");
+      setWofLastSpin(null);
+      setWofSpinType(null);
+      setWofLastLetter(null);
+      setWofSolveResult(null);
+      setWofPuzzleOver(null);
+      setWofGuessInput("");
+      setWofSolveInput("");
+      setWofVowelMode(false);
     });
 
     // ============ Jeopardy socket handlers ============
@@ -2047,6 +2234,241 @@ export default function GamePlayer() {
       <div className="flex flex-col min-h-[100dvh] p-6 items-center justify-center text-center space-y-3">
         <Loader2 className="w-12 h-12 text-yellow-400 animate-spin" />
         <p className="text-lg text-muted-foreground">Loading Jeopardy…</p>
+      </div>
+    );
+  }
+
+  // ============ WHEEL OF FORTUNE ============
+  if (gameType === "wheel-of-fortune" && gameState === "playing") {
+    const isMyTurn = me?.id === wofControllerId;
+    const VOWELS_SET = new Set(["A", "E", "I", "O", "U"]);
+    const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+    const myScore = wofScores.find(s => s.id === me?.id);
+
+    const canSpin = isMyTurn && wofPhase === "spinning";
+    const canGuessConsonant = isMyTurn && wofPhase === "guessing";
+    const canBuyVowel = isMyTurn && wofPhase === "spinning" && (myScore?.score ?? 0) >= 250;
+    const canSolve = isMyTurn && wofPhase === "spinning";
+
+    const spinValueLabel = (v: WofWheelValue | null): string => {
+      if (v === null) return "";
+      if (v === "BANKRUPT") return "BANKRUPT!";
+      if (v === "LOSE_A_TURN") return "LOSE A TURN";
+      if (v === "FREE_PLAY") return "FREE PLAY";
+      return `$${(v as number).toLocaleString()}`;
+    };
+
+    const handleSpin = () => {
+      socket?.emit("wof-spin", { roomCode });
+      hapticTap();
+    };
+
+    const handleGuessLetter = (letter: string) => {
+      if (wofGuessedLetters.includes(letter)) return;
+      socket?.emit("wof-guess-letter", { roomCode, letter });
+      hapticTap();
+    };
+
+    const handleSolve = () => {
+      if (!wofSolveInput.trim()) return;
+      socket?.emit("wof-solve-attempt", { roomCode, answer: wofSolveInput.trim() });
+      hapticTap();
+    };
+
+    if (wofPuzzleOver) {
+      return (
+        <div className="flex flex-col min-h-[100dvh] bg-[#7C3AED] items-center justify-center text-center p-6 space-y-5">
+          <motion.div initial={{ scale: 0.7, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}
+            transition={{ type: "spring", stiffness: 220, damping: 18 }} className="space-y-3">
+            <p className="font-display font-black text-white/70 uppercase tracking-widest text-lg">Puzzle Solved!</p>
+            <h1 className="font-display font-black text-white text-4xl uppercase">{wofPuzzleOver.answer}</h1>
+            {myScore && (
+              <p className="font-display font-black text-[#FFD700] text-2xl">${myScore.score.toLocaleString()} total</p>
+            )}
+          </motion.div>
+          <p className="text-white/60 font-sans text-sm">
+            {wofPuzzleOver.isLastPuzzle ? "Wait for final standings…" : "Host will advance to next puzzle…"}
+          </p>
+        </div>
+      );
+    }
+
+    return (
+      <div className="flex flex-col min-h-[100dvh] bg-[#FFF8E7]">
+        {/* Header */}
+        <div className="bg-[#7C3AED] border-b-[4px] border-black px-4 py-3 flex justify-between items-center">
+          <div className="font-display font-black text-white uppercase tracking-wide text-sm">
+            Puzzle {wofPuzzleIndex + 1}/{wofTotalPuzzles}
+          </div>
+          <div className="font-display font-black text-[#FFD700] text-lg">
+            ${myScore?.score.toLocaleString() ?? "0"}
+          </div>
+        </div>
+
+        {/* Board (compact) */}
+        <div className="px-3 py-4 bg-black/5 border-b-[3px] border-black">
+          <p className="font-display font-black text-black/50 uppercase text-xs tracking-widest text-center mb-3">{wofCategory}
+            {wofHint && <span className="ml-2 text-black/30 font-normal normal-case tracking-normal">({wofHint})</span>}
+          </p>
+          <div className="flex flex-col items-center gap-1.5">
+            {wofBoard.map((word, wi) => (
+              <div key={wi} className="flex flex-wrap justify-center gap-1">
+                {word.map((cell, ci) => (
+                  <motion.div key={`${wi}-${ci}`}
+                    animate={{ backgroundColor: cell.revealed ? "#FFD700" : "#fff" }}
+                    transition={{ duration: 0.3 }}
+                    className="w-8 h-9 flex items-center justify-center border-[2px] border-black shadow-[1px_1px_0_#000] font-display font-black text-sm">
+                    {cell.revealed ? cell.letter : ""}
+                  </motion.div>
+                ))}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Game area */}
+        <div className="flex-1 flex flex-col px-4 py-4 gap-4 overflow-auto">
+          {/* Turn indicator */}
+          <AnimatePresence mode="wait">
+            {isMyTurn ? (
+              <motion.div key="myturn" initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }}
+                className="bg-[#7C3AED] border-[3px] border-black shadow-[4px_4px_0_#000] px-4 py-3 text-center">
+                <p className="font-display font-black text-white uppercase text-lg tracking-wide">Your Turn!</p>
+              </motion.div>
+            ) : (
+              <motion.div key="notmyturn" initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }}
+                className="bg-white border-[3px] border-black px-4 py-3 text-center">
+                <p className="font-display font-black text-black/60 uppercase text-sm tracking-wide">
+                  {wofScores.find(s => s.id === wofControllerId)?.name ?? "Player"}'s turn
+                </p>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          {/* Last spin display */}
+          <AnimatePresence mode="wait">
+            {wofLastSpin !== null && !wofPuzzleOver && (
+              <motion.div key={String(wofLastSpin)} initial={{ scale: 0.7, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}
+                className={`border-[3px] border-black px-4 py-3 text-center ${wofSpinType === "bankrupt" ? "bg-black text-white" : wofSpinType === "free-play" ? "bg-[#00C853] text-white" : "bg-[#FFD700] text-black"}`}>
+                <p className="font-display font-black text-2xl uppercase">{spinValueLabel(wofLastSpin)}</p>
+                {wofLastLetter && (
+                  <p className="font-display font-black text-sm uppercase mt-1">
+                    "{wofLastLetter.letter}" — {wofLastLetter.count > 0 ? `${wofLastLetter.count} found!` : "Not in puzzle"}
+                  </p>
+                )}
+              </motion.div>
+            )}
+            {wofSolveResult && (
+              <motion.div key="solve" initial={{ scale: 0.7, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}
+                className={`border-[3px] border-black px-4 py-3 text-center ${wofSolveResult.correct ? "bg-[#00C853] text-white" : "bg-black text-white"}`}>
+                <p className="font-display font-black text-xl uppercase">
+                  {wofSolveResult.correct ? `✓ ${wofSolveResult.solverName} solved it!` : `✗ Wrong — turn passes`}
+                </p>
+                {wofSolveResult.answer && <p className="text-sm font-sans mt-1 opacity-80">{wofSolveResult.answer}</p>}
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          {/* Actions */}
+          {isMyTurn && wofPhase !== "puzzle-over" && (
+            <div className="flex flex-col gap-3">
+              {/* Spin button */}
+              {canSpin && (
+                <Button onClick={handleSpin} className="w-full py-6 text-xl font-display font-black uppercase bg-[#7C3AED] hover:bg-[#7C3AED]/90 text-white border-[3px] border-black shadow-[4px_4px_0_#000]">
+                  🎡 Spin the Wheel!
+                </Button>
+              )}
+
+              {/* Guess consonant keyboard */}
+              {canGuessConsonant && (
+                <div>
+                  <p className="font-display font-black text-black/60 uppercase text-xs tracking-widest mb-2">Pick a Consonant</p>
+                  <div className="grid grid-cols-7 gap-1">
+                    {alphabet.filter(l => !VOWELS_SET.has(l)).map(l => {
+                      const used = wofGuessedLetters.includes(l);
+                      return (
+                        <button key={l} onClick={() => !used && handleGuessLetter(l)} disabled={used}
+                          className={`h-10 flex items-center justify-center border-[2px] border-black font-display font-black text-base ${used ? "bg-black text-white/30 cursor-not-allowed" : "bg-white hover:bg-[#FFD700] active:scale-95 shadow-[2px_2px_0_#000]"}`}
+                          data-testid={`btn-wof-letter-${l}`}>
+                          {l}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+
+              {/* Solve attempt */}
+              {canSolve && (
+                <div>
+                  <p className="font-display font-black text-black/60 uppercase text-xs tracking-widest mb-2">Try to Solve</p>
+                  <div className="flex gap-2">
+                    <Input value={wofSolveInput} onChange={e => setWofSolveInput(e.target.value.toUpperCase())}
+                      placeholder="TYPE THE ANSWER…"
+                      className="flex-1 border-[2px] border-black font-display font-black uppercase text-base"
+                      onKeyDown={e => e.key === "Enter" && handleSolve()}
+                    />
+                    <Button onClick={handleSolve} disabled={!wofSolveInput.trim()}
+                      className="bg-[#FF1493] text-white border-[2px] border-black font-display font-black uppercase hover:bg-[#FF1493]/90">
+                      Solve!
+                    </Button>
+                  </div>
+                </div>
+              )}
+
+              {/* Buy vowel */}
+              {canBuyVowel && (
+                <div>
+                  <p className="font-display font-black text-black/60 uppercase text-xs tracking-widest mb-2">Buy a Vowel ($250)</p>
+                  <div className="flex gap-1">
+                    {["A","E","I","O","U"].map(l => {
+                      const used = wofGuessedLetters.includes(l);
+                      return (
+                        <button key={l} onClick={() => !used && socket?.emit("wof-buy-vowel", { roomCode, letter: l })} disabled={used}
+                          className={`flex-1 h-12 flex items-center justify-center border-[2px] border-black font-display font-black text-lg ${used ? "bg-black text-white/30 cursor-not-allowed" : "bg-[#00E5FF] hover:bg-[#00E5FF]/80 active:scale-95 shadow-[2px_2px_0_#000] text-black"}`}>
+                          {l}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Not my turn: show guessed letters */}
+          {!isMyTurn && (
+            <div>
+              <p className="font-display font-black text-black/40 uppercase text-xs tracking-widest mb-2">Used Letters</p>
+              <div className="flex flex-wrap gap-1">
+                {alphabet.map(l => {
+                  const used = wofGuessedLetters.includes(l);
+                  const revealed = wofRevealedLetters.includes(l);
+                  const isVowel = VOWELS_SET.has(l);
+                  return (
+                    <div key={l} className={`w-8 h-8 flex items-center justify-center border-[2px] border-black font-display font-black text-xs
+                      ${used ? (revealed ? "bg-[#FFD700] text-black" : "bg-black text-white/50") : isVowel ? "bg-[#00E5FF]/20 text-black/60" : "bg-white text-black/60"}`}>
+                      {l}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
+          {/* Scoreboard */}
+          <div className="mt-auto">
+            <p className="font-display font-black text-black/40 uppercase text-xs tracking-widest mb-2">Scores</p>
+            <div className="space-y-1">
+              {[...wofScores].sort((a, b) => b.score - a.score).map((s) => (
+                <div key={s.id} className={`flex justify-between items-center px-3 py-2 border-[2px] border-black ${s.id === me?.id ? "bg-[#7C3AED] text-white" : s.id === wofControllerId ? "bg-[#FFD700] text-black" : "bg-white text-black"}`}>
+                  <span className="font-display font-black text-sm uppercase truncate max-w-[140px]">{s.name}</span>
+                  <span className="font-display font-black text-sm">${s.score.toLocaleString()}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
       </div>
     );
   }

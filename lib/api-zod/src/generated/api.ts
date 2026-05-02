@@ -111,6 +111,7 @@ export const CreateRoomBody = zod.object({
     "roast-roulette",
     "pub-quiz",
     "jeopardy",
+    "wheel-of-fortune",
   ]),
   demo: zod.boolean().optional(),
   packId: zod.string().optional(),
