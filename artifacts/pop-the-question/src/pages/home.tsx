@@ -85,7 +85,7 @@ export default function Home() {
               <div className="flex justify-between items-start mb-3">
                 <div>
                   <h3 className="font-display text-2xl font-black text-black uppercase tracking-tight">Three Strikes</h3>
-                  <p className="text-sm text-black/60 font-sans mt-1">Guess the connections — 3 misses and you're out</p>
+                  <p className="text-sm text-black/60 font-sans mt-1">3 misses and you're out</p>
                 </div>
                 {tsCompleted ? (
                   <Badge variant="secondary" className="ml-2 flex-shrink-0">Done ✓</Badge>
