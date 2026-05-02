@@ -65,7 +65,6 @@ export function BubbleLogo() {
           </span>
         );
       })}
-      <span className="bubble-logo-shine" style={shineStyle} aria-hidden />
     </span>
   );
 }

@@ -96,7 +96,11 @@ export default function Home() {
                 style={{ fontSize: "clamp(0.8rem, 2.2vw, 1.35rem)", lineHeight: 1.2, color: "#000" }}
               >
                 If Bar Trivia was hosted by your{" "}
-                <span style={{ color: "#FF1493" }}>For You</span>{" "}
+                <span style={{
+                  color: "#FF1493",
+                  WebkitTextStroke: "2px #000",
+                  paintOrder: "stroke fill",
+                }}>For You</span>{" "}
                 page
               </p>
             </div>
