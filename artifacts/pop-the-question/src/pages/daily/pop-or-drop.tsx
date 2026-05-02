@@ -225,12 +225,10 @@ export default function PopOrDrop() {
     scoresMutation.mutate(
       { data: { playerToken, streak: finalStreak, date: todayDate } },
       {
-        onSuccess: () => {
-          setLeaderboardEnabled(true);
-        },
+        onSuccess: () => setLeaderboardEnabled(true),
+        onError: () => setLeaderboardEnabled(true),
       },
     );
-    setLeaderboardEnabled(true);
 
     try {
       const raw = localStorage.getItem("ptq-stats");

@@ -237,7 +237,7 @@ export default function Stats() {
                 <div className="col-span-2 bg-accent/10 rounded-xl p-4 border border-accent/30">
                   <p className="text-sm text-accent/80 font-bold uppercase tracking-wider mb-1">Best Streak Ever</p>
                   <div className="text-4xl font-black text-accent flex items-center gap-2">
-                    <CountUp value={stats.popOrDropBestStreak} /><span className="text-2xl">/19</span>
+                    <CountUp value={stats.popOrDropBestStreak} /><span className="text-2xl">/20</span>
                     <Flame className="w-6 h-6 text-accent drop-shadow-[0_0_8px_hsl(var(--accent))] ml-auto" />
                   </div>
                 </div>
