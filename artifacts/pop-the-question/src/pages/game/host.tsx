@@ -1100,14 +1100,30 @@ export default function GameHost() {
   // ============================================================
 
   const renderLobby = () => {
+    const joinUrl = typeof window !== "undefined"
+      ? `${window.location.hostname}/join`
+      : "popthequestion.replit.app/join";
+
     return (
       <div className="flex-1 flex flex-col items-center justify-center px-4 bg-[#FFF8E7]">
         <div className="flex items-center gap-4 mb-6">
           <DemoBadge />
         </div>
-        <p className="font-display font-black text-black/50 text-2xl uppercase tracking-[0.2em] mb-4 text-center">
-          <TypingText text="Go to popthequestion.com and enter code" speedMs={28} caret={false} />
-        </p>
+
+        {/* Join URL — the big instruction players see on the TV */}
+        <div className="mb-2 text-center">
+          <p className="font-display font-black text-black/40 text-xl uppercase tracking-[0.15em] mb-1">
+            Players: open your phone and go to
+          </p>
+          <div className="inline-flex items-center gap-3 bg-black px-6 py-3 border-[3px] border-black shadow-[4px_4px_0_#FF1493] mb-2">
+            <span className="font-display font-black text-[#FFD700] text-2xl md:text-3xl tracking-wide">
+              {joinUrl}
+            </span>
+          </div>
+          <p className="font-display font-black text-black/40 text-xl uppercase tracking-[0.15em]">
+            then enter code
+          </p>
+        </div>
 
         <motion.h1
           initial={{ opacity: 0, scale: 0.9 }}
