@@ -11,10 +11,8 @@ const containerStyle: CSSProperties = {
 
 const letterStyle: CSSProperties = {
   display: "inline-block",
-  background: "linear-gradient(to bottom, #ffffff 0%, #f0eee8 100%)",
-  WebkitBackgroundClip: "text",
-  backgroundClip: "text",
-  WebkitTextFillColor: "transparent",
+  color: "#ffffff",
+  WebkitTextFillColor: "#ffffff",
   WebkitTextStroke: "6px #000",
   // @ts-expect-error: text-stroke is not yet in TS CSSProperties
   textStroke: "6px #000",
