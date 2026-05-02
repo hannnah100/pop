@@ -47,9 +47,11 @@ export function RainbowText({
         }
         const color = palette[colorIdx % palette.length];
         colorIdx += 1;
-        const style: CSSProperties = glow
-          ? { color, textShadow: `0 0 14px ${color}66` }
-          : { color };
+        const style: CSSProperties = {
+          color,
+          WebkitTextStroke: "3px #000",
+          paintOrder: "stroke fill",
+        };
         return (
           <span key={i} style={style} aria-hidden>
             {ch}

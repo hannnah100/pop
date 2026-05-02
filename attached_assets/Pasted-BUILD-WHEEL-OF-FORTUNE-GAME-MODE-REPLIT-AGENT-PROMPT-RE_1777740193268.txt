@@ -1,0 +1,158 @@
+BUILD WHEEL OF FORTUNE GAME MODE - REPLIT AGENT PROMPT (REVISED)
+
+Tell Replit Agent:
+"Build a new hosted game mode called Wheel of Fortune. This is a classic word puzzle game where players spin a wheel, call letters, and try to solve phrases.
+CRITICAL: Use the same Y2K design aesthetic as the rest of the site - bright colors, thick black borders, comic book text styling (white text with black outlines), cartoon sticker elements, bold colorful sections. NO AI/corporate styling.
+Game Setup:
+Add 'Wheel of Fortune' as a new option on the Host a Game screen, alongside the existing game modes. Host selects:
+
+A puzzle pack (pre-loaded categories like Song Titles, Movie Titles, Famous Quotes, etc.)
+Number of rounds (3-5)
+Demo mode toggle (same as other games)
+
+Host View (Big Screen/Projector):
+Display on the host's screen:
+
+Round number at top (Round 1 of 3) - comic book text style
+Category name (e.g., "Song Titles") - bold with thick black outline
+Puzzle board showing the phrase with blanks and revealed letters (like _ O H E M I A N / R H A _ S O D Y) - use colorful letter tiles with thick borders
+Animated digital wheel with 30 segments - bright colors, thick black outlines on segments
+SPIN button that host clicks to spin the wheel - chunky Y2K style button
+Virtual keyboard (A-Z) that host clicks to reveal called letters - colorful keys with thick borders
+Used letters display (shows which letters have been called)
+Current player highlighted with their round score and total score - bright color highlight
+Score table showing all players (round score + total score for each) - Y2K table styling
+Host control buttons: Next Round, End Game - same button style as rest of site
+
+The Wheel:
+30 segments total with these values:
+
+Dollar amounts: $500 (3 segments), $600 (2), $700 (2), $800 (2), $900 (2), $1000 (2), $1500 (2), $2000 (1), $2500 (1)
+BANKRUPT (3 segments) - player loses all round points, turn passes
+LOSE A TURN (2 segments) - turn passes to next player
+FREE PLAY (1 segment) - call any letter free, keep turn even if wrong
+
+Style the wheel with:
+
+Bright colorful segments (hot pink, electric orange, bright yellow, lime green, etc.)
+Thick black borders between segments
+Bold white text with black outlines for values
+NOT subtle or muted colors
+
+When SPIN is clicked:
+
+Wheel animates spinning (smooth 2-3 second animation with slowing down)
+Makes clicking sounds as it passes segments
+Lands on a segment and highlights it
+All players see the same result
+
+Player View (Phone):
+When it's NOT your turn:
+
+Show the puzzle with revealed letters
+Show used letters
+Show your scores (round + total)
+Display "Waiting for [Player Name]..."
+
+When it IS your turn, show action buttons (all with Y2K styling - thick borders, bright colors):
+
+"I want to spin" button
+"Buy a vowel" button (costs $250 from round score, disabled if you can't afford it)
+"Solve the puzzle" button
+
+After spinning and landing on a dollar amount:
+
+Player sees a keyboard with only consonants (B C D F G H...)
+Player taps a consonant letter
+Host clicks that letter on their keyboard to reveal it
+If letter appears: player earns (dollar value × number of times it appears), can spin/buy vowel/solve again
+If letter doesn't appear: turn passes to next player
+
+Buying a vowel:
+
+Costs $250 from round score
+Player sees keyboard with only vowels (A E I O U)
+Player taps a vowel
+Host reveals it (no points earned)
+Player can spin/buy another vowel/solve
+
+Solving the puzzle - TWO OPTIONS:
+Option 1: "Type the Answer"
+
+Player taps this button
+Text input appears on player's phone
+Player types the full phrase and submits
+Host screen shows: "📝 [Player Name]'s answer: [typed answer]" with Y2K card styling
+Host clicks Correct ✓ or Wrong ✗ buttons (chunky Y2K style)
+Correct: round ends, player's round score added to total, next round starts
+Wrong: turn passes to next player, puzzle continues
+
+Option 2: "Say It Out Loud"
+
+Player taps this button
+Host screen shows: "🎤 [Player Name] IS SOLVING THE PUZZLE" in bold comic book text
+Player says answer out loud (in room or on call)
+Host listens and clicks Correct ✓ or Wrong ✗
+Same correct/wrong results as Type option
+
+Important rule: Each player gets ONE solve attempt per turn. If they guess wrong, they can't solve again until their next turn.
+Game Flow:
+
+Host picks puzzle pack and number of rounds
+Players join with room code
+Game starts with first puzzle
+Players take turns spinning and calling letters
+When someone solves correctly, that round ends
+Winner of round gets their round score added to total
+Next round starts with new puzzle
+After all rounds, player with highest total wins
+Show final podium/leaderboard (Y2K styled)
+
+Puzzle Content:
+Create 50+ puzzles across these categories:
+
+Song Titles (e.g., "BOHEMIAN RHAPSODY", "SHAKE IT OFF")
+Movie Titles (e.g., "THE BREAKFAST CLUB", "FORREST GUMP")
+TV Show Titles
+Famous Quotes
+Pop Culture Phrases
+Celebrity Names
+Places
+Things
+
+Each puzzle is just the phrase. Group them into 3-5 selectable puzzle packs.
+Demo Mode:
+When demo mode is enabled:
+
+Add 5 AI bot players
+Bots automatically take turns
+Bots spin, call common consonants, occasionally buy vowels
+Bots sometimes try to solve (with realistic accuracy - not always right)
+Allows solo testing of the full game
+
+Scoring:
+
+Each player has a round score (resets each round) and a total score (accumulates)
+Landing on dollar amount and calling a letter that appears: earn (value × occurrences)
+Buying vowel: costs $250, no points earned
+BANKRUPT: round score goes to zero
+Solving correctly: round score added to total
+Winner = highest total score after all rounds
+
+Technical Notes:
+
+Use Socket.io for real-time updates (same as other hosted games)
+Host controls all reveals (clicking letters on keyboard)
+Turn order cycles through players
+Mobile-friendly player view (big tap targets, 48px minimum)
+Works for both in-person (players in same room) and remote (Discord/Zoom screen share)
+
+Design Consistency:
+
+All buttons: thick black borders, bright solid colors, comic book text
+All cards/sections: thick borders, colorful backgrounds
+Letter tiles: individual colored tiles with black outlines (like Scrabble tiles but Y2K styled)
+Wheel segments: bright colors, bold outlines, NO subtle gradients
+Match the visual style of Pop the Question, Roast Roulette, Jeopardy, and Pub Quiz
+
+Make sure this game mode integrates with the existing hosted games system - same room code flow, same lobby, same demo mode pattern as the other hosted games.

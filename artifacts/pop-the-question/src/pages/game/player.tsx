@@ -1178,7 +1178,7 @@ export default function GamePlayer() {
           >
             <Sparkles className="w-14 h-14 text-white" />
           </motion.div>
-          <h1 className="font-display font-black text-black text-4xl uppercase" style={{ textShadow: "3px 3px 0 rgba(0,0,0,0.2)" }}>
+          <h1 className="font-display font-black text-4xl uppercase">
             All roasts in
           </h1>
           <p className="text-black/70 max-w-sm font-sans">
@@ -1324,7 +1324,7 @@ export default function GamePlayer() {
             <Eye className="w-12 h-12 text-black" />
           </motion.div>
           <p className="text-xs font-black uppercase tracking-widest text-black/60">Now roasting</p>
-          <h1 className="font-display font-black text-black text-4xl uppercase" style={{ textShadow: "2px 2px 0 rgba(0,0,0,0.2)" }}>
+          <h1 className="font-display font-black text-4xl uppercase">
             {rrCurrentRevealName || "…"}
           </h1>
           <p className="text-black/60 max-w-sm font-sans">
@@ -1350,7 +1350,7 @@ export default function GamePlayer() {
             <Beer className="w-12 h-12 text-black" />
           </motion.div>
           <p className="text-xs font-black uppercase tracking-widest text-black/60">Round Complete</p>
-          <h1 className="font-display font-black text-black text-3xl uppercase" style={{ textShadow: "2px 2px 0 rgba(0,0,0,0.15)" }}>{pqRoundSummary.roundName}</h1>
+          <h1 className="font-display font-black text-3xl uppercase">{pqRoundSummary.roundName}</h1>
           <p className="text-black/70 max-w-sm font-sans">
             {pqRoundSummary.isLastRound
               ? "Final standings on the big screen!"
@@ -2057,7 +2057,7 @@ export default function GamePlayer() {
 
     return (
       <div className="flex flex-col min-h-[100dvh] bg-[#FFD700] items-center justify-center text-center space-y-8 p-6">
-        <h1 className="font-display font-black text-black text-5xl uppercase" style={{ textShadow: "4px 4px 0 rgba(0,0,0,0.2)" }}>Game Over</h1>
+        <h1 className="font-display font-black text-5xl uppercase">Game Over</h1>
         <motion.div
           initial={{ opacity: 0, scale: 0.85, y: 12 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}

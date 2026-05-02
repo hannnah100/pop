@@ -100,8 +100,8 @@ export default function Host() {
 
         <div className="relative z-10">
           <h1
-            className="font-display font-black text-black uppercase leading-none"
-            style={{ fontSize: "clamp(2.4rem, 8vw, 4.5rem)", textShadow: "4px 4px 0 rgba(0,0,0,0.15)" }}
+            className="font-display font-black uppercase leading-none"
+            style={{ fontSize: "clamp(2.4rem, 8vw, 4.5rem)" }}
           >
             Host a Game
           </h1>

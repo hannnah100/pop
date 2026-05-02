@@ -1,0 +1,54 @@
+#4 - Wheel of Fortune Game Mode
+
+What & Why
+
+Add a hosted Wheel of Fortune game mode to Pop the Question. Hosts pick a puzzle pack, players join on their phones, and the host drives a classic Wheel of Fortune board on the big screen — animated digital wheel, hidden phrase with letter tiles, used-letters tracker, per-player round and total scores. The current player calls letters or buys vowels from their phone; the host clicks matching letters on the keyboard to reveal them. This is the third of the three new hosted modes and assumes Pub Quiz and Jeopardy have already shipped the shared game-type plumbing, demo-mode bot patterns, leaderboard, and host pacing controls.
+
+The phrase-solving step has two solve paths baked in from the start so the game works equally well for in-person bar/party play and quiet/virtual play:
+
+"Type the Answer" — The current player taps this on their phone, types the full phrase, and submits. The host sees the typed answer on the big screen and clicks Correct ✓ or Wrong ✗.
+"Say It Out Loud" — The current player taps this on their phone to grab the spotlight. Their name pulses on the host screen with "🎤 [Player] is solving the puzzle…", they say the answer verbally in the room or on the call, and the host listens and clicks Correct ✓ or Wrong ✗. No mic capture, no recording — the host is the sole judge.
+A player only gets ONE solve attempt per turn — wrong solve forfeits the turn to the next player.
+
+Done looks like
+
+A new "Wheel of Fortune" card appears on the Host a Game screen alongside the existing modes, with the same demo-mode toggle.
+Host screen (big-screen view): puzzle category banner, animated letter-tile board showing blanks and revealed letters, an animated 30-segment digital wheel with a SPIN button (smooth spin with easing, slowing landing, click cadence as it passes segments, landed-segment highlight), an on-screen letter keyboard the host clicks to reveal called letters, a used-letters strip, current-player highlight with their round and total scores, a side-rail score table, and "Round X of N" header.
+Player phone view: shows the current puzzle with revealed letters, used letters, the player's round and total scores, and — when it is their turn — three action buttons:
+"I want to spin" (with appropriate disabled states if a vowel is owed or the wheel is mid-spin)
+"Buy a vowel" — costs $250 from round score; reveals a vowel-only keyboard
+"Solve the puzzle" — opens a sub-menu with Type the Answer and Say It Out Loud
+After a spin lands on a dollar amount, the active player sees a consonant-only keyboard to call a letter; if it appears, they earn dollarValue × occurrences and may spin / buy a vowel / solve again. If it does not appear, turn passes.
+BANKRUPT zeros the player's round score and passes the turn. LOSE A TURN passes the turn. FREE PLAY lets them call any letter (consonant or vowel, free) and keeps the turn even on a miss.
+"Type the Answer" flow: player types and submits; host screen shows 📝 [Player]'s answer: "BOHEMIAN RHAPSODY" with Correct / Wrong buttons. Correct: round score added to total, round ends, next round starts (or final standings if last round). Wrong: turn passes to next player; puzzle continues; the typed answer is cleared from the host screen.
+"Say It Out Loud" flow: player tap immediately broadcasts to host screen as 🎤 [Player] IS SOLVING THE PUZZLE with the puzzle visible and Correct / Wrong buttons. Same correct/wrong consequences as Type. Host can also Cancel if the player changes their mind, returning to normal turn state.
+Only one solve attempt per turn — once a player chooses either solve path and the host marks it Wrong, that player cannot try again until their next turn.
+Host picks number of rounds (3–5) at game start. Highest total at the end wins. Final standings podium screen at end.
+50+ pre-loaded puzzles are bundled across categories (Song Titles, Movie Titles, Famous Quotes, Pop Culture Phrases, TV Show Titles, Celebrity Names, Places, Things), grouped into a few selectable puzzle packs.
+Demo mode spawns 5 AI bot players that take turns spinning, calling consonants/vowels with reasonable strategy, occasionally attempting to solve via the Type path with realistic correctness, so the full flow can be demoed solo.
+Out of scope
+
+Mic capture, audio recording, or any speech-to-text for the "Say It Out Loud" path — the host is the sole judge.
+Bonus / Speed round.
+Custom puzzle creation or editing in the UI.
+Persisting game results to the database or the personal stats page.
+Toss-up rounds (the game starts with a player at the wheel; first round's starting player is chosen at random or rotates).
+Steps
+
+Game-type plumbing and puzzle pack content — Add wheel-of-fortune to the shared gameType enum (OpenAPI spec, room model, socket-server room shape) and regenerate types. Add the "Wheel of Fortune" host card to the Host page. Define a TypeScript type for puzzle packs (category, puzzles: { phrase, hint?, category }[]) and author at least 50 puzzles spread across the 8 categories listed above, grouped into 3–5 selectable packs. Allow the host to pick the round count (3–5) at game start.
+Wheel data and animated wheel component — Define the 30-segment wheel (3×$500, 2×$600, 2×$700, 2×$800, 2×$900, 2×$1000, 2×$1500, 1×$2000, 1×$2500, 3×BANKRUPT, 2×LOSE A TURN, 1×FREE PLAY) with stable color and label per segment. Build an SVG-based wheel React component with a smooth spin animation (eased decel over ~2.5–3.5 s, click sound or visual tick as it crosses segments, slight bounce at landing, highlight on the landed segment). The server picks the landed segment (deterministic for fairness); the client animates to that segment so host and players see the same result.
+Server-side game state and turn engine — Extend the room shape to track: rounds (current and total), per-player round score and running total, current puzzle (phrase, revealed-letter mask, used-letters set), turn order and current player, current turn phase (needs-spin / wheel-spinning / landed:<segment> / awaiting-letter / awaiting-vowel-letter / awaiting-solve / solving:type / solving:speak / awaiting-host-judgment), pending vowel-buy, free-play flag, and per-turn solve-attempted flag (to enforce one-solve-per-turn). Add socket events: start-game (with chosen pack and round count), spin-wheel (server picks segment, broadcasts spin result; if BANKRUPT zero round score + pass turn; LOSE A TURN pass turn; FREE PLAY set flag + ask for letter), call-letter (validates consonant unless vowel-buy or free-play; reveals occurrences and awards value × count to round score; if zero occurrences and not free-play, pass turn), buy-vowel (deducts $250 from round score if affordable; sets vowel-letter phase), start-solve-typed and submit-typed-answer (player types and submits; host gets the displayed answer + Correct/Wrong buttons), start-solve-spoken (player taps to grab spotlight; host screen flips to "🎤 X is solving"; host clicks Correct/Wrong), mark-solve-correct and mark-solve-wrong (correct: add round score to total, end round, advance to next round or end game; wrong: clear solve UI, mark this turn's solve attempt used, pass turn), cancel-solve (host or player aborts spotlight back to normal turn state), next-round, end-game. Implement bot behavior: bots take their turn after a 1–2 s "thinking" delay; bot strategy spins by default, calls common consonants weighted by frequency, occasionally buys a vowel when round score allows, and attempts to solve via the Type path with a pack-tunable accuracy.
+Host big-screen UI — Build the Wheel of Fortune host view inside /game/:roomCode/host, branching on gameType === "wheel-of-fortune". Include: round header, category banner, animated letter-tile board (tiles flip when revealed), the spinning wheel component, a SPIN button the host clicks during the active player's needs-spin phase, the on-screen consonant/vowel keyboard the host clicks to reveal called letters (clicking sends reveal-letter to server), a used-letters strip, current-player highlight, side-rail score table (round + total per player), and Correct / Wrong buttons that appear during host-judgment phases. Two distinct solve-judgment layouts:
+Typed answer card: 📝 [Player]'s answer: "[typed text]" with Correct ✓ / Wrong ✗.
+Spoken solve card: 🎤 [PLAYER] IS SOLVING THE PUZZLE with the puzzle visible, "Listen to their answer…" subtitle, and Correct ✓ / Wrong ✗. Plus host pacing controls (skip turn, end round, end game early), final podium standings. Reuse existing visual conventions and DemoBadge so it inherits the Electric Visual Upgrade look.
+Player phone UI — Build the Wheel of Fortune player view inside /game/:roomCode/player, branching on gameType === "wheel-of-fortune". Off-turn: show puzzle, used letters, scores, and a "Waiting for [Player]…" state. On-turn: render the action buttons appropriate for the current phase — "I want to spin" when needs-spin, a consonant-only on-screen keyboard when awaiting-letter, a vowel-only keyboard when awaiting-vowel-letter, "Buy a vowel ($250)" (disabled if round score < $250), and "Solve the puzzle" which opens a sub-menu with two prominent buttons: Type the Answer (opens text input + Submit, sending submit-typed-answer) and Say It Out Loud (immediately fires start-solve-spoken and shows a "🎤 Speak now — host is listening" confirmation screen with a Cancel button). Always show the player's round and total scores. Disable solve buttons after one solve attempt this turn. Mobile-optimized, large tap targets.
+Polish and end-to-end verification — Smoke-test in demo mode: create room → 5 bots auto-join → pick a pack and 3 rounds → confirm wheel animations are smooth and host/player land on the same segment, BANKRUPT and LOSE A TURN behave correctly, FREE PLAY allows a vowel call without paying and keeps the turn on a miss, vowel-buy enforces the $250 cost, both solve paths render correctly on the host screen and award/forfeit correctly, the one-solve-per-turn rule is enforced, round-end carries round score to total, multi-round flow advances cleanly, final podium displays. Verify Pop the Question, Roast Roulette, Pub Quiz, and Jeopardy still work. Use the testing skill to run an automated UI test that walks through one full round including: spin → call a consonant that hits → buy a vowel → use both Type and Say It Out Loud solve paths (one Wrong from a previous turn, one Correct to end the round).
+Relevant files
+
+artifacts/pop-the-question/src/App.tsx
+artifacts/pop-the-question/src/pages/host.tsx
+artifacts/pop-the-question/src/pages/game/host.tsx
+artifacts/pop-the-question/src/pages/game/player.tsx
+artifacts/api-server/src/routes/rooms.ts
+artifacts/api-server/src/socket/events.ts
+lib/api-spec/openapi.yaml:360-393

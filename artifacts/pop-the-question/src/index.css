@@ -173,7 +173,9 @@
 
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--app-font-display);
-    color: hsl(var(--foreground));
+    color: #fff;
+    -webkit-text-stroke: 3px #000;
+    paint-order: stroke fill;
     letter-spacing: -0.01em;
     line-height: 1.1;
     font-weight: 900;
@@ -463,7 +465,8 @@ body[data-game-paused="true"]::after {
   font-weight: 900;
   font-size: clamp(3rem, 12vw, 6rem);
   letter-spacing: 0.08em;
-  color: #FFD700;
-  text-shadow: 4px 4px 0 #000;
+  color: #fff;
+  -webkit-text-stroke: 3px #000;
+  paint-order: stroke fill;
   pointer-events: none;
 }

@@ -146,8 +146,8 @@ export function HostShell({
           >
             <Pause className="w-20 h-20 text-[#FFD700]" style={{ filter: "drop-shadow(3px 3px 0 #000)" }} />
             <h2
-              className="font-display font-black text-[#FFD700] uppercase"
-              style={{ fontSize: "clamp(3rem, 10vw, 5rem)", textShadow: "4px 4px 0 #000" }}
+              className="font-display font-black uppercase"
+              style={{ fontSize: "clamp(3rem, 10vw, 5rem)" }}
             >
               PAUSED
             </h2>
