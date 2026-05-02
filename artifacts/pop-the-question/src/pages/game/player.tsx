@@ -2298,7 +2298,7 @@ export default function GamePlayer() {
     const canSpin = isMyTurn && wofPhase === "spinning" && !wofSolvePending;
     const canGuessConsonant = isMyTurn && wofPhase === "guessing" && !wofSolvePending;
     const canBuyVowel = isMyTurn && wofPhase === "spinning" && !wofSolvePending && (myScore?.roundEarnings ?? 0) >= 250;
-    const canSolve = isMyTurn && wofPhase === "spinning";
+    const canSolve = isMyTurn && (wofPhase === "spinning" || wofPhase === "guessing");
 
     const spinValueLabel = (v: WofWheelValue | null): string => {
       if (v === null) return "";
@@ -2581,8 +2581,13 @@ export default function GamePlayer() {
             <div className="space-y-1">
               {[...wofScores].sort((a, b) => b.score - a.score).map((s) => (
                 <div key={s.id} className={`flex justify-between items-center px-3 py-2 border-[2px] border-black ${s.id === me?.id ? "bg-[#7C3AED] text-white" : s.id === wofControllerId ? "bg-[#FFD700] text-black" : "bg-white text-black"}`}>
-                  <span className="font-display font-black text-sm uppercase truncate max-w-[140px]">{s.name}</span>
-                  <span className="font-display font-black text-sm">${s.score.toLocaleString()}</span>
+                  <span className="font-display font-black text-sm uppercase truncate max-w-[120px]">{s.name}</span>
+                  <div className="flex flex-col items-end">
+                    <span className="font-display font-black text-sm">${s.score.toLocaleString()}</span>
+                    {s.roundEarnings > 0 && (
+                      <span className={`font-display font-black text-xs ${s.id === me?.id ? "text-white/70" : "text-black/50"}`}>+${s.roundEarnings.toLocaleString()} this round</span>
+                    )}
+                  </div>
                 </div>
               ))}
             </div>
