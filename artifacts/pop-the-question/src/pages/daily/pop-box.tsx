@@ -712,7 +712,7 @@ function Row(props: {
                 )}
                 {filled && correct && (
                   <>
-                    <span className="font-display font-black text-sm sm:text-base leading-tight uppercase text-black line-clamp-2 px-1">
+                    <span className="font-display font-black text-lg sm:text-xl leading-tight uppercase text-black line-clamp-2 px-1">
                       {cell.celebrityName}
                     </span>
                     {cell.rarityPercent != null && (
