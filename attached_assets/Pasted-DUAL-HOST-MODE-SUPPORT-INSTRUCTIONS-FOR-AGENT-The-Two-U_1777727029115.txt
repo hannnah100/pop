@@ -1,0 +1,236 @@
+DUAL HOST MODE SUPPORT - INSTRUCTIONS FOR AGENT
+The Two Use Cases:
+Use Case 1: Living Room / Bar (In-Person)
+
+Host laptop/tablet connected to TV/projector
+Players in the same room with phones
+Everyone can see the big screen
+Players can shout answers, talk to each other
+Fast-paced, social, loud
+
+Use Case 2: Remote / Screen Share (Virtual)
+
+Host screen sharing on Zoom/Discord/Google Meet
+Players in different locations on phones
+Can't hear each other directly
+All communication through the app
+Need text-based answers, clear visual feedback
+
+Design Solution: Make Host View Work for BOTH
+
+UNIVERSAL HOST VIEW FEATURES:
+1. Layout Adjustments:
+Add a toggle in host settings:
+
+"Game Mode: In-Person 🏠 | Remote 💻"
+This changes a few UI elements but same core interface
+
+In-Person Mode:
+
+Larger text (readable from 10+ feet away)
+Minimal UI chrome (just the game content)
+Host controls small/bottom of screen
+Assumes players can see screen and shout/talk
+
+Remote Mode:
+
+Slightly smaller text (optimized for screen share window)
+More prominent player status indicators
+"Player X is typing..." notifications
+Text answers displayed larger
+Timer countdowns more prominent
+
+2. Host Controls (Always Visible):
+Bottom bar with:
+
+Next Question / Reveal Answer / Skip
+Pause Game (for breaks)
+End Game
+Settings gear icon (mute sounds, adjust timer, switch mode)
+
+3. Screen Optimization:
+For TV/Projector (16:9 aspect ratio):
+
+Full screen mode option (hides browser chrome)
+F11 for fullscreen
+High contrast mode (easier to read from distance)
+Font size: 72px+ for questions
+
+For Screen Share (varies):
+
+Responsive down to 1280x720
+Important info stays in "safe zone" (centered, not edges)
+No critical info in top 100px (gets cut off in some screen shares)
+
+
+GAME-SPECIFIC DUAL MODE FEATURES:
+POP THE QUESTION:
+In-Person Mode:
+
+Question displayed HUGE
+Voting happens on phones (silent)
+Results show with big bars/names
+Host can verbally announce "most burned"
+
+Remote Mode:
+
+Same layout
+Add "⏱️ Waiting for votes: 5/8" status
+Clearer player avatars/names (people can't see each other)
+
+
+ROAST ROULETTE:
+In-Person Mode:
+
+Colored questions big on screen
+During reveals: person reads roasts out loud themselves
+Host just advances through reveals
+Scoreboard always visible on side
+
+Remote Mode:
+
+Same colored questions
+During reveals: roasts appear on screen larger (host or player reads via voice chat)
+"🎤 Sarah is picking favorites..." status indicators
+Written roasts displayed clearly for host to read aloud if needed
+
+
+JEOPARDY:
+In-Person Mode:
+
+Board fills entire screen
+Buzz-in shows player name flashing (everyone sees who buzzed)
+Assume player shouts answer verbally
+Host marks correct/wrong based on what they hear
+Can also type answer on phone (host sees it)
+
+Remote Mode:
+
+Same board
+When player buzzes: "🔔 MIKE buzzed in!" appears prominently
+Text input required (player types answer)
+Host sees typed answer, marks correct/wrong
+OR player can unmute on call and say it
+
+Give Both Options:
+
+Checkbox on player phone after buzzing: "Say it out loud 🎤" or "Type answer ⌨️"
+
+
+WHEEL OF FORTUNE:
+In-Person Mode:
+
+Puzzle dominates screen
+Wheel animation big and satisfying
+Player shouts letter verbally
+Host clicks that letter on virtual keyboard
+Solve: player says it out loud, host marks correct/wrong
+
+Remote Mode:
+
+Same puzzle/wheel
+After spin lands: player phone shows A-Z letter buttons
+Player taps letter → host sees "[MIKE] called: T"
+Host clicks T on keyboard to reveal
+Solve: player types OR says via voice chat
+
+Universal Feature:
+
+Virtual keyboard on host screen (QWERTY layout)
+Host clicks letters to reveal them
+Works whether player shouted "T!" or tapped "T" button
+
+
+PUB QUIZ:
+In-Person Mode:
+
+Question appears big
+Players answer on phones (silent voting)
+Timer visible
+After round: host can verbally discuss answers
+Leaderboard shown between rounds
+
+Remote Mode:
+
+Identical to in-person
+Works perfectly for screen share
+Host can read questions aloud via call
+Picture rounds: image displays clearly
+Music rounds: host plays audio through screen share
+
+
+TECHNICAL IMPLEMENTATION:
+Add Host Settings Panel:
+⚙️ HOST SETTINGS
+├─ Game Mode
+│  ○ In-Person (TV/Projector)
+│  ○ Remote (Screen Share)
+├─ Display
+│  ○ Fullscreen Mode
+│  ○ High Contrast
+│  ○ Font Size: [Slider: Normal - Huge]
+├─ Audio
+│  ○ Sound Effects [On/Off]
+│  ○ Background Music [On/Off]
+├─ Timer
+│  ○ Default: 30s [Adjust: 15s - 120s]
+└─ Answer Method
+   ○ Voice Only (players say answers)
+   ○ Text Only (players type)
+   ○ Both (player chooses)
+Responsive Breakpoints for Host View:
+
+4K Display / Projector: 3840×2160 - Massive text
+1080p TV / Standard: 1920×1080 - Large text
+Laptop Screen Share: 1280×720 - Medium text
+Tablet Host: 1024×768 - Readable but compact
+
+F11 Fullscreen Support:
+
+Detect fullscreen mode
+Hide all browser UI
+Show minimal "Press ESC to exit fullscreen" tooltip
+Host controls stay as overlay at bottom
+
+
+VISUAL INDICATORS FOR REMOTE PLAY:
+Since players can't see/hear each other in remote mode, add:
+Player Status Badges:
+
+"✓ Answered" (green)
+"✏️ Typing..." (yellow, animated)
+"⏱️ Thinking..." (gray)
+"💤 Away" (if no activity for 30s)
+"🔇 Muted" (if relevant)
+
+Host Notifications:
+
+"Sarah has buzzed in!"
+"Mike submitted an answer"
+"All players have voted"
+"Waiting for 2 more players..."
+
+
+DEFAULT RECOMMENDATIONS:
+Suggest game mode based on:
+
+If < 6 players → probably remote
+If 6+ players → probably in-person
+Show helpful tip: "💡 Tip: Connect to TV for best in-person experience"
+
+But let host choose - don't force it.
+
+KEY PRINCIPLE:
+Build ONE host interface that adapts to both use cases, not two separate interfaces.
+
+Same layout
+Same controls
+Just adjusts text size, adds status indicators, and offers answer method flexibility
+Host can switch modes mid-game if needed (someone joins remotely, or they decide to connect to TV)
+
+This makes the app work for:
+
+Bar trivia nights (in-person)
+Family game night (living room TV)
+Virtual hangouts (Zoom/Discord)
+Hybrid (some people in room, some remote)
