@@ -79,12 +79,12 @@ export default function Home() {
                 style={{ fontSize: "clamp(1.1rem, 3vw, 2rem)", lineHeight: 1.1 }}
               >
                 <StarDoodle aria-hidden="true" className="w-6 h-6 md:w-8 md:h-8 text-[#FFD700] shrink-0" />
-                <span style={{ color: "#00C853" }}>Your</span>
-                <span style={{ color: "#00E5FF" }}>group</span>
+                <span style={{ color: "#FF0054" }}>Your</span>
+                <span style={{ color: "#FF6B35" }}>group</span>
                 <span style={{ color: "#00E5FF" }}>chat's</span>
-                <span style={{ color: "#00C853" }}>new</span>
-                <span style={{ color: "#00C853" }}>favorite</span>
-                <span style={{ color: "#00C853" }}>game</span>
+                <span style={{ color: "#00F5A0" }}>new</span>
+                <span style={{ color: "#FF0054" }}>favorite</span>
+                <span style={{ color: "#FF6B35" }}>game</span>
                 <StarDoodle aria-hidden="true" className="w-6 h-6 md:w-8 md:h-8 text-[#FF1493] shrink-0" />
               </p>
             </div>
