@@ -79,11 +79,11 @@ export default function Home() {
                 style={{ fontSize: "clamp(1.1rem, 3vw, 2rem)", lineHeight: 1.1 }}
               >
                 <StarDoodle aria-hidden="true" className="w-6 h-6 md:w-8 md:h-8 text-[#FFD700] shrink-0" />
-                <span style={{ color: "#FF0054" }}>Your</span>
+                <span style={{ color: "#FF5577" }}>Your</span>
                 <span style={{ color: "#FF6B35" }}>group</span>
                 <span style={{ color: "#00E5FF" }}>chat's</span>
                 <span style={{ color: "#00F5A0" }}>new</span>
-                <span style={{ color: "#FF0054" }}>favorite</span>
+                <span style={{ color: "#FF5577" }}>favorite</span>
                 <span style={{ color: "#FF6B35" }}>game</span>
                 <StarDoodle aria-hidden="true" className="w-6 h-6 md:w-8 md:h-8 text-[#FF1493] shrink-0" />
               </p>
@@ -219,30 +219,29 @@ export default function Home() {
         <SmileyDoodle className="absolute bottom-4 left-6 w-10 h-10 text-[#00E5FF] opacity-40" />
 
         <div className="max-w-4xl mx-auto relative z-10">
-          <div className="flex items-center gap-3 mb-6">
-            <Users className="w-7 h-7 text-white" />
+          <div className="flex flex-wrap items-center gap-3 mb-6">
+            <Users className="w-7 h-7 text-white shrink-0" />
             <h2 className="font-display text-3xl md:text-4xl font-black text-white uppercase">Party Games</h2>
-            <Badge variant="outline" className="bg-white text-[#FF1493] border-black ml-2">LIVE</Badge>
+            <Badge variant="outline" className="bg-white text-[#FF1493] border-black">LIVE</Badge>
+            {/* Secondary tagline inline */}
+            <div className="bg-white border-[3px] border-black shadow-[3px_3px_0_#000] px-3 py-1">
+              <p
+                className="font-display font-black tracking-tight flex flex-wrap items-center gap-x-1.5"
+                style={{ fontSize: "clamp(0.7rem, 1.5vw, 1rem)", lineHeight: 1.2, color: "#000" }}
+              >
+                If Bar Trivia was hosted by your{" "}
+                <span style={{
+                  color: "#FF1493",
+                  WebkitTextStroke: "1.5px #000",
+                  paintOrder: "stroke fill",
+                }}>For You</span>{" "}
+                page
+              </p>
+            </div>
           </div>
-          <p className="text-white/90 font-medium mb-4 font-sans">
+          <p className="text-white/90 font-medium mb-6 font-sans">
             Put this screen on a TV. Everyone joins on their phones. Maximum chaos guaranteed.
           </p>
-
-          {/* Secondary tagline */}
-          <div className="inline-block bg-white border-[4px] border-black shadow-[5px_5px_0_#000] px-5 py-2 mb-6">
-            <p
-              className="font-display font-black tracking-tight flex flex-wrap items-center gap-x-2 gap-y-1"
-              style={{ fontSize: "clamp(0.85rem, 2vw, 1.25rem)", lineHeight: 1.2, color: "#000" }}
-            >
-              If Bar Trivia was hosted by your{" "}
-              <span style={{
-                color: "#FF1493",
-                WebkitTextStroke: "2px #000",
-                paintOrder: "stroke fill",
-              }}>For You</span>{" "}
-              page
-            </p>
-          </div>
 
           <div className="grid md:grid-cols-2 gap-5">
             {/* Host */}
