@@ -89,21 +89,6 @@ export default function Home() {
               </p>
             </div>
 
-            {/* Secondary tagline */}
-            <div className="inline-block bg-white border-[4px] border-black shadow-[5px_5px_0_#000] px-5 py-2">
-              <p
-                className="font-display font-black tracking-tight flex flex-wrap items-center justify-center gap-x-2 gap-y-1"
-                style={{ fontSize: "clamp(0.8rem, 2.2vw, 1.35rem)", lineHeight: 1.2, color: "#000" }}
-              >
-                If Bar Trivia was hosted by your{" "}
-                <span style={{
-                  color: "#FF1493",
-                  WebkitTextStroke: "2px #000",
-                  paintOrder: "stroke fill",
-                }}>For You</span>{" "}
-                page
-              </p>
-            </div>
           </div>
         </div>
       </header>
@@ -239,9 +224,25 @@ export default function Home() {
             <h2 className="font-display text-3xl md:text-4xl font-black text-white uppercase">Party Games</h2>
             <Badge variant="outline" className="bg-white text-[#FF1493] border-black ml-2">LIVE</Badge>
           </div>
-          <p className="text-white/90 font-medium mb-6 font-sans">
+          <p className="text-white/90 font-medium mb-4 font-sans">
             Put this screen on a TV. Everyone joins on their phones. Maximum chaos guaranteed.
           </p>
+
+          {/* Secondary tagline */}
+          <div className="inline-block bg-white border-[4px] border-black shadow-[5px_5px_0_#000] px-5 py-2 mb-6">
+            <p
+              className="font-display font-black tracking-tight flex flex-wrap items-center gap-x-2 gap-y-1"
+              style={{ fontSize: "clamp(0.85rem, 2vw, 1.25rem)", lineHeight: 1.2, color: "#000" }}
+            >
+              If Bar Trivia was hosted by your{" "}
+              <span style={{
+                color: "#FF1493",
+                WebkitTextStroke: "2px #000",
+                paintOrder: "stroke fill",
+              }}>For You</span>{" "}
+              page
+            </p>
+          </div>
 
           <div className="grid md:grid-cols-2 gap-5">
             {/* Host */}
