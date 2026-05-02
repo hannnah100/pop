@@ -98,7 +98,6 @@ export function findMatchingAnswer(
   answers: Array<{ display: string; hint: string; correct: string[] }>
 ): number {
   if (guess.length < 2) return -1;
-  if (/^\d+$/.test(guess)) return -1;
   if (/^[^a-zA-Z0-9]+$/.test(guess)) return -1;
 
   const normalizedGuess = normalizeString(guess);

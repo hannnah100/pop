@@ -116,7 +116,7 @@ export default function ThreeStrikes() {
     e.preventDefault();
     const guess = currentGuess.trim();
     if (gameOver || !guess || !challenge) return;
-    if (/^\d+$/.test(guess) || /^[^a-zA-Z0-9]+$/.test(guess)) { setCurrentGuess(""); return; }
+    if (/^[^a-zA-Z0-9]+$/.test(guess)) { setCurrentGuess(""); return; }
     if (guess.length < 2) { toast({ title: "Too short", description: "Type at least 2 characters." }); return; }
 
     const matchIndex = findMatchingAnswer(guess, challenge.answers);
