@@ -7,27 +7,27 @@ import { playSfx, unlockAudio } from "@/lib/sfx"
 import { hapticTap } from "@/lib/haptics"
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-base font-semibold font-sans transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 active:scale-[0.98]",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap text-base font-bold font-sans transition-transform duration-75 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-40 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 active:scale-[0.95] active:translate-y-[2px]",
   {
     variants: {
       variant: {
-        // Default = static warm gradient (red → orange → gold) per design spec.
         default:
-          "bg-rainbow-warm text-white border-0 shadow-[0_4px_16px_-4px_hsl(var(--primary)/0.40)] hover:shadow-[0_8px_24px_-4px_hsl(var(--accent)/0.50)] hover:-translate-y-0.5",
+          "bg-[#FF1493] text-black border-[3px] border-black shadow-[4px_4px_0_#000] hover:bg-[#FFD700] hover:-rotate-1 active:shadow-[2px_2px_0_#000]",
         destructive:
-          "bg-destructive text-destructive-foreground shadow-[0_4px_16px_-4px_hsl(var(--destructive)/0.40)] hover:shadow-[0_8px_24px_-4px_hsl(var(--destructive)/0.55)] hover:-translate-y-0.5",
+          "bg-[#FF0000] text-white border-[3px] border-black shadow-[4px_4px_0_#000] hover:bg-[#FF6B6B] hover:text-black active:shadow-[2px_2px_0_#000]",
         outline:
-          "border-2 border-white/15 bg-transparent text-foreground hover:bg-white/5 hover:border-accent/50",
+          "bg-white text-black border-[3px] border-black shadow-[4px_4px_0_#000] hover:bg-[#00E5FF] active:shadow-[2px_2px_0_#000]",
         secondary:
-          "bg-secondary text-secondary-foreground shadow-[0_4px_16px_-4px_hsl(var(--secondary)/0.40)] hover:brightness-110 hover:-translate-y-0.5",
-        ghost: "border-0 hover:bg-white/5",
-        link: "text-accent underline-offset-4 hover:underline",
+          "bg-[#00C853] text-black border-[3px] border-black shadow-[4px_4px_0_#000] hover:bg-[#FFD700] active:shadow-[2px_2px_0_#000]",
+        ghost:
+          "bg-transparent border-0 shadow-none hover:bg-[#FFD700] hover:text-black",
+        link:
+          "text-[#FF1493] underline-offset-4 hover:underline border-0 shadow-none",
       },
       size: {
-        // Mobile-first: minimum 48px tap target by default.
         default: "min-h-12 px-5 py-3",
-        sm: "min-h-10 rounded-lg px-4 text-sm",
-        lg: "min-h-14 rounded-2xl px-8 text-lg",
+        sm: "min-h-10 px-4 text-sm",
+        lg: "min-h-14 px-8 text-lg",
         icon: "h-12 w-12",
       },
     },

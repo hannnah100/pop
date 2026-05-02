@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
 @plugin "@tailwindcss/typography";
@@ -52,99 +52,102 @@
   --font-display: var(--app-font-display);
   --font-fun: var(--app-font-fun);
 
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
+  --radius-sm: calc(var(--radius) - 2px);
+  --radius-md: var(--radius);
+  --radius-lg: calc(var(--radius) + 2px);
   --radius-xl: calc(var(--radius) + 4px);
 }
 
 :root {
-  --button-outline: rgba(255,255,255, .12);
-  --badge-outline: rgba(255,255,255, .06);
+  /* ======================================================
+   * Pop: The Question — Bold Y2K / Nickelodeon Design System
+   * Cream background, thick black borders, loud bright palette.
+   * ====================================================== */
 
-  --opaque-button-border-intensity: 9;
-  --elevate-1: rgba(255,255,255, .05);
-  --elevate-2: rgba(255,255,255, .10);
+  --y2k-pink:   #FF1493;
+  --y2k-orange: #FF6B35;
+  --y2k-yellow: #FFD700;
+  --y2k-lime:   #00C853;
+  --y2k-cyan:   #00E5FF;
+  --y2k-purple: #9B27AF;
+  --y2k-coral:  #FF6B6B;
+  --y2k-cream:  #FFF8E7;
+  --y2k-black:  #000000;
 
-  /* Pop: The Question — Editorial design system.
-     Sophisticated dark mode with a warm rainbow palette used strategically.
-     Most text is white; rainbow only on logo, room codes, and milestone moments. */
+  --button-outline: rgba(0,0,0,0.15);
+  --badge-outline:  rgba(0,0,0,0.2);
+  --opaque-button-border-intensity: 100;
+  --elevate-1: rgba(0,0,0,0.06);
+  --elevate-2: rgba(0,0,0,0.10);
 
-  /* Backgrounds (#0A0A0F / #1A1A24) */
-  --background: 240 22% 5%;
-  --foreground: 0 0% 100%;
-  --border: 0 0% 100% / 0.08;
+  /* Cream background */
+  --background: 43 100% 95%;
+  --foreground: 0 0% 0%;
+  --border: 0 0% 0%;
 
-  --card: 240 18% 12%;
-  --card-foreground: 0 0% 100%;
-  --card-border: 0 0% 100% / 0.08;
+  /* White cards with solid black borders */
+  --card: 0 0% 100%;
+  --card-foreground: 0 0% 0%;
+  --card-border: 0 0% 0%;
 
-  --popover: 240 18% 10%;
-  --popover-foreground: 0 0% 100%;
-  --popover-border: 0 0% 100% / 0.08;
+  --popover: 0 0% 100%;
+  --popover-foreground: 0 0% 0%;
+  --popover-border: 0 0% 0%;
 
-  /* Primary brand red #FF0054 */
-  --primary: 343 100% 50%;
-  --primary-foreground: 0 0% 100%;
+  /* Primary: hot pink */
+  --primary: 328 100% 54%;
+  --primary-foreground: 0 0% 0%;
 
-  /* Secondary green #00F5A0 — also success */
-  --secondary: 159 100% 48%;
-  --secondary-foreground: 240 22% 5%;
+  /* Secondary: lime green */
+  --secondary: 145 100% 39%;
+  --secondary-foreground: 0 0% 0%;
 
-  /* Muted / text-secondary #B8B8C8, text-muted #6B6B7B */
-  --muted: 240 14% 14%;
-  --muted-foreground: 240 12% 75%;
+  /* Muted: light cream/tan */
+  --muted: 43 50% 85%;
+  --muted-foreground: 0 0% 30%;
 
-  /* Accent orange #FF6B35 */
+  /* Accent: electric orange */
   --accent: 15 100% 60%;
-  --accent-foreground: 240 22% 5%;
+  --accent-foreground: 0 0% 0%;
 
-  --destructive: 343 100% 50%;
+  /* Destructive: bright red */
+  --destructive: 0 100% 50%;
   --destructive-foreground: 0 0% 100%;
 
-  /* Brand palette tokens used for accents & gradients */
-  --success: 159 100% 48%;          /* #00F5A0 */
-  --warm: 5 100% 69%;               /* coral, used very sparingly */
-  --gold: 51 100% 50%;              /* #FFD700 */
-  --magenta: 328 100% 54%;          /* #FF1493 */
-  --pink: 334 100% 50%;             /* #FF006E */
+  /* Brand palette tokens */
+  --success: 145 100% 39%;
+  --warm:    0 100% 70%;
+  --gold:    51 100% 50%;
+  --magenta: 328 100% 54%;
+  --pink:    334 100% 50%;
 
-  --input: 0 0% 100% / 0.06;
-  --ring: 343 100% 50%;
+  --input: 0 0% 100%;
+  --ring:  328 100% 54%;
 
-  /* Editorial type stack — Manrope (display, clean & narrow), Inter (body), Space Grotesk (special) */
-  --app-font-sans: 'Inter', system-ui, -apple-system, sans-serif;
-  --app-font-display: 'Manrope', 'Inter', system-ui, sans-serif;
-  --app-font-fun: 'Space Grotesk', 'Inter', system-ui, sans-serif;
-  --app-font-serif: Georgia, serif;
-  --app-font-mono: 'Space Grotesk', ui-monospace, Menlo, monospace;
+  /* Y2K type stack — Anton (display), Inter (body) */
+  --app-font-sans:    'Inter', system-ui, -apple-system, sans-serif;
+  --app-font-display: 'Anton', 'Inter', system-ui, sans-serif;
+  --app-font-fun:     'Anton', 'Inter', system-ui, sans-serif;
+  --app-font-serif:   Georgia, serif;
+  --app-font-mono:    'Anton', ui-monospace, Menlo, monospace;
 
-  --radius: 0.75rem;
+  /* Nearly-sharp corners */
+  --radius: 0.25rem;
 
-  /* Shadows */
-  --shadow-soft:
-    0 1px 0 rgba(255, 255, 255, 0.04) inset,
-    0 4px 16px rgba(0, 0, 0, 0.35);
-  --shadow-glow-primary:   0 0 0 1px hsl(var(--primary)   / 0.30), 0 0 28px -4px hsl(var(--primary)   / 0.45);
-  --shadow-glow-accent:    0 0 0 1px hsl(var(--accent)    / 0.32), 0 0 28px -4px hsl(var(--accent)    / 0.45);
-  --shadow-glow-secondary: 0 0 0 1px hsl(var(--secondary) / 0.32), 0 0 28px -4px hsl(var(--secondary) / 0.45);
-  --shadow-glow-gold:      0 0 0 1px hsl(var(--gold)      / 0.35), 0 0 28px -4px hsl(var(--gold)      / 0.45);
+  /* Bold offset drop shadows — no glow, no blur */
+  --shadow-bold:    4px 4px 0 #000;
+  --shadow-bold-lg: 6px 6px 0 #000;
+  --shadow-soft:    4px 4px 0 #000;
 
-  /* Static warm-rainbow gradient — used on buttons & accents (no animation per spec). */
-  --rainbow-gradient: linear-gradient(
-    135deg,
-    hsl(var(--primary)) 0%,
-    hsl(var(--accent)) 50%,
-    hsl(var(--gold)) 100%
-  );
-  --rainbow-gradient-full: linear-gradient(
-    135deg,
-    hsl(var(--primary)) 0%,
-    hsl(var(--accent)) 25%,
-    hsl(var(--gold)) 50%,
-    hsl(var(--secondary)) 75%,
-    hsl(var(--magenta)) 100%
-  );
+  /* Stub glow vars to prevent reference errors */
+  --shadow-glow-primary:   none;
+  --shadow-glow-accent:    none;
+  --shadow-glow-secondary: none;
+  --shadow-glow-gold:      none;
+
+  /* Rainbow gradient — kept for room-code letter coloring */
+  --rainbow-gradient: linear-gradient(135deg, #FF1493 0%, #FF6B35 50%, #FFD700 100%);
+  --rainbow-gradient-full: linear-gradient(135deg, #FF1493 0%, #FF6B35 25%, #FFD700 50%, #00C853 75%, #00E5FF 100%);
 }
 
 @layer base {
@@ -162,12 +165,8 @@
 
   body {
     @apply font-sans antialiased text-foreground;
-    /* Subtle ambient glow — much lower opacity than before, no kiddie sunset. */
-    background:
-      radial-gradient(900px 600px at 12% -5%,  hsl(343 100% 50% / 0.08), transparent 60%),
-      radial-gradient(800px 600px at 95% 0%,   hsl(15  100% 60% / 0.07), transparent 60%),
-      radial-gradient(700px 500px at 50% 110%, hsl(51  100% 50% / 0.05), transparent 60%),
-      hsl(var(--background));
+    background-color: hsl(var(--background));
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Ccircle cx='12' cy='12' r='1.8' fill='%23000' fill-opacity='0.07'/%3E%3C/svg%3E");
     font-size: 16px;
     line-height: 1.6;
   }
@@ -175,9 +174,9 @@
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--app-font-display);
     color: hsl(var(--foreground));
-    letter-spacing: -0.025em;
-    line-height: 1.15;
-    font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 1.1;
+    font-weight: 900;
   }
 }
 
@@ -186,45 +185,28 @@
   .font-display { font-family: var(--app-font-display); }
   .font-sans    { font-family: var(--app-font-sans); }
 
-  /* Glow utilities (kept subtle, used sparingly per spec). */
-  .glow-primary   { box-shadow: var(--shadow-glow-primary); }
-  .glow-accent    { box-shadow: var(--shadow-glow-accent); }
-  .glow-secondary { box-shadow: var(--shadow-glow-secondary); }
-  .glow-gold      { box-shadow: var(--shadow-glow-gold); }
+  /* Y2K bold border + shadow utilities */
+  .thick-border  { border: 3px solid #000; }
+  .bold-shadow   { box-shadow: var(--shadow-bold); }
+  .bold-shadow-lg { box-shadow: var(--shadow-bold-lg); }
 
-  .text-glow-primary   { text-shadow: 0 0 18px hsl(var(--primary)   / 0.35); }
-  .text-glow-accent    { text-shadow: 0 0 18px hsl(var(--accent)    / 0.35); }
-  .text-glow-secondary { text-shadow: 0 0 18px hsl(var(--secondary) / 0.35); }
-  .text-glow-gold      { text-shadow: 0 0 18px hsl(var(--gold)      / 0.4);  }
-
-  .surface-elevated  { box-shadow: var(--shadow-soft); }
-  .surface-card-glow {
-    box-shadow:
-      var(--shadow-soft),
-      0 0 60px -30px hsl(var(--primary) / 0.25);
+  /* Halftone polka-dot texture */
+  .halftone-bg {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20'%3E%3Ccircle cx='10' cy='10' r='1.5' fill='%23000' fill-opacity='0.1'/%3E%3C/svg%3E");
   }
 
-  .grid-overlay {
-    background-image:
-      linear-gradient(hsl(var(--foreground) / 0.03) 1px, transparent 1px),
-      linear-gradient(90deg, hsl(var(--foreground) / 0.03) 1px, transparent 1px);
-    background-size: 56px 56px;
-  }
-  .grain-overlay {
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.55 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.45'/></svg>");
-  }
-  .shimmer-bg {
-    background: linear-gradient(
-      90deg,
-      hsl(var(--card)) 0%,
-      hsl(var(--muted)) 50%,
-      hsl(var(--card)) 100%
+  /* Diagonal stripe texture */
+  .stripe-bg {
+    background-image: repeating-linear-gradient(
+      -45deg,
+      transparent 0px,
+      transparent 8px,
+      rgba(0,0,0,0.06) 8px,
+      rgba(0,0,0,0.06) 9px
     );
-    background-size: 200% 100%;
-    animation: ptq-shimmer 1.6s ease-in-out infinite;
   }
 
-  /* Static warm-rainbow text gradient — for milestone moments only. */
+  /* Rainbow text — for room codes / logo moments */
   .gradient-text-warm {
     background-image: var(--rainbow-gradient-full);
     -webkit-background-clip: text;
@@ -232,22 +214,17 @@
     color: transparent;
   }
 
-  /* Static warm-rainbow background — for primary buttons, gradient borders, accents. */
-  .bg-rainbow-warm {
-    background-image: var(--rainbow-gradient);
-  }
-  .bg-rainbow-full {
-    background-image: var(--rainbow-gradient-full);
-  }
+  /* Rainbow backgrounds */
+  .bg-rainbow-warm { background-image: var(--rainbow-gradient); }
+  .bg-rainbow-full { background-image: var(--rainbow-gradient-full); }
 
-  /* Section heading underline — single-color accent line below an h2/h3.
-     Use as a sibling element: <h2>…</h2><div class="heading-divider heading-divider--orange" /> */
+  /* Section heading underline dividers */
   .heading-divider {
     height: 4px;
     width: 64px;
-    border-radius: 2px;
+    border-radius: 0;
     margin-top: 0.5rem;
-    background: hsl(var(--accent));
+    background: #000;
   }
   .heading-divider--orange  { background: hsl(var(--accent)); }
   .heading-divider--pink    { background: hsl(var(--pink)); }
@@ -255,25 +232,51 @@
   .heading-divider--green   { background: hsl(var(--success)); }
   .heading-divider--magenta { background: hsl(var(--magenta)); }
 
-  /* Static gradient border (no animation per spec). */
+  /* Glow stubs — no-ops (kept for backwards compat with game/host.tsx refs) */
+  .glow-primary   { box-shadow: none; }
+  .glow-accent    { box-shadow: none; }
+  .glow-secondary { box-shadow: none; }
+  .glow-gold      { box-shadow: none; }
+
+  .text-glow-primary   { text-shadow: none; }
+  .text-glow-accent    { text-shadow: none; }
+  .text-glow-secondary { text-shadow: none; }
+  .text-glow-gold      { text-shadow: none; }
+
+  /* Elevation → bold offset shadow */
+  .surface-elevated  { box-shadow: var(--shadow-bold); }
+  .surface-card-glow { box-shadow: var(--shadow-bold); }
+
+  /* Shimmer loading skeleton (updated for light theme) */
+  .shimmer-bg {
+    background: linear-gradient(
+      90deg,
+      hsl(43 50% 88%) 0%,
+      hsl(43 30% 93%) 50%,
+      hsl(43 50% 88%) 100%
+    );
+    background-size: 200% 100%;
+    animation: ptq-shimmer 1.6s ease-in-out infinite;
+  }
+
+  /* Grid overlay (kept as no-op for compat) */
+  .grid-overlay { background-image: none; }
+  .grain-overlay { background-image: none; }
+
+  /* Ring rainbow → solid black border (no gradient) */
   .ring-rainbow {
     position: relative;
     isolation: isolate;
+    border: 3px solid #000;
   }
-  .ring-rainbow::before {
-    content: "";
-    position: absolute;
-    inset: -1px;
-    border-radius: inherit;
-    padding: 1px;
-    background: var(--rainbow-gradient-full);
-    -webkit-mask:
-      linear-gradient(#000 0 0) content-box,
-      linear-gradient(#000 0 0);
-    -webkit-mask-composite: xor;
-            mask-composite: exclude;
-    pointer-events: none;
-    z-index: -1;
+  .ring-rainbow::before { display: none; }
+
+  /* hover-elevate utility */
+  .hover-elevate {
+    transition: transform 75ms;
+  }
+  .hover-elevate:hover {
+    transform: translateY(-1px);
   }
 }
 
@@ -282,45 +285,15 @@
   100% { background-position: -200% 0; }
 }
 
-@keyframes ptq-blob-drift-a {
-  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
-  50%      { transform: translate3d(4%, -3%, 0) scale(1.04); }
-}
-@keyframes ptq-blob-drift-b {
-  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
-  50%      { transform: translate3d(-3%, 3%, 0) scale(1.05); }
-}
-@keyframes ptq-blob-drift-c {
-  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
-  50%      { transform: translate3d(2%, 4%, 0) scale(1.03); }
-}
-@keyframes ptq-pulse-glow {
-  0%, 100% { box-shadow: 0 0 0 0 hsl(var(--primary) / 0.45); }
-  50%      { box-shadow: 0 0 0 12px hsl(var(--primary) / 0); }
-}
-@keyframes ptq-pulse-accent {
-  0%, 100% { box-shadow: 0 0 0 0 hsl(var(--accent) / 0.45); }
-  50%      { box-shadow: 0 0 0 12px hsl(var(--accent) / 0); }
-}
-@keyframes ptq-fire-flicker {
-  0%, 100% { filter: hue-rotate(-6deg) brightness(1); transform: scale(1); }
-  50%      { filter: hue-rotate(6deg)  brightness(1.08); transform: scale(1.01); }
-}
-@keyframes ptq-shimmer-sweep {
-  0%   { transform: translateX(-120%) skewX(-20deg); }
-  100% { transform: translateX(220%)  skewX(-20deg); }
-}
 @keyframes ptq-blink-caret {
   0%, 49%   { opacity: 1; }
   50%, 100% { opacity: 0; }
 }
 
-.animate-blob-a { animation: ptq-blob-drift-a 32s ease-in-out infinite; }
-.animate-blob-b { animation: ptq-blob-drift-b 38s ease-in-out infinite; }
-.animate-blob-c { animation: ptq-blob-drift-c 44s ease-in-out infinite; }
-.animate-pulse-glow   { animation: ptq-pulse-glow 1.6s ease-in-out infinite; }
-.animate-pulse-accent { animation: ptq-pulse-accent 1.6s ease-in-out infinite; }
-.animate-fire { animation: ptq-fire-flicker 1.6s ease-in-out infinite; }
+@keyframes ptq-shimmer-sweep {
+  0%   { transform: translateX(-120%) skewX(-20deg); }
+  100% { transform: translateX(220%)  skewX(-20deg); }
+}
 
 .shimmer-sweep {
   position: relative;
@@ -333,11 +306,11 @@
   background: linear-gradient(
     100deg,
     transparent 35%,
-    rgba(255, 255, 255, 0.14) 50%,
+    rgba(255, 255, 255, 0.4) 50%,
     transparent 65%
   );
   transform: translateX(-120%) skewX(-20deg);
-  animation: ptq-shimmer-sweep 3.4s ease-in-out infinite;
+  animation: ptq-shimmer-sweep 2.4s ease-in-out infinite;
   pointer-events: none;
 }
 
@@ -347,6 +320,14 @@
   animation: ptq-blink-caret 1s step-end infinite;
 }
 
+/* Stub blob animations (no-ops — kept for compat) */
+.animate-blob-a { animation: none; }
+.animate-blob-b { animation: none; }
+.animate-blob-c { animation: none; }
+.animate-pulse-glow   { animation: none; }
+.animate-pulse-accent { animation: none; }
+.animate-fire { animation: none; }
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.001ms !important;
@@ -354,12 +335,6 @@
     transition-duration: 0.001ms !important;
   }
   .shimmer-sweep::after,
-  .animate-blob-a,
-  .animate-blob-b,
-  .animate-blob-c,
-  .animate-pulse-glow,
-  .animate-pulse-accent,
-  .animate-fire,
   .shimmer-bg {
     animation: none !important;
   }
@@ -367,13 +342,8 @@
 
 /* ============================================================
  * Dual Host Mode (Task #5)
- * Typography scaling, In-Person vs Remote density, high-contrast
- * palette, and safe-zone padding for screen-share readability.
  * ============================================================ */
 
-/* Typography scale — applied via CSS `zoom` on the host content area
-   so question/answer/scoreboard text grows in unison without breaking
-   layout flow (works in all modern browsers including Firefox 126+). */
 .host-shell {
   --host-typo-scale: 1;
 }
@@ -381,8 +351,6 @@
   zoom: var(--host-typo-scale);
 }
 
-/* Remote mode safe-zone: keeps critical content away from screen-share
-   window edges (host overlays, video conferencing chrome, etc). */
 .host-mode-remote .host-safe-zone {
   padding-block: clamp(80px, 8vh, 140px);
   padding-inline: clamp(48px, 5vw, 96px);
@@ -392,17 +360,15 @@
   padding-inline: clamp(24px, 3vw, 64px);
 }
 
-/* High-contrast palette — overrides foundational color tokens for
-   maximum legibility (yellow-on-black scheme used by accessibility
-   guidance for low-vision viewers and projectors with poor contrast). */
+/* High-contrast palette (yellow-on-black) */
 .host-high-contrast {
   --background: 0 0% 0%;
   --foreground: 60 100% 96%;
-  --border: 60 100% 70% / 0.6;
+  --border: 60 100% 70%;
 
   --card: 0 0% 4%;
   --card-foreground: 60 100% 96%;
-  --card-border: 60 100% 70% / 0.6;
+  --card-border: 60 100% 70%;
 
   --popover: 0 0% 4%;
   --popover-foreground: 60 100% 96%;
@@ -431,9 +397,7 @@
   --ring: 60 100% 70%;
 }
 
-/* Persistent host controls bar — bottom of the host view, kept above
-   page chrome and game content. Frosted to stay readable over any
-   game background. */
+/* Host controls bar — solid black, no blur */
 .host-controls-bar {
   position: fixed;
   inset-inline: 0;
@@ -444,17 +408,13 @@
   justify-content: center;
   gap: 0.75rem;
   padding: 0.75rem 1rem;
-  background: hsl(var(--background) / 0.85);
-  backdrop-filter: blur(12px);
-  border-top: 1px solid hsl(var(--border));
+  background: #000;
+  border-top: 4px solid #000;
 }
 .host-mode-in-person .host-controls-bar {
-  /* In-person: minimal chrome, smaller bottom bar */
   padding: 0.5rem 0.75rem;
 }
 
-/* Reserve space at the bottom of host content so the controls bar
-   never overlaps game content. */
 .host-shell-content {
   padding-bottom: 6.5rem;
 }
@@ -462,34 +422,33 @@
   padding-bottom: 5rem;
 }
 
-/* "Press ESC to exit fullscreen" entry tooltip */
+/* Fullscreen hint */
 .host-fullscreen-hint {
   position: fixed;
   top: 1.5rem;
   left: 50%;
   transform: translateX(-50%);
   z-index: 70;
-  padding: 0.5rem 1rem;
-  border-radius: 9999px;
-  background: hsl(var(--background) / 0.92);
-  border: 1px solid hsl(var(--border));
-  color: hsl(var(--muted-foreground));
+  padding: 0.5rem 1.25rem;
+  border-radius: 0.25rem;
+  background: #000;
+  border: 3px solid #FFD700;
+  color: #FFD700;
   font-size: 0.875rem;
-  font-weight: 600;
-  letter-spacing: 0.05em;
+  font-weight: 900;
+  letter-spacing: 0.08em;
   pointer-events: none;
+  font-family: var(--app-font-display);
+  text-transform: uppercase;
 }
 
-/* Player-side paused overlay (Task #5).
-   Toggled via body[data-game-paused="true"] from the player page so it
-   spans every game-state branch without per-branch JSX changes. */
+/* Player-side paused overlay — solid hot pink, no blur */
 body[data-game-paused="true"]::before {
   content: "";
   position: fixed;
   inset: 0;
   z-index: 90;
-  background: hsl(var(--background) / 0.92);
-  backdrop-filter: blur(4px);
+  background: rgba(255, 20, 147, 0.88);
   pointer-events: none;
 }
 body[data-game-paused="true"]::after {
@@ -500,16 +459,11 @@ body[data-game-paused="true"]::after {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: var(--font-display, "Manrope"), sans-serif;
+  font-family: var(--app-font-display);
   font-weight: 900;
   font-size: clamp(3rem, 12vw, 6rem);
-  letter-spacing: 0.05em;
-  color: hsl(var(--primary));
-  text-shadow: 0 0 32px hsl(var(--primary) / 0.6);
+  letter-spacing: 0.08em;
+  color: #FFD700;
+  text-shadow: 4px 4px 0 #000;
   pointer-events: none;
-  animation: paused-pulse 2.4s ease-in-out infinite;
-}
-@keyframes paused-pulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.75; transform: scale(0.98); }
 }
