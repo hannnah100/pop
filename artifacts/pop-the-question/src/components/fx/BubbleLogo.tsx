@@ -42,19 +42,30 @@ const shineStyle: CSSProperties = {
   pointerEvents: "none",
 };
 
+const STAGGER_MS = 55;
+
 export function BubbleLogo() {
+  let visibleIndex = 0;
   return (
     <span style={containerStyle} aria-label="THE QUESTION">
-      {LETTERS.map((ch, i) =>
-        ch === " " ? (
-          <span key={i} style={spaceStyle} aria-hidden />
-        ) : (
-          <span key={i} style={letterStyle} aria-hidden>
+      {LETTERS.map((ch, i) => {
+        if (ch === " ") {
+          return <span key={i} style={spaceStyle} aria-hidden />;
+        }
+        const delay = visibleIndex * STAGGER_MS;
+        visibleIndex += 1;
+        return (
+          <span
+            key={i}
+            className="bubble-logo-letter"
+            style={{ ...letterStyle, animationDelay: `${delay}ms` }}
+            aria-hidden
+          >
             {ch}
           </span>
-        )
-      )}
-      <span style={shineStyle} aria-hidden />
+        );
+      })}
+      <span className="bubble-logo-shine" style={shineStyle} aria-hidden />
     </span>
   );
 }

@@ -343,6 +343,54 @@
   animation: ptq-blink-caret 1s step-end infinite;
 }
 
+/* BubbleLogo entrance — elastic pop-in per letter */
+@keyframes ptq-bubble-pop-in {
+  0% {
+    opacity: 0;
+    transform: translateY(-18px) scale(0.4);
+  }
+  55% {
+    opacity: 1;
+    transform: translateY(2px) scale(1.18);
+  }
+  72% {
+    transform: translateY(0) scale(0.94);
+  }
+  86% {
+    transform: translateY(-1px) scale(1.04);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes ptq-bubble-shine-in {
+  0%, 60% { opacity: 0; }
+  100%    { opacity: 1; }
+}
+
+.bubble-logo-letter {
+  opacity: 0;
+  transform-origin: 50% 80%;
+  animation: ptq-bubble-pop-in 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  will-change: transform, opacity;
+}
+
+.bubble-logo-shine {
+  animation: ptq-bubble-shine-in 0.6s ease-out both;
+  animation-delay: 0.55s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bubble-logo-letter,
+  .bubble-logo-shine {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
 /* Stub blob animations (no-ops — kept for compat) */
 .animate-blob-a { animation: none; }
 .animate-blob-b { animation: none; }
