@@ -178,8 +178,23 @@ export function botSolvesCorrect(): boolean {
   return Math.random() < 0.55;
 }
 
+// Weighted consonant selection: common letters (T N S R L H D) get 3× weight,
+// moderately common (C M F P G W Y B) get 1.5×, rare (K V X J Q Z) get 0.4×.
+const CONSONANT_WEIGHTS: Record<string, number> = {
+  T: 3, N: 3, S: 3, R: 3, L: 3, H: 2.5, D: 2.5,
+  C: 1.5, M: 1.5, F: 1.5, P: 1.5, G: 1.5, W: 1.5, Y: 1.5, B: 1.5,
+  K: 0.8, V: 0.6, X: 0.4, J: 0.4, Q: 0.4, Z: 0.4,
+};
+
 export function botPickConsonant(guessedLetters: Set<string>): string | null {
-  const consonants = "BCDFGHJKLMNPQRSTVWXYZ".split("").filter((c) => !guessedLetters.has(c));
-  if (consonants.length === 0) return null;
-  return consonants[Math.floor(Math.random() * consonants.length)]!;
+  const available = "BCDFGHJKLMNPQRSTVWXYZ".split("").filter((c) => !guessedLetters.has(c));
+  if (available.length === 0) return null;
+  const weights = available.map((c) => CONSONANT_WEIGHTS[c] ?? 1);
+  const total = weights.reduce((a, b) => a + b, 0);
+  let rand = Math.random() * total;
+  for (let i = 0; i < available.length; i++) {
+    rand -= weights[i]!;
+    if (rand <= 0) return available[i]!;
+  }
+  return available[available.length - 1]!;
 }

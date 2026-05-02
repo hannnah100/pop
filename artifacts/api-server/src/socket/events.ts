@@ -2667,11 +2667,12 @@ function scheduleBotWofGuess(io: SocketIOServer, room: Room) {
     const positions = getLetterPositions(puzzle.answer, letter);
     const count = positions.length;
 
+    const isVowelGuess = VOWELS.has(letter);
     if (count > 0) {
       live.wof.revealedLetters.add(letter);
       const spinValue = typeof live.wof.currentSpin === "number" ? live.wof.currentSpin : 500;
-      // FREE_PLAY consonant earns at $500 rate (same rule as human players)
-      const earned = spinValue * count;
+      // Vowels (guessed via FREE PLAY) never earn round earnings — they are free turns only
+      const earned = isVowelGuess ? 0 : spinValue * count;
       if (earned > 0) {
         live.wof.roundEarnings[controllerId ?? ""] = (live.wof.roundEarnings[controllerId ?? ""] ?? 0) + earned;
       }
