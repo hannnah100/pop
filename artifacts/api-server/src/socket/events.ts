@@ -1243,6 +1243,9 @@ export function setupSocketIO(httpServer: HttpServer) {
       const board = wofPublicBoard(w);
 
       if (isPuzzleSolved(w)) {
+        // Award controller's accumulated round earnings before finishing
+        const ctrl2 = room.players.find((p) => p.id === w.controllerId);
+        if (ctrl2) ctrl2.score += w.roundEarnings[w.controllerId ?? ""] ?? 0;
         w.phase = "puzzle-over";
         io.to(room.code).emit("wof-vowel-result", {
           letter: l,
@@ -2559,6 +2562,40 @@ function scheduleBotWofTurn(io: SocketIOServer, room: Room) {
       }
     }
 
+    // Occasionally buy a vowel if affordable and unguessed vowels remain (25% chance)
+    const botRoundEarnings = live.wof.roundEarnings[controllerId ?? ""] ?? 0;
+    const unguessedVowels = ["A", "E", "I", "O", "U"].filter(v => !live.wof!.guessedLetters.has(v));
+    if (botRoundEarnings >= VOWEL_COST && unguessedVowels.length > 0 && Math.random() < 0.25) {
+      const vowel = unguessedVowels[Math.floor(Math.random() * unguessedVowels.length)]!;
+      live.wof.roundEarnings[controllerId ?? ""] = botRoundEarnings - VOWEL_COST;
+      live.wof.guessedLetters.add(vowel);
+      const puzzle = currentPuzzle(live.wof);
+      const count = getLetterPositions(puzzle.answer, vowel).length;
+      if (count > 0) live.wof.revealedLetters.add(vowel);
+      const board = wofPublicBoard(live.wof);
+      if (isPuzzleSolved(live.wof)) {
+        const ctrl2 = live.players.find((p) => p.id === controllerId);
+        if (ctrl2) ctrl2.score += live.wof.roundEarnings[controllerId ?? ""] ?? 0;
+        live.wof.phase = "puzzle-over";
+        io.to(live.code).emit("wof-vowel-result", { letter: vowel, count, found: count > 0, board, revealedLetters: Array.from(live.wof.revealedLetters), guessedLetters: Array.from(live.wof.guessedLetters), controllerId, scores: wofScoresWire(live, live.wof) });
+        setTimeout(() => { const l2 = rooms.get(room.code); if (l2?.wof?.phase === "puzzle-over") finishWofPuzzle(io, l2); }, 1500);
+        return;
+      }
+      live.wof.phase = "spinning";
+      if (count === 0) {
+        const nonHostIds = live.players.filter((p) => !p.isHost).map((p) => p.id);
+        live.wof.controllerId = advanceController(live.wof.controllerId, nonHostIds);
+      }
+      io.to(live.code).emit("wof-vowel-result", { letter: vowel, count, found: count > 0, board, revealedLetters: Array.from(live.wof.revealedLetters), guessedLetters: Array.from(live.wof.guessedLetters), controllerId: live.wof.controllerId, scores: wofScoresWire(live, live.wof) });
+      if (count === 0) {
+        const next = live.players.find((p) => p.id === live.wof!.controllerId);
+        if (next?.isBot) scheduleBotWofTurn(io, live);
+      } else {
+        scheduleBotWofTurn(io, live);
+      }
+      return;
+    }
+
     // Spin the wheel
     const { value, spinIndex } = spinWheel();
     live.wof.currentSpin = value;
@@ -2610,7 +2647,15 @@ function scheduleBotWofGuess(io: SocketIOServer, room: Room) {
     const ctrl = live.players.find((p) => p.id === controllerId);
     if (!ctrl?.isBot) return;
 
-    const letter = botPickConsonant(live.wof.guessedLetters);
+    // During FREE PLAY, bots may also pick vowels (30% chance if unguessed vowels remain)
+    let letter: string | null = null;
+    if (live.wof.isFreePlay && Math.random() < 0.3) {
+      const unguessedVowels = ["A", "E", "I", "O", "U"].filter(v => !live.wof!.guessedLetters.has(v));
+      if (unguessedVowels.length > 0) {
+        letter = unguessedVowels[Math.floor(Math.random() * unguessedVowels.length)]!;
+      }
+    }
+    if (!letter) letter = botPickConsonant(live.wof.guessedLetters);
     if (!letter) return;
 
     live.wof.guessedLetters.add(letter);
