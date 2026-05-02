@@ -558,21 +558,21 @@ export default function GamePlayer() {
   // ============ LOBBY ============
   if (gameState === "lobby") {
     return (
-      <div className="flex flex-col min-h-[100dvh] p-6">
-        <header className="mb-8">
-          <div className="inline-block px-4 py-1 rounded-full bg-card border border-secondary/30 text-sm font-bold tracking-widest text-secondary mb-4 surface-elevated">
-            ROOM {roomCode}
+      <div className="flex flex-col min-h-[100dvh] bg-[#FFD700]">
+        <header className="bg-[#FF1493] border-b-[4px] border-black px-6 py-5">
+          <div className="inline-flex items-center gap-2 bg-[#FFD700] border-[3px] border-black shadow-[3px_3px_0_#000] px-4 py-1.5 font-display font-black text-black text-sm uppercase tracking-widest mb-3">
+            <span className="text-black/60">ROOM</span>
+            <span className="text-xl tracking-[0.3em]">{roomCode}</span>
           </div>
-          <h1 className="text-4xl font-extrabold font-display tracking-tight text-foreground">You're in!</h1>
-          <div className="heading-divider heading-divider--green w-12 h-1 mt-2" />
-          <p className="text-lg text-muted-foreground mt-3">Look at the big screen.</p>
+          <h1 className="font-display font-black text-white text-4xl uppercase" style={{ textShadow: "3px 3px 0 #000" }}>You're in!</h1>
         </header>
 
-        <div className="flex-1 flex flex-col items-center justify-center space-y-6 text-center">
-          <div className="relative">
-            <Loader2 className="w-16 h-16 text-primary animate-spin drop-shadow-[0_0_18px_hsl(var(--primary))]" />
+        <div className="flex-1 flex flex-col items-center justify-center space-y-6 text-center px-6">
+          <div className="bg-white border-[3px] border-black shadow-[4px_4px_0_#000] w-24 h-24 flex items-center justify-center">
+            <Loader2 className="w-12 h-12 text-black animate-spin" />
           </div>
-          <h2 className="text-2xl font-bold">Waiting for host to start...</h2>
+          <h2 className="font-display font-black text-black text-2xl uppercase">Waiting for host…</h2>
+          <p className="text-black/70 font-bold font-sans">Look at the big screen.</p>
         </div>
       </div>
     );
@@ -582,26 +582,27 @@ export default function GamePlayer() {
   if (gameState === "playing" && (gameType === "pop-the-question" || gameType === "")) {
     const q = currentQuestion as { prompt?: string } | null;
     return (
-      <div className="flex flex-col min-h-[100dvh] p-4 sm:p-6">
-        <header className="mb-6 sticky top-0 bg-background/85 backdrop-blur-md z-10 py-4 border-b border-border/50">
+      <div className="flex flex-col min-h-[100dvh]">
+        <header className="sticky top-0 z-10 bg-[#FF1493] border-b-[4px] border-black px-4 py-4">
           <AnimatePresence mode="wait">
             <motion.h2
               key={q?.prompt ?? "loading"}
-              initial={{ opacity: 0, y: 10 }}
+              initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.3 }}
-              className="text-xl font-bold font-display leading-tight"
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.2 }}
+              className="font-display font-black text-white text-xl uppercase leading-tight"
+              style={{ textShadow: "2px 2px 0 #000" }}
             >
-              {q?.prompt || "Loading..."}
+              {q?.prompt || "Loading…"}
             </motion.h2>
           </AnimatePresence>
         </header>
 
-        <main className="flex-1 flex flex-col">
+        <main className="flex-1 flex flex-col p-4 bg-[#FFF8E7]">
           {!votedFor && !resultsRevealed ? (
             <motion.div
-              className="space-y-4 pb-8"
+              className="space-y-3 pb-8"
               initial="hidden"
               animate="show"
               variants={{ show: { transition: { staggerChildren: 0.06 } } }}
@@ -614,31 +615,33 @@ export default function GamePlayer() {
                 >
                   <Card
                     onClick={() => handleVote(p.id)}
-                    className="p-6 cursor-pointer transition-all bg-card hover:bg-card/80 border-2 border-border hover:border-primary hover:shadow-[0_0_28px_-6px_hsl(var(--primary)/0.7)] min-h-12"
+                    className="p-6 cursor-pointer bg-white border-[3px] border-black shadow-[4px_4px_0_#000] hover:bg-[#FFD700] min-h-16 active:shadow-[2px_2px_0_#000] active:translate-y-[2px]"
                     data-testid={`btn-vote-${p.id}`}
                   >
-                    <span className="text-2xl font-bold relative z-[1]">{p.name}</span>
+                    <span className="font-display font-black text-black text-2xl uppercase">{p.name}</span>
                   </Card>
                 </motion.div>
               ))}
             </motion.div>
           ) : !resultsRevealed ? (
-            <div className="flex-1 flex flex-col items-center justify-center text-center space-y-6">
+            <div className="flex-1 flex flex-col items-center justify-center text-center space-y-6 p-4">
               <motion.div
                 initial={{ scale: 0, rotate: -90 }}
                 animate={{ scale: 1, rotate: 0 }}
                 transition={{ type: "spring", stiffness: 280, damping: 16 }}
-                className="w-24 h-24 bg-success/20 rounded-full flex items-center justify-center shadow-[0_0_36px_-4px_hsl(var(--success))]"
+                className="w-24 h-24 bg-[#00C853] border-[3px] border-black shadow-[4px_4px_0_#000] flex items-center justify-center"
               >
                 <span className="text-4xl">👍</span>
               </motion.div>
-              <h2 className="text-3xl font-bold font-display">Vote received!</h2>
-              <p className="text-xl text-muted-foreground">Look at the big screen to see what everyone else thought.</p>
+              <h2 className="font-display font-black text-black text-3xl uppercase">Vote received!</h2>
+              <p className="text-black/60 font-sans">Look at the big screen to see what everyone else thought.</p>
             </div>
           ) : (
-            <div className="flex-1 flex flex-col items-center justify-center text-center space-y-6">
-              <h2 className="text-3xl font-bold text-primary text-glow-primary font-display">Results are up!</h2>
-              <p className="text-xl text-muted-foreground">Look at the big screen.</p>
+            <div className="flex-1 flex flex-col items-center justify-center text-center space-y-6 p-4">
+              <div className="bg-[#FF1493] border-[3px] border-black shadow-[4px_4px_0_#000] p-6">
+                <h2 className="font-display font-black text-white text-3xl uppercase" style={{ textShadow: "2px 2px 0 #000" }}>Results are up!</h2>
+              </div>
+              <p className="text-black/60 font-sans">Look at the big screen.</p>
             </div>
           )}
         </main>
@@ -652,18 +655,18 @@ export default function GamePlayer() {
     if (rrPhase === "writing") {
       const roundsRemaining = Math.max(1, rrTotalRounds - rrRound + 1);
       return (
-        <div className="flex flex-col min-h-[100dvh] p-4 sm:p-6">
-          <header className="mb-6 flex items-center justify-between gap-4">
+        <div className="flex flex-col min-h-[100dvh]">
+          <header className="bg-[#FF6B35] border-b-[4px] border-black px-4 py-4 flex items-center justify-between gap-4">
             <div>
-              <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground">
-                Round <span className="text-foreground"><CountUp value={rrRound} duration={0.3} /></span> of {rrTotalRounds}
+              <p className="text-xs font-black uppercase tracking-widest text-black/60">
+                Round <span className="text-black"><CountUp value={rrRound} duration={0.3} /></span> of {rrTotalRounds}
               </p>
-              <h1 className="text-2xl sm:text-3xl font-extrabold font-display tracking-tight text-foreground mt-1 leading-tight">
+              <h1 className="font-display font-black text-white text-2xl uppercase leading-tight" style={{ textShadow: "2px 2px 0 #000" }}>
                 Roast{" "}
                 {rrTargetName ? (
-                  <span className="text-accent">{rrTargetName}</span>
+                  <span className="text-[#FFD700]">{rrTargetName}</span>
                 ) : (
-                  <span className="text-muted-foreground">…</span>
+                  <span className="text-white/60">…</span>
                 )}
               </h1>
             </div>
@@ -677,10 +680,10 @@ export default function GamePlayer() {
             />
           </header>
 
-          <main className="flex-1 flex flex-col">
+          <main className="flex-1 flex flex-col p-4 bg-[#FFF8E7]">
             {!currentRoastQ ? (
               <div className="flex-1 flex items-center justify-center">
-                <Loader2 className="w-12 h-12 text-primary animate-spin" />
+                <Loader2 className="w-12 h-12 text-black animate-spin" />
               </div>
             ) : submittedThisRound ? (
               <motion.div
@@ -693,15 +696,15 @@ export default function GamePlayer() {
                   initial={{ scale: 0, rotate: -90 }}
                   animate={{ scale: 1, rotate: 0 }}
                   transition={{ type: "spring", stiffness: 280, damping: 16, delay: 0.05 }}
-                  className="w-24 h-24 rounded-full flex items-center justify-center bg-rainbow-warm shadow-[0_0_40px_-4px_hsl(var(--primary)/0.7)]"
+                  className="w-24 h-24 bg-[#00C853] border-[3px] border-black shadow-[4px_4px_0_#000] flex items-center justify-center"
                 >
-                  <CheckCircle2 className="w-12 h-12 text-white drop-shadow" />
+                  <CheckCircle2 className="w-12 h-12 text-white" />
                 </motion.div>
-                <h2 className="text-3xl font-bold font-display">Roast sent!</h2>
-                <p className="text-lg text-muted-foreground max-w-sm">
+                <h2 className="font-display font-black text-black text-3xl uppercase">Roast sent!</h2>
+                <p className="text-black/60 max-w-sm font-sans">
                   Waiting for the others to finish writing…
                 </p>
-                <Loader2 className="w-6 h-6 text-muted-foreground animate-spin" />
+                <Loader2 className="w-6 h-6 text-black/40 animate-spin" />
               </motion.div>
             ) : (
               <motion.div
@@ -712,22 +715,19 @@ export default function GamePlayer() {
                 className="flex-1 flex flex-col"
               >
                 <Card
-                  className="p-5 mb-4 border-2"
-                  style={{
-                    borderColor: `${colorHex(currentRoastQ.color)}aa`,
-                    boxShadow: `0 0 32px -8px ${colorHex(currentRoastQ.color)}aa`,
-                  }}
+                  className="p-5 mb-4 border-[3px] border-black shadow-[4px_4px_0_#000]"
+                  style={{ backgroundColor: `${colorHex(currentRoastQ.color)}22` }}
                 >
                   <div className="flex items-start gap-3">
                     <div
-                      className="w-3 self-stretch rounded-full flex-shrink-0"
+                      className="w-3 self-stretch flex-shrink-0 border border-black"
                       style={{ background: colorHex(currentRoastQ.color) }}
                     />
                     <div className="min-w-0">
-                      <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-1">
+                      <p className="text-xs font-black uppercase tracking-widest text-black/50 mb-1">
                         About {rrTargetName || "your target"}
                       </p>
-                      <p className="text-lg sm:text-xl font-bold font-display leading-snug">
+                      <p className="font-display font-black text-black text-lg uppercase leading-snug">
                         {currentRoastQ.question}
                       </p>
                     </div>
@@ -736,12 +736,12 @@ export default function GamePlayer() {
 
                 {answerMethod === "voice" ? (
                   <div
-                    className="rounded-2xl border-2 border-accent/40 bg-accent/10 p-6 text-center mb-4"
+                    className="border-[3px] border-black shadow-[4px_4px_0_#000] bg-[#FF6B35] p-6 text-center mb-4"
                     data-testid="voice-mode-prompt"
                   >
-                    <Mic className="w-12 h-12 text-accent mx-auto mb-3 drop-shadow-[0_0_12px_hsl(var(--accent))]" />
-                    <p className="text-lg font-bold text-accent mb-1">Shout your roast!</p>
-                    <p className="text-sm text-muted-foreground mb-4">
+                    <Mic className="w-12 h-12 text-white mx-auto mb-3" />
+                    <p className="font-display font-black text-white text-lg uppercase mb-1">Shout your roast!</p>
+                    <p className="text-white/80 text-sm mb-4 font-sans">
                       Say it out loud, then tap below so the round can advance.
                     </p>
                     <Button
@@ -768,7 +768,7 @@ export default function GamePlayer() {
                         fireConfetti("rainbow", { particleCount: 30, spread: 60, origin: { y: 0.7 } });
                       }}
                       disabled={submittedThisRound}
-                      className="w-full bg-accent hover:bg-accent/90 text-accent-foreground"
+                      className="w-full"
                       data-testid="btn-mark-spoken"
                     >
                       <Mic className="w-5 h-5 mr-2" /> I said it — next!
@@ -786,7 +786,7 @@ export default function GamePlayer() {
                           : "Type your roast…"
                       }
                       maxLength={140}
-                      className="text-base py-6 min-h-12 bg-card border-2 border-primary/20 focus-visible:border-primary focus-visible:ring-primary/30 focus-visible:shadow-[0_0_24px_-4px_hsl(var(--primary))] transition-shadow"
+                      className="text-base py-6 min-h-12"
                       autoFocus
                       data-testid="input-roast-answer"
                       onKeyDown={(e) => {
@@ -796,7 +796,7 @@ export default function GamePlayer() {
                         }
                       }}
                     />
-                    <div className="text-right text-xs text-muted-foreground mt-1 mb-4 font-mono">
+                    <div className="text-right text-xs text-black/40 mt-1 mb-4 font-mono">
                       {rrCurrentAnswer.length}/140
                     </div>
 
@@ -821,20 +821,19 @@ export default function GamePlayer() {
     // --- WRITING COMPLETE (intermission) ---
     if (rrPhase === "writing-complete") {
       return (
-        <div className="flex flex-col min-h-[100dvh] p-6 items-center justify-center text-center space-y-6">
+        <div className="flex flex-col min-h-[100dvh] bg-[#FFD700] items-center justify-center text-center space-y-6 p-6">
           <motion.div
             initial={{ scale: 0, rotate: -180 }}
             animate={{ scale: 1, rotate: 0 }}
             transition={{ type: "spring", stiffness: 220, damping: 18 }}
-            className="w-28 h-28 rounded-full flex items-center justify-center bg-rainbow-warm shadow-[0_0_50px_-4px_hsl(var(--primary)/0.7)]"
+            className="w-28 h-28 bg-[#FF1493] border-[3px] border-black shadow-[5px_5px_0_#000] flex items-center justify-center"
           >
-            <Sparkles className="w-14 h-14 text-white drop-shadow" />
+            <Sparkles className="w-14 h-14 text-white" />
           </motion.div>
-          <h1 className="text-4xl font-extrabold font-display tracking-tight text-foreground">
+          <h1 className="font-display font-black text-black text-4xl uppercase" style={{ textShadow: "3px 3px 0 rgba(0,0,0,0.2)" }}>
             All roasts in
           </h1>
-          <div className="heading-divider heading-divider--pink w-16 h-1 mx-auto" />
-          <p className="text-lg text-muted-foreground max-w-sm">
+          <p className="text-black/70 max-w-sm font-sans">
             Time for reveals. Look at the big screen.
           </p>
         </div>
@@ -847,16 +846,15 @@ export default function GamePlayer() {
       if (isMyCard) {
         const allPicked = rrPickedColors.size >= Object.keys(rrCard).length && Object.keys(rrCard).length > 0;
         return (
-          <div className="flex flex-col min-h-[100dvh] p-4 sm:p-6">
-            <header className="mb-5 text-center">
-              <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Your card!</p>
-              <h1 className="text-2xl sm:text-3xl font-extrabold font-display tracking-tight text-foreground mt-1 leading-tight">
+          <div className="flex flex-col min-h-[100dvh]">
+            <header className="bg-[#FF6B35] border-b-[4px] border-black px-4 py-5 text-center">
+              <p className="text-xs font-black uppercase tracking-widest text-black/60">Your card!</p>
+              <h1 className="font-display font-black text-white text-2xl uppercase" style={{ textShadow: "2px 2px 0 #000" }}>
                 Guess who roasted you
               </h1>
-              <div className="heading-divider heading-divider--orange w-16 h-1 mx-auto mt-2" />
             </header>
 
-            <main className="flex-1 flex flex-col gap-3 pb-8">
+            <main className="flex-1 flex flex-col gap-3 p-4 pb-8 bg-[#FFF8E7]">
               <AnimatePresence mode="popLayout">
                 {Object.entries(rrCard).map(([color, entry], idx) => {
                   const q = rrQuestions.find((x) => x.color === color);
@@ -872,30 +870,28 @@ export default function GamePlayer() {
                       transition={{ delay: idx * 0.05, duration: 0.35 }}
                     >
                       <Card
-                        className="p-4 border-2"
+                        className="p-4 border-[3px] border-black shadow-[4px_4px_0_#000]"
                         style={{
-                          borderColor: picked ? "hsl(var(--success) / 0.5)" : `${colorHex(color)}aa`,
-                          boxShadow: picked ? "none" : `0 0 24px -10px ${colorHex(color)}cc`,
-                          opacity: picked ? 0.6 : 1,
+                          backgroundColor: picked ? "#e8f5e9" : `${colorHex(color)}18`,
+                          opacity: picked ? 0.7 : 1,
                         }}
                       >
                         <div className="flex items-start gap-3">
                           <div
-                            className="w-3 self-stretch rounded-full flex-shrink-0"
+                            className="w-3 self-stretch flex-shrink-0 border border-black"
                             style={{ background: colorHex(color) }}
                           />
                           <div className="flex-1 min-w-0">
                             {q?.question && (
-                              <p className="text-xs text-muted-foreground mb-1 leading-snug">{q.question}</p>
+                              <p className="text-xs text-black/50 mb-1 leading-snug font-sans">{q.question}</p>
                             )}
-                            <p className="text-base sm:text-lg font-bold leading-snug break-words">
+                            <p className="font-display font-black text-black text-base uppercase leading-snug break-words">
                               "{entry.answer}"
                             </p>
 
                             {!picked && !isPicking && (
                               <Button
                                 size="sm"
-                                variant="outline"
                                 className="mt-3 min-h-10"
                                 onClick={() => setRrPickFor({ color, entry })}
                                 data-testid={`btn-pick-${color}`}
@@ -910,7 +906,7 @@ export default function GamePlayer() {
                                 animate={{ opacity: 1, height: "auto" }}
                                 className="mt-3 space-y-2"
                               >
-                                <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground">
+                                <p className="text-xs font-black uppercase tracking-widest text-black/50">
                                   Who wrote it?
                                 </p>
                                 <div className="grid grid-cols-2 gap-2">
@@ -919,9 +915,8 @@ export default function GamePlayer() {
                                     .map((p) => (
                                       <Button
                                         key={p.id}
-                                        variant="outline"
                                         size="sm"
-                                        className="min-h-12 justify-start font-bold"
+                                        className="min-h-12 justify-start font-display font-black uppercase"
                                         onClick={() => handlePickAuthor(p.id)}
                                         data-testid={`btn-author-${p.id}`}
                                       >
@@ -932,7 +927,7 @@ export default function GamePlayer() {
                                 <Button
                                   variant="ghost"
                                   size="sm"
-                                  className="text-muted-foreground"
+                                  className="text-black/50"
                                   onClick={() => setRrPickFor(null)}
                                 >
                                   Cancel
@@ -941,7 +936,7 @@ export default function GamePlayer() {
                             )}
 
                             {picked && (
-                              <div className="mt-2 flex items-center gap-2 text-success text-sm font-bold">
+                              <div className="mt-2 flex items-center gap-2 text-[#00C853] text-sm font-black uppercase">
                                 <CheckCircle2 className="w-4 h-4" /> Revealed
                               </div>
                             )}
@@ -959,7 +954,7 @@ export default function GamePlayer() {
                   animate={{ opacity: 1, y: 0 }}
                   className="text-center mt-4"
                 >
-                  <p className="text-lg font-bold text-muted-foreground">
+                  <p className="font-display font-black text-black uppercase">
                     All authors guessed! Look at the big screen.
                   </p>
                 </motion.div>
@@ -971,20 +966,20 @@ export default function GamePlayer() {
 
       // Spectator (someone else's card is being revealed)
       return (
-        <div className="flex flex-col min-h-[100dvh] p-6 items-center justify-center text-center space-y-6">
+        <div className="flex flex-col min-h-[100dvh] bg-[#00E5FF] items-center justify-center text-center space-y-6 p-6">
           <motion.div
             initial={{ scale: 0, rotate: -90 }}
             animate={{ scale: 1, rotate: 0 }}
             transition={{ type: "spring", stiffness: 220, damping: 18 }}
-            className="w-24 h-24 rounded-full flex items-center justify-center bg-card/85 border-2 border-primary/40 backdrop-blur shadow-[0_0_40px_-6px_hsl(var(--primary)/0.6)]"
+            className="w-24 h-24 bg-white border-[3px] border-black shadow-[4px_4px_0_#000] flex items-center justify-center"
           >
-            <Eye className="w-12 h-12 text-primary" />
+            <Eye className="w-12 h-12 text-black" />
           </motion.div>
-          <p className="text-sm font-bold uppercase tracking-widest text-muted-foreground">Now roasting</p>
-          <h1 className="text-4xl sm:text-5xl font-extrabold font-display tracking-tight text-foreground leading-tight">
+          <p className="text-xs font-black uppercase tracking-widest text-black/60">Now roasting</p>
+          <h1 className="font-display font-black text-black text-4xl uppercase" style={{ textShadow: "2px 2px 0 rgba(0,0,0,0.2)" }}>
             {rrCurrentRevealName || "…"}
           </h1>
-          <p className="text-lg text-muted-foreground max-w-sm">
+          <p className="text-black/60 max-w-sm font-sans">
             Watch the big screen — they're guessing who wrote each roast.
           </p>
         </div>
@@ -997,19 +992,18 @@ export default function GamePlayer() {
     // Round summary intermission
     if (pqRoundSummary) {
       return (
-        <div className="flex flex-col min-h-[100dvh] p-6 items-center justify-center text-center space-y-6">
+        <div className="flex flex-col min-h-[100dvh] bg-[#00C853] items-center justify-center text-center space-y-6 p-6">
           <motion.div
             initial={{ scale: 0, rotate: -90 }}
             animate={{ scale: 1, rotate: 0 }}
             transition={{ type: "spring", stiffness: 220, damping: 18 }}
-            className="w-24 h-24 rounded-full flex items-center justify-center bg-secondary/20 border-2 border-secondary/40 shadow-[0_0_36px_-4px_hsl(var(--secondary))]"
+            className="w-24 h-24 bg-white border-[3px] border-black shadow-[4px_4px_0_#000] flex items-center justify-center"
           >
-            <Beer className="w-12 h-12 text-secondary" />
+            <Beer className="w-12 h-12 text-black" />
           </motion.div>
-          <p className="text-sm font-bold uppercase tracking-widest text-muted-foreground">Round Complete</p>
-          <h1 className="text-3xl font-extrabold font-display tracking-tight">{pqRoundSummary.roundName}</h1>
-          <div className="heading-divider heading-divider--green w-16 h-1" />
-          <p className="text-lg text-muted-foreground max-w-sm">
+          <p className="text-xs font-black uppercase tracking-widest text-black/60">Round Complete</p>
+          <h1 className="font-display font-black text-black text-3xl uppercase" style={{ textShadow: "2px 2px 0 rgba(0,0,0,0.15)" }}>{pqRoundSummary.roundName}</h1>
+          <p className="text-black/70 max-w-sm font-sans">
             {pqRoundSummary.isLastRound
               ? "Final standings on the big screen!"
               : "Look at the big screen for round standings."}
@@ -1021,9 +1015,9 @@ export default function GamePlayer() {
     // Loading
     if (!pqQuestion) {
       return (
-        <div className="flex flex-col min-h-[100dvh] items-center justify-center p-6 space-y-4">
-          <Loader2 className="w-12 h-12 text-primary animate-spin" />
-          <p className="text-lg text-muted-foreground">Loading next question…</p>
+        <div className="flex flex-col min-h-[100dvh] bg-[#FFF8E7] items-center justify-center p-6 space-y-4">
+          <Loader2 className="w-12 h-12 text-black animate-spin" />
+          <p className="text-black/60 font-sans">Loading next question…</p>
         </div>
       );
     }
@@ -1039,36 +1033,36 @@ export default function GamePlayer() {
       const wasFirst = pqReveal.firstCorrectPlayerId === me?.id;
 
       return (
-        <div className="flex flex-col min-h-[100dvh] p-6 items-center justify-center text-center space-y-6">
+        <div className={`flex flex-col min-h-[100dvh] items-center justify-center text-center space-y-6 p-6 ${wasCorrect ? "bg-[#00C853]" : "bg-[#FF1493]"}`}>
           <motion.div
             initial={{ scale: 0, rotate: -90 }}
             animate={{ scale: 1, rotate: 0 }}
             transition={{ type: "spring", stiffness: 240, damping: 18 }}
-            className={`w-28 h-28 rounded-full flex items-center justify-center shadow-[0_0_50px_-4px_currentColor] ${
-              wasCorrect ? "bg-success/20 border-2 border-success text-success" : "bg-destructive/15 border-2 border-destructive/50 text-destructive"
-            }`}
+            className="w-28 h-28 bg-white border-[3px] border-black shadow-[5px_5px_0_#000] flex items-center justify-center"
           >
-            {wasCorrect ? <Check className="w-14 h-14" /> : <X className="w-14 h-14" />}
+            {wasCorrect
+              ? <Check className="w-14 h-14 text-[#00C853]" />
+              : <X className="w-14 h-14 text-[#FF1493]" />}
           </motion.div>
-          <h1 className={`text-4xl font-extrabold font-display tracking-tight ${wasCorrect ? "text-success" : "text-destructive"}`}>
+          <h1 className="font-display font-black text-white text-4xl uppercase" style={{ textShadow: "3px 3px 0 rgba(0,0,0,0.3)" }}>
             {wasCorrect ? "Correct!" : myAnswer ? "Not quite" : "No answer"}
           </h1>
           {wasFirst && (
-            <div className="px-4 py-2 rounded-full bg-yellow-400/20 border border-yellow-400/50 text-yellow-400 font-bold uppercase tracking-widest text-sm">
+            <div className="bg-[#FFD700] border-[3px] border-black shadow-[3px_3px_0_#000] px-4 py-2 font-display font-black text-black uppercase text-sm tracking-widest">
               + 0.5 first-correct bonus
             </div>
           )}
-          <div className="bg-card/85 backdrop-blur p-5 rounded-2xl border-2 border-border w-full max-w-sm surface-elevated">
-            <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-1">Correct answer</p>
-            <p className="text-2xl font-extrabold text-foreground">{pqReveal.correctAnswer}</p>
+          <div className="bg-white border-[3px] border-black shadow-[4px_4px_0_#000] p-5 w-full max-w-sm">
+            <p className="text-xs font-black uppercase tracking-widest text-black/50 mb-1">Correct answer</p>
+            <p className="font-display font-black text-black text-2xl uppercase">{pqReveal.correctAnswer}</p>
             {myAnswer && !wasCorrect && (
               <>
-                <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground mt-3 mb-1">Your answer</p>
-                <p className="text-lg font-bold text-muted-foreground">{myAnswer.raw}</p>
+                <p className="text-xs font-black uppercase tracking-widest text-black/50 mt-3 mb-1">Your answer</p>
+                <p className="text-black/60 font-sans">{myAnswer.raw}</p>
               </>
             )}
           </div>
-          <p className="text-sm text-muted-foreground">Look at the big screen for standings.</p>
+          <p className="text-white/70 text-sm font-sans">Look at the big screen for standings.</p>
         </div>
       );
     }
@@ -1076,27 +1070,24 @@ export default function GamePlayer() {
     // Answered, waiting for reveal
     if (pqAnswered) {
       const showResult = pqMyResult !== null;
+      const bgColor = showResult ? (pqMyResult.correct ? "#00C853" : "#FF1493") : "#FF6B35";
       return (
-        <div className="flex flex-col min-h-[100dvh] p-6 items-center justify-center text-center space-y-6">
+        <div className="flex flex-col min-h-[100dvh] items-center justify-center text-center space-y-6 p-6" style={{ backgroundColor: bgColor }}>
           <motion.div
             initial={{ scale: 0, rotate: -45 }}
             animate={{ scale: 1, rotate: 0 }}
             transition={{ type: "spring", stiffness: 280, damping: 18 }}
-            className={`w-24 h-24 rounded-full flex items-center justify-center shadow-[0_0_36px_-4px_currentColor] ${
-              showResult
-                ? pqMyResult.correct
-                  ? "bg-success/20 border-2 border-success text-success"
-                  : "bg-destructive/15 border-2 border-destructive/50 text-destructive"
-                : "bg-card border-2 border-primary/40 text-primary"
-            }`}
+            className="w-24 h-24 bg-white border-[3px] border-black shadow-[4px_4px_0_#000] flex items-center justify-center"
           >
             {showResult ? (
-              pqMyResult.correct ? <Check className="w-12 h-12" /> : <X className="w-12 h-12" />
+              pqMyResult.correct
+                ? <Check className="w-12 h-12 text-[#00C853]" />
+                : <X className="w-12 h-12 text-[#FF1493]" />
             ) : (
-              <CheckCircle2 className="w-12 h-12" />
+              <CheckCircle2 className="w-12 h-12 text-[#FF6B35]" />
             )}
           </motion.div>
-          <h2 className="text-3xl font-extrabold font-display">
+          <h2 className="font-display font-black text-white text-3xl uppercase" style={{ textShadow: "2px 2px 0 rgba(0,0,0,0.3)" }}>
             {showResult
               ? pqMyResult.correct
                 ? pqMyResult.bonus
@@ -1106,28 +1097,28 @@ export default function GamePlayer() {
               : "Answer sent!"}
           </h2>
           {pqMyResult?.bonus && (
-            <div className="px-4 py-2 rounded-full bg-yellow-400/20 border border-yellow-400/50 text-yellow-400 font-bold uppercase tracking-widest text-sm">
+            <div className="bg-[#FFD700] border-[3px] border-black shadow-[3px_3px_0_#000] px-4 py-2 font-display font-black text-black uppercase text-sm tracking-widest">
               + 0.5 bonus
             </div>
           )}
-          <p className="text-lg text-muted-foreground max-w-sm">
+          <p className="text-white/70 max-w-sm font-sans">
             Waiting for everyone else… the answer reveals on the big screen.
           </p>
-          <Loader2 className="w-6 h-6 text-muted-foreground animate-spin" />
+          <Loader2 className="w-6 h-6 text-white/60 animate-spin" />
         </div>
       );
     }
 
     // Active question — answer UI
     return (
-      <div className="flex flex-col min-h-[100dvh] p-4 sm:p-6">
-        <header className="mb-4 flex items-center justify-between gap-4">
+      <div className="flex flex-col min-h-[100dvh]">
+        <header className="bg-[#00E5FF] border-b-[4px] border-black px-4 py-4 flex items-center justify-between gap-4">
           <div className="min-w-0 flex-1">
-            <p className="text-xs font-bold uppercase tracking-widest text-secondary">
+            <p className="text-xs font-black uppercase tracking-widest text-black/60">
               <Beer className="w-3.5 h-3.5 inline mr-1 -mt-0.5" />
               {pqQuestion.roundName}
             </p>
-            <p className="text-xs text-muted-foreground mt-0.5">
+            <p className="text-xs text-black/50 mt-0.5 font-sans">
               Q {pqQuestion.questionIndex + 1} of {pqQuestion.questionsInRound}
               <span className="mx-1.5">·</span>
               R {pqQuestion.roundIndex + 1}/{pqQuestion.totalRounds}
@@ -1142,9 +1133,9 @@ export default function GamePlayer() {
           />
         </header>
 
-        <main className="flex-1 flex flex-col">
-          <Card className="p-5 mb-5 border-2 border-secondary/30 bg-card/85">
-            <h2 className="text-xl sm:text-2xl font-extrabold font-display leading-snug">
+        <main className="flex-1 flex flex-col p-4 bg-[#FFF8E7]">
+          <Card className="p-5 mb-5 border-[3px] border-black shadow-[4px_4px_0_#000]">
+            <h2 className="font-display font-black text-black text-xl uppercase leading-snug">
               {pqQuestion.prompt}
             </h2>
           </Card>
@@ -1164,15 +1155,14 @@ export default function GamePlayer() {
                   whileTap={{ scale: 0.97 }}
                 >
                   <Button
-                    variant="outline"
-                    className="w-full min-h-16 text-left text-lg font-bold py-4 px-4 justify-start whitespace-normal h-auto border-2 hover:border-primary hover:shadow-[0_0_24px_-6px_hsl(var(--primary)/0.7)]"
+                    className="w-full min-h-16 text-left py-4 px-4 justify-start whitespace-normal h-auto"
                     onClick={() => handlePqPickOption(idx)}
                     data-testid={`btn-pq-option-${idx}`}
                   >
-                    <div className="w-8 h-8 rounded-full bg-muted text-muted-foreground flex items-center justify-center font-black mr-3 flex-shrink-0">
+                    <div className="w-8 h-8 bg-white border-[2px] border-black text-black flex items-center justify-center font-black mr-3 flex-shrink-0 text-sm">
                       {String.fromCharCode(65 + idx)}
                     </div>
-                    <span className="flex-1">{opt}</span>
+                    <span className="flex-1 font-display font-black uppercase text-sm">{opt}</span>
                   </Button>
                 </motion.div>
               ))}
@@ -1184,7 +1174,7 @@ export default function GamePlayer() {
             <div className="grid grid-cols-2 gap-4 pb-6">
               <motion.div whileTap={{ scale: 0.96 }}>
                 <Button
-                  className="w-full min-h-32 text-3xl font-black bg-success/15 hover:bg-success/25 text-success border-2 border-success/50 shadow-[0_0_24px_-8px_hsl(var(--success))]"
+                  className="w-full min-h-32 font-display font-black text-3xl uppercase bg-[#00C853] text-white border-[3px] border-black shadow-[4px_4px_0_#000] hover:bg-[#00C853]/90"
                   onClick={() => handlePqPickTrueFalse(true)}
                   data-testid="btn-pq-true"
                 >
@@ -1193,7 +1183,7 @@ export default function GamePlayer() {
               </motion.div>
               <motion.div whileTap={{ scale: 0.96 }}>
                 <Button
-                  className="w-full min-h-32 text-3xl font-black bg-destructive/15 hover:bg-destructive/25 text-destructive border-2 border-destructive/50 shadow-[0_0_24px_-8px_hsl(var(--destructive))]"
+                  className="w-full min-h-32 font-display font-black text-3xl uppercase bg-[#FF1493] text-white border-[3px] border-black shadow-[4px_4px_0_#000] hover:bg-[#FF1493]/90"
                   onClick={() => handlePqPickTrueFalse(false)}
                   data-testid="btn-pq-false"
                 >
@@ -1211,7 +1201,7 @@ export default function GamePlayer() {
                 onChange={(e) => setPqOpenAnswerInput(e.target.value)}
                 placeholder="Type your answer…"
                 maxLength={120}
-                className="text-lg py-6 min-h-12 bg-card border-2 border-secondary/30 focus-visible:border-secondary focus-visible:ring-secondary/30 focus-visible:shadow-[0_0_24px_-4px_hsl(var(--secondary))] transition-shadow"
+                className="text-lg py-6 min-h-12"
                 autoFocus
                 data-testid="input-pq-open"
                 onKeyDown={(e) => {
@@ -1221,7 +1211,7 @@ export default function GamePlayer() {
                   }
                 }}
               />
-              <p className="text-xs text-muted-foreground text-center">
+              <p className="text-xs text-black/50 text-center font-sans">
                 Spelling counts loosely — typos and minor variations are accepted.
               </p>
               <Button
@@ -1245,14 +1235,13 @@ export default function GamePlayer() {
     const myScore = players.find((p) => p.id === me?.id)?.score || 0;
 
     return (
-      <div className="flex flex-col min-h-[100dvh] p-6 items-center justify-center text-center space-y-8">
-        <h1 className="text-5xl font-extrabold font-display tracking-tight text-foreground">Game Over</h1>
-        <div className="heading-divider heading-divider--magenta w-16 h-1" />
+      <div className="flex flex-col min-h-[100dvh] bg-[#FFD700] items-center justify-center text-center space-y-8 p-6">
+        <h1 className="font-display font-black text-black text-5xl uppercase" style={{ textShadow: "4px 4px 0 rgba(0,0,0,0.2)" }}>Game Over</h1>
         <motion.div
           initial={{ opacity: 0, scale: 0.85, y: 12 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           transition={{ type: "spring", stiffness: 220, damping: 20 }}
-          className="bg-card/85 backdrop-blur p-8 rounded-3xl border-2 border-primary/30 w-full max-w-sm surface-elevated shadow-[0_0_60px_-20px_hsl(var(--primary)/0.7)]"
+          className="bg-white border-[3px] border-black shadow-[6px_6px_0_#000] p-8 w-full max-w-sm"
         >
           <p className="text-lg text-muted-foreground mb-2">You scored</p>
           <div className="text-6xl font-black text-primary text-glow-primary">

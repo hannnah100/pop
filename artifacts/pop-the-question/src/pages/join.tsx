@@ -144,10 +144,15 @@ export default function Join() {
                   onSubmit={handleJoin}
                   className="space-y-5"
                 >
-                  <div className="text-center mb-2">
-                    <span className="inline-block bg-[#FFD700] border-[2px] border-black px-3 py-1 font-display font-black text-black uppercase text-sm tracking-wider">
-                      Room: {roomCode}
-                    </span>
+                  <div className="flex items-center justify-center gap-2 mb-4">
+                    <ArrowDoodle className="w-10 h-7 text-[#FF1493] rotate-180 -scale-y-100" />
+                    <div className="flex flex-col items-center">
+                      <SpeechBubbleDoodle className="w-10 h-9 text-[#FFD700]" />
+                      <div className="bg-[#FFD700] border-[3px] border-black shadow-[3px_3px_0_#000] px-4 py-2 font-display font-black text-black uppercase text-lg tracking-[0.3em] -mt-1">
+                        {roomCode}
+                      </div>
+                    </div>
+                    <ArrowDoodle className="w-10 h-7 text-[#FF1493] -scale-y-100" />
                   </div>
                   <div className="space-y-2">
                     <label className="text-xs font-bold text-black/60 uppercase tracking-widest font-sans">Your Nickname</label>

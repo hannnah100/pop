@@ -626,7 +626,7 @@ export default function GameHost() {
 
   const DemoBadge = () =>
     isDemo ? (
-      <div className="flex items-center gap-2 bg-primary/20 border border-primary/40 text-primary px-4 py-2 rounded-full font-bold text-lg shadow-[0_0_18px_-4px_hsl(var(--primary))]">
+      <div className="flex items-center gap-2 bg-[#FFD700] border-[3px] border-black shadow-[3px_3px_0_#000] text-black px-4 py-2 font-display font-black text-lg uppercase">
         <Bot className="w-5 h-5" />
         DEMO MODE
       </div>
@@ -640,13 +640,13 @@ export default function GameHost() {
       animate={{ opacity: 1, scale: 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.8 }}
       transition={{ type: "spring", stiffness: 360, damping: 18 }}
-      className={`text-2xl font-bold px-6 py-4 rounded-xl border flex items-center gap-2 surface-elevated
+      className={`font-display font-black text-2xl uppercase px-6 py-4 border-[3px] border-black shadow-[4px_4px_0_#000] flex items-center gap-2
         ${p.isBot
-          ? "bg-primary/10 border-primary/30 text-muted-foreground"
-          : "bg-background border-secondary/40 shadow-[0_0_24px_-8px_hsl(var(--secondary)/0.6)]"
+          ? "bg-[#FFF8E7] text-black/50"
+          : "bg-white text-black"
         }`}
     >
-      {p.isBot && <Bot className="w-5 h-5 text-primary/60" />}
+      {p.isBot && <Bot className="w-5 h-5 text-black/40" />}
       {p.name}
     </motion.div>
   );
