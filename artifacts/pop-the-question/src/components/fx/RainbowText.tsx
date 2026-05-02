@@ -50,6 +50,8 @@ export function RainbowText({
         const style: CSSProperties = {
           color,
           WebkitTextStroke: "3px #000",
+          // @ts-expect-error: text-stroke is not yet in TS CSSProperties
+          textStroke: "3px #000",
           paintOrder: "stroke fill",
         };
         return (

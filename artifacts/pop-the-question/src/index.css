@@ -175,10 +175,17 @@
     font-family: var(--app-font-display);
     color: #fff;
     -webkit-text-stroke: 3px #000;
+    text-stroke: 3px #000;
     paint-order: stroke fill;
     letter-spacing: -0.01em;
     line-height: 1.1;
     font-weight: 900;
+  }
+
+  h1 span, h2 span, h3 span, h4 span, h5 span, h6 span {
+    -webkit-text-stroke: inherit;
+    text-stroke: inherit;
+    paint-order: inherit;
   }
 }
 
@@ -467,6 +474,7 @@ body[data-game-paused="true"]::after {
   letter-spacing: 0.08em;
   color: #fff;
   -webkit-text-stroke: 3px #000;
+  text-stroke: 3px #000;
   paint-order: stroke fill;
   pointer-events: none;
 }
