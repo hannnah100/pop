@@ -1,8 +1,13 @@
-import { Switch, Route, Router as WouterRouter } from "wouter";
+import { Switch, Route, Router as WouterRouter, useLocation } from "wouter";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { AnimatePresence, motion } from "framer-motion";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/not-found";
+import { AnimatedBackground } from "@/components/fx/AnimatedBackground";
+import { MuteToggle } from "@/components/fx/MuteToggle";
+import { useUnlockOnFirstInteraction } from "@/lib/sfx";
+import { pageTransition } from "@/lib/motion";
 
 import Home from "@/pages/home";
 import ThreeStrikes from "@/pages/daily/three-strikes";
@@ -23,21 +28,42 @@ const queryClient = new QueryClient({
   },
 });
 
-function Router() {
+function AnimatedRoutes() {
+  const [location] = useLocation();
   return (
-    <div className="min-h-[100dvh] flex flex-col w-full bg-background text-foreground">
-      <Switch>
-        <Route path="/" component={Home} />
-        <Route path="/daily/three-strikes" component={ThreeStrikes} />
-        <Route path="/daily/crossword" component={Crossword} />
-        <Route path="/host" component={Host} />
-        <Route path="/join" component={Join} />
-        <Route path="/game/:roomCode/host" component={GameHost} />
-        <Route path="/game/:roomCode/player" component={GamePlayer} />
-        <Route path="/stats" component={Stats} />
-        <Route path="/archive" component={Archive} />
-        <Route component={NotFound} />
-      </Switch>
+    <AnimatePresence mode="wait" initial={false}>
+      <motion.div
+        key={location}
+        variants={pageTransition}
+        initial="hidden"
+        animate="show"
+        exit="exit"
+        className="flex flex-col flex-1 min-h-0"
+      >
+        <Switch location={location}>
+          <Route path="/" component={Home} />
+          <Route path="/daily/three-strikes" component={ThreeStrikes} />
+          <Route path="/daily/crossword" component={Crossword} />
+          <Route path="/host" component={Host} />
+          <Route path="/join" component={Join} />
+          <Route path="/game/:roomCode/host" component={GameHost} />
+          <Route path="/game/:roomCode/player" component={GamePlayer} />
+          <Route path="/stats" component={Stats} />
+          <Route path="/archive" component={Archive} />
+          <Route component={NotFound} />
+        </Switch>
+      </motion.div>
+    </AnimatePresence>
+  );
+}
+
+function Router() {
+  useUnlockOnFirstInteraction();
+  return (
+    <div className="relative min-h-[100dvh] flex flex-col w-full text-foreground">
+      <AnimatedBackground />
+      <AnimatedRoutes />
+      <MuteToggle />
     </div>
   );
 }

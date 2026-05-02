@@ -1,0 +1,211 @@
+Hey Agent! I need you to completely redesign the visual style of Pop: The Question to make it feel fun, exciting, and NOT like a generic AI product.
+FONT CHANGES:
+Replace the current fonts with something more playful and distinctive:
+
+Display/Headings Font:
+
+Use "Cabinet Grotesk" OR "Clash Display" OR "Outfit" (bold weights)
+These are modern, rounded, friendly fonts
+NOT Space Grotesk (too tech/AI-looking)
+
+
+Body Text Font:
+
+Keep Inter for small text (it's readable)
+But use "DM Sans" or "Plus Jakarta Sans" for UI labels and buttons
+Slightly rounded, warmer feeling
+
+
+Special/Fun Font (for celebrations, results screens):
+
+Use "Fredoka" or "Righteous" for big moments
+Example: "YOU WON!" or "NEW RECORD!" screens
+
+
+
+Import these from Google Fonts and update the Tailwind config.
+
+COLOR PALETTE - REMOVE PURPLE/BLUE, ADD WARM COLORS:
+NEW Primary Colors (use these throughout):
+
+Hot Pink: #FF1493
+Orange: #FF6B35
+Yellow/Gold: #FFD700
+Lime Green: #00F5A0
+Bright Magenta: #FF006E
+Coral: #FF6F61
+
+REMOVE or minimize:
+
+Purple (#6B46C1) - delete this
+Dark blue (#4169E1) - delete this
+Cyan (#00D9FF) - only use sparingly as accent
+
+Keep for backgrounds:
+
+Dark background: #0A0A0F
+White text: #FFFFFF
+
+The vibe: warm, energetic, sunset/neon/festival colors. NOT cold tech blues and purples.
+
+RAINBOW TEXT STYLE (Like Room Codes):
+Apply the multi-color letter style (where each letter is a different color) to:
+
+Main logo: "POP: THE QUESTION"
+All game titles: "THREE STRIKES", "MINI CROSSWORD", "POP THE QUESTION", etc.
+Player names in games
+Big score numbers
+Headings like "DAILY GAMES", "HOSTED PARTY GAMES"
+
+Color cycling pattern for rainbow text:
+Red → Orange → Yellow → Green → Pink → Magenta → (repeat)
+Example:
+"THREE STRIKES"
+T = Red
+H = Orange  
+R = Yellow
+E = Green
+E = Pink
+(space)
+S = Magenta
+T = Red
+R = Orange
+I = Yellow
+K = Green
+E = Pink
+S = Magenta
+Each letter gets its own bright color from the warm rainbow palette.
+
+GRADIENT BACKGROUNDS:
+Use rainbow gradients (warm colors only) for:
+
+Primary buttons
+Card borders on hover
+Section backgrounds
+Success/celebration screens
+
+Example button gradient:
+cssbackground: linear-gradient(135deg, #FF1493, #FF6B35, #FFD700, #00F5A0);
+Animate gradients - make them shift/flow slowly (3-5 second loops).
+
+MOBILE-FIRST DESIGN:
+Build everything mobile-responsive from the start:
+
+Breakpoints:
+
+Mobile: 375px - 767px (PRIMARY - design for this first)
+Tablet: 768px - 1023px
+Desktop: 1024px+
+
+
+Touch-friendly:
+
+Minimum button size: 48px × 48px
+Large tap targets everywhere
+Generous spacing between clickable elements
+Bottom navigation on mobile (thumb zone)
+
+
+Mobile Player Views:
+
+Single column layouts
+Full-width buttons
+Large text (minimum 16px body, 24px+ headings)
+No hover states (use active states instead)
+Sticky headers/footers for important controls
+
+
+Host Views:
+
+Desktop/tablet optimized (for projector/TV)
+But still needs to work if host uses phone
+Responsive grid layouts
+Scale text based on screen size
+
+
+Test on actual phone sizes:
+
+iPhone SE (375px) - smallest
+iPhone Pro (390px)
+Standard Android (360px)
+
+
+
+
+OVERALL STYLE DIRECTION:
+Make it look like:
+
+Duolingo (playful, colorful, fun fonts)
+Spotify Wrapped (rainbow gradients, exciting)
+BeReal (warm colors, friendly)
+Retro arcade games (bright neon, energetic)
+
+NOT like:
+
+ChatGPT/Claude (purple, blue, sterile)
+Corporate SaaS (minimal, cold)
+Generic bootstrap templates
+AI landing pages (too much purple/blue)
+
+
+SPECIFIC UI UPDATES:
+Homepage:
+
+Logo in rainbow text (each letter different color)
+Game cards with rainbow gradient borders
+Buttons with gradient backgrounds (warm colors)
+Everything feels playful and colorful
+
+Three Strikes:
+
+Game title in rainbow letters
+Answer boxes with colored borders (not gray)
+Correct answers reveal with color pop
+Celebration confetti uses warm colors
+
+Hosted Games:
+
+Room codes: keep the multi-color letter style
+Leaderboards: colorful player names
+Score numbers: rainbow digits
+Warm, inviting color scheme throughout
+
+All Buttons:
+
+No boring solid colors
+Use gradients (pink → orange, yellow → green, etc.)
+Rounded corners (12px-16px border-radius)
+Hover/active states with scale animations
+
+Typography Scale:
+
+Huge: 48px-72px (questions on projector, logo)
+Large: 32px-40px (headings, game titles)
+Medium: 20px-24px (subheadings, player names)
+Body: 16px-18px (readable text)
+Small: 14px (hints, helper text)
+
+
+NO PURPLE/BLUE RULE:
+Scan the entire codebase and replace all instances of:
+
+#6B46C1 (pop-purple) → use #FF1493 or #FF6B35
+#4169E1 (blue) → use #FFD700 or #00F5A0
+Any purple/blue gradients → replace with warm rainbow gradients
+
+Only exception: Keep cyan (#00D9FF) as a small accent color (like 5% usage max).
+
+MOBILE RESPONSIVENESS CHECKLIST:
+Make sure every page works perfectly on mobile:
+
+✅ All text readable at phone size
+✅ Buttons easy to tap (big enough, spaced out)
+✅ No horizontal scrolling
+✅ Forms/inputs work with mobile keyboards
+✅ Navigation accessible (bottom nav bar on mobile)
+✅ Game interfaces playable on phone
+✅ Host can control from phone if needed
+✅ Portrait AND landscape orientation support
+
+
+Make Pop: The Question feel like a fun party game app, NOT like an AI tool. Warm colors, playful fonts, rainbow everything, mobile-first.

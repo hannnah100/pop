@@ -1,0 +1,214 @@
+FULL RAINBOW BRANDING UPDATE - INSTRUCTIONS FOR AGENT
+Primary Brand Colors - FULL RAINBOW SPECTRUM:
+Replace the purple-heavy palette with vibrant rainbow:
+css--rainbow-red: #FF0054
+--rainbow-orange: #FF6B35
+--rainbow-yellow: #FFD700
+--rainbow-green: #00F5A0
+--rainbow-cyan: #00D9FF
+--rainbow-blue: #4169E1
+--rainbow-pink: #FF006E
+--rainbow-magenta: #FF1493
+Remove/minimize:
+
+Pop-purple (#6B46C1) - use sparingly or not at all
+Deep purple tones - replace with full spectrum
+
+
+RAINBOW TEXT STYLE (Like Room Codes):
+How the Room Code Style Works:
+Each letter gets its own color from the rainbow spectrum, creating that vibrant multi-color effect.
+Example: Room code "BUZZ"
+B = Red
+U = Orange  
+Z = Yellow
+Z = Green
+Apply This Style to ALL Major Text Elements:
+1. Logo "POP: THE QUESTION"
+P = Red
+O = Orange
+P = Yellow
+: = Green (or skip punctuation)
+T = Cyan
+H = Blue
+E = Pink
+(continue through rainbow, cycling back)
+2. Game Title Cards:
+"THREE STRIKES"
+T = Red
+H = Orange
+R = Yellow
+E = Green
+E = Cyan
+(space)
+S = Blue
+T = Pink
+R = Magenta
+I = Red (cycle restarts)
+K = Orange
+E = Yellow
+S = Green
+3. Player Names in Games:
+Each player's name displays in rainbow letters
+"SARAH" = S(red) A(orange) R(yellow) A(green) H(cyan)
+"MIKE" = M(red) I(orange) K(yellow) E(green)
+4. Score Numbers:
+Big scores use rainbow per digit
+"1,250" = 1(red) ,(orange) 2(yellow) 5(green) 0(cyan)
+5. Homepage Headings:
+"DAILY GAMES" = each letter different rainbow color
+"HOSTED PARTY GAMES" = each letter different color
+
+GRADIENT BACKGROUNDS (Not Text):
+For backgrounds, cards, and UI elements - use rainbow gradients:
+Primary Button Style:
+css.btn-primary {
+  background: linear-gradient(
+    135deg,
+    #FF0054,  /* red */
+    #FF6B35,  /* orange */
+    #FFD700,  /* yellow */
+    #00F5A0,  /* green */
+    #00D9FF,  /* cyan */
+    #4169E1   /* blue */
+  );
+  background-size: 300% 300%;
+  animation: rainbow-shift 4s ease infinite;
+}
+Card Hover Effects:
+css.card:hover {
+  border: 2px solid transparent;
+  background: 
+    linear-gradient(#0A0A0F, #0A0A0F) padding-box,
+    linear-gradient(90deg, #FF0054, #FFD700, #00D9FF, #FF006E) border-box;
+  animation: rainbow-border 3s linear infinite;
+}
+Room Code Display:
+Keep the current multi-letter-color style
+Maybe add subtle rainbow glow around the whole code box
+
+COLOR CYCLING PATTERN:
+Use consistent rainbow order everywhere:
+
+Red (#FF0054)
+Orange (#FF6B35)
+Yellow (#FFD700)
+Green (#00F5A0)
+Cyan (#00D9FF)
+Blue (#4169E1)
+Pink (#FF006E)
+Magenta (#FF1493)
+
+Then loop back to Red
+
+SPECIFIC UI UPDATES:
+Homepage:
+┌─────────────────────────────────┐
+│   P O P : T H E  Q U E S T I O N │  ← Each letter rainbow colored
+│   (red)(orange)(yellow)(green)...│
+│                                 │
+│   "Where pop culture gets       │
+│    personal"                    │  ← Subtle rainbow underline
+│                                 │
+│   DAILY GAMES                   │  ← Rainbow letters
+│   [Three Strikes card]          │  ← Rainbow gradient border
+│   [Mini Crossword card]         │
+│                                 │
+│   HOSTED PARTY GAMES            │  ← Rainbow letters
+│   [Host a Game] ← rainbow btn   │
+│   [Join a Game] ← rainbow btn   │
+└─────────────────────────────────┘
+Three Strikes Game:
+"Name all Marvel Movies"  ← Rainbow text
+33 total answers         ← White text
+
+[?]  [?]  [?]  [?]       ← When revealed, answer text is rainbow
+2008 2008 2010 2011      ← Hints stay white/gray
+
+When revealed:
+[IRON MAN]               ← I(red) R(orange) O(yellow) N(green)...
+Leaderboard:
+#1  SARAH    1,250       ← Name in rainbow, score in gold gradient
+#2  MIKE       890       ← Name in rainbow, score in silver gradient  
+#3  ALEX       750       ← Name in rainbow, score in bronze gradient
+Host View - Jeopardy Board:
+Categories across top - each category name in rainbow text
+Dollar amounts in gold (not rainbow - needs to be readable)
+Selected square glows with rainbow border
+Wheel of Fortune:
+Wheel segments: full rainbow colors (not just dollar amounts)
+Puzzle letters: white on dark (readable)
+Category text: rainbow letters
+Player names: rainbow letters
+
+ANIMATION STYLES:
+Shimmer Effect (for important elements):
+css@keyframes rainbow-shimmer {
+  0% { filter: hue-rotate(0deg); }
+  100% { filter: hue-rotate(360deg); }
+}
+
+.shimmer-text {
+  background: linear-gradient(90deg, 
+    #FF0054, #FFD700, #00D9FF, #FF006E, #FF0054);
+  background-size: 200% auto;
+  animation: rainbow-shimmer 3s linear infinite;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+Flowing Rainbow (for backgrounds):
+css@keyframes rainbow-flow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+WHAT TO KEEP SIMPLE (Not Rainbow):
+Don't rainbow-ify everything - keep these elements clean:
+
+Body text / paragraphs (white/light gray for readability)
+Input fields (white text, simple borders)
+Small helper text (gray)
+Timer numbers (color-coded: green → yellow → red)
+Question text on host projector (white - needs to be readable from distance)
+Answer options A/B/C/D (white with rainbow highlights on selection)
+
+
+DARK BACKGROUND ADJUSTMENT:
+Since using dark mode (#0A0A0F background), rainbow colors POP beautifully.
+Add subtle rainbow accents to dark background:
+cssbody {
+  background: #0A0A0F;
+  background-image: 
+    radial-gradient(circle at 20% 80%, rgba(255, 0, 84, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(0, 217, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(255, 215, 0, 0.05) 0%, transparent 50%);
+}
+This creates subtle colored glows in the background without being overwhelming.
+
+TAGLINE STYLE:
+"Where pop culture gets personal"
+
+Keep this white/light gray
+Add animated rainbow underline that flows left to right
+Or each word gets a different rainbow color but static (not animated)
+
+
+SUMMARY - THE VIBE:
+Think:
+
+Pride flag energy
+Spotify Wrapped 2023 style
+Neon signs at night
+Candy shop vibes
+Festival/rave aesthetics
+Lisa Frank notebooks (but modern/tasteful)
+
+NOT:
+
+Corporate purple gradients
+Monochrome
+Muted pastels
+Single-color themes
+
+Every major UI element should have rainbow colors - either as multi-letter text like the room code, or as flowing gradients in backgrounds/borders.

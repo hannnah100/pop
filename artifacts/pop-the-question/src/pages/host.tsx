@@ -7,20 +7,15 @@ import { Button } from "@/components/ui/button";
 import { MessageSquare, Flame, Loader2, Bot } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
+import { staggerContainer, staggerItem } from "@/lib/motion";
 
-interface HostProps {
-  preDemo?: boolean;
-}
-
-export default function Host({ preDemo = false }: HostProps) {
+export default function Host() {
   const [, setLocation] = useLocation();
   const { toast } = useToast();
 
-  // Read ?demo=true from URL on first render only
-  const initialDemo = preDemo || (
+  const initialDemo =
     typeof window !== "undefined" &&
-    new URLSearchParams(window.location.search).get("demo") === "true"
-  );
+    new URLSearchParams(window.location.search).get("demo") === "true";
 
   const [isCreating, setIsCreating] = useState<string | null>(null);
   const [demoMode, setDemoMode] = useState(initialDemo);
@@ -44,29 +39,25 @@ export default function Host({ preDemo = false }: HostProps) {
 
   return (
     <div className="flex-1 flex flex-col max-w-4xl mx-auto w-full px-4 py-12 md:py-24">
-      <header className="mb-10 text-center">
-        <motion.h1
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-4xl md:text-6xl font-bold font-display text-primary mb-4"
-        >
-          Host a Game
+      <motion.header
+        className="mb-10 text-center"
+        variants={staggerContainer(0.1)}
+        initial="hidden"
+        animate="show"
+      >
+        <motion.h1 variants={staggerItem} className="text-4xl md:text-6xl font-black font-display tracking-tight text-foreground mb-3">
+          HOST A GAME
         </motion.h1>
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.1 }}
-          className="text-xl text-muted-foreground"
-        >
+        <motion.div variants={staggerItem} className="flex justify-center mb-4">
+          <div className="heading-divider heading-divider--orange w-20 h-1" />
+        </motion.div>
+        <motion.p variants={staggerItem} className="text-lg text-muted-foreground">
           Put this screen on a TV. Players join on their phones.
         </motion.p>
 
-        {/* Demo Mode Toggle */}
         <motion.div
-          initial={{ opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="mt-6 inline-flex items-center gap-3 bg-card border border-border rounded-2xl px-5 py-3"
+          variants={staggerItem}
+          className="mt-6 inline-flex items-center gap-3 bg-card/70 backdrop-blur border border-border rounded-2xl px-5 py-3 surface-elevated"
         >
           <Bot className={`w-5 h-5 ${demoMode ? "text-primary" : "text-muted-foreground"}`} />
           <span className={`font-medium text-sm ${demoMode ? "text-foreground" : "text-muted-foreground"}`}>
@@ -77,7 +68,7 @@ export default function Host({ preDemo = false }: HostProps) {
             aria-checked={demoMode}
             onClick={() => setDemoMode((d) => !d)}
             className={`relative w-11 h-6 rounded-full transition-colors focus-visible:ring-2 focus-visible:ring-primary
-              ${demoMode ? "bg-primary" : "bg-muted"}`}
+              ${demoMode ? "bg-primary shadow-[0_0_18px_-2px_hsl(var(--primary))]" : "bg-muted"}`}
             data-testid="toggle-demo"
           >
             <span
@@ -99,24 +90,30 @@ export default function Host({ preDemo = false }: HostProps) {
             🤖 5 AI players will join automatically — perfect for demos & testing
           </motion.p>
         )}
-      </header>
+      </motion.header>
 
-      <div className="grid md:grid-cols-2 gap-8">
-        <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 }}>
-          <Card className="h-full flex flex-col border-2 border-primary/20 hover:border-primary/50 transition-colors bg-card/50 overflow-hidden relative group">
-            <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent pointer-events-none group-hover:from-primary/20 transition-colors" />
+      <motion.div
+        className="grid md:grid-cols-2 gap-8"
+        variants={staggerContainer(0.12, 0.2)}
+        initial="hidden"
+        animate="show"
+      >
+        <motion.div variants={staggerItem}>
+          <Card className="h-full flex flex-col border-2 border-primary/20 hover:border-primary/60 hover:shadow-[0_20px_60px_-20px_hsl(var(--primary)/0.7)] transition-all duration-300 group">
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/15 to-transparent pointer-events-none group-hover:from-primary/25 transition-colors" />
             <CardHeader>
-              <div className="w-12 h-12 rounded-xl bg-primary/20 flex items-center justify-center mb-4">
+              <div className="w-12 h-12 rounded-xl bg-primary/20 flex items-center justify-center mb-4 group-hover:shadow-[0_0_24px_-4px_hsl(var(--primary))] transition-shadow">
                 <MessageSquare className="w-6 h-6 text-primary" />
               </div>
-              <CardTitle className="text-3xl font-display">Pop the Question</CardTitle>
+              <CardTitle className="text-2xl md:text-3xl font-display font-extrabold tracking-tight text-foreground">POP THE QUESTION</CardTitle>
+              <div className="heading-divider heading-divider--pink mb-2" />
               <CardDescription className="text-base text-muted-foreground h-24">
                 A voting game where you answer provocative pop culture questions about your friends. Who is most likely to survive a horror movie? Vote to find out.
               </CardDescription>
             </CardHeader>
-            <CardContent className="mt-auto relative z-10">
+            <CardContent className="mt-auto">
               <Button
-                className="w-full text-lg h-14 bg-primary hover:bg-primary/90 text-primary-foreground font-bold"
+                className="w-full text-lg h-14 font-bold"
                 onClick={() => handleCreateRoom("pop-the-question")}
                 disabled={isCreating !== null}
                 data-testid="btn-host-ptq"
@@ -131,21 +128,22 @@ export default function Host({ preDemo = false }: HostProps) {
           </Card>
         </motion.div>
 
-        <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.3 }}>
-          <Card className="h-full flex flex-col border-2 border-accent/20 hover:border-accent/50 transition-colors bg-card/50 overflow-hidden relative group">
-            <div className="absolute inset-0 bg-gradient-to-br from-accent/10 to-transparent pointer-events-none group-hover:from-accent/20 transition-colors" />
+        <motion.div variants={staggerItem}>
+          <Card className="h-full flex flex-col border-2 border-accent/20 hover:border-accent/60 hover:shadow-[0_20px_60px_-20px_hsl(var(--accent)/0.7)] transition-all duration-300 group">
+            <div className="absolute inset-0 bg-gradient-to-br from-accent/15 to-transparent pointer-events-none group-hover:from-accent/25 transition-colors" />
             <CardHeader>
-              <div className="w-12 h-12 rounded-xl bg-accent/20 flex items-center justify-center mb-4">
+              <div className="w-12 h-12 rounded-xl bg-accent/20 flex items-center justify-center mb-4 group-hover:shadow-[0_0_24px_-4px_hsl(var(--accent))] transition-shadow">
                 <Flame className="w-6 h-6 text-accent" />
               </div>
-              <CardTitle className="text-3xl font-display">Roast Roulette</CardTitle>
+              <CardTitle className="text-2xl md:text-3xl font-display font-extrabold tracking-tight text-foreground">ROAST ROULETTE</CardTitle>
+              <div className="heading-divider heading-divider--orange mb-2" />
               <CardDescription className="text-base text-muted-foreground h-24">
                 A creative writing game. Everyone writes a brutal pop culture roast about someone else in the room. Guess who wrote what to score points.
               </CardDescription>
             </CardHeader>
-            <CardContent className="mt-auto relative z-10">
+            <CardContent className="mt-auto">
               <Button
-                className="w-full text-lg h-14 bg-accent hover:bg-accent/90 text-accent-foreground font-bold"
+                className="w-full text-lg h-14 font-bold"
                 onClick={() => handleCreateRoom("roast-roulette")}
                 disabled={isCreating !== null}
                 data-testid="btn-host-rr"
@@ -159,7 +157,7 @@ export default function Host({ preDemo = false }: HostProps) {
             </CardContent>
           </Card>
         </motion.div>
-      </div>
+      </motion.div>
 
       <div className="mt-12 text-center">
         <Button variant="ghost" onClick={() => setLocation("/")} data-testid="btn-back">

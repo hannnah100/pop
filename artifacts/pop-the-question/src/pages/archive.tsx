@@ -6,8 +6,8 @@ import { ArrowLeft, PlayCircle, Calendar, CheckCircle2, Trophy, Sparkles } from 
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-
-// TODO: Archive will be a premium feature - gate this behind subscription check
+import { ShimmerGrid } from "@/components/fx";
+import { staggerContainer, staggerItem } from "@/lib/motion";
 
 type Filter = "all" | "three-strikes" | "crossword";
 
@@ -61,25 +61,31 @@ export default function Archive() {
         </Button>
       </Link>
 
-      {/* Beta Banner */}
       <motion.div
         initial={{ opacity: 0, y: -8 }}
         animate={{ opacity: 1, y: 0 }}
-        className="mb-8 rounded-2xl border border-primary/30 bg-gradient-to-r from-primary/10 to-accent/10 px-6 py-4 flex items-center gap-4"
+        className="mb-8 rounded-2xl border border-secondary/30 bg-gradient-to-r from-secondary/15 via-primary/10 to-accent/15 px-6 py-4 flex items-center gap-4 shadow-[0_18px_60px_-30px_hsl(var(--secondary)/0.6)]"
       >
-        <Sparkles className="w-6 h-6 text-primary flex-shrink-0" />
+        <Sparkles className="w-6 h-6 text-secondary flex-shrink-0 drop-shadow-[0_0_10px_hsl(var(--secondary))]" />
         <div>
           <p className="font-bold text-foreground">Archive is FREE during beta! 🎉</p>
           <p className="text-sm text-muted-foreground">Play any past challenge • Premium feature coming soon</p>
         </div>
       </motion.div>
 
-      <header className="mb-8">
-        <h1 className="text-4xl md:text-5xl font-black font-display text-accent">Puzzle Archive</h1>
-        <p className="text-xl text-muted-foreground mt-2">Missed a day? Catch up here.</p>
-      </header>
+      <motion.header
+        className="mb-8"
+        variants={staggerContainer(0.08)}
+        initial="hidden"
+        animate="show"
+      >
+        <motion.div variants={staggerItem}>
+          <h1 className="text-4xl md:text-5xl font-extrabold font-display tracking-tight text-foreground">PUZZLE ARCHIVE</h1>
+          <div className="heading-divider heading-divider--green w-16 h-1 mt-2" />
+        </motion.div>
+        <motion.p variants={staggerItem} className="text-xl text-muted-foreground mt-2">Missed a day? Catch up here.</motion.p>
+      </motion.header>
 
-      {/* Filter */}
       <div className="flex gap-2 mb-8 flex-wrap">
         {(["all", "three-strikes", "crossword"] as Filter[]).map((f) => (
           <Button
@@ -98,16 +104,17 @@ export default function Archive() {
       </div>
 
       {isLoading ? (
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {Array.from({ length: 6 }).map((_, i) => (
-            <div key={i} className="h-48 rounded-xl bg-card/50 animate-pulse" />
-          ))}
-        </div>
+        <ShimmerGrid count={6} cols="md:grid-cols-2 lg:grid-cols-3" itemClassName="h-48" />
       ) : displayed.length === 0 ? (
         <div className="text-center py-24 text-muted-foreground">No challenges yet.</div>
       ) : (
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {displayed.map((item, i) => {
+        <motion.div
+          className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
+          variants={staggerContainer(0.05)}
+          initial="hidden"
+          animate="show"
+        >
+          {displayed.map((item) => {
             const isTS = item.type === "three-strikes";
             const stats = item.stats;
             const playHref = isTS
@@ -117,15 +124,13 @@ export default function Archive() {
             return (
               <motion.div
                 key={`${item.type}-${item.id}`}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.04 }}
+                variants={staggerItem}
               >
                 <Card
-                  className={`p-6 flex flex-col h-full group transition-colors
+                  className={`p-6 flex flex-col h-full group transition-all duration-300
                     ${isTS
-                      ? "bg-card/50 hover:bg-card border-border hover:border-primary/50"
-                      : "bg-card/50 hover:bg-card border-border hover:border-cyan-400/50"
+                      ? "bg-card/60 hover:bg-card border-border hover:border-primary/60 hover:shadow-[0_16px_50px_-20px_hsl(var(--primary)/0.6)]"
+                      : "bg-card/60 hover:bg-card border-border hover:border-secondary/60 hover:shadow-[0_16px_50px_-20px_hsl(var(--secondary)/0.6)]"
                     }
                     ${stats?.completed ? "border-success/30" : ""}
                   `}
@@ -138,7 +143,7 @@ export default function Archive() {
                     <div className="flex items-center gap-1.5">
                       <Badge
                         variant="outline"
-                        className={`text-xs ${isTS ? "border-primary/30 text-primary" : "border-cyan-400/30 text-cyan-400"}`}
+                        className={`text-xs ${isTS ? "border-primary/30 text-primary" : "border-secondary/30 text-secondary"}`}
                       >
                         {isTS ? "Three Strikes" : "Crossword"}
                       </Badge>
@@ -150,7 +155,7 @@ export default function Archive() {
 
                   <h3
                     className={`text-lg font-bold mb-1 transition-colors
-                      ${isTS ? "group-hover:text-primary" : "group-hover:text-cyan-400"}
+                      ${isTS ? "group-hover:text-primary" : "group-hover:text-secondary"}
                     `}
                   >
                     {item.title}
@@ -175,7 +180,7 @@ export default function Archive() {
                       className={`w-full transition-colors
                         ${isTS
                           ? "bg-primary/10 text-primary hover:bg-primary hover:text-white group-hover:bg-primary group-hover:text-white"
-                          : "bg-cyan-400/10 text-cyan-400 hover:bg-cyan-400 hover:text-background group-hover:bg-cyan-400 group-hover:text-background"
+                          : "bg-secondary/10 text-secondary hover:bg-secondary hover:text-secondary-foreground group-hover:bg-secondary group-hover:text-secondary-foreground"
                         }
                       `}
                       data-testid={`btn-play-${item.type}-${item.id}`}
@@ -188,7 +193,7 @@ export default function Archive() {
               </motion.div>
             );
           })}
-        </div>
+        </motion.div>
       )}
     </div>
   );

@@ -1,0 +1,251 @@
+The recent design system updates broke the game pages. I need you to fix them immediately while keeping the new branding guidelines.
+What's broken: The game pages (Three Strikes, Mini Crossword, Pop the Question, Roast Roulette, etc.) are not displaying correctly or are completely broken.
+What you need to do:
+
+1. RESTORE GAME FUNCTIONALITY FIRST
+Before any styling, make sure these pages work:
+Daily Games:
+
+/daily/three-strikes - Grid of hint boxes, input field, strikes counter all functional
+/daily/crossword - 5x5 grid, clues display, timer works
+
+Hosted Games:
+
+/host - Game selection works
+/game/:roomCode/host - Host view displays for Pop the Question, Roast Roulette
+/game/:roomCode/player - Player view displays and accepts input
+/join - Room code entry works
+
+Critical: Get the games playable again. Styling comes second.
+
+2. APPLY DESIGN SYSTEM TO GAME PAGES (After they work)
+Three Strikes Page:
+Layout:
+┌────────────────────────────────────┐
+│  THREE STRIKES                     │ ← White text, Syne Bold 32px
+│  Name all Marvel Cinematic...     │ ← White, Inter Regular 18px
+│  33 total answers                 │ ← text-secondary, 16px
+│                                   │
+│  [Grid of hint boxes]             │ ← See below
+│                                   │
+│  Strikes: ⚠️⚠️⚠️                  │ ← Red when active
+│                                   │
+│  ┌──────────────────────────────┐ │
+│  │ Type your answer...          │ │ ← Input field
+│  └──────────────────────────────┘ │
+│  [Submit]                         │ ← Gradient button
+└────────────────────────────────────┘
+Hint Box Styling:
+css.hint-box {
+  background: #1A1A24;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 16px;
+  text-align: center;
+}
+
+.hint-box.revealed {
+  background: linear-gradient(135deg, rgba(0, 245, 160, 0.1), rgba(0, 245, 160, 0.2));
+  border-color: #00F5A0;
+}
+
+.hint-box .question-mark {
+  font-size: 32px;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.hint-box .hint {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.5);
+  margin-top: 8px;
+}
+
+.hint-box.revealed .answer {
+  font-size: 16px;
+  font-weight: 600;
+  color: #FFFFFF;
+  margin-top: 8px;
+}
+
+Mini Crossword Page:
+Layout:
+┌────────────────────────────────────┐
+│  MINI CROSSWORD                    │ ← White, Syne Bold 32px
+│  ⏱️ 0:00                           │ ← Timer, Space Grotesk
+│                                   │
+│  [5x5 Grid]                       │ ← Crossword grid
+│                                   │
+│  ACROSS          DOWN             │ ← Clue sections
+│  1. Clue (5)     1. Clue (7)     │
+│  3. Clue (4)     2. Clue (3)     │
+│                                   │
+│  [Check Answer]                   │ ← Button
+└────────────────────────────────────┘
+Grid Cell Styling:
+css.crossword-cell {
+  width: 48px;
+  height: 48px;
+  background: #1A1A24;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  font-size: 20px;
+  font-weight: 600;
+  color: #FFFFFF;
+  text-align: center;
+  line-height: 48px;
+}
+
+.crossword-cell.black {
+  background: #0A0A0F;
+  border-color: rgba(255, 255, 255, 0.05);
+}
+
+.crossword-cell.selected {
+  background: rgba(255, 107, 53, 0.2);
+  border-color: #FF6B35;
+}
+
+.crossword-cell.correct {
+  background: rgba(0, 245, 160, 0.2);
+  border-color: #00F5A0;
+}
+
+Pop the Question - Host View:
+Layout:
+┌────────────────────────────────────┐
+│  Room: BUZZ        🤖 DEMO MODE    │ ← Top bar
+│                                   │
+│  Most likely to become a          │ ← Question text
+│  reality TV star?                 │ ← White, Syne Bold 48px
+│                                   │
+│  ⏱️ Voting... 5/7 players voted   │ ← Status
+│                                   │
+│  [Reveal Results]                 │ ← Button (host control)
+└────────────────────────────────────┘
+Results Display:
+RESULTS                             ← White, Inter SemiBold 24px
+───────
+
+SARAH        🔥🔥🔥🔥🔥  5 votes    ← Name white, votes orange
+MIKE         🔥🔥  2 votes
+TOM          🔥  1 vote
+
+Pop the Question - Player View:
+Layout:
+┌────────────────────────────────────┐
+│  Most likely to become a          │ ← Question
+│  reality TV star?                 │
+│                                   │
+│  Vote for someone:                │
+│                                   │
+│  [ Sarah ]                        │ ← Buttons for each player
+│  [ Mike  ]                        │
+│  [ Tom   ]                        │
+│  [ Alex  ]                        │
+│                                   │
+│  [Submit Vote]                    │ ← Primary button
+└────────────────────────────────────┘
+
+Roast Roulette - Host View:
+Layout:
+┌────────────────────────────────────┐
+│  ROAST ROULETTE                    │
+│  Room: ROFL                        │
+│                                   │
+│  🟡 What's their most embarrassing │
+│     Spotify playlist?              │
+│                                   │
+│  🔵 What would their drunk tattoo  │
+│     be?                            │
+│                                   │
+│  🔴 Which reality show would they  │
+│     get kicked off first?          │
+│                                   │
+│  🟢 What's their worst dating app  │
+│     bio?                           │
+│                                   │
+│  ⏱️ Writing Phase - 3/5 done       │
+└────────────────────────────────────┘
+Colored Question Cards:
+css.question-card {
+  background: #1A1A24;
+  border-left: 4px solid var(--color); /* Yellow, blue, red, green */
+  padding: 16px;
+  margin-bottom: 16px;
+  border-radius: 8px;
+}
+
+.question-card.yellow { --color: #FFD700; }
+.question-card.blue { --color: #4169E1; }
+.question-card.red { --color: #FF0054; }
+.question-card.green { --color: #00F5A0; }
+
+Roast Roulette - Player View:
+Layout:
+┌────────────────────────────────────┐
+│  You're roasting: SARAH            │ ← White text, prominent
+│  ⏱️ 1:30 remaining                 │
+│                                   │
+│  🟡 What's their most embarrassing │
+│     Spotify playlist?              │
+│  ┌──────────────────────────────┐ │
+│  │                              │ │ ← Text area
+│  └──────────────────────────────┘ │
+│                                   │
+│  🔵 What would their drunk tattoo  │
+│     be?                            │
+│  ┌──────────────────────────────┐ │
+│  │                              │ │
+│  └──────────────────────────────┘ │
+│                                   │
+│  [Continue empty boxes...]        │
+│                                   │
+│  [Submit Roast]                   │ ← Gradient button
+└────────────────────────────────────┘
+
+3. CRITICAL FIXES CHECKLIST
+Check these are working:
+
+ Three Strikes grid displays with hint boxes
+ Three Strikes input accepts answers
+ Three Strikes fuzzy matching works
+ Crossword grid is interactive (click cells, type letters)
+ Crossword clues display correctly
+ Room code generation works
+ Players can join rooms
+ Socket.io connection stable
+ Pop the Question voting works
+ Roast Roulette writing phase works
+ Leaderboards display
+ All buttons clickable and functional
+
+Mobile test:
+
+ All game pages work on 375px width
+ Touch targets are 48px minimum
+ Text is readable
+ Buttons are thumb-reachable
+
+
+4. KEEP THESE DESIGN ELEMENTS
+DO apply:
+
+New font system (Syne for headings, Inter for body)
+New color palette (warm rainbow)
+Gradient buttons
+Clean card styling
+Proper spacing
+
+DON'T apply:
+
+Rainbow text on game titles (keep white)
+Rainbow text everywhere (only logo + room codes + top 3 leaderboard)
+Childish elements
+
+
+5. ROLLBACK IF NEEDED
+If the games are completely broken and you can't fix them quickly:
+
+Restore from the last working commit BEFORE the design changes
+Get games functional again
+THEN apply design updates one component at a time
+Test after each change

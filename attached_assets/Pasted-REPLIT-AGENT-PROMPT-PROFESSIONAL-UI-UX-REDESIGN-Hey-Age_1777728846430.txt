@@ -1,0 +1,379 @@
+REPLIT AGENT PROMPT - PROFESSIONAL UI/UX REDESIGN
+
+Hey Agent! I need a sophisticated UI/UX redesign for Pop: The Question. The current implementation is too childish and overdone. Here's the refined design system:
+
+TYPOGRAPHY SYSTEM
+Font Hierarchy (Import from Google Fonts):
+1. Display Font (Logo, Major Headlines):
+
+"Syne" (ExtraBold, 800 weight) OR "Archivo Black"
+Used for: Main logo, game mode titles, big celebration moments
+Characteristics: Bold, impactful, modern but not playful
+Example usage: "POP: THE QUESTION", "THREE STRIKES", "GAME OVER"
+
+2. Heading Font (Section Titles, UI Headers):
+
+"Inter" (SemiBold, 600 weight) OR "Manrope" (Bold, 700)
+Used for: Section headings, card titles, player names, scores
+Characteristics: Clean, strong, professional yet energetic
+Example usage: "Daily Games", "Leaderboard", "Round 3"
+
+3. Body/UI Font (Everything Else):
+
+"Inter" (Regular 400, Medium 500)
+Used for: Paragraph text, buttons, labels, questions, answers
+Characteristics: Highly readable, neutral, professional
+Example usage: All body copy, form inputs, descriptions
+
+4. Accent Font (Sparingly - Special Moments Only):
+
+"Space Grotesk" (Bold, 700) OR "Bebas Neue"
+Used ONLY for: Countdown timers, big score reveals, "NEW RECORD" banners
+Characteristics: Condensed, impactful, creates contrast
+Limit to 5% of all text
+
+Font Rules:
+
+Never use more than 3 font families on a single screen
+Body text is always Inter for consistency and readability
+No rounded "kiddie" fonts like Fredoka, Comic Sans, or bubbly typefaces
+Typography should feel modern editorial (think Pitchfork, Hypebeast, The Verge)
+
+
+RAINBOW TEXT - STRATEGIC USE ONLY
+Where to Apply Multi-Color Letter Treatment:
+PRIMARY (Always Rainbow):
+
+Main logo: "POP: THE QUESTION" only
+Room codes (keep current style - this works well)
+
+SECONDARY (Selective Rainbow):
+3. Player names in leaderboards (but NOT in general UI)
+4. Winning scores above 1000 points
+5. "NEW RECORD" or "STREAK: 10 DAYS" milestone text
+NEVER Rainbow:
+
+Section headings ("Daily Games", "Hosted Party Games")
+Game mode titles ("Three Strikes", "Jeopardy")
+Button text
+Body copy
+Question text
+Navigation menus
+Form labels
+Helper text
+
+Rainbow Implementation Rules:
+When you DO use rainbow text:
+
+Color sequence: Red (#FF0054) → Orange (#FF6B35) → Yellow (#FFD700) → Green (#00F5A0) → Pink (#FF006E) → Magenta (#FF1493)
+Each letter cycles through this palette
+No animation on rainbow text (static colors only)
+High contrast ratio maintained (text must be readable)
+
+If less than 10% of text on a page is rainbow, you're doing it right.
+
+COLOR PALETTE - REFINED APPLICATION
+Core Colors:
+Primary Palette (Warm Rainbow):
+--brand-red: #FF0054
+--brand-orange: #FF6B35
+--brand-yellow: #FFD700
+--brand-green: #00F5A0
+--brand-pink: #FF006E
+--brand-magenta: #FF1493
+
+Neutrals:
+--bg-dark: #0A0A0F
+--bg-card: #1A1A24
+--text-primary: #FFFFFF
+--text-secondary: #B8B8C8
+--text-muted: #6B6B7B
+
+Functional:
+--success: #00F5A0
+--warning: #FFD700
+--error: #FF0054
+How to Use Colors:
+Backgrounds:
+
+Primary background: --bg-dark (very dark, almost black)
+Card backgrounds: --bg-card (slightly lighter dark)
+Accent backgrounds: Subtle gradients using 2-3 rainbow colors at 10% opacity
+
+Text:
+
+90% of text: White (#FFFFFF) or --text-secondary
+Headings: White
+Labels/descriptions: --text-secondary
+Disabled/muted: --text-muted
+Rainbow treatment: <10% of all text
+
+UI Elements:
+
+Buttons: Gradient backgrounds (but text stays white)
+Borders: Single accent color OR subtle gradient
+Icons: Single color from palette (match context)
+Focus states: Colored glow (single color, not rainbow)
+
+Gradients (Use Strategically):
+css/* Button gradient - warm flow */
+background: linear-gradient(135deg, #FF0054 0%, #FF6B35 50%, #FFD700 100%);
+
+/* Card hover - subtle accent */
+border: 2px solid transparent;
+background: 
+  linear-gradient(#1A1A24, #1A1A24) padding-box,
+  linear-gradient(90deg, #FF006E, #FFD700) border-box;
+
+/* Success moment - celebration gradient */
+background: linear-gradient(180deg, #FFD700 0%, #00F5A0 100%);
+
+COMPONENT-SPECIFIC DESIGN RULES
+Homepage:
+┌─────────────────────────────────────────┐
+│  POP: THE QUESTION                      │ ← Rainbow text (only logo)
+│  Where pop culture gets personal        │ ← White, italic, 18px
+│                                         │
+│  DAILY GAMES                            │ ← White, Syne Bold 32px
+│  ──────────                             │ ← Orange underline
+│                                         │
+│  [Card: Three Strikes]                  │ ← Title: White
+│  Name all the MCU movies...             │ ← Description: text-secondary
+│  [Play →]                               │ ← Button: gradient bg, white text
+│                                         │
+│  [Card: Mini Crossword]                 │
+│  5×5 pop culture puzzle...              │
+│  [Play →]                               │
+│                                         │
+│  HOSTED PARTY GAMES                     │ ← White, Syne Bold 32px
+│  ───────────────────                    │ ← Pink underline
+│                                         │
+│  [Host a Game]  [Join a Game]          │ ← Gradient buttons
+└─────────────────────────────────────────┘
+Card Design:
+
+Background: --bg-card
+Border: 1px solid rgba(255,255,255,0.1)
+Hover: Border becomes colored gradient (2px)
+Title: White, Inter SemiBold 20px
+Description: --text-secondary, Inter Regular 16px
+Padding: 24px
+Border radius: 12px
+Shadow: Subtle (0 4px 16px rgba(0,0,0,0.2))
+
+Game Titles (Three Strikes, Jeopardy, etc.):
+Current (WRONG):
+T H R E E   S T R I K E S
+↑ Each letter different rainbow color - TOO MUCH
+Correct:
+THREE STRIKES
+↑ Solid white text, Syne ExtraBold 48px
+  with subtle colored underline (red to orange gradient)
+OR if emphasis needed:
+THREE STRIKES
+↑ White text with subtle colored glow/shadow using single accent color
+Buttons:
+Primary Button:
+css.btn-primary {
+  background: linear-gradient(135deg, #FF0054, #FF6B35, #FFD700);
+  color: #FFFFFF; /* Text always white */
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  padding: 12px 32px;
+  border-radius: 8px;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(255, 107, 53, 0.4);
+}
+Secondary Button:
+css.btn-secondary {
+  background: transparent;
+  color: #FFFFFF;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  /* Same padding/radius as primary */
+}
+
+.btn-secondary:hover {
+  border-color: #FF6B35;
+  background: rgba(255, 107, 53, 0.1);
+}
+Leaderboard:
+LEADERBOARD                    ← White, Inter SemiBold
+────────────                   ← Single color underline
+
+#1  SARAH        1,250         ← Name: Rainbow text
+                               ← Score: Gold gradient
+                               
+#2  MIKE           890         ← Name: Rainbow text
+                               ← Score: Silver gradient
+                               
+#3  ALEX           750         ← Name: Rainbow text
+                               ← Score: Bronze gradient
+
+#4  Jordan         420         ← Name: White (no rainbow)
+                               ← Score: White
+Only top 3 get special treatment. Everyone else is white text.
+Room Code Display:
+JOIN GAME                      ← White heading
+
+Enter Room Code:
+┌─────────────────┐
+│  B U Z Z        │            ← Each letter different color (KEEP THIS)
+└─────────────────┘
+     ↑ Gradient border box
+This is the ONE place where rainbow per-letter works well - keep it.
+
+VISUAL HIERARCHY PRINCIPLES
+Contrast & Focus:
+Level 1 (Highest Attention):
+
+Logo
+Room codes
+Primary CTAs
+Current scores in active game
+
+Use: Rainbow text OR bold gradients OR large scale
+Level 2 (Secondary Attention):
+
+Section headings
+Game mode titles
+Player names
+Card titles
+
+Use: White text, larger size, heavier weight, optional colored underline
+Level 3 (Supporting Info):
+
+Descriptions
+Labels
+Helper text
+Timestamps
+
+Use: --text-secondary, smaller size, regular weight
+Spacing & Rhythm:
+Spacing Scale:
+--space-xs: 4px
+--space-sm: 8px
+--space-md: 16px
+--space-lg: 24px
+--space-xl: 32px
+--space-2xl: 48px
+--space-3xl: 64px
+Apply generously:
+
+Cards: 24px padding minimum
+Between sections: 48px-64px
+Button groups: 16px gap
+Text line-height: 1.6 for body, 1.2 for headings
+
+Animation Principles:
+Subtle, Purposeful Motion:
+
+Button hover: 2-3px lift, 0.3s ease
+Card hover: Border color change, subtle scale (1.02x)
+Page transitions: Fade + slide (300ms)
+Score updates: Count-up animation (500ms)
+Confetti: Only on major wins (game completion, new record)
+
+NO:
+
+Constantly shifting gradients
+Pulsing elements (except timers under 10s)
+Excessive parallax
+Shake effects (only for errors)
+
+
+MOBILE RESPONSIVENESS
+All designs must work perfectly on:
+
+Mobile: 375px-767px
+Tablet: 768px-1023px
+Desktop: 1024px+
+
+Mobile-Specific Rules:
+
+Touch targets: 48px minimum
+Font sizes scale down 10-15% on mobile
+Buttons full-width on mobile
+Cards stack vertically
+Navigation moves to bottom (tab bar style)
+
+
+WHAT GOOD LOOKS LIKE
+Design References (Study These):
+
+Linear (linear.app) - Clean, bold typography, strategic color use
+Vercel (vercel.com) - Dark mode done right, subtle gradients
+Stripe (stripe.com) - Professional but not boring, great hierarchy
+Pitch (pitch.com) - Bold without being childish, modern editorial feel
+Arc Browser (arc.net) - Colorful but sophisticated, great typography
+
+NOT Like:
+
+Duolingo (too playful/childish)
+Kids' game apps (overly rounded, too many colors)
+2010s web design (skeuomorphic, gradients everywhere)
+Generic AI tools (too much purple, sterile)
+
+
+IMPLEMENTATION CHECKLIST
+Update these files with new design system:
+1. Tailwind Config:
+
+Replace font families
+Update color variables
+Set spacing scale
+Define component classes
+
+2. Global Styles:
+
+Typography scale
+Button variants
+Card styles
+Animation keyframes
+
+3. Component Updates:
+
+Homepage: Reduce rainbow usage to logo only
+Game cards: White titles, single-color accent
+Leaderboard: Rainbow only top 3 names
+Buttons: Keep gradients, white text
+Room codes: Keep current multi-color style
+
+4. Remove:
+
+All instances of childish fonts
+Rainbow text on section headings
+Rainbow text on game mode titles
+Excessive animations
+Overly playful elements
+
+
+FINAL PRINCIPLES
+Bold, Not Childish:
+
+Strong typography creates impact without playfulness
+Color used strategically, not everywhere
+White space and hierarchy guide the eye
+Professional enough for a pitch deck, fun enough for a party
+
+Colorful, Not Chaotic:
+
+Rainbow palette exists, but most UI uses white text
+Gradients on backgrounds and accents, rarely on text
+Each color has a purpose (success = green, warning = yellow)
+If you're unsure, default to white text
+
+Modern, Not Trendy:
+
+Clean lines, good spacing, readable fonts
+Animations enhance, don't distract
+Mobile-first, accessibility-minded
+Feels 2025, not 2015
+
+
+Make Pop: The Question feel like a premium product—sophisticated, energetic, and designed with intention. Not a kids' app, not a corporate tool. A modern game platform that adults actually want to use.

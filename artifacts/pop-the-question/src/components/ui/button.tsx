@@ -3,36 +3,32 @@ import { Slot } from "@radix-ui/react-slot"
 import { cva, type VariantProps } from "class-variance-authority"
 
 import { cn } from "@/lib/utils"
+import { playSfx, unlockAudio } from "@/lib/sfx"
+import { hapticTap } from "@/lib/haptics"
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0" +
-" hover-elevate active-elevate-2",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-base font-semibold font-sans transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 active:scale-[0.98]",
   {
     variants: {
       variant: {
+        // Default = static warm gradient (red → orange → gold) per design spec.
         default:
-           // @replit: no hover, and add primary border
-           "bg-primary text-primary-foreground border border-primary-border",
+          "bg-rainbow-warm text-white border-0 shadow-[0_4px_16px_-4px_hsl(var(--primary)/0.40)] hover:shadow-[0_8px_24px_-4px_hsl(var(--accent)/0.50)] hover:-translate-y-0.5",
         destructive:
-          "bg-destructive text-destructive-foreground shadow-sm border-destructive-border",
+          "bg-destructive text-destructive-foreground shadow-[0_4px_16px_-4px_hsl(var(--destructive)/0.40)] hover:shadow-[0_8px_24px_-4px_hsl(var(--destructive)/0.55)] hover:-translate-y-0.5",
         outline:
-          // @replit Shows the background color of whatever card / sidebar / accent background it is inside of.
-          // Inherits the current text color. Uses shadow-xs. no shadow on active
-          // No hover state
-          " border [border-color:var(--button-outline)] shadow-xs active:shadow-none ",
+          "border-2 border-white/15 bg-transparent text-foreground hover:bg-white/5 hover:border-accent/50",
         secondary:
-          // @replit border, no hover, no shadow, secondary border.
-          "border bg-secondary text-secondary-foreground border border-secondary-border ",
-        // @replit no hover, transparent border
-        ghost: "border border-transparent",
-        link: "text-primary underline-offset-4 hover:underline",
+          "bg-secondary text-secondary-foreground shadow-[0_4px_16px_-4px_hsl(var(--secondary)/0.40)] hover:brightness-110 hover:-translate-y-0.5",
+        ghost: "border-0 hover:bg-white/5",
+        link: "text-accent underline-offset-4 hover:underline",
       },
       size: {
-        // @replit changed sizes
-        default: "min-h-9 px-4 py-2",
-        sm: "min-h-8 rounded-md px-3 text-xs",
-        lg: "min-h-10 rounded-md px-8",
-        icon: "h-9 w-9",
+        // Mobile-first: minimum 48px tap target by default.
+        default: "min-h-12 px-5 py-3",
+        sm: "min-h-10 rounded-lg px-4 text-sm",
+        lg: "min-h-14 rounded-2xl px-8 text-lg",
+        icon: "h-12 w-12",
       },
     },
     defaultVariants: {
@@ -49,12 +45,19 @@ export interface ButtonProps
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, asChild = false, ...props }, ref) => {
+  ({ className, variant, size, asChild = false, onClick, ...props }, ref) => {
     const Comp = asChild ? Slot : "button"
+    const handleClick: React.MouseEventHandler<HTMLButtonElement> = (e) => {
+      unlockAudio()
+      hapticTap()
+      playSfx("tap")
+      onClick?.(e)
+    }
     return (
       <Comp
         className={cn(buttonVariants({ variant, size, className }))}
         ref={ref}
+        onClick={handleClick}
         {...props}
       />
     )
