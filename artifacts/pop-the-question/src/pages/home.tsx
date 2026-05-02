@@ -1,20 +1,24 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
-import { motion } from "framer-motion";
 import {
   BarChart2,
   Archive as ArchiveIcon,
   HelpCircle,
-  Gamepad2,
-  Users,
-  CheckCircle2,
   Bot,
+  Zap,
+  Users,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { staggerContainer, staggerItem } from "@/lib/motion";
 import { RainbowText } from "@/components/fx";
+import {
+  StarDoodle,
+  LightningDoodle,
+  SmileyDoodle,
+  GameControllerDoodle,
+  ConfettiDoodle,
+  FlowerDoodle,
+} from "@/components/fx/Doodles";
 
 export default function Home() {
   const todayDate = new Date().toISOString().split('T')[0];
@@ -34,166 +38,174 @@ export default function Home() {
   }, [todayDate]);
 
   return (
-    <div className="flex-1 flex flex-col max-w-4xl mx-auto w-full px-4 py-8 md:py-16">
-      <motion.header
-        className="mb-12 text-center"
-        variants={staggerContainer(0.12, 0.05)}
-        initial="hidden"
-        animate="show"
-      >
-        <motion.h1
-          variants={staggerItem}
-          className="text-[2.25rem] sm:text-5xl md:text-7xl font-black font-display tracking-tight mb-4 leading-[1.05]"
-        >
-          <RainbowText text="POP: THE QUESTION" />
-        </motion.h1>
-        <motion.p
-          variants={staggerItem}
-          className="text-base md:text-lg text-muted-foreground italic font-normal"
-        >
-          Where pop culture gets personal
-        </motion.p>
-      </motion.header>
+    <div className="flex-1 flex flex-col w-full overflow-x-hidden">
 
-      <motion.main
-        className="grid md:grid-cols-2 gap-6 mb-12"
-        variants={staggerContainer(0.12, 0.2)}
-        initial="hidden"
-        animate="show"
-      >
-        <motion.div variants={staggerItem}>
-          <Card className="h-full border-primary/20 bg-card/60 backdrop-blur-sm hover:border-primary/40 hover:shadow-[0_18px_60px_-20px_hsl(var(--primary)/0.55)] transition-all duration-300">
-            <div className="absolute inset-0 bg-gradient-to-br from-primary/15 via-transparent to-transparent pointer-events-none" />
-            <CardHeader>
-              <div className="flex items-center gap-2 mb-2">
-                <Gamepad2 className="text-primary w-5 h-5 drop-shadow-[0_0_8px_hsl(var(--primary))]" />
-                <Badge variant="outline" className="text-primary border-primary/30">DAILY</Badge>
-              </div>
-              <CardTitle className="text-2xl md:text-3xl font-display font-extrabold tracking-tight text-foreground">DAILY GAMES</CardTitle>
-              <div className="heading-divider heading-divider--orange" />
-              <CardDescription className="text-base text-muted-foreground pt-3">
-                Fresh pop culture puzzles every day.
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
+      {/* ===== HERO ===== */}
+      <header className="relative bg-[#FFD700] border-b-[4px] border-black px-4 pt-10 pb-8 text-center overflow-hidden">
+        <StarDoodle className="absolute top-3 left-4 w-10 h-10 text-[#FF1493] opacity-90" />
+        <StarDoodle className="absolute top-6 right-6 w-7 h-7 text-[#00E5FF] opacity-90" />
+        <ConfettiDoodle className="absolute bottom-2 left-8 w-14 h-14 opacity-80" />
+        <FlowerDoodle className="absolute bottom-4 right-4 w-12 h-12 text-[#FF1493] opacity-80" />
 
-              <div className="bg-background/50 rounded-xl p-4 border border-border hover:border-primary/40 transition-colors">
-                <div className="flex justify-between items-center mb-3">
-                  <div>
-                    <h3 className="font-display font-extrabold text-xl text-foreground tracking-tight">THREE STRIKES</h3>
-                    <p className="text-sm text-muted-foreground">Guess the connections</p>
-                  </div>
-                  {tsCompleted ? (
-                    <Badge className="bg-success/20 text-success border border-success/40"><CheckCircle2 className="w-3 h-3 mr-1" /> Done</Badge>
-                  ) : (
-                    <Badge variant="secondary">Available</Badge>
-                  )}
+        <div className="relative z-10">
+          <h1
+            className="font-display font-black text-black leading-none tracking-tight"
+            style={{ fontSize: "clamp(2.8rem, 10vw, 6rem)", textShadow: "4px 4px 0 rgba(0,0,0,0.18)" }}
+          >
+            <RainbowText text="POP:" />
+            <br />
+            <span className="text-black">THE QUESTION</span>
+          </h1>
+          <p className="mt-3 text-lg md:text-xl font-bold text-black/70 font-sans">
+            Where pop culture gets personal
+          </p>
+        </div>
+      </header>
+
+      {/* ===== DAILY GAMES SECTION ===== */}
+      <section className="relative bg-[#FFD700] border-b-[4px] border-black px-4 py-8 overflow-hidden">
+        <LightningDoodle className="absolute top-4 right-6 w-8 h-12 text-[#FF6B35] opacity-70" />
+        <SmileyDoodle className="absolute bottom-4 right-10 w-10 h-10 text-[#FF1493] opacity-60" />
+
+        <div className="max-w-4xl mx-auto relative z-10">
+          <div className="flex items-center gap-3 mb-6">
+            <Zap className="w-7 h-7 text-black" />
+            <h2 className="font-display text-3xl md:text-4xl font-black text-black uppercase">Daily Games</h2>
+            <Badge variant="default" className="bg-black text-[#FFD700] border-black ml-2">TODAY</Badge>
+          </div>
+          <p className="text-black font-medium mb-6 font-sans">Fresh pop culture puzzles every day. Come back tomorrow for more!</p>
+
+          <div className="grid md:grid-cols-2 gap-5">
+            {/* Three Strikes */}
+            <div className="bg-white border-[3px] border-black shadow-[4px_4px_0_#000] p-5 relative overflow-hidden">
+              <LightningDoodle className="absolute top-2 right-3 w-6 h-8 text-[#FF6B35] opacity-40" />
+              <div className="flex justify-between items-start mb-3">
+                <div>
+                  <h3 className="font-display text-2xl font-black text-black uppercase tracking-tight">Three Strikes</h3>
+                  <p className="text-sm text-black/60 font-sans mt-1">Guess the connections — 3 misses and you're out</p>
                 </div>
-                <Link href="/daily/three-strikes">
-                  <Button className="w-full" variant={tsCompleted ? "outline" : "default"} data-testid="link-three-strikes">
-                    {tsCompleted ? "View Results" : "Play Now"}
-                  </Button>
-                </Link>
+                {tsCompleted ? (
+                  <Badge variant="secondary" className="ml-2 flex-shrink-0">Done ✓</Badge>
+                ) : (
+                  <Badge variant="outline" className="ml-2 flex-shrink-0">Available</Badge>
+                )}
               </div>
+              <Link href="/daily/three-strikes">
+                <Button
+                  className="w-full font-display text-base uppercase tracking-wide"
+                  variant={tsCompleted ? "outline" : "default"}
+                  data-testid="link-three-strikes"
+                >
+                  {tsCompleted ? "View Results" : "Play Now"}
+                </Button>
+              </Link>
+            </div>
 
-              <div className="bg-background/50 rounded-xl p-4 border border-border hover:border-secondary/40 transition-colors">
-                <div className="flex justify-between items-center mb-3">
-                  <div>
-                    <h3 className="font-display font-extrabold text-xl text-foreground tracking-tight">MINI CROSSWORD</h3>
-                    <p className="text-sm text-muted-foreground">Pop culture quickie</p>
-                  </div>
-                  {cwCompleted ? (
-                    <Badge className="bg-success/20 text-success border border-success/40"><CheckCircle2 className="w-3 h-3 mr-1" /> Done</Badge>
-                  ) : (
-                    <Badge variant="secondary">Available</Badge>
-                  )}
+            {/* Mini Crossword */}
+            <div className="bg-white border-[3px] border-black shadow-[4px_4px_0_#000] p-5 relative overflow-hidden">
+              <StarDoodle className="absolute top-2 right-3 w-7 h-7 text-[#00E5FF] opacity-40" />
+              <div className="flex justify-between items-start mb-3">
+                <div>
+                  <h3 className="font-display text-2xl font-black text-black uppercase tracking-tight">Mini Crossword</h3>
+                  <p className="text-sm text-black/60 font-sans mt-1">Pop culture quickie — fill in the grid</p>
                 </div>
-                <Link href="/daily/crossword">
-                  <Button className="w-full" variant={cwCompleted ? "outline" : "default"} data-testid="link-crossword">
-                    {cwCompleted ? "View Results" : "Play Now"}
-                  </Button>
-                </Link>
+                {cwCompleted ? (
+                  <Badge variant="secondary" className="ml-2 flex-shrink-0">Done ✓</Badge>
+                ) : (
+                  <Badge variant="outline" className="ml-2 flex-shrink-0">Available</Badge>
+                )}
               </div>
+              <Link href="/daily/crossword">
+                <Button
+                  className="w-full font-display text-base uppercase tracking-wide"
+                  variant={cwCompleted ? "outline" : "default"}
+                  data-testid="link-crossword"
+                >
+                  {cwCompleted ? "View Results" : "Play Now"}
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
 
-            </CardContent>
-          </Card>
-        </motion.div>
+      {/* ===== PARTY GAMES SECTION ===== */}
+      <section className="relative bg-[#FF1493] border-b-[4px] border-black px-4 py-8 overflow-hidden">
+        <GameControllerDoodle className="absolute top-4 left-4 w-16 h-10 text-white opacity-30" />
+        <StarDoodle className="absolute top-6 right-8 w-10 h-10 text-[#FFD700] opacity-50" />
+        <SmileyDoodle className="absolute bottom-4 left-6 w-10 h-10 text-[#00E5FF] opacity-40" />
 
-        <motion.div variants={staggerItem}>
-          <Card className="h-full border-accent/20 bg-card/60 backdrop-blur-sm hover:border-accent/40 hover:shadow-[0_18px_60px_-20px_hsl(var(--accent)/0.55)] transition-all duration-300">
-            <div className="absolute inset-0 bg-gradient-to-bl from-accent/15 via-transparent to-transparent pointer-events-none" />
-            <CardHeader>
-              <div className="flex items-center gap-2 mb-2">
-                <Users className="text-accent w-5 h-5 drop-shadow-[0_0_8px_hsl(var(--accent))]" />
-                <Badge variant="outline" className="text-accent border-accent/30">MULTIPLAYER</Badge>
-              </div>
-              <CardTitle className="text-2xl md:text-3xl font-display font-extrabold tracking-tight text-foreground">PARTY GAMES</CardTitle>
-              <div className="heading-divider heading-divider--pink" />
-              <CardDescription className="text-base text-muted-foreground pt-3">
-                Host a game on a big screen. Others join on their phones.
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4 flex flex-col justify-center h-[calc(100%-120px)]">
+        <div className="max-w-4xl mx-auto relative z-10">
+          <div className="flex items-center gap-3 mb-6">
+            <Users className="w-7 h-7 text-white" />
+            <h2 className="font-display text-3xl md:text-4xl font-black text-white uppercase">Party Games</h2>
+            <Badge variant="outline" className="bg-white text-[#FF1493] border-black ml-2">LIVE</Badge>
+          </div>
+          <p className="text-white/90 font-medium mb-6 font-sans">
+            Put this screen on a TV. Everyone joins on their phones. Maximum chaos guaranteed.
+          </p>
 
+          <div className="grid md:grid-cols-2 gap-5">
+            {/* Host */}
+            <div className="bg-[#FFD700] border-[3px] border-black shadow-[4px_4px_0_#000] p-5 relative overflow-hidden">
+              <h3 className="font-display text-2xl font-black text-black uppercase tracking-tight mb-2">Host a Game</h3>
+              <p className="text-sm text-black/70 font-sans mb-4">Choose Pop the Question, Roast Roulette, or Pub Quiz — then start the show.</p>
               <Link href="/host">
-                <Button size="lg" className="w-full h-16 text-lg" data-testid="link-host-game">
+                <Button
+                  size="lg"
+                  className="w-full font-display text-base uppercase tracking-wide bg-black text-[#FFD700] hover:bg-[#FF1493] hover:text-black border-[3px] border-black shadow-[3px_3px_0_#fff]"
+                  data-testid="link-host-game"
+                >
                   Host a Game
                 </Button>
               </Link>
+              <Link href="/host?demo=true">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="w-full mt-2 text-black/70 hover:text-black hover:bg-black/10 gap-1"
+                  data-testid="link-demo-mode"
+                >
+                  <Bot className="w-4 h-4" /> Try Demo Mode →
+                </Button>
+              </Link>
+            </div>
 
-              <div className="relative">
-                <div className="absolute inset-0 flex items-center">
-                  <span className="w-full border-t border-border" />
-                </div>
-                <div className="relative flex justify-center text-xs uppercase">
-                  <span className="bg-card px-2 text-muted-foreground">or</span>
-                </div>
-              </div>
-
+            {/* Join */}
+            <div className="bg-[#00E5FF] border-[3px] border-black shadow-[4px_4px_0_#000] p-5 relative overflow-hidden">
+              <h3 className="font-display text-2xl font-black text-black uppercase tracking-tight mb-2">Join a Game</h3>
+              <p className="text-sm text-black/70 font-sans mb-4">Got a room code from the host screen? Jump in and play on your phone.</p>
               <Link href="/join">
-                <Button size="lg" variant="outline" className="w-full h-16 text-lg border-2" data-testid="link-join-game">
+                <Button
+                  size="lg"
+                  className="w-full font-display text-base uppercase tracking-wide bg-black text-[#00E5FF] hover:bg-[#FF1493] hover:text-black border-[3px] border-black shadow-[3px_3px_0_rgba(0,0,0,0.3)]"
+                  data-testid="link-join-game"
+                >
                   Join a Game
                 </Button>
               </Link>
+            </div>
+          </div>
+        </div>
+      </section>
 
-              <div className="pt-2 border-t border-border/50">
-                <Link href="/host?demo=true">
-                  <Button
-                    size="sm"
-                    variant="ghost"
-                    className="w-full text-muted-foreground hover:text-secondary hover:bg-secondary/10 gap-2"
-                    data-testid="link-demo-mode"
-                  >
-                    <Bot className="w-4 h-4" />
-                    Try Demo Mode →
-                  </Button>
-                </Link>
-              </div>
-
-            </CardContent>
-          </Card>
-        </motion.div>
-      </motion.main>
-
-      <motion.footer
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.6 }}
-        className="mt-auto pt-8 pb-12 border-t border-border/50 flex flex-col md:flex-row justify-center items-center gap-4 md:gap-8 text-sm font-medium"
-      >
-        <Link href="/stats" className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors group" data-testid="link-stats">
-          <BarChart2 className="w-4 h-4 group-hover:text-primary transition-colors" />
-          Personal Stats
-        </Link>
-        <Link href="/archive" className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors group" data-testid="link-archive">
-          <ArchiveIcon className="w-4 h-4 group-hover:text-accent transition-colors" />
-          Past Puzzles
-        </Link>
-        <button className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors group" data-testid="link-how-to-play">
-          <HelpCircle className="w-4 h-4 group-hover:text-secondary transition-colors" />
-          How to Play
-        </button>
-      </motion.footer>
+      {/* ===== FOOTER ===== */}
+      <footer className="bg-[#FFF8E7] px-4 py-6 border-t-[4px] border-black">
+        <div className="max-w-4xl mx-auto flex flex-col md:flex-row justify-center items-center gap-4 md:gap-8 text-sm font-bold">
+          <Link href="/stats" className="flex items-center gap-2 text-black hover:text-[#FF1493] transition-none" data-testid="link-stats">
+            <BarChart2 className="w-4 h-4" />
+            Personal Stats
+          </Link>
+          <Link href="/archive" className="flex items-center gap-2 text-black hover:text-[#FF6B35] transition-none" data-testid="link-archive">
+            <ArchiveIcon className="w-4 h-4" />
+            Past Puzzles
+          </Link>
+          <button className="flex items-center gap-2 text-black hover:text-[#00C853] transition-none" data-testid="link-how-to-play">
+            <HelpCircle className="w-4 h-4" />
+            How to Play
+          </button>
+        </div>
+      </footer>
     </div>
   );
 }

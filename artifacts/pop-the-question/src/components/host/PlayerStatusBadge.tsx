@@ -11,7 +11,6 @@ export type PlayerStatusState =
 
 interface PlayerStatusBadgeProps {
   state: PlayerStatusState;
-  /** Compact = chip-only (no label). Full = chip + label text. */
   compact?: boolean;
   className?: string;
 }
@@ -29,33 +28,33 @@ const META: Record<
   answered: {
     label: "Answered",
     Icon: CheckCircle2,
-    cls: "bg-success/20 border-success/50 text-success",
-    iconCls: "text-success",
+    cls: "bg-[#00C853] border-black text-black",
+    iconCls: "text-black",
   },
   typing: {
     label: "Typing…",
     Icon: Pencil,
-    cls: "bg-yellow-500/20 border-yellow-500/50 text-yellow-300",
-    iconCls: "text-yellow-300",
+    cls: "bg-[#FFD700] border-black text-black",
+    iconCls: "text-black",
     pulse: true,
   },
   thinking: {
     label: "Thinking…",
     Icon: Hourglass,
-    cls: "bg-muted/60 border-border text-muted-foreground",
-    iconCls: "text-muted-foreground",
+    cls: "bg-white border-black text-black/60",
+    iconCls: "text-black/60",
   },
   away: {
     label: "Away",
     Icon: Moon,
-    cls: "bg-muted/40 border-border/50 text-muted-foreground/70",
-    iconCls: "text-muted-foreground/70",
+    cls: "bg-white/60 border-black/40 text-black/40",
+    iconCls: "text-black/40",
   },
   muted: {
     label: "Muted",
     Icon: MicOff,
-    cls: "bg-destructive/20 border-destructive/50 text-destructive",
-    iconCls: "text-destructive",
+    cls: "bg-[#FF6B6B] border-black text-black",
+    iconCls: "text-black",
   },
 };
 
@@ -74,7 +73,7 @@ export function PlayerStatusBadge({
       animate={{ scale: 1, opacity: 1 }}
       transition={{ type: "spring", stiffness: 380, damping: 20 }}
       className={cn(
-        "inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs font-bold leading-none",
+        "inline-flex items-center gap-1.5 border-[2px] px-2 py-0.5 text-xs font-bold leading-none uppercase tracking-wide",
         meta.cls,
         meta.pulse && "animate-pulse",
         className,

@@ -12,3 +12,13 @@ export type { RainbowTextProps } from "./RainbowText";
 export { Shake, Pop } from "./Shake";
 export { MuteToggle } from "./MuteToggle";
 export { BannerStack } from "./Banner";
+export {
+  StarDoodle,
+  LightningDoodle,
+  SmileyDoodle,
+  SpeechBubbleDoodle,
+  GameControllerDoodle,
+  ConfettiDoodle,
+  ArrowDoodle,
+  FlowerDoodle,
+} from "./Doodles";
