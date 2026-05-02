@@ -95,16 +95,16 @@ export default function Home() {
                 className="font-display font-black tracking-tight comic-headline flex flex-wrap items-center justify-center gap-x-2 gap-y-1"
                 style={{ fontSize: "clamp(0.8rem, 2.2vw, 1.35rem)", lineHeight: 1.2 }}
               >
-                <span style={{ color: "#FF1493" }}>If</span>
-                <span style={{ color: "#FF6B35" }}>Bar</span>
-                <span style={{ color: "#FFD700" }}>Trivia</span>
-                <span style={{ color: "#00E5FF" }}>was</span>
-                <span style={{ color: "#00C853" }}>hosted</span>
-                <span style={{ color: "#FF1493" }}>by</span>
-                <span style={{ color: "#FF6B35" }}>your</span>
-                <span style={{ color: "#00E5FF" }}>For</span>
-                <span style={{ color: "#FFD700" }}>You</span>
-                <span style={{ color: "#FF1493" }}>page</span>
+                <span style={{ color: "#000" }}>If</span>
+                <span style={{ color: "#000" }}>Bar</span>
+                <span style={{ color: "#000" }}>Trivia</span>
+                <span style={{ color: "#000" }}>was</span>
+                <span style={{ color: "#000" }}>hosted</span>
+                <span style={{ color: "#000" }}>by</span>
+                <span style={{ color: "#000" }}>your</span>
+                <span style={{ color: "#FF1493" }}>For</span>
+                <span style={{ color: "#FF1493" }}>You</span>
+                <span style={{ color: "#000" }}>page</span>
               </p>
             </div>
           </div>
