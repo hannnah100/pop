@@ -14,7 +14,7 @@ export const nostalgia: WofPack = {
     { answer: "MYSPACE TOP EIGHT", category: "Thing" },
     { answer: "CRIBS ON MTV", category: "TV Show" },
     { answer: "AMERICAN IDOL", category: "TV Show" },
-    { answer: "DESTINY'S CHILD", category: "Music Group" },
+    { answer: "DESTINYS CHILD", category: "Music Group" },
     { answer: "FLIP PHONE ERA", category: "Phrase" },
     { answer: "LEGALLY BLONDE", category: "Movie" },
     { answer: "SIMPLE LIFE", category: "TV Show" },

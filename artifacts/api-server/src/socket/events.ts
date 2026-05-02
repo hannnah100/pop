@@ -658,7 +658,7 @@ export function setupSocketIO(httpServer: HttpServer) {
       if (!room || room.status !== "lobby") return;
       if (room.hostId !== socket.id) return;
       if (room.gameType !== "wheel-of-fortune") return;
-      const clamped = Math.min(Math.max(Math.floor(roundCount), 3), 7);
+      const clamped = Math.min(Math.max(Math.floor(roundCount), 3), 5);
       room.wofRoundCount = clamped;
       io.to(roomCode).emit("wof-round-count-changed", { roundCount: clamped });
     });

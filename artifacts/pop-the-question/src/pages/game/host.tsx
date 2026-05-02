@@ -1564,7 +1564,7 @@ export default function GameHost() {
                 </span>
               </div>
               <div className="flex gap-3">
-                {[3, 4, 5, 6, 7].map((n) => (
+                {[3, 4, 5].map((n) => (
                   <motion.button
                     key={n}
                     onClick={() => handleWofSetRoundCount(n)}
