@@ -1,0 +1,150 @@
+I need you to make this trivia platform feel electric, exciting, and addictive like a game show meets Spotify Wrapped. Here's what needs to be amped up:
+Visual Effects to Add:
+
+Particle Effects & Confetti:
+
+When you get a correct answer in Three Strikes: green confetti burst from the revealed box
+When someone gets "burned" in Pop the Question: fire emojis rain down
+Game completion: huge confetti explosion with sparkles
+Use canvas-based particles, NOT just emojis
+
+
+Smooth Animations:
+
+Page transitions: slide + fade with easing curves
+Card reveals in Roast Roulette: 3D flip animation
+Leaderboard updates: numbers count up with spring physics
+Score changes: pulse + scale effect
+Wrong answers: shake animation (like iPhone passcode fail)
+Correct answers: satisfying "pop" with scale bounce
+
+
+Glow & Neon Effects:
+
+Buttons have subtle glow on hover
+Room codes glow with gradient border
+Active game elements pulse with soft neon outline
+Use CSS box-shadow with brand colors (purple, pink, cyan)
+
+
+Progress Indicators:
+
+Timer: circular progress ring that changes color as time runs low (green → yellow → red → pulsing)
+Three Strikes boxes: grid fills in with smooth reveal animation
+Loading states: skeleton screens with shimmer effect (like LinkedIn)
+
+
+Sound Effects (Optional Toggle):
+
+Correct answer: satisfying "ding" or "pop"
+Wrong answer: gentle "buzz"
+Strike added: warning sound
+Timer running out: ticking sound
+Game complete: victory fanfare
+Add mute button in corner
+
+
+Haptic Feedback (Mobile):
+
+Button taps trigger vibration
+Correct answers: short pulse
+Wrong answers: double pulse
+Use navigator.vibrate() API
+
+
+Typography Animation:
+
+Numbers scale up when revealed
+Leaderboard positions slide into place
+Question text fades in with stagger effect (word by word)
+Room codes have typing animation on first display
+
+
+Background Enhancements:
+
+Subtle gradient animation on dark background
+Floating orbs/blobs that drift slowly (like Stripe or Apple)
+Grid pattern overlay with low opacity
+Maybe subtle grain texture for depth
+
+
+Streaks & Achievements:
+
+When you complete a daily game: "🔥 3 Day Streak!" banner flies in
+Personal best beaten: gold trophy animation
+First game completed: "Welcome!" celebration
+Milestones: 10 games, 50 games, 100 games unlocks badge animations
+
+
+Results Screens:
+
+Share button has shimmer effect
+Stats count up from 0 (not instant display)
+Podium effect for top 3 in hosted games (1st place elevated, spotlight effect)
+Results grid for crossword flies in square by square
+
+
+
+Color & Style Upgrades:
+
+Add subtle gradients everywhere (not flat colors)
+Buttons have gradient overlays that shift on hover
+Cards have depth with layered shadows
+Active states glow with brand colors
+Dark mode has rich blacks (not pure black) with subtle colored tints
+
+Specific Component Upgrades:
+Three Strikes Game:
+
+Grid boxes flip when revealed (not just color change)
+Correct answer: box glows green, then settles
+Strike counter: each strike appears with bounce + shake
+Input field: glow when focused, shake when wrong answer
+
+Pop the Question:
+
+Vote buttons pulse when selectable
+Results bars grow from left with easing (not instant)
+"Burned" player card catches fire (CSS animation)
+Voting progress shows as filling ring
+
+Roast Roulette:
+
+Colored question cards have subtle hover lift
+Writing phase: text input glows with matching color border
+Card pass animation: slide out left, new card slides in right
+Reveal: roasts appear one at a time with fade-in
+
+Crossword:
+
+Selected cell highlights with glow
+Correct letters pop in with scale animation
+Completion: grid squares flip green one by one (wave effect)
+Timer pulses when under 30 seconds
+
+Performance Notes:
+
+Use CSS transforms (not position changes) for animations
+RequestAnimationFrame for particle effects
+Debounce scroll/resize events
+Lazy load heavy animations
+Respect prefers-reduced-motion for accessibility
+
+Key Libraries to Use:
+
+Framer Motion (already in stack) - for all React animations
+Canvas Confetti - for particle effects
+React Spring - for physics-based animations
+Lottie (optional) - for complex animated icons
+
+Make it feel like:
+
+Opening a Spotify Wrapped
+Winning on a slot machine
+Completing a Duolingo lesson
+Apple product reveal animations
+High-end mobile game UI
+
+Every interaction should feel SATISFYING. Nothing should just... appear. Everything should ARRIVE with style.
+
+Go wild with it, Power Mode. Make this thing SHINE. 🔥✨

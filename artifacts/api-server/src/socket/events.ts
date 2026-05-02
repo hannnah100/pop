@@ -6,6 +6,7 @@ interface Player {
   id: string;
   name: string;
   isHost: boolean;
+  isBot: boolean;
   score: number;
   burns: number;
   roasts: number;
@@ -25,6 +26,7 @@ interface Room {
   gameType: "pop-the-question" | "roast-roulette";
   status: "lobby" | "playing" | "finished";
   hostId: string;
+  isDemo: boolean;
   players: Player[];
   questions: Array<{ text?: string; color?: string; question?: string }>;
   currentQuestionIndex: number;
@@ -34,6 +36,7 @@ interface Room {
   roundSubmissions: Set<string>;
   revealOrder: string[];
   currentRevealIndex: number;
+  botAssignments: Record<string, { targetId: string; colors: string[] }>;
   createdAt: number;
   lastActivity: number;
 }
@@ -49,7 +52,6 @@ const ROOM_WORDS = [
 function generateRoomCode(): string {
   const available = ROOM_WORDS.filter((w) => !rooms.has(w));
   if (available.length === 0) {
-    // fallback: random 4-letter
     const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ";
     let code = "";
     do {
@@ -62,13 +64,78 @@ function generateRoomCode(): string {
 
 const ROAST_COLORS = ["yellow", "blue", "red", "green", "purple", "orange", "gray"];
 
-export function createRoom(gameType: "pop-the-question" | "roast-roulette"): string {
+const BOT_NAMES = ["Sarah", "Mike", "Alex", "Jordan", "Taylor"];
+
+const ROAST_BANK = [
+  "Definitely has a finsta",
+  "Types 'lol' but never actually laughs",
+  "Main character syndrome but supporting cast energy",
+  "Would cry at a Pixar lamp",
+  "Spotify Wrapped is just sad indie music",
+  "Their personality is a love language quiz result",
+  "Has a 'no drama' rule but creates 90% of it",
+  "TikTok algorithm knows their soul better than they do",
+  "Would survive 5 minutes in a horror movie, max",
+  "Still brings up something that happened in 2019",
+  "Their hot take is just a lukewarm take in a trench coat",
+  "Orders something 'simple' at a coffee shop but it's 12 words long",
+  "Would pitch a podcast but never start it",
+  "Has 3 ongoing situationships right now",
+  "Their villain era lasted exactly one week",
+  "Gives 'gifted child who peaked in middle school' vibes",
+  "Relates to every Myers-Briggs type depending on the day",
+  "Would watch a 3-hour documentary about someone they already hate",
+  "Their 'healing journey' has 14 new hobbies and zero therapy",
+  "Would post 'no context' and provide zero context",
+  "Has sent a voice note longer than most podcasts",
+  "Thinks they're the only one who's ever heard of that band",
+  "Their Roman Empire is a reality show elimination",
+  "Would unironically use the word 'vibe check'",
+  "Has a podcast recommendation for every mood but no actual advice",
+  "Cries at commercials but says they're 'not an emotional person'",
+  "Their sense of humor is just saying 'it's giving'",
+  "Would describe their personality as 'chaotic neutral'",
+  "Has multiple 'I should really call them back' people",
+  "Still hasn't returned that one thing they borrowed",
+  "Would watch a 30-second ad to save $0.50",
+  "Texts back immediately then acts unbothered",
+  "Has an essay-length opinion on the right way to load a dishwasher",
+  "Their Wikipedia rabbit hole at 2am is unhinged",
+  "Would get personally offended by a horoscope being wrong",
+  "Has 'we should hang out soon' energy for 6+ months",
+  "Describes everything as 'iconic' including spreadsheets",
+  "Their red flag is giving relationship advice they don't follow",
+  "Would make eye contact with you and still not say hi",
+  "Their morning routine takes 2 hours but they're still late",
+  "Knows every lyric to a song they claim to hate",
+  "Has started a book in the last year but not finished one",
+  "Their camera roll is 40% food, 40% memes, 20% screenshots of texts",
+  "Would absolutely ghost someone and then run into them at brunch",
+  "Still thinks they're better at parking than they are",
+  "Their idea of 'keeping it short' is a 4-minute voice note",
+  "Has watched the same comfort show 7+ times",
+  "Would make a Pinterest board for a plan they'll never execute",
+  "Their texting style changes completely depending on who they're talking to",
+  "Thinks manifesting counts as a plan",
+  "Has 'main character energy' in someone else's story",
+];
+
+function randomRoast(): string {
+  return ROAST_BANK[Math.floor(Math.random() * ROAST_BANK.length)];
+}
+
+function rand(min: number, max: number): number {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+export function createRoom(gameType: "pop-the-question" | "roast-roulette", isDemo = false): string {
   const code = generateRoomCode();
-  rooms.set(code, {
+  const room: Room = {
     code,
     gameType,
     status: "lobby",
     hostId: "",
+    isDemo,
     players: [],
     questions: [],
     currentQuestionIndex: 0,
@@ -78,9 +145,27 @@ export function createRoom(gameType: "pop-the-question" | "roast-roulette"): str
     roundSubmissions: new Set(),
     revealOrder: [],
     currentRevealIndex: 0,
+    botAssignments: {},
     createdAt: Date.now(),
     lastActivity: Date.now(),
-  });
+  };
+
+  if (isDemo) {
+    BOT_NAMES.forEach((name, i) => {
+      room.players.push({
+        id: `bot-${name.toLowerCase()}`,
+        name,
+        isHost: false,
+        isBot: true,
+        score: 0,
+        burns: 0,
+        roasts: 0,
+        guesses: 0,
+      });
+    });
+  }
+
+  rooms.set(code, room);
   return code;
 }
 
@@ -132,6 +217,190 @@ const ROAST_QUESTIONS_BANK = [
   "What would their memoir be titled?",
 ];
 
+// Bot auto-voting for Pop the Question
+function scheduleBotVotes(io: SocketIOServer, room: Room) {
+  if (!room.isDemo) return;
+  const bots = room.players.filter((p) => p.isBot);
+  const votablePlayers = room.players.filter((p) => !p.isHost);
+
+  bots.forEach((bot) => {
+    const delay = rand(2000, 4500);
+    setTimeout(() => {
+      const liveRoom = rooms.get(room.code);
+      if (!liveRoom || liveRoom.status !== "playing") return;
+      if (liveRoom.currentVotes[bot.id]) return; // already voted
+
+      // Vote for a random player (not self)
+      const candidates = votablePlayers.filter((p) => p.id !== bot.id);
+      const target = candidates[Math.floor(Math.random() * candidates.length)];
+      if (!target) return;
+
+      liveRoom.currentVotes[bot.id] = target.id;
+      liveRoom.lastActivity = Date.now();
+
+      const nonHostCount = liveRoom.players.filter((p) => !p.isHost).length;
+      const voteCount = Object.keys(liveRoom.currentVotes).length;
+
+      io.to(liveRoom.code).emit("vote-progress", {
+        voted: voteCount,
+        total: nonHostCount,
+      });
+
+      if (voteCount >= nonHostCount) {
+        io.to(liveRoom.hostId).emit("all-votes-in");
+      }
+    }, delay);
+  });
+}
+
+// Bot auto-submission for Roast Roulette
+function scheduleBotRoasts(
+  io: SocketIOServer,
+  room: Room,
+  assignments: Record<string, string>
+) {
+  if (!room.isDemo) return;
+  const bots = room.players.filter((p) => p.isBot);
+
+  bots.forEach((bot) => {
+    const targetId = assignments[bot.id];
+    if (!targetId) return;
+
+    const delay = rand(5000, 10000);
+    setTimeout(() => {
+      const liveRoom = rooms.get(room.code);
+      if (!liveRoom || liveRoom.status === "finished") return;
+      if (liveRoom.roundSubmissions.has(bot.id)) return; // already submitted
+
+      const colorIndex = (liveRoom.currentRound - 1) % ROAST_COLORS.length;
+      const color = ROAST_COLORS[colorIndex];
+      const answer = randomRoast();
+      const answerId = `${bot.id}-${color}-${Date.now()}`;
+
+      if (!liveRoom.cards[targetId]) liveRoom.cards[targetId] = {};
+      liveRoom.cards[targetId][color] = { author: bot.id, answer, answerId };
+      liveRoom.roundSubmissions.add(bot.id);
+      liveRoom.lastActivity = Date.now();
+
+      const nonHostPlayers = liveRoom.players.filter((p) => !p.isHost);
+      const submitted = liveRoom.roundSubmissions.size;
+      const total = nonHostPlayers.length;
+
+      io.to(liveRoom.code).emit("submission-progress", {
+        submitted,
+        total,
+        round: liveRoom.currentRound,
+      });
+
+      if (submitted >= total) {
+        const totalRounds = liveRoom.questions.length;
+        if (liveRoom.currentRound >= totalRounds) {
+          liveRoom.status = "playing";
+          const revealOrder = nonHostPlayers.map((p) => p.id);
+          liveRoom.revealOrder = revealOrder;
+          liveRoom.currentRevealIndex = 0;
+
+          io.to(liveRoom.code).emit("writing-complete", {
+            message: "All roasts written! Time for reveals!",
+          });
+
+          setTimeout(() => {
+            const r2 = rooms.get(liveRoom.code);
+            if (!r2) return;
+            const firstId = revealOrder[0];
+            const firstPlayer = nonHostPlayers.find((p) => p.id === firstId);
+            io.to(liveRoom.code).emit("start-reveals", {
+              revealOrder,
+              currentRevealId: firstId,
+              currentRevealName: firstPlayer?.name ?? "Unknown",
+              card: r2.cards[firstId] ?? {},
+              questions: r2.questions,
+            });
+
+            // If first reveal is a bot, auto-pick
+            if (firstPlayer?.isBot) {
+              scheduleBotRevealPicks(io, r2, firstId);
+            }
+          }, 2000);
+        } else {
+          liveRoom.currentRound++;
+          liveRoom.roundSubmissions = new Set();
+          const nextAssignments = assignRoastTargets(nonHostPlayers, liveRoom.currentRound);
+
+          io.to(liveRoom.code).emit("round-complete", {
+            nextRound: liveRoom.currentRound,
+            totalRounds,
+          });
+
+          nonHostPlayers.forEach((player) => {
+            const tId = nextAssignments[player.id];
+            const tPlayer = nonHostPlayers.find((p) => p.id === tId);
+            if (!player.isBot) {
+              io.to(player.id).emit("assign-card", {
+                targetPlayerId: tId,
+                targetPlayerName: tPlayer?.name ?? "Unknown",
+                round: liveRoom.currentRound,
+              });
+            }
+          });
+
+          scheduleBotRoasts(io, liveRoom, nextAssignments);
+        }
+      }
+    }, delay);
+  });
+}
+
+// Bot auto-pick during reveal phase
+function scheduleBotRevealPicks(io: SocketIOServer, room: Room, botId: string) {
+  const liveRoom = rooms.get(room.code);
+  if (!liveRoom) return;
+
+  const card = liveRoom.cards[botId];
+  if (!card) return;
+
+  const nonHostPlayers = liveRoom.players.filter((p) => !p.isHost);
+  const bot = liveRoom.players.find((p) => p.id === botId);
+
+  Object.entries(card).forEach(([color, entry], i) => {
+    setTimeout(() => {
+      const r2 = rooms.get(liveRoom.code);
+      if (!r2) return;
+
+      const roastEntry = r2.cards[botId]?.[color];
+      if (!roastEntry) return;
+
+      // Pick a random non-host player as the guessed author (bots guess randomly)
+      const candidates = nonHostPlayers.filter((p) => p.id !== botId);
+      const guessedPlayer = candidates[Math.floor(Math.random() * candidates.length)];
+      if (!guessedPlayer) return;
+
+      const actualAuthorId = roastEntry.author;
+      const correct = actualAuthorId === guessedPlayer.id;
+
+      const author = r2.players.find((p) => p.id === actualAuthorId);
+      const guesserBot = r2.players.find((p) => p.id === botId);
+
+      if (author) author.roasts += 1;
+      if (correct && guesserBot) guesserBot.guesses += 1;
+
+      r2.players.forEach((p) => { p.score = p.burns + p.roasts + p.guesses; });
+
+      const actualAuthor = r2.players.find((p) => p.id === actualAuthorId);
+
+      io.to(r2.code).emit("favorite-picked", {
+        color,
+        pickedByName: bot?.name ?? "Bot",
+        actualAuthorName: actualAuthor?.name ?? "Unknown",
+        guessedPlayerId: guessedPlayer.id,
+        actualAuthorId,
+        correct,
+        players: r2.players,
+      });
+    }, rand(1500, 3000) + i * 1200);
+  });
+}
+
 export function setupSocketIO(httpServer: HttpServer) {
   const io = new SocketIOServer(httpServer, {
     cors: {
@@ -154,13 +423,14 @@ export function setupSocketIO(httpServer: HttpServer) {
       socket.join(roomCode);
       room.lastActivity = Date.now();
 
-      // Remove any existing player with this socket id
+      // Remove any existing non-bot player with this socket id
       room.players = room.players.filter((p) => p.id !== socket.id);
 
       const player: Player = {
         id: socket.id,
         name: playerName,
         isHost: isHost || false,
+        isBot: false,
         score: 0,
         burns: 0,
         roasts: 0,
@@ -176,13 +446,14 @@ export function setupSocketIO(httpServer: HttpServer) {
       io.to(roomCode).emit("player-joined", {
         player,
         players: room.players,
+        isDemo: room.isDemo,
       });
 
-      // Send current room state to newly joined player
       socket.emit("room-state", {
         status: room.status,
         gameType: room.gameType,
         players: room.players,
+        isDemo: room.isDemo,
         currentQuestion: room.questions[room.currentQuestionIndex],
         questionIndex: room.currentQuestionIndex,
       });
@@ -198,7 +469,6 @@ export function setupSocketIO(httpServer: HttpServer) {
       room.currentVotes = {};
 
       if (room.gameType === "pop-the-question") {
-        // Shuffle questions
         const shuffled = [...POP_QUESTIONS].sort(() => Math.random() - 0.5);
         room.questions = shuffled.map((q) => ({ text: q }));
 
@@ -208,10 +478,14 @@ export function setupSocketIO(httpServer: HttpServer) {
           question: room.questions[0]?.text,
           questionIndex: 0,
           totalQuestions: room.questions.length,
+          isDemo: room.isDemo,
         });
+
+        scheduleBotVotes(io, room);
+
       } else if (room.gameType === "roast-roulette") {
         const nonHostPlayers = room.players.filter((p) => !p.isHost);
-        const numQuestions = nonHostPlayers.length - 1;
+        const numQuestions = Math.max(1, nonHostPlayers.length - 1);
         const colors = ROAST_COLORS.slice(0, numQuestions);
         const shuffledQ = [...ROAST_QUESTIONS_BANK].sort(() => Math.random() - 0.5);
         room.questions = colors.map((color, i) => ({
@@ -219,15 +493,10 @@ export function setupSocketIO(httpServer: HttpServer) {
           question: shuffledQ[i] ?? `Question ${i + 1}`,
         }));
 
-        // Initialize cards for each non-host player
-        nonHostPlayers.forEach((p) => {
-          room.cards[p.id] = {};
-        });
-
+        nonHostPlayers.forEach((p) => { room.cards[p.id] = {}; });
         room.currentRound = 1;
         room.roundSubmissions = new Set();
 
-        // Assign first round targets (round-robin)
         const assignments = assignRoastTargets(nonHostPlayers, 1);
 
         io.to(roomCode).emit("game-started", {
@@ -237,22 +506,26 @@ export function setupSocketIO(httpServer: HttpServer) {
           players: nonHostPlayers,
           currentRound: 1,
           totalRounds: numQuestions,
+          isDemo: room.isDemo,
         });
 
-        // Send individual assignments
         nonHostPlayers.forEach((player) => {
           const targetId = assignments[player.id];
           const target = nonHostPlayers.find((p) => p.id === targetId);
-          io.to(player.id).emit("assign-card", {
-            targetPlayerId: targetId,
-            targetPlayerName: target?.name ?? "Unknown",
-            round: 1,
-          });
+          if (!player.isBot) {
+            io.to(player.id).emit("assign-card", {
+              targetPlayerId: targetId,
+              targetPlayerName: target?.name ?? "Unknown",
+              round: 1,
+            });
+          }
         });
+
+        scheduleBotRoasts(io, room, assignments);
       }
     });
 
-    // Pop the Question: submit vote
+    // Pop the Question: submit vote (real player)
     socket.on("submit-vote", ({ roomCode, votedForId }: { roomCode: string; votedForId: string }) => {
       const room = rooms.get(roomCode);
       if (!room) return;
@@ -316,8 +589,9 @@ export function setupSocketIO(httpServer: HttpServer) {
         io.to(roomCode).emit("question-update", {
           question: room.questions[room.currentQuestionIndex]?.text,
           questionIndex: room.currentQuestionIndex,
-          totalQuestions: room.questions.length,
         });
+
+        scheduleBotVotes(io, room);
       }
     });
 
@@ -334,7 +608,7 @@ export function setupSocketIO(httpServer: HttpServer) {
       });
     });
 
-    // Roast Roulette: submit roast
+    // Roast Roulette: submit roast (real player)
     socket.on("submit-roast", ({ roomCode, targetPlayerId, color, answer }: {
       roomCode: string;
       targetPlayerId: string;
@@ -345,55 +619,48 @@ export function setupSocketIO(httpServer: HttpServer) {
       if (!room) return;
       room.lastActivity = Date.now();
 
-      if (!room.cards[targetPlayerId]) {
-        room.cards[targetPlayerId] = {};
-      }
+      if (!room.cards[targetPlayerId]) room.cards[targetPlayerId] = {};
 
       const answerId = `${socket.id}-${color}-${Date.now()}`;
-      room.cards[targetPlayerId][color] = {
-        author: socket.id,
-        answer,
-        answerId,
-      };
-
+      room.cards[targetPlayerId][color] = { author: socket.id, answer, answerId };
       room.roundSubmissions.add(socket.id);
 
       const nonHostPlayers = room.players.filter((p) => !p.isHost);
-      const submissionCount = room.roundSubmissions.size;
+      const submitted = room.roundSubmissions.size;
+      const total = nonHostPlayers.length;
 
       io.to(roomCode).emit("submission-progress", {
-        submitted: submissionCount,
-        total: nonHostPlayers.length,
+        submitted,
+        total,
         round: room.currentRound,
       });
 
-      if (submissionCount >= nonHostPlayers.length) {
+      if (submitted >= total) {
         const totalRounds = room.questions.length;
 
         if (room.currentRound >= totalRounds) {
-          // All rounds done — go to reveal phase
           room.status = "playing";
           const revealOrder = nonHostPlayers.map((p) => p.id);
           room.revealOrder = revealOrder;
           room.currentRevealIndex = 0;
 
-          io.to(roomCode).emit("writing-complete", {
-            message: "All roasts written! Time for reveals!",
-          });
+          io.to(roomCode).emit("writing-complete", { message: "All roasts written! Time for reveals!" });
 
           setTimeout(() => {
-            const firstRevealId = revealOrder[0];
-            const firstPlayer = nonHostPlayers.find((p) => p.id === firstRevealId);
+            const r2 = rooms.get(roomCode);
+            if (!r2) return;
+            const firstId = revealOrder[0];
+            const firstPlayer = nonHostPlayers.find((p) => p.id === firstId);
             io.to(roomCode).emit("start-reveals", {
               revealOrder,
-              currentRevealId: firstRevealId,
+              currentRevealId: firstId,
               currentRevealName: firstPlayer?.name ?? "Unknown",
-              card: room.cards[firstRevealId] ?? {},
-              questions: room.questions,
+              card: r2.cards[firstId] ?? {},
+              questions: r2.questions,
             });
+            if (firstPlayer?.isBot) scheduleBotRevealPicks(io, r2, firstId);
           }, 2000);
         } else {
-          // Next round
           room.currentRound++;
           room.roundSubmissions = new Set();
           const assignments = assignRoastTargets(nonHostPlayers, room.currentRound);
@@ -404,19 +671,23 @@ export function setupSocketIO(httpServer: HttpServer) {
           });
 
           nonHostPlayers.forEach((player) => {
-            const targetId = assignments[player.id];
-            const target = nonHostPlayers.find((p) => p.id === targetId);
-            io.to(player.id).emit("assign-card", {
-              targetPlayerId: targetId,
-              targetPlayerName: target?.name ?? "Unknown",
-              round: room.currentRound,
-            });
+            const tId = assignments[player.id];
+            const tPlayer = nonHostPlayers.find((p) => p.id === tId);
+            if (!player.isBot) {
+              io.to(player.id).emit("assign-card", {
+                targetPlayerId: tId,
+                targetPlayerName: tPlayer?.name ?? "Unknown",
+                round: room.currentRound,
+              });
+            }
           });
+
+          scheduleBotRoasts(io, room, assignments);
         }
       }
     });
 
-    // Roast Roulette: pick favorite and guess author
+    // Roast Roulette: pick favorite (real player)
     socket.on("pick-favorite", ({ roomCode, color, answerId, guessedPlayerId }: {
       roomCode: string;
       color: string;
@@ -427,7 +698,6 @@ export function setupSocketIO(httpServer: HttpServer) {
       if (!room) return;
       room.lastActivity = Date.now();
 
-      // Find who is currently being revealed (the card owner is socket.id)
       const card = room.cards[socket.id];
       if (!card || !card[color]) return;
 
@@ -435,17 +705,12 @@ export function setupSocketIO(httpServer: HttpServer) {
       const actualAuthorId = roastEntry.author;
       const correct = actualAuthorId === guessedPlayerId;
 
-      // Award points
       const author = room.players.find((p) => p.id === actualAuthorId);
       const guesser = room.players.find((p) => p.id === socket.id);
 
       if (author) author.roasts += 1;
       if (correct && guesser) guesser.guesses += 1;
-
-      // Update scores
-      room.players.forEach((p) => {
-        p.score = p.burns + p.roasts + p.guesses;
-      });
+      room.players.forEach((p) => { p.score = p.burns + p.roasts + p.guesses; });
 
       const actualAuthor = room.players.find((p) => p.id === actualAuthorId);
 
@@ -460,7 +725,7 @@ export function setupSocketIO(httpServer: HttpServer) {
       });
     });
 
-    // Roast Roulette: move to next reveal (host only)
+    // Roast Roulette: next reveal (host only)
     socket.on("next-reveal", ({ roomCode }: { roomCode: string }) => {
       const room = rooms.get(roomCode);
       if (!room || room.hostId !== socket.id) return;
@@ -474,24 +739,21 @@ export function setupSocketIO(httpServer: HttpServer) {
         io.to(roomCode).emit("game-ended", {
           players: room.players,
           finalScores: room.players.map((p) => ({
-            id: p.id,
-            name: p.name,
-            burns: p.burns,
-            roasts: p.roasts,
-            guesses: p.guesses,
-            total: p.score,
+            id: p.id, name: p.name, burns: p.burns,
+            roasts: p.roasts, guesses: p.guesses, total: p.score,
           })),
         });
       } else {
-        const nextRevealId = room.revealOrder[room.currentRevealIndex];
-        const nextPlayer = nonHostPlayers.find((p) => p.id === nextRevealId);
+        const nextId = room.revealOrder[room.currentRevealIndex];
+        const nextPlayer = nonHostPlayers.find((p) => p.id === nextId);
         io.to(roomCode).emit("start-reveals", {
           revealOrder: room.revealOrder,
-          currentRevealId: nextRevealId,
+          currentRevealId: nextId,
           currentRevealName: nextPlayer?.name ?? "Unknown",
-          card: room.cards[nextRevealId] ?? {},
+          card: room.cards[nextId] ?? {},
           questions: room.questions,
         });
+        if (nextPlayer?.isBot) scheduleBotRevealPicks(io, room, nextId);
       }
     });
 
@@ -506,8 +768,7 @@ export function setupSocketIO(httpServer: HttpServer) {
             playerId: socket.id,
             players: room.players,
           });
-
-          if (room.players.length === 0) {
+          if (room.players.filter((p) => !p.isBot).length === 0) {
             rooms.delete(code);
           }
         }
@@ -518,7 +779,6 @@ export function setupSocketIO(httpServer: HttpServer) {
   return io;
 }
 
-// Round-robin card assignment: player at index i writes on player at index (i + round) % total
 function assignRoastTargets(players: Player[], round: number): Record<string, string> {
   const assignments: Record<string, string> = {};
   players.forEach((player, i) => {

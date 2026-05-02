@@ -9,4 +9,5 @@ import type { CreateRoomRequestGameType } from "./createRoomRequestGameType";
 
 export interface CreateRoomRequest {
   gameType: CreateRoomRequestGameType;
+  demo?: boolean;
 }

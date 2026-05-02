@@ -1,0 +1,42 @@
+DEMO MODE FOR HOSTED GAMES - INSTRUCTIONS FOR AGENT
+The Problem:
+I need to demo the hosted games (Pop the Question, Roast Roulette) but can't show them properly without other real players joining. Need a demo mode with AI/bot players.
+
+How to Fix It:
+Add "Demo Mode" Toggle on Host Setup
+When creating a room, show a toggle: "Demo Mode (AI Players)"
+If enabled, automatically add 4-5 bot players with fun names like: "Sarah", "Mike", "Alex", "Jordan", "Taylor"
+These bots join the lobby immediately
+Host can still start the game even though bots aren't real people
+Bot Behavior - Pop the Question:
+Bots automatically "vote" after 2-3 seconds (random delay so it looks natural)
+They vote randomly among all players (including each other, not just the host)
+Vote counts show normally
+Results reveal works the same way
+Bot Behavior - Roast Roulette:
+Writing Phase: Bots auto-submit funny pre-written roasts after 5-10 seconds
+Create a bank of 50+ generic funny roasts like:
+"Definitely has a finsta"
+"Types 'lol' but never actually laughs"
+"Main character syndrome but supporting cast energy"
+"Would cry at a Pixar lamp"
+"Spotify Wrapped is just sad indie music"
+Bots pick random roasts from the bank for each color
+Reveal Phase: Bots auto-pick a favorite and guess randomly
+Scoring works normally
+Visual Indicator:
+Show "🤖 DEMO MODE" badge in top corner of host view
+Bot player names have a small robot emoji next to them in the player list
+This makes it clear you're in demo mode
+Demo Mode Features:
+Can mix bots + real players (if someone joins with the code, they join alongside bots)
+Host can "kick" bots if real players join
+Everything functions exactly like a real game
+Host can still control timing (next question, reveal results, etc.)
+Add Demo Mode Button to Homepage:
+Under "Hosted Party Games" section
+Button: "Try Demo Mode →"
+Takes you directly to host setup with demo mode pre-enabled
+Makes it easy for people to test without coordinating real players
+This lets you demo the games solo for pitches, videos, screenshots, etc.
+

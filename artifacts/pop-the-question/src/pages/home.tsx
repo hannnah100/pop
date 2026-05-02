@@ -9,7 +9,8 @@ import {
   Gamepad2, 
   Users,
   CheckCircle2,
-  Play
+  Play,
+  Bot
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
@@ -157,6 +158,20 @@ export default function Home() {
                   Join a Game
                 </Button>
               </Link>
+
+              <div className="pt-2 border-t border-border/50">
+                <Link href="/host?demo=true">
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    className="w-full text-muted-foreground hover:text-primary hover:bg-primary/10 gap-2"
+                    data-testid="link-demo-mode"
+                  >
+                    <Bot className="w-4 h-4" />
+                    Try Demo Mode →
+                  </Button>
+                </Link>
+              </div>
 
             </CardContent>
           </Card>

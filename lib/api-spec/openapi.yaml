@@ -360,6 +360,8 @@ components:
         gameType:
           type: string
           enum: [pop-the-question, roast-roulette]
+        demo:
+          type: boolean
       required:
         - gameType
 

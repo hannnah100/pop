@@ -72,6 +72,7 @@ export const CreateRoomRequestGameType = {
 
 export interface CreateRoomRequest {
   gameType: CreateRoomRequestGameType;
+  demo?: boolean;
 }
 
 export interface RoomCreated {

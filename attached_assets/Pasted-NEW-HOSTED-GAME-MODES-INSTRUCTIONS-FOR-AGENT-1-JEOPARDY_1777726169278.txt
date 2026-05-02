@@ -1,0 +1,381 @@
+NEW HOSTED GAME MODES - INSTRUCTIONS FOR AGENT
+
+1. JEOPARDY
+Game Setup:
+
+Host creates room, players join with code
+Host selects a category pack (pre-loaded or creates custom)
+Board shows 6 categories across the top, 5 questions down ($200, $400, $600, $800, $1000)
+30 total questions per game
+
+How It Works:
+Host View (Projected):
+
+Full Jeopardy board grid visible
+Click a dollar amount to reveal that question
+Question appears full screen with the dollar value
+Shows which player buzzed in first
+Buttons: "Correct" or "Incorrect" to award/deduct points
+After answer, that square turns gray/used
+Running leaderboard on side showing all player scores
+Daily Doubles: 2 random squares (revealed when selected), player wagers before seeing question
+
+Player View (Phone):
+
+See current category and dollar value
+Big "BUZZ IN" button (only active when question is shown)
+First person to tap gets to answer
+If they buzz in: text input to type their answer, submit to host
+If wrong: other players can buzz in again
+See their current score
+
+Socket Events:
+
+reveal-question (host selects square)
+buzz-in (player taps button, locks out others)
+submit-answer (player types answer)
+mark-correct or mark-incorrect (host judgment)
+score-update (broadcast new scores)
+
+Game Features:
+
+Scores can go negative (lose points for wrong answers)
+Daily Doubles: player chooses wager amount (up to their current score, minimum $5)
+Final Jeopardy: all players wager, see category, write answer, reveal together
+Host controls pacing (can skip questions, end early)
+
+Category Pack Examples:
+Pack: "2000s Pop Culture"
+- 90s Sitcoms
+- Billboard Hits  
+- Viral Moments
+- Movie Franchises
+- Reality TV Stars
+- Internet Slang
+
+Each category has 5 questions with answers and dollar values
+Pre-load 3-5 category packs with all pop culture themes.
+
+2. WHEEL OF FORTUNE
+Game Setup:
+
+Host creates room, players join
+Host selects puzzle pack (phrases, song titles, movie titles, etc.)
+Choose number of rounds (3-5 typical)
+Digital wheel built into the game
+
+How It Works:
+Host View (Projected):
+
+Puzzle display: Show the phrase with blanks (e.g., "_ _ _ _ _ / _ _ _ _ _")
+Category shown above (e.g., "Song Title")
+Digital wheel: Animated wheel with segments:
+
+Dollar amounts: $500, $600, $700, $800, $900, $1000, $1500, $2000, $2500
+BANKRUPT (lose all round points)
+LOSE A TURN
+
+
+Host clicks "SPIN" button → wheel spins with animation
+Shows what it landed on
+Current player (highlighted) calls out a consonant
+Host clicks letters on keyboard to reveal them
+Shows: letters already guessed, current player, round scores
+
+Player View (Phone):
+
+See the puzzle with revealed letters
+When it's your turn:
+
+Button: "I want to spin"
+Button: "Buy a vowel" ($250 from round score)
+Button: "Solve the puzzle" (text input appears)
+
+
+Not your turn: see "Waiting for [Player Name]..."
+See your round score and total score
+
+Game Flow:
+
+Host spins wheel → lands on dollar amount
+Player calls consonant via phone (letter buttons appear)
+Host clicks matching letters on screen to reveal them
+If letter appears: points = (dollar value × number of times letter appears)
+Player continues (spin again, buy vowel, or solve)
+If no letter: turn moves to next player
+First to solve gets their round score added to total
+Play 3-5 rounds, highest total wins
+
+Wheel Segments (30 total):
+
+$500 (×3)
+$600 (×2)
+$700 (×2)
+$800 (×2)
+$900 (×2)
+$1000 (×2)
+$1500 (×2)
+$2000 (×1)
+$2500 (×1)
+BANKRUPT (×3)
+LOSE A TURN (×2)
+FREE PLAY (×1) - call any letter, even if wrong, keep turn
+
+Puzzle Categories:
+
+Song Titles
+Movie Titles
+Famous Quotes
+Pop Culture Phrases
+TV Show Titles
+Celebrity Names
+Places
+Things
+
+Puzzle Pack Examples:
+Category: Song Titles
+- "SHAKE IT OFF" (Taylor Swift)
+- "BOHEMIAN RHAPSODY" (Queen)
+- "ROLLING IN THE DEEP" (Adele)
+- "UPTOWN FUNK" (Bruno Mars)
+
+Category: Movie Titles
+- "THE BREAKFAST CLUB"
+- "PULP FICTION"
+- "FORREST GUMP"
+- "THE SHAWSHANK REDEMPTION"
+Pre-load 50+ puzzles across different categories.
+Wheel Animation:
+
+Smooth spin with easing
+Click sound as it passes segments
+Slows down gradually
+Lands with bounce effect
+Highlight landed segment
+
+
+3. BAR TRIVIA / PUB QUIZ
+Game Setup:
+
+Host creates room, players join
+Host selects number of rounds (typically 5-7 rounds)
+Each round has a theme
+10 questions per round
+
+How It Works:
+Host View (Projected):
+
+Show current round name (e.g., "Round 3: Music from the 2000s")
+Display question number (e.g., "Question 5/10")
+Show the question text large on screen
+For multiple choice: show A/B/C/D options
+Timer countdown (30-60 seconds per question, host can adjust)
+After time expires: button to "Reveal Answers"
+Shows how many players got it right/wrong
+Running leaderboard after each round
+
+Player View (Phone):
+
+See the question
+Answer options (if multiple choice) or text input (if open-ended)
+Submit button
+After submitting: "Answer locked in ✓" or countdown to next question
+Can't change answer after submitting
+See their score after each round
+
+Round Types:
+
+Standard Multiple Choice
+
+4 options (A/B/C/D)
+1 point per correct answer
+Examples: "Who won the 2020 Super Bowl? A) Chiefs B) 49ers C) Patriots D) Packers"
+
+
+Picture Round
+
+Show image on host screen
+Players identify what it is (celebrity, movie still, album cover, meme)
+Text input on player phones
+Fuzzy matching for answers
+
+
+Music Round
+
+Host plays audio clip (song snippet)
+Players guess: song title, artist, or both
+Could integrate Spotify embeds or host uploads audio files
+
+
+True/False Lightning Round
+
+20 quick true/false questions
+10 seconds per question
+0.5 points each (so 10 points possible)
+
+
+Themed Rounds
+
+All questions about one topic (90s Movies, Taylor Swift, Marvel, etc.)
+Mix of multiple choice and open-ended
+
+
+
+Scoring:
+
+1 point per correct answer (standard)
+Bonus points for speed (first 3 to answer correctly get +0.5)
+Penalty for wrong answers (optional, -0.5)
+Final round worth double points
+
+Round Examples:
+ROUND 1: General Pop Culture
+Q1: Which streaming service created "Stranger Things"? 
+    A) Hulu B) Netflix C) Prime D) Disney+
+Q2: Who performed at the 2024 Super Bowl halftime show?
+    A) Rihanna B) Usher C) The Weeknd D) Beyoncé
+... (10 questions total)
+
+ROUND 2: 2000s Music
+Q1: Finish the lyric: "I've got 99 problems but..."
+    (Text input: "a bitch ain't one")
+Q2: Which band sang "Mr. Brightside"?
+    (Text input: "The Killers")
+
+ROUND 3: Picture Round - Celebrity Faces
+(Show 10 celebrity photos, players name them)
+
+ROUND 4: Movie Quotes
+Q1: "I'm gonna make him an offer he can't refuse" - which movie?
+Q2: "You're gonna need a bigger boat" - which movie?
+
+ROUND 5: True/False Lightning
+Q1: True or False: The Office was filmed in Scranton, PA
+Q2: True or False: Taylor Swift has won Album of the Year 4 times
+... (20 questions, fast-paced)
+Game Features:
+
+Host can pause between rounds (for bathroom breaks, drink refills at bars)
+Host can skip questions or go back
+Leaderboard shown after each round
+Final scores with podium display (top 3 highlighted)
+Option to play another game with same players
+
+Pre-load 5 complete pub quiz games (each with 5-7 rounds of 10 questions).
+
+GENERAL REQUIREMENTS FOR ALL THREE GAMES:
+Shared Features:
+
+Demo mode with AI bots (like Pop the Question and Roast Roulette)
+Room code system
+Lobby with player list
+Real-time Socket.io sync
+Mobile-optimized player views
+Projector-optimized host views
+Leaderboard with animations
+Share final results
+Kick player option for host
+End game early option
+
+Content Structure:
+Jeopardy Categories Database:
+json{
+  "packId": "2000s-pop-culture",
+  "packName": "2000s Pop Culture",
+  "categories": [
+    {
+      "name": "90s Sitcoms",
+      "questions": [
+        {"value": 200, "question": "This coffee shop was the hangout spot on 'Friends'", "answer": "Central Perk"},
+        {"value": 400, "question": "...", "answer": "..."},
+        ... (5 questions)
+      ]
+    },
+    ... (6 categories)
+  ],
+  "dailyDoubles": [2, 18] // Random question indices
+}
+Wheel Puzzles Database:
+json{
+  "category": "Song Titles",
+  "puzzles": [
+    {
+      "phrase": "SHAKE IT OFF",
+      "hint": "Taylor Swift",
+      "category": "Song Titles"
+    },
+    {
+      "phrase": "BOHEMIAN RHAPSODY",
+      "hint": "Queen",
+      "category": "Song Titles"
+    }
+  ]
+}
+Pub Quiz Rounds Database:
+json{
+  "gameId": "pub-quiz-1",
+  "gameName": "Pop Culture Night",
+  "rounds": [
+    {
+      "roundNumber": 1,
+      "roundName": "General Pop Culture",
+      "roundType": "multiple-choice",
+      "questions": [
+        {
+          "question": "Which streaming service created 'Stranger Things'?",
+          "options": ["Hulu", "Netflix", "Prime", "Disney+"],
+          "correctAnswer": "Netflix",
+          "points": 1
+        },
+        ... (10 questions)
+      ]
+    },
+    {
+      "roundNumber": 2,
+      "roundName": "Picture Round - Celebrities",
+      "roundType": "picture",
+      "questions": [
+        {
+          "imageUrl": "/images/celeb1.jpg",
+          "correctAnswer": "Zendaya",
+          "acceptedAnswers": ["Zendaya", "Zendaya Coleman"],
+          "points": 1
+        }
+      ]
+    }
+  ]
+}
+
+UI/UX NOTES:
+Jeopardy:
+
+Board grid should look like actual Jeopardy (blue background, gold text)
+Dollar amounts in bold
+Click animation when selecting square
+Buzzer button is HUGE on player phones (easy to tap fast)
+
+Wheel of Fortune:
+
+Wheel should be colorful and eye-catching
+Smooth spin animation (2-3 seconds)
+Letter tiles flip when revealed (like actual show)
+Keyboard interface for host to click letters
+Show: "Used letters: A B C D E..."
+
+Pub Quiz:
+
+Clean, simple design (not flashy - it's a traditional quiz)
+Clear question text
+Progress indicator (Question 3/10)
+Round scores displayed as table after each round
+Can have team names (optional - players group into teams)
+
+
+PRIORITY ORDER:
+Build in this order:
+
+Bar Trivia/Pub Quiz (simplest - just questions and answers)
+Jeopardy (more complex - grid, buzzer logic, daily doubles)
+Wheel of Fortune (most complex - wheel animation, letter revealing, puzzle solving)
+
+For each game, create 3-5 pre-loaded content packs so it's ready to demo immediately.

@@ -107,6 +107,7 @@ export const GetDailyStatusResponse = zod.object({
  */
 export const CreateRoomBody = zod.object({
   gameType: zod.enum(["pop-the-question", "roast-roulette"]),
+  demo: zod.boolean().optional(),
 });
 
 export const CreateRoomResponse = zod.object({
