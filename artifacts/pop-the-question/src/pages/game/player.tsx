@@ -277,6 +277,7 @@ export default function GamePlayer() {
   const [wofSpinType, setWofSpinType] = useState<string | null>(null);
   const [wofIsFreePlay, setWofIsFreePlay] = useState(false);
   const [wofSolveSubmitted, setWofSolveSubmitted] = useState(false);
+  const [wofSpeakNow, setWofSpeakNow] = useState(false);
   const [wofPuzzleIndex, setWofPuzzleIndex] = useState(0);
   const [wofTotalPuzzles, setWofTotalPuzzles] = useState(0);
   const [wofLastLetter, setWofLastLetter] = useState<{ letter: string; count: number; correct: boolean } | null>(null);
@@ -502,6 +503,7 @@ export default function GamePlayer() {
       setWofSolveResult({ correct: payload.correct, answer: payload.answer, solverName: payload.solverName });
       setWofSolveInput("");
       setWofSolveSubmitted(false);
+      setWofSpeakNow(false);
       if (payload.correct) hapticVictory();
       else hapticWrong();
     });
@@ -551,6 +553,7 @@ export default function GamePlayer() {
       setWofVowelMode(false);
       setWofIsFreePlay(false);
       setWofSolveSubmitted(false);
+      setWofSpeakNow(false);
     });
 
     // ============ Jeopardy socket handlers ============
@@ -2420,10 +2423,10 @@ export default function GamePlayer() {
                 </div>
               )}
 
-              {/* Solve attempt */}
-              {canSolve && !wofSolveSubmitted && (
-                <div>
-                  <p className="font-display font-black text-black/60 uppercase text-xs tracking-widest mb-2">Try to Solve</p>
+              {/* Solve attempt (typed + verbal) */}
+              {canSolve && !wofSolveSubmitted && !wofSpeakNow && (
+                <div className="flex flex-col gap-2">
+                  <p className="font-display font-black text-black/60 uppercase text-xs tracking-widest">Try to Solve</p>
                   <div className="flex gap-2">
                     <Input value={wofSolveInput} onChange={e => setWofSolveInput(e.target.value.toUpperCase())}
                       placeholder="TYPE THE ANSWER…"
@@ -2435,11 +2438,38 @@ export default function GamePlayer() {
                       Solve!
                     </Button>
                   </div>
+                  <Button
+                    onClick={() => {
+                      socket?.emit("wof-solve-verbal", { roomCode });
+                      setWofSpeakNow(true);
+                      hapticTap();
+                    }}
+                    className="w-full bg-[#7C3AED] hover:bg-[#7C3AED]/90 text-white border-[2px] border-black font-display font-black uppercase"
+                    data-testid="btn-wof-say-it"
+                  >
+                    🎤 Say It Out Loud
+                  </Button>
                 </div>
               )}
 
-              {/* Waiting for host to judge solve */}
-              {canSolve && wofSolveSubmitted && (
+              {/* Verbal solve — speak now screen */}
+              {canSolve && wofSpeakNow && (
+                <motion.div
+                  initial={{ scale: 0.9, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  className="bg-[#7C3AED] border-[3px] border-black shadow-[4px_4px_0_#000] px-4 py-5 text-center flex flex-col gap-3"
+                >
+                  <p className="font-display font-black text-white text-4xl">🎤</p>
+                  <p className="font-display font-black text-white uppercase text-xl tracking-widest">Speak Now!</p>
+                  <p className="text-white/70 font-sans text-sm">Host is listening — say your answer out loud</p>
+                  <div className="flex justify-center">
+                    <div className="w-5 h-5 border-4 border-white border-t-transparent animate-spin rounded-full" />
+                  </div>
+                </motion.div>
+              )}
+
+              {/* Waiting for host to judge typed solve */}
+              {canSolve && wofSolveSubmitted && !wofSpeakNow && (
                 <motion.div
                   initial={{ scale: 0.9, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}

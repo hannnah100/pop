@@ -379,7 +379,8 @@ export default function GameHost() {
   const [wofSelectedPackId, setWofSelectedPackId] = useState<string | null>(null);
   const [wofRoundCount, setWofRoundCount] = useState<number>(5);
   const [wofSpinIndex, setWofSpinIndex] = useState<number | null>(null);
-  const [wofPendingSolve, setWofPendingSolve] = useState<{ solverId: string | null; solverName: string; answer: string } | null>(null);
+  const [wofIsFreePlay, setWofIsFreePlay] = useState(false);
+  const [wofPendingSolve, setWofPendingSolve] = useState<{ solverId: string | null; solverName: string; answer: string; isVerbal?: boolean } | null>(null);
 
   const finishedRef = useRef(false);
   const notificationsRef = useRef<HostNotificationsHandle | null>(null);
@@ -896,6 +897,7 @@ export default function GameHost() {
       setWofControllerId(payload.controllerId);
       setWofScores(payload.scores);
       setWofPendingSolve(null);
+      setWofIsFreePlay(payload.isFreePlay ?? false);
       if (payload.type === "bankrupt" || payload.type === "lose-a-turn") {
         setWofPhase("spinning");
       } else {
@@ -3003,19 +3005,27 @@ export default function GameHost() {
                   initial={{ scale: 0.8, opacity: 0, y: -10 }}
                   animate={{ scale: 1, opacity: 1, y: 0 }}
                   exit={{ scale: 0.8, opacity: 0 }}
-                  className="w-full max-w-md bg-[#FF1493] border-[4px] border-black shadow-[6px_6px_0_#000] p-5 flex flex-col gap-3"
+                  className={`w-full max-w-md border-[4px] border-black shadow-[6px_6px_0_#000] p-5 flex flex-col gap-3 ${wofPendingSolve.isVerbal ? "bg-[#7C3AED]" : "bg-[#FF1493]"}`}
                 >
                   <p className="font-display font-black text-white uppercase text-xl tracking-widest text-center">
-                    Solve Attempt!
+                    {wofPendingSolve.isVerbal ? "🎤 Verbal Solve!" : "Solve Attempt!"}
                   </p>
                   <p className="text-white/80 font-sans text-sm text-center">
-                    <span className="font-black text-white">{wofPendingSolve.solverName}</span> says:
+                    <span className="font-black text-white">{wofPendingSolve.solverName}</span>
+                    {wofPendingSolve.isVerbal ? " is saying it out loud — listen carefully!" : " typed:"}
                   </p>
-                  <div className="bg-white border-[3px] border-black px-4 py-3 text-center">
-                    <p className="font-display font-black text-2xl uppercase text-black tracking-wider">
-                      {wofPendingSolve.answer}
-                    </p>
-                  </div>
+                  {!wofPendingSolve.isVerbal && (
+                    <div className="bg-white border-[3px] border-black px-4 py-3 text-center">
+                      <p className="font-display font-black text-2xl uppercase text-black tracking-wider">
+                        {wofPendingSolve.answer}
+                      </p>
+                    </div>
+                  )}
+                  {wofPendingSolve.isVerbal && (
+                    <div className="bg-white/20 border-[2px] border-white/50 px-4 py-3 text-center rounded">
+                      <p className="font-display font-black text-white text-lg">🎧 Listen to their answer…</p>
+                    </div>
+                  )}
                   <div className="flex gap-3">
                     <Button
                       onClick={() => handleWofJudge(true)}
@@ -3026,7 +3036,7 @@ export default function GameHost() {
                     </Button>
                     <Button
                       onClick={() => handleWofJudge(false)}
-                      className="flex-1 bg-black hover:bg-black/80 text-white border-[3px] border-[#FF1493] font-display font-black text-xl uppercase shadow-[4px_4px_0_#000]"
+                      className="flex-1 bg-black hover:bg-black/80 text-white border-[3px] border-white/30 font-display font-black text-xl uppercase shadow-[4px_4px_0_#000]"
                       data-testid="btn-wof-judge-wrong"
                     >
                       <X className="w-5 h-5 mr-2" /> WRONG
@@ -3071,7 +3081,38 @@ export default function GameHost() {
               ) : null}
             </AnimatePresence>
 
-            {/* Guessed letters */}
+            {/* Host A-Z keyboard — active when in guessing phase and no pending solve */}
+            {wofPhase === "guessing" && !wofPendingSolve && !wofPuzzleOver && (
+              <div className="w-full max-w-2xl">
+                <p className="font-display font-black text-xs uppercase tracking-widest text-black/40 mb-2">
+                  {wofIsFreePlay ? "🎉 FREE PLAY — Click Any Letter" : "Click Letter When Called"}
+                </p>
+                <div className="grid grid-cols-9 gap-1">
+                  {alphabet.map(l => {
+                    const used = wofGuessedLetters.includes(l);
+                    const isVowel = VOWELS_SET.has(l);
+                    const isDisabled = used || (!wofIsFreePlay && isVowel);
+                    return (
+                      <button
+                        key={l}
+                        onClick={() => !isDisabled && socket?.emit("wof-guess-letter", { roomCode, letter: l })}
+                        disabled={isDisabled}
+                        data-testid={`btn-host-wof-letter-${l}`}
+                        className={`h-10 flex items-center justify-center border-[2px] border-black font-display font-black text-sm
+                          ${used ? "bg-black text-white/30 cursor-not-allowed"
+                            : isDisabled ? "bg-black/10 text-black/30 cursor-not-allowed"
+                            : isVowel && wofIsFreePlay ? "bg-[#00C853] hover:bg-[#00C853]/80 text-white shadow-[2px_2px_0_#000] cursor-pointer"
+                            : "bg-white hover:bg-[#FFD700] text-black shadow-[2px_2px_0_#000] cursor-pointer"}`}
+                      >
+                        {l}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
+            {/* Used letters tracker */}
             <div className="w-full max-w-2xl">
               <p className="font-display font-black text-xs uppercase tracking-widest text-black/40 mb-2">Used Letters</p>
               <div className="flex flex-wrap gap-1.5">

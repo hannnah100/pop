@@ -1328,6 +1328,32 @@ export function setupSocketIO(httpServer: HttpServer) {
       applyWofSolveResult(io, room, w, puzzle, solver ?? null, solverId, solverName, answer, correct);
     });
 
+    // Player says the answer out loud — host hears it directly and judges
+    socket.on("wof-solve-verbal", ({ roomCode }: { roomCode: string }) => {
+      const room = rooms.get(roomCode);
+      if (!room || !room.wof) return;
+      const w = room.wof;
+      if (w.phase !== "spinning") return;
+      if (socket.id !== w.controllerId) return;
+      if (w.pendingSolve) return;
+      room.lastActivity = Date.now();
+
+      const solverId = w.controllerId;
+      const solver = room.players.find((p) => p.id === solverId);
+      w.pendingSolve = { solverId: solverId ?? "", solverName: solver?.name ?? "Player", answer: "(Say It Out Loud)" };
+
+      io.to(room.hostId).emit("wof-solve-pending", {
+        solverId,
+        solverName: solver?.name ?? "Player",
+        answer: "(Say It Out Loud)",
+        isVerbal: true,
+      });
+      io.to(room.code).emit("wof-solve-submitted", {
+        solverName: solver?.name ?? "Player",
+        isVerbal: true,
+      });
+    });
+
     socket.on("wof-next-puzzle", ({ roomCode }: { roomCode: string }) => {
       const room = rooms.get(roomCode);
       if (!room || !room.wof || room.hostId !== socket.id) return;
