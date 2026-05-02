@@ -1,7 +1,6 @@
-import { Link } from "wouter";
 import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { AlertCircle, Home as HomeIcon } from "lucide-react";
+import { AlertCircle } from "lucide-react";
+import { BackArrow } from "@/components/ui/BackArrow";
 
 export default function NotFound() {
   return (
@@ -17,11 +16,9 @@ export default function NotFound() {
             That page doesn't exist (yet). Let's get you back to the action.
           </p>
 
-          <Link href="/">
-            <Button className="mt-6 w-full">
-              <HomeIcon className="w-4 h-4 mr-2" /> Back Home
-            </Button>
-          </Link>
+          <div className="mt-6 flex justify-center">
+            <BackArrow />
+          </div>
         </CardContent>
       </Card>
     </div>

@@ -4,6 +4,7 @@ import { useGetTodayCrossword } from "@workspace/api-client-react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Share2, Home as HomeIcon, CheckCircle2 } from "lucide-react";
+import { BackArrow } from "@/components/ui/BackArrow";
 import { useToast } from "@/hooks/use-toast";
 import {
   Shake,

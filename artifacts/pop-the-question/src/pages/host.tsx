@@ -12,6 +12,7 @@ import {
   SmileyDoodle,
   ConfettiDoodle,
 } from "@/components/fx/Doodles";
+import { BackArrow } from "@/components/ui/BackArrow";
 
 const GAME_CARDS = [
   {
@@ -207,10 +208,8 @@ export default function Host() {
           })}
         </div>
 
-        <div className="mt-8 text-center">
-          <Button variant="ghost" onClick={() => setLocation("/")} data-testid="btn-back">
-            ← Back to Home
-          </Button>
+        <div className="mt-8 flex justify-center">
+          <BackArrow />
         </div>
       </div>
     </div>

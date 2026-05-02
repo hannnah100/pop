@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
-import { Link } from "wouter";
 import { motion } from "framer-motion";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { ArrowLeft, Trophy, Flame, Target, Clock, CalendarDays } from "lucide-react";
+import { Trophy, Flame, Target, Clock, CalendarDays } from "lucide-react";
+import { BackArrow } from "@/components/ui/BackArrow";
 import { CountUp } from "@/components/fx";
 import { staggerContainer, staggerItem } from "@/lib/motion";
 
@@ -36,11 +35,7 @@ export default function Stats() {
 
   return (
     <div className="flex-1 max-w-5xl mx-auto w-full px-4 py-12">
-      <Link href="/">
-        <Button variant="ghost" className="mb-8 pl-0 hover:bg-transparent hover:text-primary">
-          <ArrowLeft className="w-5 h-5 mr-2" /> Back Home
-        </Button>
-      </Link>
+      <BackArrow className="mb-8" />
 
       <motion.header
         className="mb-12"

@@ -60,7 +60,7 @@ export default function Home() {
             <span className="text-black">THE QUESTION</span>
           </h1>
           <p className="mt-3 text-lg md:text-xl font-bold text-black/70 font-sans">
-            Where pop culture gets personal
+            Who knows the most about your group chat?
           </p>
         </div>
       </header>

@@ -2,8 +2,9 @@ import { useState } from "react";
 import { Link } from "wouter";
 import { useGetThreeStrikesArchive, useGetCrosswordArchive } from "@workspace/api-client-react";
 import { motion } from "framer-motion";
-import { ArrowLeft, PlayCircle, Calendar, CheckCircle2, Trophy, Sparkles } from "lucide-react";
+import { PlayCircle, Calendar, CheckCircle2, Trophy, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { BackArrow } from "@/components/ui/BackArrow";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ShimmerGrid } from "@/components/fx";
@@ -55,11 +56,7 @@ export default function Archive() {
 
   return (
     <div className="flex-1 max-w-5xl mx-auto w-full px-4 py-12">
-      <Link href="/">
-        <Button variant="ghost" className="mb-8 pl-0 hover:bg-transparent hover:text-primary">
-          <ArrowLeft className="w-5 h-5 mr-2" /> Back Home
-        </Button>
-      </Link>
+      <BackArrow className="mb-8" />
 
       <motion.div
         initial={{ opacity: 0, y: -8 }}
