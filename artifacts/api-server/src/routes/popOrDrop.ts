@@ -77,16 +77,16 @@ router.get("/daily/pop-or-drop/leaderboard", async (req, res): Promise<void> => 
   const agg = await db
     .select({
       totalPlayers: sql<number>`count(*)::int`,
-      avgStreak: sql<number>`round(avg(streak))::int`,
+      avgStreak: sql<number>`coalesce(round(avg(streak)), 0)::int`,
     })
     .from(popOrDropScoresTable)
     .where(eq(popOrDropScoresTable.date, date))
     .then((r) => r[0] ?? { totalPlayers: 0, avgStreak: 0 });
 
-  // Median via percentile_cont window function
+  // Median via percentile_cont — coalesced to 0 when no rows
   const medianRow = await db
     .select({
-      medianStreak: sql<number>`percentile_cont(0.5) within group (order by streak)::int`,
+      medianStreak: sql<number>`coalesce(percentile_cont(0.5) within group (order by streak), 0)::int`,
     })
     .from(popOrDropScoresTable)
     .where(eq(popOrDropScoresTable.date, date))
