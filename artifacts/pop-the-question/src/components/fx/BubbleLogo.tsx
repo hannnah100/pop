@@ -9,13 +9,8 @@ const containerStyle: CSSProperties = {
   fontSize: "1.1em",
 };
 
-const letterWrapStyle: CSSProperties = {
+const letterStyle: CSSProperties = {
   display: "inline-block",
-  position: "relative",
-};
-
-const shadowLayerStyle: CSSProperties = {
-  display: "block",
   color: "#ffffff",
   WebkitTextFillColor: "#ffffff",
   WebkitTextStroke: "6px #000",
@@ -30,22 +25,6 @@ const shadowLayerStyle: CSSProperties = {
     "5px 5px 0 #1a0a00",
     "6px 8px 12px rgba(0,0,0,0.55)",
   ].join(", "),
-};
-
-const gradientLayerStyle: CSSProperties = {
-  position: "absolute",
-  top: 0,
-  left: 0,
-  display: "block",
-  background: "linear-gradient(to bottom, #ffffff 0%, #f0eee8 100%)",
-  WebkitBackgroundClip: "text",
-  backgroundClip: "text",
-  WebkitTextFillColor: "transparent",
-  WebkitTextStroke: "6px #000",
-  // @ts-expect-error: text-stroke is not yet in TS CSSProperties
-  textStroke: "6px #000",
-  paintOrder: "stroke fill",
-  pointerEvents: "none",
 };
 
 const spaceStyle: CSSProperties = {
@@ -73,9 +52,8 @@ export function BubbleLogo() {
         ch === " " ? (
           <span key={i} style={spaceStyle} aria-hidden />
         ) : (
-          <span key={i} style={letterWrapStyle} aria-hidden>
-            <span style={shadowLayerStyle}>{ch}</span>
-            <span style={gradientLayerStyle} aria-hidden>{ch}</span>
+          <span key={i} style={letterStyle} aria-hidden>
+            {ch}
           </span>
         )
       )}
