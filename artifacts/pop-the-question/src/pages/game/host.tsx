@@ -19,6 +19,10 @@ import {
   X,
   SkipForward,
   ArrowRight,
+  Shuffle,
+  BookOpen,
+  CheckSquare,
+  AlignLeft,
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import {
@@ -111,6 +115,8 @@ interface RoomStatePayload {
   players: PlayerWithBot[];
   isDemo: boolean;
   gameType: string;
+  quizPackId?: string | null;
+  quizPackSummary?: QuizPackSummary | null;
 }
 
 interface GameStartedPayload {
@@ -220,6 +226,10 @@ export default function GameHost() {
   const [submittedPlayers, setSubmittedPlayers] = useState<Set<string>>(new Set());
   const [, setAwayTick] = useState(0);
 
+  // Pub Quiz lobby — pack selection (Task #12)
+  const [availablePacks, setAvailablePacks] = useState<QuizPackSummary[]>([]);
+  const [selectedPackId, setSelectedPackId] = useState<string | null>(null);
+
   // Pub Quiz state
   const [pqPack, setPqPack] = useState<QuizPackSummary | null>(null);
   const [pqQuestion, setPqQuestion] = useState<QuizPublicQuestion | null>(null);
@@ -291,12 +301,19 @@ export default function GameHost() {
       }
     });
 
-    newSocket.on("room-state", ({ players: ps, isDemo: demo, gameType: gt }: RoomStatePayload) => {
+    newSocket.on("room-state", ({ players: ps, isDemo: demo, gameType: gt, quizPackId }: RoomStatePayload) => {
       const visible = ps.filter((p) => !p.isHost);
       setPlayers(visible);
       visible.forEach((p) => knownPlayerIds.current.add(p.id));
       if (demo) setIsDemo(true);
-      if (gt) setGameType(gt);
+      if (gt) {
+        setGameType(gt);
+        if (gt === "pub-quiz") {
+          // Restore host-selected pack from server state and fetch the pack list.
+          setSelectedPackId(quizPackId ?? null);
+          newSocket.emit("quiz-list-packs");
+        }
+      }
     });
 
     newSocket.on("game-started", (payload: GameStartedPayload & { pack?: QuizPackSummary }) => {
@@ -363,6 +380,15 @@ export default function GameHost() {
       if (payload.reveal.correctCount > 0) {
         setTimeout(() => fireConfetti("rainbow", { particleCount: 60, spread: 80, origin: { y: 0.55 } }), 200);
       }
+    });
+
+    // ====== Pub Quiz: pack list + host selection (Task #12) ======
+    newSocket.on("quiz-packs", ({ packs }: { packs: QuizPackSummary[] }) => {
+      setAvailablePacks(packs);
+    });
+
+    newSocket.on("quiz-pack-changed", ({ packId }: { packId: string | null }) => {
+      setSelectedPackId(packId);
     });
 
     newSocket.on("quiz-round-summary", (payload: {
@@ -578,6 +604,12 @@ export default function GameHost() {
     [submittedPlayers, typingPlayers],
   );
 
+  // Pub Quiz: pack picker (Task #12)
+  const handleSetPack = (packId: string | null) => {
+    setSelectedPackId(packId);
+    socket?.emit("set-pack", { roomCode, packId });
+  };
+
   // Pub Quiz handlers
   const handlePqReveal = () => socket?.emit("quiz-reveal-answer", { roomCode });
   const handlePqSkip = () => socket?.emit("quiz-skip-question", { roomCode });
@@ -660,6 +692,104 @@ export default function GameHost() {
   };
 
   // ============================================================
+  //   Pack card — reusable within the lobby pack picker (Task #12)
+  // ============================================================
+
+  const ROUND_TYPE_META: Record<string, { icon: React.ReactNode; label: string; color: string }> = {
+    "multiple-choice": {
+      icon: <BookOpen className="w-3 h-3" />,
+      label: "Multiple Choice",
+      color: "text-primary",
+    },
+    "open-ended": {
+      icon: <AlignLeft className="w-3 h-3" />,
+      label: "Open-Ended",
+      color: "text-accent",
+    },
+    "true-false": {
+      icon: <CheckSquare className="w-3 h-3" />,
+      label: "True/False",
+      color: "text-secondary",
+    },
+  };
+
+  const PackCard = ({
+    id,
+    title,
+    description,
+    roundCount,
+    questionCount,
+    rounds,
+    selected,
+    onSelect,
+  }: {
+    id: string | null;
+    title: string;
+    description: string;
+    roundCount: number;
+    questionCount: number;
+    rounds: Array<{ name: string; type: string; questionCount: number }>;
+    selected: boolean;
+    onSelect: () => void;
+  }) => {
+    const isRandom = id === null;
+    return (
+      <motion.button
+        layout
+        onClick={onSelect}
+        whileHover={{ scale: 1.02 }}
+        whileTap={{ scale: 0.98 }}
+        className={`relative w-full text-left rounded-2xl border-2 p-4 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary
+          ${selected
+            ? "border-secondary bg-secondary/10 shadow-[0_0_24px_-6px_hsl(var(--secondary)/0.6)]"
+            : "border-border bg-card/60 hover:border-border/80 hover:bg-card/80"
+          }`}
+        data-testid={`pack-card-${id ?? "random"}`}
+        aria-pressed={selected}
+      >
+        {selected && (
+          <span className="absolute top-3 right-3 w-6 h-6 rounded-full bg-secondary flex items-center justify-center shadow-[0_0_12px_-2px_hsl(var(--secondary))]">
+            <Check className="w-3.5 h-3.5 text-secondary-foreground font-black" />
+          </span>
+        )}
+
+        <div className="flex items-start gap-2 mb-2">
+          {isRandom
+            ? <Shuffle className="w-4 h-4 text-secondary mt-0.5 flex-shrink-0" />
+            : <Beer className="w-4 h-4 text-secondary mt-0.5 flex-shrink-0" />
+          }
+          <h3 className="font-bold text-base text-foreground leading-tight pr-6">{title}</h3>
+        </div>
+
+        <p className="text-xs text-muted-foreground mb-3 leading-relaxed line-clamp-2">{description}</p>
+
+        {!isRandom && (
+          <div className="space-y-1">
+            <div className="flex items-center gap-3 text-xs text-muted-foreground font-medium">
+              <span>{roundCount} {roundCount === 1 ? "round" : "rounds"}</span>
+              <span>·</span>
+              <span>{questionCount} questions</span>
+            </div>
+            {rounds.length > 0 && (
+              <div className="flex flex-col gap-0.5 mt-2">
+                {rounds.map((r, i) => {
+                  const meta = ROUND_TYPE_META[r.type];
+                  return (
+                    <div key={i} className={`flex items-center gap-1.5 text-xs ${meta?.color ?? "text-muted-foreground"}`}>
+                      {meta?.icon}
+                      <span className="truncate opacity-90">{r.name}</span>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        )}
+      </motion.button>
+    );
+  };
+
+  // ============================================================
   //   CONTENT RENDERERS — each returns the phase-specific JSX
   //   without an outer min-h container. HostShell wraps them.
   // ============================================================
@@ -714,6 +844,59 @@ export default function GameHost() {
             </AnimatePresence>
           </motion.div>
         </motion.div>
+
+        {/* ===== Pub Quiz pack picker (Task #12) ===== */}
+        {gameType === "pub-quiz" && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+            className="w-full max-w-5xl mb-8"
+          >
+            <div className="flex items-center gap-3 mb-4">
+              <Beer className="w-6 h-6 text-secondary drop-shadow-[0_0_8px_hsl(var(--secondary))]" />
+              <h2 className="text-2xl font-bold font-display tracking-tight text-foreground">
+                Choose a Pack
+              </h2>
+              {selectedPackId === null && (
+                <span className="text-sm text-muted-foreground border border-border rounded-full px-3 py-1">
+                  Random is selected
+                </span>
+              )}
+            </div>
+
+            {availablePacks.length === 0 ? (
+              <div className="text-muted-foreground animate-pulse text-lg">Loading packs…</div>
+            ) : (
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                {/* Random option */}
+                <PackCard
+                  id={null}
+                  title="🎲 Random"
+                  description="Let fate decide — a pack will be chosen at random when the game starts."
+                  roundCount={0}
+                  questionCount={0}
+                  rounds={[]}
+                  selected={selectedPackId === null}
+                  onSelect={() => handleSetPack(null)}
+                />
+                {availablePacks.map((pack) => (
+                  <PackCard
+                    key={pack.id}
+                    id={pack.id}
+                    title={pack.title}
+                    description={pack.description}
+                    roundCount={pack.roundCount}
+                    questionCount={pack.questionCount}
+                    rounds={pack.rounds}
+                    selected={selectedPackId === pack.id}
+                    onSelect={() => handleSetPack(pack.id)}
+                  />
+                ))}
+              </div>
+            )}
+          </motion.div>
+        )}
       </div>
     );
   };

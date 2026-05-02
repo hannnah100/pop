@@ -517,6 +517,22 @@ export function setupSocketIO(httpServer: HttpServer) {
       });
     });
 
+    // ===========================================
+    // Pub Quiz: host selects a specific pack (lobby only, host-only)
+    // ===========================================
+    socket.on("set-pack", ({ roomCode, packId }: { roomCode: string; packId: string | null }) => {
+      const room = rooms.get(roomCode);
+      if (!room || room.status !== "lobby") return;
+      if (room.hostId !== socket.id) return;
+      if (room.gameType !== "pub-quiz") return;
+
+      room.quizPackId = packId ?? undefined;
+      const chosenPack = packId ? getQuizPack(packId) : null;
+      const summary: PackSummary | null = chosenPack ? packSummary(chosenPack) : null;
+      // Broadcast so host UI stays in sync on reconnect / multi-tab.
+      io.to(roomCode).emit("quiz-pack-changed", { packId, summary });
+    });
+
     // ====== Dual Host Mode plumbing (Task #5) ======
 
     // Player phone reports they are typing into an answer box. Host derives
