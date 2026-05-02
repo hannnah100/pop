@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "wouter";
 import { useGetThreeStrikesArchive, useGetCrosswordArchive } from "@workspace/api-client-react";
 import { motion } from "framer-motion";
-import { PlayCircle, Calendar, CheckCircle2, Trophy, Sparkles } from "lucide-react";
+import { PlayCircle, Calendar, CheckCircle2, Trophy, Sparkles, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { BackArrow } from "@/components/ui/BackArrow";
 import { Card } from "@/components/ui/card";
@@ -58,17 +58,75 @@ export default function Archive() {
     <div className="flex-1 max-w-5xl mx-auto w-full px-4 py-12">
       <BackArrow className="mb-8" />
 
-      <motion.div
-        initial={{ opacity: 0, y: -8 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="mb-8 rounded-2xl border border-secondary/30 bg-gradient-to-r from-secondary/15 via-primary/10 to-accent/15 px-6 py-4 flex items-center gap-4 shadow-[0_18px_60px_-30px_hsl(var(--secondary)/0.6)]"
-      >
-        <Sparkles className="w-6 h-6 text-secondary flex-shrink-0 drop-shadow-[0_0_10px_hsl(var(--secondary))]" />
-        <div>
-          <p className="font-bold text-foreground">Archive is FREE during beta! 🎉</p>
-          <p className="text-sm text-muted-foreground">Play any past challenge • Premium feature coming soon</p>
-        </div>
-      </motion.div>
+      <div className="relative mb-10 mt-2 flex justify-center md:justify-start">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.6, rotate: -8 }}
+          animate={{ opacity: 1, scale: 1, rotate: -2.5 }}
+          transition={{ type: "spring", stiffness: 260, damping: 14, delay: 0.05 }}
+          className="relative inline-block"
+        >
+          <div
+            className="relative thick-border bold-shadow-lg bg-accent text-accent-foreground px-5 py-4 sm:px-7 sm:py-5 rounded-[28px_8px_28px_8px] flex items-center gap-3 sm:gap-4 max-w-[19rem] sm:max-w-xl"
+          >
+            <Sparkles className="w-7 h-7 sm:w-8 sm:h-8 flex-shrink-0" strokeWidth={2.5} />
+            <div className="min-w-0">
+              <p className="font-display uppercase tracking-tight leading-none text-xl sm:text-2xl">
+                Archive is{" "}
+                <span className="comic-headline inline-block -rotate-3 text-2xl sm:text-3xl align-baseline">FREE</span>{" "}
+                during beta!
+              </p>
+              <p className="mt-1.5 text-[11px] sm:text-xs font-bold uppercase tracking-wide leading-snug">
+                Play any past challenge • Premium feature coming soon
+              </p>
+            </div>
+          </div>
+
+          <span
+            aria-hidden="true"
+            className="pointer-events-none absolute -top-4 left-[18%] w-3 h-5 bg-[hsl(var(--gold))] border-2 border-black rotate-[12deg]"
+            style={{ clipPath: "polygon(50% 0, 100% 100%, 0 100%)" }}
+          />
+          <span
+            aria-hidden="true"
+            className="pointer-events-none absolute -bottom-4 right-[28%] w-3 h-5 bg-[hsl(var(--gold))] border-2 border-black rotate-[200deg]"
+            style={{ clipPath: "polygon(50% 0, 100% 100%, 0 100%)" }}
+          />
+          <span
+            aria-hidden="true"
+            className="hidden sm:block pointer-events-none absolute top-1/2 -translate-y-1/2 -right-5 w-5 h-3 bg-[hsl(var(--gold))] border-2 border-black"
+            style={{ clipPath: "polygon(0 0, 100% 50%, 0 100%)" }}
+          />
+
+          <Star
+            aria-hidden="true"
+            className="pointer-events-none absolute -top-5 -left-4 w-7 h-7 text-[hsl(var(--pink))] rotate-12"
+            fill="currentColor"
+            stroke="#000"
+            strokeWidth={1.75}
+          />
+          <Star
+            aria-hidden="true"
+            className="pointer-events-none absolute -bottom-4 -right-3 w-8 h-8 text-[hsl(var(--secondary))] -rotate-12"
+            fill="currentColor"
+            stroke="#000"
+            strokeWidth={1.75}
+          />
+          <Sparkles
+            aria-hidden="true"
+            className="pointer-events-none absolute -top-6 right-6 sm:right-10 w-5 h-5"
+            strokeWidth={2.5}
+            style={{ color: "var(--y2k-cyan)" }}
+          />
+          <span
+            aria-hidden="true"
+            className="pointer-events-none absolute top-1/2 -left-7 w-3 h-3 rounded-full bg-[hsl(var(--gold))] border-2 border-black"
+          />
+          <span
+            aria-hidden="true"
+            className="pointer-events-none absolute -bottom-6 left-10 w-2.5 h-2.5 rounded-full bg-[hsl(var(--pink))] border-2 border-black"
+          />
+        </motion.div>
+      </div>
 
       <motion.header
         className="mb-8"
