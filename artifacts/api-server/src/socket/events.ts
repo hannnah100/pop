@@ -1,6 +1,30 @@
 import { Server as SocketIOServer } from "socket.io";
 import type { Server as HttpServer } from "http";
 import { logger } from "../lib/logger";
+import {
+  QUIZ_PACKS,
+  getQuizPack,
+  getRandomQuizPack,
+} from "../data/quiz";
+import {
+  type QuizState,
+  type PackSummary,
+  buildReveal,
+  clearTimer,
+  getCurrentQuestion,
+  getCurrentRound,
+  isLastQuestionOfRound,
+  isLastRound,
+  judgeAnswer,
+  leaderboardSorted,
+  makeQuizState,
+  packSummary,
+  publicQuestionFromState,
+  QUIZ_SCORING,
+  QUIZ_TIMER_MS,
+  resetForNextQuestion,
+  scheduleBotQuizAnswers,
+} from "./quiz";
 
 interface Player {
   id: string;
@@ -21,6 +45,8 @@ interface HostSettingsBroadcast {
   answerMethod: "voice" | "text" | "both";
 }
 
+export type GameType = "pop-the-question" | "roast-roulette" | "pub-quiz";
+
 interface RoastCard {
   [color: string]: {
     author: string;
@@ -31,7 +57,7 @@ interface RoastCard {
 
 interface Room {
   code: string;
-  gameType: "pop-the-question" | "roast-roulette";
+  gameType: GameType;
   status: "lobby" | "playing" | "finished";
   hostId: string;
   isDemo: boolean;
@@ -45,6 +71,10 @@ interface Room {
   revealOrder: string[];
   currentRevealIndex: number;
   botAssignments: Record<string, { targetId: string; colors: string[] }>;
+  /** Pub-quiz state (only set when gameType === "pub-quiz" and game has started). */
+  quiz?: QuizState;
+  /** For pub-quiz host UI: the chosen pack id (set on createRoom or first start-game). */
+  quizPackId?: string;
   createdAt: number;
   lastActivity: number;
   hostSettings: HostSettingsBroadcast;
@@ -137,7 +167,7 @@ function rand(min: number, max: number): number {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-export function createRoom(gameType: "pop-the-question" | "roast-roulette", isDemo = false): string {
+export function createRoom(gameType: GameType, isDemo = false, packId?: string): string {
   const code = generateRoomCode();
   const room: Room = {
     code,
@@ -155,6 +185,7 @@ export function createRoom(gameType: "pop-the-question" | "roast-roulette", isDe
     revealOrder: [],
     currentRevealIndex: 0,
     botAssignments: {},
+    quizPackId: packId,
     createdAt: Date.now(),
     lastActivity: Date.now(),
     hostSettings: { answerMethod: "both" },
@@ -469,6 +500,20 @@ export function setupSocketIO(httpServer: HttpServer) {
         currentQuestion: room.questions[room.currentQuestionIndex],
         questionIndex: room.currentQuestionIndex,
         hostSettings: room.hostSettings,
+        quizPackId: room.quizPackId,
+        quizPackSummary: room.quiz ? packSummary(room.quiz.pack) : null,
+        quizQuestion: room.quiz ? publicQuestionFromState(room.quiz) : null,
+        quizRevealed: room.quiz?.revealed ?? false,
+        quizTimerEndAt: room.quiz?.timerEndAt ?? 0,
+      });
+    });
+
+    // ===========================================
+    // Pub Quiz: list available packs (for host UI)
+    // ===========================================
+    socket.on("quiz-list-packs", () => {
+      socket.emit("quiz-packs", {
+        packs: QUIZ_PACKS.map(packSummary) satisfies PackSummary[],
       });
     });
 
@@ -593,7 +638,161 @@ export function setupSocketIO(httpServer: HttpServer) {
         });
 
         scheduleBotRoasts(io, room, assignments);
+
+      } else if (room.gameType === "pub-quiz") {
+        // Pick the pack: explicit room.quizPackId, fallback to random
+        const pack = (room.quizPackId && getQuizPack(room.quizPackId)) || getRandomQuizPack();
+        room.quizPackId = pack.id;
+        room.quiz = makeQuizState(pack);
+
+        // Reset all player scores
+        room.players.forEach((p) => { p.score = 0; });
+
+        io.to(roomCode).emit("game-started", {
+          gameType: room.gameType,
+          status: room.status,
+          isDemo: room.isDemo,
+          pack: packSummary(pack),
+          totalRounds: pack.rounds.length,
+        });
+
+        // Immediately start question 1 of round 1
+        startQuizQuestion(io, room);
       }
+    });
+
+    // ===========================================
+    // Pub Quiz: submit answer (real player)
+    // ===========================================
+    socket.on("quiz-submit-answer", ({ roomCode, answer }: { roomCode: string; answer: string }) => {
+      const room = rooms.get(roomCode);
+      if (!room || !room.quiz || room.quiz.revealed) return;
+      room.lastActivity = Date.now();
+
+      const player = room.players.find((p) => p.id === socket.id);
+      if (!player || player.isHost) return;
+
+      const q = getCurrentQuestion(room.quiz);
+      if (!q) return;
+
+      // Don't allow re-submission for the same question
+      if (room.quiz.answers[socket.id]) return;
+
+      const judged = judgeAnswer(q, answer);
+      const submittedAt = Date.now();
+      room.quiz.answers[socket.id] = {
+        raw: answer,
+        submittedAt,
+        correct: judged.correct,
+      };
+      if (judged.correct && !room.quiz.firstCorrectId) {
+        room.quiz.firstCorrectId = socket.id;
+      }
+
+      const nonHostCount = room.players.filter((p) => !p.isHost).length;
+      const submitted = Object.keys(room.quiz.answers).length;
+
+      io.to(roomCode).emit("quiz-answer-progress", {
+        submitted,
+        total: nonHostCount,
+      });
+
+      // Acknowledge to the answering player so the UI can lock-in
+      socket.emit("quiz-answer-accepted", {
+        roundIndex: room.quiz.roundIndex,
+        questionIndex: room.quiz.questionIndex,
+      });
+
+      if (submitted >= nonHostCount) {
+        io.to(room.hostId).emit("quiz-all-answered");
+      }
+    });
+
+    // ===========================================
+    // Pub Quiz: reveal current answer (host only)
+    // ===========================================
+    socket.on("quiz-reveal-answer", ({ roomCode }: { roomCode: string }) => {
+      const room = rooms.get(roomCode);
+      if (!room || !room.quiz || room.hostId !== socket.id) return;
+      room.lastActivity = Date.now();
+      revealQuizAnswer(io, room);
+    });
+
+    // ===========================================
+    // Pub Quiz: skip without revealing (host only)
+    // ===========================================
+    socket.on("quiz-skip-question", ({ roomCode }: { roomCode: string }) => {
+      const room = rooms.get(roomCode);
+      if (!room || !room.quiz || room.hostId !== socket.id) return;
+      room.lastActivity = Date.now();
+
+      clearTimer(room.quiz);
+      room.quiz.revealed = true; // mark as resolved so we can advance
+      io.to(roomCode).emit("quiz-question-skipped", {
+        roundIndex: room.quiz.roundIndex,
+        questionIndex: room.quiz.questionIndex,
+      });
+    });
+
+    // ===========================================
+    // Pub Quiz: advance to next question (or end of round) (host only)
+    // ===========================================
+    socket.on("quiz-next-question", ({ roomCode }: { roomCode: string }) => {
+      const room = rooms.get(roomCode);
+      if (!room || !room.quiz || room.hostId !== socket.id) return;
+      room.lastActivity = Date.now();
+
+      // Must reveal first
+      if (!room.quiz.revealed) return;
+
+      if (isLastQuestionOfRound(room.quiz)) {
+        // Send round summary
+        const round = getCurrentRound(room.quiz);
+        io.to(roomCode).emit("quiz-round-summary", {
+          roundIndex: room.quiz.roundIndex,
+          roundName: round?.name ?? "",
+          totalRounds: room.quiz.pack.rounds.length,
+          isLastRound: isLastRound(room.quiz),
+          leaderboard: leaderboardSorted(room.players).map((p) => ({
+            id: p.id,
+            name: p.name,
+            score: p.score,
+            isBot: p.isBot,
+          })),
+        });
+      } else {
+        room.quiz.questionIndex++;
+        startQuizQuestion(io, room);
+      }
+    });
+
+    // ===========================================
+    // Pub Quiz: advance to the next round after a round summary (host only)
+    // ===========================================
+    socket.on("quiz-next-round", ({ roomCode }: { roomCode: string }) => {
+      const room = rooms.get(roomCode);
+      if (!room || !room.quiz || room.hostId !== socket.id) return;
+      room.lastActivity = Date.now();
+
+      if (isLastRound(room.quiz)) {
+        // End the game
+        endQuizGame(io, room);
+        return;
+      }
+      room.quiz.roundIndex++;
+      room.quiz.questionIndex = 0;
+      startQuizQuestion(io, room);
+    });
+
+    // ===========================================
+    // Pub Quiz: end the game early (host only)
+    // ===========================================
+    socket.on("quiz-end-game", ({ roomCode }: { roomCode: string }) => {
+      const room = rooms.get(roomCode);
+      if (!room || !room.quiz || room.hostId !== socket.id) return;
+      room.lastActivity = Date.now();
+      room.quiz.endedEarly = true;
+      endQuizGame(io, room);
     });
 
     // Pop the Question: submit vote (real player)
@@ -863,4 +1062,106 @@ function assignRoastTargets(players: Player[], round: number): Record<string, st
     assignments[player.id] = players[targetIndex].id;
   });
   return assignments;
+}
+
+// =====================================================================
+// Pub Quiz helpers (live within the socket module to share `rooms`/`io`)
+// =====================================================================
+function startQuizQuestion(io: SocketIOServer, room: Room) {
+  if (!room.quiz) return;
+  resetForNextQuestion(room.quiz);
+
+  const q = getCurrentQuestion(room.quiz);
+  if (!q) {
+    endQuizGame(io, room);
+    return;
+  }
+  const durationMs = QUIZ_TIMER_MS[q.type] ?? 30_000;
+  const startedAt = Date.now();
+  room.quiz.questionStartedAt = startedAt;
+  room.quiz.timerEndAt = startedAt + durationMs;
+
+  const publicQ = publicQuestionFromState(room.quiz);
+  io.to(room.code).emit("quiz-question", {
+    question: publicQ,
+    startedAt,
+    timerEndAt: room.quiz.timerEndAt,
+  });
+
+  // Schedule bots to answer
+  const nonHostPlayers = room.players.filter((p) => !p.isHost);
+  const bots = nonHostPlayers.filter((p) => p.isBot);
+  scheduleBotQuizAnswers(io, room.code, room.quiz, bots, nonHostPlayers.length, () => {
+    if (room.quiz && !room.quiz.revealed) {
+      io.to(room.hostId).emit("quiz-all-answered");
+    }
+  });
+
+  // Auto-reveal when the timer expires
+  room.quiz.timerHandle = setTimeout(() => {
+    const r = rooms.get(room.code);
+    if (!r || !r.quiz) return;
+    // If question already advanced or revealed, no-op
+    if (r.quiz.questionStartedAt !== startedAt) return;
+    if (r.quiz.revealed) return;
+    revealQuizAnswer(io, r);
+  }, durationMs + 100);
+}
+
+function revealQuizAnswer(io: SocketIOServer, room: Room) {
+  if (!room.quiz || room.quiz.revealed) return;
+  clearTimer(room.quiz);
+  room.quiz.revealed = true;
+
+  // Award points: base + first-correct bonus
+  const q = getCurrentQuestion(room.quiz);
+  if (q && room.quiz.firstCorrectId) {
+    // Bonus to first correct
+    const firstCorrectPlayer = room.players.find((p) => p.id === room.quiz!.firstCorrectId);
+    if (firstCorrectPlayer) {
+      firstCorrectPlayer.score += QUIZ_SCORING.firstCorrectBonus;
+    }
+  }
+  if (q) {
+    Object.entries(room.quiz.answers).forEach(([pid, ans]) => {
+      if (!ans.correct) return;
+      const player = room.players.find((p) => p.id === pid);
+      if (!player) return;
+      const judged = judgeAnswer(q, ans.raw);
+      player.score += judged.pointsForCorrect;
+    });
+  }
+
+  const reveal = buildReveal(room.quiz);
+
+  io.to(room.code).emit("quiz-reveal", {
+    reveal,
+    leaderboard: leaderboardSorted(room.players).map((p) => ({
+      id: p.id,
+      name: p.name,
+      score: p.score,
+      isBot: p.isBot,
+    })),
+    isLastQuestionOfRound: isLastQuestionOfRound(room.quiz),
+    isLastRound: isLastRound(room.quiz),
+  });
+}
+
+function endQuizGame(io: SocketIOServer, room: Room) {
+  if (room.quiz) clearTimer(room.quiz);
+  room.status = "finished";
+
+  const sorted = leaderboardSorted(room.players);
+  io.to(room.code).emit("game-ended", {
+    gameType: "pub-quiz",
+    pack: room.quiz ? packSummary(room.quiz.pack) : null,
+    players: room.players,
+    finalScores: sorted.map((p, idx) => ({
+      id: p.id,
+      name: p.name,
+      score: p.score,
+      isBot: p.isBot,
+      rank: idx + 1,
+    })),
+  });
 }

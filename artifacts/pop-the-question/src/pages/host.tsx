@@ -4,7 +4,7 @@ import { useCreateRoom, CreateRoomRequestGameType } from "@workspace/api-client-
 import { motion } from "framer-motion";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { MessageSquare, Flame, Loader2, Bot } from "lucide-react";
+import { MessageSquare, Flame, Loader2, Bot, Beer } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import { staggerContainer, staggerItem } from "@/lib/motion";
@@ -93,7 +93,7 @@ export default function Host() {
       </motion.header>
 
       <motion.div
-        className="grid md:grid-cols-2 gap-8"
+        className="grid md:grid-cols-3 gap-8"
         variants={staggerContainer(0.12, 0.2)}
         initial="hidden"
         animate="show"
@@ -152,6 +152,36 @@ export default function Host() {
                   <><Loader2 className="w-5 h-5 mr-2 animate-spin" /> Creating...</>
                 ) : demoMode ? (
                   <><Bot className="w-5 h-5 mr-2" /> Demo: Roast Roulette</>
+                ) : "Host This Game"}
+              </Button>
+            </CardContent>
+          </Card>
+        </motion.div>
+
+        <motion.div variants={staggerItem}>
+          <Card className="h-full flex flex-col border-2 border-secondary/20 hover:border-secondary/60 hover:shadow-[0_20px_60px_-20px_hsl(var(--secondary)/0.7)] transition-all duration-300 group">
+            <div className="absolute inset-0 bg-gradient-to-br from-secondary/15 to-transparent pointer-events-none group-hover:from-secondary/25 transition-colors" />
+            <CardHeader>
+              <div className="w-12 h-12 rounded-xl bg-secondary/20 flex items-center justify-center mb-4 group-hover:shadow-[0_0_24px_-4px_hsl(var(--secondary))] transition-shadow">
+                <Beer className="w-6 h-6 text-secondary" />
+              </div>
+              <CardTitle className="text-2xl md:text-3xl font-display font-extrabold tracking-tight text-foreground">PUB QUIZ</CardTitle>
+              <div className="heading-divider heading-divider--green mb-2" />
+              <CardDescription className="text-base text-muted-foreground h-24">
+                Classic bar trivia, run from your couch. 5 packs, multiple choice, open-ended, and true/false rounds. First-correct gets a bonus.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="mt-auto">
+              <Button
+                className="w-full text-lg h-14 font-bold"
+                onClick={() => handleCreateRoom("pub-quiz")}
+                disabled={isCreating !== null}
+                data-testid="btn-host-pq"
+              >
+                {isCreating === "pub-quiz" ? (
+                  <><Loader2 className="w-5 h-5 mr-2 animate-spin" /> Creating...</>
+                ) : demoMode ? (
+                  <><Bot className="w-5 h-5 mr-2" /> Demo: Pub Quiz</>
                 ) : "Host This Game"}
               </Button>
             </CardContent>

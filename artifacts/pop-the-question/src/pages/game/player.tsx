@@ -6,7 +6,7 @@ import type { Player } from "@/types/game";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Loader2, Send, CheckCircle2, Eye, Sparkles, Mic } from "lucide-react";
+import { Loader2, Send, CheckCircle2, Eye, Sparkles, Mic, Beer, Check, X, Trophy } from "lucide-react";
 import type { HostAnswerMethod } from "@/lib/hostSettings";
 import { useToast } from "@/hooks/use-toast";
 import {
@@ -97,6 +97,39 @@ interface FavoritePickedPayload {
   players: Player[];
 }
 
+// ---- Pub Quiz types ----
+interface QuizPublicQuestion {
+  type: "multiple-choice" | "open-ended" | "true-false";
+  prompt: string;
+  options?: string[];
+  roundName: string;
+  roundIndex: number;
+  questionIndex: number;
+  questionsInRound: number;
+  totalRounds: number;
+  durationMs: number;
+}
+
+interface QuizAnswerSummary {
+  playerId: string;
+  raw: string;
+  correct: boolean;
+  submittedAt: number;
+  responseMs: number;
+}
+
+interface QuizRevealPayload {
+  questionType: "multiple-choice" | "open-ended" | "true-false";
+  correctAnswer: string;
+  correctOptionIndex?: number;
+  trueFalseAnswer?: boolean;
+  acceptedAnswers?: string[];
+  perPlayerAnswers: QuizAnswerSummary[];
+  firstCorrectPlayerId: string | null;
+  correctCount: number;
+  totalAnswered: number;
+}
+
 type RrPhase = "writing" | "writing-complete" | "revealing";
 
 const colorHex = (color: string): string => {
@@ -149,6 +182,17 @@ export default function GamePlayer() {
   const [rrPickedColors, setRrPickedColors] = useState<Set<string>>(new Set());
   const [rrPickFor, setRrPickFor] = useState<{ color: string; entry: RoastEntry } | null>(null);
   const rrPickForRef = useRef<{ color: string } | null>(null);
+
+  // Pub Quiz state
+  const [pqQuestion, setPqQuestion] = useState<QuizPublicQuestion | null>(null);
+  const [pqTimerEndAt, setPqTimerEndAt] = useState(0);
+  const [pqMyAnswer, setPqMyAnswer] = useState<string>("");
+  const [pqOpenAnswerInput, setPqOpenAnswerInput] = useState<string>("");
+  const [pqAnswered, setPqAnswered] = useState(false);
+  const [pqMyResult, setPqMyResult] = useState<{ correct: boolean; bonus: boolean } | null>(null);
+  const [pqReveal, setPqReveal] = useState<QuizRevealPayload | null>(null);
+  const [pqRoundSummary, setPqRoundSummary] = useState<{ roundName: string; isLastRound: boolean } | null>(null);
+  const [pqNow, setPqNow] = useState(Date.now());
 
   const finishedRef = useRef(false);
 
@@ -206,7 +250,55 @@ export default function GamePlayer() {
         setRrSubmittedColors(new Set());
         setRrPickedColors(new Set());
         setRrCurrentRevealId("");
+      } else if (gt === "pub-quiz") {
+        setPqQuestion(null);
+        setPqReveal(null);
+        setPqRoundSummary(null);
+        setPqAnswered(false);
+        setPqMyResult(null);
+        setPqMyAnswer("");
+        setPqOpenAnswerInput("");
       }
+    });
+
+    // ============ Pub Quiz handlers ============
+    newSocket.on("quiz-question", ({ question, timerEndAt }: { question: QuizPublicQuestion; timerEndAt: number }) => {
+      setPqQuestion(question);
+      setPqTimerEndAt(timerEndAt);
+      setPqReveal(null);
+      setPqRoundSummary(null);
+      setPqAnswered(false);
+      setPqMyResult(null);
+      setPqMyAnswer("");
+      setPqOpenAnswerInput("");
+      playWhoosh();
+      window.scrollTo(0, 0);
+    });
+
+    newSocket.on("quiz-answer-accepted", ({ correct, firstCorrect }: { correct: boolean; firstCorrect: boolean }) => {
+      setPqAnswered(true);
+      setPqMyResult({ correct, bonus: firstCorrect });
+      if (correct) {
+        playCorrect();
+        hapticCorrect();
+        if (firstCorrect) fireConfetti("gold", { particleCount: 60, spread: 80, origin: { y: 0.6 } });
+      } else {
+        playWrong();
+        hapticWrong();
+      }
+    });
+
+    newSocket.on("quiz-reveal", (payload: { reveal: QuizRevealPayload }) => {
+      setPqReveal(payload.reveal);
+    });
+
+    newSocket.on("quiz-round-summary", (payload: { roundName: string; isLastRound: boolean }) => {
+      setPqRoundSummary({ roundName: payload.roundName, isLastRound: payload.isLastRound });
+    });
+
+    newSocket.on("quiz-question-skipped", () => {
+      setPqAnswered(true);
+      setPqMyResult(null);
     });
 
     // Pop the Question handlers
@@ -279,9 +371,19 @@ export default function GamePlayer() {
       }
     });
 
-    newSocket.on("game-ended", ({ players: ps }: GameEndedPayload) => {
+    newSocket.on("game-ended", (payload: GameEndedPayload & { finalScores?: Array<{ id: string; name: string; score: number; isBot: boolean }> }) => {
+      const { players: ps, finalScores } = payload;
       setGameState("finished");
-      if (ps) setPlayers(ps.filter((p) => !p.isHost));
+      if (ps) {
+        setPlayers(ps.filter((p) => !p.isHost));
+      }
+      if (finalScores) {
+        // Map scores back onto players so the finished view shows correct totals.
+        setPlayers((prev) => {
+          const lookup = new Map(finalScores.map((r) => [r.id, r.score]));
+          return prev.map((p) => ({ ...p, score: lookup.get(p.id) ?? p.score ?? 0 }));
+        });
+      }
     });
 
     return () => {
@@ -416,6 +518,42 @@ export default function GamePlayer() {
     () => Boolean(me?.id && rrCurrentRevealId && me.id === rrCurrentRevealId),
     [me?.id, rrCurrentRevealId],
   );
+
+  // Pub Quiz: timer tick
+  useEffect(() => {
+    if (gameType !== "pub-quiz" || !pqQuestion || pqReveal || pqRoundSummary || pqAnswered) return;
+    const id = setInterval(() => setPqNow(Date.now()), 250);
+    return () => clearInterval(id);
+  }, [gameType, pqQuestion, pqReveal, pqRoundSummary, pqAnswered]);
+
+  // Pub Quiz: submit helpers
+  const submitQuizAnswer = (answer: string) => {
+    if (!socket || !pqQuestion || pqAnswered) return;
+    setPqMyAnswer(answer);
+    setPqAnswered(true);
+    playTap();
+    hapticTap();
+    socket.emit("quiz-submit-answer", { roomCode, answer });
+  };
+
+  const handlePqPickOption = (idx: number) => {
+    if (pqAnswered) return;
+    submitQuizAnswer(String(idx));
+  };
+
+  const handlePqPickTrueFalse = (val: boolean) => {
+    if (pqAnswered) return;
+    submitQuizAnswer(val ? "true" : "false");
+  };
+
+  const handlePqSubmitOpen = () => {
+    const ans = pqOpenAnswerInput.trim();
+    if (!ans) {
+      toast({ title: "Type your answer first", variant: "destructive" });
+      return;
+    }
+    submitQuizAnswer(ans);
+  };
 
   // ============ LOBBY ============
   if (gameState === "lobby") {
@@ -852,6 +990,254 @@ export default function GamePlayer() {
         </div>
       );
     }
+  }
+
+  // ============ PLAYING — Pub Quiz ============
+  if (gameState === "playing" && gameType === "pub-quiz") {
+    // Round summary intermission
+    if (pqRoundSummary) {
+      return (
+        <div className="flex flex-col min-h-[100dvh] p-6 items-center justify-center text-center space-y-6">
+          <motion.div
+            initial={{ scale: 0, rotate: -90 }}
+            animate={{ scale: 1, rotate: 0 }}
+            transition={{ type: "spring", stiffness: 220, damping: 18 }}
+            className="w-24 h-24 rounded-full flex items-center justify-center bg-secondary/20 border-2 border-secondary/40 shadow-[0_0_36px_-4px_hsl(var(--secondary))]"
+          >
+            <Beer className="w-12 h-12 text-secondary" />
+          </motion.div>
+          <p className="text-sm font-bold uppercase tracking-widest text-muted-foreground">Round Complete</p>
+          <h1 className="text-3xl font-extrabold font-display tracking-tight">{pqRoundSummary.roundName}</h1>
+          <div className="heading-divider heading-divider--green w-16 h-1" />
+          <p className="text-lg text-muted-foreground max-w-sm">
+            {pqRoundSummary.isLastRound
+              ? "Final standings on the big screen!"
+              : "Look at the big screen for round standings."}
+          </p>
+        </div>
+      );
+    }
+
+    // Loading
+    if (!pqQuestion) {
+      return (
+        <div className="flex flex-col min-h-[100dvh] items-center justify-center p-6 space-y-4">
+          <Loader2 className="w-12 h-12 text-primary animate-spin" />
+          <p className="text-lg text-muted-foreground">Loading next question…</p>
+        </div>
+      );
+    }
+
+    const remainingMs = Math.max(0, pqTimerEndAt - pqNow);
+    const totalMs = pqQuestion.durationMs;
+    const secsLeft = Math.ceil(remainingMs / 1000);
+
+    // Reveal: show my result
+    if (pqReveal) {
+      const myAnswer = pqReveal.perPlayerAnswers.find((a) => a.playerId === me?.id);
+      const wasCorrect = myAnswer?.correct ?? false;
+      const wasFirst = pqReveal.firstCorrectPlayerId === me?.id;
+
+      return (
+        <div className="flex flex-col min-h-[100dvh] p-6 items-center justify-center text-center space-y-6">
+          <motion.div
+            initial={{ scale: 0, rotate: -90 }}
+            animate={{ scale: 1, rotate: 0 }}
+            transition={{ type: "spring", stiffness: 240, damping: 18 }}
+            className={`w-28 h-28 rounded-full flex items-center justify-center shadow-[0_0_50px_-4px_currentColor] ${
+              wasCorrect ? "bg-success/20 border-2 border-success text-success" : "bg-destructive/15 border-2 border-destructive/50 text-destructive"
+            }`}
+          >
+            {wasCorrect ? <Check className="w-14 h-14" /> : <X className="w-14 h-14" />}
+          </motion.div>
+          <h1 className={`text-4xl font-extrabold font-display tracking-tight ${wasCorrect ? "text-success" : "text-destructive"}`}>
+            {wasCorrect ? "Correct!" : myAnswer ? "Not quite" : "No answer"}
+          </h1>
+          {wasFirst && (
+            <div className="px-4 py-2 rounded-full bg-yellow-400/20 border border-yellow-400/50 text-yellow-400 font-bold uppercase tracking-widest text-sm">
+              + 0.5 first-correct bonus
+            </div>
+          )}
+          <div className="bg-card/85 backdrop-blur p-5 rounded-2xl border-2 border-border w-full max-w-sm surface-elevated">
+            <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-1">Correct answer</p>
+            <p className="text-2xl font-extrabold text-foreground">{pqReveal.correctAnswer}</p>
+            {myAnswer && !wasCorrect && (
+              <>
+                <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground mt-3 mb-1">Your answer</p>
+                <p className="text-lg font-bold text-muted-foreground">{myAnswer.raw}</p>
+              </>
+            )}
+          </div>
+          <p className="text-sm text-muted-foreground">Look at the big screen for standings.</p>
+        </div>
+      );
+    }
+
+    // Answered, waiting for reveal
+    if (pqAnswered) {
+      const showResult = pqMyResult !== null;
+      return (
+        <div className="flex flex-col min-h-[100dvh] p-6 items-center justify-center text-center space-y-6">
+          <motion.div
+            initial={{ scale: 0, rotate: -45 }}
+            animate={{ scale: 1, rotate: 0 }}
+            transition={{ type: "spring", stiffness: 280, damping: 18 }}
+            className={`w-24 h-24 rounded-full flex items-center justify-center shadow-[0_0_36px_-4px_currentColor] ${
+              showResult
+                ? pqMyResult.correct
+                  ? "bg-success/20 border-2 border-success text-success"
+                  : "bg-destructive/15 border-2 border-destructive/50 text-destructive"
+                : "bg-card border-2 border-primary/40 text-primary"
+            }`}
+          >
+            {showResult ? (
+              pqMyResult.correct ? <Check className="w-12 h-12" /> : <X className="w-12 h-12" />
+            ) : (
+              <CheckCircle2 className="w-12 h-12" />
+            )}
+          </motion.div>
+          <h2 className="text-3xl font-extrabold font-display">
+            {showResult
+              ? pqMyResult.correct
+                ? pqMyResult.bonus
+                  ? "First correct!"
+                  : "Locked in!"
+                : "Locked in"
+              : "Answer sent!"}
+          </h2>
+          {pqMyResult?.bonus && (
+            <div className="px-4 py-2 rounded-full bg-yellow-400/20 border border-yellow-400/50 text-yellow-400 font-bold uppercase tracking-widest text-sm">
+              + 0.5 bonus
+            </div>
+          )}
+          <p className="text-lg text-muted-foreground max-w-sm">
+            Waiting for everyone else… the answer reveals on the big screen.
+          </p>
+          <Loader2 className="w-6 h-6 text-muted-foreground animate-spin" />
+        </div>
+      );
+    }
+
+    // Active question — answer UI
+    return (
+      <div className="flex flex-col min-h-[100dvh] p-4 sm:p-6">
+        <header className="mb-4 flex items-center justify-between gap-4">
+          <div className="min-w-0 flex-1">
+            <p className="text-xs font-bold uppercase tracking-widest text-secondary">
+              <Beer className="w-3.5 h-3.5 inline mr-1 -mt-0.5" />
+              {pqQuestion.roundName}
+            </p>
+            <p className="text-xs text-muted-foreground mt-0.5">
+              Q {pqQuestion.questionIndex + 1} of {pqQuestion.questionsInRound}
+              <span className="mx-1.5">·</span>
+              R {pqQuestion.roundIndex + 1}/{pqQuestion.totalRounds}
+            </p>
+          </div>
+          <TimerRing
+            value={remainingMs / 1000}
+            total={totalMs / 1000}
+            size={60}
+            thickness={6}
+            label={`${secsLeft}s`}
+          />
+        </header>
+
+        <main className="flex-1 flex flex-col">
+          <Card className="p-5 mb-5 border-2 border-secondary/30 bg-card/85">
+            <h2 className="text-xl sm:text-2xl font-extrabold font-display leading-snug">
+              {pqQuestion.prompt}
+            </h2>
+          </Card>
+
+          {/* Multiple choice */}
+          {pqQuestion.type === "multiple-choice" && pqQuestion.options && (
+            <motion.div
+              className="space-y-3 pb-6"
+              initial="hidden"
+              animate="show"
+              variants={{ show: { transition: { staggerChildren: 0.06 } } }}
+            >
+              {pqQuestion.options.map((opt, idx) => (
+                <motion.div
+                  key={idx}
+                  variants={{ hidden: { opacity: 0, y: 12 }, show: { opacity: 1, y: 0 } }}
+                  whileTap={{ scale: 0.97 }}
+                >
+                  <Button
+                    variant="outline"
+                    className="w-full min-h-16 text-left text-lg font-bold py-4 px-4 justify-start whitespace-normal h-auto border-2 hover:border-primary hover:shadow-[0_0_24px_-6px_hsl(var(--primary)/0.7)]"
+                    onClick={() => handlePqPickOption(idx)}
+                    data-testid={`btn-pq-option-${idx}`}
+                  >
+                    <div className="w-8 h-8 rounded-full bg-muted text-muted-foreground flex items-center justify-center font-black mr-3 flex-shrink-0">
+                      {String.fromCharCode(65 + idx)}
+                    </div>
+                    <span className="flex-1">{opt}</span>
+                  </Button>
+                </motion.div>
+              ))}
+            </motion.div>
+          )}
+
+          {/* True / False */}
+          {pqQuestion.type === "true-false" && (
+            <div className="grid grid-cols-2 gap-4 pb-6">
+              <motion.div whileTap={{ scale: 0.96 }}>
+                <Button
+                  className="w-full min-h-32 text-3xl font-black bg-success/15 hover:bg-success/25 text-success border-2 border-success/50 shadow-[0_0_24px_-8px_hsl(var(--success))]"
+                  onClick={() => handlePqPickTrueFalse(true)}
+                  data-testid="btn-pq-true"
+                >
+                  TRUE
+                </Button>
+              </motion.div>
+              <motion.div whileTap={{ scale: 0.96 }}>
+                <Button
+                  className="w-full min-h-32 text-3xl font-black bg-destructive/15 hover:bg-destructive/25 text-destructive border-2 border-destructive/50 shadow-[0_0_24px_-8px_hsl(var(--destructive))]"
+                  onClick={() => handlePqPickTrueFalse(false)}
+                  data-testid="btn-pq-false"
+                >
+                  FALSE
+                </Button>
+              </motion.div>
+            </div>
+          )}
+
+          {/* Open-ended */}
+          {pqQuestion.type === "open-ended" && (
+            <div className="space-y-3 pb-6">
+              <Input
+                value={pqOpenAnswerInput}
+                onChange={(e) => setPqOpenAnswerInput(e.target.value)}
+                placeholder="Type your answer…"
+                maxLength={120}
+                className="text-lg py-6 min-h-12 bg-card border-2 border-secondary/30 focus-visible:border-secondary focus-visible:ring-secondary/30 focus-visible:shadow-[0_0_24px_-4px_hsl(var(--secondary))] transition-shadow"
+                autoFocus
+                data-testid="input-pq-open"
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" && !e.shiftKey) {
+                    e.preventDefault();
+                    handlePqSubmitOpen();
+                  }
+                }}
+              />
+              <p className="text-xs text-muted-foreground text-center">
+                Spelling counts loosely — typos and minor variations are accepted.
+              </p>
+              <Button
+                size="lg"
+                className="w-full"
+                onClick={handlePqSubmitOpen}
+                disabled={!pqOpenAnswerInput.trim()}
+                data-testid="btn-pq-submit-open"
+              >
+                <Send className="w-5 h-5 mr-2" /> Submit
+              </Button>
+            </div>
+          )}
+        </main>
+      </div>
+    );
   }
 
   // ============ FINISHED ============

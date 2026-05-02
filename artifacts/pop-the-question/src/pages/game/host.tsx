@@ -14,6 +14,11 @@ import {
   Mic,
   ChevronRight,
   Eye,
+  Beer,
+  Check,
+  X,
+  SkipForward,
+  ArrowRight,
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import {
@@ -23,6 +28,7 @@ import {
   fireConfetti,
   TypingText,
   RainbowText,
+  TimerRing,
 } from "@/components/fx";
 import { useSfx } from "@/lib/sfx";
 import { staggerContainer, staggerItem } from "@/lib/motion";
@@ -33,6 +39,52 @@ import {
 } from "@/components/host/PlayerStatusBadge";
 import type { HostNotificationsHandle } from "@/components/host/HostNotifications";
 import { useHostSettings, type HostAnswerMethod } from "@/lib/hostSettings";
+
+// ============ Pub Quiz types ============
+interface QuizPackSummary {
+  id: string;
+  title: string;
+  description: string;
+  roundCount: number;
+  questionCount: number;
+  rounds: Array<{ name: string; type: string; questionCount: number }>;
+}
+
+interface QuizPublicQuestion {
+  type: "multiple-choice" | "open-ended" | "true-false";
+  prompt: string;
+  options?: string[];
+  roundName: string;
+  roundIndex: number;
+  questionIndex: number;
+  questionsInRound: number;
+  totalRounds: number;
+  durationMs: number;
+}
+
+interface QuizAnswerSummary {
+  playerId: string;
+  raw: string;
+  correct: boolean;
+  submittedAt: number;
+  responseMs: number;
+}
+
+interface QuizRevealPayload {
+  roundIndex: number;
+  questionIndex: number;
+  questionType: "multiple-choice" | "open-ended" | "true-false";
+  correctAnswer: string;
+  correctOptionIndex?: number;
+  trueFalseAnswer?: boolean;
+  acceptedAnswers?: string[];
+  perPlayerAnswers: QuizAnswerSummary[];
+  firstCorrectPlayerId: string | null;
+  correctCount: number;
+  totalAnswered: number;
+}
+
+interface QuizLeaderboardRow { id: string; name: string; score: number; isBot: boolean }
 
 interface PlayerWithBot extends Player {
   isBot?: boolean;
@@ -168,6 +220,24 @@ export default function GameHost() {
   const [submittedPlayers, setSubmittedPlayers] = useState<Set<string>>(new Set());
   const [, setAwayTick] = useState(0);
 
+  // Pub Quiz state
+  const [pqPack, setPqPack] = useState<QuizPackSummary | null>(null);
+  const [pqQuestion, setPqQuestion] = useState<QuizPublicQuestion | null>(null);
+  const [pqQuestionStartedAt, setPqQuestionStartedAt] = useState(0);
+  const [pqTimerEndAt, setPqTimerEndAt] = useState(0);
+  const [pqAnsweredCount, setPqAnsweredCount] = useState(0);
+  const [pqTotalAnswerers, setPqTotalAnswerers] = useState(0);
+  const [pqReveal, setPqReveal] = useState<QuizRevealPayload | null>(null);
+  const [pqLeaderboard, setPqLeaderboard] = useState<QuizLeaderboardRow[]>([]);
+  const [pqRoundSummary, setPqRoundSummary] = useState<{
+    roundIndex: number;
+    roundName: string;
+    totalRounds: number;
+    isLastRound: boolean;
+    leaderboard: QuizLeaderboardRow[];
+  } | null>(null);
+  const [pqNow, setPqNow] = useState(Date.now());
+
   const finishedRef = useRef(false);
   const notificationsRef = useRef<HostNotificationsHandle | null>(null);
   const knownPlayerIds = useRef<Set<string>>(new Set());
@@ -229,7 +299,8 @@ export default function GameHost() {
       if (gt) setGameType(gt);
     });
 
-    newSocket.on("game-started", ({ gameType: gt, question, questions, players: ps, currentRound, totalRounds, isDemo: demo }: GameStartedPayload) => {
+    newSocket.on("game-started", (payload: GameStartedPayload & { pack?: QuizPackSummary }) => {
+      const { gameType: gt, question, questions, players: ps, currentRound, totalRounds, isDemo: demo, pack } = payload;
       setGameState("playing");
       setGameType(gt);
       if (demo) setIsDemo(true);
@@ -255,7 +326,70 @@ export default function GameHost() {
           setPlayers(nonHost);
         }
         if (questions) setRrQuestions(questions);
+      } else if (gt === "pub-quiz") {
+        setPqPack(pack ?? null);
+        setPqReveal(null);
+        setPqRoundSummary(null);
+        setPqAnsweredCount(0);
       }
+    });
+
+    // ============ Pub Quiz socket handlers ============
+    newSocket.on("quiz-question", ({ question, startedAt, timerEndAt }: { question: QuizPublicQuestion; startedAt: number; timerEndAt: number }) => {
+      setPqQuestion(question);
+      setPqQuestionStartedAt(startedAt);
+      setPqTimerEndAt(timerEndAt);
+      setPqReveal(null);
+      setPqRoundSummary(null);
+      setPqAnsweredCount(0);
+      setPqTotalAnswerers(players.filter((p) => !p.isHost).length || 0);
+      playWhoosh();
+    });
+
+    newSocket.on("quiz-answer-progress", ({ submitted, total }: { submitted: number; total: number }) => {
+      setPqAnsweredCount(submitted);
+      setPqTotalAnswerers(total);
+    });
+
+    newSocket.on("quiz-reveal", (payload: {
+      reveal: QuizRevealPayload;
+      leaderboard: QuizLeaderboardRow[];
+      isLastQuestionOfRound: boolean;
+      isLastRound: boolean;
+    }) => {
+      setPqReveal(payload.reveal);
+      setPqLeaderboard(payload.leaderboard);
+      playCorrect();
+      if (payload.reveal.correctCount > 0) {
+        setTimeout(() => fireConfetti("rainbow", { particleCount: 60, spread: 80, origin: { y: 0.55 } }), 200);
+      }
+    });
+
+    newSocket.on("quiz-round-summary", (payload: {
+      roundIndex: number;
+      roundName: string;
+      totalRounds: number;
+      isLastRound: boolean;
+      leaderboard: QuizLeaderboardRow[];
+    }) => {
+      setPqRoundSummary(payload);
+      setPqLeaderboard(payload.leaderboard);
+      playWhoosh();
+      setTimeout(() => fireConfetti("gold", { particleCount: 50, spread: 70, origin: { y: 0.5 } }), 200);
+    });
+
+    newSocket.on("quiz-question-skipped", () => {
+      // Treat skip as a "fake reveal" so host can advance — but render handled by reveal=null + leaderboard view.
+      setPqReveal({
+        roundIndex: pqQuestion?.roundIndex ?? 0,
+        questionIndex: pqQuestion?.questionIndex ?? 0,
+        questionType: pqQuestion?.type ?? "multiple-choice",
+        correctAnswer: "(skipped)",
+        perPlayerAnswers: [],
+        firstCorrectPlayerId: null,
+        correctCount: 0,
+        totalAnswered: 0,
+      });
     });
 
     newSocket.on("question-update", ({ question, questionIndex: qi }: QuestionUpdatePayload) => {
@@ -337,9 +471,11 @@ export default function GameHost() {
       if (ps) setPlayers(ps.filter((p) => !p.isHost));
     });
 
-    newSocket.on("game-ended", ({ players: ps }: PlayersOnlyPayload) => {
+    newSocket.on("game-ended", (payload: PlayersOnlyPayload & { finalScores?: QuizLeaderboardRow[] }) => {
+      const { players: ps, finalScores } = payload;
       setGameState("finished");
       if (ps) setPlayers(ps.filter((p) => !p.isHost));
+      if (finalScores) setPqLeaderboard(finalScores);
     });
 
     // ====== Task #5: per-player status events ======
@@ -441,6 +577,20 @@ export default function GameHost() {
     },
     [submittedPlayers, typingPlayers],
   );
+
+  // Pub Quiz handlers
+  const handlePqReveal = () => socket?.emit("quiz-reveal-answer", { roomCode });
+  const handlePqSkip = () => socket?.emit("quiz-skip-question", { roomCode });
+  const handlePqNext = () => socket?.emit("quiz-next-question", { roomCode });
+  const handlePqNextRound = () => socket?.emit("quiz-next-round", { roomCode });
+  const handlePqEndGame = () => socket?.emit("quiz-end-game", { roomCode });
+
+  // Pub Quiz: timer tick (every 250ms while a question is live without reveal)
+  useEffect(() => {
+    if (gameType !== "pub-quiz" || !pqQuestion || pqReveal || pqRoundSummary) return;
+    const id = setInterval(() => setPqNow(Date.now()), 250);
+    return () => clearInterval(id);
+  }, [gameType, pqQuestion, pqReveal, pqRoundSummary]);
 
   const DemoBadge = () =>
     isDemo ? (
@@ -924,6 +1074,276 @@ export default function GameHost() {
   };
 
   // ============================================================
+  //   PUB QUIZ — renders question, reveal panel, round summary
+  // ============================================================
+  const renderPQ = () => {
+    const remainingMs = Math.max(0, pqTimerEndAt - pqNow);
+    const totalMs = pqQuestion ? pqQuestion.durationMs : 30000;
+    const secsLeft = Math.ceil(remainingMs / 1000);
+
+    // ---- Round summary screen (between rounds) ----
+    if (pqRoundSummary) {
+      const top = pqRoundSummary.leaderboard[0];
+      return (
+        <div className="flex-1 flex flex-col text-foreground relative overflow-hidden">
+          {isDemo && <div className="absolute top-6 right-6 z-20"><DemoBadge /></div>}
+          <header className="flex justify-between items-center mb-8 relative z-10">
+            <div className="text-2xl font-bold text-muted-foreground bg-card/80 backdrop-blur px-6 py-3 rounded-full border border-border surface-elevated">
+              ROOM: <span className="text-foreground">{roomCode}</span>
+            </div>
+            <div className="text-2xl font-bold text-muted-foreground bg-card/80 backdrop-blur px-6 py-3 rounded-full border border-border surface-elevated">
+              Round <span className="text-foreground">{pqRoundSummary.roundIndex + 1}</span> / {pqRoundSummary.totalRounds}
+            </div>
+          </header>
+
+          <main className="flex-1 flex flex-col items-center justify-center max-w-5xl mx-auto w-full relative z-10">
+            <p className="text-2xl text-muted-foreground uppercase tracking-widest font-bold mb-2">Round Complete</p>
+            <h1 className="text-5xl md:text-7xl font-extrabold font-display tracking-tight text-center mb-2">
+              <RainbowText text={pqRoundSummary.roundName} />
+            </h1>
+            <div className="heading-divider heading-divider--green w-20 h-1 mb-12" />
+
+            <div className="w-full max-w-3xl space-y-3 mb-12">
+              {pqRoundSummary.leaderboard.slice(0, 8).map((row, i) => (
+                <motion.div
+                  key={row.id}
+                  initial={{ opacity: 0, x: -30 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.07, type: "spring", stiffness: 200, damping: 22 }}
+                  className={`flex items-center justify-between bg-card/85 backdrop-blur rounded-2xl p-5 border-2 surface-elevated ${
+                    i === 0 ? "border-primary/60 shadow-[0_0_40px_-10px_hsl(var(--primary)/0.7)]" : "border-border"
+                  }`}
+                >
+                  <div className="flex items-center gap-4">
+                    <div className={`w-10 h-10 rounded-full flex items-center justify-center font-extrabold text-xl ${
+                      i === 0 ? "bg-primary/30 text-primary" : "bg-muted text-muted-foreground"
+                    }`}>
+                      {i + 1}
+                    </div>
+                    {i === 0 && <Crown className="w-7 h-7 text-yellow-400 drop-shadow-[0_0_8px_hsl(48_100%_60%)]" />}
+                    {row.isBot && <Bot className="w-5 h-5 text-primary/60" />}
+                    <span className="text-2xl font-bold">{row.name}</span>
+                  </div>
+                  <div className="text-3xl font-extrabold text-primary text-glow-primary">
+                    <CountUp value={row.score} duration={1} />
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+
+            {top && (
+              <p className="text-lg text-muted-foreground mt-2">
+                Leading: <span className="font-bold text-foreground">{top.name}</span> with {top.score} pts
+              </p>
+            )}
+          </main>
+        </div>
+      );
+    }
+
+    // ---- Loading state ----
+    if (!pqQuestion) {
+      return (
+        <div className="flex-1 flex flex-col items-center justify-center relative">
+          {isDemo && <div className="absolute top-6 right-6"><DemoBadge /></div>}
+          <Beer className="w-20 h-20 text-secondary mb-6" />
+          <h1 className="text-4xl font-extrabold font-display">Loading next question…</h1>
+        </div>
+      );
+    }
+
+    return (
+      <div className="flex-1 flex flex-col text-foreground relative overflow-hidden">
+        {isDemo && <div className="absolute top-6 right-6 z-20"><DemoBadge /></div>}
+
+        <header className="flex justify-between items-center mb-6 relative z-10">
+          <div className="text-2xl font-bold text-muted-foreground bg-card/80 backdrop-blur px-6 py-3 rounded-full border border-border surface-elevated">
+            ROOM: <span className="text-foreground">{roomCode}</span>
+          </div>
+          <div className="text-xl font-bold uppercase tracking-widest text-secondary bg-card/80 backdrop-blur px-6 py-3 rounded-full border border-secondary/40 surface-elevated">
+            <Beer className="w-5 h-5 inline mr-2 -mt-1" />
+            {pqQuestion.roundName}
+          </div>
+          <div className="text-2xl font-bold text-muted-foreground bg-card/80 backdrop-blur px-6 py-3 rounded-full border border-border surface-elevated">
+            Q <span className="text-foreground">{pqQuestion.questionIndex + 1}</span>
+            <span className="text-muted-foreground/60">/{pqQuestion.questionsInRound}</span>
+            <span className="mx-3 text-muted-foreground/40">·</span>
+            R <span className="text-foreground">{pqQuestion.roundIndex + 1}</span>
+            <span className="text-muted-foreground/60">/{pqQuestion.totalRounds}</span>
+          </div>
+        </header>
+
+        {/* Player status bar — visible during the question */}
+        <PlayerStatusBar />
+
+        <main className="flex-1 flex flex-col items-center justify-center relative z-10 max-w-6xl mx-auto w-full">
+          <AnimatePresence mode="wait">
+            <motion.h2
+              key={`pq-${pqQuestion.roundIndex}-${pqQuestion.questionIndex}`}
+              initial={{ opacity: 0, y: 50, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -50, scale: 0.95 }}
+              transition={{ type: "spring", stiffness: 180, damping: 22 }}
+              className="text-4xl md:text-6xl leading-tight font-extrabold font-display tracking-tight text-center mb-10"
+            >
+              {pqQuestion.prompt}
+            </motion.h2>
+          </AnimatePresence>
+
+          {/* Multiple choice */}
+          {pqQuestion.type === "multiple-choice" && pqQuestion.options && (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-4xl mb-10">
+              {pqQuestion.options.map((opt, idx) => {
+                const isCorrect = pqReveal && pqReveal.correctOptionIndex === idx;
+                const isWrong = pqReveal && pqReveal.correctOptionIndex !== idx;
+                return (
+                  <motion.div
+                    key={idx}
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: idx * 0.06 }}
+                    className={`rounded-2xl p-6 border-2 surface-elevated text-2xl font-bold flex items-center gap-4 transition-all ${
+                      pqReveal
+                        ? isCorrect
+                          ? "bg-success/20 border-success shadow-[0_0_30px_-8px_hsl(var(--success))]"
+                          : "bg-card/40 border-border opacity-50"
+                        : "bg-card/85 border-border"
+                    }`}
+                  >
+                    <div className={`w-10 h-10 rounded-full flex items-center justify-center font-black ${
+                      pqReveal && isCorrect ? "bg-success text-success-foreground" : "bg-muted text-muted-foreground"
+                    }`}>
+                      {String.fromCharCode(65 + idx)}
+                    </div>
+                    <span className="flex-1">{opt}</span>
+                    {pqReveal && isCorrect && <Check className="w-7 h-7 text-success" />}
+                    {pqReveal && isWrong && <X className="w-6 h-6 text-muted-foreground/40" />}
+                  </motion.div>
+                );
+              })}
+            </div>
+          )}
+
+          {/* True / False */}
+          {pqQuestion.type === "true-false" && (
+            <div className="grid grid-cols-2 gap-6 w-full max-w-3xl mb-10">
+              {[true, false].map((val) => {
+                const label = val ? "TRUE" : "FALSE";
+                const isCorrect = pqReveal && pqReveal.trueFalseAnswer === val;
+                return (
+                  <div
+                    key={label}
+                    className={`rounded-3xl p-12 border-2 text-center text-5xl font-black surface-elevated transition-all ${
+                      pqReveal
+                        ? isCorrect
+                          ? "bg-success/20 border-success shadow-[0_0_40px_-8px_hsl(var(--success))]"
+                          : "bg-card/40 border-border opacity-40"
+                        : val ? "bg-success/10 border-success/40" : "bg-destructive/10 border-destructive/40"
+                    }`}
+                  >
+                    {label}
+                    {pqReveal && isCorrect && <div className="mt-3"><Check className="w-12 h-12 text-success mx-auto" /></div>}
+                  </div>
+                );
+              })}
+            </div>
+          )}
+
+          {/* Open-ended */}
+          {pqQuestion.type === "open-ended" && (
+            <div className="w-full max-w-3xl mb-10">
+              {pqReveal ? (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="rounded-3xl p-10 bg-success/15 border-2 border-success text-center shadow-[0_0_40px_-8px_hsl(var(--success))]"
+                >
+                  <p className="text-lg text-muted-foreground uppercase tracking-widest font-bold mb-3">Answer</p>
+                  <p className="text-5xl font-extrabold text-success">{pqReveal.correctAnswer}</p>
+                  {pqReveal.acceptedAnswers && pqReveal.acceptedAnswers.length > 1 && (
+                    <p className="text-sm text-muted-foreground mt-4">
+                      Also accepted: {pqReveal.acceptedAnswers.filter((a) => a !== pqReveal.correctAnswer).join(", ")}
+                    </p>
+                  )}
+                </motion.div>
+              ) : (
+                <div className="rounded-3xl p-10 bg-card/60 border-2 border-dashed border-border text-center">
+                  <p className="text-2xl text-muted-foreground">Players are typing on their phones…</p>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Bottom: timer + progress (pre-reveal) or live standings (post-reveal) */}
+          {!pqReveal ? (
+            <div className="w-full max-w-4xl flex flex-col items-center gap-6">
+              <div className="flex items-center justify-center gap-12">
+                <TimerRing
+                  value={remainingMs / 1000}
+                  total={totalMs / 1000}
+                  size={160}
+                  thickness={12}
+                  label={`${secsLeft}s`}
+                />
+                <div className="text-center">
+                  <div className="text-7xl font-black">
+                    <span className="text-secondary text-glow-secondary"><CountUp value={pqAnsweredCount} duration={0.4} /></span>
+                    <span className="text-muted-foreground text-5xl"> / {pqTotalAnswerers}</span>
+                  </div>
+                  <p className="text-xl text-muted-foreground uppercase tracking-widest font-bold mt-2">Answers In</p>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div className="w-full max-w-4xl">
+              <div className="bg-card/85 backdrop-blur rounded-2xl p-6 border-2 border-border surface-elevated">
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-xl font-bold uppercase tracking-widest text-muted-foreground">Live Standings</h3>
+                  <div className="text-sm text-muted-foreground">
+                    {pqReveal.correctCount}/{pqReveal.totalAnswered} got it right
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  {pqLeaderboard.slice(0, 6).map((row, i) => {
+                    const ans = pqReveal.perPlayerAnswers.find((a) => a.playerId === row.id);
+                    const isFirst = pqReveal.firstCorrectPlayerId === row.id;
+                    return (
+                      <div key={row.id} className="flex items-center justify-between gap-4 px-4 py-3 rounded-xl bg-background/40">
+                        <div className="flex items-center gap-3 min-w-0">
+                          <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm ${
+                            i === 0 ? "bg-primary/30 text-primary" : "bg-muted text-muted-foreground"
+                          }`}>
+                            {i + 1}
+                          </div>
+                          {row.isBot && <Bot className="w-4 h-4 text-primary/60 flex-shrink-0" />}
+                          <span className="font-bold text-lg truncate">{row.name}</span>
+                          {ans && (
+                            ans.correct
+                              ? <Check className="w-5 h-5 text-success flex-shrink-0" />
+                              : <X className="w-5 h-5 text-destructive/70 flex-shrink-0" />
+                          )}
+                          {isFirst && (
+                            <span className="text-xs font-bold uppercase bg-yellow-400/20 text-yellow-400 px-2 py-0.5 rounded-full whitespace-nowrap">
+                              +0.5 First
+                            </span>
+                          )}
+                        </div>
+                        <div className="text-2xl font-extrabold text-primary text-glow-primary">
+                          {row.score}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+          )}
+        </main>
+      </div>
+    );
+  };
+
+  // ============================================================
   //   CONTROLS — game-contextual buttons rendered in the bar
   // ============================================================
   const renderControls = () => {
@@ -991,6 +1411,80 @@ export default function GameHost() {
       );
     }
 
+    if (gameType === "pub-quiz") {
+      // Round summary phase
+      if (pqRoundSummary) {
+        if (pqRoundSummary.isLastRound) {
+          return (
+            <Button
+              size="lg"
+              onClick={handlePqEndGame}
+              className="text-lg px-6 py-5 font-bold gap-2 bg-primary hover:bg-primary/90"
+              data-testid="btn-pq-end-bar"
+            >
+              <Trophy className="w-5 h-5" />
+              Show Final Standings
+            </Button>
+          );
+        }
+        return (
+          <Button
+            size="lg"
+            onClick={handlePqNextRound}
+            className="text-lg px-6 py-5 font-bold gap-2"
+            data-testid="btn-pq-next-round-bar"
+          >
+            Next Round
+            <ChevronRight className="w-5 h-5" />
+          </Button>
+        );
+      }
+      // Reveal phase: advance to next question
+      if (pqReveal) {
+        return (
+          <Button
+            size="lg"
+            onClick={handlePqNext}
+            className="text-lg px-6 py-5 font-bold gap-2 bg-primary hover:bg-primary/90"
+            data-testid="btn-pq-next-bar"
+          >
+            Next Question
+            <ArrowRight className="w-5 h-5" />
+          </Button>
+        );
+      }
+      // Question is live: reveal + skip
+      if (pqQuestion) {
+        const remainingMs = Math.max(0, pqTimerEndAt - pqNow);
+        const allAnswered = pqTotalAnswerers > 0 && pqAnsweredCount >= pqTotalAnswerers;
+        return (
+          <div className="flex gap-3">
+            <Button
+              size="lg"
+              variant="outline"
+              onClick={handlePqSkip}
+              className="text-lg px-5 py-5 font-bold gap-2"
+              data-testid="btn-pq-skip-bar"
+            >
+              <SkipForward className="w-5 h-5" />
+              Skip
+            </Button>
+            <Button
+              size="lg"
+              onClick={handlePqReveal}
+              disabled={pqAnsweredCount === 0 && !allAnswered && remainingMs > 1000}
+              className="text-lg px-6 py-5 font-bold gap-2 bg-accent hover:bg-accent/90 text-accent-foreground"
+              data-testid="btn-pq-reveal-bar"
+            >
+              <Eye className="w-5 h-5" />
+              {allAnswered || remainingMs <= 0 ? "Reveal Answer" : "Reveal Now"}
+            </Button>
+          </div>
+        );
+      }
+      return null;
+    }
+
     return null;
   };
 
@@ -999,6 +1493,7 @@ export default function GameHost() {
   else if (gameState === "finished") content = renderFinished();
   else if (gameType === "pop-the-question") content = renderPtQ();
   else if (gameType === "roast-roulette") content = renderRR();
+  else if (gameType === "pub-quiz") content = renderPQ();
 
   return (
     <HostShell

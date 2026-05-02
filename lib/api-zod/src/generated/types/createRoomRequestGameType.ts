@@ -12,4 +12,5 @@ export type CreateRoomRequestGameType =
 export const CreateRoomRequestGameType = {
   "pop-the-question": "pop-the-question",
   "roast-roulette": "roast-roulette",
+  "pub-quiz": "pub-quiz",
 } as const;

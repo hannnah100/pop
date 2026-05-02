@@ -11,7 +11,7 @@ router.post("/rooms/create", async (req, res): Promise<void> => {
     return;
   }
 
-  const roomCode = createRoom(parsed.data.gameType, parsed.data.demo ?? false);
+  const roomCode = createRoom(parsed.data.gameType, parsed.data.demo ?? false, parsed.data.packId);
 
   const data = CreateRoomResponse.parse({
     roomCode,
