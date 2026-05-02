@@ -29,11 +29,40 @@ const ABBREVIATIONS: Record<string, string> = {
   mrs: 'misses',
 };
 
+const NUMBER_WORDS: Record<string, number> = {
+  one: 1, two: 2, three: 3, four: 4, five: 5,
+  six: 6, seven: 7, eight: 8, nine: 9, ten: 10,
+};
+
+function extractNumbers(str: string): number[] {
+  const nums: number[] = [];
+  for (const token of str.split(' ')) {
+    if (/^\d+$/.test(token)) {
+      nums.push(parseInt(token, 10));
+    } else if (NUMBER_WORDS[token] !== undefined) {
+      nums.push(NUMBER_WORDS[token]);
+    }
+  }
+  return nums.sort((a, b) => a - b);
+}
+
+function numbersEqual(a: number[], b: number[]): boolean {
+  if (a.length !== b.length) return false;
+  return a.every((n, i) => n === b[i]);
+}
+
 export function isAnswerMatch(guess: string, answer: string): boolean {
   const normalizedGuess = normalizeString(guess);
   const normalizedAnswer = normalizeString(answer);
 
   if (normalizedGuess === normalizedAnswer) return true;
+
+  // Numbered sequels are distinct entries. "Iron Man" must NOT fuzzy-match
+  // "Iron Man 2", "Iron Man 3", etc. Number-words ("two", "three") count as
+  // their digit equivalents so "Iron Man Two" still matches "Iron Man 2".
+  const guessNums = extractNumbers(normalizedGuess);
+  const answerNums = extractNumbers(normalizedAnswer);
+  if (!numbersEqual(guessNums, answerNums)) return false;
 
   const cleanGuess = removeCommonWords(normalizedGuess);
   const cleanAnswer = removeCommonWords(normalizedAnswer);
@@ -72,7 +101,19 @@ export function findMatchingAnswer(
   if (/^\d+$/.test(guess)) return -1;
   if (/^[^a-zA-Z0-9]+$/.test(guess)) return -1;
 
+  const normalizedGuess = normalizeString(guess);
+
+  // Pass 1: exact match (after normalization) against any accepted variant.
+  // This guarantees that explicit titles like "Iron Man 2" always resolve to
+  // the Iron Man 2 entry — never the looser "Iron Man" entry — even if a
+  // fuzzy rule would also match them.
+  const exactIdx = answers.findIndex(answer =>
+    answer.correct.some(variant => normalizeString(variant) === normalizedGuess),
+  );
+  if (exactIdx !== -1) return exactIdx;
+
+  // Pass 2: fuzzy match (handles typos, abbreviations, missing common words).
   return answers.findIndex(answer =>
-    answer.correct.some(variant => isAnswerMatch(guess, variant))
+    answer.correct.some(variant => isAnswerMatch(guess, variant)),
   );
 }

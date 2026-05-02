@@ -6,7 +6,7 @@ import {
   getGetTodayThreeStrikesQueryKey,
   getGetThreeStrikesByIdQueryKey,
 } from "@workspace/api-client-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { AlertCircle, ArrowRight, Share2, Home as HomeIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -289,56 +289,54 @@ export default function ThreeStrikes() {
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-8" style={{ perspective: 1200 }}>
-        <AnimatePresence>
-          {challenge.answers.map((answer, idx) => {
-            const isGuessed = guesses.includes(answer.display);
-            const isRevealed = gameOver && !isGuessed;
-            const showFront = !isGuessed && !isRevealed;
-            const isLastCorrect = idx === lastCorrectIdx && isGuessed;
+        {challenge.answers.map((answer, idx) => {
+          const isGuessed = guesses.includes(answer.display);
+          const isRevealed = gameOver && !isGuessed;
+          const showFront = !isGuessed && !isRevealed;
+          const isLastCorrect = idx === lastCorrectIdx && isGuessed;
 
-            return (
+          return (
+            <motion.div
+              key={idx}
+              ref={(el) => { cellRefs.current[idx] = el; }}
+              initial={{ opacity: 0, y: 12, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ delay: reduced ? 0 : Math.min(idx * 0.025, 0.6), duration: 0.4, ease: easing.out }}
+              className="relative min-h-[110px]"
+              style={{ transformStyle: "preserve-3d" }}
+            >
               <motion.div
-                key={idx}
-                ref={(el) => { cellRefs.current[idx] = el; }}
-                initial={{ opacity: 0, y: 12, scale: 0.95 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                transition={{ delay: reduced ? 0 : idx * 0.04, duration: 0.45, ease: easing.out }}
-                className="relative"
+                className="relative w-full h-full"
                 style={{ transformStyle: "preserve-3d" }}
+                animate={{ rotateY: showFront ? 0 : 180 }}
+                transition={reduced ? { duration: 0 } : { type: "spring", stiffness: 220, damping: 22 }}
               >
-                <motion.div
-                  className="relative w-full h-full"
-                  style={{ transformStyle: "preserve-3d" }}
-                  animate={{ rotateY: showFront ? 0 : 180 }}
-                  transition={reduced ? { duration: 0 } : { type: "spring", stiffness: 220, damping: 22 }}
+                <Card
+                  className="absolute inset-0 h-full flex flex-col items-center justify-center p-4 text-center border-2 min-h-[100px] bg-card/70 border-border/50"
+                  style={{ backfaceVisibility: "hidden" }}
                 >
-                  <Card
-                    className="absolute inset-0 h-full flex flex-col items-center justify-center p-4 text-center border-2 min-h-[100px] bg-card/70 border-border/50"
-                    style={{ backfaceVisibility: "hidden" }}
-                  >
-                    <div className="text-3xl font-bold text-muted mb-2">?</div>
-                    <div className="text-sm font-medium text-muted-foreground">{answer.hint}</div>
-                  </Card>
-                  <Card
-                    className={`absolute inset-0 h-full flex flex-col items-center justify-center p-4 text-center border-2 min-h-[100px] transition-shadow duration-500
-                      ${isGuessed
-                        ? "bg-success/10 border-success/60 shadow-[0_0_28px_-6px_hsl(var(--success)/0.7)]"
-                        : "bg-destructive/10 border-destructive/60 shadow-[0_0_28px_-6px_hsl(var(--destructive)/0.6)]"
-                      }
-                      ${isLastCorrect ? "animate-pulse-glow" : ""}
-                    `}
-                    style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
-                  >
-                    <div className={`font-bold text-base md:text-lg mb-1 ${isGuessed ? "text-success" : "text-destructive"}`}>
-                      {answer.display}
-                    </div>
-                    <div className="text-xs text-muted-foreground">{answer.hint}</div>
-                  </Card>
-                </motion.div>
+                  <div className="text-3xl font-bold text-muted mb-2">?</div>
+                  <div className="text-sm font-medium text-muted-foreground">{answer.hint}</div>
+                </Card>
+                <Card
+                  className={`absolute inset-0 h-full flex flex-col items-center justify-center p-4 text-center border-2 min-h-[100px] transition-shadow duration-500
+                    ${isGuessed
+                      ? "bg-success/10 border-success/60 shadow-[0_0_28px_-6px_hsl(var(--success)/0.7)]"
+                      : "bg-destructive/10 border-destructive/60 shadow-[0_0_28px_-6px_hsl(var(--destructive)/0.6)]"
+                    }
+                    ${isLastCorrect ? "animate-pulse-glow" : ""}
+                  `}
+                  style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
+                >
+                  <div className={`font-bold text-base md:text-lg mb-1 ${isGuessed ? "text-success" : "text-destructive"}`}>
+                    {answer.display}
+                  </div>
+                  <div className="text-xs text-muted-foreground">{answer.hint}</div>
+                </Card>
               </motion.div>
-            );
-          })}
-        </AnimatePresence>
+            </motion.div>
+          );
+        })}
       </div>
 
       {!gameOver ? (
