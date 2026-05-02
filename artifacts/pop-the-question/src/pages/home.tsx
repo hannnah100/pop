@@ -52,7 +52,10 @@ export default function Home() {
             className="font-display font-black text-black leading-none tracking-tight"
             style={{ fontSize: "clamp(2.8rem, 10vw, 6rem)", textShadow: "4px 4px 0 rgba(0,0,0,0.18)" }}
           >
-            <RainbowText text="POP:" />
+            <RainbowText
+              text="POP:"
+              palette={["#FF0054", "#FF6B35", "#00E5FF", "#00F5A0", "#FF006E", "#FF1493"]}
+            />
             <br />
             <span className="text-black">THE QUESTION</span>
           </h1>
