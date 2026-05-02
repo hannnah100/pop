@@ -1,0 +1,228 @@
+"The entire interface looks too much like a generic AI app. Complete visual redesign needed. I'm uploading 5 reference images that show the exact visual style I want. Study these carefully and redesign the entire site to match this aesthetic.
+Current Problems:
+
+Too many nested boxes (black cards with pills inside black cards with more boxes)
+Hover effects that make boxes glow
+Glassmorphism (blurred transparent boxes)
+Dark mode with subtle gradients everywhere
+Feels like a corporate dashboard or AI chatbot interface
+Boring, sterile, lifeless
+
+Key Elements from Reference Images:
+From Image 1 (Koala Color - Kids site):
+
+Bright pastel backgrounds (cream, light pink)
+Organic blob shapes as decorative elements (not boxes!)
+Hand-drawn illustration style
+Colorful scattered elements (coral, teal, yellow blobs)
+Clean white space with playful accents
+Rainbow logo treatment that feels organic, not digital
+Curved, flowing shapes instead of rectangles
+
+From Image 2 (Creative Design - Orange site):
+
+BOLD solid color backgrounds (bright yellow/orange)
+Thick black borders/frames around sections
+Hand-drawn doodle illustrations mixed with clean UI
+Cartoon style icons and decorative elements (light bulbs, smiley faces, rainbows, clouds)
+Typography with thick outlines and drop shadows
+Illustrated stickers/badges scattered around
+Halftone dot patterns for texture
+Mix of photos with illustrated elements overlaid
+
+From Image 3 (College Humor - Split screen):
+
+Bold color blocking (blue checkered pattern vs solid orange)
+Large, impactful typography
+Bright, saturated colors with high contrast
+Simple geometric patterns (checkerboard)
+Full bleed color sections
+Clean white buttons with strong CTAs
+
+From Image 4 (Saved by the 90s):
+
+Neon bright colors (hot pink, cyan, lime green, purple)
+90s party/rave aesthetic
+Energetic, loud color combinations
+Diagonal stripe patterns
+Retro logo styling
+Party/event vibe with movement
+Bold white text on bright backgrounds
+
+From Image 5 (Frans Hals Museum):
+
+Massive bold typography (HUGE letters)
+Bright yellow dominant background
+Black side navigation panel
+Color-coded sections (yellow, pink/coral, mint green)
+Simple, bold geometric shapes
+Museum/gallery aesthetic but playful
+Minimal decorative elements, maximum impact through scale and color
+
+STOP Doing These AI Design Clichés:
+
+Hover effects that make boxes glow
+Glassmorphism and blur effects
+Subtle gradients on everything
+Cards with rounded corners floating on dark backgrounds
+Gentle shadow effects
+Smooth fade-in animations
+Gradient borders that shimmer
+Dark mode as the only option
+Nested semi-transparent containers
+Pill-shaped buttons
+Skeleton loading screens with shimmer
+Micro-interactions everywhere
+
+START Doing This Instead:
+Interaction Style:
+
+Hover = color change (bright to brighter), not glow
+Click = satisfying snap/pop animation, not smooth fade
+No subtle transitions - everything should be snappy and instant
+Think video game feedback, not elegant website
+
+Visual Style:
+
+FLAT colors or BOLD gradients (nothing subtle)
+Hard edges and shapes, not soft glows
+Patterns and textures (halftone dots, stripes, checkerboard), not blur effects
+Hand-drawn illustrations and cartoon icons everywhere
+Solid colors that POP, not muted tones with transparency
+Thick black borders (3-5px) to frame sections
+
+Layout Approach:
+
+Magazine/poster layout, not floating cards
+Use BRIGHT solid color backgrounds for sections (not dark mode)
+Color blocking: Daily Games section = bright yellow background, Hosted Games section = hot pink background
+Content sections butt against each other or use thick borders to separate
+Organic blob shapes as decorative elements
+Everything feels printed/tangible, not floating in space
+Add decorative hand-drawn doodles: game controllers, dice, playing cards, confetti, stars, lightning bolts
+
+Color Palette:
+
+Hot Pink: #FF1493
+Electric Orange: #FF6B35
+Bright Yellow: #FFD700
+Lime Green: #00FF7F
+Cyan: #00FFFF
+Purple: #9D4EDD
+Coral: #FF6F61
+Cream/Off-white: #FFF8E7
+Black: #000000 (for borders and text)
+
+Typography:
+
+Go BIGGER on headlines (think Frans Hals Museum scale)
+Add drop shadows or thick outlines for impact (like Creative Design)
+Mix of sizes: tiny and HUGE, not all medium
+Bold, impactful fonts
+Black text on bright backgrounds for readability
+
+Homepage Redesign:
+Instead of: Dark background with gray cards containing game options
+Do:
+
+Full-width BRIGHT YELLOW section with hand-drawn decorative blobs
+Bold black text 'DAILY GAMES' with drop shadow
+Game options as colorful banners with thick black borders (not boxes)
+Scattered illustrated elements: stars, lightning bolts, game controllers
+Next section: HOT PINK background for 'HOSTED GAMES'
+Hand-drawn doodle illustrations throughout
+Thick black borders separating sections
+
+Three Strikes Game Page:
+
+Bright background color (not black) - maybe cream or light yellow
+Hint boxes with thick colorful borders and slightly irregular hand-drawn style edges
+Add decorative illustrations around the grid based on category (film reels for movies, music notes for albums)
+Use patterns or textures in backgrounds (halftone dots, subtle stripes)
+Make it feel like a game show set with props and decorations
+
+Room Code Display:
+
+Put code in a bold frame with thick black border
+Add decorative doodles around it (arrows pointing to it, stars, sparkles)
+Use a speech bubble or badge shape instead of a rectangle
+Bright colored background (hot pink or electric orange)
+Maybe add illustrated sticker-style elements
+
+Buttons:
+
+Thick black borders (3-5px)
+Drop shadows for depth (not subtle glows)
+Solid bright colors (hot pink, electric blue, lime green, orange)
+Possibly slightly irregular shapes (hand-drawn feel)
+Big, chunky, impossible to miss
+On hover: color swap (pink becomes yellow, text becomes black), instant change, no smooth transition
+
+Navigation:
+
+Black side panel with colorful icons (like Frans Hals Museum)
+OR bright colored tabs with bold text and thick borders
+NOT subtle top nav bar with gray links
+
+Decorative Elements to Add:
+
+Organic blob shapes (like Koala Color)
+Hand-drawn doodle illustrations: smiley faces, stars, lightning bolts, hearts, arrows
+Halftone dot patterns for texture
+Diagonal stripe patterns
+Illustrated stickers/badges
+Cartoon style icons
+Geometric patterns (checkerboard, polka dots, zigzags)
+
+Examples of Correct Interactions:
+Bad (AI vibes):
+
+Hovering over a game card makes it glow softly with a purple aura and lift slightly
+
+Good (Fun vibes):
+
+Hovering over a game makes the entire section snap to a different bright color instantly, maybe a playful illustration pops in
+
+Bad:
+
+Dark background with semi-transparent cards that have subtle gradients
+
+Good:
+
+Bright yellow section with bold black text, thick black border on the bottom, hand-drawn stars scattered around
+
+Bad:
+
+Button with gradient background that glows on hover
+
+Good:
+
+Button is solid HOT PINK with thick black border. On hover it becomes ELECTRIC YELLOW and the text turns black. Instant change. Maybe it tilts 2 degrees.
+
+The Test:
+If someone screenshots this app and it looks like it could be ChatGPT, Claude, Notion AI, or any other AI tool - you failed. It should look like a 90s Nickelodeon show meets a modern indie game meets a colorful museum meets a party flyer.
+DO NOT USE:
+
+Dark backgrounds as primary
+Subtle grays or muted tones
+Glassmorphism or blur
+Perfect geometric boxes everywhere
+Subtle shadows and glows
+Smooth elegant transitions
+
+DO USE:
+
+Bright, saturated solid color backgrounds
+Hand-drawn illustration elements
+Thick black borders and outlines
+Bold drop shadows (not glows)
+Organic shapes (blobs, curves, irregular forms)
+Patterns and textures (dots, stripes, checkerboard)
+Playful doodles and cartoon icons
+Color blocking (full sections in solid bright colors)
+Typography at extreme scales
+Thick borders separating everything
+
+Overall Vibe:
+90s Nickelodeon meets modern museum meets indie game meets party flyer. Energetic, colorful, hand-crafted feeling, NOT digital/AI/corporate. Think Jackbox Party Pack, Poolsuite, old Spotify Wrapped pages - bold graphics, playful but sophisticated.
+Make it look FUN and BOLD and DIFFERENT. If someone saw this and thought 'that looks fun' instead of 'that looks professional' - you nailed it."
