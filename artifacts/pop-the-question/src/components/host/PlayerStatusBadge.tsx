@@ -22,7 +22,7 @@ const META: Record<
     Icon: typeof CheckCircle2;
     cls: string;
     iconCls: string;
-    pulse?: boolean;
+    dots?: boolean;
   }
 > = {
   answered: {
@@ -32,17 +32,18 @@ const META: Record<
     iconCls: "text-black",
   },
   typing: {
-    label: "Typing…",
+    label: "Typing",
     Icon: Pencil,
     cls: "bg-[#FFD700] border-black text-black",
     iconCls: "text-black",
-    pulse: true,
+    dots: true,
   },
   thinking: {
-    label: "Thinking…",
+    label: "Thinking",
     Icon: Hourglass,
     cls: "bg-white border-black text-black/60",
     iconCls: "text-black/60",
+    dots: true,
   },
   away: {
     label: "Away",
@@ -57,6 +58,21 @@ const META: Record<
     iconCls: "text-black",
   },
 };
+
+function TypingDots({ className }: { className?: string }) {
+  return (
+    <span className={cn("inline-flex items-center gap-[2px]", className)} aria-hidden>
+      {[0, 1, 2].map((i) => (
+        <motion.span
+          key={i}
+          className="w-1 h-1 rounded-full bg-current"
+          animate={{ opacity: [0.3, 1, 0.3] }}
+          transition={{ duration: 1.2, repeat: Infinity, delay: i * 0.2, ease: "easeInOut" }}
+        />
+      ))}
+    </span>
+  );
+}
 
 export function PlayerStatusBadge({
   state,
@@ -75,13 +91,17 @@ export function PlayerStatusBadge({
       className={cn(
         "inline-flex items-center gap-1.5 border-[2px] px-2 py-0.5 text-xs font-bold leading-none uppercase tracking-wide",
         meta.cls,
-        meta.pulse && "animate-pulse",
         className,
       )}
       data-testid={`status-${state}`}
     >
       <Icon className={cn("w-3.5 h-3.5", meta.iconCls)} />
-      {!compact && <span>{meta.label}</span>}
+      {!compact && (
+        <span className="flex items-center gap-0.5">
+          {meta.label}
+          {meta.dots && <TypingDots className="ml-0.5" />}
+        </span>
+      )}
     </motion.span>
   );
 }
