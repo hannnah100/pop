@@ -297,14 +297,14 @@ export function HostShell({
           <AlertDialogHeader>
             <AlertDialogTitle className="font-display font-black uppercase text-xl">← Bail Out?</AlertDialogTitle>
             <AlertDialogDescription>
-              You'll be taken back to the home screen. The current game will end for all players.
+              You'll be taken back to the home screen. Players will see an inactive host screen.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel data-testid="btn-bail-cancel">Stay in game</AlertDialogCancel>
             <AlertDialogAction
               className="bg-black text-[#FFD700] border-[3px] border-black hover:bg-black/80 font-display font-black uppercase"
-              onClick={() => { setConfirmExit(false); onEndGame?.(); setLocation("/"); }}
+              onClick={() => { setConfirmExit(false); setLocation("/"); }}
               data-testid="btn-bail-confirm"
             >
               ← BAIL OUT
