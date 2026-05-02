@@ -2523,7 +2523,6 @@ function scheduleBotWofTurn(io: SocketIOServer, room: Room) {
     if (revealedCount >= Math.floor(totalLetters * 0.6) && Math.random() < 0.4) {
       live.wof.phase = "spinning"; // ensure phase is right before fake solve
       // Emit a bot solve attempt
-      const normalized = (s: string) => s.toUpperCase().replace(/[^A-Z ]/g, "").trim().replace(/\s+/g, " ");
       const correct = Math.random() < 0.55;
       const answer = correct ? puzzle.answer : "WRONG ANSWER";
       const solverId = controllerId;
@@ -2671,7 +2670,8 @@ function scheduleBotWofGuess(io: SocketIOServer, room: Room) {
     if (count > 0) {
       live.wof.revealedLetters.add(letter);
       const spinValue = typeof live.wof.currentSpin === "number" ? live.wof.currentSpin : 500;
-      const earned = live.wof.isFreePlay ? 0 : spinValue * count;
+      // FREE_PLAY consonant earns at $500 rate (same rule as human players)
+      const earned = spinValue * count;
       if (earned > 0) {
         live.wof.roundEarnings[controllerId ?? ""] = (live.wof.roundEarnings[controllerId ?? ""] ?? 0) + earned;
       }
