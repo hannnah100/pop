@@ -952,6 +952,8 @@ export default function GameHost() {
     });
 
     newSocket.on("wof-solve-pending", (payload: { solverId: string | null; solverName: string; answer: string }) => {
+      if (wofSpinTimeoutRef.current) { clearTimeout(wofSpinTimeoutRef.current); wofSpinTimeoutRef.current = null; }
+      setWofSpinning(false);
       setWofPendingSolve(payload);
     });
 
@@ -974,6 +976,8 @@ export default function GameHost() {
       controllerId: string | null;
       scores: WofScoreRow[];
     }) => {
+      if (wofSpinTimeoutRef.current) { clearTimeout(wofSpinTimeoutRef.current); wofSpinTimeoutRef.current = null; }
+      setWofSpinning(false);
       setWofBoard(payload.board);
       setWofRevealedLetters(payload.revealedLetters);
       setWofGuessedLetters(payload.guessedLetters);
@@ -999,6 +1003,8 @@ export default function GameHost() {
       controllerId: string | null;
       scores: WofScoreRow[];
     }) => {
+      if (wofSpinTimeoutRef.current) { clearTimeout(wofSpinTimeoutRef.current); wofSpinTimeoutRef.current = null; }
+      setWofSpinning(false);
       setWofBoard(payload.board);
       setWofRevealedLetters(payload.revealedLetters);
       setWofGuessedLetters(payload.guessedLetters);
@@ -1017,6 +1023,8 @@ export default function GameHost() {
       revealedLetters: string[];
       scores: WofScoreRow[];
     }) => {
+      if (wofSpinTimeoutRef.current) { clearTimeout(wofSpinTimeoutRef.current); wofSpinTimeoutRef.current = null; }
+      setWofSpinning(false);
       setWofBoard(payload.board);
       setWofRevealedLetters(payload.revealedLetters);
       setWofScores(payload.scores);
@@ -1037,6 +1045,8 @@ export default function GameHost() {
       totalPuzzles: number;
       isLastPuzzle: boolean;
     }) => {
+      if (wofSpinTimeoutRef.current) { clearTimeout(wofSpinTimeoutRef.current); wofSpinTimeoutRef.current = null; }
+      setWofSpinning(false);
       setWofBoard(payload.board);
       setWofRevealedLetters(payload.board.flatMap(w => w.map(c => c.letter)));
       setWofScores(payload.scores);
@@ -1059,6 +1069,8 @@ export default function GameHost() {
       guessedLetters: string[];
       scores: WofScoreRow[];
     }) => {
+      if (wofSpinTimeoutRef.current) { clearTimeout(wofSpinTimeoutRef.current); wofSpinTimeoutRef.current = null; }
+      setWofSpinning(false);
       setWofBoard(payload.board);
       setWofCategory(payload.category);
       setWofHint(payload.hint);
