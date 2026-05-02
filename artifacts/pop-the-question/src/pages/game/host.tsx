@@ -3019,7 +3019,7 @@ export default function GameHost() {
 
         <div className="flex-1 flex flex-col lg:flex-row gap-6 p-6 overflow-auto">
           {/* Main area — board + wheel result */}
-          <div className="flex-1 flex flex-col items-center gap-6">
+          <div className="flex-1 flex flex-col items-center gap-4">
             {/* Board */}
             <div className="w-full max-w-3xl bg-black/5 border-[3px] border-black p-4 shadow-[4px_4px_0_#000]">
               <WofBoard board={wofBoard} category={wofCategory} hint={wofHint ?? undefined} />
