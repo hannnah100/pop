@@ -3031,7 +3031,7 @@ export default function GameHost() {
               spinIndex={wofSpinIndex}
               value={wofSpinning ? null : wofLastSpin}
               spinnerName={controllerName}
-              size={300}
+              size={460}
             />
 
             {/* Host SPIN button — active when controller needs to spin */}

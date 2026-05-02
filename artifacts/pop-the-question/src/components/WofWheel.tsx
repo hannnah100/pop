@@ -102,15 +102,18 @@ export function WofWheel({ spinning, spinIndex, value, spinnerName, size = 280 }
       ctx.translate(tx, ty);
       ctx.rotate(midAngle + Math.PI / 2);
       ctx.fillStyle = segmentTextColor(seg);
-      ctx.font = `bold ${size < 200 ? 7 : 8.5}px 'Arial', sans-serif`;
+      // Font scales with diameter: ~8.5px at size 280, ~14px at size 460
+      const fontPx = Math.max(7, Math.round(size / 32));
+      ctx.font = `bold ${fontPx}px 'Arial', sans-serif`;
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
 
       const l1 = segmentLabel(seg);
       const l2 = segmentLabelLine2(seg);
+      const lineGap = Math.max(4, Math.round(size / 56));
       if (l2) {
-        ctx.fillText(l1, 0, -5);
-        ctx.fillText(l2, 0, 5);
+        ctx.fillText(l1, 0, -lineGap);
+        ctx.fillText(l2, 0, lineGap);
       } else {
         ctx.fillText(l1, 0, 0);
       }
@@ -203,10 +206,17 @@ export function WofWheel({ spinning, spinIndex, value, spinnerName, size = 280 }
         </p>
       )}
       <div className="relative" style={{ width: size, height: size }}>
-        {/* Pointer triangle at top */}
+        {/* Pointer triangle at top — scales with wheel */}
         <div
           className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1 z-10"
-          style={{ width: 0, height: 0, borderLeft: "10px solid transparent", borderRight: "10px solid transparent", borderTop: "20px solid #FF1493" }}
+          style={{
+            width: 0,
+            height: 0,
+            borderLeft: `${Math.round(size * 0.04)}px solid transparent`,
+            borderRight: `${Math.round(size * 0.04)}px solid transparent`,
+            borderTop: `${Math.round(size * 0.075)}px solid #FF1493`,
+            filter: "drop-shadow(2px 2px 0 #000)",
+          }}
         />
         {/* Drop shadow ring */}
         <div
@@ -216,23 +226,25 @@ export function WofWheel({ spinning, spinIndex, value, spinnerName, size = 280 }
         <canvas ref={canvasRef} width={size} height={size} className="rounded-full" />
       </div>
 
-      {/* Result badge */}
+      {/* Result banner — large, color-matched to landed slice */}
       <AnimatePresence mode="wait">
         {!spinning && value !== null && (
           <motion.div
             key={String(value)}
-            initial={{ scale: 0.5, opacity: 0, y: -10 }}
+            initial={{ scale: 0.4, opacity: 0, y: -16 }}
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.5, opacity: 0 }}
-            transition={{ type: "spring", stiffness: 300, damping: 18 }}
-            className={`mt-2 px-6 py-3 border-[3px] border-black font-display font-black uppercase tracking-wider text-xl shadow-[4px_4px_0_#000]
+            transition={{ type: "spring", stiffness: 280, damping: 20 }}
+            className={`mt-4 px-10 py-5 border-[5px] border-black font-display font-black uppercase tracking-wider text-5xl sm:text-6xl shadow-[8px_8px_0_#000] leading-none
               ${value === "BANKRUPT" ? "bg-black text-white" :
                 value === "LOSE_A_TURN" ? "bg-[#6B7280] text-white" :
                 value === "FREE_PLAY" ? "bg-[#00C853] text-white" :
                 (value as number) >= 2000 ? "bg-[#FF1493] text-white" :
                 (value as number) >= 1000 ? "bg-[#FF6B35] text-white" :
+                (value as number) >= 700 ? "bg-[#7C3AED] text-white" :
                 "bg-[#FFD700] text-black"
               }`}
+            data-testid="wof-result-banner"
           >
             {value === "BANKRUPT" ? "BANKRUPT!" :
              value === "LOSE_A_TURN" ? "LOSE A TURN" :
