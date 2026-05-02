@@ -283,6 +283,10 @@ export default function Crossword() {
     >
       <BannerStack banners={banners} onDone={(id) => setBanners((b) => b.filter((x) => x.id !== id))} />
 
+      <div className="mb-4">
+        <BackArrow />
+      </div>
+
       {/* Header */}
       <header className="relative bg-[#00E5FF] border-[3px] border-black shadow-[4px_4px_0_#000] px-5 py-4 mb-6 flex justify-between items-center overflow-hidden">
         <StarDoodle className="absolute top-2 right-16 w-7 h-7 text-[#FF1493] opacity-40" />

@@ -181,11 +181,10 @@ export default function ThreeStrikes() {
     <div className="flex-1 flex flex-col max-w-4xl mx-auto w-full px-4 py-8">
       <BannerStack banners={banners} onDone={(id) => setBanners((b) => b.filter((x) => x.id !== id))} />
 
-      {isArchive && (
-        <div className="mb-4">
-          <Badge variant="outline">📦 Archive Replay</Badge>
-        </div>
-      )}
+      <div className="flex items-center gap-3 mb-4">
+        <BackArrow href={isArchive ? "/archive" : "/"} label={isArchive ? "Back to archive" : "Back to home"} />
+        {isArchive && <Badge variant="outline">📦 Archive Replay</Badge>}
+      </div>
 
       {/* Game header */}
       <div className="relative bg-[#FFD700] border-[3px] border-black shadow-[4px_4px_0_#000] px-5 py-4 mb-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 overflow-hidden">
