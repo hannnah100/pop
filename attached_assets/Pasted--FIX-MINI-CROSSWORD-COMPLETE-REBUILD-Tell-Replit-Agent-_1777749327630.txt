@@ -1,0 +1,70 @@
+## **FIX MINI CROSSWORD - COMPLETE REBUILD**
+
+---
+
+**Tell Replit Agent:**
+
+"The Mini Crossword is completely broken. The clues don't match the grid, the numbers are wrong, and nothing lines up. This needs to be completely rebuilt properly.
+
+**The Problems:**
+
+1. Clue hints say wrong letter counts (says 5 letters when answer is 7 letters)
+2. Clue numbers don't match the numbers on the grid
+3. Grid cells don't have the right numbers
+4. Answers don't fit in the spaces
+
+**How to Fix It Properly:**
+
+**Step 1: Delete ALL existing crossword puzzles**
+
+Remove every crossword from the database. They're all wrong.
+
+**Step 2: Understand How Crosswords Work**
+
+Before creating new ones, understand the rules:
+- It's a 5×5 grid (5 rows, 5 columns)
+- Black squares block off sections
+- White squares are where letters go
+- Each white square must be part of a word (across or down or both)
+- Words must be at least 3 letters long
+
+**Numbering system:**
+- Number the white squares that START a word
+- Number from left to right, top to bottom
+- If a square starts BOTH an across word AND a down word, it gets ONE number used for both clues
+- Example: Square at position [0,0] starts "TIKTOK" going across AND "TIKTOKER" going down = both use clue number 1
+
+**Step 3: Create NEW Valid Crosswords**
+
+Don't try to generate them automatically. Either:
+
+Option A: Use a real crossword generator tool online, then manually input the results
+
+Option B: Build them manually step by step:
+1. Pick 6-8 short pop culture words (4-5 letters each)
+2. Arrange them so they intersect (share letters)
+3. Fill remaining spaces with black squares
+4. Number the starting squares correctly
+5. Write clues with CORRECT letter counts in parentheses
+
+**Step 4: Validate EVERY Crossword**
+
+Before adding to database, manually check:
+- Count each answer letter by letter
+- Verify the number in parentheses matches exactly
+- Check that clue numbers match grid numbers
+- Test: can this actually be solved?
+
+**Step 5: Start Small**
+
+Create just ONE valid crossword first. Test it thoroughly. Make sure it works perfectly. Then create more.
+
+**If this is too complex:**
+
+Alternative solution: Remove Mini Crossword from the site temporarily until we can create proper puzzles. It's better to have no crossword than a broken one.
+
+**I need you to either:**
+1. Build ONE completely valid working crossword and show me it works, OR
+2. Temporarily disable the Mini Crossword game until proper puzzles can be created
+
+Do not attempt to auto-generate crosswords - they keep breaking. Build them manually or find a reliable crossword generator tool to use."
