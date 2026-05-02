@@ -133,7 +133,7 @@ export function WofWheel({ spinning, spinIndex, value, spinnerName, size = 280 }
 
     isSpinningRef.current = true;
     let startTime: number | null = null;
-    const spinDuration = 3500;
+    const spinDuration = 2500;
     const extraSpins = 6 * 360;
     const fromAngle = currentAngleRef.current;
 

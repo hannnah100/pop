@@ -589,6 +589,8 @@ export function setupSocketIO(httpServer: HttpServer) {
         wofCategory: room.wof ? currentPuzzle(room.wof).category : null,
         wofHint: room.wof ? currentPuzzle(room.wof).hint ?? null : null,
         wofPendingSolve: room.wof?.pendingSolve ?? null,
+        wofPuzzleIndex: room.wof?.puzzleIndex ?? 0,
+        wofTotalPuzzles: room.wof?.roundCount ?? 0,
       });
     });
 

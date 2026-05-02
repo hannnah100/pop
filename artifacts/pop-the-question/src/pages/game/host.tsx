@@ -208,6 +208,8 @@ interface RoomStatePayload {
   wofCategory?: string | null;
   wofHint?: string | null;
   wofPendingSolve?: { solverId: string | null; solverName: string; answer: string; isVerbal?: boolean } | null;
+  wofPuzzleIndex?: number;
+  wofTotalPuzzles?: number;
 }
 
 interface GameStartedPayload {
@@ -474,6 +476,8 @@ export default function GameHost() {
             setWofGuessedLetters(data.wofGuessedLetters ?? []);
             setWofPhase(data.wofPhase ?? "spinning");
             setWofPendingSolve(data.wofPendingSolve ?? null);
+            setWofPuzzleIndex(data.wofPuzzleIndex ?? 0);
+            setWofTotalPuzzles(data.wofTotalPuzzles ?? 0);
             setWofSpinning(false);
             setWofSpinIndex(null);
             setWofLastSpin(null);
@@ -941,7 +945,7 @@ export default function GameHost() {
         }
         setWofLastLetter(null);
         setWofSolveResult(null);
-      }, 3600);
+      }, 2600);
     });
 
     newSocket.on("wof-solve-pending", (payload: { solverId: string | null; solverName: string; answer: string }) => {
