@@ -1,0 +1,405 @@
+UPDATED: THREE STRIKES ANSWER MATCHING (More Forgiving)
+Matching Strategy:
+Instead of exact string matching, use fuzzy matching with these rules:
+
+Normalize both input and answers:
+
+Convert to lowercase
+Remove all punctuation (:, -, ', ., ,)
+Remove common articles (the, a, an)
+Remove extra whitespace
+Remove common subtitle connectors (and the, of the)
+
+
+Partial matching:
+
+If user types "captain america winter soldier" → match "Captain America: The Winter Soldier"
+If user types "spiderman homecoming" → match "Spider-Man: Homecoming"
+Extract key words and check if all are present in the answer
+
+
+Sequence matching:
+
+Allow words in different order for some cases
+"winter soldier captain america" should still work
+
+
+
+
+Implementation Code:
+javascript// utils/answerMatching.js
+
+/**
+ * Normalize a string for fuzzy matching
+ */
+function normalizeString(str) {
+  return str
+    .toLowerCase()
+    .replace(/[':.,\-!?]/g, '') // Remove punctuation
+    .replace(/\s+/g, ' ') // Normalize whitespace
+    .trim();
+}
+
+/**
+ * Remove common articles and connectors
+ */
+function removeCommonWords(str) {
+  const commonWords = ['the', 'a', 'an', 'and', 'of', 'in', 'to'];
+  const words = str.split(' ');
+  return words
+    .filter(word => !commonWords.includes(word))
+    .join(' ');
+}
+
+/**
+ * Extract significant words (3+ characters)
+ */
+function getSignificantWords(str) {
+  return str
+    .split(' ')
+    .filter(word => word.length >= 3);
+}
+
+/**
+ * Check if guess matches an answer
+ */
+export function isAnswerMatch(guess, answer) {
+  const normalizedGuess = normalizeString(guess);
+  const normalizedAnswer = normalizeString(answer);
+  
+  // Direct match after normalization
+  if (normalizedGuess === normalizedAnswer) {
+    return true;
+  }
+  
+  // Remove common words and check again
+  const cleanGuess = removeCommonWords(normalizedGuess);
+  const cleanAnswer = removeCommonWords(normalizedAnswer);
+  
+  if (cleanGuess === cleanAnswer) {
+    return true;
+  }
+  
+  // Check if all significant words from guess appear in answer
+  const guessWords = getSignificantWords(cleanGuess);
+  const answerWords = getSignificantWords(cleanAnswer);
+  
+  // All guess words must be in answer
+  const allWordsMatch = guessWords.every(guessWord =>
+    answerWords.some(answerWord => 
+      answerWord.includes(guessWord) || guessWord.includes(answerWord)
+    )
+  );
+  
+  if (allWordsMatch && guessWords.length > 0) {
+    return true;
+  }
+  
+  // Special case: Check for common abbreviations
+  const abbreviations = {
+    'gotg': 'guardians of the galaxy',
+    'mcu': 'marvel cinematic universe',
+    'lotr': 'lord of the rings',
+    'hp': 'harry potter',
+    'sw': 'star wars',
+    'dr': 'doctor',
+    'mr': 'mister',
+    'mrs': 'misses'
+  };
+  
+  let expandedGuess = normalizedGuess;
+  Object.entries(abbreviations).forEach(([abbr, full]) => {
+    expandedGuess = expandedGuess.replace(abbr, full);
+  });
+  
+  if (expandedGuess !== normalizedGuess) {
+    return isAnswerMatch(expandedGuess, answer);
+  }
+  
+  return false;
+}
+
+/**
+ * Find matching answer from a list
+ */
+export function findMatchingAnswer(guess, answers) {
+  return answers.findIndex(answer => {
+    // Check all accepted variations for this answer
+    return answer.correct.some(variant => isAnswerMatch(guess, variant));
+  });
+}
+
+Updated Answer Data Structure:
+You can now simplify the accepted variations since fuzzy matching handles most cases:
+json{
+  "id": "marvel-movies",
+  "title": "Marvel Cinematic Universe Movies",
+  "answers": [
+    {
+      "display": "Iron Man",
+      "hint": "2008",
+      "correct": ["Iron Man"]  // Just need the canonical name now
+    },
+    {
+      "display": "Captain America: The Winter Soldier",
+      "hint": "2014",
+      "correct": ["Captain America: The Winter Soldier", "Winter Soldier"]
+      // "captain america winter soldier", "cap america winter soldier" automatically work
+    },
+    {
+      "display": "Spider-Man: Homecoming",
+      "hint": "2017",
+      "correct": ["Spider-Man: Homecoming", "Homecoming"]
+      // "spiderman homecoming", "spider man homecoming" automatically work
+    },
+    {
+      "display": "Guardians of the Galaxy",
+      "hint": "2014",
+      "correct": ["Guardians of the Galaxy", "GOTG"]
+      // "guardians galaxy" automatically works
+    },
+    {
+      "display": "Doctor Strange in the Multiverse of Madness",
+      "hint": "2022",
+      "correct": ["Doctor Strange in the Multiverse of Madness", "Multiverse of Madness", "Doctor Strange 2"]
+      // "dr strange multiverse madness" automatically works
+    }
+  ]
+}
+
+Usage in Component:
+jsx// ThreeStrikes.jsx
+
+import { findMatchingAnswer } from '../utils/answerMatching';
+
+const ThreeStrikesGame = () => {
+  const [answers, setAnswers] = useState([]);
+  const [revealed, setRevealed] = useState(new Set());
+  const [strikes, setStrikes] = useState(0);
+  const [input, setInput] = useState('');
+  const [guessedInputs, setGuessedInputs] = useState(new Set()); // Track exact inputs
+  
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const guess = input.trim();
+    
+    if (guess.length < 2) {
+      return;
+    }
+    
+    // Check if this exact input was already tried
+    const normalizedInput = guess.toLowerCase();
+    if (guessedInputs.has(normalizedInput)) {
+      showMessage("You already tried that!");
+      setInput('');
+      return;
+    }
+    
+    // Find matching answer using fuzzy matching
+    const matchIndex = findMatchingAnswer(guess, answers);
+    
+    if (matchIndex !== -1 && !revealed.has(matchIndex)) {
+      // CORRECT!
+      setRevealed(new Set([...revealed, matchIndex]));
+      setInput('');
+      setGuessedInputs(new Set([...guessedInputs, normalizedInput]));
+      
+      // Show success message with what they typed vs what matched
+      showMessage(`✓ ${answers[matchIndex].display}`);
+      
+    } else if (matchIndex !== -1 && revealed.has(matchIndex)) {
+      // Already revealed this answer
+      showMessage("Already found!");
+      setInput('');
+      setGuessedInputs(new Set([...guessedInputs, normalizedInput]));
+      
+    } else {
+      // WRONG!
+      const newStrikes = strikes + 1;
+      setStrikes(newStrikes);
+      setInput('');
+      setGuessedInputs(new Set([...guessedInputs, normalizedInput]));
+      
+      // Show what they guessed
+      showMessage(`✗ "${guess}" - Strike ${newStrikes}/3`, 'error');
+      
+      if (newStrikes >= 3) {
+        handleGameOver();
+      }
+    }
+  };
+  
+  // ... rest of component
+};
+
+Examples of What Now Works:
+Marvel Movies:
+
+✅ "spiderman homecoming" → Spider-Man: Homecoming
+✅ "captain america winter soldier" → Captain America: The Winter Soldier
+✅ "guardians galaxy" → Guardians of the Galaxy
+✅ "dr strange multiverse madness" → Doctor Strange in the Multiverse of Madness
+✅ "antman" → Ant-Man
+✅ "black panther wakanda" → Black Panther: Wakanda Forever
+✅ "avengers endgame" → Avengers: Endgame
+✅ "iron man 2" → Iron Man 2
+
+Taylor Swift:
+
+✅ "tortured poets" → The Tortured Poets Department
+✅ "speak now" → Speak Now
+✅ "fearless" → Fearless
+
+Best Actress:
+
+✅ "julia roberts" → Julia Roberts
+✅ "jennifer lawrence" → Jennifer Lawrence
+✅ "emma stone" → Emma Stone
+
+US States:
+
+✅ "new york" → New York
+✅ "california" → California
+✅ "north carolina" → North Carolina
+
+
+Additional Validation Rules:
+javascript// In the handleSubmit function, add these checks:
+
+// 1. Minimum length check
+if (guess.length < 2) {
+  showMessage("Type at least 2 characters");
+  return;
+}
+
+// 2. Numbers-only check (prevent accidental submissions)
+if (/^\d+$/.test(guess)) {
+  showMessage("That's just a number - try the full answer!");
+  return;
+}
+
+// 3. Special characters only (prevent typos)
+if (/^[^a-zA-Z0-9]+$/.test(guess)) {
+  return; // Silently ignore
+}
+
+Feedback Messages:
+Show helpful feedback when answers don't match:
+jsxconst [message, setMessage] = useState({ text: '', type: '' });
+
+const showMessage = (text, type = 'info') => {
+  setMessage({ text, type });
+  setTimeout(() => setMessage({ text: '', type: '' }), 2000);
+};
+
+// In render:
+{message.text && (
+  <div className={`
+    fixed top-4 left-1/2 transform -translate-x-1/2 
+    px-6 py-3 rounded-lg font-medium
+    ${message.type === 'error' ? 'bg-error text-white' : 
+      message.type === 'success' ? 'bg-success text-bg-dark' :
+      'bg-pop-cyan text-bg-dark'}
+    animate-bounce
+  `}>
+    {message.text}
+  </div>
+)}
+
+Testing Examples:
+Add these test cases to verify fuzzy matching works:
+javascript// test/answerMatching.test.js
+
+import { isAnswerMatch } from '../utils/answerMatching';
+
+describe('Answer Matching', () => {
+  test('removes punctuation', () => {
+    expect(isAnswerMatch('spiderman homecoming', 'Spider-Man: Homecoming')).toBe(true);
+  });
+  
+  test('removes articles', () => {
+    expect(isAnswerMatch('avengers', 'The Avengers')).toBe(true);
+  });
+  
+  test('handles missing subtitle words', () => {
+    expect(isAnswerMatch('captain america winter soldier', 'Captain America: The Winter Soldier')).toBe(true);
+  });
+  
+  test('case insensitive', () => {
+    expect(isAnswerMatch('IRON MAN', 'Iron Man')).toBe(true);
+  });
+  
+  test('handles abbreviations', () => {
+    expect(isAnswerMatch('dr strange', 'Doctor Strange')).toBe(true);
+  });
+  
+  test('partial word matching', () => {
+    expect(isAnswerMatch('guardians galaxy', 'Guardians of the Galaxy')).toBe(true);
+  });
+  
+  test('rejects completely wrong answers', () => {
+    expect(isAnswerMatch('batman', 'Iron Man')).toBe(false);
+  });
+});
+
+ADD THIS TO THE REPLIT AGENT PROMPT:
+Insert this section right after the original Three Strikes data structure:
+
+CRITICAL: FUZZY ANSWER MATCHING
+Implement forgiving answer matching so users don't need perfect spelling/punctuation.
+Create utils/answerMatching.js with:
+javascriptfunction normalizeString(str) {
+  return str
+    .toLowerCase()
+    .replace(/[':.,\-!?]/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function removeCommonWords(str) {
+  const commonWords = ['the', 'a', 'an', 'and', 'of', 'in', 'to'];
+  return str.split(' ').filter(w => !commonWords.includes(w)).join(' ');
+}
+
+function getSignificantWords(str) {
+  return str.split(' ').filter(word => word.length >= 3);
+}
+
+export function isAnswerMatch(guess, answer) {
+  const normalizedGuess = normalizeString(guess);
+  const normalizedAnswer = normalizeString(answer);
+  
+  // Direct match
+  if (normalizedGuess === normalizedAnswer) return true;
+  
+  // Match without articles
+  const cleanGuess = removeCommonWords(normalizedGuess);
+  const cleanAnswer = removeCommonWords(normalizedAnswer);
+  if (cleanGuess === cleanAnswer) return true;
+  
+  // Significant words match
+  const guessWords = getSignificantWords(cleanGuess);
+  const answerWords = getSignificantWords(cleanAnswer);
+  
+  const allWordsMatch = guessWords.every(gw =>
+    answerWords.some(aw => aw.includes(gw) || gw.includes(aw))
+  );
+  
+  return allWordsMatch && guessWords.length > 0;
+}
+
+export function findMatchingAnswer(guess, answers) {
+  return answers.findIndex(answer =>
+    answer.correct.some(variant => isAnswerMatch(guess, variant))
+  );
+}
+Use this in ThreeStrikes.jsx:
+javascriptimport { findMatchingAnswer } from '../utils/answerMatching';
+
+const matchIndex = findMatchingAnswer(guess, answers);
+This makes these all work:
+
+"spiderman homecoming" → Spider-Man: Homecoming ✅
+"captain america winter soldier" → Captain America: The Winter Soldier ✅
+"guardians galaxy" → Guardians of the Galaxy ✅
+"dr strange multiverse madness" → Doctor Strange in the Multiverse of Madness ✅

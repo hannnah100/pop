@@ -2,12 +2,12 @@ import { useState, useEffect, useRef } from "react";
 import { useLocation } from "wouter";
 import { useGetTodayThreeStrikes } from "@workspace/api-client-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { AlertCircle, ArrowRight, Share2, Home as HomeIcon, RotateCcw } from "lucide-react";
+import { AlertCircle, ArrowRight, Share2, Home as HomeIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
+import { findMatchingAnswer } from "@/utils/answerMatching";
 
 export default function ThreeStrikes() {
   const [, setLocation] = useLocation();
@@ -75,36 +75,36 @@ export default function ThreeStrikes() {
 
   const handleGuess = (e: React.FormEvent) => {
     e.preventDefault();
-    if (gameOver || !currentGuess.trim() || !challenge) return;
+    const guess = currentGuess.trim();
+    if (gameOver || !guess || !challenge) return;
 
-    const guessNormalized = currentGuess.trim().toLowerCase();
-    
-    // Check if already guessed
-    const alreadyGuessed = challenge.answers.some(ans => 
-      ans.correct.some(c => c.toLowerCase() === guessNormalized) &&
-      guesses.includes(ans.display)
-    );
-
-    if (alreadyGuessed) {
-      toast({
-        title: "Already guessed!",
-        description: "You've already found this answer.",
-        variant: "default",
-      });
+    // Silently reject numbers-only or symbols-only
+    if (/^\d+$/.test(guess) || /^[^a-zA-Z0-9]+$/.test(guess)) {
       setCurrentGuess("");
       return;
     }
 
-    // Check for match
-    const matchedAnswer = challenge.answers.find(ans => 
-      ans.correct.some(c => c.toLowerCase() === guessNormalized)
-    );
+    if (guess.length < 2) {
+      toast({ title: "Too short", description: "Type at least 2 characters.", variant: "default" });
+      return;
+    }
 
-    if (matchedAnswer) {
-      const newGuesses = [...guesses, matchedAnswer.display];
+    const matchIndex = findMatchingAnswer(guess, challenge.answers);
+
+    if (matchIndex !== -1 && guesses.includes(challenge.answers[matchIndex].display)) {
+      toast({ title: "Already found!", description: `You already got "${challenge.answers[matchIndex].display}".`, variant: "default" });
+      setCurrentGuess("");
+      inputRef.current?.focus();
+      return;
+    }
+
+    if (matchIndex !== -1) {
+      const matched = challenge.answers[matchIndex];
+      const newGuesses = [...guesses, matched.display];
       setGuesses(newGuesses);
       setCurrentGuess("");
-      
+      toast({ title: `✓ ${matched.display}`, description: matched.hint, variant: "default" });
+
       if (newGuesses.length === challenge.totalCount) {
         setGameOver(true);
         setHasWon(true);
@@ -113,13 +113,18 @@ export default function ThreeStrikes() {
       const newStrikes = strikes + 1;
       setStrikes(newStrikes);
       setCurrentGuess("");
-      
+      toast({
+        title: `✗ Strike ${newStrikes}/3`,
+        description: `"${guess}" doesn't match any answer.`,
+        variant: "destructive",
+      });
+
       if (newStrikes >= 3) {
         setGameOver(true);
         setHasWon(false);
       }
     }
-    
+
     inputRef.current?.focus();
   };
 
