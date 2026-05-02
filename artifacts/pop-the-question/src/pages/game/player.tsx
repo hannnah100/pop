@@ -2506,25 +2506,23 @@ export default function GamePlayer() {
             </div>
           )}
 
-          {/* Not my turn: show guessed letters */}
-          {!isMyTurn && (
-            <div>
-              <p className="font-display font-black text-black/40 uppercase text-xs tracking-widest mb-2">Used Letters</p>
-              <div className="flex flex-wrap gap-1">
-                {alphabet.map(l => {
-                  const used = wofGuessedLetters.includes(l);
-                  const revealed = wofRevealedLetters.includes(l);
-                  const isVowel = VOWELS_SET.has(l);
-                  return (
-                    <div key={l} className={`w-8 h-8 flex items-center justify-center border-[2px] border-black font-display font-black text-xs
-                      ${used ? (revealed ? "bg-[#FFD700] text-black" : "bg-black text-white/50") : isVowel ? "bg-[#00E5FF]/20 text-black/60" : "bg-white text-black/60"}`}>
-                      {l}
-                    </div>
-                  );
-                })}
-              </div>
+          {/* Used letters — always visible */}
+          <div>
+            <p className="font-display font-black text-black/40 uppercase text-xs tracking-widest mb-2">Used Letters</p>
+            <div className="flex flex-wrap gap-1">
+              {alphabet.map(l => {
+                const used = wofGuessedLetters.includes(l);
+                const revealed = wofRevealedLetters.includes(l);
+                const isVowel = VOWELS_SET.has(l);
+                return (
+                  <div key={l} className={`w-8 h-8 flex items-center justify-center border-[2px] border-black font-display font-black text-xs
+                    ${used ? (revealed ? "bg-[#FFD700] text-black" : "bg-black text-white/50") : isVowel ? "bg-[#00E5FF]/20 text-black/60" : "bg-white text-black/60"}`}>
+                    {l}
+                  </div>
+                );
+              })}
             </div>
-          )}
+          </div>
 
           {/* Scoreboard */}
           <div className="mt-auto">
