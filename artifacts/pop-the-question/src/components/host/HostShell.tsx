@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useLocation } from "wouter";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Settings,
@@ -66,9 +67,11 @@ export function HostShell({
 }: HostShellProps) {
   const settings = useHostSettings();
   const isFs = useFullscreenState();
+  const [, setLocation] = useLocation();
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [paused, setPaused] = useState(false);
   const [confirmEnd, setConfirmEnd] = useState(false);
+  const [confirmExit, setConfirmExit] = useState(false);
   const [showFsHint, setShowFsHint] = useState(false);
   const lastFsRef = useRef(isFs);
 
@@ -164,6 +167,27 @@ export function HostShell({
       {/* Controls bar — solid black */}
       <div className="host-controls-bar" data-testid="host-controls-bar">
         <div className="flex items-center gap-2 flex-1 justify-center max-w-5xl">
+          {/* ← BAIL OUT — Y2K back navigation */}
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                variant="outline"
+                size="lg"
+                onClick={() => setConfirmExit(true)}
+                className="font-display font-black uppercase tracking-wide gap-2 bg-white text-black border-[3px] border-white hover:bg-[#FFD700] hover:text-black"
+                data-testid="btn-bail-out"
+              >
+                <svg viewBox="0 0 24 24" fill="none" className="w-4 h-4 flex-shrink-0" aria-hidden>
+                  <path d="M19 12H5M5 12L11 6M5 12L11 18" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+                BAIL OUT
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>Leave this game and go home</TooltipContent>
+          </Tooltip>
+
+          <div className="w-px h-8 bg-white/30 mx-1" />
+
           {controls}
 
           {/* Pause/Resume */}
@@ -262,6 +286,28 @@ export function HostShell({
               data-testid="btn-end-confirm"
             >
               End Game
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
+      {/* BAIL OUT — exit confirmation */}
+      <AlertDialog open={confirmExit} onOpenChange={setConfirmExit}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle className="font-display font-black uppercase text-xl">← Bail Out?</AlertDialogTitle>
+            <AlertDialogDescription>
+              You'll be taken back to the home screen. The current game will end for all players.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel data-testid="btn-bail-cancel">Stay in game</AlertDialogCancel>
+            <AlertDialogAction
+              className="bg-black text-[#FFD700] border-[3px] border-black hover:bg-black/80 font-display font-black uppercase"
+              onClick={() => { setConfirmExit(false); onEndGame?.(); setLocation("/"); }}
+              data-testid="btn-bail-confirm"
+            >
+              ← BAIL OUT
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

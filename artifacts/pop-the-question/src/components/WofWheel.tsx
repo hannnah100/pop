@@ -23,16 +23,6 @@ function segmentColor(v: WofWheelValue): string {
   return "#FFD700";
 }
 
-function segmentTextColor(v: WofWheelValue): string {
-  if (v === "BANKRUPT") return "#ffffff";
-  if (v === "LOSE_A_TURN") return "#ffffff";
-  if (v === "FREE_PLAY") return "#ffffff";
-  if (v >= 2000) return "#ffffff";
-  if (v >= 1000) return "#ffffff";
-  if (v >= 700)  return "#ffffff";
-  return "#111111";
-}
-
 function segmentLabel(v: WofWheelValue): string {
   if (v === "BANKRUPT") return "BANKRUPT";
   if (v === "LOSE_A_TURN") return "LOSE";
@@ -44,6 +34,31 @@ function segmentLabelLine2(v: WofWheelValue): string {
   if (v === "LOSE_A_TURN") return "TURN";
   if (v === "FREE_PLAY") return "PLAY";
   return "";
+}
+
+function overlayBg(v: WofWheelValue): string {
+  if (v === "BANKRUPT") return "#111111";
+  if (v === "LOSE_A_TURN") return "#6B7280";
+  if (v === "FREE_PLAY") return "#00C853";
+  if ((v as number) >= 2000) return "#FF1493";
+  if ((v as number) >= 1000) return "#FF6B35";
+  if ((v as number) >= 700) return "#7C3AED";
+  return "#FFD700";
+}
+
+function overlayTextColor(v: WofWheelValue): string {
+  if (v === "BANKRUPT") return "#FFD700";
+  if (v === "LOSE_A_TURN") return "#ffffff";
+  if (v === "FREE_PLAY") return "#111111";
+  if ((v as number) >= 700) return "#ffffff";
+  return "#111111";
+}
+
+function overlayLabel(v: WofWheelValue): string {
+  if (v === "BANKRUPT") return "BANKRUPT!";
+  if (v === "LOSE_A_TURN") return "LOSE A TURN!";
+  if (v === "FREE_PLAY") return "FREE PLAY!";
+  return `$${(v as number).toLocaleString()}`;
 }
 
 interface WofWheelProps {
@@ -58,11 +73,28 @@ export function WofWheel({ spinning, spinIndex, value, spinnerName, size = 280 }
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animRef = useRef<number | null>(null);
   const [displayAngle, setDisplayAngle] = useState(0);
-  const targetAngleRef = useRef(0);
   const currentAngleRef = useRef(0);
   const isSpinningRef = useRef(false);
 
+  const [showOverlay, setShowOverlay] = useState(false);
+  const overlayTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
   const segAngle = 360 / TOTAL;
+
+  // Show/hide the big landing overlay
+  useEffect(() => {
+    if (!spinning && value !== null) {
+      setShowOverlay(true);
+      if (overlayTimerRef.current) clearTimeout(overlayTimerRef.current);
+      overlayTimerRef.current = setTimeout(() => setShowOverlay(false), 2500);
+    } else {
+      setShowOverlay(false);
+      if (overlayTimerRef.current) clearTimeout(overlayTimerRef.current);
+    }
+    return () => {
+      if (overlayTimerRef.current) clearTimeout(overlayTimerRef.current);
+    };
+  }, [spinning, value]);
 
   // Draw wheel on canvas
   useEffect(() => {
@@ -92,32 +124,41 @@ export function WofWheel({ spinning, spinIndex, value, spinnerName, size = 280 }
       ctx.lineWidth = 1.5;
       ctx.stroke();
 
-      // Label
+      // Label — drawn HORIZONTALLY (no context rotation)
       const midAngle = (start + end) / 2;
-      const textR = r * 0.68;
+      const textR = r * 0.66;
       const tx = cx + textR * Math.cos(midAngle);
       const ty = cy + textR * Math.sin(midAngle);
 
-      ctx.save();
-      ctx.translate(tx, ty);
-      ctx.rotate(midAngle + Math.PI / 2);
-      ctx.fillStyle = segmentTextColor(seg);
-      // Font scales with diameter: ~8.5px at size 280, ~14px at size 460
-      const fontPx = Math.max(7, Math.round(size / 32));
-      ctx.font = `bold ${fontPx}px 'Arial', sans-serif`;
+      // Font scales with size: ~8px at 280, ~13px at 460
+      const fontPx = Math.max(7, Math.round(size / 36));
+      ctx.font = `900 ${fontPx}px 'Arial Black', Arial, sans-serif`;
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
 
       const l1 = segmentLabel(seg);
       const l2 = segmentLabelLine2(seg);
-      const lineGap = Math.max(4, Math.round(size / 56));
+      const lineGap = fontPx + 2;
+
+      // Black stroke outline first (for contrast on any bg color)
+      ctx.strokeStyle = "#000000";
+      ctx.lineWidth = 3;
+      ctx.lineJoin = "round";
       if (l2) {
-        ctx.fillText(l1, 0, -lineGap);
-        ctx.fillText(l2, 0, lineGap);
+        ctx.strokeText(l1, tx, ty - lineGap / 2);
+        ctx.strokeText(l2, tx, ty + lineGap / 2);
       } else {
-        ctx.fillText(l1, 0, 0);
+        ctx.strokeText(l1, tx, ty);
       }
-      ctx.restore();
+
+      // White fill on top — always white for maximum legibility
+      ctx.fillStyle = "#ffffff";
+      if (l2) {
+        ctx.fillText(l1, tx, ty - lineGap / 2);
+        ctx.fillText(l2, tx, ty + lineGap / 2);
+      } else {
+        ctx.fillText(l1, tx, ty);
+      }
     });
 
     // Center hub
@@ -144,7 +185,6 @@ export function WofWheel({ spinning, spinIndex, value, spinnerName, size = 280 }
       if (!startTime) startTime = ts;
       const elapsed = ts - startTime;
       const progress = Math.min(elapsed / spinDuration, 1);
-      // Ease out cubic
       const eased = 1 - Math.pow(1 - progress, 3);
       const angle = fromAngle + extraSpins * eased;
       currentAngleRef.current = angle % 360;
@@ -168,14 +208,9 @@ export function WofWheel({ spinning, spinIndex, value, spinnerName, size = 280 }
     if (spinning || spinIndex === null) return;
     if (isSpinningRef.current) return;
 
-    // Target angle: segment `spinIndex` should be at the top (12 o'clock = pointer)
-    // Segment i starts at i * segAngle degrees from top (before rotation offset)
-    // We want segment center at top → angle such that -(spinIndex + 0.5) * segAngle lands at top
     const targetBase = -(spinIndex + 0.5) * segAngle;
-    // Normalize to land after current angle
     let target = targetBase % 360;
     if (target < 0) target += 360;
-    // Make sure we land at the nearest equivalent ≥ current
     while (target < currentAngleRef.current) target += 360;
 
     let startTime: number | null = null;
@@ -206,7 +241,7 @@ export function WofWheel({ spinning, spinIndex, value, spinnerName, size = 280 }
         </p>
       )}
       <div className="relative" style={{ width: size, height: size }}>
-        {/* Pointer triangle at top — scales with wheel */}
+        {/* Pointer triangle at top */}
         <div
           className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1 z-10"
           style={{
@@ -215,7 +250,9 @@ export function WofWheel({ spinning, spinIndex, value, spinnerName, size = 280 }
             borderLeft: `${Math.round(size * 0.04)}px solid transparent`,
             borderRight: `${Math.round(size * 0.04)}px solid transparent`,
             borderTop: `${Math.round(size * 0.075)}px solid #FF1493`,
-            filter: "drop-shadow(2px 2px 0 #000)",
+            filter: value && !spinning
+              ? "drop-shadow(0 0 8px #FF1493) drop-shadow(2px 2px 0 #000)"
+              : "drop-shadow(2px 2px 0 #000)",
           }}
         />
         {/* Drop shadow ring */}
@@ -226,7 +263,46 @@ export function WofWheel({ spinning, spinIndex, value, spinnerName, size = 280 }
         <canvas ref={canvasRef} width={size} height={size} className="rounded-full" />
       </div>
 
-      {/* Result banner — large, color-matched to landed slice */}
+      {/* ── LARGE LANDING OVERLAY ── springs in, dominates screen, auto-dismisses */}
+      <AnimatePresence>
+        {showOverlay && value !== null && (
+          <motion.div
+            key={`overlay-${String(value)}`}
+            initial={{ scale: 0.2, opacity: 0, y: -20 }}
+            animate={{ scale: 1, opacity: 1, y: 0 }}
+            exit={{ scale: 1.1, opacity: 0 }}
+            transition={{ type: "spring", stiffness: 340, damping: 24 }}
+            onClick={() => setShowOverlay(false)}
+            className="fixed inset-0 z-50 flex flex-col items-center justify-center gap-2 cursor-pointer select-none"
+            style={{ background: "rgba(0,0,0,0.55)" }}
+            data-testid="wof-landing-overlay"
+          >
+            <motion.div
+              initial={{ scale: 0.6 }}
+              animate={{ scale: 1 }}
+              transition={{ type: "spring", stiffness: 400, damping: 20, delay: 0.05 }}
+              className="flex flex-col items-center justify-center gap-2 px-12 py-10 border-[6px] border-black shadow-[10px_10px_0_#000]"
+              style={{ background: overlayBg(value), color: overlayTextColor(value), minWidth: 280 }}
+            >
+              <p
+                className="font-display font-black uppercase tracking-widest leading-none"
+                style={{ fontSize: "clamp(1rem, 4vw, 1.5rem)", color: overlayTextColor(value), opacity: 0.85 }}
+              >
+                YOU LANDED ON
+              </p>
+              <p
+                className="font-display font-black uppercase tracking-wide leading-none text-center"
+                style={{ fontSize: "clamp(2.5rem, 10vw, 5rem)", color: overlayTextColor(value), textShadow: "4px 4px 0 rgba(0,0,0,0.35)" }}
+              >
+                {overlayLabel(value)}
+              </p>
+            </motion.div>
+            <p className="text-white/70 text-sm font-bold mt-2">tap to dismiss</p>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Persistent result banner beneath the wheel */}
       <AnimatePresence mode="wait">
         {!spinning && value !== null && (
           <motion.div

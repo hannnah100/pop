@@ -1,11 +1,21 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { useRoute } from "wouter";
+import { useRoute, useLocation } from "wouter";
 import { io, Socket } from "socket.io-client";
 import { motion, AnimatePresence } from "framer-motion";
 import type { Player } from "@/types/game";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { Loader2, Send, CheckCircle2, Eye, Sparkles, Mic, Beer, Check, X, Trophy, Grid3x3, Star, Zap, Award } from "lucide-react";
 import type { HostAnswerMethod } from "@/lib/hostSettings";
 import { useToast } from "@/hooks/use-toast";
@@ -209,6 +219,9 @@ export default function GamePlayer() {
 
   const urlParams = new URLSearchParams(window.location.search);
   const playerNameParam = urlParams.get("name") || "";
+
+  const [, setLocation] = useLocation();
+  const [confirmLeave, setConfirmLeave] = useState(false);
 
   const [socket, setSocket] = useState<Socket | null>(null);
   const [gameState, setGameState] = useState<"lobby" | "playing" | "finished">("lobby");
@@ -1143,23 +1156,58 @@ export default function GamePlayer() {
   // ============ LOBBY ============
   if (gameState === "lobby") {
     return (
-      <div className="flex flex-col min-h-[100dvh] bg-[#FFD700]">
-        <header className="bg-[#FF1493] border-b-[4px] border-black px-6 py-5">
-          <div className="inline-flex items-center gap-2 bg-[#FFD700] border-[3px] border-black shadow-[3px_3px_0_#000] px-4 py-1.5 font-display font-black text-black text-sm uppercase tracking-widest mb-3">
-            <span className="text-black/60">ROOM</span>
-            <span className="text-xl tracking-[0.3em]">{roomCode}</span>
-          </div>
-          <h1 className="font-display font-black text-white text-4xl uppercase" style={{ textShadow: "3px 3px 0 #000" }}>You're in!</h1>
-        </header>
+      <>
+        <div className="flex flex-col min-h-[100dvh] bg-[#FFD700]">
+          <header className="bg-[#FF1493] border-b-[4px] border-black px-6 py-5">
+            <div className="flex items-start justify-between gap-2 mb-3">
+              <div className="inline-flex items-center gap-2 bg-[#FFD700] border-[3px] border-black shadow-[3px_3px_0_#000] px-4 py-1.5 font-display font-black text-black text-sm uppercase tracking-widest">
+                <span className="text-black/60">ROOM</span>
+                <span className="text-xl tracking-[0.3em]">{roomCode}</span>
+              </div>
+              <button
+                onClick={() => setConfirmLeave(true)}
+                data-testid="btn-leave-game"
+                className="inline-flex items-center gap-1.5 bg-white border-[3px] border-black shadow-[4px_4px_0_#000] px-3 py-1.5 font-display font-black text-black text-xs uppercase tracking-wide hover:shadow-[2px_2px_0_#000] hover:translate-x-[2px] hover:translate-y-[2px] active:shadow-none active:translate-x-[4px] active:translate-y-[4px] transition-[box-shadow,transform] duration-75"
+              >
+                <svg viewBox="0 0 24 24" fill="none" className="w-3.5 h-3.5 flex-shrink-0" aria-hidden>
+                  <path d="M19 12H5M5 12L11 6M5 12L11 18" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+                LEAVE
+              </button>
+            </div>
+            <h1 className="font-display font-black text-white text-4xl uppercase" style={{ textShadow: "3px 3px 0 #000" }}>You're in!</h1>
+          </header>
 
-        <div className="flex-1 flex flex-col items-center justify-center space-y-6 text-center px-6">
-          <div className="bg-white border-[3px] border-black shadow-[4px_4px_0_#000] w-24 h-24 flex items-center justify-center">
-            <Loader2 className="w-12 h-12 text-black animate-spin" />
+          <div className="flex-1 flex flex-col items-center justify-center space-y-6 text-center px-6">
+            <div className="bg-white border-[3px] border-black shadow-[4px_4px_0_#000] w-24 h-24 flex items-center justify-center">
+              <Loader2 className="w-12 h-12 text-black animate-spin" />
+            </div>
+            <h2 className="font-display font-black text-black text-2xl uppercase">Waiting for host…</h2>
+            <p className="text-black/70 font-bold font-sans">Look at the big screen.</p>
           </div>
-          <h2 className="font-display font-black text-black text-2xl uppercase">Waiting for host…</h2>
-          <p className="text-black/70 font-bold font-sans">Look at the big screen.</p>
         </div>
-      </div>
+
+        <AlertDialog open={confirmLeave} onOpenChange={setConfirmLeave}>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle className="font-display font-black uppercase text-xl">← Leave Game?</AlertDialogTitle>
+              <AlertDialogDescription>
+                You'll be taken back to the home screen. You can rejoin using the same room code if the game hasn't started.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel data-testid="btn-leave-cancel">Stay</AlertDialogCancel>
+              <AlertDialogAction
+                className="bg-black text-[#FFD700] border-[3px] border-black hover:bg-black/80 font-display font-black uppercase"
+                onClick={() => { setConfirmLeave(false); setLocation("/"); }}
+                data-testid="btn-leave-confirm"
+              >
+                ← LEAVE
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+      </>
     );
   }
 
