@@ -5,6 +5,7 @@ const LETTERS = "THE QUESTION".split("");
 const containerStyle: CSSProperties = {
   position: "relative",
   display: "inline-block",
+  fontFamily: "'Fredoka One', cursive",
   letterSpacing: "0.05em",
   fontSize: "1.1em",
 };
