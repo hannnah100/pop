@@ -173,19 +173,9 @@
 
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--app-font-display);
-    color: #fff;
-    -webkit-text-stroke: 3px #000;
-    text-stroke: 3px #000;
-    paint-order: stroke fill;
     letter-spacing: -0.01em;
     line-height: 1.1;
     font-weight: 900;
-  }
-
-  h1 span, h2 span, h3 span, h4 span, h5 span, h6 span {
-    -webkit-text-stroke: inherit;
-    text-stroke: inherit;
-    paint-order: inherit;
   }
 }
 
@@ -193,6 +183,19 @@
   .font-fun     { font-family: var(--app-font-fun); }
   .font-display { font-family: var(--app-font-display); }
   .font-sans    { font-family: var(--app-font-sans); }
+
+  /* Comic-book sticker headline — white fill + black stroke */
+  .comic-headline {
+    color: #fff;
+    -webkit-text-stroke: 3px #000;
+    text-stroke: 3px #000;
+    paint-order: stroke fill;
+  }
+  .comic-headline span {
+    -webkit-text-stroke: inherit;
+    text-stroke: inherit;
+    paint-order: inherit;
+  }
 
   /* Y2K bold border + shadow utilities */
   .thick-border  { border: 3px solid #000; }

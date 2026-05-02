@@ -100,7 +100,7 @@ export default function Host() {
 
         <div className="relative z-10">
           <h1
-            className="font-display font-black uppercase leading-none"
+            className="font-display font-black uppercase leading-none comic-headline"
             style={{ fontSize: "clamp(2.4rem, 8vw, 4.5rem)" }}
           >
             Host a Game

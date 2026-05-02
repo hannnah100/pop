@@ -97,7 +97,7 @@ export default function Join() {
 
             <div className="p-5 sm:p-7">
               <h1
-                className="font-display font-black text-center mb-1 uppercase"
+                className="font-display font-black text-center mb-1 uppercase comic-headline"
                 style={{ fontSize: "clamp(1.8rem, 7vw, 2.6rem)" }}
               >
                 Join Game

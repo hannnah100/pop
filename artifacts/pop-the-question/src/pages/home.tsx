@@ -49,7 +49,7 @@ export default function Home() {
 
         <div className="relative z-10">
           <h1
-            className="font-display font-black leading-none tracking-tight"
+            className="font-display font-black leading-none tracking-tight comic-headline"
             style={{ fontSize: "clamp(2.8rem, 10vw, 6rem)" }}
           >
             <RainbowText

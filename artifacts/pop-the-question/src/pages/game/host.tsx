@@ -1129,7 +1129,7 @@ export default function GameHost() {
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ type: "spring", stiffness: 220, damping: 18 }}
-          className="font-display font-black text-[8rem] sm:text-[10rem] md:text-[12rem] tracking-[0.18em] leading-none mb-4"
+          className="font-display font-black text-[8rem] sm:text-[10rem] md:text-[12rem] tracking-[0.18em] leading-none mb-4 comic-headline"
         >
           {roomCode}
         </motion.h1>
@@ -1238,7 +1238,7 @@ export default function GameHost() {
       <div className="flex-1 flex flex-col items-center justify-center relative overflow-hidden bg-[#FFF8E7]">
         {isDemo && (<div className="absolute top-6 right-6"><DemoBadge /></div>)}
         <Trophy className="w-24 h-24 text-[#FFD700] mb-4" style={{ filter: "drop-shadow(4px 4px 0 #000)" }} />
-        <h1 className="font-display font-black text-4xl md:text-6xl uppercase text-center mb-2">
+        <h1 className="font-display font-black text-4xl md:text-6xl uppercase text-center mb-2 comic-headline">
           FINAL STANDINGS
         </h1>
         <div className="h-1 w-24 bg-[#FFD700] border-y border-black mb-12" />
@@ -1349,7 +1349,7 @@ export default function GameHost() {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -50, scale: 0.95 }}
               transition={{ type: "spring", stiffness: 180, damping: 22 }}
-              className="font-display font-black text-5xl md:text-[4.5rem] leading-tight uppercase text-center mb-12"
+              className="font-display font-black text-5xl md:text-[4.5rem] leading-tight uppercase text-center mb-12 comic-headline"
             >
               {currentQuestion || "Loading question..."}
             </motion.h2>
@@ -1524,7 +1524,7 @@ export default function GameHost() {
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.95, y: -20 }}
                 transition={{ type: "spring", stiffness: 220, damping: 20 }}
-                className="font-display font-black text-5xl md:text-7xl lg:text-[6rem] uppercase mb-12 text-center"
+                className="font-display font-black text-5xl md:text-7xl lg:text-[6rem] uppercase mb-12 text-center comic-headline"
               >
                 {rrCurrentRevealName}
               </motion.h1>
@@ -1676,7 +1676,7 @@ export default function GameHost() {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -50, scale: 0.95 }}
               transition={{ type: "spring", stiffness: 180, damping: 22 }}
-              className="font-display font-black text-4xl md:text-6xl leading-tight uppercase text-center mb-10"
+              className="font-display font-black text-4xl md:text-6xl leading-tight uppercase text-center mb-10 comic-headline"
             >
               {pqQuestion.prompt}
             </motion.h2>
