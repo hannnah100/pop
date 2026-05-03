@@ -4,11 +4,12 @@ import { cn } from "@/lib/utils";
 interface BackArrowProps {
   href?: string;
   label?: string;
+  displayText?: string;
   className?: string;
   onClick?: () => void;
 }
 
-export function BackArrow({ href = "/", label = "Back to home", className, onClick }: BackArrowProps) {
+export function BackArrow({ href = "/", label = "Back to home", displayText = "Back", className, onClick }: BackArrowProps) {
   const [, setLocation] = useLocation();
 
   return (
@@ -40,7 +41,7 @@ export function BackArrow({ href = "/", label = "Back to home", className, onCli
           strokeLinejoin="round"
         />
       </svg>
-      <span>Back</span>
+      <span>{displayText}</span>
     </button>
   );
 }

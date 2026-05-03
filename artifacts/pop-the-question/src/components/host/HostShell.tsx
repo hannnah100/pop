@@ -174,6 +174,7 @@ export function HostShell({
               <BackArrow
                 onClick={() => setConfirmExit(true)}
                 label="Bail out — return to home"
+                displayText="BAIL OUT"
                 className="border-white hover:bg-[#FFD700]"
               />
             </TooltipTrigger>
