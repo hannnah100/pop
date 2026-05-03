@@ -346,6 +346,7 @@ export default function Crossword() {
         ref={hiddenInputRef}
         type="text"
         inputMode="text"
+        readOnly={false}
         autoComplete="off"
         autoCorrect="off"
         autoCapitalize="none"
