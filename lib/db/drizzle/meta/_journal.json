@@ -15,6 +15,13 @@
       "when": 1777772756771,
       "tag": "0001_loud_ezekiel",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1778500000000,
+      "tag": "0002_rename_three_strikes",
+      "breakpoints": true
     }
   ]
 }

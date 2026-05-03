@@ -1,0 +1,1 @@
+ALTER TABLE "three_strikes_challenges" RENAME TO "three_flops_challenges";

@@ -202,7 +202,7 @@ export default function Crossword() {
       const currentStreak = parseInt(localStorage.getItem('ptq-streak-crossword') || '0');
       localStorage.setItem('ptq-streak-crossword', (currentStreak + 1).toString());
       const statsStr = localStorage.getItem('ptq-stats');
-      const stats = statsStr ? JSON.parse(statsStr) : { threeStrikesTotalPlays: 0, threeStrikesBestScore: 0, crosswordTotalPlays: 0, crosswordBestTime: 999999 };
+      const stats = statsStr ? JSON.parse(statsStr) : { threeFlopsTotalPlays: 0, threeFlopsBestScore: 0, crosswordTotalPlays: 0, crosswordBestTime: 999999 };
       stats.crosswordTotalPlays += 1;
       if (!stats.crosswordBestTime || elapsedTime < stats.crosswordBestTime) stats.crosswordBestTime = elapsedTime;
       localStorage.setItem('ptq-stats', JSON.stringify(stats));

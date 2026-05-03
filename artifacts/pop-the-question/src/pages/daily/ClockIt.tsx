@@ -224,11 +224,18 @@ export default function ClockIt() {
       try {
         const raw = localStorage.getItem("ptq-stats");
         const stats = raw ? JSON.parse(raw) : {};
-        stats.gtyTotalPlays = (stats.gtyTotalPlays ?? 0) + 1;
-        stats.gtyTotalScore = (stats.gtyTotalScore ?? 0) + score;
-        stats.gtyBestScore = Math.max(stats.gtyBestScore ?? 0, score);
-        stats.gtyPerfectGames = (stats.gtyPerfectGames ?? 0) + (score === 3 ? 1 : 0);
-        stats.gtyHintsSum = (stats.gtyHintsSum ?? 0) + hintsUsed;
+        // Read legacy `gty*` as fallback so prior progress carries over;
+        // write canonical `clockIt*` going forward.
+        const prevPlays = stats.clockItTotalPlays ?? stats.gtyTotalPlays ?? 0;
+        const prevTotalScore = stats.clockItTotalScore ?? stats.gtyTotalScore ?? 0;
+        const prevBest = stats.clockItBestScore ?? stats.gtyBestScore ?? 0;
+        const prevPerfect = stats.clockItPerfectGames ?? stats.gtyPerfectGames ?? 0;
+        const prevHints = stats.clockItHintsSum ?? stats.gtyHintsSum ?? 0;
+        stats.clockItTotalPlays = prevPlays + 1;
+        stats.clockItTotalScore = prevTotalScore + score;
+        stats.clockItBestScore = Math.max(prevBest, score);
+        stats.clockItPerfectGames = prevPerfect + (score === 3 ? 1 : 0);
+        stats.clockItHintsSum = prevHints + hintsUsed;
         const yesterday = new Date();
         yesterday.setDate(yesterday.getDate() - 1);
         const yesterdayStr = yesterday.toISOString().split("T")[0];
@@ -354,23 +361,20 @@ export default function ClockIt() {
     const score = savedState?.score ?? finalScore;
     const hintsUsed = savedState?.hintsUsed ?? hintsRevealed;
     const gaveUp = savedState?.gaveUp ?? (phase === "failed");
-    const hintRow = Array.from({ length: 3 }, (_, i) =>
-      i < hintsUsed ? ["🟣", "🟠", "🔵"][i] : "⬜",
-    ).join(" ");
     const humanDate = new Date(puzzle.date + "T00:00:00").toLocaleDateString(undefined, {
       year: "numeric", month: "long", day: "numeric",
     });
     const hintLabel = hintsUsed === 1 ? "hint" : "hints";
     const text = [
-      `📅 Clock It — ${humanDate}`,
+      `Pop: The Question - Clock It`,
+      humanDate,
+      ``,
       gaveUp
-        ? `❌ Gave up (the year was ${finalYear})`
-        : `${scoreEmoji(score)} Got it in ${hintsUsed} ${hintLabel}! (${score} pts)`,
-      hintRow,
-      "popthequestion.replit.app",
-    ]
-      .filter(Boolean)
-      .join("\n");
+        ? `Gave up (the year was ${finalYear})`
+        : `Got it in ${hintsUsed} ${hintLabel}! (${score} pts)`,
+      ``,
+      `popthequestion.replit.app`,
+    ].join("\n");
 
     navigator.clipboard
       .writeText(text)
@@ -626,12 +630,12 @@ export default function ClockIt() {
               </div>
 
               {/* Personal stats */}
-              {stats && (stats.gtyTotalPlays ?? 0) > 0 && (
+              {stats && ((stats.clockItTotalPlays ?? stats.gtyTotalPlays) ?? 0) > 0 && (
                 <div className="border-[3px] border-black bg-[#FFF8E7] shadow-[3px_3px_0_#000] p-4">
                   <p className="font-display font-black text-sm uppercase mb-3">Your Stats</p>
                   <div className="grid grid-cols-3 gap-3">
                     <div className="text-center">
-                      <p className="font-display font-black text-2xl">{stats.gtyTotalPlays ?? 0}</p>
+                      <p className="font-display font-black text-2xl">{stats.clockItTotalPlays ?? stats.gtyTotalPlays ?? 0}</p>
                       <p className="text-xs text-black/50 font-bold uppercase">Played</p>
                     </div>
                     <div className="text-center">
@@ -640,9 +644,11 @@ export default function ClockIt() {
                     </div>
                     <div className="text-center">
                       <p className="font-display font-black text-2xl">
-                        {stats.gtyTotalPlays && stats.gtyHintsSum
-                          ? (stats.gtyHintsSum / stats.gtyTotalPlays).toFixed(1)
-                          : "—"}
+                        {(() => {
+                          const plays = stats.clockItTotalPlays ?? stats.gtyTotalPlays;
+                          const hints = stats.clockItHintsSum ?? stats.gtyHintsSum;
+                          return plays && hints ? (hints / plays).toFixed(1) : "—";
+                        })()}
                       </p>
                       <p className="text-xs text-black/50 font-bold uppercase">Avg Hints</p>
                     </div>

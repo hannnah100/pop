@@ -106,11 +106,13 @@ export default function ThreeFlops() {
         const currentStreak = parseInt(localStorage.getItem("ptq-streak-three-strikes") ?? "0");
         localStorage.setItem("ptq-streak-three-strikes", hasWon ? (currentStreak + 1).toString() : "0");
         const statsStr = localStorage.getItem("ptq-stats");
-        const stats = statsStr
-          ? JSON.parse(statsStr)
-          : { threeStrikesTotalPlays: 0, threeStrikesBestScore: 0, crosswordTotalPlays: 0, crosswordBestTime: 0 };
-        stats.threeStrikesTotalPlays += 1;
-        if (guesses.length > stats.threeStrikesBestScore) stats.threeStrikesBestScore = guesses.length;
+        const stats = statsStr ? JSON.parse(statsStr) : {};
+        // Read legacy `threeStrikes*` as fallback so prior progress carries
+        // over; write canonical `threeFlops*` going forward.
+        const prevPlays = stats.threeFlopsTotalPlays ?? stats.threeStrikesTotalPlays ?? 0;
+        const prevBest = stats.threeFlopsBestScore ?? stats.threeStrikesBestScore ?? 0;
+        stats.threeFlopsTotalPlays = prevPlays + 1;
+        stats.threeFlopsBestScore = Math.max(prevBest, guesses.length);
         localStorage.setItem("ptq-stats", JSON.stringify(stats));
       }
     } catch {/* ignore */}
@@ -164,16 +166,16 @@ export default function ThreeFlops() {
 
   const handleShare = () => {
     if (!challenge) return;
-    const flopMojis = Array(3).fill("⚪").map((_, i) => i < flops ? "🔴" : "⚪").join("");
     const humanDate = new Date(challenge.date + "T00:00:00").toLocaleDateString(undefined, {
       year: "numeric", month: "long", day: "numeric",
     });
     const shareText = [
-      `Pop: The Question — Three Flops`,
+      `Pop: The Question - Three Flops`,
       humanDate,
-      `${challenge.title}`,
+      ``,
       `Completed: ${guesses.length}/${challenge.totalCount} ✓`,
-      `Used ${flops}/3 flops ${flopMojis}`,
+      `Used ${flops}/3 flops`,
+      ``,
       `popthequestion.replit.app`,
     ].join("\n");
     navigator.clipboard.writeText(shareText).then(() => toast({ title: "Copied!", description: "Share your score with friends." }));

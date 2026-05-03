@@ -2,12 +2,10 @@ import { pgTable, text, integer, timestamp } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod/v4";
 
-// NOTE: The physical table name is preserved as "three_strikes_challenges"
-// from before the game was renamed to "Three Flops". Renaming the table in
-// production would require a migration with downtime risk, and there is no
-// behavioural reason to rename it — Drizzle binds via the symbol, not the
-// physical name. All TS identifiers use the new "threeFlops" naming.
-export const threeFlopsChallengesTable = pgTable("three_strikes_challenges", {
+// Physical table name was renamed from "three_strikes_challenges" to
+// "three_flops_challenges" in migration 0002. The rename is a single
+// metadata-only ALTER TABLE — no row data is touched.
+export const threeFlopsChallengesTable = pgTable("three_flops_challenges", {
   id: text("id").primaryKey(),
   date: text("date").notNull(),
   title: text("title").notNull(),

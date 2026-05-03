@@ -8,8 +8,9 @@ import { staggerContainer, staggerItem } from "@/lib/motion";
 
 export default function Stats() {
   const [stats, setStats] = useState({
-    threeStrikesTotalPlays: 0,
-    threeStrikesBestScore: 0,
+    // Canonical (new) keys; legacy `threeStrikes*` are read as fallback below.
+    threeFlopsTotalPlays: 0,
+    threeFlopsBestScore: 0,
     crosswordTotalPlays: 0,
     crosswordBestTime: 0,
     popBoxTotalPlays: 0,
@@ -32,9 +33,17 @@ export default function Stats() {
       const statsStr = localStorage.getItem('ptq-stats');
       if (statsStr) {
         const parsed = JSON.parse(statsStr);
-        setStats((prev) => ({ ...prev, ...parsed }));
+        // Legacy `threeStrikes*` keys persisted before the rename; fall back
+        // to them so player history doesn't appear to reset.
+        setStats((prev) => ({
+          ...prev,
+          ...parsed,
+          threeFlopsTotalPlays: parsed.threeFlopsTotalPlays ?? parsed.threeStrikesTotalPlays ?? 0,
+          threeFlopsBestScore: parsed.threeFlopsBestScore ?? parsed.threeStrikesBestScore ?? 0,
+        }));
       }
 
+      // Legacy streak key preserved for back-compat.
       setTsStreak(parseInt(localStorage.getItem('ptq-streak-three-strikes') || '0'));
       setCwStreak(parseInt(localStorage.getItem('ptq-streak-crossword') || '0'));
       setPbStreak(parseInt(localStorage.getItem('ptq-streak-pop-box') || '0'));
@@ -93,13 +102,13 @@ export default function Stats() {
                 <div className="bg-background/60 rounded-xl p-4 border border-border">
                   <p className="text-sm text-muted-foreground mb-1">Total Plays</p>
                   <div className="text-3xl font-black flex items-center gap-2">
-                    <CountUp value={stats.threeStrikesTotalPlays} /> <CalendarDays className="w-6 h-6 text-muted-foreground" />
+                    <CountUp value={stats.threeFlopsTotalPlays} /> <CalendarDays className="w-6 h-6 text-muted-foreground" />
                   </div>
                 </div>
                 <div className="col-span-2 bg-primary/10 rounded-xl p-4 border border-primary/30">
                   <p className="text-sm text-primary/80 font-bold uppercase tracking-wider mb-1">Personal Best</p>
                   <div className="text-4xl font-black text-primary flex items-center gap-2">
-                    <CountUp value={stats.threeStrikesBestScore} /> <Trophy className="w-6 h-6 text-primary drop-shadow-[0_0_8px_hsl(var(--primary))]" />
+                    <CountUp value={stats.threeFlopsBestScore} /> <Trophy className="w-6 h-6 text-primary drop-shadow-[0_0_8px_hsl(var(--primary))]" />
                   </div>
                 </div>
               </div>
