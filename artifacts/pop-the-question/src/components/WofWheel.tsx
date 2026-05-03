@@ -24,13 +24,14 @@ function segmentColor(v: WofWheelValue): string {
 }
 
 function segmentLabel(v: WofWheelValue): string {
-  if (v === "BANKRUPT") return "BANKRUPT";
+  if (v === "BANKRUPT") return "BANK";
   if (v === "LOSE_A_TURN") return "LOSE";
   if (v === "FREE_PLAY") return "FREE";
   return `$${v}`;
 }
 
 function segmentLabelLine2(v: WofWheelValue): string {
+  if (v === "BANKRUPT") return "RUPT";
   if (v === "LOSE_A_TURN") return "TURN";
   if (v === "FREE_PLAY") return "PLAY";
   return "";
@@ -58,7 +59,7 @@ function overlayLabel(v: WofWheelValue): string {
   if (v === "BANKRUPT") return "BANKRUPT!";
   if (v === "LOSE_A_TURN") return "LOSE A TURN!";
   if (v === "FREE_PLAY") return "FREE PLAY!";
-  return `$${(v as number).toLocaleString()}`;
+  return `$${(v as number).toLocaleString()}!`;
 }
 
 interface WofWheelProps {
@@ -126,18 +127,30 @@ export function WofWheel({ spinning, spinIndex, value, spinnerName, size = 280 }
 
       // Label — drawn HORIZONTALLY (no context rotation)
       const midAngle = (start + end) / 2;
-      const textR = r * 0.66;
+      // textR at 0.72r gives wider arc per segment than 0.66r
+      const textR = r * 0.72;
       const tx = cx + textR * Math.cos(midAngle);
       const ty = cy + textR * Math.sin(midAngle);
 
-      // Font scales with size: ~9px at 280, ~16px at 460 — large enough for TV projection
-      const fontPx = Math.max(8, Math.round(size / 28));
-      ctx.font = `900 ${fontPx}px 'Arial Black', Arial, sans-serif`;
-      ctx.textAlign = "center";
-      ctx.textBaseline = "middle";
-
       const l1 = segmentLabel(seg);
       const l2 = segmentLabelLine2(seg);
+
+      // Arc chord width available for horizontal text in this wedge
+      const arcWidth = 2 * textR * Math.sin((segAngle / 2) * (Math.PI / 180));
+      const maxW = arcWidth * 0.90; // 90% of arc for padding
+
+      // Use measureText to find largest font that fits the longest line
+      const longestLine = l2 && l2.length > l1.length ? l2 : l1;
+      let fontPx = Math.round(size / 22); // start generous
+      const minFont = 6;
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.font = `900 ${fontPx}px 'Arial Black', Arial, sans-serif`;
+      while (fontPx > minFont && ctx.measureText(longestLine).width > maxW) {
+        fontPx--;
+        ctx.font = `900 ${fontPx}px 'Arial Black', Arial, sans-serif`;
+      }
+
       const lineGap = fontPx + 2;
 
       // Black stroke outline first (for contrast on any bg color)
