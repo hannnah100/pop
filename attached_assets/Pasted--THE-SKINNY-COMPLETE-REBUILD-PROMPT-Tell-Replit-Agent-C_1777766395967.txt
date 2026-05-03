@@ -1,0 +1,155 @@
+## **THE SKINNY - COMPLETE REBUILD PROMPT**
+
+---
+
+**Tell Replit Agent:**
+
+"Completely rebuild the Mini Crossword game with a new name, new grid size, and pop culture focus.
+
+**CRITICAL: Use Y2K design aesthetic - bright colors, thick black borders, comic book text styling.**
+
+**Game Name Change:**
+
+Rename from 'Mini Crossword' or 'Cross Pop' to **'The Skinny'**
+
+Update everywhere:
+- Homepage daily games section
+- Game page title
+- Navigation links
+- Archive page
+- Share results text
+
+**Grid Size Change:**
+
+Change from 5×5 grid to **3 columns × 9 rows** (tall skinny vertical rectangle)
+- 3 cells wide
+- 9 cells tall
+- This creates a noticeably tall, skinny shape that matches the name
+
+**Pop Culture Requirement:**
+
+ALL clues must be pop culture themed. NO generic crossword clues.
+
+**Correct clue examples:**
+- "Streaming giant with red logo (7)" → NETFLIX
+- "Baby Yoda's real name (5)" → GROGU  
+- "Wizarding school (8)" → HOGWARTS
+- "Taylor's ex boy band member (5)" → HARRY
+- "Spongebob's best friend (7)" → PATRICK
+- "Viral dance app (6)" → TIKTOK
+- "Queen Bey (7)" → BEYONCE
+- "Wakanda king (6)" → TCHALLA
+- "Stranger Things town (7)" → HAWKINS
+
+**WRONG clue examples (too generic - DO NOT USE):**
+- "Large feline (4)" → LION
+- "Morning beverage (6)" → COFFEE
+- "French capital (5)" → PARIS
+- "Ocean or sea (5)" → WATER
+
+Every word in the grid must be from pop culture: celebrity names, character names, show titles, movie titles, song titles, app names, brand names, viral moments, meme references, etc.
+
+**How Crosswords Work - Follow These Rules:**
+
+**Grid Structure:**
+- 3×9 grid (3 columns, 9 rows)
+- White squares = letters
+- Black squares = blockers/separators
+- Each white square must be part of a word (across or down or both)
+- Minimum word length: 3 letters
+
+**Numbering System (CRITICAL):**
+- Number squares that START a word
+- Number from left to right, top to bottom
+- If a square starts BOTH an across AND a down word, it gets ONE number used for both clues
+- Only number the starting squares, not every square
+
+Example numbering:
+```
+Row 1: [1][2][■]
+Row 2: [3][4][5]
+Row 3: [■][6][7]
+```
+
+If square 1 starts "TAYLOR" going across AND "TIKTOK" going down:
+- 1-Across: "Swift or Lautner (6)" → TAYLOR
+- 1-Down: "Viral dance app (6)" → TIKTOK
+
+**Clue Format:**
+- Clue number matches grid number EXACTLY
+- Include letter count in parentheses: (6) means 6 letters
+- Count must be accurate - verify by counting letters in answer
+- Clue text should be solvable but not too easy
+
+**Build Valid Puzzles:**
+
+Don't auto-generate - they keep breaking. Either:
+
+**Option A:** Use a crossword generator tool online, then manually input the grid and clues
+
+**Option B:** Build manually step by step:
+1. Pick 6-8 short pop culture words (3-5 letters)
+2. Arrange them so they intersect (share letters)
+3. Fill remaining spaces with black squares
+4. Number the starting squares correctly
+5. Write clues with CORRECT letter counts
+6. Verify every answer fits in the grid
+
+**Validation Checklist:**
+
+Before adding ANY puzzle to the database, verify:
+- ✅ Grid is 3 wide × 9 tall
+- ✅ Every clue is pop culture themed
+- ✅ Clue numbers match grid numbers exactly
+- ✅ Letter counts in parentheses are accurate (count each answer)
+- ✅ All words are at least 3 letters
+- ✅ Words actually intersect correctly
+- ✅ Puzzle is actually solvable
+
+**Start Small:**
+
+Create ONE completely valid working puzzle first. Test it thoroughly. Make sure:
+- Numbers align correctly
+- Letter counts are right
+- All clues are pop culture
+- Grid displays properly
+- Answers validate correctly
+
+Then create 9 more valid puzzles (10 total to start).
+
+**Game Features (Keep Working):**
+
+- Click cells to type letters
+- Timer tracks completion time
+- Arrow keys navigate between cells
+- Tab moves to next empty cell
+- Check answer validation
+- Reveal letter/word hints (optional)
+- Mobile-friendly touch input
+
+**Share Results:**
+
+```
+Pop: The Question - The Skinny
+May 2, 2026
+
+Completed in 3:42 ⚡
+
+popthequestion.replit.app
+```
+
+**Visual Design:**
+
+- Game title "THE SKINNY" at top in comic book style
+- 3×9 grid displayed vertically (tall and skinny)
+- Thick black borders around grid
+- Colorful cell backgrounds when filled correctly
+- Clues listed on side (Across / Down sections)
+- Timer displayed prominently
+- Y2K styling throughout
+
+**If Building This is Too Complex:**
+
+Alternative: Temporarily disable The Skinny until we can source proper valid puzzles from a crossword tool or create them manually outside of code.
+
+**Do not launch broken puzzles. Quality over quantity - 10 perfect puzzles is better than 100 broken ones.**"

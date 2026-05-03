@@ -211,6 +211,52 @@ const colorHex = (color: string): string => {
   }
 };
 
+function LeaveGameBtn({ onClick }: { onClick: () => void }) {
+  return (
+    <button
+      onClick={onClick}
+      data-testid="btn-leave-game-playing"
+      className="fixed top-3 left-3 z-[100] inline-flex items-center gap-1.5 bg-white border-[3px] border-black shadow-[4px_4px_0_#000] px-3 py-1.5 font-display font-black text-black text-xs uppercase tracking-wide hover:shadow-[2px_2px_0_#000] hover:translate-x-[2px] hover:translate-y-[2px] active:shadow-none active:translate-x-[4px] active:translate-y-[4px] transition-[box-shadow,transform] duration-75"
+    >
+      <svg viewBox="0 0 24 24" fill="none" className="w-3.5 h-3.5 flex-shrink-0" aria-hidden>
+        <path d="M19 12H5M5 12L11 6M5 12L11 18" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+      LEAVE
+    </button>
+  );
+}
+
+function LeaveGameDialog({
+  open,
+  onOpenChange,
+  onLeave,
+}: {
+  open: boolean;
+  onOpenChange: (v: boolean) => void;
+  onLeave: () => void;
+}) {
+  return (
+    <AlertDialog open={open} onOpenChange={onOpenChange}>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle className="font-display font-black uppercase text-xl">← Leave Game?</AlertDialogTitle>
+          <AlertDialogDescription>You'll be taken back to the home screen.</AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel data-testid="btn-leave-cancel">Stay</AlertDialogCancel>
+          <AlertDialogAction
+            className="bg-black text-[#FFD700] border-[3px] border-black hover:bg-black/80 font-display font-black uppercase"
+            onClick={onLeave}
+            data-testid="btn-leave-confirm"
+          >
+            ← LEAVE
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+  );
+}
+
 export default function GamePlayer() {
   const [, params] = useRoute("/game/:roomCode/player");
   const roomCode = params?.roomCode || "";
@@ -1216,7 +1262,7 @@ export default function GamePlayer() {
     const q = currentQuestion as { prompt?: string } | null;
     return (
       <>
-        <button onClick={() => setConfirmLeave(true)} data-testid="btn-leave-game-playing" className="fixed top-3 left-3 z-[100] inline-flex items-center gap-1.5 bg-white border-[3px] border-black shadow-[4px_4px_0_#000] px-3 py-1.5 font-display font-black text-black text-xs uppercase tracking-wide hover:shadow-[2px_2px_0_#000] hover:translate-x-[2px] hover:translate-y-[2px] active:shadow-none active:translate-x-[4px] active:translate-y-[4px] transition-[box-shadow,transform] duration-75"><svg viewBox="0 0 24 24" fill="none" className="w-3.5 h-3.5 flex-shrink-0" aria-hidden><path d="M19 12H5M5 12L11 6M5 12L11 18" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" /></svg>LEAVE</button>
+        <LeaveGameBtn onClick={() => setConfirmLeave(true)} />
         <div className="flex flex-col min-h-[100dvh]">
         <header className="sticky top-0 z-10 bg-[#FF1493] border-b-[4px] border-black px-4 py-4">
           <AnimatePresence mode="wait">
@@ -1281,14 +1327,18 @@ export default function GamePlayer() {
           )}
         </main>
       </div>
-        <AlertDialog open={confirmLeave} onOpenChange={setConfirmLeave}><AlertDialogContent><AlertDialogHeader><AlertDialogTitle className="font-display font-black uppercase text-xl">← Leave Game?</AlertDialogTitle><AlertDialogDescription>You'll be taken back to the home screen.</AlertDialogDescription></AlertDialogHeader><AlertDialogFooter><AlertDialogCancel data-testid="btn-leave-cancel">Stay</AlertDialogCancel><AlertDialogAction className="bg-black text-[#FFD700] border-[3px] border-black hover:bg-black/80 font-display font-black uppercase" onClick={() => { setConfirmLeave(false); setLocation("/"); }} data-testid="btn-leave-confirm">← LEAVE</AlertDialogAction></AlertDialogFooter></AlertDialogContent></AlertDialog>
+        <LeaveGameDialog
+          open={confirmLeave}
+          onOpenChange={setConfirmLeave}
+          onLeave={() => { setConfirmLeave(false); setLocation("/"); }}
+        />
       </>
     );
   }
 
   // ============ PLAYING — Roast Roulette ============
   if (gameState === "playing" && gameType === "roast-roulette") {
-    const _c = () => {
+    function renderContent() {
     // --- WRITING PHASE ---
     if (rrPhase === "writing") {
       const roundsRemaining = Math.max(1, rrTotalRounds - rrRound + 1);
@@ -1623,14 +1673,24 @@ export default function GamePlayer() {
         </div>
       );
     }
-    return <></>;
-    };
-    return (<><button onClick={() => setConfirmLeave(true)} data-testid="btn-leave-game-playing" className="fixed top-3 left-3 z-[100] inline-flex items-center gap-1.5 bg-white border-[3px] border-black shadow-[4px_4px_0_#000] px-3 py-1.5 font-display font-black text-black text-xs uppercase tracking-wide hover:shadow-[2px_2px_0_#000] hover:translate-x-[2px] hover:translate-y-[2px] active:shadow-none active:translate-x-[4px] active:translate-y-[4px] transition-[box-shadow,transform] duration-75"><svg viewBox="0 0 24 24" fill="none" className="w-3.5 h-3.5 flex-shrink-0" aria-hidden><path d="M19 12H5M5 12L11 6M5 12L11 18" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" /></svg>LEAVE</button>{_c()}<AlertDialog open={confirmLeave} onOpenChange={setConfirmLeave}><AlertDialogContent><AlertDialogHeader><AlertDialogTitle className="font-display font-black uppercase text-xl">← Leave Game?</AlertDialogTitle><AlertDialogDescription>You'll be taken back to the home screen.</AlertDialogDescription></AlertDialogHeader><AlertDialogFooter><AlertDialogCancel data-testid="btn-leave-cancel">Stay</AlertDialogCancel><AlertDialogAction className="bg-black text-[#FFD700] border-[3px] border-black hover:bg-black/80 font-display font-black uppercase" onClick={() => { setConfirmLeave(false); setLocation("/"); }} data-testid="btn-leave-confirm">← LEAVE</AlertDialogAction></AlertDialogFooter></AlertDialogContent></AlertDialog></>);
+    return null;
+    }
+    return (
+      <>
+        <LeaveGameBtn onClick={() => setConfirmLeave(true)} />
+        {renderContent()}
+        <LeaveGameDialog
+          open={confirmLeave}
+          onOpenChange={setConfirmLeave}
+          onLeave={() => { setConfirmLeave(false); setLocation("/"); }}
+        />
+      </>
+    );
   }
 
   // ============ PLAYING — Pub Quiz ============
   if (gameState === "playing" && gameType === "pub-quiz") {
-    const _c = () => {
+    function renderContent() {
     // Round summary intermission
     if (pqRoundSummary) {
       return (
@@ -1870,9 +1930,19 @@ export default function GamePlayer() {
         </main>
       </div>
     );
-    return <></>;
-    };
-    return (<><button onClick={() => setConfirmLeave(true)} data-testid="btn-leave-game-playing" className="fixed top-3 left-3 z-[100] inline-flex items-center gap-1.5 bg-white border-[3px] border-black shadow-[4px_4px_0_#000] px-3 py-1.5 font-display font-black text-black text-xs uppercase tracking-wide hover:shadow-[2px_2px_0_#000] hover:translate-x-[2px] hover:translate-y-[2px] active:shadow-none active:translate-x-[4px] active:translate-y-[4px] transition-[box-shadow,transform] duration-75"><svg viewBox="0 0 24 24" fill="none" className="w-3.5 h-3.5 flex-shrink-0" aria-hidden><path d="M19 12H5M5 12L11 6M5 12L11 18" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" /></svg>LEAVE</button>{_c()}<AlertDialog open={confirmLeave} onOpenChange={setConfirmLeave}><AlertDialogContent><AlertDialogHeader><AlertDialogTitle className="font-display font-black uppercase text-xl">← Leave Game?</AlertDialogTitle><AlertDialogDescription>You'll be taken back to the home screen.</AlertDialogDescription></AlertDialogHeader><AlertDialogFooter><AlertDialogCancel data-testid="btn-leave-cancel">Stay</AlertDialogCancel><AlertDialogAction className="bg-black text-[#FFD700] border-[3px] border-black hover:bg-black/80 font-display font-black uppercase" onClick={() => { setConfirmLeave(false); setLocation("/"); }} data-testid="btn-leave-confirm">← LEAVE</AlertDialogAction></AlertDialogFooter></AlertDialogContent></AlertDialog></>);
+    return null;
+    }
+    return (
+      <>
+        <LeaveGameBtn onClick={() => setConfirmLeave(true)} />
+        {renderContent()}
+        <LeaveGameDialog
+          open={confirmLeave}
+          onOpenChange={setConfirmLeave}
+          onLeave={() => { setConfirmLeave(false); setLocation("/"); }}
+        />
+      </>
+    );
   }
 
   // ============ PLAYING — Jeopardy ============
@@ -1894,7 +1964,7 @@ export default function GamePlayer() {
       </div>
     );
 
-    const _c = () => {
+    function renderContent() {
     // ---- Final reveal (read-only screen) ----
     if (jFinalReveal) {
       const mine = jFinalReveal.perPlayer.find((p) => p.id === me?.id);
@@ -2347,8 +2417,18 @@ export default function GamePlayer() {
         <p className="text-lg text-muted-foreground">Loading Jeopardy…</p>
       </div>
     );
-    };
-    return (<><button onClick={() => setConfirmLeave(true)} data-testid="btn-leave-game-playing" className="fixed top-3 left-3 z-[100] inline-flex items-center gap-1.5 bg-white border-[3px] border-black shadow-[4px_4px_0_#000] px-3 py-1.5 font-display font-black text-black text-xs uppercase tracking-wide hover:shadow-[2px_2px_0_#000] hover:translate-x-[2px] hover:translate-y-[2px] active:shadow-none active:translate-x-[4px] active:translate-y-[4px] transition-[box-shadow,transform] duration-75"><svg viewBox="0 0 24 24" fill="none" className="w-3.5 h-3.5 flex-shrink-0" aria-hidden><path d="M19 12H5M5 12L11 6M5 12L11 18" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" /></svg>LEAVE</button>{_c()}<AlertDialog open={confirmLeave} onOpenChange={setConfirmLeave}><AlertDialogContent><AlertDialogHeader><AlertDialogTitle className="font-display font-black uppercase text-xl">← Leave Game?</AlertDialogTitle><AlertDialogDescription>You'll be taken back to the home screen.</AlertDialogDescription></AlertDialogHeader><AlertDialogFooter><AlertDialogCancel data-testid="btn-leave-cancel">Stay</AlertDialogCancel><AlertDialogAction className="bg-black text-[#FFD700] border-[3px] border-black hover:bg-black/80 font-display font-black uppercase" onClick={() => { setConfirmLeave(false); setLocation("/"); }} data-testid="btn-leave-confirm">← LEAVE</AlertDialogAction></AlertDialogFooter></AlertDialogContent></AlertDialog></>);
+    }
+    return (
+      <>
+        <LeaveGameBtn onClick={() => setConfirmLeave(true)} />
+        {renderContent()}
+        <LeaveGameDialog
+          open={confirmLeave}
+          onOpenChange={setConfirmLeave}
+          onLeave={() => { setConfirmLeave(false); setLocation("/"); }}
+        />
+      </>
+    );
   }
 
   // ============ WHEEL OF FORTUNE ============
@@ -2389,7 +2469,7 @@ export default function GamePlayer() {
       hapticTap();
     };
 
-    const _c = () => {
+    function renderContent() {
     if (wofPuzzleOver) {
       return (
         <div className="flex flex-col min-h-[100dvh] bg-[#7C3AED] items-center justify-center text-center p-6 space-y-5">
@@ -2659,9 +2739,19 @@ export default function GamePlayer() {
         </div>
       </div>
     );
-    return <></>;
-    };
-    return (<><button onClick={() => setConfirmLeave(true)} data-testid="btn-leave-game-playing" className="fixed top-3 left-3 z-[100] inline-flex items-center gap-1.5 bg-white border-[3px] border-black shadow-[4px_4px_0_#000] px-3 py-1.5 font-display font-black text-black text-xs uppercase tracking-wide hover:shadow-[2px_2px_0_#000] hover:translate-x-[2px] hover:translate-y-[2px] active:shadow-none active:translate-x-[4px] active:translate-y-[4px] transition-[box-shadow,transform] duration-75"><svg viewBox="0 0 24 24" fill="none" className="w-3.5 h-3.5 flex-shrink-0" aria-hidden><path d="M19 12H5M5 12L11 6M5 12L11 18" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" /></svg>LEAVE</button>{_c()}<AlertDialog open={confirmLeave} onOpenChange={setConfirmLeave}><AlertDialogContent><AlertDialogHeader><AlertDialogTitle className="font-display font-black uppercase text-xl">← Leave Game?</AlertDialogTitle><AlertDialogDescription>You'll be taken back to the home screen.</AlertDialogDescription></AlertDialogHeader><AlertDialogFooter><AlertDialogCancel data-testid="btn-leave-cancel">Stay</AlertDialogCancel><AlertDialogAction className="bg-black text-[#FFD700] border-[3px] border-black hover:bg-black/80 font-display font-black uppercase" onClick={() => { setConfirmLeave(false); setLocation("/"); }} data-testid="btn-leave-confirm">← LEAVE</AlertDialogAction></AlertDialogFooter></AlertDialogContent></AlertDialog></>);
+    return null;
+    }
+    return (
+      <>
+        <LeaveGameBtn onClick={() => setConfirmLeave(true)} />
+        {renderContent()}
+        <LeaveGameDialog
+          open={confirmLeave}
+          onOpenChange={setConfirmLeave}
+          onLeave={() => { setConfirmLeave(false); setLocation("/"); }}
+        />
+      </>
+    );
   }
 
   // ============ FINISHED ============
