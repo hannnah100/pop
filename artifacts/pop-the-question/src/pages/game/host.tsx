@@ -1000,6 +1000,7 @@ export default function GameHost() {
 
     newSocket.on("scattergories-10-second-alert", () => {
       setScatAlertActive(true);
+      playWhoosh();
     });
 
     newSocket.on("scattergories-results", (payload: {

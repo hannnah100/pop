@@ -2951,10 +2951,23 @@ export default function GamePlayer() {
                           const val = e.target.value;
                           setScatAnswers((prev) => ({ ...prev, [cat.id]: val }));
                         }}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") {
+                            e.preventDefault();
+                            const idx = scatCategories.findIndex((c) => c.id === cat.id);
+                            const nextId = scatCategories[idx + 1]?.id;
+                            if (nextId) {
+                              (document.querySelector(`[data-testid="input-scat-${nextId}"]`) as HTMLInputElement | null)?.focus();
+                            } else {
+                              (e.target as HTMLInputElement).blur();
+                            }
+                          }
+                        }}
                         placeholder={`Something starting with ${scatLetter}…`}
                         className="flex-1 px-3 py-3 font-sans text-base bg-transparent border-none outline-none placeholder:text-black/30"
                         data-testid={`input-scat-${cat.id}`}
                         autoCapitalize="words"
+                        inputMode="text"
                       />
                     </div>
                   </div>
