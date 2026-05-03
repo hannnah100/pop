@@ -1,4 +1,4 @@
-export * from "./threeStrikes";
+export * from "./threeFlops";
 export * from "./crossword";
 export * from "./questions";
 export * from "./popBox";

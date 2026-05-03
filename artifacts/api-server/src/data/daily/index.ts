@@ -1,4 +1,4 @@
-// Bundled archive content for the Daily Three Strikes, Mini Crossword, and
+// Bundled archive content for the Daily Three Flops, Mini Crossword, and
 // Pop Box games. This is the source of truth for what shows up on the
 // published site's Archive page — it gets seeded into the database on server
 // startup (idempotently) so production has the same library of challenges as
@@ -8,19 +8,19 @@
 // republish. The seeder only inserts rows whose `id` is not already present,
 // so it is safe to re-run.
 
-import threeStrikesJson from "./three-strikes.json" with { type: "json" };
+import threeFlopsJson from "./three-flops.json" with { type: "json" };
 import crosswordJson from "./crossword.json" with { type: "json" };
 import popBoxJson from "./pop-box.json" with { type: "json" };
 import popBoxCategoriesJson from "./pop-box-categories.json" with { type: "json" };
 import popBoxCelebritiesJson from "./pop-box-celebrities.json" with { type: "json" };
 
-export interface ThreeStrikesSeed {
+export interface ThreeFlopsSeed {
   id: string;
   date: string;
   title: string;
   prompt: string;
   totalCount: number;
-  /** JSON-encoded ThreeStrikesAnswer[] — stored as TEXT in the DB. */
+  /** JSON-encoded ThreeFlopsAnswer[] — stored as TEXT in the DB. */
   answers: string;
 }
 
@@ -60,7 +60,7 @@ export interface PopBoxCelebrity {
   categories: string[];
 }
 
-export const THREE_STRIKES_SEED: ThreeStrikesSeed[] = threeStrikesJson as ThreeStrikesSeed[];
+export const THREE_FLOPS_SEED: ThreeFlopsSeed[] = threeFlopsJson as ThreeFlopsSeed[];
 export const CROSSWORD_SEED: CrosswordSeed[] = crosswordJson as CrosswordSeed[];
 export const POP_BOX_SEED: PopBoxSeed[] = popBoxJson as PopBoxSeed[];
 export const POP_BOX_CATEGORIES: PopBoxCategory[] = popBoxCategoriesJson as PopBoxCategory[];

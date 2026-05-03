@@ -6,9 +6,10 @@
  * OpenAPI spec version: 0.1.0
  */
 
-export interface GuessTheYearCheckRequest {
-  /** Opaque daily identifier returned by the GET endpoint */
+export interface ThreeFlopsSummary {
   id: string;
-  guess?: number;
-  giveUp?: boolean;
+  date: string;
+  title: string;
+  prompt: string;
+  totalCount: number;
 }

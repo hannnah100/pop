@@ -6,8 +6,7 @@
  * OpenAPI spec version: 0.1.0
  */
 
-export interface ThreeStrikesAnswer {
-  display: string;
-  hint: string;
-  correct: string[];
+export interface ClockItCheckResponse {
+  correct: boolean;
+  year?: number | null;
 }

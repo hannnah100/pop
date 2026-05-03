@@ -137,7 +137,7 @@ function HintCard({ index, text, revealed, onReveal, reduced }: HintCardProps) {
   );
 }
 
-export default function GuessTheYear() {
+export default function ClockIt() {
   const { toast } = useToast();
   const { playCorrect, playWrong, playVictory } = useSfx();
   const reduced = useReducedMotion();
@@ -145,6 +145,11 @@ export default function GuessTheYear() {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const todayDate = new Date().toISOString().split("T")[0];
+  // Storage keys (`ptq-guess-the-year-…`, `ptq-streak-guess-the-year`,
+  // `ptq-last-guess-the-year`, and the `gty*` fields in `ptq-stats`) are
+  // intentionally kept under their legacy names so player progress saved
+  // before the rename to "Clock It" still loads. These are internal
+  // identifiers only — no UI surface ever shows them.
   const storageKey = `ptq-guess-the-year-${todayDate}`;
 
   const [puzzle, setPuzzle] = useState<Puzzle | null>(null);
@@ -164,7 +169,7 @@ export default function GuessTheYear() {
   useEffect(() => {
     const fetchPuzzle = async () => {
       try {
-        const resp = await fetch("/api/daily/guess-the-year");
+        const resp = await fetch("/api/daily/clock-it");
         if (!resp.ok) throw new Error("Failed to fetch");
         const data: Puzzle = await resp.json();
         setPuzzle(data);
@@ -280,7 +285,7 @@ export default function GuessTheYear() {
     }
 
     try {
-      const resp = await fetch("/api/daily/guess-the-year/check", {
+      const resp = await fetch("/api/daily/clock-it/check", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id: puzzle.id, guess: year }),
@@ -326,7 +331,7 @@ export default function GuessTheYear() {
   const handleGiveUp = useCallback(async () => {
     if (!puzzle || phase !== "playing") return;
     try {
-      const resp = await fetch("/api/daily/guess-the-year/check", {
+      const resp = await fetch("/api/daily/clock-it/check", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id: puzzle.id, giveUp: true }),
@@ -352,11 +357,15 @@ export default function GuessTheYear() {
     const hintRow = Array.from({ length: 3 }, (_, i) =>
       i < hintsUsed ? ["🟣", "🟠", "🔵"][i] : "⬜",
     ).join(" ");
+    const humanDate = new Date(puzzle.date + "T00:00:00").toLocaleDateString(undefined, {
+      year: "numeric", month: "long", day: "numeric",
+    });
+    const hintLabel = hintsUsed === 1 ? "hint" : "hints";
     const text = [
-      `📅 Guess the Year — ${puzzle.date}`,
+      `📅 Clock It — ${humanDate}`,
       gaveUp
         ? `❌ Gave up (the year was ${finalYear})`
-        : `${scoreEmoji(score)} Got it in hint ${hintsUsed}! (${score} pts)`,
+        : `${scoreEmoji(score)} Got it in ${hintsUsed} ${hintLabel}! (${score} pts)`,
       hintRow,
       "popthequestion.replit.app",
     ]
@@ -420,7 +429,7 @@ export default function GuessTheYear() {
         <div className="text-center">
           <h1 className="font-display font-black text-black text-xl uppercase tracking-tight comic-headline flex items-center gap-2">
             <Calendar className="w-5 h-5" />
-            Guess the Year
+            Clock It
           </h1>
           <p className="text-black/70 text-xs font-bold uppercase">Which year is it?</p>
         </div>

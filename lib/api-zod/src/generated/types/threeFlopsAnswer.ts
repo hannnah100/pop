@@ -6,10 +6,8 @@
  * OpenAPI spec version: 0.1.0
  */
 
-export interface ThreeStrikesSummary {
-  id: string;
-  date: string;
-  title: string;
-  prompt: string;
-  totalCount: number;
+export interface ThreeFlopsAnswer {
+  display: string;
+  hint: string;
+  correct: string[];
 }

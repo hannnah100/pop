@@ -33,18 +33,18 @@ paths:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
 
-  /daily/three-strikes:
+  /daily/three-flops:
     get:
-      operationId: getTodayThreeStrikes
+      operationId: getTodayThreeFlops
       tags: [daily]
-      summary: Get today's Three Strikes challenge
+      summary: Get today's Three Flops challenge
       responses:
         "200":
           description: Today's challenge
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ThreeStrikesChallenge"
+                $ref: "#/components/schemas/ThreeFlopsChallenge"
         "404":
           description: No challenge for today
           content:
@@ -52,11 +52,11 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
 
-  /daily/three-strikes/archive:
+  /daily/three-flops/archive:
     get:
-      operationId: getThreeStrikesArchive
+      operationId: getThreeFlopsArchive
       tags: [daily]
-      summary: Get archive of Three Strikes challenges
+      summary: Get archive of Three Flops challenges
       responses:
         "200":
           description: List of past challenges
@@ -65,13 +65,13 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/ThreeStrikesSummary"
+                  $ref: "#/components/schemas/ThreeFlopsSummary"
 
-  /daily/three-strikes/{id}:
+  /daily/three-flops/{id}:
     get:
-      operationId: getThreeStrikesById
+      operationId: getThreeFlopsById
       tags: [daily]
-      summary: Get a specific Three Strikes challenge by ID (for archive replay)
+      summary: Get a specific Three Flops challenge by ID (for archive replay)
       parameters:
         - name: id
           in: path
@@ -84,7 +84,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ThreeStrikesChallenge"
+                $ref: "#/components/schemas/ThreeFlopsChallenge"
         "404":
           description: Challenge not found
           content:
@@ -348,22 +348,22 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
 
-  /daily/guess-the-year:
+  /daily/clock-it:
     get:
-      operationId: getTodayGuessTheYear
+      operationId: getTodayClockIt
       tags: [daily]
-      summary: Get today's Guess the Year puzzle (hints only, no year)
+      summary: Get today's Clock It puzzle (hints only, no year)
       responses:
         "200":
           description: Today's puzzle
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/GuessTheYearPuzzle"
+                $ref: "#/components/schemas/ClockItPuzzle"
 
-  /daily/guess-the-year/check:
+  /daily/clock-it/check:
     post:
-      operationId: checkGuessTheYear
+      operationId: checkClockIt
       tags: [daily]
       summary: Check a year guess or request the answer (give up)
       requestBody:
@@ -371,14 +371,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/GuessTheYearCheckRequest"
+              $ref: "#/components/schemas/ClockItCheckRequest"
       responses:
         "200":
           description: Result of the guess
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/GuessTheYearCheckResponse"
+                $ref: "#/components/schemas/ClockItCheckResponse"
         "400":
           description: Invalid request
           content:
@@ -882,7 +882,7 @@ components:
       required:
         - error
 
-    ThreeStrikesAnswer:
+    ThreeFlopsAnswer:
       type: object
       properties:
         display:
@@ -898,7 +898,7 @@ components:
         - hint
         - correct
 
-    ThreeStrikesChallenge:
+    ThreeFlopsChallenge:
       type: object
       properties:
         id:
@@ -914,7 +914,7 @@ components:
         answers:
           type: array
           items:
-            $ref: "#/components/schemas/ThreeStrikesAnswer"
+            $ref: "#/components/schemas/ThreeFlopsAnswer"
       required:
         - id
         - date
@@ -923,7 +923,7 @@ components:
         - totalCount
         - answers
 
-    ThreeStrikesSummary:
+    ThreeFlopsSummary:
       type: object
       properties:
         id:
@@ -994,13 +994,13 @@ components:
       properties:
         date:
           type: string
-        threeStrikesAvailable:
+        threeFlopsAvailable:
           type: boolean
         crosswordAvailable:
           type: boolean
         popBoxAvailable:
           type: boolean
-        threeStrikesTitle:
+        threeFlopsTitle:
           type: string
         crosswordDate:
           type: string
@@ -1008,7 +1008,7 @@ components:
           type: string
       required:
         - date
-        - threeStrikesAvailable
+        - threeFlopsAvailable
         - crosswordAvailable
         - popBoxAvailable
 
@@ -1316,7 +1316,7 @@ components:
         - avgStreak
         - medianStreak
 
-    GuessTheYearPuzzle:
+    ClockItPuzzle:
       type: object
       properties:
         id:
@@ -1335,7 +1335,7 @@ components:
         - date
         - hints
 
-    GuessTheYearCheckRequest:
+    ClockItCheckRequest:
       type: object
       properties:
         id:
@@ -1348,7 +1348,7 @@ components:
       required:
         - id
 
-    GuessTheYearCheckResponse:
+    ClockItCheckResponse:
       type: object
       properties:
         correct:

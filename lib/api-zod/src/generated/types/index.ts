@@ -6,6 +6,9 @@
  * OpenAPI spec version: 0.1.0
  */
 
+export * from "./clockItCheckRequest";
+export * from "./clockItCheckResponse";
+export * from "./clockItPuzzle";
 export * from "./createRoomRequest";
 export * from "./createRoomRequestGameType";
 export * from "./crosswordPuzzle";
@@ -17,9 +20,6 @@ export * from "./customPackPayload";
 export * from "./dailyStatus";
 export * from "./errorResponse";
 export * from "./getPopOrDropLeaderboardParams";
-export * from "./guessTheYearCheckRequest";
-export * from "./guessTheYearCheckResponse";
-export * from "./guessTheYearPuzzle";
 export * from "./healthStatus";
 export * from "./popBoxAnswers";
 export * from "./popBoxCategory";
@@ -43,6 +43,6 @@ export * from "./room";
 export * from "./roomCreated";
 export * from "./roomStatus";
 export * from "./submitPopOrDropScore200";
-export * from "./threeStrikesAnswer";
-export * from "./threeStrikesChallenge";
-export * from "./threeStrikesSummary";
+export * from "./threeFlopsAnswer";
+export * from "./threeFlopsChallenge";
+export * from "./threeFlopsSummary";

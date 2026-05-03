@@ -79,7 +79,7 @@ function rarityColor(p: number | null): string {
 export default function PopBox() {
   const [, setLocation] = useLocation();
   const { toast } = useToast();
-  const { playCorrect, playWrong, playStrike, playVictory, playTap } = useSfx();
+  const { playCorrect, playWrong, playFlop, playVictory, playTap } = useSfx();
   const { recordGame } = useStreaks();
   const reduced = useReducedMotion();
 
@@ -312,7 +312,7 @@ export default function PopBox() {
         setActiveCell(null);
         setCurrentGuess("");
       } else {
-        playStrike();
+        playFlop();
         playWrong();
         hapticWrong();
         setShakeKey((k) => k + 1);

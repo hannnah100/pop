@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "wouter";
 import {
-  useGetThreeStrikesArchive,
+  useGetThreeFlopsArchive,
   useGetCrosswordArchive,
   useGetPopBoxArchive,
   useGetPopOrDropArchive,
@@ -27,7 +27,8 @@ function getArchiveStats(id: string, type: "three-strikes" | "crossword" | "pop-
           : `ptq-archive-pb-${id}`;
     const raw = localStorage.getItem(key);
     if (!raw) return null;
-    return JSON.parse(raw) as { completed: boolean; score: number; total?: number; strikes?: number };
+    // Legacy saves used `strikes`; new saves use `flops`. Read both.
+    return JSON.parse(raw) as { completed: boolean; score: number; total?: number; strikes?: number; flops?: number };
   } catch {
     return null;
   }
@@ -46,7 +47,7 @@ function getPodStats(date: string) {
 }
 
 export default function Archive() {
-  const { data: tsArchive, isLoading: tsLoading } = useGetThreeStrikesArchive();
+  const { data: tsArchive, isLoading: tsLoading } = useGetThreeFlopsArchive();
   const { data: cwArchive, isLoading: cwLoading } = useGetCrosswordArchive();
   const { data: pbArchive, isLoading: pbLoading } = useGetPopBoxArchive();
   const { data: podArchive, isLoading: podLoading } = useGetPopOrDropArchive();
@@ -194,7 +195,7 @@ export default function Archive() {
             {f === "all"
               ? "All"
               : f === "three-strikes"
-                ? "Three Strikes"
+                ? "Three Flops"
                 : f === "crossword"
                   ? "The Skinny"
                   : f === "pop-box"
@@ -228,7 +229,7 @@ export default function Archive() {
 
             const playHref =
               item.type === "three-strikes"
-                ? `/daily/three-strikes?id=${item.id}`
+                ? `/daily/three-flops?id=${item.id}`
                 : item.type === "pop-box"
                   ? `/daily/pop-box?id=${item.id}`
                   : item.type === "pop-or-drop"
@@ -272,7 +273,7 @@ export default function Archive() {
                     };
 
             const badgeLabel = isTS
-              ? "Three Strikes"
+              ? "Three Flops"
               : isPB
                 ? "Pop Box"
                 : isPOD
@@ -326,7 +327,7 @@ export default function Archive() {
                             : ""}
                         {isTS && (
                           <>
-                            {" "}• {stats.strikes ?? 0} strike{(stats.strikes ?? 0) !== 1 ? "s" : ""}
+                            {" "}• {stats.flops ?? stats.strikes ?? 0} flop{(stats.flops ?? stats.strikes ?? 0) !== 1 ? "s" : ""}
                           </>
                         )}
                       </span>

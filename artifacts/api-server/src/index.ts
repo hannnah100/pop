@@ -29,7 +29,7 @@ httpServer.listen(port, (err?: Error) => {
 
   logger.info({ port }, "Server listening");
 
-  // Seed daily archive content (Three Strikes + Mini Crossword) into
+  // Seed daily archive content (Three Flops + Mini Crossword) into
   // whatever DB this server is talking to. Idempotent — it skips rows
   // that already exist. This is what populates the Archive page on the
   // published site.

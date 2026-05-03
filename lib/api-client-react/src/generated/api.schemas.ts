@@ -28,22 +28,22 @@ export interface ErrorResponse {
   error: string;
 }
 
-export interface ThreeStrikesAnswer {
+export interface ThreeFlopsAnswer {
   display: string;
   hint: string;
   correct: string[];
 }
 
-export interface ThreeStrikesChallenge {
+export interface ThreeFlopsChallenge {
   id: string;
   date: string;
   title: string;
   prompt: string;
   totalCount: number;
-  answers: ThreeStrikesAnswer[];
+  answers: ThreeFlopsAnswer[];
 }
 
-export interface ThreeStrikesSummary {
+export interface ThreeFlopsSummary {
   id: string;
   date: string;
   title: string;
@@ -71,10 +71,10 @@ export interface CrosswordSummary {
 
 export interface DailyStatus {
   date: string;
-  threeStrikesAvailable: boolean;
+  threeFlopsAvailable: boolean;
   crosswordAvailable: boolean;
   popBoxAvailable: boolean;
-  threeStrikesTitle?: string;
+  threeFlopsTitle?: string;
   crosswordDate?: string;
   popBoxDate?: string;
 }
@@ -245,7 +245,7 @@ export interface PopOrDropLeaderboard {
   playerRank?: number | null;
 }
 
-export interface GuessTheYearPuzzle {
+export interface ClockItPuzzle {
   /** Opaque daily identifier (date-based, does not contain the year) */
   id: string;
   date: string;
@@ -256,14 +256,14 @@ export interface GuessTheYearPuzzle {
   hints: string[];
 }
 
-export interface GuessTheYearCheckRequest {
+export interface ClockItCheckRequest {
   /** Opaque daily identifier returned by the GET endpoint */
   id: string;
   guess?: number;
   giveUp?: boolean;
 }
 
-export interface GuessTheYearCheckResponse {
+export interface ClockItCheckResponse {
   correct: boolean;
   year?: number | null;
 }

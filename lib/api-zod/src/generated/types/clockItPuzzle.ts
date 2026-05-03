@@ -6,7 +6,7 @@
  * OpenAPI spec version: 0.1.0
  */
 
-export interface GuessTheYearPuzzle {
+export interface ClockItPuzzle {
   /** Opaque daily identifier (date-based, does not contain the year) */
   id: string;
   date: string;

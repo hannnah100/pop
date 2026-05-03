@@ -1,15 +1,18 @@
 import { Router, type IRouter } from "express";
-import GUESS_THE_YEAR_JSON from "../data/daily/guess-the-year.json" with { type: "json" };
+// NOTE: filename preserved as guess-the-year.json — the JSON content is
+// generic year-puzzle data and renaming the file would just churn git history
+// for no functional gain.
+import CLOCK_IT_JSON from "../data/daily/guess-the-year.json" with { type: "json" };
 
 const router: IRouter = Router();
 
-interface GuessTheYearPuzzle {
+interface ClockItPuzzle {
   id: string;
   year: number;
   hints: [string, string, string];
 }
 
-const PUZZLES: GuessTheYearPuzzle[] = GUESS_THE_YEAR_JSON as GuessTheYearPuzzle[];
+const PUZZLES: ClockItPuzzle[] = CLOCK_IT_JSON as ClockItPuzzle[];
 
 function lcgRng(seed: number) {
   let s = seed;
@@ -27,13 +30,13 @@ function dateSeed(date: string): number {
   return parseInt(date.replace(/-/g, ""), 10);
 }
 
-function selectPuzzle(date: string): GuessTheYearPuzzle {
+function selectPuzzle(date: string): ClockItPuzzle {
   const rng = lcgRng(dateSeed(date));
   const index = Math.floor(rng() * PUZZLES.length);
   return PUZZLES[index];
 }
 
-router.get("/daily/guess-the-year", (_req, res): void => {
+router.get("/daily/clock-it", (_req, res): void => {
   const today = todayDate();
   const puzzle = selectPuzzle(today);
   res.json({
@@ -43,7 +46,7 @@ router.get("/daily/guess-the-year", (_req, res): void => {
   });
 });
 
-router.post("/daily/guess-the-year/check", (req, res): void => {
+router.post("/daily/clock-it/check", (req, res): void => {
   const { id, guess, giveUp } = req.body as {
     id?: unknown;
     guess?: unknown;

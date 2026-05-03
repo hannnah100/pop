@@ -3,7 +3,9 @@ import { useCallback, useEffect, useState } from "react";
 const STORAGE_KEY = "ptq-streaks-v1";
 const SEEN_BANNERS_KEY = "ptq-seen-banners-v1";
 
-export type GameKey = "three-strikes" | "crossword" | "pop-box" | "pop-the-question" | "roast-roulette";
+// "three-strikes" is preserved (alongside the new "three-flops") so existing
+// per-game counts saved under the legacy key still surface in the UI.
+export type GameKey = "three-strikes" | "three-flops" | "clock-it" | "crossword" | "pop-box" | "pop-the-question" | "roast-roulette";
 
 export interface StreakState {
   totalGames: number;

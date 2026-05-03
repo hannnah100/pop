@@ -98,15 +98,15 @@ function GameRulesCard({
 
 const GAMES: GameRulesCardProps[] = [
   {
-    title: "Three Strikes",
+    title: "Three Flops",
     tagline: "3 misses and you're out",
     emoji: "⚡",
     bg: "#FF6B35",
     steps: [
       "You'll see a pop-culture category with a hidden list of correct answers.",
       "Type a guess and submit. Matches don't have to be exact — close spellings count.",
-      "Anything that isn't on the list earns a strike. Repeating an answer you already found just shows \"Already found!\" — no strike.",
-      "Find every answer to win, or hit 3 strikes and the round ends.",
+      "Anything that isn't on the list earns a flop. Repeating an answer you already found just shows \"Already found!\" — no flop.",
+      "Find every answer to win, or hit 3 flops and the round ends.",
     ],
     scoring:
       "Your score is how many correct answers you found. Stuck? Try a different angle — the list usually goes deeper than the obvious picks.",
@@ -158,7 +158,7 @@ const GAMES: GameRulesCardProps[] = [
     share: "Post your streak and dare your friends to beat it.",
   },
   {
-    title: "Guess the Year",
+    title: "Clock It",
     tagline: "3 pop culture hints — which year is it?",
     emoji: "📅",
     bg: "#FFD700",

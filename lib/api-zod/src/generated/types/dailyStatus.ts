@@ -8,10 +8,10 @@
 
 export interface DailyStatus {
   date: string;
-  threeStrikesAvailable: boolean;
+  threeFlopsAvailable: boolean;
   crosswordAvailable: boolean;
   popBoxAvailable: boolean;
-  threeStrikesTitle?: string;
+  threeFlopsTitle?: string;
   crosswordDate?: string;
   popBoxDate?: string;
 }

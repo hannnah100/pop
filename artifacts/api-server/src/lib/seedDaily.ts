@@ -1,13 +1,13 @@
 import {
   db,
-  threeStrikesChallengesTable,
+  threeFlopsChallengesTable,
   crosswordPuzzlesTable,
   popBoxGridsTable,
 } from "@workspace/db";
 import { inArray } from "drizzle-orm";
 import { logger } from "./logger";
 import {
-  THREE_STRIKES_SEED,
+  THREE_FLOPS_SEED,
   CROSSWORD_SEED,
   POP_BOX_SEED,
 } from "../data/daily";
@@ -31,7 +31,7 @@ const STALE_CROSSWORD_IDS = [
  */
 export async function seedDailyContent(): Promise<void> {
   try {
-    await Promise.all([seedThreeStrikes(), seedCrossword(), seedPopBox()]);
+    await Promise.all([seedThreeFlops(), seedCrossword(), seedPopBox()]);
   } catch (err) {
     // Don't crash the server if seeding fails — just log it. The API still
     // works; the Archive page will show whatever rows are present.
@@ -65,29 +65,29 @@ async function seedPopBox(): Promise<void> {
   );
 }
 
-async function seedThreeStrikes(): Promise<void> {
-  if (THREE_STRIKES_SEED.length === 0) return;
+async function seedThreeFlops(): Promise<void> {
+  if (THREE_FLOPS_SEED.length === 0) return;
 
-  const ids = THREE_STRIKES_SEED.map((r) => r.id);
+  const ids = THREE_FLOPS_SEED.map((r) => r.id);
   const existing = await db
-    .select({ id: threeStrikesChallengesTable.id })
-    .from(threeStrikesChallengesTable)
-    .where(inArray(threeStrikesChallengesTable.id, ids));
+    .select({ id: threeFlopsChallengesTable.id })
+    .from(threeFlopsChallengesTable)
+    .where(inArray(threeFlopsChallengesTable.id, ids));
   const have = new Set(existing.map((r) => r.id));
 
-  const missing = THREE_STRIKES_SEED.filter((r) => !have.has(r.id));
+  const missing = THREE_FLOPS_SEED.filter((r) => !have.has(r.id));
   if (missing.length === 0) {
     logger.info(
-      { total: THREE_STRIKES_SEED.length },
-      "Three Strikes archive already up to date",
+      { total: THREE_FLOPS_SEED.length },
+      "Three Flops archive already up to date",
     );
     return;
   }
 
-  await db.insert(threeStrikesChallengesTable).values(missing);
+  await db.insert(threeFlopsChallengesTable).values(missing);
   logger.info(
-    { inserted: missing.length, total: THREE_STRIKES_SEED.length },
-    "Seeded Three Strikes archive",
+    { inserted: missing.length, total: THREE_FLOPS_SEED.length },
+    "Seeded Three Flops archive",
   );
 }
 

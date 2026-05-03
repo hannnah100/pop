@@ -1,8 +1,8 @@
 import { Router, type IRouter } from "express";
-import { db, threeStrikesChallengesTable, crosswordPuzzlesTable, popBoxGridsTable } from "@workspace/db";
+import { db, threeFlopsChallengesTable, crosswordPuzzlesTable, popBoxGridsTable } from "@workspace/db";
 import { eq, desc } from "drizzle-orm";
 import {
-  GetTodayThreeStrikesResponse,
+  GetTodayThreeFlopsResponse,
   GetTodayCrosswordResponse,
   GetDailyStatusResponse,
 } from "@workspace/api-zod";
@@ -13,13 +13,13 @@ function todayDate(): string {
   return new Date().toISOString().split("T")[0];
 }
 
-router.get("/daily/three-strikes", async (req, res): Promise<void> => {
+router.get("/daily/three-flops", async (req, res): Promise<void> => {
   const today = todayDate();
 
   let row = await db
     .select()
-    .from(threeStrikesChallengesTable)
-    .where(eq(threeStrikesChallengesTable.date, today))
+    .from(threeFlopsChallengesTable)
+    .where(eq(threeFlopsChallengesTable.date, today))
     .limit(1)
     .then((r) => r[0]);
 
@@ -27,8 +27,8 @@ router.get("/daily/three-strikes", async (req, res): Promise<void> => {
   if (!row) {
     row = await db
       .select()
-      .from(threeStrikesChallengesTable)
-      .orderBy(desc(threeStrikesChallengesTable.date))
+      .from(threeFlopsChallengesTable)
+      .orderBy(desc(threeFlopsChallengesTable.date))
       .limit(1)
       .then((r) => r[0]);
   }
@@ -38,7 +38,7 @@ router.get("/daily/three-strikes", async (req, res): Promise<void> => {
     return;
   }
 
-  const data = GetTodayThreeStrikesResponse.parse({
+  const data = GetTodayThreeFlopsResponse.parse({
     id: row.id,
     date: row.date,
     title: row.title,
@@ -50,26 +50,26 @@ router.get("/daily/three-strikes", async (req, res): Promise<void> => {
   res.json(data);
 });
 
-router.get("/daily/three-strikes/archive", async (_req, res): Promise<void> => {
+router.get("/daily/three-flops/archive", async (_req, res): Promise<void> => {
   const rows = await db
     .select({
-      id: threeStrikesChallengesTable.id,
-      date: threeStrikesChallengesTable.date,
-      title: threeStrikesChallengesTable.title,
-      prompt: threeStrikesChallengesTable.prompt,
-      totalCount: threeStrikesChallengesTable.totalCount,
+      id: threeFlopsChallengesTable.id,
+      date: threeFlopsChallengesTable.date,
+      title: threeFlopsChallengesTable.title,
+      prompt: threeFlopsChallengesTable.prompt,
+      totalCount: threeFlopsChallengesTable.totalCount,
     })
-    .from(threeStrikesChallengesTable)
-    .orderBy(desc(threeStrikesChallengesTable.date));
+    .from(threeFlopsChallengesTable)
+    .orderBy(desc(threeFlopsChallengesTable.date));
 
   res.json(rows);
 });
 
-router.get("/daily/three-strikes/:id", async (req, res): Promise<void> => {
+router.get("/daily/three-flops/:id", async (req, res): Promise<void> => {
   const row = await db
     .select()
-    .from(threeStrikesChallengesTable)
-    .where(eq(threeStrikesChallengesTable.id, req.params.id))
+    .from(threeFlopsChallengesTable)
+    .where(eq(threeFlopsChallengesTable.id, req.params.id))
     .limit(1)
     .then((r) => r[0]);
 
@@ -78,7 +78,7 @@ router.get("/daily/three-strikes/:id", async (req, res): Promise<void> => {
     return;
   }
 
-  const data = GetTodayThreeStrikesResponse.parse({
+  const data = GetTodayThreeFlopsResponse.parse({
     id: row.id,
     date: row.date,
     title: row.title,
@@ -141,10 +141,10 @@ router.get("/daily/crossword/archive", async (_req, res): Promise<void> => {
 router.get("/daily/status", async (_req, res): Promise<void> => {
   const today = todayDate();
 
-  const [tsRow, cwRow, pbRow] = await Promise.all([
-    db.select({ id: threeStrikesChallengesTable.id, title: threeStrikesChallengesTable.title })
-      .from(threeStrikesChallengesTable)
-      .orderBy(desc(threeStrikesChallengesTable.date))
+  const [tfRow, cwRow, pbRow] = await Promise.all([
+    db.select({ id: threeFlopsChallengesTable.id, title: threeFlopsChallengesTable.title })
+      .from(threeFlopsChallengesTable)
+      .orderBy(desc(threeFlopsChallengesTable.date))
       .limit(1)
       .then((r) => r[0]),
     db.select({ id: crosswordPuzzlesTable.id, date: crosswordPuzzlesTable.date })
@@ -161,10 +161,10 @@ router.get("/daily/status", async (_req, res): Promise<void> => {
 
   const data = GetDailyStatusResponse.parse({
     date: today,
-    threeStrikesAvailable: !!tsRow,
+    threeFlopsAvailable: !!tfRow,
     crosswordAvailable: !!cwRow,
     popBoxAvailable: !!pbRow,
-    ...(tsRow?.title ? { threeStrikesTitle: tsRow.title } : {}),
+    ...(tfRow?.title ? { threeFlopsTitle: tfRow.title } : {}),
     ...(cwRow?.date ? { crosswordDate: cwRow.date } : {}),
     ...(pbRow?.date ? { popBoxDate: pbRow.date } : {}),
   });

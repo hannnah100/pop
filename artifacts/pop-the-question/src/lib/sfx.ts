@@ -1,6 +1,6 @@
 import { useEffect, useRef, useSyncExternalStore } from "react";
 
-type SfxName = "correct" | "wrong" | "strike" | "tick" | "victory" | "tap" | "whoosh";
+type SfxName = "correct" | "wrong" | "flop" | "tick" | "victory" | "tap" | "whoosh";
 
 const STORAGE_KEY = "ptq-sfx-muted";
 
@@ -118,7 +118,7 @@ const players: Record<SfxName, () => void> = {
     playTone({ type: "sawtooth", freq: 220, endFreq: 110, duration: 0.28, volume: 0.16 });
     playNoise(0.12, 0.05);
   },
-  strike: () => {
+  flop: () => {
     playTone({ type: "square", freq: 180, endFreq: 80, duration: 0.18, volume: 0.18 });
     playTone({ type: "square", freq: 80, duration: 0.12, volume: 0.14, delay: 0.16 });
   },
@@ -158,7 +158,7 @@ export function useSfx() {
   return {
     playCorrect: () => playSfx("correct"),
     playWrong: () => playSfx("wrong"),
-    playStrike: () => playSfx("strike"),
+    playFlop: () => playSfx("flop"),
     playTick: () => playSfx("tick"),
     playVictory: () => playSfx("victory"),
     playTap: () => playSfx("tap"),

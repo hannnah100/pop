@@ -17,6 +17,9 @@ import type {
 } from "@tanstack/react-query";
 
 import type {
+  ClockItCheckRequest,
+  ClockItCheckResponse,
+  ClockItPuzzle,
   CreateRoomRequest,
   CrosswordPuzzle,
   CrosswordSummary,
@@ -25,9 +28,6 @@ import type {
   DailyStatus,
   ErrorResponse,
   GetPopOrDropLeaderboardParams,
-  GuessTheYearCheckRequest,
-  GuessTheYearCheckResponse,
-  GuessTheYearPuzzle,
   HealthStatus,
   PopBoxAnswers,
   PopBoxGrid,
@@ -43,8 +43,8 @@ import type {
   Room,
   RoomCreated,
   SubmitPopOrDropScore200,
-  ThreeStrikesChallenge,
-  ThreeStrikesSummary,
+  ThreeFlopsChallenge,
+  ThreeFlopsSummary,
 } from "./api.schemas";
 
 import { customFetch } from "../custom-fetch";
@@ -134,29 +134,29 @@ export function useHealthCheck<
 /**
  * @summary Get today's Three Strikes challenge
  */
-export const getGetTodayThreeStrikesUrl = () => {
-  return `/api/daily/three-strikes`;
+export const getGetTodayThreeFlopsUrl = () => {
+  return `/api/daily/three-flops`;
 };
 
-export const getTodayThreeStrikes = async (
+export const getTodayThreeFlops = async (
   options?: RequestInit,
-): Promise<ThreeStrikesChallenge> => {
-  return customFetch<ThreeStrikesChallenge>(getGetTodayThreeStrikesUrl(), {
+): Promise<ThreeFlopsChallenge> => {
+  return customFetch<ThreeFlopsChallenge>(getGetTodayThreeFlopsUrl(), {
     ...options,
     method: "GET",
   });
 };
 
-export const getGetTodayThreeStrikesQueryKey = () => {
-  return [`/api/daily/three-strikes`] as const;
+export const getGetTodayThreeFlopsQueryKey = () => {
+  return [`/api/daily/three-flops`] as const;
 };
 
-export const getGetTodayThreeStrikesQueryOptions = <
-  TData = Awaited<ReturnType<typeof getTodayThreeStrikes>>,
+export const getGetTodayThreeFlopsQueryOptions = <
+  TData = Awaited<ReturnType<typeof getTodayThreeFlops>>,
   TError = ErrorType<ErrorResponse>,
 >(options?: {
   query?: UseQueryOptions<
-    Awaited<ReturnType<typeof getTodayThreeStrikes>>,
+    Awaited<ReturnType<typeof getTodayThreeFlops>>,
     TError,
     TData
   >;
@@ -164,40 +164,40 @@ export const getGetTodayThreeStrikesQueryOptions = <
 }) => {
   const { query: queryOptions, request: requestOptions } = options ?? {};
 
-  const queryKey = queryOptions?.queryKey ?? getGetTodayThreeStrikesQueryKey();
+  const queryKey = queryOptions?.queryKey ?? getGetTodayThreeFlopsQueryKey();
 
   const queryFn: QueryFunction<
-    Awaited<ReturnType<typeof getTodayThreeStrikes>>
-  > = ({ signal }) => getTodayThreeStrikes({ signal, ...requestOptions });
+    Awaited<ReturnType<typeof getTodayThreeFlops>>
+  > = ({ signal }) => getTodayThreeFlops({ signal, ...requestOptions });
 
   return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
-    Awaited<ReturnType<typeof getTodayThreeStrikes>>,
+    Awaited<ReturnType<typeof getTodayThreeFlops>>,
     TError,
     TData
   > & { queryKey: QueryKey };
 };
 
-export type GetTodayThreeStrikesQueryResult = NonNullable<
-  Awaited<ReturnType<typeof getTodayThreeStrikes>>
+export type GetTodayThreeFlopsQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getTodayThreeFlops>>
 >;
-export type GetTodayThreeStrikesQueryError = ErrorType<ErrorResponse>;
+export type GetTodayThreeFlopsQueryError = ErrorType<ErrorResponse>;
 
 /**
  * @summary Get today's Three Strikes challenge
  */
 
-export function useGetTodayThreeStrikes<
-  TData = Awaited<ReturnType<typeof getTodayThreeStrikes>>,
+export function useGetTodayThreeFlops<
+  TData = Awaited<ReturnType<typeof getTodayThreeFlops>>,
   TError = ErrorType<ErrorResponse>,
 >(options?: {
   query?: UseQueryOptions<
-    Awaited<ReturnType<typeof getTodayThreeStrikes>>,
+    Awaited<ReturnType<typeof getTodayThreeFlops>>,
     TError,
     TData
   >;
   request?: SecondParameter<typeof customFetch>;
 }): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
-  const queryOptions = getGetTodayThreeStrikesQueryOptions(options);
+  const queryOptions = getGetTodayThreeFlopsQueryOptions(options);
 
   const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
     queryKey: QueryKey;
@@ -209,29 +209,29 @@ export function useGetTodayThreeStrikes<
 /**
  * @summary Get archive of Three Strikes challenges
  */
-export const getGetThreeStrikesArchiveUrl = () => {
-  return `/api/daily/three-strikes/archive`;
+export const getGetThreeFlopsArchiveUrl = () => {
+  return `/api/daily/three-flops/archive`;
 };
 
-export const getThreeStrikesArchive = async (
+export const getThreeFlopsArchive = async (
   options?: RequestInit,
-): Promise<ThreeStrikesSummary[]> => {
-  return customFetch<ThreeStrikesSummary[]>(getGetThreeStrikesArchiveUrl(), {
+): Promise<ThreeFlopsSummary[]> => {
+  return customFetch<ThreeFlopsSummary[]>(getGetThreeFlopsArchiveUrl(), {
     ...options,
     method: "GET",
   });
 };
 
-export const getGetThreeStrikesArchiveQueryKey = () => {
-  return [`/api/daily/three-strikes/archive`] as const;
+export const getGetThreeFlopsArchiveQueryKey = () => {
+  return [`/api/daily/three-flops/archive`] as const;
 };
 
-export const getGetThreeStrikesArchiveQueryOptions = <
-  TData = Awaited<ReturnType<typeof getThreeStrikesArchive>>,
+export const getGetThreeFlopsArchiveQueryOptions = <
+  TData = Awaited<ReturnType<typeof getThreeFlopsArchive>>,
   TError = ErrorType<unknown>,
 >(options?: {
   query?: UseQueryOptions<
-    Awaited<ReturnType<typeof getThreeStrikesArchive>>,
+    Awaited<ReturnType<typeof getThreeFlopsArchive>>,
     TError,
     TData
   >;
@@ -239,41 +239,40 @@ export const getGetThreeStrikesArchiveQueryOptions = <
 }) => {
   const { query: queryOptions, request: requestOptions } = options ?? {};
 
-  const queryKey =
-    queryOptions?.queryKey ?? getGetThreeStrikesArchiveQueryKey();
+  const queryKey = queryOptions?.queryKey ?? getGetThreeFlopsArchiveQueryKey();
 
   const queryFn: QueryFunction<
-    Awaited<ReturnType<typeof getThreeStrikesArchive>>
-  > = ({ signal }) => getThreeStrikesArchive({ signal, ...requestOptions });
+    Awaited<ReturnType<typeof getThreeFlopsArchive>>
+  > = ({ signal }) => getThreeFlopsArchive({ signal, ...requestOptions });
 
   return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
-    Awaited<ReturnType<typeof getThreeStrikesArchive>>,
+    Awaited<ReturnType<typeof getThreeFlopsArchive>>,
     TError,
     TData
   > & { queryKey: QueryKey };
 };
 
-export type GetThreeStrikesArchiveQueryResult = NonNullable<
-  Awaited<ReturnType<typeof getThreeStrikesArchive>>
+export type GetThreeFlopsArchiveQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getThreeFlopsArchive>>
 >;
-export type GetThreeStrikesArchiveQueryError = ErrorType<unknown>;
+export type GetThreeFlopsArchiveQueryError = ErrorType<unknown>;
 
 /**
  * @summary Get archive of Three Strikes challenges
  */
 
-export function useGetThreeStrikesArchive<
-  TData = Awaited<ReturnType<typeof getThreeStrikesArchive>>,
+export function useGetThreeFlopsArchive<
+  TData = Awaited<ReturnType<typeof getThreeFlopsArchive>>,
   TError = ErrorType<unknown>,
 >(options?: {
   query?: UseQueryOptions<
-    Awaited<ReturnType<typeof getThreeStrikesArchive>>,
+    Awaited<ReturnType<typeof getThreeFlopsArchive>>,
     TError,
     TData
   >;
   request?: SecondParameter<typeof customFetch>;
 }): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
-  const queryOptions = getGetThreeStrikesArchiveQueryOptions(options);
+  const queryOptions = getGetThreeFlopsArchiveQueryOptions(options);
 
   const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
     queryKey: QueryKey;
@@ -285,32 +284,32 @@ export function useGetThreeStrikesArchive<
 /**
  * @summary Get a specific Three Strikes challenge by ID (for archive replay)
  */
-export const getGetThreeStrikesByIdUrl = (id: string) => {
-  return `/api/daily/three-strikes/${id}`;
+export const getGetThreeFlopsByIdUrl = (id: string) => {
+  return `/api/daily/three-flops/${id}`;
 };
 
-export const getThreeStrikesById = async (
+export const getThreeFlopsById = async (
   id: string,
   options?: RequestInit,
-): Promise<ThreeStrikesChallenge> => {
-  return customFetch<ThreeStrikesChallenge>(getGetThreeStrikesByIdUrl(id), {
+): Promise<ThreeFlopsChallenge> => {
+  return customFetch<ThreeFlopsChallenge>(getGetThreeFlopsByIdUrl(id), {
     ...options,
     method: "GET",
   });
 };
 
-export const getGetThreeStrikesByIdQueryKey = (id: string) => {
-  return [`/api/daily/three-strikes/${id}`] as const;
+export const getGetThreeFlopsByIdQueryKey = (id: string) => {
+  return [`/api/daily/three-flops/${id}`] as const;
 };
 
-export const getGetThreeStrikesByIdQueryOptions = <
-  TData = Awaited<ReturnType<typeof getThreeStrikesById>>,
+export const getGetThreeFlopsByIdQueryOptions = <
+  TData = Awaited<ReturnType<typeof getThreeFlopsById>>,
   TError = ErrorType<ErrorResponse>,
 >(
   id: string,
   options?: {
     query?: UseQueryOptions<
-      Awaited<ReturnType<typeof getThreeStrikesById>>,
+      Awaited<ReturnType<typeof getThreeFlopsById>>,
       TError,
       TData
     >;
@@ -319,11 +318,11 @@ export const getGetThreeStrikesByIdQueryOptions = <
 ) => {
   const { query: queryOptions, request: requestOptions } = options ?? {};
 
-  const queryKey = queryOptions?.queryKey ?? getGetThreeStrikesByIdQueryKey(id);
+  const queryKey = queryOptions?.queryKey ?? getGetThreeFlopsByIdQueryKey(id);
 
   const queryFn: QueryFunction<
-    Awaited<ReturnType<typeof getThreeStrikesById>>
-  > = ({ signal }) => getThreeStrikesById(id, { signal, ...requestOptions });
+    Awaited<ReturnType<typeof getThreeFlopsById>>
+  > = ({ signal }) => getThreeFlopsById(id, { signal, ...requestOptions });
 
   return {
     queryKey,
@@ -331,36 +330,36 @@ export const getGetThreeStrikesByIdQueryOptions = <
     enabled: !!id,
     ...queryOptions,
   } as UseQueryOptions<
-    Awaited<ReturnType<typeof getThreeStrikesById>>,
+    Awaited<ReturnType<typeof getThreeFlopsById>>,
     TError,
     TData
   > & { queryKey: QueryKey };
 };
 
-export type GetThreeStrikesByIdQueryResult = NonNullable<
-  Awaited<ReturnType<typeof getThreeStrikesById>>
+export type GetThreeFlopsByIdQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getThreeFlopsById>>
 >;
-export type GetThreeStrikesByIdQueryError = ErrorType<ErrorResponse>;
+export type GetThreeFlopsByIdQueryError = ErrorType<ErrorResponse>;
 
 /**
  * @summary Get a specific Three Strikes challenge by ID (for archive replay)
  */
 
-export function useGetThreeStrikesById<
-  TData = Awaited<ReturnType<typeof getThreeStrikesById>>,
+export function useGetThreeFlopsById<
+  TData = Awaited<ReturnType<typeof getThreeFlopsById>>,
   TError = ErrorType<ErrorResponse>,
 >(
   id: string,
   options?: {
     query?: UseQueryOptions<
-      Awaited<ReturnType<typeof getThreeStrikesById>>,
+      Awaited<ReturnType<typeof getThreeFlopsById>>,
       TError,
       TData
     >;
     request?: SecondParameter<typeof customFetch>;
   },
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
-  const queryOptions = getGetThreeStrikesByIdQueryOptions(id, options);
+  const queryOptions = getGetThreeFlopsByIdQueryOptions(id, options);
 
   const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
     queryKey: QueryKey;
@@ -1362,29 +1361,29 @@ export const useSubmitPopOrDropScore = <
 /**
  * @summary Get today's Guess the Year puzzle (hints only, no year)
  */
-export const getGetTodayGuessTheYearUrl = () => {
-  return `/api/daily/guess-the-year`;
+export const getGetTodayClockItUrl = () => {
+  return `/api/daily/clock-it`;
 };
 
-export const getTodayGuessTheYear = async (
+export const getTodayClockIt = async (
   options?: RequestInit,
-): Promise<GuessTheYearPuzzle> => {
-  return customFetch<GuessTheYearPuzzle>(getGetTodayGuessTheYearUrl(), {
+): Promise<ClockItPuzzle> => {
+  return customFetch<ClockItPuzzle>(getGetTodayClockItUrl(), {
     ...options,
     method: "GET",
   });
 };
 
-export const getGetTodayGuessTheYearQueryKey = () => {
-  return [`/api/daily/guess-the-year`] as const;
+export const getGetTodayClockItQueryKey = () => {
+  return [`/api/daily/clock-it`] as const;
 };
 
-export const getGetTodayGuessTheYearQueryOptions = <
-  TData = Awaited<ReturnType<typeof getTodayGuessTheYear>>,
+export const getGetTodayClockItQueryOptions = <
+  TData = Awaited<ReturnType<typeof getTodayClockIt>>,
   TError = ErrorType<unknown>,
 >(options?: {
   query?: UseQueryOptions<
-    Awaited<ReturnType<typeof getTodayGuessTheYear>>,
+    Awaited<ReturnType<typeof getTodayClockIt>>,
     TError,
     TData
   >;
@@ -1392,40 +1391,40 @@ export const getGetTodayGuessTheYearQueryOptions = <
 }) => {
   const { query: queryOptions, request: requestOptions } = options ?? {};
 
-  const queryKey = queryOptions?.queryKey ?? getGetTodayGuessTheYearQueryKey();
+  const queryKey = queryOptions?.queryKey ?? getGetTodayClockItQueryKey();
 
-  const queryFn: QueryFunction<
-    Awaited<ReturnType<typeof getTodayGuessTheYear>>
-  > = ({ signal }) => getTodayGuessTheYear({ signal, ...requestOptions });
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getTodayClockIt>>> = ({
+    signal,
+  }) => getTodayClockIt({ signal, ...requestOptions });
 
   return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
-    Awaited<ReturnType<typeof getTodayGuessTheYear>>,
+    Awaited<ReturnType<typeof getTodayClockIt>>,
     TError,
     TData
   > & { queryKey: QueryKey };
 };
 
-export type GetTodayGuessTheYearQueryResult = NonNullable<
-  Awaited<ReturnType<typeof getTodayGuessTheYear>>
+export type GetTodayClockItQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getTodayClockIt>>
 >;
-export type GetTodayGuessTheYearQueryError = ErrorType<unknown>;
+export type GetTodayClockItQueryError = ErrorType<unknown>;
 
 /**
  * @summary Get today's Guess the Year puzzle (hints only, no year)
  */
 
-export function useGetTodayGuessTheYear<
-  TData = Awaited<ReturnType<typeof getTodayGuessTheYear>>,
+export function useGetTodayClockIt<
+  TData = Awaited<ReturnType<typeof getTodayClockIt>>,
   TError = ErrorType<unknown>,
 >(options?: {
   query?: UseQueryOptions<
-    Awaited<ReturnType<typeof getTodayGuessTheYear>>,
+    Awaited<ReturnType<typeof getTodayClockIt>>,
     TError,
     TData
   >;
   request?: SecondParameter<typeof customFetch>;
 }): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
-  const queryOptions = getGetTodayGuessTheYearQueryOptions(options);
+  const queryOptions = getGetTodayClockItQueryOptions(options);
 
   const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
     queryKey: QueryKey;
@@ -1437,40 +1436,40 @@ export function useGetTodayGuessTheYear<
 /**
  * @summary Check a year guess or request the answer (give up)
  */
-export const getCheckGuessTheYearUrl = () => {
-  return `/api/daily/guess-the-year/check`;
+export const getCheckClockItUrl = () => {
+  return `/api/daily/clock-it/check`;
 };
 
-export const checkGuessTheYear = async (
-  guessTheYearCheckRequest: GuessTheYearCheckRequest,
+export const checkClockIt = async (
+  clockItCheckRequest: ClockItCheckRequest,
   options?: RequestInit,
-): Promise<GuessTheYearCheckResponse> => {
-  return customFetch<GuessTheYearCheckResponse>(getCheckGuessTheYearUrl(), {
+): Promise<ClockItCheckResponse> => {
+  return customFetch<ClockItCheckResponse>(getCheckClockItUrl(), {
     ...options,
     method: "POST",
     headers: { "Content-Type": "application/json", ...options?.headers },
-    body: JSON.stringify(guessTheYearCheckRequest),
+    body: JSON.stringify(clockItCheckRequest),
   });
 };
 
-export const getCheckGuessTheYearMutationOptions = <
+export const getCheckClockItMutationOptions = <
   TError = ErrorType<ErrorResponse>,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof checkGuessTheYear>>,
+    Awaited<ReturnType<typeof checkClockIt>>,
     TError,
-    { data: BodyType<GuessTheYearCheckRequest> },
+    { data: BodyType<ClockItCheckRequest> },
     TContext
   >;
   request?: SecondParameter<typeof customFetch>;
 }): UseMutationOptions<
-  Awaited<ReturnType<typeof checkGuessTheYear>>,
+  Awaited<ReturnType<typeof checkClockIt>>,
   TError,
-  { data: BodyType<GuessTheYearCheckRequest> },
+  { data: BodyType<ClockItCheckRequest> },
   TContext
 > => {
-  const mutationKey = ["checkGuessTheYear"];
+  const mutationKey = ["checkClockIt"];
   const { mutation: mutationOptions, request: requestOptions } = options
     ? options.mutation &&
       "mutationKey" in options.mutation &&
@@ -1480,44 +1479,44 @@ export const getCheckGuessTheYearMutationOptions = <
     : { mutation: { mutationKey }, request: undefined };
 
   const mutationFn: MutationFunction<
-    Awaited<ReturnType<typeof checkGuessTheYear>>,
-    { data: BodyType<GuessTheYearCheckRequest> }
+    Awaited<ReturnType<typeof checkClockIt>>,
+    { data: BodyType<ClockItCheckRequest> }
   > = (props) => {
     const { data } = props ?? {};
 
-    return checkGuessTheYear(data, requestOptions);
+    return checkClockIt(data, requestOptions);
   };
 
   return { mutationFn, ...mutationOptions };
 };
 
-export type CheckGuessTheYearMutationResult = NonNullable<
-  Awaited<ReturnType<typeof checkGuessTheYear>>
+export type CheckClockItMutationResult = NonNullable<
+  Awaited<ReturnType<typeof checkClockIt>>
 >;
-export type CheckGuessTheYearMutationBody = BodyType<GuessTheYearCheckRequest>;
-export type CheckGuessTheYearMutationError = ErrorType<ErrorResponse>;
+export type CheckClockItMutationBody = BodyType<ClockItCheckRequest>;
+export type CheckClockItMutationError = ErrorType<ErrorResponse>;
 
 /**
  * @summary Check a year guess or request the answer (give up)
  */
-export const useCheckGuessTheYear = <
+export const useCheckClockIt = <
   TError = ErrorType<ErrorResponse>,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof checkGuessTheYear>>,
+    Awaited<ReturnType<typeof checkClockIt>>,
     TError,
-    { data: BodyType<GuessTheYearCheckRequest> },
+    { data: BodyType<ClockItCheckRequest> },
     TContext
   >;
   request?: SecondParameter<typeof customFetch>;
 }): UseMutationResult<
-  Awaited<ReturnType<typeof checkGuessTheYear>>,
+  Awaited<ReturnType<typeof checkClockIt>>,
   TError,
-  { data: BodyType<GuessTheYearCheckRequest> },
+  { data: BodyType<ClockItCheckRequest> },
   TContext
 > => {
-  return useMutation(getCheckGuessTheYearMutationOptions(options));
+  return useMutation(getCheckClockItMutationOptions(options));
 };
 
 /**

@@ -1,10 +1,10 @@
 import { useState, useEffect, useRef } from "react";
 import { useLocation } from "wouter";
 import {
-  useGetTodayThreeStrikes,
-  useGetThreeStrikesById,
-  getGetTodayThreeStrikesQueryKey,
-  getGetThreeStrikesByIdQueryKey,
+  useGetTodayThreeFlops,
+  useGetThreeFlopsById,
+  getGetTodayThreeFlopsQueryKey,
+  getGetThreeFlopsByIdQueryKey,
 } from "@workspace/api-client-react";
 import { motion } from "framer-motion";
 import { AlertCircle, ArrowRight, Share2, Home as HomeIcon } from "lucide-react";
@@ -34,32 +34,32 @@ function useQueryParam(key: string): string | null {
   return new URLSearchParams(window.location.search).get(key);
 }
 
-export default function ThreeStrikes() {
+export default function ThreeFlops() {
   const [, setLocation] = useLocation();
   const { toast } = useToast();
-  const { playCorrect, playWrong, playStrike, playVictory } = useSfx();
+  const { playCorrect, playWrong, playFlop, playVictory } = useSfx();
   const { recordGame } = useStreaks();
   const reduced = useReducedMotion();
 
   const archiveId = useQueryParam("id");
   const isArchive = !!archiveId;
 
-  const todayQuery = useGetTodayThreeStrikes({
-    query: { queryKey: getGetTodayThreeStrikesQueryKey(), enabled: !isArchive },
+  const todayQuery = useGetTodayThreeFlops({
+    query: { queryKey: getGetTodayThreeFlopsQueryKey(), enabled: !isArchive },
   });
-  const archiveQuery = useGetThreeStrikesById(archiveId ?? "", {
-    query: { queryKey: getGetThreeStrikesByIdQueryKey(archiveId ?? ""), enabled: isArchive },
+  const archiveQuery = useGetThreeFlopsById(archiveId ?? "", {
+    query: { queryKey: getGetThreeFlopsByIdQueryKey(archiveId ?? ""), enabled: isArchive },
   });
 
   const { data: challenge, isLoading } = isArchive ? archiveQuery : todayQuery;
 
   const [guesses, setGuesses] = useState<string[]>([]);
-  const [strikes, setStrikes] = useState(0);
+  const [flops, setFlops] = useState(0);
   const [gameOver, setGameOver] = useState(false);
   const [hasWon, setHasWon] = useState(false);
   const [currentGuess, setCurrentGuess] = useState("");
   const [shakeKey, setShakeKey] = useState(0);
-  const [strikePopKey, setStrikePopKey] = useState(0);
+  const [flopPopKey, setFlopPopKey] = useState(0);
   const [lastCorrectIdx, setLastCorrectIdx] = useState<number | null>(null);
   const [banners, setBanners] = useState<Banner[]>([]);
   const recordedRef = useRef(false);
@@ -67,6 +67,11 @@ export default function ThreeStrikes() {
   const cellRefs = useRef<Array<HTMLDivElement | null>>([]);
 
   const todayDate = new Date().toISOString().split("T")[0];
+  // Storage keys (`ptq-three-strikes-…`, `ptq-archive-ts-…`,
+  // `ptq-streak-three-strikes`, `ptq-stats.threeStrikes*`) are intentionally
+  // kept under their legacy names so player progress saved before the rename
+  // to "Three Flops" still loads. These are internal identifiers only — no UI
+  // surface ever shows them.
   const storageKey = isArchive ? `ptq-archive-ts-${archiveId}` : `ptq-three-strikes-${todayDate}`;
 
   useEffect(() => {
@@ -78,7 +83,8 @@ export default function ThreeStrikes() {
         if (parsed.completed) {
           setGameOver(true);
           setHasWon(parsed.hasWon ?? false);
-          setStrikes(parsed.strikes ?? 0);
+          // Legacy saves used `strikes`; new saves use `flops`. Read both.
+          setFlops(parsed.flops ?? parsed.strikes ?? 0);
           setGuesses(parsed.guesses ?? []);
           recordedRef.current = true;
         }
@@ -91,7 +97,10 @@ export default function ThreeStrikes() {
     try {
       localStorage.setItem(storageKey, JSON.stringify({
         completed: true, hasWon, score: guesses.length,
-        total: challenge.totalCount, strikes, guesses,
+        total: challenge.totalCount,
+        // Persist under both keys for forward + backward compat with archive readers.
+        flops, strikes: flops,
+        guesses,
       }));
       if (!isArchive) {
         const currentStreak = parseInt(localStorage.getItem("ptq-streak-three-strikes") ?? "0");
@@ -107,6 +116,8 @@ export default function ThreeStrikes() {
     } catch {/* ignore */}
     if (!recordedRef.current) {
       recordedRef.current = true;
+      // Recorded under the legacy key to keep per-game counters continuous
+      // across the rename.
       const newBanners = recordGame("three-strikes", guesses.length);
       if (hasWon) { playVictory(); hapticVictory(); fireBigCelebration(); }
       if (newBanners.length > 0) setBanners((b) => [...b, ...newBanners]);
@@ -142,19 +153,29 @@ export default function ThreeStrikes() {
       toast({ title: `✓ ${matched.display}`, description: matched.hint });
       if (newGuesses.length === challenge.totalCount) { setGameOver(true); setHasWon(true); }
     } else {
-      const newStrikes = strikes + 1;
-      setStrikes(newStrikes); setCurrentGuess(""); setShakeKey((k) => k + 1); setStrikePopKey((k) => k + 1);
-      playStrike(); hapticStrike(); playWrong(); hapticWrong();
-      toast({ title: `✗ Strike ${newStrikes}/3`, description: `"${guess}" doesn't match any answer.`, variant: "destructive" });
-      if (newStrikes >= 3) { setGameOver(true); setHasWon(false); }
+      const newFlops = flops + 1;
+      setFlops(newFlops); setCurrentGuess(""); setShakeKey((k) => k + 1); setFlopPopKey((k) => k + 1);
+      playFlop(); hapticStrike(); playWrong(); hapticWrong();
+      toast({ title: `✗ Flop ${newFlops}/3`, description: `"${guess}" doesn't match any answer.`, variant: "destructive" });
+      if (newFlops >= 3) { setGameOver(true); setHasWon(false); }
     }
     inputRef.current?.focus();
   };
 
   const handleShare = () => {
     if (!challenge) return;
-    const strikeMojis = Array(3).fill("⚪").map((_, i) => i < strikes ? "🔴" : "⚪").join("");
-    const shareText = `Pop: The Question – Three Strikes\n${challenge.title}: ${guesses.length}/${challenge.totalCount} ${strikeMojis}\n\npopthequestion.replit.app`;
+    const flopMojis = Array(3).fill("⚪").map((_, i) => i < flops ? "🔴" : "⚪").join("");
+    const humanDate = new Date(challenge.date + "T00:00:00").toLocaleDateString(undefined, {
+      year: "numeric", month: "long", day: "numeric",
+    });
+    const shareText = [
+      `Pop: The Question — Three Flops`,
+      humanDate,
+      `${challenge.title}`,
+      `Completed: ${guesses.length}/${challenge.totalCount} ✓`,
+      `Used ${flops}/3 flops ${flopMojis}`,
+      `popthequestion.replit.app`,
+    ].join("\n");
     navigator.clipboard.writeText(shareText).then(() => toast({ title: "Copied!", description: "Share your score with friends." }));
   };
 
@@ -199,15 +220,15 @@ export default function ThreeStrikes() {
           </p>
         </div>
 
-        {/* Strikes display */}
+        {/* Flops display */}
         <div className="flex items-center gap-3 bg-white border-[3px] border-black shadow-[3px_3px_0_#000] px-4 py-3 flex-shrink-0">
-          <span className="font-display font-black text-sm text-black uppercase tracking-wide">Strikes</span>
+          <span className="font-display font-black text-sm text-black uppercase tracking-wide">Flops</span>
           <div className="flex gap-1.5">
             {[0, 1, 2].map((i) => {
-              const active = i < strikes;
+              const active = i < flops;
               return (
-                <Pop key={i} trigger={active ? strikePopKey : 0} asTag="span">
-                  <Shake trigger={active ? strikePopKey : 0} asTag="span">
+                <Pop key={i} trigger={active ? flopPopKey : 0} asTag="span">
+                  <Shake trigger={active ? flopPopKey : 0} asTag="span">
                     <AlertCircle
                       className={`w-7 h-7 transition-none ${active ? "text-[#FF0000] fill-[#FF0000]/20" : "text-black/20"}`}
                     />
@@ -320,7 +341,7 @@ export default function ThreeStrikes() {
           <p className="text-lg text-black/70 font-sans mb-6">
             Got <CountUp className="font-black text-black" value={guesses.length} /> of{" "}
             <span className="font-black text-black">{challenge.totalCount}</span> with{" "}
-            <CountUp className="font-black text-black" value={strikes} /> strike{strikes !== 1 ? "s" : ""}
+            <CountUp className="font-black text-black" value={flops} /> flop{flops !== 1 ? "s" : ""}
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Button

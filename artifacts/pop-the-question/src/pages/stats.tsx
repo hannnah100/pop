@@ -79,7 +79,7 @@ export default function Stats() {
             <CardHeader className="pb-4">
               <CardTitle className="text-2xl font-display flex items-center gap-2">
                 <Target className="w-6 h-6 text-primary drop-shadow-[0_0_8px_hsl(var(--primary))]" />
-                Three Strikes
+                Three Flops
               </CardTitle>
             </CardHeader>
             <CardContent>

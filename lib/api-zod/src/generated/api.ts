@@ -17,7 +17,7 @@ export const HealthCheckResponse = zod.object({
 /**
  * @summary Get today's Three Strikes challenge
  */
-export const GetTodayThreeStrikesResponse = zod.object({
+export const GetTodayThreeFlopsResponse = zod.object({
   id: zod.string(),
   date: zod.string(),
   title: zod.string(),
@@ -35,25 +35,25 @@ export const GetTodayThreeStrikesResponse = zod.object({
 /**
  * @summary Get archive of Three Strikes challenges
  */
-export const GetThreeStrikesArchiveResponseItem = zod.object({
+export const GetThreeFlopsArchiveResponseItem = zod.object({
   id: zod.string(),
   date: zod.string(),
   title: zod.string(),
   prompt: zod.string(),
   totalCount: zod.number(),
 });
-export const GetThreeStrikesArchiveResponse = zod.array(
-  GetThreeStrikesArchiveResponseItem,
+export const GetThreeFlopsArchiveResponse = zod.array(
+  GetThreeFlopsArchiveResponseItem,
 );
 
 /**
  * @summary Get a specific Three Strikes challenge by ID (for archive replay)
  */
-export const GetThreeStrikesByIdParams = zod.object({
+export const GetThreeFlopsByIdParams = zod.object({
   id: zod.coerce.string(),
 });
 
-export const GetThreeStrikesByIdResponse = zod.object({
+export const GetThreeFlopsByIdResponse = zod.object({
   id: zod.string(),
   date: zod.string(),
   title: zod.string(),
@@ -305,10 +305,10 @@ export const SubmitPopOrDropScoreResponse = zod.object({
 /**
  * @summary Get today's Guess the Year puzzle (hints only, no year)
  */
-export const getTodayGuessTheYearResponseHintsMin = 3;
-export const getTodayGuessTheYearResponseHintsMax = 3;
+export const getTodayClockItResponseHintsMin = 3;
+export const getTodayClockItResponseHintsMax = 3;
 
-export const GetTodayGuessTheYearResponse = zod.object({
+export const GetTodayClockItResponse = zod.object({
   id: zod
     .string()
     .describe(
@@ -317,14 +317,14 @@ export const GetTodayGuessTheYearResponse = zod.object({
   date: zod.string(),
   hints: zod
     .array(zod.string())
-    .min(getTodayGuessTheYearResponseHintsMin)
-    .max(getTodayGuessTheYearResponseHintsMax),
+    .min(getTodayClockItResponseHintsMin)
+    .max(getTodayClockItResponseHintsMax),
 });
 
 /**
  * @summary Check a year guess or request the answer (give up)
  */
-export const CheckGuessTheYearBody = zod.object({
+export const CheckClockItBody = zod.object({
   id: zod
     .string()
     .describe("Opaque daily identifier returned by the GET endpoint"),
@@ -332,7 +332,7 @@ export const CheckGuessTheYearBody = zod.object({
   giveUp: zod.boolean().optional(),
 });
 
-export const CheckGuessTheYearResponse = zod.object({
+export const CheckClockItResponse = zod.object({
   correct: zod.boolean(),
   year: zod.number().nullish(),
 });
@@ -342,10 +342,10 @@ export const CheckGuessTheYearResponse = zod.object({
  */
 export const GetDailyStatusResponse = zod.object({
   date: zod.string(),
-  threeStrikesAvailable: zod.boolean(),
+  threeFlopsAvailable: zod.boolean(),
   crosswordAvailable: zod.boolean(),
   popBoxAvailable: zod.boolean(),
-  threeStrikesTitle: zod.string().optional(),
+  threeFlopsTitle: zod.string().optional(),
   crosswordDate: zod.string().optional(),
   popBoxDate: zod.string().optional(),
 });
