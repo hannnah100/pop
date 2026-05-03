@@ -1,18 +1,33 @@
 <svg width="180" height="180" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Yellow background -->
   <rect width="180" height="180" rx="36" fill="#FFD700"/>
+  <!-- Black border -->
   <rect x="5" y="5" width="170" height="170" rx="31" fill="none" stroke="#000000" stroke-width="10"/>
-  <text
-    x="90"
-    y="125"
-    font-family="Arial Black, Impact, 'Haettenschweiler', sans-serif"
-    font-weight="900"
-    font-size="80"
+
+  <!-- Letter P — drawn as pure paths, no font needed -->
+  <!-- Outer P shape (stem + bump outer) -->
+  <path
+    d="M 48,148
+       L 48,32
+       L 100,32
+       C 138,32 148,52 148,72
+       C 148,92 138,110 100,110
+       L 75,110
+       L 75,148
+       Z"
     fill="#FF1493"
     stroke="#000000"
-    stroke-width="6"
+    stroke-width="7"
     stroke-linejoin="round"
-    paint-order="stroke fill"
-    text-anchor="middle"
-    letter-spacing="-2"
-  >POP</text>
+  />
+  <!-- Inner counter of P (the hole) — punched out with evenodd or layered -->
+  <path
+    d="M 75,56
+       L 98,56
+       C 118,56 124,62 124,72
+       C 124,82 118,88 98,88
+       L 75,88
+       Z"
+    fill="#FFD700"
+  />
 </svg>
