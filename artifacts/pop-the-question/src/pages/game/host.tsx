@@ -179,6 +179,7 @@ interface ScatAnswerResult {
   answer: string;
   pointsEarned: number;
   isDuplicate: boolean;
+  isInvalid?: boolean;
 }
 interface ScatCategoryResult {
   categoryId: string;

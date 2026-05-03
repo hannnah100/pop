@@ -86,6 +86,10 @@ export const ALL_CATEGORIES: ScatCategory[] = [
   { id: "scandal", name: "Celebrity Scandal or Drama", group: "things" },
   { id: "nfl-team", name: "NFL Team", group: "things" },
   { id: "nba-team", name: "NBA Team", group: "things" },
+  { id: "toy", name: "Iconic Toy", group: "things" },
+  { id: "magazine", name: "Magazine", group: "things" },
+  { id: "emoji", name: "Emoji You Use a Lot", group: "things" },
+  { id: "award", name: "Famous Award or Trophy", group: "things" },
   // Pop-culture specific
   { id: "taylor-swift-song", name: "Taylor Swift Song", group: "pop-specific" },
   { id: "beyonce-song", name: "Beyoncé Song", group: "pop-specific" },

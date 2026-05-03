@@ -162,6 +162,7 @@ interface ScatAnswerResult {
   answer: string;
   pointsEarned: number;
   isDuplicate: boolean;
+  isInvalid?: boolean;
 }
 interface ScatCategoryResult {
   categoryId: string;
@@ -1031,6 +1032,7 @@ export default function GamePlayer() {
     newSocket.on("scattergories-10-second-alert", () => {
       setScatAlertActive(true);
       hapticTap();
+      playWhoosh();
     });
 
     newSocket.on("scattergories-results", (payload: {
@@ -1193,12 +1195,19 @@ export default function GamePlayer() {
     return () => clearInterval(id);
   }, [gameType, pqQuestion, pqReveal, pqRoundSummary, pqAnswered]);
 
-  // Scattergories: timer tick
+  // Scattergories: timer tick + auto-submit when time runs out
   useEffect(() => {
     if (gameType !== "scattergories" || scatPhase !== "round" || scatTimerEndAt === 0) return;
-    const id = setInterval(() => setScatNow(Date.now()), 250);
+    const id = setInterval(() => {
+      const now = Date.now();
+      setScatNow(now);
+      if (now >= scatTimerEndAt && !scatSubmitted) {
+        setScatSubmitted(true);
+        socket?.emit("scattergories-submit", { roomCode, answers: scatAnswers });
+      }
+    }, 250);
     return () => clearInterval(id);
-  }, [gameType, scatPhase, scatTimerEndAt]);
+  }, [gameType, scatPhase, scatTimerEndAt, scatSubmitted, scatAnswers, socket, roomCode]);
 
   // Scattergories: submit answers
   const handleScatSubmit = () => {

@@ -19,6 +19,8 @@ export interface PlayerAnswerResult {
   answer: string;
   isUnique: boolean;
   isBlank: boolean;
+  isDuplicate: boolean;
+  isInvalid: boolean;
   pointsEarned: number;
 }
 
@@ -121,29 +123,40 @@ export function areSameAnswer(a: string, b: string): boolean {
   return tol > 0 && levenshtein(na, nb) <= tol;
 }
 
+function answersWithLetter(raw: string, letter: string): boolean {
+  if (!raw) return false;
+  const norm = normalizeScatAnswer(raw);
+  return norm.startsWith(letter.toLowerCase());
+}
+
 export function scoreScattergoriesRound(
   categories: ScatCategory[],
   submissions: Map<string, Record<string, string>>,
   players: Array<{ id: string; name: string; isBot: boolean }>,
+  letter: string,
 ): CategoryResult[] {
   return categories.map((cat) => {
     const answers: PlayerAnswerResult[] = players.map((p) => {
       const raw = (submissions.get(p.id)?.[cat.id] ?? "").trim();
       const isBlank = raw.length === 0;
+      const isInvalid = !isBlank && !answersWithLetter(raw, letter);
       return {
         playerId: p.id,
         playerName: p.name,
         answer: raw,
         isUnique: false,
         isBlank,
+        isInvalid,
+        isDuplicate: false,
         pointsEarned: 0,
       };
     });
 
-    const nonBlank = answers.filter((a) => !a.isBlank);
-    nonBlank.forEach((a) => {
-      const others = nonBlank.filter((b) => b.playerId !== a.playerId);
+    const eligible = answers.filter((a) => !a.isBlank && !a.isInvalid);
+    eligible.forEach((a) => {
+      const others = eligible.filter((b) => b.playerId !== a.playerId);
       const hasDuplicate = others.some((b) => areSameAnswer(a.answer, b.answer));
+      a.isDuplicate = hasDuplicate;
       a.isUnique = !hasDuplicate;
       a.pointsEarned = a.isUnique ? 1 : 0;
     });

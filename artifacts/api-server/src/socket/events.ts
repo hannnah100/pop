@@ -2837,7 +2837,7 @@ function resolveScattergoriesRound(io: SocketIOServer, room: Room) {
   sc.phase = "results";
 
   const nonHostPlayers = room.players.filter((p) => !p.isHost);
-  const results = scoreScattergoriesRound(sc.currentCategories, sc.submissions, nonHostPlayers);
+  const results = scoreScattergoriesRound(sc.currentCategories, sc.submissions, nonHostPlayers, sc.currentLetter);
 
   const roundScoreMap: Record<string, number> = {};
   results.forEach((cat: CategoryResult) => {
