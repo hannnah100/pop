@@ -146,12 +146,12 @@ export default function Home() {
               </Link>
             </div>
 
-            {/* Mini Crossword */}
+            {/* The Skinny */}
             <div className="bg-white border-[3px] border-black shadow-[4px_4px_0_#000] p-5 relative overflow-hidden">
               <StarDoodle className="absolute top-2 right-3 w-7 h-7 text-[#00E5FF] opacity-40" />
               <div className="flex justify-between items-start mb-3">
                 <div>
-                  <h3 className="font-display text-2xl font-black text-black uppercase tracking-tight">Mini Crossword</h3>
+                  <h3 className="font-display text-2xl font-black text-black uppercase tracking-tight">THE SKINNY</h3>
                   <p className="text-sm text-black/60 font-sans mt-1">Pop culture quickie — fill in the grid</p>
                 </div>
                 {cwCompleted ? (

@@ -63,7 +63,7 @@ export default function Archive() {
   const cwItems = (cwArchive ?? []).map((item) => ({
     ...item,
     type: "crossword" as const,
-    title: "Mini Crossword",
+    title: "The Skinny",
     prompt: "Pop culture crossword puzzle",
     totalCount: undefined as number | undefined,
     stats: getArchiveStats(item.id, "crossword"),
@@ -196,7 +196,7 @@ export default function Archive() {
               : f === "three-strikes"
                 ? "Three Strikes"
                 : f === "crossword"
-                  ? "Mini Crossword"
+                  ? "The Skinny"
                   : f === "pop-box"
                     ? "Pop Box"
                     : "Pop or Drop"}

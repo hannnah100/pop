@@ -224,7 +224,7 @@ export default function Crossword() {
       for (let c = 0; c < 5; c++) gridEmoji += isBlackSquare(r, c) ? '⬛' : '🟩';
       gridEmoji += '\n';
     }
-    const shareText = `Pop: The Question - Mini Crossword\n${dateStr}\n\n${gridEmoji}\nTime: ${mm}:${ss}\n\npopthequestion.com`;
+    const shareText = `Pop: The Question - The Skinny\n${dateStr}\n\n${gridEmoji}\nTime: ${mm}:${ss}\n\npopthequestion.com`;
     navigator.clipboard.writeText(shareText).then(() => toast({ title: "Copied!", description: "Share your time with friends." }));
   };
 
@@ -291,7 +291,7 @@ export default function Crossword() {
       <header className="relative bg-[#00E5FF] border-[3px] border-black shadow-[4px_4px_0_#000] px-5 py-4 mb-6 flex justify-between items-center overflow-hidden">
         <StarDoodle className="absolute top-2 right-16 w-7 h-7 text-[#FF1493] opacity-40" />
         <div>
-          <h1 className="font-display text-3xl font-black text-black uppercase tracking-tight">Mini Crossword</h1>
+          <h1 className="font-display text-3xl font-black text-black uppercase tracking-tight">The Skinny</h1>
           <p className="text-sm font-bold text-black/60 font-sans">{puzzle.date}</p>
         </div>
         <div className="flex-shrink-0">
