@@ -633,9 +633,9 @@
     "id": "gty-2000c",
     "year": 2000,
     "hints": [
-      "A new animated family film featured an unlikely green hero and his chatty donkey companion",
-      "Eminem's 'The Real Slim Shady' became one of the most played songs of the year",
-      "Paris Hilton and Nicole Richie were the talk of Hollywood's social scene"
+      "Eminem's 'The Real Slim Shady' and 'Stan' dominated MTV and radio all year long",
+      "Tom Hanks survived alone on a deserted island alongside a volleyball named Wilson",
+      "The Supreme Court halted the Florida recount, handing the US presidency to George W. Bush"
     ]
   },
   {
@@ -778,7 +778,7 @@
     "year": 2006,
     "hints": [
       "A Disney Channel original film about high school students singing shocked everyone by becoming a massive hit",
-      "Ne-Yo's 'So Sick' and Sean Kingston's 'Beautiful Girls' were inescapable on radio",
+      "Ne-Yo's 'So Sick' and Nelly Furtado's 'Maneater' were inescapable on radio",
       "North Korea conducted its first nuclear weapons test"
     ]
   },
@@ -813,8 +813,8 @@
     "id": "gty-2014c",
     "year": 2014,
     "hints": [
-      "A Netflix drama about a chemistry teacher turned drug lord aired its final season and swept awards",
       "John Legend and Chrissy Teigen got married in Lake Como, Italy",
+      "Iggy Azalea's 'Fancy' and Meghan Trainor's 'All About That Bass' were inescapable summer hits",
       "Malaysian Airlines flight MH370 disappeared with 239 people aboard and was never found"
     ]
   },
@@ -915,6 +915,15 @@
       "A major US city experienced days of rioting after a hockey team lost the Stanley Cup finals",
       "Pitbull's 'Give Me Everything' and LMFAO's 'Party Rock Anthem' dominated the summer charts",
       "Muammar Gaddafi was killed after rebel forces stormed his hometown of Sirte"
+    ]
+  },
+  {
+    "id": "gty-2025b",
+    "year": 2025,
+    "hints": [
+      "A pop star's Eras Tour became the highest-grossing concert tour in history, surpassing $2 billion",
+      "Sabrina Carpenter's 'Espresso' was the undisputed song of the summer",
+      "Los Angeles wildfires in January destroyed thousands of structures and forced mass evacuations"
     ]
   }
 ]

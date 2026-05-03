@@ -332,15 +332,15 @@ export default function GuessTheYear() {
     const score = savedState?.score ?? finalScore;
     const hintsUsed = savedState?.hintsUsed ?? hintsRevealed;
     const gaveUp = savedState?.gaveUp ?? (phase === "failed");
-    const hintDots = Array.from({ length: 3 }, (_, i) =>
-      i < hintsUsed ? HINT_COLORS[i].slice(0, 7) !== "#" ? "🟡" : "🟡" : "⬜",
-    );
+    const hintRow = Array.from({ length: 3 }, (_, i) =>
+      i < hintsUsed ? ["🟣", "🟠", "🔵"][i] : "⬜",
+    ).join(" ");
     const text = [
       `📅 Guess the Year — ${puzzle.date}`,
       gaveUp
         ? `❌ Gave up (the year was ${finalYear})`
         : `${scoreEmoji(score)} Got it in hint ${hintsUsed}! (${score} pts)`,
-      hintDots.map((_, i) => (i < hintsUsed ? ["🟣", "🟠", "🔵"][i] : "⬜")).join(" "),
+      hintRow,
       "Play at https://pop-the-question.replit.app",
     ]
       .filter(Boolean)
