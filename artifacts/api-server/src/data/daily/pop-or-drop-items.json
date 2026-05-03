@@ -115,7 +115,6 @@
   {"id":"argentina-area","name":"Argentina","value":2780000,"unit":"","metricLabel":"Country area","category":"geography"},
   {"id":"uk-area","name":"United Kingdom","value":244000,"unit":"","metricLabel":"Country area","category":"geography"},
   {"id":"japan-area","name":"Japan","value":378000,"unit":"","metricLabel":"Country area","category":"geography"},
-  {"id":"mariana-trench-depth","name":"Mariana Trench","value":-10994,"unit":"m","metricLabel":"Ocean depth","category":"geography"},
   {"id":"pacific-ocean-area","name":"Pacific Ocean","value":165000000,"unit":"","metricLabel":"Ocean area","category":"geography"},
   {"id":"atlantic-ocean-area","name":"Atlantic Ocean","value":106000000,"unit":"","metricLabel":"Ocean area","category":"geography"},
   {"id":"indian-ocean-area","name":"Indian Ocean","value":70000000,"unit":"","metricLabel":"Ocean area","category":"geography"},
