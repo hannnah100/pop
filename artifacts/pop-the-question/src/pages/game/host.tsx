@@ -1599,9 +1599,7 @@ export default function GameHost() {
   // ============================================================
 
   const renderLobby = () => {
-    const joinUrl = typeof window !== "undefined"
-      ? `${window.location.hostname}/join`
-      : "popthequestion.replit.app/join";
+    const joinUrl = "popthequestion.replit.app/join";
 
     return (
       <div className="flex-1 flex flex-col items-center justify-center px-4 bg-[#FFF8E7]">
@@ -1612,7 +1610,7 @@ export default function GameHost() {
         {/* Join URL — the big instruction players see on the TV */}
         <div className="mb-2 text-center">
           <p className="font-display font-black text-black/40 text-xl uppercase tracking-[0.15em] mb-1">
-            Players: open your phone and go to
+            Players join at:
           </p>
           <div className="inline-flex items-center gap-3 bg-black px-6 py-3 border-[3px] border-black shadow-[4px_4px_0_#FF1493] mb-2">
             <span className="font-display font-black text-[#FFD700] text-2xl md:text-3xl tracking-wide">
