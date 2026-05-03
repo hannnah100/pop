@@ -181,16 +181,13 @@ export default function ThreeFlops() {
       year: "numeric", month: "long", day: "numeric", timeZone: "UTC",
     });
     const resultEmoji = hasWon
-      ? (flops === 0 ? "🏆" : "✅")
+      ? (flops === 0 ? "🏆" : "✓")
       : "💀";
-    const resultLine = hasWon
-      ? `${resultEmoji} Completed: ${guesses.length}/${challenge.totalCount}`
-      : `${resultEmoji} Got ${guesses.length}/${challenge.totalCount}`;
     const shareText = [
       `Pop: The Question - Three Flops`,
       humanDate,
       ``,
-      resultLine,
+      `Completed: ${guesses.length}/${challenge.totalCount} ${resultEmoji}`,
       `Used ${flops}/3 flops`,
       ``,
       `popthequestion.replit.app`,

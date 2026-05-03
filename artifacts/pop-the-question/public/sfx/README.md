@@ -6,7 +6,7 @@ keeps the bundle small, avoids licensing questions, and lets us ship sound
 without depending on remote assets.
 
 If you want to swap in real CC0/royalty-free clips later, drop them in this
-folder (e.g. `correct.mp3`, `wrong.mp3`, `strike.mp3`, `tick.mp3`,
+folder (e.g. `correct.mp3`, `wrong.mp3`, `flop.mp3`, `tick.mp3`,
 `victory.mp3`) and replace the `players` map in `src/lib/sfx.ts` with
 `HTMLAudioElement` instances.
 
@@ -16,7 +16,7 @@ folder (e.g. `correct.mp3`, `wrong.mp3`, `strike.mp3`, `tick.mp3`,
 | --------- | ------------------------------------ |
 | `correct` | Right answer / correct guess         |
 | `wrong`   | Wrong answer / invalid input         |
-| `strike`  | Strike counter increment             |
+| `flop`    | Flop counter increment                |
 | `tick`    | Final-seconds countdown ticks        |
 | `victory` | Game / puzzle completion fanfare     |
 | `tap`     | Generic button tap                   |

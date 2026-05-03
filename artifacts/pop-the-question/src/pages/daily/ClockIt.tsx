@@ -375,8 +375,8 @@ export default function ClockIt() {
       humanDate,
       ``,
       gaveUp
-        ? `${resultEmoji} Gave up (the year was ${finalYear})`
-        : `${resultEmoji} Got it in ${hintsUsed} ${hintLabel}! (${score} pts)`,
+        ? `Gave up (the year was ${finalYear}) ${resultEmoji}`
+        : `Got it in ${hintsUsed} ${hintLabel}! ${resultEmoji}`,
       ``,
       `popthequestion.replit.app`,
     ].join("\n");
