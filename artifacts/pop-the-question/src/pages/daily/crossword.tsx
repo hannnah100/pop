@@ -67,19 +67,21 @@ export default function Crossword() {
       const numRows = puzzle.grid.length;
       const numCols = puzzle.grid[0]?.length ?? 0;
       const emptyGrid = Array(numRows).fill(null).map(() => Array(numCols).fill(''));
-      try {
-        const savedState = localStorage.getItem(`ptq-crossword-${todayDate}`);
-        if (savedState) {
-          const parsed = JSON.parse(savedState);
-          if (parsed.completed) {
-            setGridState(puzzle.grid);
-            setIsCompleted(true);
-            setElapsedTime(parsed.time);
-            recordedRef.current = true;
-            return;
+      if (!archiveId) {
+        try {
+          const savedState = localStorage.getItem(`ptq-crossword-${todayDate}`);
+          if (savedState) {
+            const parsed = JSON.parse(savedState);
+            if (parsed.completed) {
+              setGridState(puzzle.grid);
+              setIsCompleted(true);
+              setElapsedTime(parsed.time);
+              recordedRef.current = true;
+              return;
+            }
           }
-        }
-      } catch {/* ignore */}
+        } catch {/* ignore */}
+      }
       setGridState(emptyGrid);
       setStartTime(Date.now());
       for (let r = 0; r < numRows; r++) {
@@ -91,7 +93,7 @@ export default function Crossword() {
         }
       }
     }
-  }, [puzzle, todayDate, gridState.length]);
+  }, [puzzle, todayDate, gridState.length, archiveId]);
 
   useEffect(() => {
     if (startTime && !isCompleted) {
