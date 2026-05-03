@@ -249,6 +249,8 @@ export interface ClockItPuzzle {
   /** Opaque daily identifier (date-based, does not contain the year) */
   id: string;
   date: string;
+  /** The correct answer year for this puzzle */
+  year: number;
   /**
    * @minItems 3
    * @maxItems 3

@@ -26,6 +26,7 @@ const HINT_LABELS = ["HINT 1", "HINT 2", "HINT 3"];
 interface Puzzle {
   id: string;
   date: string;
+  year: number;
   hints: [string, string, string];
 }
 
@@ -173,6 +174,7 @@ export default function ClockIt() {
         if (!resp.ok) throw new Error("Failed to fetch");
         const data: Puzzle = await resp.json();
         setPuzzle(data);
+        setFinalYear(data.year);
       } catch {
         setIsError(true);
       } finally {
@@ -390,7 +392,7 @@ export default function ClockIt() {
       ``,
       gaveUp
         ? `Gave up (the year was ${finalYear}) ${resultEmoji}`
-        : `Got it in ${hintsUsed} ${hintLabel}! ${resultEmoji}`,
+        : `Clocked it in ${hintsUsed} ${hintLabel}! ${resultEmoji}`,
       ``,
       `popthequestion.replit.app`,
     ].join("\n");
@@ -610,7 +612,7 @@ export default function ClockIt() {
                     ? "PERFECT! 🏆"
                     : finalScore === 2
                     ? "NICE! ⭐"
-                    : "GOT IT! ✓"}
+                    : "CLOCKED IT! ✓"}
                 </p>
 
                 <div className="mt-3 flex items-center justify-center gap-3">

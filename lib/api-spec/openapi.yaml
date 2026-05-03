@@ -352,7 +352,7 @@ paths:
     get:
       operationId: getTodayClockIt
       tags: [daily]
-      summary: Get today's Clock It puzzle (hints only, no year)
+      summary: Get today's Clock It puzzle
       responses:
         "200":
           description: Today's puzzle
@@ -1324,6 +1324,9 @@ components:
           description: Opaque daily identifier (date-based, does not contain the year)
         date:
           type: string
+        year:
+          type: integer
+          description: The correct answer year for this puzzle
         hints:
           type: array
           items:
@@ -1333,6 +1336,7 @@ components:
       required:
         - id
         - date
+        - year
         - hints
 
     ClockItCheckRequest:

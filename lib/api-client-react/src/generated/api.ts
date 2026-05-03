@@ -132,7 +132,7 @@ export function useHealthCheck<
 }
 
 /**
- * @summary Get today's Three Strikes challenge
+ * @summary Get today's Three Flops challenge
  */
 export const getGetTodayThreeFlopsUrl = () => {
   return `/api/daily/three-flops`;
@@ -183,7 +183,7 @@ export type GetTodayThreeFlopsQueryResult = NonNullable<
 export type GetTodayThreeFlopsQueryError = ErrorType<ErrorResponse>;
 
 /**
- * @summary Get today's Three Strikes challenge
+ * @summary Get today's Three Flops challenge
  */
 
 export function useGetTodayThreeFlops<
@@ -207,7 +207,7 @@ export function useGetTodayThreeFlops<
 }
 
 /**
- * @summary Get archive of Three Strikes challenges
+ * @summary Get archive of Three Flops challenges
  */
 export const getGetThreeFlopsArchiveUrl = () => {
   return `/api/daily/three-flops/archive`;
@@ -258,7 +258,7 @@ export type GetThreeFlopsArchiveQueryResult = NonNullable<
 export type GetThreeFlopsArchiveQueryError = ErrorType<unknown>;
 
 /**
- * @summary Get archive of Three Strikes challenges
+ * @summary Get archive of Three Flops challenges
  */
 
 export function useGetThreeFlopsArchive<
@@ -282,7 +282,7 @@ export function useGetThreeFlopsArchive<
 }
 
 /**
- * @summary Get a specific Three Strikes challenge by ID (for archive replay)
+ * @summary Get a specific Three Flops challenge by ID (for archive replay)
  */
 export const getGetThreeFlopsByIdUrl = (id: string) => {
   return `/api/daily/three-flops/${id}`;
@@ -342,7 +342,7 @@ export type GetThreeFlopsByIdQueryResult = NonNullable<
 export type GetThreeFlopsByIdQueryError = ErrorType<ErrorResponse>;
 
 /**
- * @summary Get a specific Three Strikes challenge by ID (for archive replay)
+ * @summary Get a specific Three Flops challenge by ID (for archive replay)
  */
 
 export function useGetThreeFlopsById<
@@ -1359,7 +1359,7 @@ export const useSubmitPopOrDropScore = <
 };
 
 /**
- * @summary Get today's Guess the Year puzzle (hints only, no year)
+ * @summary Get today's Clock It puzzle
  */
 export const getGetTodayClockItUrl = () => {
   return `/api/daily/clock-it`;
@@ -1410,7 +1410,7 @@ export type GetTodayClockItQueryResult = NonNullable<
 export type GetTodayClockItQueryError = ErrorType<unknown>;
 
 /**
- * @summary Get today's Guess the Year puzzle (hints only, no year)
+ * @summary Get today's Clock It puzzle
  */
 
 export function useGetTodayClockIt<

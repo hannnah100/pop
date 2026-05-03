@@ -42,6 +42,7 @@ router.get("/daily/clock-it", (_req, res): void => {
   res.json({
     id: today,
     date: today,
+    year: puzzle.year,
     hints: puzzle.hints,
   });
 });

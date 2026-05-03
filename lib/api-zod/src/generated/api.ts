@@ -15,7 +15,7 @@ export const HealthCheckResponse = zod.object({
 });
 
 /**
- * @summary Get today's Three Strikes challenge
+ * @summary Get today's Three Flops challenge
  */
 export const GetTodayThreeFlopsResponse = zod.object({
   id: zod.string(),
@@ -33,7 +33,7 @@ export const GetTodayThreeFlopsResponse = zod.object({
 });
 
 /**
- * @summary Get archive of Three Strikes challenges
+ * @summary Get archive of Three Flops challenges
  */
 export const GetThreeFlopsArchiveResponseItem = zod.object({
   id: zod.string(),
@@ -47,7 +47,7 @@ export const GetThreeFlopsArchiveResponse = zod.array(
 );
 
 /**
- * @summary Get a specific Three Strikes challenge by ID (for archive replay)
+ * @summary Get a specific Three Flops challenge by ID (for archive replay)
  */
 export const GetThreeFlopsByIdParams = zod.object({
   id: zod.coerce.string(),
@@ -303,7 +303,7 @@ export const SubmitPopOrDropScoreResponse = zod.object({
 });
 
 /**
- * @summary Get today's Guess the Year puzzle (hints only, no year)
+ * @summary Get today's Clock It puzzle
  */
 export const getTodayClockItResponseHintsMin = 3;
 export const getTodayClockItResponseHintsMax = 3;
@@ -315,6 +315,7 @@ export const GetTodayClockItResponse = zod.object({
       "Opaque daily identifier (date-based, does not contain the year)",
     ),
   date: zod.string(),
+  year: zod.number().describe("The correct answer year for this puzzle"),
   hints: zod
     .array(zod.string())
     .min(getTodayClockItResponseHintsMin)
