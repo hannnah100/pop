@@ -103,8 +103,15 @@ export default function ThreeFlops() {
         guesses,
       }));
       if (!isArchive) {
-        const currentStreak = parseInt(localStorage.getItem("ptq-streak-three-strikes") ?? "0");
-        localStorage.setItem("ptq-streak-three-strikes", hasWon ? (currentStreak + 1).toString() : "0");
+        // Read either canonical or legacy streak key, then write to BOTH so
+        // older parts of the UI that still read the legacy key keep working.
+        const streakRaw = localStorage.getItem("ptq-streak-three-flops")
+          ?? localStorage.getItem("ptq-streak-three-strikes")
+          ?? "0";
+        const currentStreak = parseInt(streakRaw);
+        const nextStreak = hasWon ? (currentStreak + 1).toString() : "0";
+        localStorage.setItem("ptq-streak-three-flops", nextStreak);
+        localStorage.setItem("ptq-streak-three-strikes", nextStreak);
         const statsStr = localStorage.getItem("ptq-stats");
         const stats = statsStr ? JSON.parse(statsStr) : {};
         // Read legacy `threeStrikes*` as fallback so prior progress carries
@@ -120,7 +127,9 @@ export default function ThreeFlops() {
       recordedRef.current = true;
       // Recorded under the legacy key to keep per-game counters continuous
       // across the rename.
-      const newBanners = recordGame("three-strikes", guesses.length);
+      // Canonical key is now "three-flops"; the streaks lib migrates any
+      // legacy "three-strikes" entries forward on read (see streaks.ts).
+      const newBanners = recordGame("three-flops", guesses.length);
       if (hasWon) { playVictory(); hapticVictory(); fireBigCelebration(); }
       if (newBanners.length > 0) setBanners((b) => [...b, ...newBanners]);
     }
@@ -166,14 +175,22 @@ export default function ThreeFlops() {
 
   const handleShare = () => {
     if (!challenge) return;
-    const humanDate = new Date(challenge.date + "T00:00:00").toLocaleDateString(undefined, {
-      year: "numeric", month: "long", day: "numeric",
+    // Deterministic en-US date so the share text is identical for every
+    // player regardless of locale (e.g. "May 3, 2026").
+    const humanDate = new Date(challenge.date + "T00:00:00Z").toLocaleDateString("en-US", {
+      year: "numeric", month: "long", day: "numeric", timeZone: "UTC",
     });
+    const resultEmoji = hasWon
+      ? (flops === 0 ? "🏆" : "✅")
+      : "💀";
+    const resultLine = hasWon
+      ? `${resultEmoji} Completed: ${guesses.length}/${challenge.totalCount}`
+      : `${resultEmoji} Got ${guesses.length}/${challenge.totalCount}`;
     const shareText = [
       `Pop: The Question - Three Flops`,
       humanDate,
       ``,
-      `Completed: ${guesses.length}/${challenge.totalCount} ✓`,
+      resultLine,
       `Used ${flops}/3 flops`,
       ``,
       `popthequestion.replit.app`,
@@ -214,9 +231,10 @@ export default function ThreeFlops() {
         <LightningDoodle className="absolute top-2 right-4 w-6 h-9 text-[#FF6B35] opacity-40" />
         <div>
           <h1 className="font-display text-2xl md:text-3xl font-black text-black uppercase tracking-tight">
-            {challenge.title}
+            Three Flops
           </h1>
-          <p className="text-base text-black/70 font-sans mt-1">{challenge.prompt}</p>
+          <p className="text-base text-black/80 font-sans font-bold mt-1">{challenge.title}</p>
+          <p className="text-sm text-black/60 font-sans mt-0.5">{challenge.prompt}</p>
           <p className="text-sm font-bold text-black/50 font-sans mt-0.5">
             <CountUp value={guesses.length} duration={0.5} />/{challenge.totalCount} found
           </p>

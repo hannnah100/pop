@@ -361,17 +361,22 @@ export default function ClockIt() {
     const score = savedState?.score ?? finalScore;
     const hintsUsed = savedState?.hintsUsed ?? hintsRevealed;
     const gaveUp = savedState?.gaveUp ?? (phase === "failed");
-    const humanDate = new Date(puzzle.date + "T00:00:00").toLocaleDateString(undefined, {
-      year: "numeric", month: "long", day: "numeric",
+    // Deterministic en-US date so share text is identical regardless of
+    // the player's locale (e.g. "May 3, 2026").
+    const humanDate = new Date(puzzle.date + "T00:00:00Z").toLocaleDateString("en-US", {
+      year: "numeric", month: "long", day: "numeric", timeZone: "UTC",
     });
     const hintLabel = hintsUsed === 1 ? "hint" : "hints";
+    const resultEmoji = gaveUp
+      ? "💀"
+      : score === 3 ? "🏆" : score === 2 ? "⭐" : "✓";
     const text = [
       `Pop: The Question - Clock It`,
       humanDate,
       ``,
       gaveUp
-        ? `Gave up (the year was ${finalYear})`
-        : `Got it in ${hintsUsed} ${hintLabel}! (${score} pts)`,
+        ? `${resultEmoji} Gave up (the year was ${finalYear})`
+        : `${resultEmoji} Got it in ${hintsUsed} ${hintLabel}! (${score} pts)`,
       ``,
       `popthequestion.replit.app`,
     ].join("\n");

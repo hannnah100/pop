@@ -3,8 +3,10 @@ import { useCallback, useEffect, useState } from "react";
 const STORAGE_KEY = "ptq-streaks-v1";
 const SEEN_BANNERS_KEY = "ptq-seen-banners-v1";
 
-// "three-strikes" is preserved (alongside the new "three-flops") so existing
-// per-game counts saved under the legacy key still surface in the UI.
+// "three-strikes" is kept in the union purely so legacy persisted data (from
+// before the rename to "three-flops") can be migrated forward on read. New
+// code MUST use "three-flops" / "clock-it" — the legacy keys are silently
+// folded into the new ones inside `read()` below.
 export type GameKey = "three-strikes" | "three-flops" | "clock-it" | "crossword" | "pop-box" | "pop-the-question" | "roast-roulette";
 
 export interface StreakState {
@@ -28,7 +30,20 @@ function read(): StreakState {
   try {
     const raw = window.localStorage.getItem(STORAGE_KEY);
     if (!raw) return initial;
-    return { ...initial, ...JSON.parse(raw) };
+    const parsed = { ...initial, ...JSON.parse(raw) } as StreakState;
+    // Migrate legacy "three-strikes" entries → "three-flops" on read so
+    // history accrued under the old name is still credited. Prefer whatever
+    // value is already under the new key (in case both exist after partial
+    // upgrades).
+    const perGame = { ...parsed.perGame };
+    const bestScore = { ...parsed.bestScore };
+    if (perGame["three-strikes"] != null && perGame["three-flops"] == null) {
+      perGame["three-flops"] = perGame["three-strikes"];
+    }
+    if (bestScore["three-strikes"] != null && bestScore["three-flops"] == null) {
+      bestScore["three-flops"] = bestScore["three-strikes"];
+    }
+    return { ...parsed, perGame, bestScore };
   } catch {
     return initial;
   }

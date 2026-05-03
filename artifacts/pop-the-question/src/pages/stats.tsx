@@ -43,8 +43,11 @@ export default function Stats() {
         }));
       }
 
-      // Legacy streak key preserved for back-compat.
-      setTsStreak(parseInt(localStorage.getItem('ptq-streak-three-strikes') || '0'));
+      // Prefer canonical streak key; fall back to legacy.
+      setTsStreak(parseInt(
+        localStorage.getItem('ptq-streak-three-flops')
+          ?? localStorage.getItem('ptq-streak-three-strikes')
+          ?? '0'));
       setCwStreak(parseInt(localStorage.getItem('ptq-streak-crossword') || '0'));
       setPbStreak(parseInt(localStorage.getItem('ptq-streak-pop-box') || '0'));
       setPodStreak(parseInt(localStorage.getItem('ptq-streak-pop-or-drop') || '0'));
