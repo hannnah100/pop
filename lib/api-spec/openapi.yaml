@@ -16,6 +16,8 @@ tags:
     description: Hosted game rooms
   - name: questions
     description: Question packs
+  - name: custom-games
+    description: User-created custom game packs
 
 paths:
   /healthz:
@@ -403,6 +405,366 @@ paths:
               schema:
                 $ref: "#/components/schemas/DailyStatus"
 
+  /custom-games/jeopardy:
+    get:
+      operationId: listCustomJeopardyPacks
+      tags: [custom-games]
+      summary: List caller's custom Jeopardy packs
+      parameters:
+        - name: x-owner-id
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: List of packs
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/CustomGameSummary"
+    post:
+      operationId: createCustomJeopardyPack
+      tags: [custom-games]
+      summary: Create a custom Jeopardy pack
+      parameters:
+        - name: x-owner-id
+          in: header
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CustomPackPayload"
+      responses:
+        "201":
+          description: Created pack
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CustomGameSummary"
+
+  /custom-games/jeopardy/{id}:
+    get:
+      operationId: getCustomJeopardyPack
+      tags: [custom-games]
+      summary: Get a single custom Jeopardy pack by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: x-owner-id
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Pack detail
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CustomGameSummary"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    put:
+      operationId: updateCustomJeopardyPack
+      tags: [custom-games]
+      summary: Update a custom Jeopardy pack
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: x-owner-id
+          in: header
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CustomPackPayload"
+      responses:
+        "200":
+          description: Updated pack
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CustomGameSummary"
+    delete:
+      operationId: deleteCustomJeopardyPack
+      tags: [custom-games]
+      summary: Delete a custom Jeopardy pack
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: x-owner-id
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Deleted
+
+  /custom-games/wof:
+    get:
+      operationId: listCustomWofPacks
+      tags: [custom-games]
+      summary: List caller's custom Wheel of Fortune packs
+      parameters:
+        - name: x-owner-id
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: List of packs
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/CustomGameSummary"
+    post:
+      operationId: createCustomWofPack
+      tags: [custom-games]
+      summary: Create a custom Wheel of Fortune pack
+      parameters:
+        - name: x-owner-id
+          in: header
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CustomPackPayload"
+      responses:
+        "201":
+          description: Created pack
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CustomGameSummary"
+
+  /custom-games/wof/{id}:
+    get:
+      operationId: getCustomWofPack
+      tags: [custom-games]
+      summary: Get a single custom WoF pack by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: x-owner-id
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Pack detail
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CustomGameSummary"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    put:
+      operationId: updateCustomWofPack
+      tags: [custom-games]
+      summary: Update a custom WoF pack
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: x-owner-id
+          in: header
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CustomPackPayload"
+      responses:
+        "200":
+          description: Updated pack
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CustomGameSummary"
+    delete:
+      operationId: deleteCustomWofPack
+      tags: [custom-games]
+      summary: Delete a custom WoF pack
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: x-owner-id
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Deleted
+
+  /custom-games/quiz:
+    get:
+      operationId: listCustomQuizPacks
+      tags: [custom-games]
+      summary: List caller's custom Pub Quiz packs
+      parameters:
+        - name: x-owner-id
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: List of packs
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/CustomGameSummary"
+    post:
+      operationId: createCustomQuizPack
+      tags: [custom-games]
+      summary: Create a custom Pub Quiz pack
+      parameters:
+        - name: x-owner-id
+          in: header
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CustomPackPayload"
+      responses:
+        "201":
+          description: Created pack
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CustomGameSummary"
+
+  /custom-games/quiz/{id}:
+    get:
+      operationId: getCustomQuizPack
+      tags: [custom-games]
+      summary: Get a single custom Pub Quiz pack by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: x-owner-id
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Pack detail
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CustomGameSummary"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    put:
+      operationId: updateCustomQuizPack
+      tags: [custom-games]
+      summary: Update a custom Pub Quiz pack
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: x-owner-id
+          in: header
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CustomPackPayload"
+      responses:
+        "200":
+          description: Updated pack
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CustomGameSummary"
+    delete:
+      operationId: deleteCustomQuizPack
+      tags: [custom-games]
+      summary: Delete a custom Pub Quiz pack
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: x-owner-id
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Deleted
+
   /rooms/create:
     post:
       operationId: createRoom
@@ -479,6 +841,31 @@ paths:
 
 components:
   schemas:
+    CustomPackPayload:
+      type: object
+      additionalProperties: true
+      description: Raw pack payload (validated server-side by game-type-specific Zod schema)
+
+    CustomGameSummary:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        payload:
+          $ref: "#/components/schemas/CustomPackPayload"
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+      required:
+        - id
+        - title
+        - payload
+
     HealthStatus:
       type: object
       properties:

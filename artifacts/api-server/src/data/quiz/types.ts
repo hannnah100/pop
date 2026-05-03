@@ -5,18 +5,21 @@ export interface MultipleChoiceQuestion {
   prompt: string;
   options: [string, string, string, string];
   correctIndex: 0 | 1 | 2 | 3;
+  doublePoints?: boolean;
 }
 
 export interface OpenEndedQuestion {
   type: "open-ended";
   prompt: string;
   acceptedAnswers: string[];
+  doublePoints?: boolean;
 }
 
 export interface TrueFalseQuestion {
   type: "true-false";
   prompt: string;
   answer: boolean;
+  doublePoints?: boolean;
 }
 
 export type QuizQuestion =

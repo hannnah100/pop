@@ -5,6 +5,21 @@
  * Pop The Question API specification
  * OpenAPI spec version: 0.1.0
  */
+/**
+ * Raw pack payload (validated server-side by game-type-specific Zod schema)
+ */
+export interface CustomPackPayload {
+  [key: string]: unknown;
+}
+
+export interface CustomGameSummary {
+  id: number;
+  title: string;
+  payload: CustomPackPayload;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
 export interface HealthStatus {
   status: string;
 }

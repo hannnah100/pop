@@ -20,6 +20,8 @@ import type {
   CreateRoomRequest,
   CrosswordPuzzle,
   CrosswordSummary,
+  CustomGameSummary,
+  CustomPackPayload,
   DailyStatus,
   ErrorResponse,
   GetPopOrDropLeaderboardParams,
@@ -1592,6 +1594,1265 @@ export function useGetDailyStatus<
 
   return { ...query, queryKey: queryOptions.queryKey };
 }
+
+/**
+ * @summary List caller's custom Jeopardy packs
+ */
+export const getListCustomJeopardyPacksUrl = () => {
+  return `/api/custom-games/jeopardy`;
+};
+
+export const listCustomJeopardyPacks = async (
+  options?: RequestInit,
+): Promise<CustomGameSummary[]> => {
+  return customFetch<CustomGameSummary[]>(getListCustomJeopardyPacksUrl(), {
+    ...options,
+    method: "GET",
+  });
+};
+
+export const getListCustomJeopardyPacksQueryKey = () => {
+  return [`/api/custom-games/jeopardy`] as const;
+};
+
+export const getListCustomJeopardyPacksQueryOptions = <
+  TData = Awaited<ReturnType<typeof listCustomJeopardyPacks>>,
+  TError = ErrorType<unknown>,
+>(options?: {
+  query?: UseQueryOptions<
+    Awaited<ReturnType<typeof listCustomJeopardyPacks>>,
+    TError,
+    TData
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
+
+  const queryKey =
+    queryOptions?.queryKey ?? getListCustomJeopardyPacksQueryKey();
+
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof listCustomJeopardyPacks>>
+  > = ({ signal }) => listCustomJeopardyPacks({ signal, ...requestOptions });
+
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof listCustomJeopardyPacks>>,
+    TError,
+    TData
+  > & { queryKey: QueryKey };
+};
+
+export type ListCustomJeopardyPacksQueryResult = NonNullable<
+  Awaited<ReturnType<typeof listCustomJeopardyPacks>>
+>;
+export type ListCustomJeopardyPacksQueryError = ErrorType<unknown>;
+
+/**
+ * @summary List caller's custom Jeopardy packs
+ */
+
+export function useListCustomJeopardyPacks<
+  TData = Awaited<ReturnType<typeof listCustomJeopardyPacks>>,
+  TError = ErrorType<unknown>,
+>(options?: {
+  query?: UseQueryOptions<
+    Awaited<ReturnType<typeof listCustomJeopardyPacks>>,
+    TError,
+    TData
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+  const queryOptions = getListCustomJeopardyPacksQueryOptions(options);
+
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: QueryKey;
+  };
+
+  return { ...query, queryKey: queryOptions.queryKey };
+}
+
+/**
+ * @summary Create a custom Jeopardy pack
+ */
+export const getCreateCustomJeopardyPackUrl = () => {
+  return `/api/custom-games/jeopardy`;
+};
+
+export const createCustomJeopardyPack = async (
+  customPackPayload: CustomPackPayload,
+  options?: RequestInit,
+): Promise<CustomGameSummary> => {
+  return customFetch<CustomGameSummary>(getCreateCustomJeopardyPackUrl(), {
+    ...options,
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...options?.headers },
+    body: JSON.stringify(customPackPayload),
+  });
+};
+
+export const getCreateCustomJeopardyPackMutationOptions = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof createCustomJeopardyPack>>,
+    TError,
+    { data: BodyType<CustomPackPayload> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof createCustomJeopardyPack>>,
+  TError,
+  { data: BodyType<CustomPackPayload> },
+  TContext
+> => {
+  const mutationKey = ["createCustomJeopardyPack"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof createCustomJeopardyPack>>,
+    { data: BodyType<CustomPackPayload> }
+  > = (props) => {
+    const { data } = props ?? {};
+
+    return createCustomJeopardyPack(data, requestOptions);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type CreateCustomJeopardyPackMutationResult = NonNullable<
+  Awaited<ReturnType<typeof createCustomJeopardyPack>>
+>;
+export type CreateCustomJeopardyPackMutationBody = BodyType<CustomPackPayload>;
+export type CreateCustomJeopardyPackMutationError = ErrorType<unknown>;
+
+/**
+ * @summary Create a custom Jeopardy pack
+ */
+export const useCreateCustomJeopardyPack = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof createCustomJeopardyPack>>,
+    TError,
+    { data: BodyType<CustomPackPayload> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof createCustomJeopardyPack>>,
+  TError,
+  { data: BodyType<CustomPackPayload> },
+  TContext
+> => {
+  return useMutation(getCreateCustomJeopardyPackMutationOptions(options));
+};
+
+/**
+ * @summary Get a single custom Jeopardy pack by ID
+ */
+export const getGetCustomJeopardyPackUrl = (id: number) => {
+  return `/api/custom-games/jeopardy/${id}`;
+};
+
+export const getCustomJeopardyPack = async (
+  id: number,
+  options?: RequestInit,
+): Promise<CustomGameSummary> => {
+  return customFetch<CustomGameSummary>(getGetCustomJeopardyPackUrl(id), {
+    ...options,
+    method: "GET",
+  });
+};
+
+export const getGetCustomJeopardyPackQueryKey = (id: number) => {
+  return [`/api/custom-games/jeopardy/${id}`] as const;
+};
+
+export const getGetCustomJeopardyPackQueryOptions = <
+  TData = Awaited<ReturnType<typeof getCustomJeopardyPack>>,
+  TError = ErrorType<ErrorResponse>,
+>(
+  id: number,
+  options?: {
+    query?: UseQueryOptions<
+      Awaited<ReturnType<typeof getCustomJeopardyPack>>,
+      TError,
+      TData
+    >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
+
+  const queryKey =
+    queryOptions?.queryKey ?? getGetCustomJeopardyPackQueryKey(id);
+
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof getCustomJeopardyPack>>
+  > = ({ signal }) => getCustomJeopardyPack(id, { signal, ...requestOptions });
+
+  return {
+    queryKey,
+    queryFn,
+    enabled: !!id,
+    ...queryOptions,
+  } as UseQueryOptions<
+    Awaited<ReturnType<typeof getCustomJeopardyPack>>,
+    TError,
+    TData
+  > & { queryKey: QueryKey };
+};
+
+export type GetCustomJeopardyPackQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getCustomJeopardyPack>>
+>;
+export type GetCustomJeopardyPackQueryError = ErrorType<ErrorResponse>;
+
+/**
+ * @summary Get a single custom Jeopardy pack by ID
+ */
+
+export function useGetCustomJeopardyPack<
+  TData = Awaited<ReturnType<typeof getCustomJeopardyPack>>,
+  TError = ErrorType<ErrorResponse>,
+>(
+  id: number,
+  options?: {
+    query?: UseQueryOptions<
+      Awaited<ReturnType<typeof getCustomJeopardyPack>>,
+      TError,
+      TData
+    >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+  const queryOptions = getGetCustomJeopardyPackQueryOptions(id, options);
+
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: QueryKey;
+  };
+
+  return { ...query, queryKey: queryOptions.queryKey };
+}
+
+/**
+ * @summary Update a custom Jeopardy pack
+ */
+export const getUpdateCustomJeopardyPackUrl = (id: number) => {
+  return `/api/custom-games/jeopardy/${id}`;
+};
+
+export const updateCustomJeopardyPack = async (
+  id: number,
+  customPackPayload: CustomPackPayload,
+  options?: RequestInit,
+): Promise<CustomGameSummary> => {
+  return customFetch<CustomGameSummary>(getUpdateCustomJeopardyPackUrl(id), {
+    ...options,
+    method: "PUT",
+    headers: { "Content-Type": "application/json", ...options?.headers },
+    body: JSON.stringify(customPackPayload),
+  });
+};
+
+export const getUpdateCustomJeopardyPackMutationOptions = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof updateCustomJeopardyPack>>,
+    TError,
+    { id: number; data: BodyType<CustomPackPayload> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof updateCustomJeopardyPack>>,
+  TError,
+  { id: number; data: BodyType<CustomPackPayload> },
+  TContext
+> => {
+  const mutationKey = ["updateCustomJeopardyPack"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof updateCustomJeopardyPack>>,
+    { id: number; data: BodyType<CustomPackPayload> }
+  > = (props) => {
+    const { id, data } = props ?? {};
+
+    return updateCustomJeopardyPack(id, data, requestOptions);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type UpdateCustomJeopardyPackMutationResult = NonNullable<
+  Awaited<ReturnType<typeof updateCustomJeopardyPack>>
+>;
+export type UpdateCustomJeopardyPackMutationBody = BodyType<CustomPackPayload>;
+export type UpdateCustomJeopardyPackMutationError = ErrorType<unknown>;
+
+/**
+ * @summary Update a custom Jeopardy pack
+ */
+export const useUpdateCustomJeopardyPack = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof updateCustomJeopardyPack>>,
+    TError,
+    { id: number; data: BodyType<CustomPackPayload> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof updateCustomJeopardyPack>>,
+  TError,
+  { id: number; data: BodyType<CustomPackPayload> },
+  TContext
+> => {
+  return useMutation(getUpdateCustomJeopardyPackMutationOptions(options));
+};
+
+/**
+ * @summary Delete a custom Jeopardy pack
+ */
+export const getDeleteCustomJeopardyPackUrl = (id: number) => {
+  return `/api/custom-games/jeopardy/${id}`;
+};
+
+export const deleteCustomJeopardyPack = async (
+  id: number,
+  options?: RequestInit,
+): Promise<void> => {
+  return customFetch<void>(getDeleteCustomJeopardyPackUrl(id), {
+    ...options,
+    method: "DELETE",
+  });
+};
+
+export const getDeleteCustomJeopardyPackMutationOptions = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof deleteCustomJeopardyPack>>,
+    TError,
+    { id: number },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof deleteCustomJeopardyPack>>,
+  TError,
+  { id: number },
+  TContext
+> => {
+  const mutationKey = ["deleteCustomJeopardyPack"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof deleteCustomJeopardyPack>>,
+    { id: number }
+  > = (props) => {
+    const { id } = props ?? {};
+
+    return deleteCustomJeopardyPack(id, requestOptions);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type DeleteCustomJeopardyPackMutationResult = NonNullable<
+  Awaited<ReturnType<typeof deleteCustomJeopardyPack>>
+>;
+
+export type DeleteCustomJeopardyPackMutationError = ErrorType<unknown>;
+
+/**
+ * @summary Delete a custom Jeopardy pack
+ */
+export const useDeleteCustomJeopardyPack = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof deleteCustomJeopardyPack>>,
+    TError,
+    { id: number },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof deleteCustomJeopardyPack>>,
+  TError,
+  { id: number },
+  TContext
+> => {
+  return useMutation(getDeleteCustomJeopardyPackMutationOptions(options));
+};
+
+/**
+ * @summary List caller's custom Wheel of Fortune packs
+ */
+export const getListCustomWofPacksUrl = () => {
+  return `/api/custom-games/wof`;
+};
+
+export const listCustomWofPacks = async (
+  options?: RequestInit,
+): Promise<CustomGameSummary[]> => {
+  return customFetch<CustomGameSummary[]>(getListCustomWofPacksUrl(), {
+    ...options,
+    method: "GET",
+  });
+};
+
+export const getListCustomWofPacksQueryKey = () => {
+  return [`/api/custom-games/wof`] as const;
+};
+
+export const getListCustomWofPacksQueryOptions = <
+  TData = Awaited<ReturnType<typeof listCustomWofPacks>>,
+  TError = ErrorType<unknown>,
+>(options?: {
+  query?: UseQueryOptions<
+    Awaited<ReturnType<typeof listCustomWofPacks>>,
+    TError,
+    TData
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
+
+  const queryKey = queryOptions?.queryKey ?? getListCustomWofPacksQueryKey();
+
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof listCustomWofPacks>>
+  > = ({ signal }) => listCustomWofPacks({ signal, ...requestOptions });
+
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof listCustomWofPacks>>,
+    TError,
+    TData
+  > & { queryKey: QueryKey };
+};
+
+export type ListCustomWofPacksQueryResult = NonNullable<
+  Awaited<ReturnType<typeof listCustomWofPacks>>
+>;
+export type ListCustomWofPacksQueryError = ErrorType<unknown>;
+
+/**
+ * @summary List caller's custom Wheel of Fortune packs
+ */
+
+export function useListCustomWofPacks<
+  TData = Awaited<ReturnType<typeof listCustomWofPacks>>,
+  TError = ErrorType<unknown>,
+>(options?: {
+  query?: UseQueryOptions<
+    Awaited<ReturnType<typeof listCustomWofPacks>>,
+    TError,
+    TData
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+  const queryOptions = getListCustomWofPacksQueryOptions(options);
+
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: QueryKey;
+  };
+
+  return { ...query, queryKey: queryOptions.queryKey };
+}
+
+/**
+ * @summary Create a custom Wheel of Fortune pack
+ */
+export const getCreateCustomWofPackUrl = () => {
+  return `/api/custom-games/wof`;
+};
+
+export const createCustomWofPack = async (
+  customPackPayload: CustomPackPayload,
+  options?: RequestInit,
+): Promise<CustomGameSummary> => {
+  return customFetch<CustomGameSummary>(getCreateCustomWofPackUrl(), {
+    ...options,
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...options?.headers },
+    body: JSON.stringify(customPackPayload),
+  });
+};
+
+export const getCreateCustomWofPackMutationOptions = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof createCustomWofPack>>,
+    TError,
+    { data: BodyType<CustomPackPayload> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof createCustomWofPack>>,
+  TError,
+  { data: BodyType<CustomPackPayload> },
+  TContext
+> => {
+  const mutationKey = ["createCustomWofPack"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof createCustomWofPack>>,
+    { data: BodyType<CustomPackPayload> }
+  > = (props) => {
+    const { data } = props ?? {};
+
+    return createCustomWofPack(data, requestOptions);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type CreateCustomWofPackMutationResult = NonNullable<
+  Awaited<ReturnType<typeof createCustomWofPack>>
+>;
+export type CreateCustomWofPackMutationBody = BodyType<CustomPackPayload>;
+export type CreateCustomWofPackMutationError = ErrorType<unknown>;
+
+/**
+ * @summary Create a custom Wheel of Fortune pack
+ */
+export const useCreateCustomWofPack = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof createCustomWofPack>>,
+    TError,
+    { data: BodyType<CustomPackPayload> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof createCustomWofPack>>,
+  TError,
+  { data: BodyType<CustomPackPayload> },
+  TContext
+> => {
+  return useMutation(getCreateCustomWofPackMutationOptions(options));
+};
+
+/**
+ * @summary Get a single custom WoF pack by ID
+ */
+export const getGetCustomWofPackUrl = (id: number) => {
+  return `/api/custom-games/wof/${id}`;
+};
+
+export const getCustomWofPack = async (
+  id: number,
+  options?: RequestInit,
+): Promise<CustomGameSummary> => {
+  return customFetch<CustomGameSummary>(getGetCustomWofPackUrl(id), {
+    ...options,
+    method: "GET",
+  });
+};
+
+export const getGetCustomWofPackQueryKey = (id: number) => {
+  return [`/api/custom-games/wof/${id}`] as const;
+};
+
+export const getGetCustomWofPackQueryOptions = <
+  TData = Awaited<ReturnType<typeof getCustomWofPack>>,
+  TError = ErrorType<ErrorResponse>,
+>(
+  id: number,
+  options?: {
+    query?: UseQueryOptions<
+      Awaited<ReturnType<typeof getCustomWofPack>>,
+      TError,
+      TData
+    >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
+
+  const queryKey = queryOptions?.queryKey ?? getGetCustomWofPackQueryKey(id);
+
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof getCustomWofPack>>
+  > = ({ signal }) => getCustomWofPack(id, { signal, ...requestOptions });
+
+  return {
+    queryKey,
+    queryFn,
+    enabled: !!id,
+    ...queryOptions,
+  } as UseQueryOptions<
+    Awaited<ReturnType<typeof getCustomWofPack>>,
+    TError,
+    TData
+  > & { queryKey: QueryKey };
+};
+
+export type GetCustomWofPackQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getCustomWofPack>>
+>;
+export type GetCustomWofPackQueryError = ErrorType<ErrorResponse>;
+
+/**
+ * @summary Get a single custom WoF pack by ID
+ */
+
+export function useGetCustomWofPack<
+  TData = Awaited<ReturnType<typeof getCustomWofPack>>,
+  TError = ErrorType<ErrorResponse>,
+>(
+  id: number,
+  options?: {
+    query?: UseQueryOptions<
+      Awaited<ReturnType<typeof getCustomWofPack>>,
+      TError,
+      TData
+    >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+  const queryOptions = getGetCustomWofPackQueryOptions(id, options);
+
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: QueryKey;
+  };
+
+  return { ...query, queryKey: queryOptions.queryKey };
+}
+
+/**
+ * @summary Update a custom WoF pack
+ */
+export const getUpdateCustomWofPackUrl = (id: number) => {
+  return `/api/custom-games/wof/${id}`;
+};
+
+export const updateCustomWofPack = async (
+  id: number,
+  customPackPayload: CustomPackPayload,
+  options?: RequestInit,
+): Promise<CustomGameSummary> => {
+  return customFetch<CustomGameSummary>(getUpdateCustomWofPackUrl(id), {
+    ...options,
+    method: "PUT",
+    headers: { "Content-Type": "application/json", ...options?.headers },
+    body: JSON.stringify(customPackPayload),
+  });
+};
+
+export const getUpdateCustomWofPackMutationOptions = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof updateCustomWofPack>>,
+    TError,
+    { id: number; data: BodyType<CustomPackPayload> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof updateCustomWofPack>>,
+  TError,
+  { id: number; data: BodyType<CustomPackPayload> },
+  TContext
+> => {
+  const mutationKey = ["updateCustomWofPack"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof updateCustomWofPack>>,
+    { id: number; data: BodyType<CustomPackPayload> }
+  > = (props) => {
+    const { id, data } = props ?? {};
+
+    return updateCustomWofPack(id, data, requestOptions);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type UpdateCustomWofPackMutationResult = NonNullable<
+  Awaited<ReturnType<typeof updateCustomWofPack>>
+>;
+export type UpdateCustomWofPackMutationBody = BodyType<CustomPackPayload>;
+export type UpdateCustomWofPackMutationError = ErrorType<unknown>;
+
+/**
+ * @summary Update a custom WoF pack
+ */
+export const useUpdateCustomWofPack = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof updateCustomWofPack>>,
+    TError,
+    { id: number; data: BodyType<CustomPackPayload> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof updateCustomWofPack>>,
+  TError,
+  { id: number; data: BodyType<CustomPackPayload> },
+  TContext
+> => {
+  return useMutation(getUpdateCustomWofPackMutationOptions(options));
+};
+
+/**
+ * @summary Delete a custom WoF pack
+ */
+export const getDeleteCustomWofPackUrl = (id: number) => {
+  return `/api/custom-games/wof/${id}`;
+};
+
+export const deleteCustomWofPack = async (
+  id: number,
+  options?: RequestInit,
+): Promise<void> => {
+  return customFetch<void>(getDeleteCustomWofPackUrl(id), {
+    ...options,
+    method: "DELETE",
+  });
+};
+
+export const getDeleteCustomWofPackMutationOptions = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof deleteCustomWofPack>>,
+    TError,
+    { id: number },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof deleteCustomWofPack>>,
+  TError,
+  { id: number },
+  TContext
+> => {
+  const mutationKey = ["deleteCustomWofPack"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof deleteCustomWofPack>>,
+    { id: number }
+  > = (props) => {
+    const { id } = props ?? {};
+
+    return deleteCustomWofPack(id, requestOptions);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type DeleteCustomWofPackMutationResult = NonNullable<
+  Awaited<ReturnType<typeof deleteCustomWofPack>>
+>;
+
+export type DeleteCustomWofPackMutationError = ErrorType<unknown>;
+
+/**
+ * @summary Delete a custom WoF pack
+ */
+export const useDeleteCustomWofPack = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof deleteCustomWofPack>>,
+    TError,
+    { id: number },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof deleteCustomWofPack>>,
+  TError,
+  { id: number },
+  TContext
+> => {
+  return useMutation(getDeleteCustomWofPackMutationOptions(options));
+};
+
+/**
+ * @summary List caller's custom Pub Quiz packs
+ */
+export const getListCustomQuizPacksUrl = () => {
+  return `/api/custom-games/quiz`;
+};
+
+export const listCustomQuizPacks = async (
+  options?: RequestInit,
+): Promise<CustomGameSummary[]> => {
+  return customFetch<CustomGameSummary[]>(getListCustomQuizPacksUrl(), {
+    ...options,
+    method: "GET",
+  });
+};
+
+export const getListCustomQuizPacksQueryKey = () => {
+  return [`/api/custom-games/quiz`] as const;
+};
+
+export const getListCustomQuizPacksQueryOptions = <
+  TData = Awaited<ReturnType<typeof listCustomQuizPacks>>,
+  TError = ErrorType<unknown>,
+>(options?: {
+  query?: UseQueryOptions<
+    Awaited<ReturnType<typeof listCustomQuizPacks>>,
+    TError,
+    TData
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
+
+  const queryKey = queryOptions?.queryKey ?? getListCustomQuizPacksQueryKey();
+
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof listCustomQuizPacks>>
+  > = ({ signal }) => listCustomQuizPacks({ signal, ...requestOptions });
+
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof listCustomQuizPacks>>,
+    TError,
+    TData
+  > & { queryKey: QueryKey };
+};
+
+export type ListCustomQuizPacksQueryResult = NonNullable<
+  Awaited<ReturnType<typeof listCustomQuizPacks>>
+>;
+export type ListCustomQuizPacksQueryError = ErrorType<unknown>;
+
+/**
+ * @summary List caller's custom Pub Quiz packs
+ */
+
+export function useListCustomQuizPacks<
+  TData = Awaited<ReturnType<typeof listCustomQuizPacks>>,
+  TError = ErrorType<unknown>,
+>(options?: {
+  query?: UseQueryOptions<
+    Awaited<ReturnType<typeof listCustomQuizPacks>>,
+    TError,
+    TData
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+  const queryOptions = getListCustomQuizPacksQueryOptions(options);
+
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: QueryKey;
+  };
+
+  return { ...query, queryKey: queryOptions.queryKey };
+}
+
+/**
+ * @summary Create a custom Pub Quiz pack
+ */
+export const getCreateCustomQuizPackUrl = () => {
+  return `/api/custom-games/quiz`;
+};
+
+export const createCustomQuizPack = async (
+  customPackPayload: CustomPackPayload,
+  options?: RequestInit,
+): Promise<CustomGameSummary> => {
+  return customFetch<CustomGameSummary>(getCreateCustomQuizPackUrl(), {
+    ...options,
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...options?.headers },
+    body: JSON.stringify(customPackPayload),
+  });
+};
+
+export const getCreateCustomQuizPackMutationOptions = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof createCustomQuizPack>>,
+    TError,
+    { data: BodyType<CustomPackPayload> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof createCustomQuizPack>>,
+  TError,
+  { data: BodyType<CustomPackPayload> },
+  TContext
+> => {
+  const mutationKey = ["createCustomQuizPack"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof createCustomQuizPack>>,
+    { data: BodyType<CustomPackPayload> }
+  > = (props) => {
+    const { data } = props ?? {};
+
+    return createCustomQuizPack(data, requestOptions);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type CreateCustomQuizPackMutationResult = NonNullable<
+  Awaited<ReturnType<typeof createCustomQuizPack>>
+>;
+export type CreateCustomQuizPackMutationBody = BodyType<CustomPackPayload>;
+export type CreateCustomQuizPackMutationError = ErrorType<unknown>;
+
+/**
+ * @summary Create a custom Pub Quiz pack
+ */
+export const useCreateCustomQuizPack = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof createCustomQuizPack>>,
+    TError,
+    { data: BodyType<CustomPackPayload> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof createCustomQuizPack>>,
+  TError,
+  { data: BodyType<CustomPackPayload> },
+  TContext
+> => {
+  return useMutation(getCreateCustomQuizPackMutationOptions(options));
+};
+
+/**
+ * @summary Get a single custom Pub Quiz pack by ID
+ */
+export const getGetCustomQuizPackUrl = (id: number) => {
+  return `/api/custom-games/quiz/${id}`;
+};
+
+export const getCustomQuizPack = async (
+  id: number,
+  options?: RequestInit,
+): Promise<CustomGameSummary> => {
+  return customFetch<CustomGameSummary>(getGetCustomQuizPackUrl(id), {
+    ...options,
+    method: "GET",
+  });
+};
+
+export const getGetCustomQuizPackQueryKey = (id: number) => {
+  return [`/api/custom-games/quiz/${id}`] as const;
+};
+
+export const getGetCustomQuizPackQueryOptions = <
+  TData = Awaited<ReturnType<typeof getCustomQuizPack>>,
+  TError = ErrorType<ErrorResponse>,
+>(
+  id: number,
+  options?: {
+    query?: UseQueryOptions<
+      Awaited<ReturnType<typeof getCustomQuizPack>>,
+      TError,
+      TData
+    >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
+
+  const queryKey = queryOptions?.queryKey ?? getGetCustomQuizPackQueryKey(id);
+
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof getCustomQuizPack>>
+  > = ({ signal }) => getCustomQuizPack(id, { signal, ...requestOptions });
+
+  return {
+    queryKey,
+    queryFn,
+    enabled: !!id,
+    ...queryOptions,
+  } as UseQueryOptions<
+    Awaited<ReturnType<typeof getCustomQuizPack>>,
+    TError,
+    TData
+  > & { queryKey: QueryKey };
+};
+
+export type GetCustomQuizPackQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getCustomQuizPack>>
+>;
+export type GetCustomQuizPackQueryError = ErrorType<ErrorResponse>;
+
+/**
+ * @summary Get a single custom Pub Quiz pack by ID
+ */
+
+export function useGetCustomQuizPack<
+  TData = Awaited<ReturnType<typeof getCustomQuizPack>>,
+  TError = ErrorType<ErrorResponse>,
+>(
+  id: number,
+  options?: {
+    query?: UseQueryOptions<
+      Awaited<ReturnType<typeof getCustomQuizPack>>,
+      TError,
+      TData
+    >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+  const queryOptions = getGetCustomQuizPackQueryOptions(id, options);
+
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: QueryKey;
+  };
+
+  return { ...query, queryKey: queryOptions.queryKey };
+}
+
+/**
+ * @summary Update a custom Pub Quiz pack
+ */
+export const getUpdateCustomQuizPackUrl = (id: number) => {
+  return `/api/custom-games/quiz/${id}`;
+};
+
+export const updateCustomQuizPack = async (
+  id: number,
+  customPackPayload: CustomPackPayload,
+  options?: RequestInit,
+): Promise<CustomGameSummary> => {
+  return customFetch<CustomGameSummary>(getUpdateCustomQuizPackUrl(id), {
+    ...options,
+    method: "PUT",
+    headers: { "Content-Type": "application/json", ...options?.headers },
+    body: JSON.stringify(customPackPayload),
+  });
+};
+
+export const getUpdateCustomQuizPackMutationOptions = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof updateCustomQuizPack>>,
+    TError,
+    { id: number; data: BodyType<CustomPackPayload> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof updateCustomQuizPack>>,
+  TError,
+  { id: number; data: BodyType<CustomPackPayload> },
+  TContext
+> => {
+  const mutationKey = ["updateCustomQuizPack"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof updateCustomQuizPack>>,
+    { id: number; data: BodyType<CustomPackPayload> }
+  > = (props) => {
+    const { id, data } = props ?? {};
+
+    return updateCustomQuizPack(id, data, requestOptions);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type UpdateCustomQuizPackMutationResult = NonNullable<
+  Awaited<ReturnType<typeof updateCustomQuizPack>>
+>;
+export type UpdateCustomQuizPackMutationBody = BodyType<CustomPackPayload>;
+export type UpdateCustomQuizPackMutationError = ErrorType<unknown>;
+
+/**
+ * @summary Update a custom Pub Quiz pack
+ */
+export const useUpdateCustomQuizPack = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof updateCustomQuizPack>>,
+    TError,
+    { id: number; data: BodyType<CustomPackPayload> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof updateCustomQuizPack>>,
+  TError,
+  { id: number; data: BodyType<CustomPackPayload> },
+  TContext
+> => {
+  return useMutation(getUpdateCustomQuizPackMutationOptions(options));
+};
+
+/**
+ * @summary Delete a custom Pub Quiz pack
+ */
+export const getDeleteCustomQuizPackUrl = (id: number) => {
+  return `/api/custom-games/quiz/${id}`;
+};
+
+export const deleteCustomQuizPack = async (
+  id: number,
+  options?: RequestInit,
+): Promise<void> => {
+  return customFetch<void>(getDeleteCustomQuizPackUrl(id), {
+    ...options,
+    method: "DELETE",
+  });
+};
+
+export const getDeleteCustomQuizPackMutationOptions = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof deleteCustomQuizPack>>,
+    TError,
+    { id: number },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof deleteCustomQuizPack>>,
+  TError,
+  { id: number },
+  TContext
+> => {
+  const mutationKey = ["deleteCustomQuizPack"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof deleteCustomQuizPack>>,
+    { id: number }
+  > = (props) => {
+    const { id } = props ?? {};
+
+    return deleteCustomQuizPack(id, requestOptions);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type DeleteCustomQuizPackMutationResult = NonNullable<
+  Awaited<ReturnType<typeof deleteCustomQuizPack>>
+>;
+
+export type DeleteCustomQuizPackMutationError = ErrorType<unknown>;
+
+/**
+ * @summary Delete a custom Pub Quiz pack
+ */
+export const useDeleteCustomQuizPack = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof deleteCustomQuizPack>>,
+    TError,
+    { id: number },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof deleteCustomQuizPack>>,
+  TError,
+  { id: number },
+  TContext
+> => {
+  return useMutation(getDeleteCustomQuizPackMutationOptions(options));
+};
 
 /**
  * @summary Create a new hosted game room

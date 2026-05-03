@@ -22,6 +22,11 @@ import GameHost from "@/pages/game/host";
 import GamePlayer from "@/pages/game/player";
 import Stats from "@/pages/stats";
 import Archive from "@/pages/archive";
+import CreateGamePicker from "@/pages/create-game/index";
+import JeopardyCreator from "@/pages/create-game/jeopardy";
+import WofCreator from "@/pages/create-game/wof";
+import QuizCreator from "@/pages/create-game/quiz";
+import MyGames from "@/pages/my-games";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -58,6 +63,14 @@ function AnimatedRoutes() {
           <Route path="/game/:roomCode/player" component={GamePlayer} />
           <Route path="/stats" component={Stats} />
           <Route path="/archive" component={Archive} />
+          <Route path="/create-game" component={CreateGamePicker} />
+          <Route path="/create-game/jeopardy/:id" component={JeopardyCreator} />
+          <Route path="/create-game/jeopardy" component={JeopardyCreator} />
+          <Route path="/create-game/wof/:id" component={WofCreator} />
+          <Route path="/create-game/wof" component={WofCreator} />
+          <Route path="/create-game/quiz/:id" component={QuizCreator} />
+          <Route path="/create-game/quiz" component={QuizCreator} />
+          <Route path="/my-games" component={MyGames} />
           <Route component={NotFound} />
         </Switch>
       </motion.div>

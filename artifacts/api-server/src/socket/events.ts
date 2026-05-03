@@ -1,6 +1,16 @@
 import { Server as SocketIOServer } from "socket.io";
 import type { Server as HttpServer } from "http";
 import { logger } from "../lib/logger";
+import { db } from "@workspace/db";
+import {
+  customJeopardyPacksTable,
+  customWofPacksTable,
+  customQuizPacksTable,
+} from "@workspace/db/schema";
+import { eq } from "drizzle-orm";
+import type { JeopardyPack } from "../data/jeopardy/types";
+import type { WofPack } from "../data/wof/types";
+import type { QuizPack } from "../data/quiz/types";
 import {
   QUIZ_PACKS,
   getQuizPack,
@@ -147,6 +157,12 @@ interface Room {
   wof?: WofState;
   /** For wof host UI: the chosen pack id. */
   wofPackId?: string;
+  /** Custom payload when a custom WoF pack is selected (avoids DB lookup at start-game time). */
+  customWofPackPayload?: WofPack;
+  /** Custom payload when a custom Jeopardy pack is selected. */
+  customJeopardyPackPayload?: JeopardyPack;
+  /** Custom payload when a custom Quiz pack is selected. */
+  customQuizPackPayload?: QuizPack;
   /** For wof host UI: the chosen round count (3-5, default 5). */
   wofRoundCount?: number;
   /** Scattergories state (only set when gameType === "scattergories" and game has started). */
@@ -623,25 +639,64 @@ export function setupSocketIO(httpServer: HttpServer) {
     // ===========================================
     // Pub Quiz: list available packs (for host UI)
     // ===========================================
-    socket.on("quiz-list-packs", () => {
-      socket.emit("quiz-packs", {
-        packs: QUIZ_PACKS.map(packSummary) satisfies PackSummary[],
-      });
+    socket.on("quiz-list-packs", async ({ ownerId }: { ownerId?: string } = {}) => {
+      const builtIn = QUIZ_PACKS.map(packSummary) satisfies PackSummary[];
+      if (!ownerId) {
+        socket.emit("quiz-packs", { packs: builtIn });
+        return;
+      }
+      try {
+        const rows = await db.select().from(customQuizPacksTable).where(eq(customQuizPacksTable.ownerId, ownerId));
+        const custom: (PackSummary & { isCustom: true })[] = rows.map((r) => {
+          const p = r.payload as { rounds?: Array<{ name?: string; roundType?: string; questions?: unknown[] }> };
+          const questionCount = (p.rounds ?? []).reduce((acc, round) => acc + (round.questions?.length ?? 0), 0);
+          return {
+            id: `custom-q-${r.id}`,
+            title: r.title,
+            description: "",
+            roundCount: (p.rounds ?? []).length,
+            questionCount,
+            rounds: (p.rounds ?? []).map((rnd) => ({ name: rnd.name ?? "", type: (rnd.roundType as "multiple-choice" | "open-ended" | "true-false") ?? "multiple-choice", questionCount: rnd.questions?.length ?? 0 })),
+            isCustom: true as const,
+          };
+        });
+        socket.emit("quiz-packs", { packs: [...builtIn, ...custom] });
+      } catch {
+        socket.emit("quiz-packs", { packs: builtIn });
+      }
     });
 
     // ===========================================
     // Pub Quiz: host selects a specific pack (lobby only, host-only)
     // ===========================================
-    socket.on("set-pack", ({ roomCode, packId }: { roomCode: string; packId: string | null }) => {
+    socket.on("set-pack", async ({ roomCode, packId, ownerId }: { roomCode: string; packId: string | null; ownerId?: string }) => {
       const room = rooms.get(roomCode);
       if (!room || room.status !== "lobby") return;
       if (room.hostId !== socket.id) return;
       if (room.gameType !== "pub-quiz") return;
 
-      // Validate packId is either null (random) or a known pack.
+      if (packId !== null && packId.startsWith("custom-q-")) {
+        const customId = Number(packId.replace("custom-q-", ""));
+        if (!Number.isFinite(customId)) return;
+        try {
+          const [row] = await db.select().from(customQuizPacksTable).where(eq(customQuizPacksTable.id, customId));
+          if (!row) return;
+          if (!ownerId || row.ownerId !== ownerId) return;
+          const p = row.payload as QuizPack;
+          room.quizPackId = packId;
+          room.customQuizPackPayload = p;
+          const questionCount = p.rounds.reduce((acc, r) => acc + r.questions.length, 0);
+          const summary: PackSummary & { isCustom: true } = { id: packId, title: row.title, description: "", roundCount: p.rounds.length, questionCount, rounds: p.rounds.map((rnd) => ({ name: rnd.name, type: rnd.questions[0]?.type ?? "multiple-choice", questionCount: rnd.questions.length })), isCustom: true };
+          io.to(roomCode).emit("quiz-pack-changed", { packId, summary });
+        } catch { /* ignore */ }
+        return;
+      }
+
+      // Validate packId is either null (random) or a known built-in pack.
       if (packId !== null && !getQuizPack(packId)) return;
 
       room.quizPackId = packId ?? undefined;
+      room.customQuizPackPayload = undefined;
       const chosenPack = packId ? getQuizPack(packId) : null;
       const summary: PackSummary | null = chosenPack ? packSummary(chosenPack) : null;
       // Broadcast so host UI stays in sync on reconnect / multi-tab.
@@ -651,31 +706,106 @@ export function setupSocketIO(httpServer: HttpServer) {
     // ===========================================
     // Jeopardy: list available packs (for host UI)
     // ===========================================
-    socket.on("jeopardy-list-packs", () => {
-      socket.emit("jeopardy-packs", {
-        packs: JEOPARDY_PACKS.map(jeopardyPackSummary) satisfies JeopardyPackSummaryWire[],
-      });
+    socket.on("jeopardy-list-packs", async ({ ownerId }: { ownerId?: string } = {}) => {
+      const builtIn = JEOPARDY_PACKS.map(jeopardyPackSummary) satisfies JeopardyPackSummaryWire[];
+      if (!ownerId) {
+        socket.emit("jeopardy-packs", { packs: builtIn });
+        return;
+      }
+      try {
+        const rows = await db.select().from(customJeopardyPacksTable).where(eq(customJeopardyPacksTable.ownerId, ownerId));
+        const custom: (JeopardyPackSummaryWire & { isCustom: true })[] = rows.map((r) => {
+          const p = r.payload as { categories?: unknown[]; final?: { category?: string } };
+          return { id: `custom-j-${r.id}`, title: r.title, description: "", categoryCount: (p.categories ?? []).length, clueCount: (p.categories ?? []).length * 5, finalCategory: p.final?.category ?? "", isCustom: true as const };
+        });
+        socket.emit("jeopardy-packs", { packs: [...builtIn, ...custom] });
+      } catch {
+        socket.emit("jeopardy-packs", { packs: builtIn });
+      }
+    });
+
+    // ===========================================
+    // Jeopardy: host selects a pack (lobby only, host-only)
+    // ===========================================
+    socket.on("jeopardy-set-pack", async ({ roomCode, packId, ownerId }: { roomCode: string; packId: string | null; ownerId?: string }) => {
+      const room = rooms.get(roomCode);
+      if (!room || room.status !== "lobby") return;
+      if (room.hostId !== socket.id) return;
+      if (room.gameType !== "jeopardy") return;
+
+      if (packId !== null && packId.startsWith("custom-j-")) {
+        const customId = Number(packId.replace("custom-j-", ""));
+        if (!Number.isFinite(customId)) return;
+        try {
+          const [row] = await db.select().from(customJeopardyPacksTable).where(eq(customJeopardyPacksTable.id, customId));
+          if (!row) return;
+          if (!ownerId || row.ownerId !== ownerId) return;
+          const p = row.payload as JeopardyPack;
+          room.jeopardyPackId = packId;
+          room.customJeopardyPackPayload = p;
+          const summary: JeopardyPackSummaryWire & { isCustom: true } = { id: packId, title: row.title, description: "", categoryCount: p.categories.length, clueCount: p.categories.length * 5, finalCategory: p.final.category, isCustom: true };
+          io.to(roomCode).emit("jeopardy-pack-changed", { packId, summary });
+        } catch { /* ignore */ }
+        return;
+      }
+
+      if (packId !== null && !getJeopardyPack(packId)) return;
+      room.jeopardyPackId = packId ?? undefined;
+      room.customJeopardyPackPayload = undefined;
+      const chosenPack = packId ? getJeopardyPack(packId) : null;
+      const summary = chosenPack ? jeopardyPackSummary(chosenPack) : null;
+      io.to(roomCode).emit("jeopardy-pack-changed", { packId, summary });
     });
 
     // ===========================================
     // Wheel of Fortune: list available packs (for host UI)
     // ===========================================
-    socket.on("wof-list-packs", () => {
-      socket.emit("wof-packs", {
-        packs: WOF_PACKS.map(wofPackSummaryWire) satisfies WofPackSummaryWire[],
-      });
+    socket.on("wof-list-packs", async ({ ownerId }: { ownerId?: string } = {}) => {
+      const builtIn = WOF_PACKS.map(wofPackSummaryWire) satisfies WofPackSummaryWire[];
+      if (!ownerId) {
+        socket.emit("wof-packs", { packs: builtIn });
+        return;
+      }
+      try {
+        const rows = await db.select().from(customWofPacksTable).where(eq(customWofPacksTable.ownerId, ownerId));
+        const custom: (WofPackSummaryWire & { isCustom: true })[] = rows.map((r) => {
+          const p = r.payload as { puzzles?: unknown[] };
+          return { id: `custom-w-${r.id}`, title: r.title, description: "", puzzleCount: (p.puzzles ?? []).length, isCustom: true as const };
+        });
+        socket.emit("wof-packs", { packs: [...builtIn, ...custom] });
+      } catch {
+        socket.emit("wof-packs", { packs: builtIn });
+      }
     });
 
     // ===========================================
     // Wheel of Fortune: host selects a pack (lobby only, host-only)
     // ===========================================
-    socket.on("wof-set-pack", ({ roomCode, packId }: { roomCode: string; packId: string | null }) => {
+    socket.on("wof-set-pack", async ({ roomCode, packId, ownerId }: { roomCode: string; packId: string | null; ownerId?: string }) => {
       const room = rooms.get(roomCode);
       if (!room || room.status !== "lobby") return;
       if (room.hostId !== socket.id) return;
       if (room.gameType !== "wheel-of-fortune") return;
+
+      if (packId !== null && packId.startsWith("custom-w-")) {
+        const customId = Number(packId.replace("custom-w-", ""));
+        if (!Number.isFinite(customId)) return;
+        try {
+          const [row] = await db.select().from(customWofPacksTable).where(eq(customWofPacksTable.id, customId));
+          if (!row) return;
+          if (!ownerId || row.ownerId !== ownerId) return;
+          const p = row.payload as WofPack;
+          room.wofPackId = packId;
+          room.customWofPackPayload = p;
+          const summary: WofPackSummaryWire & { isCustom: true } = { id: packId, title: row.title, description: "", puzzleCount: p.puzzles.length, isCustom: true };
+          io.to(roomCode).emit("wof-pack-changed", { packId, summary });
+        } catch { /* ignore */ }
+        return;
+      }
+
       if (packId !== null && !getWofPack(packId)) return;
       room.wofPackId = packId ?? undefined;
+      room.customWofPackPayload = undefined;
       const chosenPack = packId ? getWofPack(packId) : null;
       const summary = chosenPack ? wofPackSummaryWire(chosenPack) : null;
       io.to(roomCode).emit("wof-pack-changed", { packId, summary });
@@ -749,7 +879,7 @@ export function setupSocketIO(httpServer: HttpServer) {
       io.to(roomCode).emit("host-paused-changed", { paused: Boolean(paused) });
     });
 
-    socket.on("start-game", ({ roomCode }: { roomCode: string }) => {
+    socket.on("start-game", async ({ roomCode, ownerId }: { roomCode: string; ownerId?: string }) => {
       const room = rooms.get(roomCode);
       if (!room || room.hostId !== socket.id) return;
       room.lastActivity = Date.now();
@@ -814,8 +944,20 @@ export function setupSocketIO(httpServer: HttpServer) {
         scheduleBotRoasts(io, room, assignments);
 
       } else if (room.gameType === "pub-quiz") {
-        // Pick the pack: explicit room.quizPackId, fallback to random
-        const pack = (room.quizPackId && getQuizPack(room.quizPackId)) || getRandomQuizPack();
+        // Pick the pack: custom payload, explicit built-in packId, or random
+        if (!room.customQuizPackPayload && room.quizPackId?.startsWith("custom-q-")) {
+          const customId = Number(room.quizPackId.replace("custom-q-", ""));
+          const [row] = await db.select().from(customQuizPacksTable).where(eq(customQuizPacksTable.id, customId));
+          if (!row || !ownerId || row.ownerId !== ownerId) {
+            socket.emit("error", { message: "Cannot start game: custom pack not found or permission denied" });
+            room.status = "lobby";
+            return;
+          }
+          room.customQuizPackPayload = row.payload as QuizPack;
+        }
+        const pack = room.customQuizPackPayload
+          ? { ...room.customQuizPackPayload, id: room.quizPackId ?? room.customQuizPackPayload.id }
+          : (room.quizPackId && getQuizPack(room.quizPackId)) || getRandomQuizPack();
         room.quizPackId = pack.id;
         room.quiz = makeQuizState(pack);
 
@@ -833,9 +975,19 @@ export function setupSocketIO(httpServer: HttpServer) {
         // Immediately start question 1 of round 1
         startQuizQuestion(io, room);
       } else if (room.gameType === "jeopardy") {
-        const pack =
-          (room.jeopardyPackId && getJeopardyPack(room.jeopardyPackId)) ||
-          getRandomJeopardyPack();
+        if (!room.customJeopardyPackPayload && room.jeopardyPackId?.startsWith("custom-j-")) {
+          const customId = Number(room.jeopardyPackId.replace("custom-j-", ""));
+          const [row] = await db.select().from(customJeopardyPacksTable).where(eq(customJeopardyPacksTable.id, customId));
+          if (!row || !ownerId || row.ownerId !== ownerId) {
+            socket.emit("error", { message: "Cannot start game: custom pack not found or permission denied" });
+            room.status = "lobby";
+            return;
+          }
+          room.customJeopardyPackPayload = row.payload as JeopardyPack;
+        }
+        const pack = room.customJeopardyPackPayload
+          ? { ...room.customJeopardyPackPayload, id: room.jeopardyPackId ?? room.customJeopardyPackPayload.id } as JeopardyPack
+          : (room.jeopardyPackId && getJeopardyPack(room.jeopardyPackId)) || getRandomJeopardyPack();
         room.jeopardyPackId = pack.id;
         room.jeopardy = makeJeopardyState(pack);
 
@@ -867,8 +1019,19 @@ export function setupSocketIO(httpServer: HttpServer) {
         if (controller?.isBot) scheduleBotJeopardyPick(io, room);
 
       } else if (room.gameType === "wheel-of-fortune") {
-        const pack =
-          (room.wofPackId && getWofPack(room.wofPackId)) || getRandomWofPack();
+        if (!room.customWofPackPayload && room.wofPackId?.startsWith("custom-w-")) {
+          const customId = Number(room.wofPackId.replace("custom-w-", ""));
+          const [row] = await db.select().from(customWofPacksTable).where(eq(customWofPacksTable.id, customId));
+          if (!row || !ownerId || row.ownerId !== ownerId) {
+            socket.emit("error", { message: "Cannot start game: custom pack not found or permission denied" });
+            room.status = "lobby";
+            return;
+          }
+          room.customWofPackPayload = row.payload as WofPack;
+        }
+        const pack = room.customWofPackPayload
+          ? { ...room.customWofPackPayload, id: room.wofPackId ?? room.customWofPackPayload.id } as WofPack
+          : (room.wofPackId && getWofPack(room.wofPackId)) || getRandomWofPack();
         room.wofPackId = pack.id;
         room.wof = makeWofState(pack, room.wofRoundCount ?? 5);
 

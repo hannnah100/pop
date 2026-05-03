@@ -3,7 +3,7 @@ import { useLocation } from "wouter";
 import { useCreateRoom, CreateRoomRequestGameType } from "@workspace/api-client-react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { MessageSquare, Flame, Loader2, Bot, Beer, Grid3x3, CircleDot, LayoutList } from "lucide-react";
+import { MessageSquare, Flame, Loader2, Bot, Beer, Grid3x3, CircleDot, LayoutList, PenSquare, Star } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import {
@@ -169,6 +169,30 @@ export default function Host() {
 
       {/* Game cards */}
       <div className="flex-1 bg-[#FFF8E7] px-4 py-8">
+        {/* Custom game action strip */}
+        <div className="max-w-6xl mx-auto flex gap-3 flex-wrap mb-6">
+          <motion.button
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.97 }}
+            onClick={() => setLocation("/create-game")}
+            className="flex items-center gap-2 px-5 py-3 bg-[#FF6B35] text-black font-display font-black uppercase text-sm border-[3px] border-black shadow-[4px_4px_0_#000]"
+            data-testid="btn-create-custom-game"
+          >
+            <PenSquare className="w-4 h-4" />
+            Create Custom Game
+          </motion.button>
+          <motion.button
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.97 }}
+            onClick={() => setLocation("/my-games")}
+            className="flex items-center gap-2 px-5 py-3 bg-white text-black font-display font-black uppercase text-sm border-[3px] border-black shadow-[4px_4px_0_#000]"
+            data-testid="btn-my-games"
+          >
+            <Star className="w-4 h-4 text-[#FFD700] fill-[#FFD700]" />
+            My Custom Games
+          </motion.button>
+        </div>
+
         <div className="max-w-6xl mx-auto grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           {GAME_CARDS.map((game) => {
             const { Icon } = game;

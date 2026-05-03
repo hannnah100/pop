@@ -178,25 +178,26 @@ export function judgeAnswer(
   q: QuizQuestion,
   raw: string,
 ): JudgeResult {
+  const multiplier = q.doublePoints ? 2 : 1;
   if (q.type === "multiple-choice") {
     const idx = Number.parseInt(raw, 10);
-    if (Number.isNaN(idx)) return { correct: false, pointsForCorrect: QUIZ_SCORING.multipleChoice };
+    if (Number.isNaN(idx)) return { correct: false, pointsForCorrect: QUIZ_SCORING.multipleChoice * multiplier };
     return {
       correct: idx === q.correctIndex,
-      pointsForCorrect: QUIZ_SCORING.multipleChoice,
+      pointsForCorrect: QUIZ_SCORING.multipleChoice * multiplier,
     };
   }
   if (q.type === "true-false") {
     const v = raw === "true" || raw === "1";
     return {
       correct: v === q.answer,
-      pointsForCorrect: QUIZ_SCORING.trueFalse,
+      pointsForCorrect: QUIZ_SCORING.trueFalse * multiplier,
     };
   }
   // open-ended
   return {
     correct: isOpenEndedCorrect(raw, q.acceptedAnswers),
-    pointsForCorrect: QUIZ_SCORING.openEnded,
+    pointsForCorrect: QUIZ_SCORING.openEnded * multiplier,
   };
 }
 

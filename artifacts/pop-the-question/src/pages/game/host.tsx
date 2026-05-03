@@ -49,6 +49,7 @@ import {
 } from "@/components/host/PlayerStatusBadge";
 import type { HostNotificationsHandle } from "@/components/host/HostNotifications";
 import { useHostSettings, type HostAnswerMethod } from "@/lib/hostSettings";
+import { getOwnerId } from "@/lib/ownerId";
 
 // ============ Pub Quiz types ============
 interface QuizPackSummary {
@@ -58,6 +59,7 @@ interface QuizPackSummary {
   roundCount: number;
   questionCount: number;
   rounds: Array<{ name: string; type: string; questionCount: number }>;
+  isCustom?: boolean;
 }
 
 interface QuizPublicQuestion {
@@ -165,6 +167,7 @@ interface WofPackSummaryWire {
   title: string;
   description: string;
   puzzleCount: number;
+  isCustom?: boolean;
 }
 
 type WofWheelValue = number | "BANKRUPT" | "LOSE_A_TURN" | "FREE_PLAY";
@@ -416,6 +419,9 @@ export default function GameHost() {
   const [wofAvailablePacks, setWofAvailablePacks] = useState<WofPackSummaryWire[]>([]);
   const [wofSelectedPackId, setWofSelectedPackId] = useState<string | null>(null);
   const [wofRoundCount, setWofRoundCount] = useState<number>(5);
+  // Jeopardy pack selection
+  const [jeopardyAvailablePacks, setJeopardyAvailablePacks] = useState<(JPackSummary & { isCustom?: boolean })[]>([]);
+  const [jeopardySelectedPackId, setJeopardySelectedPackId] = useState<string | null>(null);
   const [wofSpinIndex, setWofSpinIndex] = useState<number | null>(null);
   const [wofIsFreePlay, setWofIsFreePlay] = useState(false);
   const [wofPendingSolve, setWofPendingSolve] = useState<{ solverId: string | null; solverName: string; answer: string; isVerbal?: boolean } | null>(null);
@@ -503,12 +509,17 @@ export default function GameHost() {
         if (gt === "pub-quiz") {
           // Restore host-selected pack from server state and fetch the pack list.
           setSelectedPackId(quizPackId ?? null);
-          newSocket.emit("quiz-list-packs");
+          newSocket.emit("quiz-list-packs", { ownerId: getOwnerId() });
+        }
+        if (gt === "jeopardy") {
+          const jPackId = (data as { jeopardyPackId?: string }).jeopardyPackId;
+          setJeopardySelectedPackId(jPackId ?? null);
+          newSocket.emit("jeopardy-list-packs", { ownerId: getOwnerId() });
         }
         if (gt === "wheel-of-fortune") {
           setWofSelectedPackId(wofPackId ?? null);
           if (data.wofRoundCount) setWofRoundCount(data.wofRoundCount);
-          newSocket.emit("wof-list-packs");
+          newSocket.emit("wof-list-packs", { ownerId: getOwnerId() });
           // Rehydrate mid-game state on reconnect
           if (data.status === "playing" && data.wofBoard) {
             setGameState("playing");
@@ -1029,6 +1040,15 @@ export default function GameHost() {
       playCorrect();
     });
 
+    // ============ Jeopardy pack picker ============
+    newSocket.on("jeopardy-packs", ({ packs }: { packs: (JPackSummary & { isCustom?: boolean })[] }) => {
+      setJeopardyAvailablePacks(packs);
+    });
+
+    newSocket.on("jeopardy-pack-changed", ({ packId }: { packId: string | null }) => {
+      setJeopardySelectedPackId(packId);
+    });
+
     // ============ Wheel of Fortune socket handlers ============
     newSocket.on("wof-packs", ({ packs }: { packs: WofPackSummaryWire[] }) => {
       setWofAvailablePacks(packs);
@@ -1255,7 +1275,7 @@ export default function GameHost() {
     }
   }, [voteCounts, resultsRevealed, gameType]);
 
-  const handleStartGame = () => socket?.emit("start-game", { roomCode });
+  const handleStartGame = () => socket?.emit("start-game", { roomCode, ownerId: getOwnerId() });
   const handleRevealResults = () => socket?.emit("reveal-results", { roomCode });
   const handleNextQuestion = () => socket?.emit("next-question", { roomCode });
   const handleEndGame = () => socket?.emit("end-game", { roomCode });
@@ -1317,13 +1337,19 @@ export default function GameHost() {
   // Pub Quiz: pack picker (Task #12)
   const handleSetPack = (packId: string | null) => {
     setSelectedPackId(packId);
-    socket?.emit("set-pack", { roomCode, packId });
+    socket?.emit("set-pack", { roomCode, packId, ownerId: getOwnerId() });
+  };
+
+  // Jeopardy: pack picker
+  const handleJeopardySetPack = (packId: string | null) => {
+    setJeopardySelectedPackId(packId);
+    socket?.emit("jeopardy-set-pack", { roomCode, packId, ownerId: getOwnerId() });
   };
 
   // Wheel of Fortune: pack picker
   const handleWofSetPack = (packId: string | null) => {
     setWofSelectedPackId(packId);
-    socket?.emit("wof-set-pack", { roomCode, packId });
+    socket?.emit("wof-set-pack", { roomCode, packId, ownerId: getOwnerId() });
   };
 
   // Wheel of Fortune: handlers
@@ -1492,6 +1518,7 @@ export default function GameHost() {
     rounds,
     selected,
     onSelect,
+    isCustom,
   }: {
     id: string | null;
     title: string;
@@ -1501,6 +1528,7 @@ export default function GameHost() {
     rounds: Array<{ name: string; type: string; questionCount: number }>;
     selected: boolean;
     onSelect: () => void;
+    isCustom?: boolean;
   }) => {
     const isRandom = id === null;
     return (
@@ -1530,6 +1558,12 @@ export default function GameHost() {
           }
           <h3 className="font-display font-black text-black uppercase text-sm leading-tight pr-6">{title}</h3>
         </div>
+
+        {isCustom && (
+          <span className="inline-flex items-center gap-1 text-[10px] font-black uppercase bg-[#FFD700] border-[2px] border-black px-2 py-0.5 mb-2 font-sans">
+            ★ Custom
+          </span>
+        )}
 
         <p className="text-xs text-black/60 mb-3 leading-relaxed line-clamp-2 font-sans">{description}</p>
 
@@ -1631,6 +1665,77 @@ export default function GameHost() {
           </motion.div>
         </motion.div>
 
+        {/* ===== Jeopardy pack picker ===== */}
+        {gameType === "jeopardy" && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+            className="w-full max-w-5xl mb-8"
+          >
+            <div className="flex items-center gap-3 mb-4">
+              <Grid3x3 className="w-6 h-6 text-black" />
+              <h2 className="font-display font-black text-black text-2xl uppercase">
+                Choose a Pack
+              </h2>
+              {jeopardySelectedPackId === null && (
+                <span className="text-sm text-black/50 border-[2px] border-black px-3 py-1 font-sans">
+                  Random is selected
+                </span>
+              )}
+            </div>
+            {jeopardyAvailablePacks.length === 0 ? (
+              <div className="text-black/50 animate-pulse text-lg font-display font-black uppercase">Loading packs…</div>
+            ) : (
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                <motion.button
+                  layout
+                  onClick={() => handleJeopardySetPack(null)}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className={`w-full text-left border-[3px] border-black p-4 focus-visible:outline-none ${jeopardySelectedPackId === null ? "bg-[#FFD700] shadow-[5px_5px_0_#000]" : "bg-white shadow-[4px_4px_0_#000] hover:bg-[#FFF8E7]"}`}
+                >
+                  <div className="flex items-start gap-2 mb-2">
+                    <Shuffle className="w-4 h-4 text-black mt-0.5 flex-shrink-0" />
+                    <h3 className="font-display font-black text-black uppercase text-sm leading-tight">🎲 Random</h3>
+                  </div>
+                  <p className="text-xs text-black/60 leading-relaxed font-sans">Let fate decide — a Jeopardy pack will be chosen at random.</p>
+                </motion.button>
+                {jeopardyAvailablePacks.map((pack) => (
+                  <motion.button
+                    key={pack.id}
+                    layout
+                    onClick={() => handleJeopardySetPack(pack.id)}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    className={`relative w-full text-left border-[3px] border-black p-4 focus-visible:outline-none ${jeopardySelectedPackId === pack.id ? "bg-[#FFD700] shadow-[5px_5px_0_#000]" : "bg-white shadow-[4px_4px_0_#000] hover:bg-[#FFF8E7]"}`}
+                  >
+                    {pack.isCustom && (
+                      <span className="absolute top-2 right-2 bg-[#FF1493] text-white text-[9px] font-display font-black uppercase px-1.5 py-0.5 leading-none border-[1px] border-black">
+                        ★ Custom
+                      </span>
+                    )}
+                    {jeopardySelectedPackId === pack.id && !pack.isCustom && (
+                      <span className="absolute top-3 right-3 w-6 h-6 bg-black flex items-center justify-center">
+                        <Check className="w-3.5 h-3.5 text-[#FFD700]" />
+                      </span>
+                    )}
+                    <h3 className="font-display font-black text-black uppercase text-sm leading-tight mb-1 pr-16">
+                      {pack.title}
+                    </h3>
+                    <p className="text-xs text-black/60 mb-2 leading-relaxed line-clamp-2 font-sans">
+                      {pack.description}
+                    </p>
+                    <span className="text-xs font-sans text-black/40">
+                      {pack.categoryCount} categories · {pack.clueCount} clues
+                    </span>
+                  </motion.button>
+                ))}
+              </div>
+            )}
+          </motion.div>
+        )}
+
         {/* ===== Pub Quiz pack picker (Task #12) ===== */}
         {gameType === "pub-quiz" && (
           <motion.div
@@ -1676,6 +1781,7 @@ export default function GameHost() {
                     rounds={pack.rounds}
                     selected={selectedPackId === pack.id}
                     onSelect={() => handleSetPack(pack.id)}
+                    isCustom={pack.isCustom}
                   />
                 ))}
               </div>
@@ -1738,6 +1844,11 @@ export default function GameHost() {
                       <h3 className={`font-display font-black uppercase text-sm leading-tight mb-1 ${wofSelectedPackId === pack.id ? "text-white" : "text-black"}`}>
                         {pack.title}
                       </h3>
+                      {pack.isCustom && (
+                        <span className="inline-flex items-center gap-1 text-[10px] font-black uppercase bg-[#FFD700] border-[2px] border-black px-2 py-0.5 mb-2 font-sans">
+                          ★ Custom
+                        </span>
+                      )}
                       <p className={`text-xs mb-2 leading-relaxed line-clamp-2 font-sans ${wofSelectedPackId === pack.id ? "text-white/80" : "text-black/60"}`}>
                         {pack.description}
                       </p>

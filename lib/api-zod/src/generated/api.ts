@@ -351,6 +351,300 @@ export const GetDailyStatusResponse = zod.object({
 });
 
 /**
+ * @summary List caller's custom Jeopardy packs
+ */
+export const ListCustomJeopardyPacksHeader = zod.object({
+  "x-owner-id": zod.string(),
+});
+
+export const ListCustomJeopardyPacksResponseItem = zod.object({
+  id: zod.number(),
+  title: zod.string(),
+  payload: zod
+    .record(zod.string(), zod.unknown())
+    .describe(
+      "Raw pack payload (validated server-side by game-type-specific Zod schema)",
+    ),
+  createdAt: zod.coerce.date().optional(),
+  updatedAt: zod.coerce.date().optional(),
+});
+export const ListCustomJeopardyPacksResponse = zod.array(
+  ListCustomJeopardyPacksResponseItem,
+);
+
+/**
+ * @summary Create a custom Jeopardy pack
+ */
+export const CreateCustomJeopardyPackHeader = zod.object({
+  "x-owner-id": zod.string(),
+});
+
+export const CreateCustomJeopardyPackBody = zod
+  .record(zod.string(), zod.unknown())
+  .describe(
+    "Raw pack payload (validated server-side by game-type-specific Zod schema)",
+  );
+
+/**
+ * @summary Get a single custom Jeopardy pack by ID
+ */
+export const GetCustomJeopardyPackParams = zod.object({
+  id: zod.coerce.number(),
+});
+
+export const GetCustomJeopardyPackHeader = zod.object({
+  "x-owner-id": zod.string(),
+});
+
+export const GetCustomJeopardyPackResponse = zod.object({
+  id: zod.number(),
+  title: zod.string(),
+  payload: zod
+    .record(zod.string(), zod.unknown())
+    .describe(
+      "Raw pack payload (validated server-side by game-type-specific Zod schema)",
+    ),
+  createdAt: zod.coerce.date().optional(),
+  updatedAt: zod.coerce.date().optional(),
+});
+
+/**
+ * @summary Update a custom Jeopardy pack
+ */
+export const UpdateCustomJeopardyPackParams = zod.object({
+  id: zod.coerce.number(),
+});
+
+export const UpdateCustomJeopardyPackHeader = zod.object({
+  "x-owner-id": zod.string(),
+});
+
+export const UpdateCustomJeopardyPackBody = zod
+  .record(zod.string(), zod.unknown())
+  .describe(
+    "Raw pack payload (validated server-side by game-type-specific Zod schema)",
+  );
+
+export const UpdateCustomJeopardyPackResponse = zod.object({
+  id: zod.number(),
+  title: zod.string(),
+  payload: zod
+    .record(zod.string(), zod.unknown())
+    .describe(
+      "Raw pack payload (validated server-side by game-type-specific Zod schema)",
+    ),
+  createdAt: zod.coerce.date().optional(),
+  updatedAt: zod.coerce.date().optional(),
+});
+
+/**
+ * @summary Delete a custom Jeopardy pack
+ */
+export const DeleteCustomJeopardyPackParams = zod.object({
+  id: zod.coerce.number(),
+});
+
+export const DeleteCustomJeopardyPackHeader = zod.object({
+  "x-owner-id": zod.string(),
+});
+
+/**
+ * @summary List caller's custom Wheel of Fortune packs
+ */
+export const ListCustomWofPacksHeader = zod.object({
+  "x-owner-id": zod.string(),
+});
+
+export const ListCustomWofPacksResponseItem = zod.object({
+  id: zod.number(),
+  title: zod.string(),
+  payload: zod
+    .record(zod.string(), zod.unknown())
+    .describe(
+      "Raw pack payload (validated server-side by game-type-specific Zod schema)",
+    ),
+  createdAt: zod.coerce.date().optional(),
+  updatedAt: zod.coerce.date().optional(),
+});
+export const ListCustomWofPacksResponse = zod.array(
+  ListCustomWofPacksResponseItem,
+);
+
+/**
+ * @summary Create a custom Wheel of Fortune pack
+ */
+export const CreateCustomWofPackHeader = zod.object({
+  "x-owner-id": zod.string(),
+});
+
+export const CreateCustomWofPackBody = zod
+  .record(zod.string(), zod.unknown())
+  .describe(
+    "Raw pack payload (validated server-side by game-type-specific Zod schema)",
+  );
+
+/**
+ * @summary Get a single custom WoF pack by ID
+ */
+export const GetCustomWofPackParams = zod.object({
+  id: zod.coerce.number(),
+});
+
+export const GetCustomWofPackHeader = zod.object({
+  "x-owner-id": zod.string(),
+});
+
+export const GetCustomWofPackResponse = zod.object({
+  id: zod.number(),
+  title: zod.string(),
+  payload: zod
+    .record(zod.string(), zod.unknown())
+    .describe(
+      "Raw pack payload (validated server-side by game-type-specific Zod schema)",
+    ),
+  createdAt: zod.coerce.date().optional(),
+  updatedAt: zod.coerce.date().optional(),
+});
+
+/**
+ * @summary Update a custom WoF pack
+ */
+export const UpdateCustomWofPackParams = zod.object({
+  id: zod.coerce.number(),
+});
+
+export const UpdateCustomWofPackHeader = zod.object({
+  "x-owner-id": zod.string(),
+});
+
+export const UpdateCustomWofPackBody = zod
+  .record(zod.string(), zod.unknown())
+  .describe(
+    "Raw pack payload (validated server-side by game-type-specific Zod schema)",
+  );
+
+export const UpdateCustomWofPackResponse = zod.object({
+  id: zod.number(),
+  title: zod.string(),
+  payload: zod
+    .record(zod.string(), zod.unknown())
+    .describe(
+      "Raw pack payload (validated server-side by game-type-specific Zod schema)",
+    ),
+  createdAt: zod.coerce.date().optional(),
+  updatedAt: zod.coerce.date().optional(),
+});
+
+/**
+ * @summary Delete a custom WoF pack
+ */
+export const DeleteCustomWofPackParams = zod.object({
+  id: zod.coerce.number(),
+});
+
+export const DeleteCustomWofPackHeader = zod.object({
+  "x-owner-id": zod.string(),
+});
+
+/**
+ * @summary List caller's custom Pub Quiz packs
+ */
+export const ListCustomQuizPacksHeader = zod.object({
+  "x-owner-id": zod.string(),
+});
+
+export const ListCustomQuizPacksResponseItem = zod.object({
+  id: zod.number(),
+  title: zod.string(),
+  payload: zod
+    .record(zod.string(), zod.unknown())
+    .describe(
+      "Raw pack payload (validated server-side by game-type-specific Zod schema)",
+    ),
+  createdAt: zod.coerce.date().optional(),
+  updatedAt: zod.coerce.date().optional(),
+});
+export const ListCustomQuizPacksResponse = zod.array(
+  ListCustomQuizPacksResponseItem,
+);
+
+/**
+ * @summary Create a custom Pub Quiz pack
+ */
+export const CreateCustomQuizPackHeader = zod.object({
+  "x-owner-id": zod.string(),
+});
+
+export const CreateCustomQuizPackBody = zod
+  .record(zod.string(), zod.unknown())
+  .describe(
+    "Raw pack payload (validated server-side by game-type-specific Zod schema)",
+  );
+
+/**
+ * @summary Get a single custom Pub Quiz pack by ID
+ */
+export const GetCustomQuizPackParams = zod.object({
+  id: zod.coerce.number(),
+});
+
+export const GetCustomQuizPackHeader = zod.object({
+  "x-owner-id": zod.string(),
+});
+
+export const GetCustomQuizPackResponse = zod.object({
+  id: zod.number(),
+  title: zod.string(),
+  payload: zod
+    .record(zod.string(), zod.unknown())
+    .describe(
+      "Raw pack payload (validated server-side by game-type-specific Zod schema)",
+    ),
+  createdAt: zod.coerce.date().optional(),
+  updatedAt: zod.coerce.date().optional(),
+});
+
+/**
+ * @summary Update a custom Pub Quiz pack
+ */
+export const UpdateCustomQuizPackParams = zod.object({
+  id: zod.coerce.number(),
+});
+
+export const UpdateCustomQuizPackHeader = zod.object({
+  "x-owner-id": zod.string(),
+});
+
+export const UpdateCustomQuizPackBody = zod
+  .record(zod.string(), zod.unknown())
+  .describe(
+    "Raw pack payload (validated server-side by game-type-specific Zod schema)",
+  );
+
+export const UpdateCustomQuizPackResponse = zod.object({
+  id: zod.number(),
+  title: zod.string(),
+  payload: zod
+    .record(zod.string(), zod.unknown())
+    .describe(
+      "Raw pack payload (validated server-side by game-type-specific Zod schema)",
+    ),
+  createdAt: zod.coerce.date().optional(),
+  updatedAt: zod.coerce.date().optional(),
+});
+
+/**
+ * @summary Delete a custom Pub Quiz pack
+ */
+export const DeleteCustomQuizPackParams = zod.object({
+  id: zod.coerce.number(),
+});
+
+export const DeleteCustomQuizPackHeader = zod.object({
+  "x-owner-id": zod.string(),
+});
+
+/**
  * @summary Create a new hosted game room
  */
 export const CreateRoomBody = zod.object({

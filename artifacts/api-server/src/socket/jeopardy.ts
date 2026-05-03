@@ -138,6 +138,16 @@ export function makeJeopardyState(pack: JeopardyPack): JeopardyState {
 }
 
 function pickDailyDoubles(pack: JeopardyPack): Array<{ cat: number; clue: number }> {
+  // Use creator-specified Daily Double positions if present in the pack.
+  const customDDs: Array<{ cat: number; clue: number }> = [];
+  pack.categories.forEach((cat, ci) => {
+    cat.clues.forEach((clue, qi) => {
+      if (clue.isDailyDouble) customDDs.push({ cat: ci, clue: qi });
+    });
+  });
+  if (customDDs.length > 0) return customDDs;
+
+  // Fallback: random selection for built-in packs that don't specify positions.
   const ddCount = 2;
   const candidates: Array<{ cat: number; clue: number }> = [];
   pack.categories.forEach((cat, ci) => {

@@ -3,6 +3,7 @@ export interface JeopardyClue {
   question: string;
   answer: string;
   acceptedAnswers?: string[];
+  isDailyDouble?: boolean;
 }
 
 export interface JeopardyCategory {

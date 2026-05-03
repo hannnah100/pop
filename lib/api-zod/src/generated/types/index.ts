@@ -12,6 +12,8 @@ export * from "./crosswordPuzzle";
 export * from "./crosswordPuzzleCluesAcross";
 export * from "./crosswordPuzzleCluesDown";
 export * from "./crosswordSummary";
+export * from "./customGameSummary";
+export * from "./customPackPayload";
 export * from "./dailyStatus";
 export * from "./errorResponse";
 export * from "./getPopOrDropLeaderboardParams";
