@@ -45,9 +45,23 @@ export default function Crossword() {
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const todayDate = new Date().toISOString().split('T')[0];
 
+  const rows = puzzle ? puzzle.grid.length : 0;
+  const cols = puzzle ? (puzzle.grid[0]?.length ?? 0) : 0;
+
+  const cellSize = cols > 6
+    ? 'w-9 h-9 md:w-11 md:h-11'
+    : cols > 5
+      ? 'w-10 h-10 md:w-12 md:h-12'
+      : 'w-12 h-12 md:w-16 md:h-16';
+
+  const cellTextSize = cols > 6 ? 'text-base md:text-lg' : 'text-xl md:text-2xl';
+  const cellNumSize = cols > 6 ? 'text-[6px] md:text-[8px]' : 'text-[9px] md:text-[10px]';
+
   useEffect(() => {
     if (puzzle && gridState.length === 0) {
-      const emptyGrid = Array(5).fill(null).map(() => Array(5).fill(''));
+      const numRows = puzzle.grid.length;
+      const numCols = puzzle.grid[0]?.length ?? 0;
+      const emptyGrid = Array(numRows).fill(null).map(() => Array(numCols).fill(''));
       try {
         const savedState = localStorage.getItem(`ptq-crossword-${todayDate}`);
         if (savedState) {
@@ -63,8 +77,8 @@ export default function Crossword() {
       } catch {/* ignore */}
       setGridState(emptyGrid);
       setStartTime(Date.now());
-      for (let r = 0; r < 5; r++) {
-        for (let c = 0; c < 5; c++) {
+      for (let r = 0; r < numRows; r++) {
+        for (let c = 0; c < numCols; c++) {
           if (!puzzle.blackSquares.some(([br, bc]) => br === r && bc === c)) {
             setSelectedCell([r, c]);
             return;
@@ -107,7 +121,7 @@ export default function Crossword() {
       while (startC >= 0 && !isBlackSquare(r, startC)) startC--;
       startC++;
       let endC = c;
-      while (endC < 5 && !isBlackSquare(r, endC)) endC++;
+      while (endC < cols && !isBlackSquare(r, endC)) endC++;
       endC--;
       for (let i = startC; i <= endC; i++) cells.push([r, i]);
     } else {
@@ -115,12 +129,12 @@ export default function Crossword() {
       while (startR >= 0 && !isBlackSquare(startR, c)) startR--;
       startR++;
       let endR = r;
-      while (endR < 5 && !isBlackSquare(endR, c)) endR++;
+      while (endR < rows && !isBlackSquare(endR, c)) endR++;
       endR--;
       for (let i = startR; i <= endR; i++) cells.push([i, c]);
     }
     return cells;
-  }, [selectedCell, direction, puzzle, isBlackSquare]);
+  }, [selectedCell, direction, puzzle, isBlackSquare, rows, cols]);
 
   const activeWordCells = useMemo(() => getActiveWordCells(), [getActiveWordCells]);
 
@@ -150,8 +164,8 @@ export default function Crossword() {
       newGrid[r][c] = char;
       setGridState(newGrid);
       if (char === puzzle.grid[r][c]) triggerPop(r, c);
-      if (direction === 'across' && c < 4 && !isBlackSquare(r, c + 1)) setSelectedCell([r, c + 1]);
-      else if (direction === 'down' && r < 4 && !isBlackSquare(r + 1, c)) setSelectedCell([r + 1, c]);
+      if (direction === 'across' && c < cols - 1 && !isBlackSquare(r, c + 1)) setSelectedCell([r, c + 1]);
+      else if (direction === 'down' && r < rows - 1 && !isBlackSquare(r + 1, c)) setSelectedCell([r + 1, c]);
     } else if (e.key === 'Backspace') {
       if (gridState[r][c] !== '') {
         const newGrid = [...gridState.map(row => [...row])];
@@ -161,9 +175,9 @@ export default function Crossword() {
         if (direction === 'across' && c > 0 && !isBlackSquare(r, c - 1)) setSelectedCell([r, c - 1]);
         else if (direction === 'down' && r > 0 && !isBlackSquare(r - 1, c)) setSelectedCell([r - 1, c]);
       }
-    } else if (e.key === 'ArrowRight' && c < 4 && !isBlackSquare(r, c + 1)) { setSelectedCell([r, c + 1]); setDirection('across'); }
+    } else if (e.key === 'ArrowRight' && c < cols - 1 && !isBlackSquare(r, c + 1)) { setSelectedCell([r, c + 1]); setDirection('across'); }
     else if (e.key === 'ArrowLeft' && c > 0 && !isBlackSquare(r, c - 1)) { setSelectedCell([r, c - 1]); setDirection('across'); }
-    else if (e.key === 'ArrowDown' && r < 4 && !isBlackSquare(r + 1, c)) { setSelectedCell([r + 1, c]); setDirection('down'); }
+    else if (e.key === 'ArrowDown' && r < rows - 1 && !isBlackSquare(r + 1, c)) { setSelectedCell([r + 1, c]); setDirection('down'); }
     else if (e.key === 'ArrowUp' && r > 0 && !isBlackSquare(r - 1, c)) { setSelectedCell([r - 1, c]); setDirection('down'); }
   };
 
@@ -171,8 +185,8 @@ export default function Crossword() {
     if (!puzzle) return;
     let isPerfect = true;
     const wrongCells: [number, number][] = [];
-    for (let r = 0; r < 5; r++) {
-      for (let c = 0; c < 5; c++) {
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
         if (!isBlackSquare(r, c)) {
           if (gridState[r][c] !== puzzle.grid[r][c]) {
             isPerfect = false;
@@ -220,8 +234,8 @@ export default function Crossword() {
     const mm = Math.floor(elapsedTime / 60).toString().padStart(2, '0');
     const ss = (elapsedTime % 60).toString().padStart(2, '0');
     let gridEmoji = '';
-    for (let r = 0; r < 5; r++) {
-      for (let c = 0; c < 5; c++) gridEmoji += isBlackSquare(r, c) ? '⬛' : '🟩';
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) gridEmoji += isBlackSquare(r, c) ? '⬛' : '🟩';
       gridEmoji += '\n';
     }
     const shareText = `Pop: The Question - The Skinny\n${dateStr}\n\n${gridEmoji}\nTime: ${mm}:${ss}\n\npopthequestion.replit.app`;
@@ -238,23 +252,35 @@ export default function Crossword() {
     if (!puzzle) return {};
     const numbers: Record<string, number> = {};
     let currentNum = 1;
-    for (let r = 0; r < 5; r++) {
-      for (let c = 0; c < 5; c++) {
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
         if (isBlackSquare(r, c)) continue;
-        const isAcrossStart = c === 0 || isBlackSquare(r, c - 1);
-        const isDownStart = r === 0 || isBlackSquare(r - 1, c);
+        const leftIsBlack = c === 0 || isBlackSquare(r, c - 1);
+        const topIsBlack = r === 0 || isBlackSquare(r - 1, c);
+        let acrossLen = 0;
+        if (leftIsBlack) {
+          let ec = c;
+          while (ec < cols && !isBlackSquare(r, ec)) { acrossLen++; ec++; }
+        }
+        let downLen = 0;
+        if (topIsBlack) {
+          let er = r;
+          while (er < rows && !isBlackSquare(er, c)) { downLen++; er++; }
+        }
+        const isAcrossStart = acrossLen >= 3;
+        const isDownStart = downLen >= 3;
         if (isAcrossStart || isDownStart) numbers[`${r},${c}`] = currentNum++;
       }
     }
     return numbers;
-  }, [puzzle, isBlackSquare]);
+  }, [puzzle, isBlackSquare, rows, cols]);
 
   if (isLoading || !puzzle) {
     return (
       <div className="flex-1 max-w-5xl mx-auto w-full px-4 py-8 space-y-8">
         <div className="shimmer-bg h-12 w-1/2" />
         <div className="flex gap-8">
-          <ShimmerGrid count={25} cols="grid-cols-5" itemClassName="aspect-square w-12 md:w-16" />
+          <ShimmerGrid count={84} cols="grid-cols-7" itemClassName="aspect-square w-9 md:w-11" />
         </div>
       </div>
     );
@@ -309,9 +335,12 @@ export default function Crossword() {
         {/* Grid */}
         <div className="flex-shrink-0 flex flex-col items-center">
           <Shake trigger={shakeBoardKey}>
-            <div className="grid grid-cols-5 gap-[3px] bg-black p-[3px] border-[3px] border-black shadow-[6px_6px_0_#000]">
-              {Array.from({ length: 5 }).map((_, r) =>
-                Array.from({ length: 5 }).map((_, c) => {
+            <div
+              className="grid gap-[3px] bg-black p-[3px] border-[3px] border-black shadow-[6px_6px_0_#000]"
+              style={{ gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))` }}
+            >
+              {Array.from({ length: rows }).map((_, r) =>
+                Array.from({ length: cols }).map((_, c) => {
                   const isBlack = isBlackSquare(r, c);
                   const isSelected = selectedCell?.[0] === r && selectedCell?.[1] === c;
                   const isActiveWord = activeWordCells.some(([wr, wc]) => wr === r && wc === c);
@@ -327,20 +356,20 @@ export default function Crossword() {
                   return (
                     <motion.div
                       key={`${r}-${c}`}
-                      className={`relative w-12 h-12 md:w-16 md:h-16 flex items-center justify-center cursor-pointer select-none ${bg} ${isShaking ? "animate-[shake_0.5s_ease-in-out]" : ""}`}
+                      className={`relative ${cellSize} flex items-center justify-center cursor-pointer select-none ${bg} ${isShaking ? "animate-[shake_0.5s_ease-in-out]" : ""}`}
                       onClick={() => handleCellClick(r, c)}
                       data-testid={`cell-${r}-${c}`}
                       animate={winFlipping && !isBlack ? { rotateY: [0, 180, 360], scale: [1, 1.1, 1] } : {}}
-                      transition={{ delay: winFlipping ? (r + c) * 0.05 : 0, duration: 0.6 }}
+                      transition={{ delay: winFlipping ? (r + c) * 0.04 : 0, duration: 0.5 }}
                     >
                       {!isBlack && cellNumbers[`${r},${c}`] && (
-                        <span className="absolute top-0.5 left-1 text-[9px] md:text-[10px] font-bold text-black/60 leading-none">
+                        <span className={`absolute top-0.5 left-0.5 ${cellNumSize} font-bold text-black/60 leading-none`}>
                           {cellNumbers[`${r},${c}`]}
                         </span>
                       )}
                       {!isBlack && (
                         <motion.span
-                          className={`text-xl md:text-2xl font-black font-display ${isCompleted ? "text-white" : isSelected ? "text-white" : "text-black"}`}
+                          className={`${cellTextSize} font-black font-display ${isCompleted ? "text-white" : isSelected ? "text-white" : "text-black"}`}
                           animate={isPopping ? { scale: [1, 1.4, 1] } : { scale: 1 }}
                           transition={{ duration: 0.2 }}
                         >
