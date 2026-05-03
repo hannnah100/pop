@@ -336,7 +336,7 @@ export default function Crossword() {
         <div className="flex-shrink-0 flex flex-col items-center">
           <Shake trigger={shakeBoardKey}>
             <div
-              className="grid gap-[3px] bg-black p-[3px] border-[3px] border-black shadow-[6px_6px_0_#000]"
+              className="grid gap-0 bg-[#FFD700] p-[3px] border-[3px] border-black shadow-[6px_6px_0_#000]"
               style={{ gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))` }}
             >
               {Array.from({ length: rows }).map((_, r) =>
@@ -348,15 +348,17 @@ export default function Crossword() {
                   const isPopping = popCells.has(`${r}-${c}`);
 
                   let bg = "bg-white";
-                  if (isBlack) bg = "bg-black";
+                  if (isBlack) bg = "bg-[#FFD700]";
                   else if (isSelected) bg = "bg-[#FF1493]";
-                  else if (isActiveWord) bg = "bg-[#FFD700]";
+                  else if (isActiveWord) bg = "bg-[#FFFDE7]";
                   else if (isCompleted || winFlipping) bg = "bg-[#00C853]";
+
+                  const cellBorder = isBlack ? "" : "border-[3px] border-black";
 
                   return (
                     <motion.div
                       key={`${r}-${c}`}
-                      className={`relative ${cellSize} flex items-center justify-center cursor-pointer select-none ${bg} ${isShaking ? "animate-[shake_0.5s_ease-in-out]" : ""}`}
+                      className={`relative ${cellSize} flex items-center justify-center cursor-pointer select-none ${bg} ${cellBorder} ${isShaking ? "animate-[shake_0.5s_ease-in-out]" : ""}`}
                       onClick={() => handleCellClick(r, c)}
                       data-testid={`cell-${r}-${c}`}
                       animate={winFlipping && !isBlack ? { rotateY: [0, 180, 360], scale: [1, 1.1, 1] } : {}}
