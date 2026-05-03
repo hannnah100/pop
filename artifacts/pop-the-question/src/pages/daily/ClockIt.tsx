@@ -442,7 +442,6 @@ export default function ClockIt() {
           <span className="font-display font-black text-sm">{streak}</span>
         </div>
       </header>
-
       <div className="flex-1 flex flex-col p-4 gap-4 max-w-xl mx-auto w-full">
         <AnimatePresence mode="wait">
           {!isCompleted ? (
@@ -555,7 +554,7 @@ export default function ClockIt() {
             </motion.div>
           ) : (
             /* Results screen */
-            <motion.div
+            (<motion.div
               key="results"
               initial={reduced ? {} : { opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -597,7 +596,7 @@ export default function ClockIt() {
                     style={{ color: phase === "failed" ? "#FF1493" : "#000" }}
                   />
                   <span
-                    className="font-display font-black text-6xl comic-headline"
+                    className="font-display font-black text-6xl comic-headline text-[#ffb5c9]"
                     style={{ color: phase === "failed" ? "#FF1493" : "#000" }}
                   >
                     {finalYear}
@@ -610,7 +609,6 @@ export default function ClockIt() {
                   </div>
                 )}
               </div>
-
               {/* All hints revealed */}
               <div className="border-[3px] border-black bg-white shadow-[3px_3px_0_#000] overflow-hidden">
                 <div className="bg-black px-4 py-2">
@@ -628,7 +626,6 @@ export default function ClockIt() {
                   ))}
                 </div>
               </div>
-
               {/* Personal stats */}
               {stats && ((stats.clockItTotalPlays ?? stats.gtyTotalPlays) ?? 0) > 0 && (
                 <div className="border-[3px] border-black bg-[#FFF8E7] shadow-[3px_3px_0_#000] p-4">
@@ -655,7 +652,6 @@ export default function ClockIt() {
                   </div>
                 </div>
               )}
-
               {/* Countdown */}
               <div className="border-[3px] border-black bg-white shadow-[3px_3px_0_#000] p-4 flex items-center justify-between">
                 <div className="flex items-center gap-2">
@@ -664,7 +660,6 @@ export default function ClockIt() {
                 </div>
                 <span className="font-display font-black text-2xl comic-headline">{countdown}</span>
               </div>
-
               {/* Share */}
               <Button
                 onClick={handleShare}
@@ -673,7 +668,7 @@ export default function ClockIt() {
                 <Share2 className="w-5 h-5" />
                 Share Result
               </Button>
-            </motion.div>
+            </motion.div>)
           )}
         </AnimatePresence>
       </div>
