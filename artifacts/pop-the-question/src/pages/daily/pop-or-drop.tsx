@@ -111,12 +111,12 @@ function ItemCard({ item, colorIndex, revealed, isRight, flash }: ItemCardProps)
       <p className="font-sans text-xs font-bold uppercase tracking-widest text-black/60 mb-1">
         {item.metricLabel}
       </p>
-      <h2 className="font-display font-black text-black text-xl md:text-2xl leading-tight mb-3 comic-headline">
+      <h2 className="font-display font-black text-black text-xl md:text-2xl leading-tight mb-3">
         {item.name}
       </h2>
       {isRight && !revealed ? (
         <div className="flex flex-col items-center gap-1">
-          <span className="font-display font-black text-4xl md:text-5xl text-black comic-headline">???</span>
+          <span className="font-display font-black text-4xl md:text-5xl text-black">???</span>
         </div>
       ) : (
         <motion.div
@@ -125,7 +125,7 @@ function ItemCard({ item, colorIndex, revealed, isRight, flash }: ItemCardProps)
           transition={{ type: "spring", stiffness: 400, damping: 20 }}
           className="flex flex-col items-center"
         >
-          <span className="font-display font-black text-2xl md:text-4xl text-black comic-headline break-all">
+          <span className="font-display font-black text-2xl md:text-4xl text-black break-all">
             {displayValue}
           </span>
         </motion.div>
@@ -494,7 +494,7 @@ export default function PopOrDrop() {
                 <StarDoodle className="absolute top-2 left-3 w-8 h-8 text-black/30" />
                 <LightningDoodle className="absolute bottom-2 right-3 w-6 h-10 text-black/20" />
 
-                <p className="font-display font-black text-4xl text-black comic-headline">
+                <p className="font-display font-black text-4xl text-black">
                   {streak >= items.length - 1
                     ? "PERFECT! 🏆"
                     : streak >= 10
@@ -506,7 +506,7 @@ export default function PopOrDrop() {
 
                 <div className="mt-3 flex items-center justify-center gap-2">
                   <Flame className="w-8 h-8 text-black" />
-                  <span className="font-display font-black text-6xl text-black comic-headline">
+                  <span className="font-display font-black text-6xl text-black">
                     {streak}
                   </span>
                   <span className="font-display text-xl text-black/70 font-bold">
@@ -530,7 +530,7 @@ export default function PopOrDrop() {
                   <Clock className="w-5 h-5 text-black" />
                   <span className="font-bold text-sm uppercase tracking-wide">Next challenge</span>
                 </div>
-                <span className="font-display font-black text-2xl comic-headline">{countdown}</span>
+                <span className="font-display font-black text-2xl text-black">{countdown}</span>
               </div>
 
               {/* Leaderboard */}

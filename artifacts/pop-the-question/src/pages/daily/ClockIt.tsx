@@ -454,7 +454,7 @@ export default function ClockIt() {
       <header className="bg-[#FFD700] border-b-[4px] border-black px-4 py-3 flex items-center justify-between sticky top-0 z-20">
         <BackArrow className="text-black [&_svg]:stroke-black" />
         <div className="text-center">
-          <h1 className="font-display font-black text-black text-xl uppercase tracking-tight comic-headline flex items-center gap-2">
+          <h1 className="font-display font-black text-black text-xl uppercase tracking-tight flex items-center gap-2">
             <Calendar className="w-5 h-5" />
             Clock It
           </h1>
@@ -601,7 +601,7 @@ export default function ClockIt() {
                 <LightningDoodle className="absolute bottom-2 right-3 w-6 h-10 text-white/20" />
 
                 <p
-                  className="font-display font-black text-4xl comic-headline"
+                  className="font-display font-black text-4xl"
                   style={{ color: phase === "failed" ? "#FF1493" : "#000" }}
                 >
                   {phase === "failed"
@@ -619,7 +619,7 @@ export default function ClockIt() {
                     style={{ color: phase === "failed" ? "#FF1493" : "#000" }}
                   />
                   <span
-                    className="font-display font-black text-6xl comic-headline text-[#ffb5c9]"
+                    className="font-display font-black text-6xl"
                     style={{ color: phase === "failed" ? "#FF1493" : "#000" }}
                   >
                     {finalYear}
@@ -681,7 +681,7 @@ export default function ClockIt() {
                   <Clock className="w-5 h-5 text-black" />
                   <span className="font-bold text-sm uppercase tracking-wide">Next puzzle</span>
                 </div>
-                <span className="font-display font-black text-2xl comic-headline">{countdown}</span>
+                <span className="font-display font-black text-2xl text-black">{countdown}</span>
               </div>
               {/* Share */}
               <Button
