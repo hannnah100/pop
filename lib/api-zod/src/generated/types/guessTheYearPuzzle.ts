@@ -7,7 +7,8 @@
  */
 
 export interface GuessTheYearPuzzle {
-  token: string;
+  /** Opaque daily identifier (date-based, does not contain the year) */
+  id: string;
   date: string;
   /**
    * @minItems 3

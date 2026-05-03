@@ -24,7 +24,7 @@ const HINT_COLORS = ["#FF1493", "#FF6B35", "#00E5FF"];
 const HINT_LABELS = ["HINT 1", "HINT 2", "HINT 3"];
 
 interface Puzzle {
-  token: string;
+  id: string;
   date: string;
   hints: [string, string, string];
 }
@@ -283,7 +283,7 @@ export default function GuessTheYear() {
       const resp = await fetch("/api/daily/guess-the-year/check", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ token: puzzle.token, guess: year }),
+        body: JSON.stringify({ id: puzzle.id, guess: year }),
       });
       const data: { correct: boolean; year?: number } = await resp.json();
 
@@ -329,7 +329,7 @@ export default function GuessTheYear() {
       const resp = await fetch("/api/daily/guess-the-year/check", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ token: puzzle.token, giveUp: true }),
+        body: JSON.stringify({ id: puzzle.id, giveUp: true }),
       });
       const data: { correct: boolean; year?: number } = await resp.json();
       const year = data.year ?? 0;

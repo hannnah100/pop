@@ -7,7 +7,8 @@
  */
 
 export interface GuessTheYearCheckRequest {
-  token: string;
+  /** Opaque daily identifier returned by the GET endpoint */
+  id: string;
   guess?: number;
   giveUp?: boolean;
 }

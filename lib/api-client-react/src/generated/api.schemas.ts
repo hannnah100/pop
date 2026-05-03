@@ -230,7 +230,8 @@ export interface PopOrDropLeaderboard {
 }
 
 export interface GuessTheYearPuzzle {
-  token: string;
+  /** Opaque daily identifier (date-based, does not contain the year) */
+  id: string;
   date: string;
   /**
    * @minItems 3
@@ -240,7 +241,8 @@ export interface GuessTheYearPuzzle {
 }
 
 export interface GuessTheYearCheckRequest {
-  token: string;
+  /** Opaque daily identifier returned by the GET endpoint */
+  id: string;
   guess?: number;
   giveUp?: boolean;
 }

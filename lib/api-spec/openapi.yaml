@@ -932,8 +932,9 @@ components:
     GuessTheYearPuzzle:
       type: object
       properties:
-        token:
+        id:
           type: string
+          description: Opaque daily identifier (date-based, does not contain the year)
         date:
           type: string
         hints:
@@ -943,21 +944,22 @@ components:
           minItems: 3
           maxItems: 3
       required:
-        - token
+        - id
         - date
         - hints
 
     GuessTheYearCheckRequest:
       type: object
       properties:
-        token:
+        id:
           type: string
+          description: Opaque daily identifier returned by the GET endpoint
         guess:
           type: integer
         giveUp:
           type: boolean
       required:
-        - token
+        - id
 
     GuessTheYearCheckResponse:
       type: object
