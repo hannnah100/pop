@@ -387,7 +387,7 @@ export default function ClockIt() {
       ? "💀"
       : score === 3 ? "🏆" : score === 2 ? "⭐" : "✓";
     const text = [
-      `Pop: The Question - Clock It`,
+      `Pop The Question - Clock It`,
       humanDate,
       ``,
       gaveUp

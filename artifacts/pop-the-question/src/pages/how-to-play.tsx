@@ -114,7 +114,7 @@ const GAMES: GameRulesCardProps[] = [
   },
   {
     title: "The Skinny",
-    tagline: "Pop culture quickie — fill in the grid",
+    tagline: "Pop culture crossword",
     emoji: "🧩",
     bg: "#00E5FF",
     steps: [

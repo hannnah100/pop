@@ -2,7 +2,7 @@ import { type CSSProperties, type HTMLAttributes } from "react";
 
 /**
  * Editorial rainbow palette — used STRATEGICALLY only:
- *   - The "POP: THE QUESTION" logo (homepage hero)
+ *   - The "POP THE QUESTION" logo (homepage hero)
  *   - Room codes
  *   - Top-3 leaderboard player names
  *   - "NEW RECORD" / streak milestones

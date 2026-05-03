@@ -78,7 +78,7 @@ export default function Home() {
             style={{ fontSize: "clamp(2.8rem, 10vw, 6rem)" }}
           >
             <RainbowText
-              text="POP:"
+              text="POP"
               palette={["#FF0054", "#FF6B35", "#00E5FF", "#00F5A0", "#FF006E", "#FF1493"]}
             />
             <br />
@@ -152,7 +152,7 @@ export default function Home() {
               <div className="flex justify-between items-start mb-3">
                 <div>
                   <h3 className="font-display text-2xl font-black text-black uppercase tracking-tight">THE SKINNY</h3>
-                  <p className="text-sm text-black/60 font-sans mt-1">Pop culture quickie — fill in the grid</p>
+                  <p className="text-sm text-black/60 font-sans mt-1">Pop culture crossword</p>
                 </div>
                 {cwCompleted ? (
                   <Badge variant="secondary" className="ml-2 flex-shrink-0">Done ✓</Badge>

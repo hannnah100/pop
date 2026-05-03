@@ -65,7 +65,7 @@ export default function Archive() {
     ...item,
     type: "crossword" as const,
     title: "The Skinny",
-    prompt: "Pop culture crossword puzzle",
+    prompt: "Pop culture crossword",
     totalCount: undefined as number | undefined,
     stats: getArchiveStats(item.id, "crossword"),
   }));

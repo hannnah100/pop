@@ -184,7 +184,7 @@ export default function ThreeFlops() {
       ? (flops === 0 ? "🏆" : "✓")
       : "💀";
     const shareText = [
-      `Pop: The Question - Three Flops`,
+      `Pop The Question - Three Flops`,
       humanDate,
       ``,
       `Completed: ${guesses.length}/${challenge.totalCount} ${resultEmoji}`,

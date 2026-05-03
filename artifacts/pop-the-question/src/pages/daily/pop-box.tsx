@@ -359,7 +359,7 @@ export default function PopBox() {
       rows.push([0, 1, 2].map((c) => emoji(cells[r * 3 + c])).join(""));
     }
     const text = [
-      `Pop: The Question – Pop Box (${grid.date})`,
+      `Pop The Question – Pop Box (${grid.date})`,
       `Score: ${correctCount}/9${avgRarity != null ? ` • Rarity ${avgRarity}%` : ""}`,
       "",
       ...rows,
