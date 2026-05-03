@@ -229,6 +229,27 @@ export interface PopOrDropLeaderboard {
   playerRank?: number | null;
 }
 
+export interface GuessTheYearPuzzle {
+  id: string;
+  date: string;
+  /**
+   * @minItems 3
+   * @maxItems 3
+   */
+  hints: string[];
+}
+
+export interface GuessTheYearCheckRequest {
+  id: string;
+  guess?: number;
+  giveUp?: boolean;
+}
+
+export interface GuessTheYearCheckResponse {
+  correct: boolean;
+  year?: number | null;
+}
+
 export interface PopOrDropScoreRequest {
   playerToken: string;
   /** @minimum 0 */

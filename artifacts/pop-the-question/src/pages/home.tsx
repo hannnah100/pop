@@ -6,6 +6,7 @@ import {
   Bot,
   Zap,
   Users,
+  Calendar,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -27,6 +28,9 @@ export default function Home() {
   const [pbCompleted, setPbCompleted] = useState(false);
   const [podCompleted, setPodCompleted] = useState(false);
   const [podStreak, setPodStreak] = useState(0);
+  const [gtyCompleted, setGtyCompleted] = useState(false);
+  const [gtyScore, setGtyScore] = useState<number | null>(null);
+  const [gtyGaveUp, setGtyGaveUp] = useState(false);
 
   useEffect(() => {
     try {
@@ -42,6 +46,15 @@ export default function Home() {
         if (parsed.done) {
           setPodCompleted(true);
           setPodStreak(parsed.streak ?? 0);
+        }
+      }
+      const gtyState = localStorage.getItem(`ptq-guess-the-year-${todayDate}`);
+      if (gtyState) {
+        const parsed = JSON.parse(gtyState);
+        if (parsed.completed) {
+          setGtyCompleted(true);
+          setGtyScore(parsed.score ?? null);
+          setGtyGaveUp(parsed.gaveUp ?? false);
         }
       }
     } catch {
@@ -206,6 +219,36 @@ export default function Home() {
                   data-testid="link-pop-or-drop"
                 >
                   {podCompleted ? "View Results" : "Play Today's Challenge"}
+                </Button>
+              </Link>
+            </div>
+
+            {/* Guess the Year */}
+            <div className="bg-white border-[3px] border-black shadow-[4px_4px_0_#000] p-5 relative overflow-hidden">
+              <StarDoodle className="absolute top-2 right-3 w-7 h-7 text-[#FFD700] opacity-50" />
+              <div className="flex justify-between items-start mb-3">
+                <div>
+                  <h3 className="font-display text-2xl font-black text-black uppercase tracking-tight flex items-center gap-2">
+                    <Calendar className="w-5 h-5" />
+                    Guess the Year
+                  </h3>
+                  <p className="text-sm text-black/60 font-sans mt-1">3 pop culture hints — which year is it?</p>
+                </div>
+                {gtyCompleted ? (
+                  <Badge variant="secondary" className="ml-2 flex-shrink-0">
+                    {gtyGaveUp ? "💀 Gave Up" : gtyScore === 3 ? "🏆 Perfect" : gtyScore === 2 ? "⭐ Nice" : "✓ Done"}
+                  </Badge>
+                ) : (
+                  <Badge className="ml-2 flex-shrink-0 bg-[#FFD700] text-black border-black">NEW</Badge>
+                )}
+              </div>
+              <Link href="/daily/guess-the-year">
+                <Button
+                  className="w-full font-display text-base uppercase tracking-wide"
+                  variant={gtyCompleted ? "outline" : "default"}
+                  data-testid="link-guess-the-year"
+                >
+                  {gtyCompleted ? "View Results" : "Play Now"}
                 </Button>
               </Link>
             </div>

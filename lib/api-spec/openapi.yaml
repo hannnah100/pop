@@ -346,6 +346,50 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
 
+  /daily/guess-the-year:
+    get:
+      operationId: getTodayGuessTheYear
+      tags: [daily]
+      summary: Get today's Guess the Year puzzle (hints only, no year)
+      responses:
+        "200":
+          description: Today's puzzle
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GuessTheYearPuzzle"
+
+  /daily/guess-the-year/check:
+    post:
+      operationId: checkGuessTheYear
+      tags: [daily]
+      summary: Check a year guess or request the answer (give up)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GuessTheYearCheckRequest"
+      responses:
+        "200":
+          description: Result of the guess
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GuessTheYearCheckResponse"
+        "400":
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: Puzzle not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
   /daily/status:
     get:
       operationId: getDailyStatus
@@ -884,6 +928,47 @@ components:
         - totalPlayers
         - avgStreak
         - medianStreak
+
+    GuessTheYearPuzzle:
+      type: object
+      properties:
+        id:
+          type: string
+        date:
+          type: string
+        hints:
+          type: array
+          items:
+            type: string
+          minItems: 3
+          maxItems: 3
+      required:
+        - id
+        - date
+        - hints
+
+    GuessTheYearCheckRequest:
+      type: object
+      properties:
+        id:
+          type: string
+        guess:
+          type: integer
+        giveUp:
+          type: boolean
+      required:
+        - id
+
+    GuessTheYearCheckResponse:
+      type: object
+      properties:
+        correct:
+          type: boolean
+        year:
+          type: integer
+          nullable: true
+      required:
+        - correct
 
     PopOrDropScoreRequest:
       type: object

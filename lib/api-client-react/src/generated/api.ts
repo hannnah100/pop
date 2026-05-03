@@ -23,6 +23,9 @@ import type {
   DailyStatus,
   ErrorResponse,
   GetPopOrDropLeaderboardParams,
+  GuessTheYearCheckRequest,
+  GuessTheYearCheckResponse,
+  GuessTheYearPuzzle,
   HealthStatus,
   PopBoxAnswers,
   PopBoxGrid,
@@ -1352,6 +1355,167 @@ export const useSubmitPopOrDropScore = <
   TContext
 > => {
   return useMutation(getSubmitPopOrDropScoreMutationOptions(options));
+};
+
+/**
+ * @summary Get today's Guess the Year puzzle (hints only, no year)
+ */
+export const getGetTodayGuessTheYearUrl = () => {
+  return `/api/daily/guess-the-year`;
+};
+
+export const getTodayGuessTheYear = async (
+  options?: RequestInit,
+): Promise<GuessTheYearPuzzle> => {
+  return customFetch<GuessTheYearPuzzle>(getGetTodayGuessTheYearUrl(), {
+    ...options,
+    method: "GET",
+  });
+};
+
+export const getGetTodayGuessTheYearQueryKey = () => {
+  return [`/api/daily/guess-the-year`] as const;
+};
+
+export const getGetTodayGuessTheYearQueryOptions = <
+  TData = Awaited<ReturnType<typeof getTodayGuessTheYear>>,
+  TError = ErrorType<unknown>,
+>(options?: {
+  query?: UseQueryOptions<
+    Awaited<ReturnType<typeof getTodayGuessTheYear>>,
+    TError,
+    TData
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
+
+  const queryKey = queryOptions?.queryKey ?? getGetTodayGuessTheYearQueryKey();
+
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof getTodayGuessTheYear>>
+  > = ({ signal }) => getTodayGuessTheYear({ signal, ...requestOptions });
+
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof getTodayGuessTheYear>>,
+    TError,
+    TData
+  > & { queryKey: QueryKey };
+};
+
+export type GetTodayGuessTheYearQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getTodayGuessTheYear>>
+>;
+export type GetTodayGuessTheYearQueryError = ErrorType<unknown>;
+
+/**
+ * @summary Get today's Guess the Year puzzle (hints only, no year)
+ */
+
+export function useGetTodayGuessTheYear<
+  TData = Awaited<ReturnType<typeof getTodayGuessTheYear>>,
+  TError = ErrorType<unknown>,
+>(options?: {
+  query?: UseQueryOptions<
+    Awaited<ReturnType<typeof getTodayGuessTheYear>>,
+    TError,
+    TData
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+  const queryOptions = getGetTodayGuessTheYearQueryOptions(options);
+
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: QueryKey;
+  };
+
+  return { ...query, queryKey: queryOptions.queryKey };
+}
+
+/**
+ * @summary Check a year guess or request the answer (give up)
+ */
+export const getCheckGuessTheYearUrl = () => {
+  return `/api/daily/guess-the-year/check`;
+};
+
+export const checkGuessTheYear = async (
+  guessTheYearCheckRequest: GuessTheYearCheckRequest,
+  options?: RequestInit,
+): Promise<GuessTheYearCheckResponse> => {
+  return customFetch<GuessTheYearCheckResponse>(getCheckGuessTheYearUrl(), {
+    ...options,
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...options?.headers },
+    body: JSON.stringify(guessTheYearCheckRequest),
+  });
+};
+
+export const getCheckGuessTheYearMutationOptions = <
+  TError = ErrorType<ErrorResponse>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof checkGuessTheYear>>,
+    TError,
+    { data: BodyType<GuessTheYearCheckRequest> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof checkGuessTheYear>>,
+  TError,
+  { data: BodyType<GuessTheYearCheckRequest> },
+  TContext
+> => {
+  const mutationKey = ["checkGuessTheYear"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof checkGuessTheYear>>,
+    { data: BodyType<GuessTheYearCheckRequest> }
+  > = (props) => {
+    const { data } = props ?? {};
+
+    return checkGuessTheYear(data, requestOptions);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type CheckGuessTheYearMutationResult = NonNullable<
+  Awaited<ReturnType<typeof checkGuessTheYear>>
+>;
+export type CheckGuessTheYearMutationBody = BodyType<GuessTheYearCheckRequest>;
+export type CheckGuessTheYearMutationError = ErrorType<ErrorResponse>;
+
+/**
+ * @summary Check a year guess or request the answer (give up)
+ */
+export const useCheckGuessTheYear = <
+  TError = ErrorType<ErrorResponse>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof checkGuessTheYear>>,
+    TError,
+    { data: BodyType<GuessTheYearCheckRequest> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof checkGuessTheYear>>,
+  TError,
+  { data: BodyType<GuessTheYearCheckRequest> },
+  TContext
+> => {
+  return useMutation(getCheckGuessTheYearMutationOptions(options));
 };
 
 /**

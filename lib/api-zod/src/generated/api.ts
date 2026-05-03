@@ -303,6 +303,35 @@ export const SubmitPopOrDropScoreResponse = zod.object({
 });
 
 /**
+ * @summary Get today's Guess the Year puzzle (hints only, no year)
+ */
+export const getTodayGuessTheYearResponseHintsMin = 3;
+export const getTodayGuessTheYearResponseHintsMax = 3;
+
+export const GetTodayGuessTheYearResponse = zod.object({
+  id: zod.string(),
+  date: zod.string(),
+  hints: zod
+    .array(zod.string())
+    .min(getTodayGuessTheYearResponseHintsMin)
+    .max(getTodayGuessTheYearResponseHintsMax),
+});
+
+/**
+ * @summary Check a year guess or request the answer (give up)
+ */
+export const CheckGuessTheYearBody = zod.object({
+  id: zod.string(),
+  guess: zod.number().optional(),
+  giveUp: zod.boolean().optional(),
+});
+
+export const CheckGuessTheYearResponse = zod.object({
+  correct: zod.boolean(),
+  year: zod.number().nullish(),
+});
+
+/**
  * @summary Get today's completion status summary (wow endpoint)
  */
 export const GetDailyStatusResponse = zod.object({
