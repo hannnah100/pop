@@ -239,16 +239,30 @@ export default function ClockIt() {
         const yesterday = new Date();
         yesterday.setDate(yesterday.getDate() - 1);
         const yesterdayStr = yesterday.toISOString().split("T")[0];
-        const lastKey = "ptq-last-guess-the-year";
-        const streakKey = "ptq-streak-guess-the-year";
-        const last = localStorage.getItem(lastKey);
-        const streakCount = parseInt(localStorage.getItem(streakKey) ?? "0");
+        // Canonical keys are now `ptq-{streak,last}-clock-it`. We still
+        // read AND write the legacy `…-guess-the-year` keys so existing
+        // streaks carry forward and any older code paths that still read
+        // the legacy keys keep working.
+        const lastKeyNew = "ptq-last-clock-it";
+        const streakKeyNew = "ptq-streak-clock-it";
+        const lastKeyOld = "ptq-last-guess-the-year";
+        const streakKeyOld = "ptq-streak-guess-the-year";
+        const last = localStorage.getItem(lastKeyNew) ?? localStorage.getItem(lastKeyOld);
+        const streakCount = parseInt(
+          localStorage.getItem(streakKeyNew) ?? localStorage.getItem(streakKeyOld) ?? "0",
+        );
+        let nextStreak: string;
         if (last === yesterdayStr) {
-          localStorage.setItem(streakKey, String(streakCount + 1));
-        } else if (last !== todayDate) {
-          localStorage.setItem(streakKey, "1");
+          nextStreak = String(streakCount + 1);
+        } else if (last === todayDate) {
+          nextStreak = String(streakCount);
+        } else {
+          nextStreak = "1";
         }
-        localStorage.setItem(lastKey, todayDate);
+        localStorage.setItem(streakKeyNew, nextStreak);
+        localStorage.setItem(streakKeyOld, nextStreak);
+        localStorage.setItem(lastKeyNew, todayDate);
+        localStorage.setItem(lastKeyOld, todayDate);
         localStorage.setItem("ptq-stats", JSON.stringify(stats));
       } catch {
         /* ignore */
@@ -399,7 +413,11 @@ export default function ClockIt() {
 
   const streak = (() => {
     try {
-      return parseInt(localStorage.getItem("ptq-streak-guess-the-year") ?? "0");
+      return parseInt(
+        localStorage.getItem("ptq-streak-clock-it")
+          ?? localStorage.getItem("ptq-streak-guess-the-year")
+          ?? "0",
+      );
     } catch {
       return 0;
     }
