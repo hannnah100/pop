@@ -1,0 +1,66 @@
+You're right! The grid cell counts don't match the clue letter counts at all. Looking at the screenshot:
+
+**Problems:**
+1. **1-Down (SOFI - 4 letters)** is showing way more than 4 cells
+2. **Clue #6 is highlighted pink** but it's in the wrong position
+3. The entire grid structure is completely wrong
+
+---
+
+**The real issue:** Replit Agent is not using the exact grid coordinates you provided. It's auto-generating a grid layout instead of copying your data.
+
+---
+
+## **NUCLEAR OPTION PROMPT FOR REPLIT AGENT:**
+
+> **STOP auto-generating the grid. You are NOT creating the crossword layout - I already created it.**
+> 
+> **Your ONLY job is to copy the exact data I'm giving you into the game database.**
+> 
+> Here is the COMPLETE grid as a data structure. Copy this EXACTLY:
+>
+> ```javascript
+> const puzzle3Grid = {
+>   rows: 8,
+>   cols: 7,
+>   cells: [
+>     // Row 0
+>     [null, null, null, {letter: 'S', number: 1}, null, null, null],
+>     // Row 1
+>     [{letter: 'L', number: 2}, {letter: 'U'}, {letter: 'M'}, {letter: 'O'}, {letter: 'S'}, null, null],
+>     // Row 2
+>     [null, null, null, {letter: 'F'}, null, null, null],
+>     // Row 3
+>     [{letter: 'S', number: 3}, {letter: 'H'}, {letter: 'I'}, {letter: 'B', number: 4}, {letter: 'A'}, null, {letter: 'M', number: 5}],
+>     // Row 4
+>     [null, null, null, {letter: 'R'}, null, null, {letter: 'O'}],
+>     // Row 5
+>     [{letter: 'A', number: 6}, {letter: 'T'}, {letter: 'L'}, {letter: 'A'}, {letter: 'N'}, {letter: 'T'}, {letter: 'A'}],
+>     // Row 6
+>     [null, null, null, {letter: 'T'}, null, null, {letter: 'N'}],
+>     // Row 7
+>     [null, null, null, {letter: 'K', number: 7}, {letter: 'L'}, {letter: 'A'}, {letter: 'Y'}]
+>   ],
+>   clues: {
+>     across: {
+>       2: "Spell in Harry Potter that casts light",
+>       3: "Inu, DOGE coin dog breed",
+>       6: "Donald Glover FX show",
+>       7: "Thompson that was dating a Stallion"
+>     },
+>     down: {
+>       1: "Stadium for the Rams and Chargers",
+>       4: "Summer 2024",
+>       5: "Movie that features the song 'How Far I'll Go'"
+>     }
+>   }
+> }
+> ```
+>
+> **Where `null` = yellow block (non-playable cell)**
+> **Where `{letter: 'X'}` = white playable cell with that letter**
+> **Where `{letter: 'X', number: N}` = white playable cell with that letter AND a clue number**
+>
+> Use this exact structure. Do not modify it. Do not regenerate it.
+
+Want to try this approach? 🎯
