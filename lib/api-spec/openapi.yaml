@@ -932,7 +932,7 @@ components:
     GuessTheYearPuzzle:
       type: object
       properties:
-        id:
+        token:
           type: string
         date:
           type: string
@@ -943,21 +943,21 @@ components:
           minItems: 3
           maxItems: 3
       required:
-        - id
+        - token
         - date
         - hints
 
     GuessTheYearCheckRequest:
       type: object
       properties:
-        id:
+        token:
           type: string
         guess:
           type: integer
         giveUp:
           type: boolean
       required:
-        - id
+        - token
 
     GuessTheYearCheckResponse:
       type: object

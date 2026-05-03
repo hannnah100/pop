@@ -7,7 +7,7 @@
  */
 
 export interface GuessTheYearCheckRequest {
-  id: string;
+  token: string;
   guess?: number;
   giveUp?: boolean;
 }

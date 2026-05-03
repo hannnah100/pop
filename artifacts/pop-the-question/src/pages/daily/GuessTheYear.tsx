@@ -24,7 +24,7 @@ const HINT_COLORS = ["#FF1493", "#FF6B35", "#00E5FF"];
 const HINT_LABELS = ["HINT 1", "HINT 2", "HINT 3"];
 
 interface Puzzle {
-  id: string;
+  token: string;
   date: string;
   hints: [string, string, string];
 }
@@ -36,6 +36,7 @@ interface SavedState {
   gaveUp: boolean;
   year?: number;
   date: string;
+  inProgress?: boolean;
 }
 
 type GamePhase = "playing" | "success" | "failed";
@@ -187,6 +188,8 @@ export default function GuessTheYear() {
           setFinalYear(parsed.year ?? null);
           setHintsRevealed(parsed.hintsUsed);
           setPhase(parsed.gaveUp ? "failed" : "success");
+        } else if (parsed.inProgress && parsed.hintsUsed > 1) {
+          setHintsRevealed(parsed.hintsUsed);
         }
       }
     } catch {
@@ -245,10 +248,24 @@ export default function GuessTheYear() {
   const handleRevealHint = useCallback(
     (index: number) => {
       if (index !== hintsRevealed || phase !== "playing") return;
-      setHintsRevealed(index + 1);
+      const next = index + 1;
+      setHintsRevealed(next);
       setWrongMessage(null);
+      try {
+        const partial: SavedState = {
+          completed: false,
+          inProgress: true,
+          score: 0,
+          hintsUsed: next,
+          gaveUp: false,
+          date: todayDate,
+        };
+        localStorage.setItem(storageKey, JSON.stringify(partial));
+      } catch {
+        /* ignore */
+      }
     },
-    [hintsRevealed, phase],
+    [hintsRevealed, phase, storageKey, todayDate],
   );
 
   const handleSubmit = useCallback(async () => {
@@ -266,7 +283,7 @@ export default function GuessTheYear() {
       const resp = await fetch("/api/daily/guess-the-year/check", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id: puzzle.id, guess: year }),
+        body: JSON.stringify({ token: puzzle.token, guess: year }),
       });
       const data: { correct: boolean; year?: number } = await resp.json();
 
@@ -312,7 +329,7 @@ export default function GuessTheYear() {
       const resp = await fetch("/api/daily/guess-the-year/check", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id: puzzle.id, giveUp: true }),
+        body: JSON.stringify({ token: puzzle.token, giveUp: true }),
       });
       const data: { correct: boolean; year?: number } = await resp.json();
       const year = data.year ?? 0;

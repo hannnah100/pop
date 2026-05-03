@@ -230,7 +230,7 @@ export interface PopOrDropLeaderboard {
 }
 
 export interface GuessTheYearPuzzle {
-  id: string;
+  token: string;
   date: string;
   /**
    * @minItems 3
@@ -240,7 +240,7 @@ export interface GuessTheYearPuzzle {
 }
 
 export interface GuessTheYearCheckRequest {
-  id: string;
+  token: string;
   guess?: number;
   giveUp?: boolean;
 }

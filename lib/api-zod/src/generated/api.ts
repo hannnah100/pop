@@ -309,7 +309,7 @@ export const getTodayGuessTheYearResponseHintsMin = 3;
 export const getTodayGuessTheYearResponseHintsMax = 3;
 
 export const GetTodayGuessTheYearResponse = zod.object({
-  id: zod.string(),
+  token: zod.string(),
   date: zod.string(),
   hints: zod
     .array(zod.string())
@@ -321,7 +321,7 @@ export const GetTodayGuessTheYearResponse = zod.object({
  * @summary Check a year guess or request the answer (give up)
  */
 export const CheckGuessTheYearBody = zod.object({
-  id: zod.string(),
+  token: zod.string(),
   guess: zod.number().optional(),
   giveUp: zod.boolean().optional(),
 });

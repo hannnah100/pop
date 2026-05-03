@@ -37,29 +37,25 @@ router.get("/daily/guess-the-year", (_req, res): void => {
   const today = todayDate();
   const puzzle = selectPuzzle(today);
   res.json({
-    id: puzzle.id,
+    token: today,
     date: today,
     hints: puzzle.hints,
   });
 });
 
 router.post("/daily/guess-the-year/check", (req, res): void => {
-  const { id, guess, giveUp } = req.body as {
-    id?: unknown;
+  const { token, guess, giveUp } = req.body as {
+    token?: unknown;
     guess?: unknown;
     giveUp?: unknown;
   };
 
-  if (typeof id !== "string" || id.length === 0) {
-    res.status(400).json({ error: "Invalid id" });
+  if (typeof token !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(token)) {
+    res.status(400).json({ error: "Invalid token" });
     return;
   }
 
-  const puzzle = PUZZLES.find((p) => p.id === id);
-  if (!puzzle) {
-    res.status(404).json({ error: "Puzzle not found" });
-    return;
-  }
+  const puzzle = selectPuzzle(token);
 
   if (giveUp === true) {
     res.json({ correct: false, year: puzzle.year });

@@ -236,10 +236,10 @@ export default function Home() {
                 </div>
                 {gtyCompleted ? (
                   <Badge variant="secondary" className="ml-2 flex-shrink-0">
-                    {gtyGaveUp ? "💀 Gave Up" : gtyScore === 3 ? "🏆 Perfect" : gtyScore === 2 ? "⭐ Nice" : "✓ Done"}
+                    {gtyGaveUp ? "💀 Gave Up" : gtyScore === 3 ? "🏆 Perfect" : gtyScore === 2 ? "⭐ Nice" : "Done ✓"}
                   </Badge>
                 ) : (
-                  <Badge className="ml-2 flex-shrink-0 bg-[#FFD700] text-black border-black">NEW</Badge>
+                  <Badge variant="outline" className="ml-2 flex-shrink-0">Available</Badge>
                 )}
               </div>
               <Link href="/daily/guess-the-year">

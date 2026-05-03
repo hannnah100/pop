@@ -7,7 +7,7 @@
  */
 
 export interface GuessTheYearPuzzle {
-  id: string;
+  token: string;
   date: string;
   /**
    * @minItems 3
