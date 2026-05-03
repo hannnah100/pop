@@ -85,11 +85,8 @@ function getPlayerToken(): string {
   return token;
 }
 
-function formatValue(value: number, _unit: string): string {
-  const abs = Math.abs(value);
-  const sign = value < 0 ? "-" : "";
-  if (abs >= 1000000) return `${sign}${(abs / 1000000).toFixed(1)}T`;
-  return `${sign}${abs.toLocaleString()}`;
+function formatValue(value: number): string {
+  return value.toLocaleString();
 }
 
 interface ItemCardProps {
@@ -103,7 +100,7 @@ interface ItemCardProps {
 function ItemCard({ item, colorIndex, revealed, isRight, flash }: ItemCardProps) {
   const bg = cardColor(colorIndex);
   const flashBg = flash === "correct" ? "#00C853" : flash === "wrong" ? "#FF1744" : bg;
-  const displayValue = `${formatValue(item.value, item.unit)}${item.unit ? " " + item.unit : ""}`;
+  const displayValue = formatValue(item.value);
 
   return (
     <motion.div
@@ -120,7 +117,6 @@ function ItemCard({ item, colorIndex, revealed, isRight, flash }: ItemCardProps)
       {isRight && !revealed ? (
         <div className="flex flex-col items-center gap-1">
           <span className="font-display font-black text-4xl md:text-5xl text-black comic-headline">???</span>
-          <span className="font-sans text-xs text-black/50">{item.unit || "—"}</span>
         </div>
       ) : (
         <motion.div
@@ -129,7 +125,7 @@ function ItemCard({ item, colorIndex, revealed, isRight, flash }: ItemCardProps)
           transition={{ type: "spring", stiffness: 400, damping: 20 }}
           className="flex flex-col items-center"
         >
-          <span className="font-display font-black text-3xl md:text-5xl text-black comic-headline">
+          <span className="font-display font-black text-2xl md:text-4xl text-black comic-headline break-all">
             {displayValue}
           </span>
         </motion.div>
@@ -286,7 +282,7 @@ export default function PopOrDrop() {
 
       toast({
         title: `Correct! 🔥 Streak: ${newStreak}`,
-        description: `${rightItem.name}: ${formatValue(rightItem.value, rightItem.unit)} ${rightItem.unit}`,
+        description: `${rightItem.name}: ${formatValue(rightItem.value)}`,
         className: "border-[3px] border-black bg-[#00C853] text-black font-bold",
       });
 
@@ -315,7 +311,7 @@ export default function PopOrDrop() {
 
       toast({
         title: "Wrong! Game over",
-        description: `${rightItem.name} was actually ${formatValue(rightItem.value, rightItem.unit)} ${rightItem.unit}`,
+        description: `${rightItem.name} was actually ${formatValue(rightItem.value)}`,
         className: "border-[3px] border-black bg-[#FF1744] text-white font-bold",
         variant: "destructive",
       });

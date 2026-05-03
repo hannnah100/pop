@@ -42,11 +42,8 @@ function cardColor(index: number): string {
   return CARD_COLORS[index % CARD_COLORS.length];
 }
 
-function formatValue(value: number, _unit: string): string {
-  const abs = Math.abs(value);
-  const sign = value < 0 ? "-" : "";
-  if (abs >= 1000000) return `${sign}${(abs / 1000000).toFixed(1)}T`;
-  return `${sign}${abs.toLocaleString()}`;
+function formatValue(value: number): string {
+  return value.toLocaleString();
 }
 
 function formatDate(dateStr: string): string {
@@ -62,7 +59,7 @@ interface ResultItemCardProps {
 
 function ResultItemCard({ item, colorIndex, highlight }: ResultItemCardProps) {
   const bg = highlight === "correct" ? "#00C853" : highlight === "wrong" ? "#FF1744" : cardColor(colorIndex);
-  const displayValue = `${formatValue(item.value, item.unit)}${item.unit ? " " + item.unit : ""}`;
+  const displayValue = formatValue(item.value);
 
   return (
     <div
@@ -243,11 +240,11 @@ export default function PopOrDropArchive() {
                     <span className="text-xs text-muted-foreground">
                       {missedRight.name} had{" "}
                       <span className="text-foreground font-semibold">
-                        {formatValue(missedRight.value, missedRight.unit)}{missedRight.unit ? ` ${missedRight.unit}` : ""}
+                        {formatValue(missedRight.value)}
                       </span>{" "}
                       vs. {missedLeft.name}'s{" "}
                       <span className="text-foreground font-semibold">
-                        {formatValue(missedLeft.value, missedLeft.unit)}{missedLeft.unit ? ` ${missedLeft.unit}` : ""}
+                        {formatValue(missedLeft.value)}
                       </span>
                     </span>
                   </div>
