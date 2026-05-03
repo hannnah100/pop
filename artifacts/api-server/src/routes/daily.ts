@@ -138,6 +138,31 @@ router.get("/daily/crossword/archive", async (_req, res): Promise<void> => {
   res.json(rows);
 });
 
+router.get("/daily/crossword/:id", async (req, res): Promise<void> => {
+  const row = await db
+    .select()
+    .from(crosswordPuzzlesTable)
+    .where(eq(crosswordPuzzlesTable.id, req.params.id))
+    .limit(1)
+    .then((r) => r[0]);
+
+  if (!row) {
+    res.status(404).json({ error: "Puzzle not found" });
+    return;
+  }
+
+  const data = GetTodayCrosswordResponse.parse({
+    id: row.id,
+    date: row.date,
+    grid: JSON.parse(row.grid),
+    blackSquares: JSON.parse(row.blackSquares),
+    cluesAcross: JSON.parse(row.cluesAcross),
+    cluesDown: JSON.parse(row.cluesDown),
+  });
+
+  res.json(data);
+});
+
 router.get("/daily/status", async (_req, res): Promise<void> => {
   const today = todayDate();
 

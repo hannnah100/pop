@@ -111,6 +111,31 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
 
+  /daily/crossword/{id}:
+    get:
+      operationId: getCrosswordById
+      tags: [daily]
+      summary: Get a specific crossword puzzle by ID (for archive replay)
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: The puzzle
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CrosswordPuzzle"
+        "404":
+          description: Puzzle not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
   /daily/crossword/archive:
     get:
       operationId: getCrosswordArchive

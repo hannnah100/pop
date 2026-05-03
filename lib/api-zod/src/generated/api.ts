@@ -81,6 +81,22 @@ export const GetTodayCrosswordResponse = zod.object({
 });
 
 /**
+ * @summary Get a specific crossword puzzle by ID (for archive replay)
+ */
+export const GetCrosswordByIdParams = zod.object({
+  id: zod.coerce.string(),
+});
+
+export const GetCrosswordByIdResponse = zod.object({
+  id: zod.string(),
+  date: zod.string(),
+  grid: zod.array(zod.array(zod.string())),
+  blackSquares: zod.array(zod.array(zod.number())),
+  cluesAcross: zod.record(zod.string(), zod.string()),
+  cluesDown: zod.record(zod.string(), zod.string()),
+});
+
+/**
  * @summary Get archive of crossword puzzles
  */
 export const GetCrosswordArchiveResponseItem = zod.object({

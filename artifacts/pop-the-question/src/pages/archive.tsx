@@ -234,7 +234,7 @@ export default function Archive() {
                   ? `/daily/pop-box?id=${item.id}`
                   : item.type === "pop-or-drop"
                     ? `/daily/pop-or-drop/archive/${item.id}`
-                    : `/daily/crossword`;
+                    : `/daily/crossword?id=${item.id}`;
 
             const accentClasses = isTS
               ? {

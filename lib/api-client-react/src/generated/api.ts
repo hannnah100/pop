@@ -444,6 +444,93 @@ export function useGetTodayCrossword<
 }
 
 /**
+ * @summary Get a specific crossword puzzle by ID (for archive replay)
+ */
+export const getGetCrosswordByIdUrl = (id: string) => {
+  return `/api/daily/crossword/${id}`;
+};
+
+export const getCrosswordById = async (
+  id: string,
+  options?: RequestInit,
+): Promise<CrosswordPuzzle> => {
+  return customFetch<CrosswordPuzzle>(getGetCrosswordByIdUrl(id), {
+    ...options,
+    method: "GET",
+  });
+};
+
+export const getGetCrosswordByIdQueryKey = (id: string) => {
+  return [`/api/daily/crossword/${id}`] as const;
+};
+
+export const getGetCrosswordByIdQueryOptions = <
+  TData = Awaited<ReturnType<typeof getCrosswordById>>,
+  TError = ErrorType<ErrorResponse>,
+>(
+  id: string,
+  options?: {
+    query?: UseQueryOptions<
+      Awaited<ReturnType<typeof getCrosswordById>>,
+      TError,
+      TData
+    >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
+
+  const queryKey = queryOptions?.queryKey ?? getGetCrosswordByIdQueryKey(id);
+
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof getCrosswordById>>
+  > = ({ signal }) => getCrosswordById(id, { signal, ...requestOptions });
+
+  return {
+    queryKey,
+    queryFn,
+    enabled: !!id,
+    ...queryOptions,
+  } as UseQueryOptions<
+    Awaited<ReturnType<typeof getCrosswordById>>,
+    TError,
+    TData
+  > & { queryKey: QueryKey };
+};
+
+export type GetCrosswordByIdQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getCrosswordById>>
+>;
+export type GetCrosswordByIdQueryError = ErrorType<ErrorResponse>;
+
+/**
+ * @summary Get a specific crossword puzzle by ID (for archive replay)
+ */
+
+export function useGetCrosswordById<
+  TData = Awaited<ReturnType<typeof getCrosswordById>>,
+  TError = ErrorType<ErrorResponse>,
+>(
+  id: string,
+  options?: {
+    query?: UseQueryOptions<
+      Awaited<ReturnType<typeof getCrosswordById>>,
+      TError,
+      TData
+    >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+  const queryOptions = getGetCrosswordByIdQueryOptions(id, options);
+
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: QueryKey;
+  };
+
+  return { ...query, queryKey: queryOptions.queryKey };
+}
+
+/**
  * @summary Get archive of crossword puzzles
  */
 export const getGetCrosswordArchiveUrl = () => {

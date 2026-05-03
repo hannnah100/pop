@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useMemo, useCallback } from "react";
-import { useLocation } from "wouter";
-import { useGetTodayCrossword } from "@workspace/api-client-react";
+import { useLocation, useSearch } from "wouter";
+import { useGetTodayCrossword, useGetCrosswordById } from "@workspace/api-client-react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Share2, Home as HomeIcon, CheckCircle2 } from "lucide-react";
@@ -22,11 +22,16 @@ const TARGET_TIME = 240;
 
 export default function Crossword() {
   const [, setLocation] = useLocation();
+  const search = useSearch();
+  const archiveId = new URLSearchParams(search).get("id") ?? undefined;
   const { toast } = useToast();
   const { playCorrect, playWrong, playTick, playVictory } = useSfx();
   const { recordGame } = useStreaks();
 
-  const { data: puzzle, isLoading } = useGetTodayCrossword();
+  const { data: todayPuzzle, isLoading: todayLoading } = useGetTodayCrossword({ query: { enabled: !archiveId } });
+  const { data: archivePuzzle, isLoading: archiveLoading } = useGetCrosswordById(archiveId ?? "", { query: { enabled: !!archiveId } });
+  const puzzle = archiveId ? archivePuzzle : todayPuzzle;
+  const isLoading = archiveId ? archiveLoading : todayLoading;
 
   const [gridState, setGridState] = useState<string[][]>([]);
   const [selectedCell, setSelectedCell] = useState<[number, number] | null>(null);
