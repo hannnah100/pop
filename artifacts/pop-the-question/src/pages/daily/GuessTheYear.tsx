@@ -358,7 +358,7 @@ export default function GuessTheYear() {
         ? `❌ Gave up (the year was ${finalYear})`
         : `${scoreEmoji(score)} Got it in hint ${hintsUsed}! (${score} pts)`,
       hintRow,
-      "Play at https://pop-the-question.replit.app",
+      "popthequestion.replit.app",
     ]
       .filter(Boolean)
       .join("\n");

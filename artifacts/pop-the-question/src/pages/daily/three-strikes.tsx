@@ -154,7 +154,7 @@ export default function ThreeStrikes() {
   const handleShare = () => {
     if (!challenge) return;
     const strikeMojis = Array(3).fill("⚪").map((_, i) => i < strikes ? "🔴" : "⚪").join("");
-    const shareText = `Pop: The Question – Three Strikes\n${challenge.title}: ${guesses.length}/${challenge.totalCount} ${strikeMojis}\n\npopthequestion.com`;
+    const shareText = `Pop: The Question – Three Strikes\n${challenge.title}: ${guesses.length}/${challenge.totalCount} ${strikeMojis}\n\npopthequestion.replit.app`;
     navigator.clipboard.writeText(shareText).then(() => toast({ title: "Copied!", description: "Share your score with friends." }));
   };
 

@@ -224,7 +224,7 @@ export default function Crossword() {
       for (let c = 0; c < 5; c++) gridEmoji += isBlackSquare(r, c) ? '⬛' : '🟩';
       gridEmoji += '\n';
     }
-    const shareText = `Pop: The Question - The Skinny\n${dateStr}\n\n${gridEmoji}\nTime: ${mm}:${ss}\n\npopthequestion.com`;
+    const shareText = `Pop: The Question - The Skinny\n${dateStr}\n\n${gridEmoji}\nTime: ${mm}:${ss}\n\npopthequestion.replit.app`;
     navigator.clipboard.writeText(shareText).then(() => toast({ title: "Copied!", description: "Share your time with friends." }));
   };
 
