@@ -42,6 +42,7 @@ import {
   type HostNotificationsHandle,
 } from "./HostNotifications";
 import { SmartDefaultTip } from "./SmartDefaultTip";
+import { BackArrow } from "@/components/ui/BackArrow";
 import { cn } from "@/lib/utils";
 
 interface HostShellProps {
@@ -167,21 +168,14 @@ export function HostShell({
       {/* Controls bar — solid black */}
       <div className="host-controls-bar" data-testid="host-controls-bar">
         <div className="flex items-center gap-2 flex-1 justify-center max-w-5xl">
-          {/* ← BAIL OUT — Y2K back navigation */}
+          {/* ← Back — exit via BackArrow with confirmation */}
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button
-                variant="outline"
-                size="lg"
+              <BackArrow
                 onClick={() => setConfirmExit(true)}
-                className="font-display font-black uppercase tracking-wide gap-2 bg-white text-black border-[3px] border-white hover:bg-[#FFD700] hover:text-black"
-                data-testid="btn-bail-out"
-              >
-                <svg viewBox="0 0 24 24" fill="none" className="w-4 h-4 flex-shrink-0" aria-hidden>
-                  <path d="M19 12H5M5 12L11 6M5 12L11 18" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-                BAIL OUT
-              </Button>
+                label="Bail out — return to home"
+                className="border-white hover:bg-[#FFD700]"
+              />
             </TooltipTrigger>
             <TooltipContent>Leave this game and go home</TooltipContent>
           </Tooltip>

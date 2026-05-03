@@ -5,14 +5,15 @@ interface BackArrowProps {
   href?: string;
   label?: string;
   className?: string;
+  onClick?: () => void;
 }
 
-export function BackArrow({ href = "/", label = "Back to home", className }: BackArrowProps) {
+export function BackArrow({ href = "/", label = "Back to home", className, onClick }: BackArrowProps) {
   const [, setLocation] = useLocation();
 
   return (
     <button
-      onClick={() => setLocation(href)}
+      onClick={onClick ?? (() => setLocation(href))}
       aria-label={label}
       data-testid="btn-back-arrow"
       className={cn(

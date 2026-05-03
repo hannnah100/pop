@@ -130,8 +130,8 @@ export function WofWheel({ spinning, spinIndex, value, spinnerName, size = 280 }
       const tx = cx + textR * Math.cos(midAngle);
       const ty = cy + textR * Math.sin(midAngle);
 
-      // Font scales with size: ~8px at 280, ~13px at 460
-      const fontPx = Math.max(7, Math.round(size / 36));
+      // Font scales with size: ~9px at 280, ~16px at 460 — large enough for TV projection
+      const fontPx = Math.max(8, Math.round(size / 28));
       ctx.font = `900 ${fontPx}px 'Arial Black', Arial, sans-serif`;
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
