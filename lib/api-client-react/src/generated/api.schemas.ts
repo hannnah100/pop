@@ -153,6 +153,7 @@ export const CreateRoomRequestGameType = {
   "pub-quiz": "pub-quiz",
   jeopardy: "jeopardy",
   "wheel-of-fortune": "wheel-of-fortune",
+  scattergories: "scattergories",
 } as const;
 
 export interface CreateRoomRequest {

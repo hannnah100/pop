@@ -171,6 +171,29 @@ type WofWheelValue = number | "BANKRUPT" | "LOSE_A_TURN" | "FREE_PLAY";
 
 interface WofScoreRow { id: string; name: string; score: number; roundEarnings: number; isBot: boolean }
 
+// ============ Scattergories types ============
+interface ScatCategory { id: string; name: string }
+interface ScatAnswerResult {
+  playerId: string;
+  playerName: string;
+  answer: string;
+  pointsEarned: number;
+  isDuplicate: boolean;
+}
+interface ScatCategoryResult {
+  categoryId: string;
+  categoryName: string;
+  answers: ScatAnswerResult[];
+}
+interface ScatRoundScore {
+  playerId: string;
+  playerName: string;
+  roundScore: number;
+  isBot: boolean;
+}
+interface ScatLeaderboardRow { id: string; name: string; score: number; isBot: boolean; rank: number }
+type ScatDifficulty = "easy" | "medium" | "hard";
+
 interface PlayerWithBot extends Player {
   isBot?: boolean;
   lastActivity?: number;
@@ -397,6 +420,24 @@ export default function GameHost() {
   const [wofPendingSolve, setWofPendingSolve] = useState<{ solverId: string | null; solverName: string; answer: string; isVerbal?: boolean } | null>(null);
   const wofSpinTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+  // Scattergories state
+  const [scatPhase, setScatPhase] = useState<"round" | "results" | "ended" | null>(null);
+  const [scatRound, setScatRound] = useState(0);
+  const [scatTotalRounds, setScatTotalRounds] = useState(3);
+  const [scatLetter, setScatLetter] = useState("");
+  const [scatCategories, setScatCategories] = useState<ScatCategory[]>([]);
+  const [scatTimerEndAt, setScatTimerEndAt] = useState(0);
+  const [scatNow, setScatNow] = useState(Date.now());
+  const [scatSubmitted, setScatSubmitted] = useState(0);
+  const [scatTotal, setScatTotal] = useState(0);
+  const [scatResults, setScatResults] = useState<ScatCategoryResult[]>([]);
+  const [scatRoundScores, setScatRoundScores] = useState<ScatRoundScore[]>([]);
+  const [scatLeaderboard, setScatLeaderboard] = useState<ScatLeaderboardRow[]>([]);
+  const [scatIsLastRound, setScatIsLastRound] = useState(false);
+  const [scatDifficulty, setScatDifficulty] = useState<ScatDifficulty>("medium");
+  const [scatRoundCount, setScatRoundCount] = useState(3);
+  const [scatAlertActive, setScatAlertActive] = useState(false);
+
   const finishedRef = useRef(false);
   const notificationsRef = useRef<HostNotificationsHandle | null>(null);
   const knownPlayerIds = useRef<Set<string>>(new Set());
@@ -576,6 +617,19 @@ export default function GameHost() {
         setWofLastLetter(null);
         setWofSolveResult(null);
         setWofPuzzleOver(null);
+      } else if (gt === "scattergories") {
+        const s = payload as unknown as { roundCount?: number; difficulty?: ScatDifficulty };
+        setScatPhase(null);
+        setScatRound(0);
+        setScatTotalRounds(s.roundCount ?? 3);
+        setScatDifficulty(s.difficulty ?? "medium");
+        setScatLetter("");
+        setScatCategories([]);
+        setScatResults([]);
+        setScatLeaderboard([]);
+        setScatAlertActive(false);
+        setScatSubmitted(0);
+        setScatTotal(players.length);
       }
     });
 
@@ -902,6 +956,75 @@ export default function GameHost() {
       if (ps) setPlayers(ps.filter((p) => !p.isHost));
       if (finalScores) setPqLeaderboard(finalScores);
       if (gt === "wheel-of-fortune" && finalScores) setWofScores(finalScores.map(s => ({ ...s, roundEarnings: 0 })));
+      if (gt === "scattergories" && finalScores) {
+        const sorted = [...finalScores].sort((a, b) => b.score - a.score);
+        setScatLeaderboard(sorted.map((r, i) => ({ ...r, rank: i + 1 })));
+      }
+    });
+
+    // ============ Scattergories socket handlers ============
+    newSocket.on("scattergories-config-changed", ({ roundCount, difficulty }: { roundCount: number; difficulty: ScatDifficulty }) => {
+      setScatRoundCount(roundCount);
+      setScatDifficulty(difficulty);
+    });
+
+    newSocket.on("scattergories-round-started", (payload: {
+      round: number;
+      totalRounds: number;
+      letter: string;
+      categories: ScatCategory[];
+      timerEndAt: number;
+      difficulty: ScatDifficulty;
+    }) => {
+      setScatPhase("round");
+      setScatRound(payload.round);
+      setScatTotalRounds(payload.totalRounds);
+      setScatLetter(payload.letter);
+      setScatCategories(payload.categories);
+      setScatTimerEndAt(payload.timerEndAt);
+      setScatNow(Date.now());
+      setScatDifficulty(payload.difficulty);
+      setScatAlertActive(false);
+      setScatSubmitted(0);
+      setScatTotal(players.filter(p => !p.isHost).length);
+      setScatResults([]);
+      setScatRoundScores([]);
+      playWhoosh();
+    });
+
+    newSocket.on("scattergories-submission-progress", ({ submitted, total }: { submitted: number; total: number }) => {
+      setScatSubmitted(submitted);
+      setScatTotal(total);
+    });
+
+    newSocket.on("scattergories-10-second-alert", () => {
+      setScatAlertActive(true);
+    });
+
+    newSocket.on("scattergories-results", (payload: {
+      round: number;
+      totalRounds: number;
+      letter: string;
+      results: ScatCategoryResult[];
+      roundScores: ScatRoundScore[];
+      leaderboard: ScatLeaderboardRow[];
+      isLastRound: boolean;
+    }) => {
+      setScatPhase("results");
+      setScatRound(payload.round);
+      setScatTotalRounds(payload.totalRounds);
+      setScatLetter(payload.letter);
+      setScatResults(payload.results);
+      setScatRoundScores(payload.roundScores);
+      setScatLeaderboard(payload.leaderboard);
+      setScatIsLastRound(payload.isLastRound);
+      setScatAlertActive(false);
+      // Update player scores from leaderboard
+      setPlayers(prev => prev.map(p => {
+        const row = payload.leaderboard.find(r => r.id === p.id);
+        return row ? { ...p, score: row.score } : p;
+      }));
+      playCorrect();
     });
 
     // ============ Wheel of Fortune socket handlers ============
@@ -1221,6 +1344,16 @@ export default function GameHost() {
     socket?.emit("wof-judge", { roomCode, correct });
   };
 
+  // Scattergories handlers
+  const handleScatSetConfig = (roundCount: number, difficulty: ScatDifficulty) => {
+    setScatRoundCount(roundCount);
+    setScatDifficulty(difficulty);
+    socket?.emit("scattergories-set-config", { roomCode, roundCount, difficulty });
+  };
+  const handleScatSkipToResults = () => socket?.emit("scattergories-skip-to-results", { roomCode });
+  const handleScatNextRound = () => socket?.emit("scattergories-next-round", { roomCode });
+  const handleScatEndGame = () => socket?.emit("scattergories-end-game", { roomCode });
+
   // Pub Quiz handlers
   const handlePqReveal = () => socket?.emit("quiz-reveal-answer", { roomCode });
   const handlePqSkip = () => socket?.emit("quiz-skip-question", { roomCode });
@@ -1251,6 +1384,13 @@ export default function GameHost() {
     const id = setInterval(() => setJNow(Date.now()), 250);
     return () => clearInterval(id);
   }, [gameType, jTimerEndAt]);
+
+  // Scattergories: timer tick during active round
+  useEffect(() => {
+    if (gameType !== "scattergories" || scatPhase !== "round" || scatTimerEndAt === 0) return;
+    const id = setInterval(() => setScatNow(Date.now()), 250);
+    return () => clearInterval(id);
+  }, [gameType, scatPhase, scatTimerEndAt]);
 
   const DemoBadge = () =>
     isDemo ? (
@@ -1637,8 +1777,247 @@ export default function GameHost() {
             </div>
           </motion.div>
         )}
+
+        {/* ===== Scattergories lobby settings ===== */}
+        {gameType === "scattergories" && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+            className="w-full max-w-5xl mb-8 space-y-8"
+          >
+            <div>
+              <div className="flex items-center gap-3 mb-4">
+                <Star className="w-6 h-6 text-black" />
+                <h2 className="font-display font-black text-black text-2xl uppercase">Number of Rounds</h2>
+                <span className="text-sm text-black/50 border-[2px] border-black px-3 py-1 font-sans">{scatRoundCount} round{scatRoundCount !== 1 ? "s" : ""}</span>
+              </div>
+              <div className="flex gap-3">
+                {[3, 4, 5].map((n) => (
+                  <motion.button
+                    key={n}
+                    onClick={() => handleScatSetConfig(n, scatDifficulty)}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.96 }}
+                    className={`w-16 h-16 font-display font-black text-2xl border-[3px] border-black focus-visible:outline-none ${scatRoundCount === n ? "bg-[#FF6B35] text-white shadow-[5px_5px_0_#000]" : "bg-white shadow-[4px_4px_0_#000] hover:bg-[#FFF8E7]"}`}
+                    data-testid={`btn-scat-rounds-${n}`}
+                  >
+                    {n}
+                  </motion.button>
+                ))}
+              </div>
+            </div>
+            <div>
+              <div className="flex items-center gap-3 mb-4">
+                <Zap className="w-6 h-6 text-black" />
+                <h2 className="font-display font-black text-black text-2xl uppercase">Difficulty</h2>
+                <span className="text-sm text-black/50 border-[2px] border-black px-3 py-1 font-sans">
+                  {scatDifficulty === "easy" ? "90s" : scatDifficulty === "medium" ? "60s" : "45s"} per round
+                </span>
+              </div>
+              <div className="flex gap-3">
+                {(["easy", "medium", "hard"] as ScatDifficulty[]).map((d) => (
+                  <motion.button
+                    key={d}
+                    onClick={() => handleScatSetConfig(scatRoundCount, d)}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    className={`px-8 py-4 font-display font-black text-xl uppercase border-[3px] border-black focus-visible:outline-none ${scatDifficulty === d ? "bg-[#FF6B35] text-white shadow-[5px_5px_0_#000]" : "bg-white shadow-[4px_4px_0_#000] hover:bg-[#FFF8E7]"}`}
+                    data-testid={`btn-scat-diff-${d}`}
+                  >
+                    {d}
+                  </motion.button>
+                ))}
+              </div>
+            </div>
+          </motion.div>
+        )}
       </div>
     );
+  };
+
+  const renderScattergories = () => {
+    const secondsLeft = scatTimerEndAt > 0 ? Math.max(0, Math.ceil((scatTimerEndAt - scatNow) / 1000)) : 0;
+    const totalSecs = scatDifficulty === "easy" ? 90 : scatDifficulty === "medium" ? 60 : 45;
+
+    if (scatPhase === "round") {
+      return (
+        <div className="flex-1 flex flex-col bg-[#FFF8E7] p-6 gap-6">
+          <header className="flex justify-between items-center flex-wrap gap-3">
+            <div className="font-display font-black text-black text-xl bg-white border-[3px] border-black shadow-[3px_3px_0_#000] px-6 py-3 uppercase tracking-widest">
+              ROOM: <span style={{ color: "#FF6B35" }}>{roomCode}</span>
+            </div>
+            {isDemo && <DemoBadge />}
+            <div className="font-display font-black text-black text-xl bg-white border-[3px] border-black shadow-[3px_3px_0_#000] px-6 py-3 uppercase">
+              Round <span style={{ color: "#FF6B35" }}>{scatRound}</span> / {scatTotalRounds}
+            </div>
+          </header>
+
+          <div className="flex flex-col lg:flex-row gap-6 flex-1">
+            {/* Main panel */}
+            <div className="flex-1 flex flex-col gap-6">
+              {/* Letter + timer */}
+              <div className={`flex items-center justify-between p-6 border-[4px] border-black shadow-[6px_6px_0_#000] ${scatAlertActive ? "bg-[#FF1493]" : "bg-[#FF6B35]"}`}>
+                <div>
+                  <p className="font-display font-black text-white/70 text-sm uppercase tracking-widest mb-1">This round&apos;s letter</p>
+                  <div className="font-display font-black text-white text-[8rem] leading-none" style={{ textShadow: "4px 4px 0 rgba(0,0,0,0.3)" }}>
+                    {scatLetter}
+                  </div>
+                </div>
+                <div className="flex flex-col items-center gap-2">
+                  <TimerRing value={secondsLeft} total={totalSecs} size={120} thickness={10} label={`${secondsLeft}s`} />
+                  {scatAlertActive && (
+                    <span className="font-display font-black text-white uppercase text-sm animate-pulse">⚡ 10 seconds!</span>
+                  )}
+                </div>
+              </div>
+
+              {/* Submission progress */}
+              <div className="bg-white border-[3px] border-black shadow-[4px_4px_0_#000] p-4">
+                <div className="flex items-center justify-between mb-3">
+                  <span className="font-display font-black text-black uppercase text-sm">Answers submitted</span>
+                  <span className="font-display font-black" style={{ color: "#FF6B35" }}>{scatSubmitted} / {scatTotal}</span>
+                </div>
+                <div className="w-full bg-black/10 border-[2px] border-black h-4">
+                  <motion.div
+                    className="h-full"
+                    style={{ backgroundColor: "#FF6B35" }}
+                    animate={{ width: `${(scatSubmitted / Math.max(1, scatTotal)) * 100}%` }}
+                    transition={{ duration: 0.5 }}
+                  />
+                </div>
+              </div>
+
+              {/* Categories list */}
+              <div className="bg-white border-[3px] border-black shadow-[4px_4px_0_#000] p-4">
+                <h3 className="font-display font-black text-black uppercase text-lg mb-4 border-b-[3px] border-black pb-2">Categories — must start with <span style={{ color: "#FF6B35" }}>{scatLetter}</span></h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                  {scatCategories.map((cat) => (
+                    <div key={cat.id} className="flex items-center gap-3 p-3 border-[2px] border-black bg-[#FFF8E7]">
+                      <div className="w-8 h-8 flex items-center justify-center font-display font-black text-white text-sm flex-shrink-0" style={{ backgroundColor: "#FF6B35" }}>
+                        {scatLetter}
+                      </div>
+                      <span className="font-display font-black text-black text-sm uppercase">{cat.name}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Sidebar */}
+            <div className="w-full lg:w-64 flex flex-col gap-4">
+              <Button
+                variant="outline"
+                onClick={handleScatSkipToResults}
+                className="w-full border-[3px] border-black font-display font-black text-base uppercase shadow-[4px_4px_0_#000]"
+                data-testid="btn-scat-skip"
+              >
+                <SkipForward className="w-5 h-5 mr-2" /> Skip to Results
+              </Button>
+              <div className="bg-white border-[3px] border-black shadow-[4px_4px_0_#000] p-4">
+                <h3 className="font-display font-black text-black uppercase text-sm mb-3">Scoreboard</h3>
+                <div className="space-y-2">
+                  {[...players].sort((a, b) => (b.score ?? 0) - (a.score ?? 0)).slice(0, 8).map((p, i) => (
+                    <div key={p.id} className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <span className="font-display font-black text-black/40 text-sm w-5">#{i+1}</span>
+                        {p.isBot && <Bot className="w-3 h-3 text-black/40" />}
+                        <span className="font-display font-black text-black text-sm uppercase truncate max-w-[100px]">{p.name}</span>
+                      </div>
+                      <span className="font-display font-black text-sm" style={{ color: "#FF6B35" }}>{p.score ?? 0}pt</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    if (scatPhase === "results") {
+      return (
+        <div className="flex-1 flex flex-col bg-[#FFF8E7] p-6 gap-6">
+          <header className="flex justify-between items-center flex-wrap gap-3">
+            <div className="font-display font-black text-black text-xl bg-white border-[3px] border-black shadow-[3px_3px_0_#000] px-6 py-3 uppercase tracking-widest">
+              Round {scatRound} Results — <span style={{ color: "#FF6B35" }}>Letter {scatLetter}</span>
+            </div>
+            {isDemo && <DemoBadge />}
+            <div className="flex gap-3">
+              {!scatIsLastRound && (
+                <Button onClick={handleScatNextRound} className="font-display font-black uppercase text-lg px-8 py-4" data-testid="btn-scat-next-round">
+                  Next Round <ArrowRight className="w-5 h-5 ml-2" />
+                </Button>
+              )}
+              <Button variant="outline" onClick={handleScatEndGame} className="border-[3px] border-black font-display font-black uppercase" data-testid="btn-scat-end-game">
+                End Game
+              </Button>
+            </div>
+          </header>
+
+          <div className="flex flex-col lg:flex-row gap-6 flex-1 overflow-auto">
+            {/* Results table */}
+            <div className="flex-1 space-y-4 overflow-auto">
+              {scatResults.map((cat) => (
+                <div key={cat.categoryId} className="bg-white border-[3px] border-black shadow-[4px_4px_0_#000]">
+                  <div className="p-3 border-b-[3px] border-black flex items-center gap-3" style={{ backgroundColor: "#FF6B35" }}>
+                    <span className="w-8 h-8 flex items-center justify-center font-display font-black text-white text-sm bg-black/20">{scatLetter}</span>
+                    <span className="font-display font-black text-white uppercase text-sm">{cat.categoryName}</span>
+                  </div>
+                  <div className="divide-y-[2px] divide-black">
+                    {cat.answers.filter(a => a.answer).map((a) => (
+                      <div key={a.playerId} className={`flex items-center justify-between px-4 py-2 ${a.isDuplicate ? "bg-black/5 opacity-60" : ""}`}>
+                        <div className="flex items-center gap-3">
+                          {a.pointsEarned > 0 ? <Check className="w-4 h-4 text-[#00C853]" /> : <X className="w-4 h-4 text-[#FF1493]" />}
+                          <span className="font-display font-black text-black uppercase text-sm">{a.playerName}</span>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <span className="font-sans text-sm text-black/70 italic">{a.answer}</span>
+                          {a.isDuplicate && <span className="text-xs font-sans text-black/50 border border-black/30 px-1">dup</span>}
+                          <span className="font-display font-black text-sm" style={{ color: a.pointsEarned > 0 ? "#00C853" : "#FF1493" }}>
+                            {a.pointsEarned > 0 ? "+1" : "0"}
+                          </span>
+                        </div>
+                      </div>
+                    ))}
+                    {cat.answers.filter(a => !a.answer).map((a) => (
+                      <div key={a.playerId} className="flex items-center justify-between px-4 py-2 opacity-40">
+                        <div className="flex items-center gap-3">
+                          <X className="w-4 h-4 text-black/50" />
+                          <span className="font-display font-black text-black uppercase text-sm">{a.playerName}</span>
+                        </div>
+                        <span className="font-sans text-sm text-black/40 italic">—</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Round leaderboard */}
+            <div className="w-full lg:w-72 flex flex-col gap-4">
+              <div className="bg-white border-[3px] border-black shadow-[4px_4px_0_#000] p-4">
+                <h3 className="font-display font-black text-xl uppercase mb-4 border-b-[3px] border-black pb-2">Leaderboard</h3>
+                <div className="space-y-3">
+                  {scatLeaderboard.map((row) => (
+                    <div key={row.id} className={`flex items-center justify-between p-3 border-[2px] border-black ${row.rank === 1 ? "bg-[#FFD700]" : "bg-[#FFF8E7]"}`}>
+                      <div className="flex items-center gap-2">
+                        <span className="font-display font-black text-black/50 w-6">#{row.rank}</span>
+                        {row.isBot && <Bot className="w-4 h-4 text-black/40" />}
+                        <span className="font-display font-black text-black uppercase truncate max-w-[100px]">{row.name}</span>
+                      </div>
+                      <span className="font-display font-black text-black text-lg">{row.score}pt</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    return null;
   };
 
   const renderFinished = () => {
@@ -3213,6 +3592,7 @@ export default function GameHost() {
   else if (gameType === "pub-quiz") content = renderPQ();
   else if (gameType === "jeopardy") content = renderJeopardy();
   else if (gameType === "wheel-of-fortune") content = renderWof();
+  else if (gameType === "scattergories") content = renderScattergories();
 
   return (
     <HostShell

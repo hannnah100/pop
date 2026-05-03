@@ -78,6 +78,17 @@ import {
   spinWheel,
   wofPackSummaryWire,
 } from "./wof";
+import {
+  type ScattergoriesState,
+  type ScattergoriesDifficulty,
+  type CategoryResult,
+  makeScattergoriesState,
+  pickScatLetter,
+  scoreScattergoriesRound,
+  clearScatTimers,
+  TIMER_DURATIONS_MS,
+} from "./scattergories";
+import { pickCategories, BOT_ANSWER_POOL, CATEGORIES_PER_ROUND } from "../data/scattergories/categories";
 
 interface Player {
   id: string;
@@ -98,7 +109,7 @@ interface HostSettingsBroadcast {
   answerMethod: "voice" | "text" | "both";
 }
 
-export type GameType = "pop-the-question" | "roast-roulette" | "pub-quiz" | "jeopardy" | "wheel-of-fortune";
+export type GameType = "pop-the-question" | "roast-roulette" | "pub-quiz" | "jeopardy" | "wheel-of-fortune" | "scattergories";
 
 interface RoastCard {
   [color: string]: {
@@ -138,6 +149,12 @@ interface Room {
   wofPackId?: string;
   /** For wof host UI: the chosen round count (3-5, default 5). */
   wofRoundCount?: number;
+  /** Scattergories state (only set when gameType === "scattergories" and game has started). */
+  scattergories?: ScattergoriesState;
+  /** For scattergories host UI: round count config (3-5, default 3). */
+  scattergoriesRoundCount?: number;
+  /** For scattergories host UI: difficulty config. */
+  scattergoriesDifficulty?: ScattergoriesDifficulty;
   createdAt: number;
   lastActivity: number;
   hostSettings: HostSettingsBroadcast;
@@ -592,6 +609,14 @@ export function setupSocketIO(httpServer: HttpServer) {
         wofPuzzleIndex: room.wof?.puzzleIndex ?? 0,
         wofTotalPuzzles: room.wof?.roundCount ?? 0,
         wofScores: room.wof ? wofScoresWire(room, room.wof) : [],
+        scattergoriesRoundCount: room.scattergoriesRoundCount ?? 3,
+        scattergoriesDifficulty: room.scattergoriesDifficulty ?? "medium",
+        scattergoriesPhase: room.scattergories?.phase ?? null,
+        scattergoriesRound: room.scattergories?.currentRound ?? 0,
+        scattergoriesLetter: room.scattergories?.currentLetter ?? null,
+        scattergoriesCategories: room.scattergories?.currentCategories ?? [],
+        scattergoriesTimerEndAt: room.scattergories?.timerEndAt ?? 0,
+        scattergoriesDifficultyActive: room.scattergories?.difficulty ?? null,
       });
     });
 
@@ -873,6 +898,23 @@ export function setupSocketIO(httpServer: HttpServer) {
 
         const firstController = room.players.find((p) => p.id === room.wof!.controllerId);
         if (firstController?.isBot) scheduleBotWofTurn(io, room);
+
+      } else if (room.gameType === "scattergories") {
+        const roundCount = room.scattergoriesRoundCount ?? 3;
+        const difficulty = room.scattergoriesDifficulty ?? "medium";
+        room.scattergories = makeScattergoriesState(roundCount, difficulty);
+        room.players.forEach((p) => { p.score = 0; });
+
+        io.to(roomCode).emit("game-started", {
+          gameType: room.gameType,
+          status: room.status,
+          isDemo: room.isDemo,
+          roundCount,
+          difficulty,
+        });
+
+        // Kick off round 1 immediately
+        startScattergoriesRound(io, room);
       }
     });
 
@@ -1376,6 +1418,102 @@ export function setupSocketIO(httpServer: HttpServer) {
       if (!room || !room.wof || room.hostId !== socket.id) return;
       room.lastActivity = Date.now();
       endWofGame(io, room);
+    });
+
+    // ===========================================
+    // Scattergories: set config (lobby, host only)
+    // ===========================================
+    socket.on("scattergories-set-config", ({ roomCode, roundCount, difficulty }: { roomCode: string; roundCount?: number; difficulty?: string }) => {
+      const room = rooms.get(roomCode);
+      if (!room || room.status !== "lobby") return;
+      if (room.hostId !== socket.id) return;
+      if (room.gameType !== "scattergories") return;
+      if (typeof roundCount === "number") {
+        room.scattergoriesRoundCount = Math.min(Math.max(Math.floor(roundCount), 3), 5);
+      }
+      if (difficulty === "easy" || difficulty === "medium" || difficulty === "hard") {
+        room.scattergoriesDifficulty = difficulty as ScattergoriesDifficulty;
+      }
+      io.to(roomCode).emit("scattergories-config-changed", {
+        roundCount: room.scattergoriesRoundCount ?? 3,
+        difficulty: room.scattergoriesDifficulty ?? "medium",
+      });
+    });
+
+    // ===========================================
+    // Scattergories: player submits answers
+    // ===========================================
+    socket.on("scattergories-submit", ({ roomCode, answers }: { roomCode: string; answers: Record<string, string> }) => {
+      const room = rooms.get(roomCode);
+      if (!room || !room.scattergories) return;
+      const sc = room.scattergories;
+      if (sc.phase !== "round") return;
+      const player = room.players.find((p) => p.id === socket.id);
+      if (!player || player.isHost) return;
+      room.lastActivity = Date.now();
+      player.lastActivity = Date.now();
+
+      sc.submissions.set(socket.id, answers);
+      sc.submittedPlayerIds.add(socket.id);
+
+      const nonHostPlayers = room.players.filter((p) => !p.isHost);
+      io.to(roomCode).emit("scattergories-submission-progress", {
+        submitted: sc.submittedPlayerIds.size,
+        total: nonHostPlayers.length,
+      });
+
+      if (sc.submittedPlayerIds.size >= nonHostPlayers.length) {
+        resolveScattergoriesRound(io, room);
+      }
+    });
+
+    // ===========================================
+    // Scattergories: host skips to results
+    // ===========================================
+    socket.on("scattergories-skip-to-results", ({ roomCode }: { roomCode: string }) => {
+      const room = rooms.get(roomCode);
+      if (!room || !room.scattergories) return;
+      if (room.hostId !== socket.id) return;
+      if (room.scattergories.phase !== "round") return;
+      room.lastActivity = Date.now();
+      resolveScattergoriesRound(io, room);
+    });
+
+    // ===========================================
+    // Scattergories: host starts next round
+    // ===========================================
+    socket.on("scattergories-next-round", ({ roomCode }: { roomCode: string }) => {
+      const room = rooms.get(roomCode);
+      if (!room || !room.scattergories) return;
+      if (room.hostId !== socket.id) return;
+      if (room.scattergories.phase !== "results") return;
+      room.lastActivity = Date.now();
+      startScattergoriesRound(io, room);
+    });
+
+    // ===========================================
+    // Scattergories: host ends the game
+    // ===========================================
+    socket.on("scattergories-end-game", ({ roomCode }: { roomCode: string }) => {
+      const room = rooms.get(roomCode);
+      if (!room || !room.scattergories) return;
+      if (room.hostId !== socket.id) return;
+      room.lastActivity = Date.now();
+      const sc = room.scattergories;
+      clearScatTimers(sc);
+      sc.phase = "ended";
+      room.status = "finished";
+
+      const nonHostPlayers = room.players.filter((p) => !p.isHost);
+      const finalScores = [...nonHostPlayers]
+        .sort((a, b) => b.score - a.score)
+        .map((p, i) => ({ id: p.id, name: p.name, score: p.score, isBot: p.isBot, rank: i + 1 }));
+
+      io.to(roomCode).emit("game-ended", {
+        players: room.players,
+        finalScores,
+        gameType: "scattergories",
+      });
     });
 
     // ===========================================
@@ -2637,6 +2775,142 @@ function scheduleBotWofTurn(io: SocketIOServer, room: Room) {
     io.to(live.code).emit("wof-spun", { value, spinIndex, type: "dollar", isFreePlay: false, controllerId: live.wof.controllerId, controllerName, scores: wofScoresWire(live, live.wof) });
     scheduleBotWofGuess(io, live);
   }, wofRand(1200, 2800));
+}
+
+// ==============================================
+// Scattergories helper functions
+// ==============================================
+
+function startScattergoriesRound(io: SocketIOServer, room: Room) {
+  const sc = room.scattergories!;
+  sc.phase = "round";
+  sc.currentRound += 1;
+  sc.submissions = new Map();
+  sc.submittedPlayerIds = new Set();
+
+  const letter = pickScatLetter(sc.usedLetters);
+  sc.currentLetter = letter;
+  sc.usedLetters.push(letter);
+
+  const categories = pickCategories(CATEGORIES_PER_ROUND, sc.usedCategoryIds);
+  sc.currentCategories = categories;
+  sc.usedCategoryIds.push(...categories.map((c) => c.id));
+
+  const durationMs = TIMER_DURATIONS_MS[sc.difficulty];
+  const startedAt = Date.now();
+  sc.timerEndAt = startedAt + durationMs;
+
+  io.to(room.code).emit("scattergories-round-started", {
+    round: sc.currentRound,
+    totalRounds: sc.roundCount,
+    letter,
+    categories: categories.map((c) => ({ id: c.id, name: c.name })),
+    timerEndAt: sc.timerEndAt,
+    difficulty: sc.difficulty,
+  });
+
+  if (room.isDemo) {
+    scheduleBotScattergoriesAnswers(io, room, letter, categories, startedAt, durationMs);
+  }
+
+  const alertDelay = durationMs - 10_000;
+  if (alertDelay > 0) {
+    sc.alertHandle = setTimeout(() => {
+      const live = rooms.get(room.code);
+      if (!live?.scattergories || live.scattergories.phase !== "round") return;
+      if (live.scattergories.currentLetter !== letter) return;
+      io.to(room.code).emit("scattergories-10-second-alert");
+    }, alertDelay) as unknown as ReturnType<typeof setTimeout>;
+  }
+
+  sc.timerHandle = setTimeout(() => {
+    const live = rooms.get(room.code);
+    if (!live?.scattergories || live.scattergories.phase !== "round") return;
+    if (live.scattergories.currentLetter !== letter) return;
+    resolveScattergoriesRound(io, live);
+  }, durationMs) as unknown as ReturnType<typeof setTimeout>;
+}
+
+function resolveScattergoriesRound(io: SocketIOServer, room: Room) {
+  const sc = room.scattergories!;
+  clearScatTimers(sc);
+  sc.phase = "results";
+
+  const nonHostPlayers = room.players.filter((p) => !p.isHost);
+  const results = scoreScattergoriesRound(sc.currentCategories, sc.submissions, nonHostPlayers);
+
+  const roundScoreMap: Record<string, number> = {};
+  results.forEach((cat: CategoryResult) => {
+    cat.answers.forEach((a) => {
+      roundScoreMap[a.playerId] = (roundScoreMap[a.playerId] ?? 0) + a.pointsEarned;
+    });
+  });
+
+  nonHostPlayers.forEach((p) => {
+    p.score += roundScoreMap[p.id] ?? 0;
+  });
+
+  const roundScores = nonHostPlayers.map((p) => ({
+    playerId: p.id,
+    playerName: p.name,
+    roundScore: roundScoreMap[p.id] ?? 0,
+    isBot: p.isBot,
+  }));
+
+  const leaderboard = [...nonHostPlayers]
+    .sort((a, b) => b.score - a.score)
+    .map((p, i) => ({ id: p.id, name: p.name, score: p.score, isBot: p.isBot, rank: i + 1 }));
+
+  io.to(room.code).emit("scattergories-results", {
+    round: sc.currentRound,
+    totalRounds: sc.roundCount,
+    letter: sc.currentLetter,
+    results,
+    roundScores,
+    leaderboard,
+    isLastRound: sc.currentRound >= sc.roundCount,
+  });
+}
+
+function scheduleBotScattergoriesAnswers(
+  io: SocketIOServer,
+  room: Room,
+  letter: string,
+  categories: Array<{ id: string; name: string }>,
+  startedAt: number,
+  durationMs: number,
+) {
+  const bots = room.players.filter((p) => p.isBot && !p.isHost);
+  bots.forEach((bot) => {
+    const delay = Math.floor(durationMs * (0.25 + Math.random() * 0.5));
+    setTimeout(() => {
+      const live = rooms.get(room.code);
+      const sc = live?.scattergories;
+      if (!sc || sc.phase !== "round" || sc.currentLetter !== letter) return;
+      if (Date.now() - startedAt > durationMs - 2000) return;
+
+      const answers: Record<string, string> = {};
+      const letterPool = BOT_ANSWER_POOL[letter] ?? [];
+      categories.forEach((cat) => {
+        if (Math.random() < 0.18) { answers[cat.id] = ""; return; }
+        if (letterPool.length === 0) { answers[cat.id] = ""; return; }
+        answers[cat.id] = letterPool[Math.floor(Math.random() * letterPool.length)]!;
+      });
+
+      sc.submissions.set(bot.id, answers);
+      sc.submittedPlayerIds.add(bot.id);
+
+      const nonHostPlayers = live!.players.filter((p) => !p.isHost);
+      io.to(live!.code).emit("scattergories-submission-progress", {
+        submitted: sc.submittedPlayerIds.size,
+        total: nonHostPlayers.length,
+      });
+
+      if (sc.submittedPlayerIds.size >= nonHostPlayers.length) {
+        resolveScattergoriesRound(io, live!);
+      }
+    }, delay);
+  });
 }
 
 function scheduleBotWofGuess(io: SocketIOServer, room: Room) {

@@ -3,7 +3,7 @@ import { useLocation } from "wouter";
 import { useCreateRoom, CreateRoomRequestGameType } from "@workspace/api-client-react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { MessageSquare, Flame, Loader2, Bot, Beer, Grid3x3, CircleDot } from "lucide-react";
+import { MessageSquare, Flame, Loader2, Bot, Beer, Grid3x3, CircleDot, LayoutList } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import {
@@ -69,6 +69,17 @@ const GAME_CARDS = [
     bg: "#7C3AED",
     accent: "#FFD700",
     testId: "btn-host-wof",
+  },
+  {
+    type: "scattergories" as CreateRoomRequestGameType,
+    label: "Scattergories",
+    tagline: "Name something famous starting with S.",
+    description:
+      "Race the clock to fill in pop-culture categories starting with the same letter. Unique answers score — duplicates don't.",
+    Icon: LayoutList,
+    bg: "#FF6B35",
+    accent: "#FFD700",
+    testId: "btn-host-scattergories",
   },
 ];
 

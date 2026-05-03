@@ -360,6 +360,7 @@ export const CreateRoomBody = zod.object({
     "pub-quiz",
     "jeopardy",
     "wheel-of-fortune",
+    "scattergories",
   ]),
   demo: zod.boolean().optional(),
   packId: zod.string().optional(),
