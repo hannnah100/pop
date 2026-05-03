@@ -73,7 +73,7 @@ function rarityColor(p: number | null): string {
   if (p >= 80) return "bg-[#00E5FF]";
   if (p >= 50) return "bg-[#00C853]";
   if (p >= 25) return "bg-[#FFF8E7]";
-  return "bg-[#FF6B6B]";
+  return "bg-white";
 }
 
 export default function PopBox() {
@@ -717,7 +717,7 @@ function Row(props: {
                     </span>
                     {cell.rarityPercent != null && (
                       <span className="text-[10px] sm:text-xs font-bold text-black/60 mt-0.5">
-                        {cell.rarityPercent}%
+                        {rarityLabel(cell.rarityPercent)}
                       </span>
                     )}
                   </>
