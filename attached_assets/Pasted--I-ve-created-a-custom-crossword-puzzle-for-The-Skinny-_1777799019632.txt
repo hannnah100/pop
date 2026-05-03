@@ -1,0 +1,101 @@
+"I've created a custom crossword puzzle for The Skinny. Implement this exact puzzle into the game.
+Grid Layout (reading left to right, top to bottom):
+The grid is NOT a uniform rectangle - it's an irregular crossword shape. Here's the exact layout with coordinates:
+Position [row, col]: Letter
+
+Row 1:
+[1,4]: G (clue 1-Down starts here)
+
+Row 2:
+[2,4]: U
+
+Row 3:
+[3,3]: R (clue 2-Down starts here)
+[3,4]: U
+[3,5]: T
+
+Row 4:
+[4,2]: A (clue 4-Across starts here)
+[4,3]: C
+[4,4]: E
+[4,5]: S
+[4,6]: (empty space, then) E (clue 3-Down starts here)
+
+Row 5:
+[5,3]: Y
+[5,6]: M
+
+Row 6:
+[6,2]: Z (clue 5-Across starts here)
+[6,3]: E
+[6,4]: N (clue 6-Down starts here)
+[6,5]: D
+[6,6]: A
+[6,7]: Y
+[6,8]: A
+
+Row 7:
+[7,5]: D
+[7,6]: O
+
+Row 8:
+[8,2]: D (clue 7-Across starts here)
+[8,3]: O
+[8,4]: D
+[8,5]: G
+[8,6]: E
+[8,7]: R
+[8,8]: S (clue 8-Down starts here)
+
+Row 9:
+[9,5]: S
+[9,8]: P
+
+Row 10:
+[10,8]: U
+
+Row 11:
+[11,8]: R
+
+Row 12:
+[12,8]: S
+All Answers (filled in puzzle shown in image):
+1-Down: GUTS (Olivia Rodrigo's second album)
+2-Down: RUTI (singer of "Where is my husband!")
+3-Down: EMMA (Stone, Thompson, Watson)
+4-Across: ACES (2025 WNBA champions)
+5-Across: ZENDAYA (Tom Holland's other half)
+6-Down: DOGS (Drake's album "For all the ___")
+7-Across: DODGERS (winners of 2024, 2025 World Series)
+8-Down: SPURS (2014 NBA champions)
+Clues:
+Down:
+
+Olivia Rodrigo's second album (4 letters) → GUTS
+Singer of "Where is my husband!" (4 letters) → RUTI
+Stone, Thompson, Watson (4 letters) → EMMA
+Drake's album "For all the ___" (4 letters) → DOGS
+2014 NBA champions (5 letters) → SPURS
+
+Across:
+4. 2025 WNBA champions (4 letters) → ACES
+5. Tom Holland's other half (7 letters) → ZENDAYA
+7. Winners of 2024, 2025 World Series (7 letters) → DODGERS
+Implementation Instructions:
+
+This is puzzle #1 for The Skinny
+Display the grid exactly as shown in the image (irregular crossword shape)
+Black/empty squares where there are no letters
+Numbered squares match the clue numbers (1, 2, 3, 4, 5, 6, 7, 8)
+Click to type functionality
+Timer tracks completion
+Validate answers against the correct words above
+
+Visual Style:
+
+Title: 'THE SKINNY' (not 'Crossword Puzzle')
+Keep the grid layout and clue list
+Add Y2K styling (thick borders, colorful cells when correct)
+Mobile responsive
+
+Add this as the first daily puzzle. I'll provide more puzzles in the same format later."
