@@ -525,9 +525,9 @@
     "id": "gty-2016b",
     "year": 2016,
     "hints": [
-      "Beyoncé's 'visual album' released without warning featured a baseball bat and burning cars",
-      "Justin Timberlake performed at the Super Bowl — wait, no — The Weeknd performed 'Starboy'",
-      "David Bowie and Prince both died within months of each other"
+      "Beyoncé's surprise visual album featured a baseball bat, burning cars, and accusations of infidelity",
+      "The Weeknd's 'Starboy' featuring Daft Punk debuted at number one globally",
+      "David Bowie and Prince both died within months of each other, shocking the music world"
     ]
   },
   {
@@ -621,12 +621,12 @@
     ]
   },
   {
-    "id": "gty-2026",
-    "year": 2026,
+    "id": "gty-2007d",
+    "year": 2007,
     "hints": [
-      "A highly anticipated sports drama film about a legendary athlete shattered opening weekend records",
-      "A pop star's collaborative album with an unlikely partner broke multiple streaming records",
-      "FIFA World Cup kicked off in the United States, Canada, and Mexico"
+      "An animated French film about a rat who dreams of cooking in Paris became a Pixar classic",
+      "Carrie Underwood's 'Before He Cheats' made her the defining country crossover star of the year",
+      "The iPhone launched, triggering a smartphone revolution that reshaped every industry"
     ]
   },
   {
@@ -777,18 +777,18 @@
     "id": "gty-2006c",
     "year": 2006,
     "hints": [
-      "An animated film about a cooking rat earned critical acclaim and over $620M worldwide",
-      "Ne-Yo's 'So Sick' and 'Sexy Love' made him the breakout R&B star of the year",
-      "North Korea conducted its first successful nuclear weapons test"
+      "A Disney Channel original film about high school students singing shocked everyone by becoming a massive hit",
+      "Ne-Yo's 'So Sick' and Sean Kingston's 'Beautiful Girls' were inescapable on radio",
+      "North Korea conducted its first nuclear weapons test"
     ]
   },
   {
     "id": "gty-2008c",
     "year": 2008,
     "hints": [
-      "A boy wizard and his friends faced Death Eaters in their sixth big-screen adventure",
-      "Lil Wayne's 'Lollipop' topped the charts before his groundbreaking mixtape dropped",
-      "Barack Obama won the Nobel Peace Prize — controversially, in his first year in office"
+      "An animated Pixar film about a robot left alone on a trash-covered Earth won Best Animated Feature",
+      "Lil Wayne's 'Tha Carter III' sold one million copies in its first week",
+      "Joe Biden was announced as Barack Obama's vice presidential running mate"
     ]
   },
   {
@@ -825,6 +825,96 @@
       "A woman candidate won the popular vote but lost the presidency in an Electoral College upset",
       "The Chainsmokers' 'Closer' spent 12 weeks at number one",
       "The Chicago Cubs ended a 108-year World Series drought in a dramatic Game 7"
+    ]
+  },
+  {
+    "id": "gty-1990b",
+    "year": 1990,
+    "hints": [
+      "The highest-grossing film of the year featured a ghost, a pottery wheel, and an iconic song",
+      "Vanilla Ice's 'Ice Ice Baby' became the first hip-hop single to top the Billboard chart",
+      "Nelson Mandela was released from prison after 27 years"
+    ]
+  },
+  {
+    "id": "gty-2004c",
+    "year": 2004,
+    "hints": [
+      "A reality show featuring Donald Trump saying 'You're fired!' became the season's biggest hit",
+      "Outkast's 'Hey Ya!' was still everywhere after dominating the previous year's charts",
+      "Ronald Reagan passed away at age 93 after a long battle with Alzheimer's disease"
+    ]
+  },
+  {
+    "id": "gty-2010d",
+    "year": 2010,
+    "hints": [
+      "A music video for a Lady Gaga song featuring a prison and a poker game ran over nine minutes",
+      "Ke$ha's 'Tik Tok' spent nine weeks at number one starting the year",
+      "The Deepwater Horizon oil rig exploded and sank, causing the worst oil spill in US history"
+    ]
+  },
+  {
+    "id": "gty-2013d",
+    "year": 2013,
+    "hints": [
+      "A smartphone manufacturer launched a smartwatch before any competitor had a viable product",
+      "Daft Punk's 'Get Lucky' was the inescapable summer anthem of the year",
+      "A pressure cooker bomb exploded near the finish line of the Boston Marathon"
+    ]
+  },
+  {
+    "id": "gty-2018d",
+    "year": 2018,
+    "hints": [
+      "A streaming-exclusive superhero film earned over $426 million worldwide despite not releasing in China",
+      "Childish Gambino's 'This Is America' music video sparked a nationwide conversation",
+      "Anthony Bourdain died by suicide while filming an episode of his CNN travel show"
+    ]
+  },
+  {
+    "id": "gty-2019d",
+    "year": 2019,
+    "hints": [
+      "A streaming service launched its first original series featuring a Mandalorian bounty hunter and a green toddler",
+      "Ariana Grande's 'Thank U, Next' broke the Spotify single-day streaming record",
+      "Jeffrey Epstein was arrested on federal sex trafficking charges and died in custody"
+    ]
+  },
+  {
+    "id": "gty-2021d",
+    "year": 2021,
+    "hints": [
+      "A blockbuster film about rival street gangs and star-crossed lovers set in New York received wide acclaim",
+      "Silk Sonic's 'Leave the Door Open' introduced the Bruno Mars and Anderson .Paak collaboration",
+      "Facebook, Instagram, and WhatsApp went down for six hours in the largest outage in their history"
+    ]
+  },
+  {
+    "id": "gty-2009d",
+    "year": 2009,
+    "hints": [
+      "A romantic fantasy series about a vampire named Edward and a human girl named Bella reached its peak popularity",
+      "Jay-Z's 'Empire State of Mind' featuring Alicia Keys became an instant New York anthem",
+      "Barack Obama was inaugurated as the 44th President of the United States"
+    ]
+  },
+  {
+    "id": "gty-2005d",
+    "year": 2005,
+    "hints": [
+      "A short video sharing website with an unusual name launched and would change online culture forever",
+      "Gwen Stefani's 'Hollaback Girl' had listeners spelling out the word 'bananas'",
+      "Terri Schiavo's right-to-die case sparked a national debate about end-of-life decisions"
+    ]
+  },
+  {
+    "id": "gty-2011d",
+    "year": 2011,
+    "hints": [
+      "A major US city experienced days of rioting after a hockey team lost the Stanley Cup finals",
+      "Pitbull's 'Give Me Everything' and LMFAO's 'Party Rock Anthem' dominated the summer charts",
+      "Muammar Gaddafi was killed after rebel forces stormed his hometown of Sirte"
     ]
   }
 ]

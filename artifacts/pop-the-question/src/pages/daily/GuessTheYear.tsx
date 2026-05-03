@@ -289,11 +289,7 @@ export default function GuessTheYear() {
         setShakeKey((k) => k + 1);
         playWrong();
         hapticWrong();
-        const diff = Math.abs(year - (data.year ?? year));
-        let msg = "Not quite — try again!";
-        if (diff <= 1) msg = "So close! Just 1 year off!";
-        else if (diff <= 3) msg = `Almost! You were ${diff} years off`;
-        else if (diff <= 10) msg = `Not quite — a few years off`;
+        const msg = "Not quite — try again!";
         setWrongMessage(msg);
         setYearInput("");
         inputRef.current?.focus();
@@ -345,7 +341,7 @@ export default function GuessTheYear() {
         ? `❌ Gave up (the year was ${finalYear})`
         : `${scoreEmoji(score)} Got it in hint ${hintsUsed}! (${score} pts)`,
       hintDots.map((_, i) => (i < hintsUsed ? ["🟣", "🟠", "🔵"][i] : "⬜")).join(" "),
-      "Play at Pop: The Question",
+      "Play at https://pop-the-question.replit.app",
     ]
       .filter(Boolean)
       .join("\n");
@@ -618,11 +614,11 @@ export default function GuessTheYear() {
                     </div>
                     <div className="text-center">
                       <p className="font-display font-black text-2xl">
-                        {stats.gtyTotalPlays
-                          ? (stats.gtyTotalScore / stats.gtyTotalPlays).toFixed(1)
+                        {stats.gtyTotalPlays && stats.gtyHintsSum
+                          ? (stats.gtyHintsSum / stats.gtyTotalPlays).toFixed(1)
                           : "—"}
                       </p>
-                      <p className="text-xs text-black/50 font-bold uppercase">Avg Score</p>
+                      <p className="text-xs text-black/50 font-bold uppercase">Avg Hints</p>
                     </div>
                   </div>
                 </div>
