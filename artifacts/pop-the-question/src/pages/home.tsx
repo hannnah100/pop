@@ -390,25 +390,26 @@ export default function Home() {
           </Link>
 
           {/* How to Play — lime green square badge */}
-          <button
-            data-testid="link-how-to-play"
-            className="relative flex items-center gap-2 px-5 py-2.5 border-[3px] border-black shadow-[4px_4px_0_#000] hover:shadow-[2px_2px_0_#000] hover:translate-x-[2px] hover:translate-y-[2px] active:shadow-none active:translate-x-[4px] active:translate-y-[4px] transition-all cursor-pointer select-none"
-            style={{ background: "#00C853", borderRadius: "6px" }}
-          >
-            <HelpCircle className="w-4 h-4 text-white shrink-0" />
+          <Link href="/how-to-play" data-testid="link-how-to-play">
             <span
-              className="font-display font-black text-sm uppercase tracking-wide"
-              style={{
-                color: "#fff",
-                WebkitTextFillColor: "#fff",
-                WebkitTextStroke: "1px #000",
-                paintOrder: "stroke fill",
-              }}
+              className="relative flex items-center gap-2 px-5 py-2.5 border-[3px] border-black shadow-[4px_4px_0_#000] hover:shadow-[2px_2px_0_#000] hover:translate-x-[2px] hover:translate-y-[2px] active:shadow-none active:translate-x-[4px] active:translate-y-[4px] transition-all cursor-pointer select-none"
+              style={{ background: "#00C853", borderRadius: "6px" }}
             >
-              How to Play
+              <HelpCircle className="w-4 h-4 text-white shrink-0" />
+              <span
+                className="font-display font-black text-sm uppercase tracking-wide"
+                style={{
+                  color: "#fff",
+                  WebkitTextFillColor: "#fff",
+                  WebkitTextStroke: "1px #000",
+                  paintOrder: "stroke fill",
+                }}
+              >
+                How to Play
+              </span>
+              <StarDoodle className="w-3 h-3 text-[#FFD700] ml-0.5 shrink-0" />
             </span>
-            <StarDoodle className="w-3 h-3 text-[#FFD700] ml-0.5 shrink-0" />
-          </button>
+          </Link>
         </div>
       </footer>
     </div>

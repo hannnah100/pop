@@ -27,6 +27,7 @@ import JeopardyCreator from "@/pages/create-game/jeopardy";
 import WofCreator from "@/pages/create-game/wof";
 import QuizCreator from "@/pages/create-game/quiz";
 import MyGames from "@/pages/my-games";
+import HowToPlay from "@/pages/how-to-play";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -71,6 +72,7 @@ function AnimatedRoutes() {
           <Route path="/create-game/quiz/:id" component={QuizCreator} />
           <Route path="/create-game/quiz" component={QuizCreator} />
           <Route path="/my-games" component={MyGames} />
+          <Route path="/how-to-play" component={HowToPlay} />
           <Route component={NotFound} />
         </Switch>
       </motion.div>
