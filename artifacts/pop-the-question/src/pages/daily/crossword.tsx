@@ -47,6 +47,7 @@ export default function Crossword() {
   const lastTickRef = useRef(0);
   const recordedRef = useRef(false);
   const gridRef = useRef<HTMLDivElement>(null);
+  const hiddenInputRef = useRef<HTMLInputElement>(null);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const todayDate = new Date().toISOString().split('T')[0];
 
@@ -153,6 +154,13 @@ export default function Crossword() {
     }, 320);
   };
 
+  // Focus the hidden input whenever a cell is selected so the mobile keyboard opens
+  useEffect(() => {
+    if (selectedCell && !isCompleted) {
+      hiddenInputRef.current?.focus({ preventScroll: true });
+    }
+  }, [selectedCell, isCompleted]);
+
   const handleCellClick = (r: number, c: number) => {
     if (isCompleted || isBlackSquare(r, c)) return;
     if (selectedCell && selectedCell[0] === r && selectedCell[1] === c) {
@@ -160,20 +168,31 @@ export default function Crossword() {
     } else {
       setSelectedCell([r, c]);
     }
+    // Always (re-)focus the hidden input on every tap so the keyboard stays open
+    hiddenInputRef.current?.focus({ preventScroll: true });
+  };
+
+  const processLetter = (char: string) => {
+    if (isCompleted || !selectedCell || !puzzle) return;
+    const [r, c] = selectedCell;
+    const upper = char.toUpperCase();
+    if (!upper.match(/^[A-Z]$/)) return;
+    const newGrid = [...gridState.map(row => [...row])];
+    newGrid[r][c] = upper;
+    setGridState(newGrid);
+    if (upper === puzzle.grid[r][c]) triggerPop(r, c);
+    if (direction === 'across' && c < cols - 1 && !isBlackSquare(r, c + 1)) setSelectedCell([r, c + 1]);
+    else if (direction === 'down' && r < rows - 1 && !isBlackSquare(r + 1, c)) setSelectedCell([r + 1, c]);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (isCompleted || !selectedCell || !puzzle) return;
     const [r, c] = selectedCell;
     if (e.key.match(/^[a-zA-Z]$/)) {
-      const char = e.key.toUpperCase();
-      const newGrid = [...gridState.map(row => [...row])];
-      newGrid[r][c] = char;
-      setGridState(newGrid);
-      if (char === puzzle.grid[r][c]) triggerPop(r, c);
-      if (direction === 'across' && c < cols - 1 && !isBlackSquare(r, c + 1)) setSelectedCell([r, c + 1]);
-      else if (direction === 'down' && r < rows - 1 && !isBlackSquare(r + 1, c)) setSelectedCell([r + 1, c]);
+      e.preventDefault(); // prevent the char from landing in the hidden input (stops onChange double-fire)
+      processLetter(e.key);
     } else if (e.key === 'Backspace') {
+      e.preventDefault();
       if (gridState[r][c] !== '') {
         const newGrid = [...gridState.map(row => [...row])];
         newGrid[r][c] = '';
@@ -186,6 +205,16 @@ export default function Crossword() {
     else if (e.key === 'ArrowLeft' && c > 0 && !isBlackSquare(r, c - 1)) { setSelectedCell([r, c - 1]); setDirection('across'); }
     else if (e.key === 'ArrowDown' && r < rows - 1 && !isBlackSquare(r + 1, c)) { setSelectedCell([r + 1, c]); setDirection('down'); }
     else if (e.key === 'ArrowUp' && r > 0 && !isBlackSquare(r - 1, c)) { setSelectedCell([r - 1, c]); setDirection('down'); }
+  };
+
+  // onChange fires on Android/iOS when onKeyDown doesn't deliver the key (IME input)
+  const handleHiddenInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const val = e.target.value;
+    if (!val) return;
+    // Extract the last character typed (input was empty before, now has one char)
+    processLetter(val[val.length - 1]);
+    // Clear the input so it's ready for the next keystroke
+    e.target.value = '';
   };
 
   const handleCheck = () => {
@@ -310,10 +339,23 @@ export default function Crossword() {
   return (
     <div
       className="flex-1 flex flex-col max-w-5xl mx-auto w-full px-4 py-8"
-      tabIndex={0}
-      onKeyDown={handleKeyDown}
       ref={gridRef}
     >
+      {/* Hidden input — keeps focus so the mobile virtual keyboard opens on cell tap */}
+      <input
+        ref={hiddenInputRef}
+        type="text"
+        inputMode="text"
+        autoComplete="off"
+        autoCorrect="off"
+        autoCapitalize="none"
+        spellCheck={false}
+        onKeyDown={handleKeyDown}
+        onChange={handleHiddenInputChange}
+        aria-hidden="true"
+        tabIndex={-1}
+        style={{ position: 'fixed', top: '-9999px', left: '-9999px', width: '1px', height: '1px', opacity: 0 }}
+      />
       <BannerStack banners={banners} onDone={(id) => setBanners((b) => b.filter((x) => x.id !== id))} />
 
       <div className="mb-4">
@@ -488,7 +530,7 @@ export default function Crossword() {
       </div>
 
       <p className="mt-6 text-center text-sm text-black/50 font-sans lg:hidden">
-        Tap a cell to select · double-tap to change direction
+        Tap a cell to start typing · tap again to switch direction
       </p>
     </div>
   );
