@@ -164,12 +164,12 @@ const GAMES: GameRulesCardProps[] = [
     bg: "#FFD700",
     steps: [
       "You'll see 3 pop-culture facts from the same year. The first hint is shown straight away.",
-      "Lock in a year if you're confident, or tap to reveal Hint 2 — and then Hint 3 — for more clues.",
-      "You only need to enter one final answer: the exact year.",
-      "Out of ideas? You can give up to reveal the year, but you'll score 0.",
+      "Type a year and submit — wrong guesses don't end the game, so you can keep trying.",
+      "Need more help? Tap to reveal Hint 2, and then Hint 3, for more clues.",
+      "Stuck? You can give up to reveal the year, but you'll score 0.",
     ],
     scoring:
-      "3 points if you nail it after just hint 1, 2 points after hint 2, 1 point after hint 3. The year has to be exact — close doesn't count.",
+      "Your score depends on how many hints had been revealed when you nailed the year: 3 points with only hint 1 showing, 2 with hint 2 revealed, 1 with hint 3. The year has to be exact — close doesn't count.",
     share: "Share your score and see who in your group has the best memory.",
   },
 ];
