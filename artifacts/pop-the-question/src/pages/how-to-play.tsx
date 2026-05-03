@@ -103,14 +103,14 @@ const GAMES: GameRulesCardProps[] = [
     emoji: "⚡",
     bg: "#FF6B35",
     steps: [
-      "You'll see a pop-culture category and need to name things that fit it.",
-      "Type your answer and submit — correct guesses keep you alive.",
-      "Each wrong or repeated guess is a strike. Three strikes and the round ends.",
-      "Keep going as long as you can to rack up the longest streak.",
+      "You'll see a pop-culture category with a hidden list of correct answers.",
+      "Type a guess and submit. Matches don't have to be exact — close spellings count.",
+      "Anything that isn't on the list earns a strike. Repeating an answer you already found just shows \"Already found!\" — no strike.",
+      "Find every answer to win, or hit 3 strikes and the round ends.",
     ],
     scoring:
-      "You're scored on how many correct answers you get before your third strike. Stuck? Take a breath — sometimes the obvious answer is the right one.",
-    share: "Brag about your streak — share your result with the group chat.",
+      "Your score is how many correct answers you found. Stuck? Try a different angle — the list usually goes deeper than the obvious picks.",
+    share: "Brag about how many you got — share your result with the group chat.",
   },
   {
     title: "The Skinny",
@@ -118,13 +118,13 @@ const GAMES: GameRulesCardProps[] = [
     emoji: "🧩",
     bg: "#00E5FF",
     steps: [
-      "Tap a square to start filling in a word, then type your answer.",
-      "Use the across and down clues to figure out each word.",
-      "Cross-checking letters helps you crack the trickier ones.",
-      "Fill every square correctly to finish the puzzle.",
+      "Tap a square to start a word, then type your answers using the Across and Down clues.",
+      "Letters that are correct as you type get a little pop animation as a confidence boost.",
+      "When you think the grid is done, hit \"Check Grid\" to see if you've solved it.",
+      "Beat the clock — there's a target time ticking down at the top of the puzzle.",
     ],
     scoring:
-      "Faster solves and fewer hints make for a better result. There's no penalty for trying — guess freely and back yourself.",
+      "There are no hints, just you and the clues. Solving under the target time is the flex — partial fills don't count, so finish the whole grid.",
     share: "Finished it? Share your time and challenge a friend to beat it.",
   },
   {
@@ -133,14 +133,14 @@ const GAMES: GameRulesCardProps[] = [
     emoji: "🎬",
     bg: "#FF1493",
     steps: [
-      "You'll see a 3×3 grid with a category on each row and column.",
-      "Pick a square and name a celebrity who fits BOTH that row and column.",
-      "Each celebrity can only be used once across the whole board.",
-      "Fill all 9 squares to complete the box.",
+      "You'll see a 3×3 grid with a category on each row and each column.",
+      "Tap a square and name a celebrity who fits BOTH that row and column.",
+      "Each square locks once you guess — right or wrong — so think before you submit.",
+      "Fill all 9 squares to finish the board.",
     ],
     scoring:
-      "Rarer picks score higher than the obvious ones — go off-script if you can. Aim to fill all 9 squares; partial boards still count.",
-    share: "Show off your most original picks in the group chat.",
+      "Your score is how many of the 9 you got right. Each pick also gets a rarity score showing how unique your answer was — 95%+ is an Iconic Pick, 80%+ is a Rare Grab.",
+    share: "Show off your iconic picks and rarity scores in the group chat.",
   },
   {
     title: "Pop or Drop",
@@ -151,7 +151,7 @@ const GAMES: GameRulesCardProps[] = [
       "You'll see two pop-culture items side by side comparing the same metric.",
       "The left card shows its real number. The right card is hidden behind ???.",
       "Tap HIGHER if you think the right item's number is bigger, LOWER if smaller.",
-      "Get it right and the right card slides over and a new one appears. One wrong guess ends the run.",
+      "Get it right and the right card stays as the new left, with a fresh challenger on the right. One wrong answer ends the run instantly.",
     ],
     scoring:
       "Your streak is your score — see how many in a row you can chain. Trust your gut on the big numbers; the gaps are usually wider than you think.",
@@ -163,13 +163,13 @@ const GAMES: GameRulesCardProps[] = [
     emoji: "📅",
     bg: "#FFD700",
     steps: [
-      "You'll get up to 3 pop-culture hints from the same year.",
-      "After each hint, lock in your best guess for the year.",
-      "The fewer hints you need, the more points you score.",
-      "Get it on the first hint for the perfect score.",
+      "You'll see 3 pop-culture facts from the same year. The first hint is shown straight away.",
+      "Lock in a year if you're confident, or tap to reveal Hint 2 — and then Hint 3 — for more clues.",
+      "You only need to enter one final answer: the exact year.",
+      "Out of ideas? You can give up to reveal the year, but you'll score 0.",
     ],
     scoring:
-      "3 points for nailing it on hint one, 2 on hint two, 1 on hint three. Close-but-not-quite still earns partial credit on the final guess.",
+      "3 points if you nail it after just hint 1, 2 points after hint 2, 1 point after hint 3. The year has to be exact — close doesn't count.",
     share: "Share your score and see who in your group has the best memory.",
   },
 ];
