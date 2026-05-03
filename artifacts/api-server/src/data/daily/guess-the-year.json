@@ -372,7 +372,7 @@
     "id": "gty-1998b",
     "year": 1998,
     "hints": [
-      "A high school romantic comedy set in a world of cliques gave rise to 'She's all that'",
+      "A dramatic film about a sinking ocean liner swept 11 Academy Awards including Best Picture",
       "Savage Garden's 'Truly Madly Deeply' became one of the year's biggest love songs",
       "Mark McGwire broke Roger Maris's single-season home run record with 70 home runs"
     ]
@@ -408,7 +408,7 @@
     "id": "gty-2003b",
     "year": 2003,
     "hints": [
-      "A reality TV show with a final rose ceremony became the most-watched debut on ABC in years",
+      "A clownfish's epic cross-ocean journey to find his missing son became Pixar's biggest film at the time",
       "Norah Jones dominated the Grammy Awards winning five including Album of the Year",
       "The Space Shuttle Columbia disintegrated on re-entry, killing all seven astronauts"
     ]
@@ -435,7 +435,7 @@
     "id": "gty-2006b",
     "year": 2006,
     "hints": [
-      "A certain boy wizard battled enemies in his fourth big-screen adventure earning $895M",
+      "A new James Bond — rugged, blond, and emotionally raw — rebooted the franchise earning $594M",
       "James Blunt's 'You're Beautiful' was inescapable on radio",
       "YouTube was acquired by Google for $1.65 billion in stock"
     ]
@@ -544,7 +544,7 @@
     "year": 2018,
     "hints": [
       "A pop star released a 'reputation' tour that broke concert revenue records",
-      "Cardi B became the first solo female rapper to win the Grammy for Best Rap Album",
+      "Avengers: Infinity War shocked audiences by ending with half the universe turning to dust",
       "Prince Harry married Meghan Markle in a globally watched ceremony at Windsor Castle"
     ]
   },
@@ -634,7 +634,7 @@
     "year": 2000,
     "hints": [
       "Eminem's 'The Real Slim Shady' and 'Stan' dominated MTV and radio all year long",
-      "Tom Hanks survived alone on a deserted island alongside a volleyball named Wilson",
+      "Gladiator swept awards season with Russell Crowe winning Best Actor as a vengeful general",
       "The Supreme Court halted the Florida recount, handing the US presidency to George W. Bush"
     ]
   },
@@ -696,7 +696,7 @@
     "id": "gty-2015c",
     "year": 2015,
     "hints": [
-      "Netflix released all episodes of a drama about a women's prison at once, changing TV forever",
+      "An astronaut's survival saga on Mars starring Matt Damon grossed $630M worldwide",
       "Adele's '25' sold 3.5 million copies in the US in its first week",
       "The Paris climate agreement was signed by 196 countries"
     ]
@@ -921,9 +921,18 @@
     "id": "gty-2025b",
     "year": 2025,
     "hints": [
-      "A pop star's Eras Tour became the highest-grossing concert tour in history, surpassing $2 billion",
-      "Sabrina Carpenter's 'Espresso' was the undisputed song of the summer",
+      "Beyoncé's 'Cowboy Carter' won Album of the Year at the Grammys making history as the first country album to win",
+      "Kendrick Lamar performed a Super Bowl halftime show that referenced his beef with Drake",
       "Los Angeles wildfires in January destroyed thousands of structures and forced mass evacuations"
+    ]
+  },
+  {
+    "id": "gty-2026",
+    "year": 2026,
+    "hints": [
+      "The FIFA World Cup kicked off for the first time across three nations: the United States, Canada, and Mexico",
+      "The Milan-Cortina Winter Olympics brought ski and snow sports back to Italy for the second time",
+      "A new wave of AI-generated music sparked debate about copyright and authenticity in the music industry"
     ]
   }
 ]
