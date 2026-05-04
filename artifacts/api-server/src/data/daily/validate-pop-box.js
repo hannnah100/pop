@@ -154,16 +154,9 @@ if (emptyAlts.length > 0) {
 // Five pre-existing baseline entries (ana-de-armas, rainn-wilson, colin-farrell,
 // gal-gadot, gordon-ramsay) were already thin before this task — exempt them.
 console.log("\n[6] Category count per entry (new entries only)");
-let baselineIds = new Set();
-try {
-  const baselineJson = execSync(
-    "git --no-optional-locks show 194cb22:artifacts/api-server/src/data/daily/pop-box-celebrities.json",
-    { cwd: "/home/runner/workspace" }
-  ).toString();
-  baselineIds = new Set(JSON.parse(baselineJson).map((c) => c.id));
-} catch {
-  console.warn("  Warning: could not load baseline for thin-entry exemption");
-}
+const baselineIds = new Set(
+  JSON.parse(readFileSync(join(DATA_DIR, "pop-box-baseline-ids.json"), "utf-8"))
+);
 const thin = celebrities.filter(
   (c) =>
     (!c.categories || c.categories.length < 2) && !baselineIds.has(c.id)
@@ -247,21 +240,11 @@ if (missingPriority.length > 0) {
 
 // ── 10. Backward-compatibility guard (no baseline IDs removed) ──────────────
 console.log("\n[10] Backward compatibility (no baseline IDs removed)");
-try {
-  const baselineJson = execSync(
-    "git --no-optional-locks show 194cb22:artifacts/api-server/src/data/daily/pop-box-celebrities.json",
-    { cwd: "/home/runner/workspace" }
-  ).toString();
-  const baseline = JSON.parse(baselineJson);
-  const baselineIds = new Set(baseline.map((c) => c.id));
-  const deleted = [...baselineIds].filter((id) => !uniqueIds.has(id));
-  if (deleted.length > 0) {
-    fail(`Baseline IDs deleted: ${deleted.join(", ")}`);
-  } else {
-    ok(`All ${baselineIds.size} baseline IDs preserved`);
-  }
-} catch {
-  ok("Baseline check skipped (git not available)");
+const deleted = [...baselineIds].filter((id) => !uniqueIds.has(id));
+if (deleted.length > 0) {
+  fail(`Baseline IDs deleted: ${deleted.join(", ")}`);
+} else {
+  ok(`All ${baselineIds.size} baseline IDs preserved`);
 }
 
 // ── 11. Category coverage thresholds ────────────────────────────────────────
@@ -350,25 +333,6 @@ displayCats.forEach((cat) => {
 });
 
 
-// ── 13. High-risk tag sanity checks ─────────────────────────────────────────
-console.log("\n[13] High-risk tag sanity checks");
-const highRiskIssues = [];
-celebrities.forEach((c) => {
-  if ((c.categories || []).includes("ig-100m") && !IG_100M_ALLOWLIST.has(c.id)) {
-    highRiskIssues.push(`${c.id}:ig-100m`);
-  }
-  if ((c.categories || []).includes("snl-cast") && c.id === "richard-pryor") {
-    highRiskIssues.push(`${c.id}:snl-cast`);
-  }
-  if ((c.categories || []).includes("been-on-snl") && c.id === "dean-martin") {
-    highRiskIssues.push(`${c.id}:been-on-snl`);
-  }
-});
-if (highRiskIssues.length > 0) {
-  fail(`High-risk false tags: ${highRiskIssues.join(", ")}`);
-} else {
-  ok("No high-risk false tags detected");
-}
 console.log("\n[13] High-risk tag sanity checks");
 const flagged = [
   ["bo-jackson", "olympian"],

@@ -17,6 +17,7 @@
       "born-1980s",
       "american",
       "blonde",
+      "ig-100m",
       "billionaire"
     ]
   },
@@ -38,6 +39,7 @@
       "born-1980s",
       "american",
       "blonde",
+      "ig-100m",
       "married-another-celeb",
       "billionaire",
       "beauty-brand-owner",
@@ -58,6 +60,7 @@
       "world-tour",
       "born-1990s",
       "american",
+      "ig-100m",
       "publicly-divorced",
       "beauty-brand-owner",
       "music-to-acting"
@@ -161,6 +164,7 @@
       "billboard-1",
       "world-tour",
       "born-1980s",
+      "ig-100m",
       "billionaire",
       "beauty-brand-owner",
       "music-to-acting"
@@ -1157,6 +1161,7 @@
       "billboard-1",
       "born-1990s",
       "american",
+      "ig-100m",
       "billionaire",
       "beauty-brand-owner",
       "music-to-acting"
@@ -1312,6 +1317,7 @@
       "reality-tv-star",
       "born-1980s",
       "american",
+      "ig-100m",
       "billionaire",
       "beauty-brand-owner",
       "publicly-divorced"
@@ -1327,6 +1333,7 @@
       "reality-tv-star",
       "born-1990s",
       "american",
+      "ig-100m",
       "beauty-brand-owner"
     ]
   },
@@ -1339,7 +1346,8 @@
     "categories": [
       "reality-tv-star",
       "born-1990s",
-      "american"
+      "american",
+      "ig-100m"
     ]
   },
   {
@@ -1453,7 +1461,8 @@
       "athlete-entertainer",
       "billionaire",
       "born-1980s",
-      "american"
+      "american",
+      "ig-100m"
     ]
   },
   {
@@ -1479,6 +1488,7 @@
     "categories": [
       "athlete-entertainer",
       "born-1980s",
+      "ig-100m",
       "billionaire"
     ]
   },
@@ -1491,7 +1501,8 @@
     ],
     "categories": [
       "athlete-entertainer",
-      "born-1980s"
+      "born-1980s",
+      "ig-100m"
     ]
   },
   {
@@ -20153,6 +20164,7 @@
       "disney-channel-alum",
       "born-1990s",
       "american",
+      "ig-100m",
       "mcu-actor",
       "music-to-acting"
     ]
