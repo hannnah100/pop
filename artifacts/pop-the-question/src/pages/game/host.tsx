@@ -828,9 +828,10 @@ export default function GameHost() {
       playWhoosh();
     });
 
-    newSocket.on("quiz-answer-progress", ({ submitted, total }: { submitted: number; total: number }) => {
+    newSocket.on("quiz-answer-progress", ({ submitted, total, submittedIds }: { submitted: number; total: number; submittedIds?: string[] }) => {
       setPqAnsweredCount(submitted);
       setPqTotalAnswerers(total);
+      if (submittedIds) setSubmittedPlayers(new Set(submittedIds));
     });
 
     newSocket.on("quiz-reveal", (payload: {
@@ -913,10 +914,11 @@ export default function GameHost() {
       }
     });
 
-    newSocket.on("submission-progress", ({ submitted, total, round }: SubmissionProgressPayload) => {
+    newSocket.on("submission-progress", ({ submitted, total, round, submittedIds }: SubmissionProgressPayload & { submittedIds?: string[] }) => {
       setRrSubmitted(submitted);
       setRrTotal(total);
       setRrRound(round);
+      if (submittedIds) setSubmittedPlayers(new Set(submittedIds));
     });
 
     newSocket.on("round-complete", ({ nextRound, totalRounds }: RoundCompletePayload) => {
@@ -1004,9 +1006,10 @@ export default function GameHost() {
       playWhoosh();
     });
 
-    newSocket.on("scattergories-submission-progress", ({ submitted, total }: { submitted: number; total: number }) => {
+    newSocket.on("scattergories-submission-progress", ({ submitted, total, submittedIds }: { submitted: number; total: number; submittedIds?: string[] }) => {
       setScatSubmitted(submitted);
       setScatTotal(total);
+      if (submittedIds) setSubmittedPlayers(new Set(submittedIds));
     });
 
     newSocket.on("scattergories-10-second-alert", () => {
@@ -1432,10 +1435,10 @@ export default function GameHost() {
     <motion.div
       key={p.id}
       layout
-      initial={{ opacity: 0, scale: 0.7, y: 12 }}
-      animate={{ opacity: 1, scale: 1, y: 0 }}
-      exit={{ opacity: 0, scale: 0.8 }}
-      transition={{ type: "spring", stiffness: 260, damping: 30 }}
+      initial={{ opacity: 0, y: 6 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.18, ease: "easeOut" }}
       className={`font-display font-black text-2xl uppercase px-6 py-4 border-[3px] border-black shadow-[4px_4px_0_#000] flex items-center gap-2
         ${p.isBot
           ? "bg-[#FFF8E7] text-black/50"
@@ -1471,13 +1474,15 @@ export default function GameHost() {
           return (
             <div
               key={p.id}
-              className={`inline-flex items-center gap-2 border-[2px] border-black px-3 py-1.5 font-display font-black uppercase shadow-[2px_2px_0_#000] ${
+              className={`inline-flex items-center gap-2 border-[2px] border-black px-3 py-1.5 font-display font-black uppercase shadow-[2px_2px_0_#000] transition-colors duration-300 ${
                 state === "answered"
-                  ? "bg-[#00C853] text-white"
+                  ? "bg-[#00C853] border-[#00C853] text-white"
+                  : state === "typing"
+                  ? "bg-[#FFD700] border-[#FFD700] text-black"
                   : "bg-white text-black"
               } ${isRemote ? "text-sm" : "text-xs"}`}
             >
-              {p.isBot && <Bot className="w-3.5 h-3.5 text-black/40" />}
+              {p.isBot && <Bot className="w-3.5 h-3.5 opacity-50" />}
               <span className="truncate max-w-[140px]">{p.name}</span>
               <PlayerStatusBadge state={state} compact={!isRemote} />
             </div>
@@ -1998,6 +2003,8 @@ export default function GameHost() {
                   />
                 </div>
               </div>
+
+              <PlayerStatusBar />
 
               {/* Categories list */}
               <div className="bg-white border-[3px] border-black shadow-[4px_4px_0_#000] p-4">

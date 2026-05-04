@@ -430,6 +430,7 @@ function scheduleBotRoasts(
         submitted,
         total,
         round: liveRoom.currentRound,
+        submittedIds: [...liveRoom.roundSubmissions],
       });
 
       if (submitted >= total) {
@@ -1623,6 +1624,7 @@ export function setupSocketIO(httpServer: HttpServer) {
       io.to(roomCode).emit("scattergories-submission-progress", {
         submitted: sc.submittedPlayerIds.size,
         total: nonHostPlayers.length,
+        submittedIds: [...sc.submittedPlayerIds],
       });
 
       if (sc.submittedPlayerIds.size >= nonHostPlayers.length) {
@@ -1713,6 +1715,7 @@ export function setupSocketIO(httpServer: HttpServer) {
       io.to(roomCode).emit("quiz-answer-progress", {
         submitted,
         total: nonHostCount,
+        submittedIds: Object.keys(room.quiz.answers),
       });
 
       // Acknowledge to the answering player so the UI can lock-in
@@ -1925,6 +1928,7 @@ export function setupSocketIO(httpServer: HttpServer) {
         submitted,
         total,
         round: room.currentRound,
+        submittedIds: [...room.roundSubmissions],
       });
 
       if (submitted >= total) {
@@ -3067,6 +3071,7 @@ function scheduleBotScattergoriesAnswers(
       io.to(live!.code).emit("scattergories-submission-progress", {
         submitted: sc.submittedPlayerIds.size,
         total: nonHostPlayers.length,
+        submittedIds: [...sc.submittedPlayerIds],
       });
 
       if (sc.submittedPlayerIds.size >= nonHostPlayers.length) {

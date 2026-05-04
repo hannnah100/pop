@@ -392,6 +392,7 @@ export function scheduleBotQuizAnswers<TPlayer extends { id: string; isBot: bool
       io.to(roomCode).emit("quiz-answer-progress", {
         submitted,
         total: totalNonHost,
+        submittedIds: Object.keys(state.answers),
       });
 
       if (submitted >= totalNonHost) {
