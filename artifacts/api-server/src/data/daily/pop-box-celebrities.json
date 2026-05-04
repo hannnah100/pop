@@ -3428,7 +3428,9 @@
       "Ana"
     ],
     "categories": [
-      "born-1980s"
+      "born-1980s",
+      "european",
+      "latino"
     ]
   },
   {
@@ -3608,7 +3610,9 @@
       "Dwight Schrute"
     ],
     "categories": [
-      "american"
+      "american",
+      "born-1960s",
+      "comedian"
     ]
   },
   {
@@ -6109,7 +6113,10 @@
       "Colin F"
     ],
     "categories": [
-      "born-1970s"
+      "born-1970s",
+      "european",
+      "golden-globe-winner",
+      "irish"
     ]
   },
   {
@@ -6470,8 +6477,7 @@
       "athlete",
       "athlete-entertainer",
       "billionaire",
-      "born-1970s",
-      "ufc"
+      "born-1970s"
     ]
   },
   {
@@ -7208,10 +7214,9 @@
       "Paul"
     ],
     "categories": [
-      "irish",
-      "european",
       "born-1990s",
-      "golden-globe-winner"
+      "european",
+      "irish"
     ]
   },
   {
@@ -7340,7 +7345,10 @@
       "Captain Picard"
     ],
     "categories": [
-      "british"
+      "been-on-snl",
+      "born-1950s",
+      "british",
+      "mcu-actor"
     ]
   },
   {
@@ -7432,9 +7440,8 @@
       "Jon Snow"
     ],
     "categories": [
-      "british",
       "born-1980s",
-      "emmy-winner",
+      "british",
       "married-another-celeb"
     ]
   },
@@ -7446,9 +7453,8 @@
       "Daenerys"
     ],
     "categories": [
-      "british",
       "born-1980s",
-      "emmy-winner"
+      "british"
     ]
   },
   {
@@ -7592,9 +7598,8 @@
       "Cersei"
     ],
     "categories": [
-      "british",
       "born-1970s",
-      "emmy-winner"
+      "british"
     ]
   },
   {
@@ -8126,7 +8131,10 @@
       "Rocky"
     ],
     "categories": [
-      "american"
+      "american",
+      "been-on-snl",
+      "married-another-celeb",
+      "publicly-divorced"
     ]
   },
   {
@@ -8358,7 +8366,9 @@
       "Richard"
     ],
     "categories": [
-      "british"
+      "british",
+      "married-another-celeb",
+      "publicly-divorced"
     ]
   },
   {
@@ -8438,16 +8448,6 @@
     ]
   },
   {
-    "id": "james-dean",
-    "name": "James Dean",
-    "alternateNames": [
-      "James"
-    ],
-    "categories": [
-      "american"
-    ]
-  },
-  {
     "id": "frank-sinatra",
     "name": "Frank Sinatra",
     "alternateNames": [
@@ -8468,7 +8468,9 @@
       "Dino"
     ],
     "categories": [
-      "american"
+      "american",
+      "been-on-snl",
+      "comedian"
     ]
   },
   {
@@ -18882,16 +18884,6 @@
     ]
   },
   {
-    "id": "jean-reno",
-    "name": "Jean Reno",
-    "alternateNames": [
-      "Jean"
-    ],
-    "categories": [
-      "european"
-    ]
-  },
-  {
     "id": "gael-garcia-bernal",
     "name": "Gael García Bernal",
     "alternateNames": [
@@ -20530,6 +20522,31 @@
       "athlete",
       "soccer",
       "premier-league"
+    ]
+  },
+  {
+    "id": "damson-idris",
+    "name": "Damson Idris",
+    "alternateNames": [
+      "Damson"
+    ],
+    "categories": [
+      "british",
+      "born-1990s",
+      "emmy-winner",
+      "golden-globe-winner"
+    ]
+  },
+  {
+    "id": "oliver-jackson-cohen",
+    "name": "Oliver Jackson-Cohen",
+    "alternateNames": [
+      "Oliver"
+    ],
+    "categories": [
+      "british",
+      "born-1980s",
+      "emmy-winner"
     ]
   }
 ]
