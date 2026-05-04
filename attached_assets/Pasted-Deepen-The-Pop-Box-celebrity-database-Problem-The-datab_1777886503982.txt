@@ -1,0 +1,70 @@
+Deepen The Pop Box celebrity database.
+
+Problem:
+The database is missing too many common pop culture names. It should recognize A, B, C, and D-list celebrities that commonly appear in pub quizzes, pop culture rounds, current events, memes, reality TV, awards shows, sports, music, and UK/US entertainment.
+
+Goal:
+Expand to at least 1500 celebrities with accurate tagging and aliases.
+
+Coverage should include:
+- Actors: film, TV, streaming, soaps, sitcoms, supporting actors, franchise actors
+- Musicians/artists: solo artists, rappers, DJs, producers, singers, country artists, K-pop stars, individual band members
+- Reality TV: Kardashians, Love Island UK/US, The Bachelor/Bachelorette, Bravo, Real Housewives, Vanderpump Rules, Big Brother, I’m A Celebrity, Strictly, Drag Race winners/finalists
+- Comedians: stand-ups, UK panel show regulars, sitcom comedians, Taskmaster contestants
+- SNL: alumni, current cast, frequent hosts
+- Influencers/creators: TikTok, YouTube, podcast hosts, internet-famous names
+- Athletes: NBA, NFL, Premier League/soccer, tennis, F1, UFC, Olympics
+- UK celebrities: presenters, radio hosts, panel show people, reality stars, musicians, footballers
+- US celebrities: actors, musicians, reality stars, comedians, athletes, influencers
+
+Priority:
+Do not only add A-listers. Add the recognizable B/C/D-list names people actually guess in pub quizzes and party games.
+
+Required examples that MUST be recognized:
+Jean Smart, Zendaya, Jeremy Allen White, Sarah Snook, Jennifer Coolidge, Pedro Pascal, Quinta Brunson, Kieran Culkin, Ayo Edebiri, Emma Stone, Margot Robbie, Timothee Chalamet, Florence Pugh, Sydney Sweeney, Jacob Elordi, Jenna Ortega, Paul Mescal, Barry Keoghan, The Rock, Brad Pitt, Ryan Gosling, Chris Evans, Pedro Pascal, Dakota Johnson, Materialists cast, Beyoncé, Taylor Swift, Drake, Kendrick Lamar, Adele, Billie Eilish, SZA, Sabrina Carpenter, Chappell Roan, Charli XCX, Harry Styles, Dua Lipa, Ed Sheeran, Stormzy, Central Cee, Dave, Skepta, Little Simz, Kim Kardashian, Kylie Jenner, Kris Jenner, Charli D’Amelio, Addison Rae, Emma Chamberlain, MrBeast, Logan Paul, Kai Cenat, Alix Earle, RuPaul, Trixie Mattel, Bob the Drag Queen, Maya Jama, Joey Essex, Ekin-Su, Molly-Mae Hague, Gemma Collins, Alison Hammond, Jack Whitehall, James Acaster, Romesh Ranganathan, Katherine Ryan, Jimmy Carr, John Mulaney, Pete Davidson, Tina Fey, Amy Poehler, Kenan Thompson, Kate McKinnon, Bowen Yang, LeBron James, Steph Curry, Travis Kelce, Patrick Mahomes, Lionel Messi, Cristiano Ronaldo, Kylian Mbappe, Lewis Hamilton, Max Verstappen, Serena Williams.
+
+Each entry should include:
+- name
+- slug
+- aliases / alternate spellings
+- primary categories, e.g. actor, musician, reality-tv, comedian, athlete, influencer, presenter
+- tags array
+
+Improve tags:
+- awards: won-emmy, won-grammy, won-oscar, won-tony, won-golden-globe, won-sag-award
+- media: been-on-snl, snl-alumni, hot-ones, met-gala, superbowl-commercial, been-meme
+- reality: reality-show, won-reality-show, love-island, bachelor-nation, bravo, real-housewives, drag-race, big-brother, strictly, im-a-celebrity
+- comedy: comedian, stand-up, panel-show-regular, taskmaster
+- franchises: marvel-movie, dc-movie, disney-movie, star-wars, harry-potter, fast-and-furious, hunger-games, jurassic-world
+- music: pop-artist, rap-artist, r-and-b-artist, country-artist, k-pop-artist, dj-producer, band-member
+- sports: nba, nfl, soccer, premier-league, tennis, f1, ufc, olympian
+- nationality: from-uk, from-us, from-canada, from-australia, european, latino-latina, from-asia
+- career/personal/business where known: has-stage-name, actor-released-music, musician-acted-movies, athlete-turned-entertainer, has-beauty-line, has-fashion-line, written-book, has-podcast
+
+Add relationship/co-star tags where useful and accurate:
+- costar-the-rock
+- costar-brad-pitt
+- costar-ryan-gosling
+- costar-chris-evans
+- costar-pedro-pascal
+- costar-margot-robbie
+Only add these for confirmed co-stars.
+
+Data quality rules:
+- Do not guess award wins, collaborations, franchises, or co-stars.
+- If unsure, omit the tag.
+- Add aliases for stage names, punctuation differences, maiden/married names, shortened names, and common spellings.
+- Prevent duplicates by slug and normalized name.
+- Search should be case-insensitive and punctuation-insensitive.
+
+Implementation:
+1. Find the current celebrity seed/database file.
+2. Preserve the existing schema.
+3. Add the expanded entries in clean batches.
+4. Add validation that checks:
+   - total celebrities >= 1500
+   - priority names above are present
+   - Jean Smart has won-emmy
+   - Love Island, SNL, comedians, influencers, athletes, and UK celebs are represented
+   - no duplicate slugs
+5. Return the updated file names, total celebrity count, category breakdown, and any new tags added.
