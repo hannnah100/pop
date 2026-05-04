@@ -155,6 +155,13 @@ const priorityIds = [
   "jenna-ortega",
   "paul-mescal",
   "barry-keoghan",
+  "dakota-johnson",
+  "central-cee",
+  "skepta",
+  "bob-the-drag-queen",
+  "jack-whitehall",
+  "kenan-thompson",
+  "alix-earle",
 ];
 const missingPriority = priorityIds.filter((id) => !uniqueIds.has(id));
 if (missingPriority.length > 0) {

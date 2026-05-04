@@ -110,7 +110,6 @@
       "blonde",
       "born-1990s",
       "disney-channel-alum",
-      "grammy-winner",
       "pop",
       "world-tour"
     ]
@@ -7474,8 +7473,8 @@
       "Arya"
     ],
     "categories": [
-      "british",
-      "born-2000s"
+      "born-1990s",
+      "british"
     ]
   },
   {
@@ -8209,8 +8208,7 @@
     ],
     "categories": [
       "american",
-      "born-1950s",
-      "emmy-winner"
+      "born-1950s"
     ]
   },
   {
@@ -9740,10 +9738,10 @@
       "JJ"
     ],
     "categories": [
-      "athlete",
-      "nfl",
       "american",
-      "born-2000s"
+      "athlete",
+      "born-1990s",
+      "nfl"
     ]
   },
   {
@@ -10036,9 +10034,9 @@
     ],
     "categories": [
       "athlete",
-      "nba",
+      "born-1990s",
       "european",
-      "born-2000s"
+      "nba"
     ]
   },
   {
@@ -10176,10 +10174,10 @@
       "Ja"
     ],
     "categories": [
-      "athlete",
-      "nba",
       "american",
-      "born-2000s"
+      "athlete",
+      "born-1990s",
+      "nba"
     ]
   },
   {
@@ -10402,9 +10400,9 @@
     ],
     "categories": [
       "athlete",
-      "soccer",
+      "born-1990s",
       "european",
-      "born-2000s"
+      "soccer"
     ]
   },
   {
@@ -10533,10 +10531,10 @@
     ],
     "categories": [
       "athlete",
-      "soccer",
+      "born-1990s",
       "british",
-      "born-2000s",
-      "premier-league"
+      "premier-league",
+      "soccer"
     ]
   },
   {
@@ -10762,10 +10760,10 @@
     ],
     "categories": [
       "athlete",
-      "soccer",
-      "premier-league",
+      "born-1990s",
       "european",
-      "born-2000s"
+      "premier-league",
+      "soccer"
     ]
   },
   {
@@ -10777,10 +10775,10 @@
     ],
     "categories": [
       "athlete",
-      "soccer",
+      "born-1990s",
       "british",
-      "born-2000s",
-      "premier-league"
+      "premier-league",
+      "soccer"
     ]
   },
   {
@@ -10836,9 +10834,9 @@
     ],
     "categories": [
       "athlete",
-      "soccer",
+      "born-1990s",
       "european",
-      "born-2000s"
+      "soccer"
     ]
   },
   {
@@ -11064,9 +11062,9 @@
     ],
     "categories": [
       "athlete",
-      "f1",
+      "born-1990s",
       "european",
-      "born-2000s"
+      "f1"
     ]
   },
   {
@@ -11104,9 +11102,9 @@
     ],
     "categories": [
       "athlete",
-      "f1",
+      "born-1990s",
       "british",
-      "born-2000s"
+      "f1"
     ]
   },
   {
@@ -11372,9 +11370,9 @@
       "Katie"
     ],
     "categories": [
-      "athlete",
       "american",
-      "born-2000s",
+      "athlete",
+      "born-1990s",
       "olympian"
     ]
   },
@@ -12316,10 +12314,9 @@
     ],
     "categories": [
       "american",
-      "rock",
       "band-member",
-      "world-tour",
-      "grammy-winner"
+      "rock",
+      "world-tour"
     ]
   },
   {
@@ -12387,10 +12384,9 @@
     ],
     "categories": [
       "american",
-      "rock",
-      "pop",
       "band-member",
-      "grammy-winner"
+      "pop",
+      "rock"
     ]
   },
   {
@@ -13944,12 +13940,12 @@
       "Tommy"
     ],
     "categories": [
-      "british",
-      "reality-tv-star",
-      "love-island",
       "athlete",
-      "born-2000s",
-      "married-another-celeb"
+      "born-1990s",
+      "british",
+      "love-island",
+      "married-another-celeb",
+      "reality-tv-star"
     ]
   },
   {
@@ -14017,10 +14013,10 @@
       "Liberty"
     ],
     "categories": [
+      "born-1990s",
       "british",
-      "reality-tv-star",
       "love-island",
-      "born-2000s"
+      "reality-tv-star"
     ]
   },
   {
@@ -14030,10 +14026,10 @@
       "Chloe"
     ],
     "categories": [
+      "born-1990s",
       "british",
-      "reality-tv-star",
       "love-island",
-      "born-2000s"
+      "reality-tv-star"
     ]
   },
   {
@@ -14043,11 +14039,11 @@
       "Toby"
     ],
     "categories": [
-      "british",
-      "reality-tv-star",
-      "love-island",
       "athlete",
-      "born-2000s"
+      "born-1990s",
+      "british",
+      "love-island",
+      "reality-tv-star"
     ]
   },
   {
@@ -15214,8 +15210,8 @@
     ],
     "categories": [
       "american",
-      "social-to-mainstream",
-      "born-2000s"
+      "born-1990s",
+      "social-to-mainstream"
     ]
   },
   {
@@ -15361,10 +15357,10 @@
     ],
     "categories": [
       "american",
-      "social-to-mainstream",
-      "born-2000s",
       "blonde",
-      "has-podcast"
+      "born-1990s",
+      "has-podcast",
+      "social-to-mainstream"
     ]
   },
   {
@@ -16031,8 +16027,8 @@
       "Daisy"
     ],
     "categories": [
+      "born-1990s",
       "british",
-      "born-2000s",
       "golden-globe-winner"
     ]
   },
@@ -18586,10 +18582,10 @@
       "Micah"
     ],
     "categories": [
-      "athlete",
-      "nfl",
       "american",
-      "born-2000s"
+      "athlete",
+      "born-1990s",
+      "nfl"
     ]
   },
   {
@@ -19743,7 +19739,7 @@
     ],
     "categories": [
       "american",
-      "born-2000s",
+      "born-1990s",
       "married-another-celeb"
     ]
   },
@@ -19794,7 +19790,7 @@
     ],
     "categories": [
       "american",
-      "born-2000s"
+      "born-1990s"
     ]
   },
   {
@@ -19826,8 +19822,8 @@
       "Ellie"
     ],
     "categories": [
-      "british",
-      "born-2000s"
+      "born-1990s",
+      "british"
     ]
   },
   {
@@ -20569,6 +20565,103 @@
       "grammy-winner",
       "born-1970s",
       "dj-producer"
+    ]
+  },
+  {
+    "id": "dakota-johnson",
+    "name": "Dakota Johnson",
+    "alternateNames": [
+      "Dakota",
+      "Anastasia Steele"
+    ],
+    "categories": [
+      "american",
+      "born-1980s",
+      "mcu-actor",
+      "married-another-celeb"
+    ]
+  },
+  {
+    "id": "central-cee",
+    "name": "Central Cee",
+    "alternateNames": [
+      "Cench",
+      "Oakley Neil Caesar-Su"
+    ],
+    "categories": [
+      "british",
+      "rap",
+      "born-1990s",
+      "ig-100m"
+    ]
+  },
+  {
+    "id": "skepta",
+    "name": "Skepta",
+    "alternateNames": [
+      "Joseph Junior Adenuga"
+    ],
+    "categories": [
+      "british",
+      "rap",
+      "born-1980s",
+      "band-member"
+    ]
+  },
+  {
+    "id": "bob-the-drag-queen",
+    "name": "Bob the Drag Queen",
+    "alternateNames": [
+      "Bob",
+      "Caldwell Tidicue"
+    ],
+    "categories": [
+      "american",
+      "drag-race",
+      "won-reality-show",
+      "comedian"
+    ]
+  },
+  {
+    "id": "jack-whitehall",
+    "name": "Jack Whitehall",
+    "alternateNames": [
+      "Jack"
+    ],
+    "categories": [
+      "british",
+      "comedian",
+      "stand-up",
+      "born-1980s",
+      "been-on-snl"
+    ]
+  },
+  {
+    "id": "kenan-thompson",
+    "name": "Kenan Thompson",
+    "alternateNames": [
+      "Kenan"
+    ],
+    "categories": [
+      "american",
+      "comedian",
+      "born-1970s",
+      "snl-cast",
+      "emmy-winner",
+      "been-on-snl"
+    ]
+  },
+  {
+    "id": "alix-earle",
+    "name": "Alix Earle",
+    "alternateNames": [
+      "Alix"
+    ],
+    "categories": [
+      "american",
+      "social-to-mainstream",
+      "born-2000s",
+      "has-podcast"
     ]
   }
 ]
