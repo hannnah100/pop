@@ -72,7 +72,10 @@ export default function ThreeFlops() {
   // kept under their legacy names so player progress saved before the rename
   // to "Three Flops" still loads. These are internal identifiers only — no UI
   // surface ever shows them.
-  const storageKey = isArchive ? `ptq-archive-ts-${archiveId}` : `ptq-three-strikes-${todayDate}`;
+  // Use the puzzle's own date so that if the server falls back to the most
+  // recent challenge (when today's hasn't been seeded yet), the storage key
+  // still matches any existing save for that puzzle.
+  const storageKey = isArchive ? `ptq-archive-ts-${archiveId}` : `ptq-three-strikes-${challenge?.date ?? todayDate}`;
 
   useEffect(() => {
     if (!challenge) return;

@@ -168,21 +168,30 @@ export default function ClockIt() {
   const recordedRef = useRef(false);
 
   useEffect(() => {
+    // Re-fetch when the date rolls over (todayDate changes at midnight).
+    // useCountdown re-renders every second, so the first post-midnight render
+    // will trigger this effect with the new date.
+    let active = true;
+    setIsLoading(true);
+    setIsError(false);
     const fetchPuzzle = async () => {
       try {
         const resp = await fetch("/api/daily/clock-it");
         if (!resp.ok) throw new Error("Failed to fetch");
         const data: Puzzle = await resp.json();
-        setPuzzle(data);
-        setFinalYear(data.year);
+        if (active) {
+          setPuzzle(data);
+          setFinalYear(data.year);
+        }
       } catch {
-        setIsError(true);
+        if (active) setIsError(true);
       } finally {
-        setIsLoading(false);
+        if (active) setIsLoading(false);
       }
     };
     void fetchPuzzle();
-  }, []);
+    return () => { active = false; };
+  }, [todayDate]);
 
   useEffect(() => {
     try {
@@ -198,6 +207,17 @@ export default function ClockIt() {
         } else if (parsed.inProgress && parsed.hintsUsed > 1) {
           setHintsRevealed(parsed.hintsUsed);
         }
+      } else {
+        // No save for today — reset to a fresh game. This handles the midnight
+        // rollover when the component stays mounted: useCountdown re-renders
+        // every second, so storageKey updates at midnight and this branch fires,
+        // clearing any completed state from the previous day.
+        setSavedState(null);
+        setFinalScore(0);
+        setFinalYear(null);
+        setHintsRevealed(1);
+        setPhase("playing");
+        recordedRef.current = false;
       }
     } catch {
       /* ignore */
