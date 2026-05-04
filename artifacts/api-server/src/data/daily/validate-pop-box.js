@@ -4,7 +4,6 @@
 import { readFileSync } from "fs";
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
-import { execSync } from "child_process";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const DATA_DIR = __dirname;
@@ -160,14 +159,11 @@ if (emptyAlts.length > 0) {
 // ── 6. Minimum 2 categories per entry (new entries only) ────────────────────
 // Five pre-existing baseline entries (ana-de-armas, rainn-wilson, colin-farrell,
 // gal-gadot, gordon-ramsay) were already thin before this task — exempt them.
+// Source of truth: pop-box-baseline-ids.json
 console.log("\n[6] Category count per entry (new entries only)");
-const baselineIds = new Set([
-  "ana-de-armas",
-  "rainn-wilson",
-  "colin-farrell",
-  "gal-gadot",
-  "gordon-ramsay",
-]);
+const baselineIds = new Set(
+  JSON.parse(readFileSync(join(DATA_DIR, "pop-box-baseline-ids.json"), "utf-8"))
+);
 const thin = celebrities.filter(
   (c) =>
     (!c.categories || c.categories.length < 2) && !baselineIds.has(c.id)
@@ -363,8 +359,8 @@ if (badFlags.length > 0) {
 }
 
 
-// ── 13. Factual tag sanity checks ─────────────────────────────────────────
-console.log("\n[13] Factual tag sanity checks");
+// ── 14. Factual tag sanity checks ─────────────────────────────────────────
+console.log("\n[14] Factual tag sanity checks");
 const factualIssues = [];
 for (const c of celebrities) {
   const banned = FACTUAL_DENYLIST[c.id] || [];
