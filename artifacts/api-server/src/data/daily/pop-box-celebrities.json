@@ -17,7 +17,6 @@
       "born-1980s",
       "american",
       "blonde",
-      "ig-100m",
       "billionaire"
     ]
   },
@@ -39,7 +38,6 @@
       "born-1980s",
       "american",
       "blonde",
-      "ig-100m",
       "married-another-celeb",
       "billionaire",
       "beauty-brand-owner",
@@ -60,7 +58,6 @@
       "world-tour",
       "born-1990s",
       "american",
-      "ig-100m",
       "publicly-divorced",
       "beauty-brand-owner",
       "music-to-acting"
@@ -164,7 +161,6 @@
       "billboard-1",
       "world-tour",
       "born-1980s",
-      "ig-100m",
       "billionaire",
       "beauty-brand-owner",
       "music-to-acting"
@@ -1161,7 +1157,6 @@
       "billboard-1",
       "born-1990s",
       "american",
-      "ig-100m",
       "billionaire",
       "beauty-brand-owner",
       "music-to-acting"
@@ -1317,7 +1312,6 @@
       "reality-tv-star",
       "born-1980s",
       "american",
-      "ig-100m",
       "billionaire",
       "beauty-brand-owner",
       "publicly-divorced"
@@ -1333,7 +1327,6 @@
       "reality-tv-star",
       "born-1990s",
       "american",
-      "ig-100m",
       "beauty-brand-owner"
     ]
   },
@@ -1346,8 +1339,7 @@
     "categories": [
       "reality-tv-star",
       "born-1990s",
-      "american",
-      "ig-100m"
+      "american"
     ]
   },
   {
@@ -1461,8 +1453,7 @@
       "athlete-entertainer",
       "billionaire",
       "born-1980s",
-      "american",
-      "ig-100m"
+      "american"
     ]
   },
   {
@@ -1488,7 +1479,6 @@
     "categories": [
       "athlete-entertainer",
       "born-1980s",
-      "ig-100m",
       "billionaire"
     ]
   },
@@ -1501,8 +1491,7 @@
     ],
     "categories": [
       "athlete-entertainer",
-      "born-1980s",
-      "ig-100m"
+      "born-1980s"
     ]
   },
   {
@@ -8260,7 +8249,6 @@
     ],
     "categories": [
       "american",
-      "been-on-snl",
       "comedian"
     ]
   },
@@ -8908,7 +8896,6 @@
       "american",
       "comedian",
       "stand-up",
-      "snl-cast",
       "grammy-winner"
     ]
   },
@@ -14554,8 +14541,7 @@
     "categories": [
       "british",
       "reality-tv-star",
-      "born-1970s",
-      "ig-100m"
+      "born-1970s"
     ]
   },
   {
@@ -14975,7 +14961,6 @@
       "american",
       "social-to-mainstream",
       "beauty-brand-owner",
-      "ig-100m",
       "born-1980s"
     ]
   },
@@ -15264,7 +15249,6 @@
     "categories": [
       "from-asia",
       "born-1980s",
-      "ig-100m",
       "married-another-celeb",
       "beauty-brand-owner"
     ]
@@ -15292,8 +15276,7 @@
     ],
     "categories": [
       "from-asia",
-      "born-1960s",
-      "ig-100m"
+      "born-1960s"
     ]
   },
   {
@@ -20170,7 +20153,6 @@
       "disney-channel-alum",
       "born-1990s",
       "american",
-      "ig-100m",
       "mcu-actor",
       "music-to-acting"
     ]

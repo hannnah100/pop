@@ -27,6 +27,54 @@ const bornCats = [
 ];
 const SLUG_RE = /^[a-z0-9-]+$/;
 
+const IG_100M_ALLOWLIST = new Set([
+  "dua-lipa",
+  "justin-bieber",
+  "harry-styles",
+  "drake",
+  "cardi-b",
+  "nicki-minaj",
+  "the-weeknd",
+  "bts",
+  "blackpink",
+  "jennie",
+  "lisa-blackpink",
+  "rose-blackpink",
+  "ed-sheeran",
+  "billie-eilish",
+  "camila-cabello",
+  "bad-bunny",
+  "tom-holland",
+  "dwayne-johnson",
+  "shawn-mendes",
+  "maluma",
+  "j-balvin",
+  "jung-kook",
+  "jimin-bts",
+  "jisoo",
+  "will-smith",
+  "sydney-sweeney",
+  "tom-brady",
+  "stephen-curry",
+  "naomi-osaka",
+  "david-beckham",
+  "neymar",
+  "hailey-bieber",
+  "bella-hadid",
+  "gigi-hadid",
+  "elon-musk",
+  "kevin-hart",
+  "zayn-malik",
+  "priyanka-chopra-jonas",
+  "ranveer-singh",
+  "alia-bhatt",
+  "tiger-shroff",
+  "hrithik-roshan",
+  "neymar-jr",
+  "jackie-chan",
+  "central-cee"
+]);
+
 let failures = 0;
 
 function fail(msg) {
@@ -303,6 +351,24 @@ displayCats.forEach((cat) => {
 
 
 // ── 13. High-risk tag sanity checks ─────────────────────────────────────────
+console.log("\n[13] High-risk tag sanity checks");
+const highRiskIssues = [];
+celebrities.forEach((c) => {
+  if ((c.categories || []).includes("ig-100m") && !IG_100M_ALLOWLIST.has(c.id)) {
+    highRiskIssues.push(`${c.id}:ig-100m`);
+  }
+  if ((c.categories || []).includes("snl-cast") && c.id === "richard-pryor") {
+    highRiskIssues.push(`${c.id}:snl-cast`);
+  }
+  if ((c.categories || []).includes("been-on-snl") && c.id === "dean-martin") {
+    highRiskIssues.push(`${c.id}:been-on-snl`);
+  }
+});
+if (highRiskIssues.length > 0) {
+  fail(`High-risk false tags: ${highRiskIssues.join(", ")}`);
+} else {
+  ok("No high-risk false tags detected");
+}
 console.log("\n[13] High-risk tag sanity checks");
 const flagged = [
   ["bo-jackson", "olympian"],
