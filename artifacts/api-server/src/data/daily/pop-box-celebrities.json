@@ -285,11 +285,15 @@
       "Onika"
     ],
     "categories": [
-      "rap",
+      "american",
+      "been-on-snl",
       "billboard-1",
-      "world-tour",
       "born-1980s",
-      "ig-100m"
+      "ig-100m",
+      "pop",
+      "publicly-divorced",
+      "rap",
+      "world-tour"
     ]
   },
   {
@@ -577,12 +581,15 @@
       "Dolly"
     ],
     "categories": [
-      "country",
-      "grammy-winner",
-      "world-tour",
       "american",
+      "beauty-brand-owner",
       "blonde",
-      "beauty-brand-owner"
+      "country",
+      "emmy-winner",
+      "grammy-winner",
+      "pop",
+      "tony-winner",
+      "world-tour"
     ]
   },
   {
@@ -1073,22 +1080,6 @@
     "categories": [
       "born-1990s",
       "american"
-    ]
-  },
-  {
-    "id": "zendaya",
-    "name": "Zendaya",
-    "alternateNames": [
-      "Zendaya Coleman"
-    ],
-    "categories": [
-      "emmy-winner",
-      "disney-channel-alum",
-      "born-1990s",
-      "american",
-      "ig-100m",
-      "mcu-actor",
-      "music-to-acting"
     ]
   },
   {
@@ -1708,7 +1699,6 @@
       "Shawn"
     ],
     "categories": [
-      "band-member",
       "billboard-1",
       "born-1990s",
       "canadian",
@@ -2057,21 +2047,6 @@
     ]
   },
   {
-    "id": "lenny-kravitz",
-    "name": "Lenny Kravitz",
-    "alternateNames": [
-      "Lenny"
-    ],
-    "categories": [
-      "rock",
-      "grammy-winner",
-      "world-tour",
-      "american",
-      "publicly-divorced",
-      "music-to-acting"
-    ]
-  },
-  {
     "id": "jack-white",
     "name": "Jack White",
     "alternateNames": [
@@ -2252,21 +2227,6 @@
     ]
   },
   {
-    "id": "shania-twain-skip",
-    "name": "Keith Urban",
-    "alternateNames": [
-      "Keith"
-    ],
-    "categories": [
-      "country",
-      "grammy-winner",
-      "world-tour",
-      "born-1970s",
-      "australian",
-      "married-another-celeb"
-    ]
-  },
-  {
     "id": "karol-g",
     "name": "Karol G",
     "alternateNames": [
@@ -2274,11 +2234,10 @@
       "Carolina Giraldo"
     ],
     "categories": [
+      "born-1990s",
       "latino",
       "pop",
-      "grammy-winner",
-      "world-tour",
-      "born-1990s"
+      "world-tour"
     ]
   },
   {
@@ -4474,9 +4433,11 @@
       "Penelope"
     ],
     "categories": [
+      "born-1970s",
+      "european",
       "latino",
-      "oscar-winner",
-      "married-another-celeb"
+      "married-another-celeb",
+      "oscar-winner"
     ]
   },
   {
@@ -4576,18 +4537,6 @@
       "oscar-winner",
       "born-1990s",
       "american"
-    ]
-  },
-  {
-    "id": "ed-sheeran-skip",
-    "name": "Niall Horan",
-    "alternateNames": [
-      "Niall"
-    ],
-    "categories": [
-      "pop",
-      "world-tour",
-      "born-1990s"
     ]
   },
   {
@@ -4799,22 +4748,6 @@
       "rnb",
       "born-1980s",
       "american"
-    ]
-  },
-  {
-    "id": "shawn-skip-too",
-    "name": "Avril Lavigne",
-    "alternateNames": [
-      "Avril"
-    ],
-    "categories": [
-      "pop",
-      "rock",
-      "world-tour",
-      "born-1980s",
-      "canadian",
-      "blonde",
-      "publicly-divorced"
     ]
   },
   {
@@ -5723,12 +5656,16 @@
     "name": "Lilly Singh",
     "alternateNames": [
       "Superwoman",
-      "IISuperwomanII"
+      "IISuperwomanII",
+      "Lilly"
     ],
     "categories": [
-      "social-to-mainstream",
       "born-1980s",
-      "canadian"
+      "canadian",
+      "comedian",
+      "from-asia",
+      "presenter",
+      "social-to-mainstream"
     ]
   },
   {
@@ -6068,8 +6005,11 @@
       "Zoe"
     ],
     "categories": [
-      "born-1980s",
       "american",
+      "born-1980s",
+      "dc-actor",
+      "married-another-celeb",
+      "mcu-actor",
       "publicly-divorced"
     ]
   },
@@ -6256,9 +6196,9 @@
       "Glen"
     ],
     "categories": [
-      "born-1980s",
       "american",
-      "blonde"
+      "blonde",
+      "born-1980s"
     ]
   },
   {
@@ -7019,11 +6959,11 @@
       "El Negrito Ojos Claros"
     ],
     "categories": [
+      "born-1990s",
       "latino",
       "pop",
       "rnb",
-      "world-tour",
-      "born-1990s"
+      "world-tour"
     ]
   },
   {
@@ -7602,10 +7542,8 @@
       "Dev"
     ],
     "categories": [
-      "british",
       "born-1990s",
-      "golden-globe-winner",
-      "oscar-winner",
+      "british",
       "from-asia"
     ]
   },
@@ -7843,10 +7781,10 @@
     ],
     "categories": [
       "american",
-      "oscar-winner",
-      "mcu-actor",
+      "born-1960s",
       "latino",
-      "born-1960s"
+      "mcu-actor",
+      "oscar-winner"
     ]
   },
   {
@@ -7856,10 +7794,10 @@
       "Javier"
     ],
     "categories": [
+      "born-1960s",
       "european",
-      "oscar-winner",
       "married-another-celeb",
-      "born-1960s"
+      "oscar-winner"
     ]
   },
   {
@@ -8259,19 +8197,6 @@
     ]
   },
   {
-    "id": "bob-odenkirk",
-    "name": "Bob Odenkirk",
-    "alternateNames": [
-      "Bob"
-    ],
-    "categories": [
-      "american",
-      "born-1960s",
-      "emmy-winner",
-      "comedian"
-    ]
-  },
-  {
     "id": "giancarlo-esposito",
     "name": "Giancarlo Esposito",
     "alternateNames": [
@@ -8282,18 +8207,6 @@
       "american",
       "born-1950s",
       "emmy-winner"
-    ]
-  },
-  {
-    "id": "rachel-zegler",
-    "name": "Rachel Zegler",
-    "alternateNames": [
-      "Rachel"
-    ],
-    "categories": [
-      "american",
-      "born-2000s",
-      "latino"
     ]
   },
   {
@@ -10981,11 +10894,10 @@
       "Cori Gauff"
     ],
     "categories": [
-      "athlete",
-      "tennis",
       "american",
+      "athlete",
       "born-2000s",
-      "grammy-winner"
+      "tennis"
     ]
   },
   {
@@ -11351,12 +11263,11 @@
       "Iron Mike"
     ],
     "categories": [
-      "athlete",
-      "ufc",
       "american",
-      "born-1960s",
+      "athlete",
       "athlete-entertainer",
-      "been-on-snl"
+      "been-on-snl",
+      "born-1960s"
     ]
   },
   {
@@ -11913,7 +11824,8 @@
       "british",
       "european",
       "irish",
-      "pop"
+      "pop",
+      "world-tour"
     ]
   },
   {
@@ -11960,7 +11872,9 @@
   {
     "id": "tlc",
     "name": "TLC",
-    "alternateNames": [],
+    "alternateNames": [
+      "T-Boz Chilli Left Eye"
+    ],
     "categories": [
       "american",
       "rnb",
@@ -11999,7 +11913,9 @@
   {
     "id": "little-mix",
     "name": "Little Mix",
-    "alternateNames": [],
+    "alternateNames": [
+      "Little Mix"
+    ],
     "categories": [
       "british",
       "pop",
@@ -12010,7 +11926,9 @@
   {
     "id": "westlife",
     "name": "Westlife",
-    "alternateNames": [],
+    "alternateNames": [
+      "Westlife"
+    ],
     "categories": [
       "british",
       "irish",
@@ -12022,7 +11940,9 @@
   {
     "id": "boyzone",
     "name": "Boyzone",
-    "alternateNames": [],
+    "alternateNames": [
+      "Boyzone"
+    ],
     "categories": [
       "british",
       "irish",
@@ -12047,7 +11967,9 @@
   {
     "id": "take-that",
     "name": "Take That",
-    "alternateNames": [],
+    "alternateNames": [
+      "Take That"
+    ],
     "categories": [
       "british",
       "pop",
@@ -12075,10 +11997,9 @@
       "Arctic Monkeys band"
     ],
     "categories": [
+      "band-member",
       "british",
       "rock",
-      "band-member",
-      "grammy-winner",
       "world-tour"
     ]
   },
@@ -12129,12 +12050,11 @@
       "Florence"
     ],
     "categories": [
-      "british",
       "born-1980s",
-      "rock",
+      "british",
       "redhead",
-      "world-tour",
-      "grammy-winner"
+      "rock",
+      "world-tour"
     ]
   },
   {
@@ -12168,7 +12088,9 @@
   {
     "id": "oasis",
     "name": "Oasis",
-    "alternateNames": [],
+    "alternateNames": [
+      "Oasis"
+    ],
     "categories": [
       "british",
       "rock",
@@ -12219,10 +12141,10 @@
   },
   {
     "id": "kurt-cobain",
-    "name": "Kurt Nirvana",
+    "name": "Kurt Cobain",
     "alternateNames": [
-      "Kurt Cobain",
-      "Kurt"
+      "Kurt",
+      "Nirvana"
     ],
     "categories": [
       "american",
@@ -12289,7 +12211,9 @@
   {
     "id": "metallica",
     "name": "Metallica",
-    "alternateNames": [],
+    "alternateNames": [
+      "Metallica"
+    ],
     "categories": [
       "american",
       "rock",
@@ -12314,7 +12238,9 @@
   {
     "id": "green-day",
     "name": "Green Day",
-    "alternateNames": [],
+    "alternateNames": [
+      "Green Day"
+    ],
     "categories": [
       "american",
       "rock",
@@ -12326,7 +12252,9 @@
   {
     "id": "u2",
     "name": "U2",
-    "alternateNames": [],
+    "alternateNames": [
+      "U2"
+    ],
     "categories": [
       "british",
       "irish",
@@ -12353,7 +12281,9 @@
   {
     "id": "abba",
     "name": "ABBA",
-    "alternateNames": [],
+    "alternateNames": [
+      "ABBA"
+    ],
     "categories": [
       "european",
       "pop",
@@ -12363,7 +12293,9 @@
   {
     "id": "fleetwood-mac",
     "name": "Fleetwood Mac",
-    "alternateNames": [],
+    "alternateNames": [
+      "Fleetwood Mac"
+    ],
     "categories": [
       "british",
       "american",
@@ -12375,7 +12307,10 @@
   {
     "id": "the-cure",
     "name": "The Cure",
-    "alternateNames": [],
+    "alternateNames": [
+      "The Cure",
+      "The Cure band"
+    ],
     "categories": [
       "british",
       "rock",
@@ -12385,7 +12320,9 @@
   {
     "id": "depeche-mode",
     "name": "Depeche Mode",
-    "alternateNames": [],
+    "alternateNames": [
+      "Depeche Mode"
+    ],
     "categories": [
       "british",
       "rock",
@@ -12395,7 +12332,9 @@
   {
     "id": "new-order",
     "name": "New Order",
-    "alternateNames": [],
+    "alternateNames": [
+      "New Order"
+    ],
     "categories": [
       "british",
       "rock",
@@ -12405,7 +12344,9 @@
   {
     "id": "the-killers",
     "name": "The Killers",
-    "alternateNames": [],
+    "alternateNames": [
+      "The Killers"
+    ],
     "categories": [
       "american",
       "rock",
@@ -12417,7 +12358,9 @@
   {
     "id": "imagine-dragons",
     "name": "Imagine Dragons",
-    "alternateNames": [],
+    "alternateNames": [
+      "Imagine Dragons"
+    ],
     "categories": [
       "american",
       "rock",
@@ -12430,7 +12373,9 @@
   {
     "id": "maroon-5",
     "name": "Maroon 5",
-    "alternateNames": [],
+    "alternateNames": [
+      "Maroon 5"
+    ],
     "categories": [
       "american",
       "pop",
@@ -12512,7 +12457,9 @@
   {
     "id": "migos",
     "name": "Migos",
-    "alternateNames": [],
+    "alternateNames": [
+      "Migos"
+    ],
     "categories": [
       "american",
       "rap",
@@ -12561,7 +12508,9 @@
   {
     "id": "de-la-soul",
     "name": "De La Soul",
-    "alternateNames": [],
+    "alternateNames": [
+      "De La Soul"
+    ],
     "categories": [
       "american",
       "rap",
@@ -12707,12 +12656,13 @@
   {
     "id": "disclosure",
     "name": "Disclosure",
-    "alternateNames": [],
+    "alternateNames": [
+      "Disclosure"
+    ],
     "categories": [
-      "british",
-      "dj-producer",
       "band-member",
-      "grammy-winner"
+      "british",
+      "dj-producer"
     ]
   },
   {
@@ -13116,9 +13066,11 @@
     ],
     "categories": [
       "australian",
+      "born-1960s",
       "country",
       "grammy-winner",
-      "married-another-celeb"
+      "married-another-celeb",
+      "world-tour"
     ]
   },
   {
@@ -13151,12 +13103,11 @@
       "Andrew Hozier-Byrne"
     ],
     "categories": [
-      "irish",
-      "european",
-      "pop",
-      "rock",
       "born-1990s",
-      "grammy-winner"
+      "european",
+      "irish",
+      "pop",
+      "rock"
     ]
   },
   {
@@ -13430,7 +13381,10 @@
   {
     "id": "maxwell",
     "name": "Maxwell",
-    "alternateNames": [],
+    "alternateNames": [
+      "Maxwell",
+      "Embrya"
+    ],
     "categories": [
       "american",
       "rnb",
@@ -13485,10 +13439,9 @@
       "Jorja"
     ],
     "categories": [
-      "british",
-      "rnb",
       "born-1990s",
-      "grammy-winner"
+      "british",
+      "rnb"
     ]
   },
   {
@@ -13498,10 +13451,9 @@
       "Simbi Ajikawo"
     ],
     "categories": [
-      "british",
-      "rap",
       "born-1990s",
-      "grammy-winner"
+      "british",
+      "rap"
     ]
   },
   {
@@ -13537,9 +13489,9 @@
     ],
     "categories": [
       "american",
+      "born-1990s",
       "latino",
-      "rnb",
-      "born-1990s"
+      "rnb"
     ]
   },
   {
@@ -13563,9 +13515,9 @@
     ],
     "categories": [
       "american",
+      "born-1990s",
       "latino",
-      "pop",
-      "born-1990s"
+      "pop"
     ]
   },
   {
@@ -13576,8 +13528,8 @@
     ],
     "categories": [
       "american",
-      "latino",
-      "born-1990s"
+      "born-1990s",
+      "latino"
     ]
   },
   {
@@ -13587,9 +13539,9 @@
       "Nathy"
     ],
     "categories": [
+      "born-1990s",
       "european",
-      "latino",
-      "born-1990s"
+      "latino"
     ]
   },
   {
@@ -13733,26 +13685,14 @@
   {
     "id": "illit",
     "name": "ILLIT",
-    "alternateNames": [],
+    "alternateNames": [
+      "ILLIT"
+    ],
     "categories": [
       "kpop",
       "from-asia",
       "band-member",
       "born-2000s"
-    ]
-  },
-  {
-    "id": "mendez-shawn",
-    "name": "Shawn Mendes",
-    "alternateNames": [
-      "Shawn"
-    ],
-    "categories": [
-      "canadian",
-      "pop",
-      "born-2000s",
-      "grammy-winner",
-      "world-tour"
     ]
   },
   {
@@ -13789,11 +13729,10 @@
       "Raye"
     ],
     "categories": [
+      "born-1990s",
       "british",
       "pop",
-      "rnb",
-      "born-1990s",
-      "grammy-winner"
+      "rnb"
     ]
   },
   {
@@ -13824,19 +13763,6 @@
     ]
   },
   {
-    "id": "weeknd-abel",
-    "name": "Abel Tesfaye",
-    "alternateNames": [
-      "Abel"
-    ],
-    "categories": [
-      "canadian",
-      "rnb",
-      "pop",
-      "born-1990s"
-    ]
-  },
-  {
     "id": "bryan-adams",
     "name": "Bryan Adams",
     "alternateNames": [
@@ -13856,17 +13782,21 @@
       "Avril"
     ],
     "categories": [
+      "blonde",
+      "born-1980s",
       "canadian",
       "pop",
+      "publicly-divorced",
       "rock",
-      "born-1980s",
-      "publicly-divorced"
+      "world-tour"
     ]
   },
   {
     "id": "the-beaches",
     "name": "The Beaches",
-    "alternateNames": [],
+    "alternateNames": [
+      "The Beaches"
+    ],
     "categories": [
       "canadian",
       "rock",
@@ -13882,11 +13812,10 @@
       "Corinne"
     ],
     "categories": [
+      "born-1970s",
       "british",
-      "rnb",
       "pop",
-      "grammy-winner",
-      "born-1970s"
+      "rnb"
     ]
   },
   {
@@ -14149,19 +14078,6 @@
     ]
   },
   {
-    "id": "islanders-couple",
-    "name": "Tasha Ghouri",
-    "alternateNames": [
-      "Tasha"
-    ],
-    "categories": [
-      "british",
-      "reality-tv-star",
-      "love-island",
-      "born-2000s"
-    ]
-  },
-  {
     "id": "liberty-poole",
     "name": "Liberty Poole",
     "alternateNames": [
@@ -14371,7 +14287,9 @@
   {
     "id": "peppermint",
     "name": "Peppermint",
-    "alternateNames": [],
+    "alternateNames": [
+      "Peppermint"
+    ],
     "categories": [
       "american",
       "reality-tv-star",
@@ -14449,7 +14367,10 @@
   {
     "id": "symone",
     "name": "Symone",
-    "alternateNames": [],
+    "alternateNames": [
+      "Symone",
+      "Symone Johnson"
+    ],
     "categories": [
       "american",
       "reality-tv-star",
@@ -14479,20 +14400,6 @@
     ],
     "categories": [
       "american",
-      "reality-tv-star",
-      "drag-race",
-      "won-reality-show"
-    ]
-  },
-  {
-    "id": "nicky-doll",
-    "name": "The Vivienne",
-    "alternateNames": [
-      "The Vivienne",
-      "James Lee Williams"
-    ],
-    "categories": [
-      "british",
       "reality-tv-star",
       "drag-race",
       "won-reality-show"
@@ -15033,23 +14940,6 @@
     ]
   },
   {
-    "id": "nicki-minaj-host",
-    "name": "Nicki Minaj",
-    "alternateNames": [
-      "Nicki",
-      "Onika Tanya Maraj"
-    ],
-    "categories": [
-      "american",
-      "rap",
-      "pop",
-      "been-on-snl",
-      "ig-100m",
-      "born-1980s",
-      "publicly-divorced"
-    ]
-  },
-  {
     "id": "katie-price",
     "name": "Katie Price",
     "alternateNames": [
@@ -15162,21 +15052,6 @@
       "band-member",
       "strictly",
       "won-reality-show"
-    ]
-  },
-  {
-    "id": "dafne-schippers",
-    "name": "Alexandra Burke",
-    "alternateNames": [
-      "Alexandra Burke",
-      "Alexandra"
-    ],
-    "categories": [
-      "british",
-      "rnb",
-      "pop",
-      "won-reality-show",
-      "born-1980s"
     ]
   },
   {
@@ -15354,19 +15229,6 @@
       "irish",
       "presenter",
       "reality-tv-star"
-    ]
-  },
-  {
-    "id": "sharon-osbourne-2",
-    "name": "Sinitta",
-    "alternateNames": [
-      "Sinitta"
-    ],
-    "categories": [
-      "british",
-      "pop",
-      "reality-tv-star",
-      "born-1960s"
     ]
   },
   {
@@ -15673,33 +15535,6 @@
     ]
   },
   {
-    "id": "intheclutch",
-    "name": "Kai Cenat",
-    "alternateNames": [
-      "Kai Cenat",
-      "Kai"
-    ],
-    "categories": [
-      "american",
-      "social-to-mainstream",
-      "born-2000s",
-      "comedian"
-    ]
-  },
-  {
-    "id": "streamer",
-    "name": "xQc",
-    "alternateNames": [
-      "xQc",
-      "Felix Lengyel"
-    ],
-    "categories": [
-      "canadian",
-      "social-to-mainstream",
-      "born-1990s"
-    ]
-  },
-  {
     "id": "tyler-oakley",
     "name": "Tyler Oakley",
     "alternateNames": [
@@ -15711,22 +15546,6 @@
       "born-1980s",
       "comedian",
       "has-podcast"
-    ]
-  },
-  {
-    "id": "superwoman",
-    "name": "Lilly Singh",
-    "alternateNames": [
-      "Lilly Singh",
-      "Superwoman"
-    ],
-    "categories": [
-      "canadian",
-      "social-to-mainstream",
-      "comedian",
-      "born-1980s",
-      "from-asia",
-      "presenter"
     ]
   },
   {
@@ -15828,18 +15647,6 @@
     ]
   },
   {
-    "id": "pedro-almodóvar",
-    "name": "Pedro Almodóvar",
-    "alternateNames": [
-      "Pedro Almodovar",
-      "Almodovar"
-    ],
-    "categories": [
-      "european",
-      "oscar-winner"
-    ]
-  },
-  {
     "id": "antonio-banderas",
     "name": "Antonio Banderas",
     "alternateNames": [
@@ -15851,20 +15658,6 @@
       "born-1960s",
       "golden-globe-winner",
       "publicly-divorced"
-    ]
-  },
-  {
-    "id": "benicio-del-toro-v2",
-    "name": "Benicio Del Toro",
-    "alternateNames": [
-      "Benicio"
-    ],
-    "categories": [
-      "american",
-      "oscar-winner",
-      "mcu-actor",
-      "latino",
-      "born-1960s"
     ]
   },
   {
@@ -16002,23 +15795,6 @@
     ]
   },
   {
-    "id": "frasier",
-    "name": "Kelsey Grammer",
-    "alternateNames": [
-      "Kelsey Grammer",
-      "Kelsey",
-      "Frasier"
-    ],
-    "categories": [
-      "american",
-      "born-1950s",
-      "emmy-winner",
-      "golden-globe-winner",
-      "tony-winner",
-      "publicly-divorced"
-    ]
-  },
-  {
     "id": "helen-hunt",
     "name": "Helen Hunt",
     "alternateNames": [
@@ -16083,19 +15859,6 @@
       "emmy-winner",
       "golden-globe-winner",
       "tony-winner"
-    ]
-  },
-  {
-    "id": "rachel-brosnahan",
-    "name": "Rachel Brosnahan",
-    "alternateNames": [
-      "Rachel"
-    ],
-    "categories": [
-      "american",
-      "born-1990s",
-      "emmy-winner",
-      "golden-globe-winner"
     ]
   },
   {
@@ -16294,21 +16057,6 @@
       "golden-globe-winner",
       "grammy-winner",
       "tony-winner"
-    ]
-  },
-  {
-    "id": "dolly-parton-actress",
-    "name": "Dolly Parton",
-    "alternateNames": [
-      "Dolly"
-    ],
-    "categories": [
-      "american",
-      "country",
-      "grammy-winner",
-      "emmy-winner",
-      "tony-winner",
-      "pop"
     ]
   },
   {
@@ -16905,29 +16653,6 @@
     ]
   },
   {
-    "id": "tariq-trotter",
-    "name": "Black Thought",
-    "alternateNames": [
-      "Black Thought"
-    ],
-    "categories": [
-      "american",
-      "rap",
-      "band-member"
-    ]
-  },
-  {
-    "id": "jake-picking",
-    "name": "Glen Powell",
-    "alternateNames": [
-      "Glen"
-    ],
-    "categories": [
-      "american",
-      "born-1980s"
-    ]
-  },
-  {
     "id": "miles-teller",
     "name": "Miles Teller",
     "alternateNames": [
@@ -17040,19 +16765,6 @@
       "born-1970s",
       "emmy-winner",
       "redhead"
-    ]
-  },
-  {
-    "id": "nbc-lester-holt",
-    "name": "Lester Holt",
-    "alternateNames": [
-      "Lester"
-    ],
-    "categories": [
-      "american",
-      "presenter",
-      "emmy-winner",
-      "born-1950s"
     ]
   },
   {
@@ -17326,20 +17038,6 @@
       "emmy-winner",
       "golden-globe-winner",
       "has-podcast"
-    ]
-  },
-  {
-    "id": "donna-air",
-    "name": "Denise Welch",
-    "alternateNames": [
-      "Denise Welch",
-      "Denise"
-    ],
-    "categories": [
-      "british",
-      "presenter",
-      "reality-tv-star",
-      "born-1950s"
     ]
   },
   {
@@ -17849,7 +17547,9 @@
   {
     "id": "dire-straits",
     "name": "Dire Straits",
-    "alternateNames": [],
+    "alternateNames": [
+      "Dire Straits"
+    ],
     "categories": [
       "british",
       "rock",
@@ -17914,7 +17614,9 @@
   {
     "id": "jamelia",
     "name": "Jamelia",
-    "alternateNames": [],
+    "alternateNames": [
+      "Jamelia Davis"
+    ],
     "categories": [
       "british",
       "rnb",
@@ -17929,11 +17631,10 @@
       "Ms Dynamite"
     ],
     "categories": [
-      "british",
-      "rnb",
-      "rap",
       "born-1980s",
-      "grammy-winner"
+      "british",
+      "rap",
+      "rnb"
     ]
   },
   {
@@ -17978,7 +17679,9 @@
   {
     "id": "culture-club",
     "name": "Culture Club",
-    "alternateNames": [],
+    "alternateNames": [
+      "Culture Club"
+    ],
     "categories": [
       "british",
       "pop",
@@ -18053,7 +17756,9 @@
   {
     "id": "ace-of-base",
     "name": "Ace of Base",
-    "alternateNames": [],
+    "alternateNames": [
+      "Ace of Base"
+    ],
     "categories": [
       "european",
       "pop",
@@ -18063,7 +17768,9 @@
   {
     "id": "roxette",
     "name": "Roxette",
-    "alternateNames": [],
+    "alternateNames": [
+      "Roxette"
+    ],
     "categories": [
       "european",
       "pop",
@@ -18416,21 +18123,6 @@
     ]
   },
   {
-    "id": "nikki-laoye",
-    "name": "Rebecca Adlington",
-    "alternateNames": [
-      "Rebecca Adlington",
-      "Rebecca"
-    ],
-    "categories": [
-      "british",
-      "athlete",
-      "olympian",
-      "born-1980s",
-      "im-a-celebrity"
-    ]
-  },
-  {
     "id": "peter-wright",
     "name": "Peter Wright",
     "alternateNames": [
@@ -18622,21 +18314,6 @@
     ]
   },
   {
-    "id": "alan-iverson",
-    "name": "Allen Iverson",
-    "alternateNames": [
-      "AI",
-      "Allen Iverson",
-      "The Answer"
-    ],
-    "categories": [
-      "athlete",
-      "nba",
-      "american",
-      "born-1970s"
-    ]
-  },
-  {
     "id": "kevin-garnett",
     "name": "Kevin Garnett",
     "alternateNames": [
@@ -18783,20 +18460,6 @@
       "athlete",
       "british",
       "born-1980s"
-    ]
-  },
-  {
-    "id": "ww-de-villiers",
-    "name": "AB de Villiers",
-    "alternateNames": [
-      "AB de Villiers",
-      "AB",
-      "Mister 360"
-    ],
-    "categories": [
-      "athlete",
-      "born-1980s",
-      "european"
     ]
   },
   {
@@ -18987,20 +18650,6 @@
     ]
   },
   {
-    "id": "nfl-player-aj",
-    "name": "A.J. Brown",
-    "alternateNames": [
-      "AJ Brown",
-      "A J Brown"
-    ],
-    "categories": [
-      "athlete",
-      "nfl",
-      "american",
-      "born-2000s"
-    ]
-  },
-  {
     "id": "justin-tucker",
     "name": "Justin Tucker",
     "alternateNames": [
@@ -19067,38 +18716,10 @@
     ]
   },
   {
-    "id": "justin-jeffersonx",
-    "name": "CeeDee Lamb",
-    "alternateNames": [
-      "CeeDee Lamb",
-      "CeeDee"
-    ],
-    "categories": [
-      "athlete",
-      "nfl",
-      "american",
-      "born-2000s"
-    ]
-  },
-  {
     "id": "cooper-kupp",
     "name": "Cooper Kupp",
     "alternateNames": [
       "Cooper"
-    ],
-    "categories": [
-      "athlete",
-      "nfl",
-      "american",
-      "born-1990s"
-    ]
-  },
-  {
-    "id": "diontae-johnson",
-    "name": "DeAndre Hopkins",
-    "alternateNames": [
-      "DeAndre Hopkins",
-      "DeAndre"
     ],
     "categories": [
       "athlete",
@@ -19174,44 +18795,6 @@
       "emmy-winner",
       "mcu-actor",
       "latino"
-    ]
-  },
-  {
-    "id": "penelope-cruz-2",
-    "name": "Penélope Cruz",
-    "alternateNames": [
-      "Penelope Cruz",
-      "Penelope"
-    ],
-    "categories": [
-      "european",
-      "oscar-winner",
-      "married-another-celeb",
-      "born-1970s"
-    ]
-  },
-  {
-    "id": "javier-bardem-2",
-    "name": "Javier Bardem",
-    "alternateNames": [
-      "Javier"
-    ],
-    "categories": [
-      "european",
-      "oscar-winner",
-      "married-another-celeb",
-      "born-1960s"
-    ]
-  },
-  {
-    "id": "pedro-almodovar",
-    "name": "Pedro Almodóvar",
-    "alternateNames": [
-      "Pedro Almodovar"
-    ],
-    "categories": [
-      "european",
-      "oscar-winner"
     ]
   },
   {
@@ -19735,23 +19318,6 @@
     ]
   },
   {
-    "id": "vanessa-morgenstern",
-    "name": "Zoë Kravitz",
-    "alternateNames": [
-      "Zoe Kravitz",
-      "Zoë Kravitz",
-      "Zoe"
-    ],
-    "categories": [
-      "american",
-      "born-1980s",
-      "dc-actor",
-      "mcu-actor",
-      "married-another-celeb",
-      "publicly-divorced"
-    ]
-  },
-  {
     "id": "paul-bettany",
     "name": "Paul Bettany",
     "alternateNames": [
@@ -20132,7 +19698,9 @@
   {
     "id": "counting-crows",
     "name": "Counting Crows",
-    "alternateNames": [],
+    "alternateNames": [
+      "Counting Crows"
+    ],
     "categories": [
       "american",
       "rock",
@@ -20179,7 +19747,9 @@
   {
     "id": "vertical-horizon",
     "name": "Vertical Horizon",
-    "alternateNames": [],
+    "alternateNames": [
+      "Vertical Horizon"
+    ],
     "categories": [
       "american",
       "rock",
@@ -20615,6 +20185,351 @@
     "categories": [
       "american",
       "oscar-winner"
+    ]
+  },
+  {
+    "id": "tasha-ghouri",
+    "name": "Tasha Ghouri",
+    "alternateNames": [
+      "Tasha"
+    ],
+    "categories": [
+      "british",
+      "reality-tv-star",
+      "love-island",
+      "born-2000s"
+    ]
+  },
+  {
+    "id": "ceedee-lamb",
+    "name": "CeeDee Lamb",
+    "alternateNames": [
+      "CeeDee"
+    ],
+    "categories": [
+      "athlete",
+      "nfl",
+      "american",
+      "born-2000s"
+    ]
+  },
+  {
+    "id": "kelsey-grammer",
+    "name": "Kelsey Grammer",
+    "alternateNames": [
+      "Kelsey",
+      "Frasier Crane"
+    ],
+    "categories": [
+      "american",
+      "born-1950s",
+      "emmy-winner",
+      "golden-globe-winner",
+      "tony-winner"
+    ]
+  },
+  {
+    "id": "sinitta",
+    "name": "Sinitta",
+    "alternateNames": [
+      "Sinitta Malone"
+    ],
+    "categories": [
+      "british",
+      "pop",
+      "reality-tv-star",
+      "born-1960s"
+    ]
+  },
+  {
+    "id": "alexandra-burke",
+    "name": "Alexandra Burke",
+    "alternateNames": [
+      "Alexandra"
+    ],
+    "categories": [
+      "british",
+      "rnb",
+      "pop",
+      "won-reality-show",
+      "born-1980s",
+      "been-on-snl"
+    ]
+  },
+  {
+    "id": "rachel-zegler",
+    "name": "Rachel Zegler",
+    "alternateNames": [
+      "Rachel"
+    ],
+    "categories": [
+      "american",
+      "born-2000s",
+      "latino"
+    ]
+  },
+  {
+    "id": "ab-de-villiers",
+    "name": "AB de Villiers",
+    "alternateNames": [
+      "AB",
+      "Mr 360"
+    ],
+    "categories": [
+      "athlete",
+      "born-1980s"
+    ]
+  },
+  {
+    "id": "pedro-almodovar",
+    "name": "Pedro Almodóvar",
+    "alternateNames": [
+      "Pedro Almodovar",
+      "Almodovar"
+    ],
+    "categories": [
+      "european",
+      "oscar-winner"
+    ]
+  },
+  {
+    "id": "amber-heard",
+    "name": "Amber Heard",
+    "alternateNames": [
+      "Amber"
+    ],
+    "categories": [
+      "american",
+      "born-1980s",
+      "dc-actor",
+      "publicly-divorced"
+    ]
+  },
+  {
+    "id": "ray-fisher",
+    "name": "Ray Fisher",
+    "alternateNames": [
+      "Ray"
+    ],
+    "categories": [
+      "american",
+      "born-1980s",
+      "dc-actor"
+    ]
+  },
+  {
+    "id": "kyle-chandler",
+    "name": "Kyle Chandler",
+    "alternateNames": [
+      "Kyle"
+    ],
+    "categories": [
+      "american",
+      "born-1960s",
+      "emmy-winner",
+      "golden-globe-winner"
+    ]
+  },
+  {
+    "id": "michael-c-hall",
+    "name": "Michael C. Hall",
+    "alternateNames": [
+      "Michael C Hall",
+      "Michael"
+    ],
+    "categories": [
+      "american",
+      "born-1970s",
+      "emmy-winner",
+      "golden-globe-winner"
+    ]
+  },
+  {
+    "id": "anna-gunn",
+    "name": "Anna Gunn",
+    "alternateNames": [
+      "Anna"
+    ],
+    "categories": [
+      "american",
+      "born-1960s",
+      "emmy-winner"
+    ]
+  },
+  {
+    "id": "dean-norris",
+    "name": "Dean Norris",
+    "alternateNames": [
+      "Dean",
+      "Hank Schrader"
+    ],
+    "categories": [
+      "american",
+      "born-1960s"
+    ]
+  },
+  {
+    "id": "bob-odenkirk",
+    "name": "Bob Odenkirk",
+    "alternateNames": [
+      "Bob",
+      "Saul Goodman",
+      "Jimmy McGill"
+    ],
+    "categories": [
+      "american",
+      "born-1960s",
+      "emmy-winner",
+      "golden-globe-winner",
+      "comedian",
+      "been-on-snl"
+    ]
+  },
+  {
+    "id": "rhea-seehorn",
+    "name": "Rhea Seehorn",
+    "alternateNames": [
+      "Rhea",
+      "Kim Wexler"
+    ],
+    "categories": [
+      "american",
+      "born-1970s",
+      "emmy-winner"
+    ]
+  },
+  {
+    "id": "matt-berry",
+    "name": "Matt Berry",
+    "alternateNames": [
+      "Matt"
+    ],
+    "categories": [
+      "british",
+      "born-1970s",
+      "comedian",
+      "emmy-winner",
+      "panel-show",
+      "taskmaster"
+    ]
+  },
+  {
+    "id": "maisie-adam",
+    "name": "Maisie Adam",
+    "alternateNames": [
+      "Maisie"
+    ],
+    "categories": [
+      "british",
+      "born-1990s",
+      "comedian",
+      "stand-up",
+      "panel-show",
+      "taskmaster"
+    ]
+  },
+  {
+    "id": "oti-mabuse",
+    "name": "Oti Mabuse",
+    "alternateNames": [
+      "Oti"
+    ],
+    "categories": [
+      "british",
+      "born-1990s",
+      "strictly",
+      "presenter",
+      "won-reality-show"
+    ]
+  },
+  {
+    "id": "mark-wright",
+    "name": "Mark Wright",
+    "alternateNames": [
+      "Mark"
+    ],
+    "categories": [
+      "british",
+      "born-1980s",
+      "reality-tv-star",
+      "presenter",
+      "married-another-celeb"
+    ]
+  },
+  {
+    "id": "danielle-lloyd",
+    "name": "Danielle Lloyd",
+    "alternateNames": [
+      "Danielle"
+    ],
+    "categories": [
+      "british",
+      "born-1980s",
+      "reality-tv-star",
+      "publicly-divorced"
+    ]
+  },
+  {
+    "id": "peter-crouch",
+    "name": "Peter Crouch",
+    "alternateNames": [
+      "Peter",
+      "Crouchy"
+    ],
+    "categories": [
+      "british",
+      "born-1970s",
+      "athlete",
+      "soccer",
+      "premier-league",
+      "has-podcast",
+      "married-another-celeb"
+    ]
+  },
+  {
+    "id": "ian-wright",
+    "name": "Ian Wright",
+    "alternateNames": [
+      "Ian",
+      "Wrighty"
+    ],
+    "categories": [
+      "british",
+      "born-1960s",
+      "athlete",
+      "soccer",
+      "premier-league",
+      "presenter"
+    ]
+  },
+  {
+    "id": "robbie-fowler",
+    "name": "Robbie Fowler",
+    "alternateNames": [
+      "Robbie",
+      "God"
+    ],
+    "categories": [
+      "british",
+      "born-1970s",
+      "athlete",
+      "soccer",
+      "premier-league"
+    ]
+  },
+  {
+    "id": "john-terry",
+    "name": "John Terry",
+    "alternateNames": [
+      "John",
+      "JT"
+    ],
+    "categories": [
+      "british",
+      "born-1970s",
+      "athlete",
+      "soccer",
+      "premier-league"
     ]
   }
 ]
