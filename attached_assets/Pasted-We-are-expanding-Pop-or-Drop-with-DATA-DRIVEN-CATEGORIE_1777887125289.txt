@@ -1,0 +1,168 @@
+We are expanding “Pop or Drop” with DATA-DRIVEN CATEGORIES.
+
+Goal:
+Add new question types based on real-world stats, rankings, and metrics — especially in sports, music, and pop culture.
+
+These should work like:
+- “Which is higher?”
+- “Who has more?”
+- “Which is bigger?”
+
+-------------------------------------
+
+PART 1: SPORTS STATS (HIGH PRIORITY)
+
+Add structured datasets for:
+
+NFL:
+- Career passing yards
+- Career touchdowns
+- Super Bowl wins
+- QB rating
+Examples:
+Tom Brady, Patrick Mahomes, Josh Allen, Aaron Rodgers, Joe Burrow
+
+NBA:
+- Career points
+- Career assists
+- Career rebounds
+- Championships
+Examples:
+LeBron James, Steph Curry, Kevin Durant, Giannis, Luka Doncic, Jokic
+
+SOCCER:
+- Career goals
+- International goals
+- Club appearances
+Examples:
+Messi, Ronaldo, Mbappe, Haaland, Neymar
+
+IMPORTANT:
+- Store stats as numeric values
+- Use consistent stat types across players
+- Allow easy comparison between any two players
+
+-------------------------------------
+
+PART 2: MUSIC / SPOTIFY DATA
+
+Add datasets for:
+
+Artists:
+- Monthly listeners
+- Total Spotify streams
+- Followers
+
+Albums:
+- Total streams
+- First week sales (optional if available)
+
+Songs:
+- Spotify streams
+- Chart peak (optional)
+
+Examples:
+Drake, Taylor Swift, Beyoncé, Bad Bunny, The Weeknd, Travis Scott, SZA
+
+-------------------------------------
+
+PART 3: OTHER POP METRICS (EXPANDABLE)
+
+Add support for:
+
+- Box office totals (movies)
+- Instagram followers (celebrities)
+- Net worth (optional, careful with accuracy)
+- YouTube subscribers (creators)
+
+-------------------------------------
+
+PART 4: SYSTEM DESIGN
+
+Create a flexible structure:
+
+Each item should have:
+- name
+- category (athlete, artist, movie, etc.)
+- stat type (e.g. "career_yards", "spotify_streams")
+- value (number)
+
+Example:
+{
+  name: "Tom Brady",
+  category: "athlete",
+  stat: "career_passing_yards",
+  value: 89214
+}
+
+-------------------------------------
+
+PART 5: GAME INTEGRATION
+
+- Allow Pop or Drop to randomly pull 2 items with the SAME stat type
+- Ask player to choose which is higher
+- Ensure fair difficulty (not always obvious mismatches)
+
+-------------------------------------
+
+PART 6: DATA QUALITY
+
+- Use real, approximate, or rounded values if needed (does not need to be perfectly up to date)
+- Prioritize recognizable names
+- Avoid obscure players/artists
+
+-------------------------------------
+
+PART 7: VALIDATION
+
+- Ensure at least:
+  - 50+ NFL players
+  - 50+ NBA players
+  - 50+ soccer players
+  - 50+ music artists
+
+- Ensure each stat type has enough entries to generate questions
+
+Update Pop or Drop stat system to enforce value bounds.
+
+RULES:
+- Minimum stat value: 10,000
+- Maximum stat value: 1,000,000,000
+
+-------------------------------------
+
+PART 1: DATA VALIDATION
+
+For ALL stat-based entries:
+- If value < 10,000 → EXCLUDE from dataset
+- If value > 1,000,000,000 → EXCLUDE from dataset
+
+Do NOT clamp values — remove invalid entries instead.
+
+-------------------------------------
+
+PART 2: FILTERING LAYER
+
+Before generating any Pop or Drop question:
+- Filter dataset to only include values within [10,000, 1,000,000,000]
+
+-------------------------------------
+
+PART 3: DATA NORMALIZATION (IMPORTANT)
+
+Some stats naturally fall outside this range:
+- Too small → e.g. assists, awards
+- Too large → e.g. social impressions, total views
+
+Handle this by:
+- Converting to appropriate units where needed
+
+Examples:
+- Use "career yards" instead of "touchdowns"
+-------------------------------------
+
+OUTPUT:
+
+- List of stat categories added
+- Example entries for each
+- Total dataset size
