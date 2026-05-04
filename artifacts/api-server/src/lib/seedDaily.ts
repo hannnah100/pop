@@ -4,7 +4,7 @@ import {
   crosswordPuzzlesTable,
   popBoxGridsTable,
 } from "@workspace/db";
-import { inArray } from "drizzle-orm";
+import { eq, inArray } from "drizzle-orm";
 import { logger } from "./logger";
 import {
   THREE_FLOPS_SEED,
@@ -67,7 +67,24 @@ async function seedPopBox(): Promise<void> {
   );
 }
 
+/**
+ * Three Flops entries whose dates were swapped after initial seeding.
+ * These updates run on every startup so production DBs stay in sync.
+ */
+const THREE_FLOPS_DATE_FIXES: Array<{ id: string; date: string }> = [
+  { id: "ryan-gosling-movies", date: "2026-05-04" },
+  { id: "lady-gaga-albums",    date: "2026-09-05" },
+];
+
 async function seedThreeFlops(): Promise<void> {
+  // Apply any date corrections to existing rows first.
+  for (const fix of THREE_FLOPS_DATE_FIXES) {
+    await db
+      .update(threeFlopsChallengesTable)
+      .set({ date: fix.date })
+      .where(eq(threeFlopsChallengesTable.id, fix.id));
+  }
+
   if (THREE_FLOPS_SEED.length === 0) return;
 
   const ids = THREE_FLOPS_SEED.map((r) => r.id);
