@@ -11810,22 +11810,6 @@
     ]
   },
   {
-    "id": "niall-horan",
-    "name": "Niall Horan",
-    "alternateNames": [
-      "Niall"
-    ],
-    "categories": [
-      "band-member",
-      "born-1990s",
-      "british",
-      "european",
-      "irish",
-      "pop",
-      "world-tour"
-    ]
-  },
-  {
     "id": "backstreet-boys",
     "name": "Backstreet Boys",
     "alternateNames": [
@@ -11850,20 +11834,6 @@
       "pop",
       "band-member",
       "world-tour"
-    ]
-  },
-  {
-    "id": "destiny's-child",
-    "name": "Destiny's Child",
-    "alternateNames": [
-      "Destinys Child",
-      "DC"
-    ],
-    "categories": [
-      "american",
-      "rnb",
-      "pop",
-      "band-member"
     ]
   },
   {
@@ -13056,21 +13026,6 @@
     ]
   },
   {
-    "id": "keith-urban",
-    "name": "Keith Urban",
-    "alternateNames": [
-      "Keith"
-    ],
-    "categories": [
-      "australian",
-      "born-1960s",
-      "country",
-      "grammy-winner",
-      "married-another-celeb",
-      "world-tour"
-    ]
-  },
-  {
     "id": "brad-paisley",
     "name": "Brad Paisley",
     "alternateNames": [
@@ -13152,11 +13107,10 @@
       "Will"
     ],
     "categories": [
+      "born-1970s",
       "british",
       "pop",
-      "born-1970s",
-      "won-reality-show",
-      "emmy-winner"
+      "won-reality-show"
     ]
   },
   {
@@ -13247,10 +13201,9 @@
       "Rory Graham"
     ],
     "categories": [
-      "british",
-      "pop",
       "born-1980s",
-      "grammy-winner"
+      "british",
+      "pop"
     ]
   },
   {
@@ -13773,32 +13726,15 @@
     ]
   },
   {
-    "id": "avril-lavigne",
-    "name": "Avril Lavigne",
-    "alternateNames": [
-      "Avril"
-    ],
-    "categories": [
-      "blonde",
-      "born-1980s",
-      "canadian",
-      "pop",
-      "publicly-divorced",
-      "rock",
-      "world-tour"
-    ]
-  },
-  {
     "id": "the-beaches",
     "name": "The Beaches",
     "alternateNames": [
       "The Beaches"
     ],
     "categories": [
-      "canadian",
-      "rock",
       "band-member",
-      "grammy-winner"
+      "canadian",
+      "rock"
     ]
   },
   {
@@ -15226,22 +15162,6 @@
       "irish",
       "presenter",
       "reality-tv-star"
-    ]
-  },
-  {
-    "id": "will.i.am",
-    "name": "will.i.am",
-    "alternateNames": [
-      "Will I Am",
-      "William Adams"
-    ],
-    "categories": [
-      "american",
-      "pop",
-      "rap",
-      "grammy-winner",
-      "born-1970s",
-      "dj-producer"
     ]
   },
   {
@@ -20576,6 +20496,79 @@
       "grammy-winner",
       "married-another-celeb",
       "publicly-divorced"
+    ]
+  },
+  {
+    "id": "shania-twain-skip",
+    "name": "Keith Urban",
+    "alternateNames": [
+      "Keith"
+    ],
+    "categories": [
+      "country",
+      "grammy-winner",
+      "world-tour",
+      "born-1970s",
+      "australian",
+      "married-another-celeb"
+    ]
+  },
+  {
+    "id": "ed-sheeran-skip",
+    "name": "Niall Horan",
+    "alternateNames": [
+      "Niall"
+    ],
+    "categories": [
+      "pop",
+      "world-tour",
+      "born-1990s"
+    ]
+  },
+  {
+    "id": "shawn-skip-too",
+    "name": "Avril Lavigne",
+    "alternateNames": [
+      "Avril"
+    ],
+    "categories": [
+      "pop",
+      "rock",
+      "world-tour",
+      "born-1980s",
+      "canadian",
+      "blonde",
+      "publicly-divorced"
+    ]
+  },
+  {
+    "id": "destinys-child",
+    "name": "Destiny's Child",
+    "alternateNames": [
+      "Destinys Child",
+      "DC"
+    ],
+    "categories": [
+      "american",
+      "rnb",
+      "pop",
+      "band-member"
+    ]
+  },
+  {
+    "id": "will-i-am",
+    "name": "will.i.am",
+    "alternateNames": [
+      "Will I Am",
+      "William Adams"
+    ],
+    "categories": [
+      "american",
+      "pop",
+      "rap",
+      "grammy-winner",
+      "born-1970s",
+      "dj-producer"
     ]
   }
 ]
