@@ -351,6 +351,32 @@ if (badFlags.length > 0) {
   ok("No high-risk false tags detected");
 }
 
+
+// ── 13. Factual tag sanity checks ───────────────────────────────────────────
+console.log("\n[13] Factual tag sanity checks");
+const factualIssues = [];
+const deny = {
+  "tristan-thompson": ["married-another-celeb", "publicly-divorced"],
+  "odell-beckham-jr": ["married-another-celeb"],
+  "neymar-jr": ["european", "married-another-celeb"],
+  "vinicius-jr": ["european"],
+  "ronaldinho": ["european"],
+  "canelo-alvarez": ["european"],
+  "paulo-londra": ["european"],
+  "sean-paul": ["american"],
+  "davido": ["american"],
+  "fireboy-dml": ["american"],
+};
+for (const c of celebrities) {
+  const bad = deny[c.id]?.filter((t) => (c.categories || []).includes(t));
+  if (bad?.length) factualIssues.push(`${c.id}:${bad.join('|')}`);
+}
+if (factualIssues.length > 0) {
+  fail(`Factual tag issues: ${factualIssues.join(', ')}`);
+} else {
+  ok('No factual tag issues detected');
+}
+
 // ── Summary ──────────────────────────────────────────────────────────────────
 console.log("\n" + "═".repeat(60));
 if (failures === 0) {
