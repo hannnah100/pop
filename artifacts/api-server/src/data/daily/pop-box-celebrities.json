@@ -595,7 +595,8 @@
       "billboard-1",
       "world-tour",
       "born-1990s",
-      "american"
+      "american",
+      "grammy-winner"
     ]
   },
   {
@@ -3010,7 +3011,8 @@
     "categories": [
       "mcu-actor",
       "born-1970s",
-      "british"
+      "british",
+      "emmy-winner"
     ]
   },
   {
@@ -4984,7 +4986,8 @@
       "billboard-1",
       "world-tour",
       "born-1970s",
-      "american"
+      "american",
+      "grammy-winner"
     ]
   },
   {
@@ -6101,7 +6104,8 @@
       "mcu-actor",
       "born-1970s",
       "american",
-      "married-another-celeb"
+      "married-another-celeb",
+      "oscar-winner"
     ]
   },
   {
@@ -7186,7 +7190,8 @@
     "categories": [
       "british",
       "harry-potter",
-      "oscar-winner"
+      "oscar-winner",
+      "emmy-winner"
     ]
   },
   {
@@ -7963,7 +7968,8 @@
       "american",
       "born-1960s",
       "golden-globe-winner",
-      "oscar-winner"
+      "oscar-winner",
+      "emmy-winner"
     ]
   },
   {
@@ -12784,7 +12790,8 @@
       "american",
       "country",
       "born-1960s",
-      "world-tour"
+      "world-tour",
+      "grammy-winner"
     ]
   },
   {
@@ -15484,7 +15491,8 @@
     "categories": [
       "american",
       "born-1960s",
-      "redhead"
+      "redhead",
+      "emmy-winner"
     ]
   },
   {
@@ -16214,7 +16222,8 @@
       "born-1950s",
       "dc-actor",
       "golden-globe-winner",
-      "mcu-actor"
+      "mcu-actor",
+      "emmy-winner"
     ]
   },
   {
@@ -19545,7 +19554,8 @@
       "born-1950s",
       "golden-globe-winner",
       "oscar-winner",
-      "publicly-divorced"
+      "publicly-divorced",
+      "emmy-winner"
     ]
   },
   {
@@ -20358,6 +20368,1773 @@
       "born-1970s",
       "emmy-winner",
       "golden-globe-winner"
+    ]
+  },
+  {
+    "id": "james-gandolfini",
+    "name": "James Gandolfini",
+    "alternateNames": [
+      "Gandolfini",
+      "Tony Soprano"
+    ],
+    "categories": [
+      "emmy-winner",
+      "born-1960s",
+      "american"
+    ]
+  },
+  {
+    "id": "michael-chiklis",
+    "name": "Michael Chiklis",
+    "alternateNames": [
+      "Chiklis"
+    ],
+    "categories": [
+      "emmy-winner",
+      "born-1960s",
+      "american"
+    ]
+  },
+  {
+    "id": "james-spader",
+    "name": "James Spader",
+    "alternateNames": [
+      "Spader"
+    ],
+    "categories": [
+      "emmy-winner",
+      "born-1960s",
+      "american"
+    ]
+  },
+  {
+    "id": "kiefer-sutherland",
+    "name": "Kiefer Sutherland",
+    "alternateNames": [
+      "Kiefer",
+      "Jack Bauer"
+    ],
+    "categories": [
+      "emmy-winner",
+      "born-1960s",
+      "canadian"
+    ]
+  },
+  {
+    "id": "jeff-daniels",
+    "name": "Jeff Daniels",
+    "alternateNames": [
+      "Daniels"
+    ],
+    "categories": [
+      "emmy-winner",
+      "born-1950s",
+      "american"
+    ]
+  },
+  {
+    "id": "matthew-rhys",
+    "name": "Matthew Rhys",
+    "alternateNames": [
+      "Rhys"
+    ],
+    "categories": [
+      "emmy-winner",
+      "born-1970s",
+      "british"
+    ]
+  },
+  {
+    "id": "jeremy-strong",
+    "name": "Jeremy Strong",
+    "alternateNames": [
+      "Strong",
+      "Kendall Roy"
+    ],
+    "categories": [
+      "emmy-winner",
+      "born-1970s",
+      "american"
+    ]
+  },
+  {
+    "id": "josh-o-connor",
+    "name": "Josh O'Connor",
+    "alternateNames": [
+      "Josh OConnor",
+      "Josh O Connor"
+    ],
+    "categories": [
+      "emmy-winner",
+      "born-1990s",
+      "british"
+    ]
+  },
+  {
+    "id": "lee-jung-jae",
+    "name": "Lee Jung-jae",
+    "alternateNames": [
+      "Jung-jae Lee",
+      "Lee Jung Jae",
+      "Gi-hun"
+    ],
+    "categories": [
+      "emmy-winner",
+      "born-1970s",
+      "from-asia"
+    ]
+  },
+  {
+    "id": "hiroyuki-sanada",
+    "name": "Hiroyuki Sanada",
+    "alternateNames": [
+      "Sanada",
+      "Yoshii Toranaga"
+    ],
+    "categories": [
+      "emmy-winner",
+      "born-1960s",
+      "from-asia"
+    ]
+  },
+  {
+    "id": "edie-falco",
+    "name": "Edie Falco",
+    "alternateNames": [
+      "Falco",
+      "Carmela Soprano"
+    ],
+    "categories": [
+      "emmy-winner",
+      "born-1960s",
+      "american"
+    ]
+  },
+  {
+    "id": "allison-janney",
+    "name": "Allison Janney",
+    "alternateNames": [
+      "Janney"
+    ],
+    "categories": [
+      "emmy-winner",
+      "oscar-winner",
+      "born-1950s",
+      "american"
+    ]
+  },
+  {
+    "id": "mariska-hargitay",
+    "name": "Mariska Hargitay",
+    "alternateNames": [
+      "Mariska",
+      "Olivia Benson"
+    ],
+    "categories": [
+      "emmy-winner",
+      "born-1960s",
+      "american"
+    ]
+  },
+  {
+    "id": "sally-field",
+    "name": "Sally Field",
+    "alternateNames": [
+      "Field"
+    ],
+    "categories": [
+      "emmy-winner",
+      "oscar-winner",
+      "born-1940s",
+      "american"
+    ]
+  },
+  {
+    "id": "glenn-close",
+    "name": "Glenn Close",
+    "alternateNames": [
+      "Close"
+    ],
+    "categories": [
+      "emmy-winner",
+      "born-1940s",
+      "american"
+    ]
+  },
+  {
+    "id": "kyra-sedgwick",
+    "name": "Kyra Sedgwick",
+    "alternateNames": [
+      "Sedgwick"
+    ],
+    "categories": [
+      "emmy-winner",
+      "born-1960s",
+      "american",
+      "married-another-celeb"
+    ]
+  },
+  {
+    "id": "julianna-margulies",
+    "name": "Julianna Margulies",
+    "alternateNames": [
+      "Margulies"
+    ],
+    "categories": [
+      "emmy-winner",
+      "born-1960s",
+      "american"
+    ]
+  },
+  {
+    "id": "tatiana-maslany",
+    "name": "Tatiana Maslany",
+    "alternateNames": [
+      "Maslany",
+      "Tat"
+    ],
+    "categories": [
+      "emmy-winner",
+      "born-1980s",
+      "canadian"
+    ]
+  },
+  {
+    "id": "elisabeth-moss",
+    "name": "Elisabeth Moss",
+    "alternateNames": [
+      "Lizzy Moss",
+      "Offred"
+    ],
+    "categories": [
+      "emmy-winner",
+      "born-1980s",
+      "american"
+    ]
+  },
+  {
+    "id": "jodie-comer",
+    "name": "Jodie Comer",
+    "alternateNames": [
+      "Comer",
+      "Villanelle"
+    ],
+    "categories": [
+      "emmy-winner",
+      "born-1990s",
+      "british"
+    ]
+  },
+  {
+    "id": "anna-sawai",
+    "name": "Anna Sawai",
+    "alternateNames": [
+      "Sawai",
+      "Toda Mariko"
+    ],
+    "categories": [
+      "emmy-winner",
+      "born-1990s",
+      "from-asia"
+    ]
+  },
+  {
+    "id": "michael-j-fox",
+    "name": "Michael J. Fox",
+    "alternateNames": [
+      "MJF",
+      "Marty McFly"
+    ],
+    "categories": [
+      "emmy-winner",
+      "born-1960s",
+      "canadian",
+      "music-to-acting"
+    ]
+  },
+  {
+    "id": "alec-baldwin",
+    "name": "Alec Baldwin",
+    "alternateNames": [
+      "Alex Baldwin",
+      "Jack Donaghy"
+    ],
+    "categories": [
+      "emmy-winner",
+      "born-1950s",
+      "american"
+    ]
+  },
+  {
+    "id": "eugene-levy",
+    "name": "Eugene Levy",
+    "alternateNames": [
+      "Levy",
+      "Moira's husband"
+    ],
+    "categories": [
+      "emmy-winner",
+      "born-1940s",
+      "canadian",
+      "comedian"
+    ]
+  },
+  {
+    "id": "patricia-heaton",
+    "name": "Patricia Heaton",
+    "alternateNames": [
+      "Heaton",
+      "Debra Barone"
+    ],
+    "categories": [
+      "emmy-winner",
+      "born-1950s",
+      "american"
+    ]
+  },
+  {
+    "id": "julia-louis-dreyfus",
+    "name": "Julia Louis-Dreyfus",
+    "alternateNames": [
+      "JLD",
+      "Elaine Benes",
+      "Selina Meyer"
+    ],
+    "categories": [
+      "emmy-winner",
+      "born-1960s",
+      "american",
+      "comedian",
+      "snl-cast"
+    ]
+  },
+  {
+    "id": "felicity-huffman",
+    "name": "Felicity Huffman",
+    "alternateNames": [
+      "Huffman",
+      "Lynette Scavo"
+    ],
+    "categories": [
+      "emmy-winner",
+      "born-1960s",
+      "american"
+    ]
+  },
+  {
+    "id": "rachel-brosnahan",
+    "name": "Rachel Brosnahan",
+    "alternateNames": [
+      "Brosnahan",
+      "Midge Maisel"
+    ],
+    "categories": [
+      "emmy-winner",
+      "born-1990s",
+      "american"
+    ]
+  },
+  {
+    "id": "catherine-ohara",
+    "name": "Catherine O'Hara",
+    "alternateNames": [
+      "Moira Rose",
+      "COH"
+    ],
+    "categories": [
+      "emmy-winner",
+      "born-1950s",
+      "canadian",
+      "comedian"
+    ]
+  },
+  {
+    "id": "paul-giamatti",
+    "name": "Paul Giamatti",
+    "alternateNames": [
+      "Giamatti"
+    ],
+    "categories": [
+      "emmy-winner",
+      "born-1960s",
+      "american"
+    ]
+  },
+  {
+    "id": "darren-criss",
+    "name": "Darren Criss",
+    "alternateNames": [
+      "Criss",
+      "Gianni Versace"
+    ],
+    "categories": [
+      "emmy-winner",
+      "born-1980s",
+      "american",
+      "music-to-acting"
+    ]
+  },
+  {
+    "id": "riz-ahmed",
+    "name": "Riz Ahmed",
+    "alternateNames": [
+      "Rizwan Ahmed",
+      "Rizzle Kicks"
+    ],
+    "categories": [
+      "emmy-winner",
+      "born-1980s",
+      "british"
+    ]
+  },
+  {
+    "id": "courtney-b-vance",
+    "name": "Courtney B. Vance",
+    "alternateNames": [
+      "Vance",
+      "Johnnie Cochran"
+    ],
+    "categories": [
+      "emmy-winner",
+      "born-1960s",
+      "american"
+    ]
+  },
+  {
+    "id": "steven-yeun",
+    "name": "Steven Yeun",
+    "alternateNames": [
+      "Yeun",
+      "Glenn Rhee"
+    ],
+    "categories": [
+      "emmy-winner",
+      "born-1980s",
+      "american",
+      "from-asia"
+    ]
+  },
+  {
+    "id": "ethan-hawke",
+    "name": "Ethan Hawke",
+    "alternateNames": [
+      "Hawke"
+    ],
+    "categories": [
+      "born-1970s",
+      "american"
+    ]
+  },
+  {
+    "id": "frances-mcdormand",
+    "name": "Frances McDormand",
+    "alternateNames": [
+      "McDormand",
+      "Fran"
+    ],
+    "categories": [
+      "emmy-winner",
+      "oscar-winner",
+      "born-1950s",
+      "american"
+    ]
+  },
+  {
+    "id": "amanda-seyfried",
+    "name": "Amanda Seyfried",
+    "alternateNames": [
+      "Seyfried"
+    ],
+    "categories": [
+      "emmy-winner",
+      "born-1980s",
+      "american",
+      "music-to-acting"
+    ]
+  },
+  {
+    "id": "richard-schiff",
+    "name": "Richard Schiff",
+    "alternateNames": [
+      "Schiff",
+      "Toby Ziegler"
+    ],
+    "categories": [
+      "emmy-winner",
+      "born-1950s",
+      "american"
+    ]
+  },
+  {
+    "id": "bradley-whitford",
+    "name": "Bradley Whitford",
+    "alternateNames": [
+      "Whitford",
+      "Josh Lyman"
+    ],
+    "categories": [
+      "emmy-winner",
+      "born-1950s",
+      "american"
+    ]
+  },
+  {
+    "id": "john-spencer",
+    "name": "John Spencer",
+    "alternateNames": [
+      "Spencer",
+      "Leo McGarry"
+    ],
+    "categories": [
+      "emmy-winner",
+      "born-1940s",
+      "american"
+    ]
+  },
+  {
+    "id": "joe-pantoliano",
+    "name": "Joe Pantoliano",
+    "alternateNames": [
+      "Joey Pants",
+      "Pantoliano"
+    ],
+    "categories": [
+      "emmy-winner",
+      "born-1950s",
+      "american"
+    ]
+  },
+  {
+    "id": "michael-imperioli",
+    "name": "Michael Imperioli",
+    "alternateNames": [
+      "Imperioli",
+      "Christopher Moltisanti"
+    ],
+    "categories": [
+      "emmy-winner",
+      "born-1960s",
+      "american"
+    ]
+  },
+  {
+    "id": "william-shatner",
+    "name": "William Shatner",
+    "alternateNames": [
+      "Shatner",
+      "Captain Kirk"
+    ],
+    "categories": [
+      "emmy-winner",
+      "born-1930s",
+      "canadian"
+    ]
+  },
+  {
+    "id": "terry-o-quinn",
+    "name": "Terry O'Quinn",
+    "alternateNames": [
+      "John Locke",
+      "OQuinn"
+    ],
+    "categories": [
+      "emmy-winner",
+      "born-1950s",
+      "american"
+    ]
+  },
+  {
+    "id": "michael-emerson",
+    "name": "Michael Emerson",
+    "alternateNames": [
+      "Emerson",
+      "Benjamin Linus"
+    ],
+    "categories": [
+      "emmy-winner",
+      "born-1950s",
+      "american"
+    ]
+  },
+  {
+    "id": "bobby-cannavale",
+    "name": "Bobby Cannavale",
+    "alternateNames": [
+      "Cannavale"
+    ],
+    "categories": [
+      "emmy-winner",
+      "born-1970s",
+      "american"
+    ]
+  },
+  {
+    "id": "ben-mendelsohn",
+    "name": "Ben Mendelsohn",
+    "alternateNames": [
+      "Mendelsohn"
+    ],
+    "categories": [
+      "emmy-winner",
+      "born-1960s",
+      "australian"
+    ]
+  },
+  {
+    "id": "john-lithgow",
+    "name": "John Lithgow",
+    "alternateNames": [
+      "Lithgow",
+      "Winston Churchill"
+    ],
+    "categories": [
+      "emmy-winner",
+      "born-1940s",
+      "american"
+    ]
+  },
+  {
+    "id": "matthew-macfadyen",
+    "name": "Matthew Macfadyen",
+    "alternateNames": [
+      "Macfadyen",
+      "Tom Wambsgans"
+    ],
+    "categories": [
+      "emmy-winner",
+      "born-1970s",
+      "british"
+    ]
+  },
+  {
+    "id": "billy-crudup",
+    "name": "Billy Crudup",
+    "alternateNames": [
+      "Crudup",
+      "Cory Ellison"
+    ],
+    "categories": [
+      "emmy-winner",
+      "born-1960s",
+      "american"
+    ]
+  },
+  {
+    "id": "joanne-froggatt",
+    "name": "Joanne Froggatt",
+    "alternateNames": [
+      "Froggatt",
+      "Anna Bates"
+    ],
+    "categories": [
+      "emmy-winner",
+      "born-1980s",
+      "british"
+    ]
+  },
+  {
+    "id": "julia-garner",
+    "name": "Julia Garner",
+    "alternateNames": [
+      "Garner",
+      "Ruth Langmore"
+    ],
+    "categories": [
+      "emmy-winner",
+      "born-1990s",
+      "american"
+    ]
+  },
+  {
+    "id": "gillian-anderson",
+    "name": "Gillian Anderson",
+    "alternateNames": [
+      "Anderson",
+      "Scully",
+      "Margaret Thatcher"
+    ],
+    "categories": [
+      "emmy-winner",
+      "born-1960s",
+      "american",
+      "british"
+    ]
+  },
+  {
+    "id": "elizabeth-debicki",
+    "name": "Elizabeth Debicki",
+    "alternateNames": [
+      "Debicki",
+      "Princess Diana"
+    ],
+    "categories": [
+      "emmy-winner",
+      "born-1990s",
+      "australian"
+    ]
+  },
+  {
+    "id": "david-hyde-pierce",
+    "name": "David Hyde Pierce",
+    "alternateNames": [
+      "DHP",
+      "Niles Crane"
+    ],
+    "categories": [
+      "emmy-winner",
+      "born-1950s",
+      "american"
+    ]
+  },
+  {
+    "id": "brad-garrett",
+    "name": "Brad Garrett",
+    "alternateNames": [
+      "Garrett",
+      "Robert Barone"
+    ],
+    "categories": [
+      "emmy-winner",
+      "born-1960s",
+      "american",
+      "comedian",
+      "stand-up"
+    ]
+  },
+  {
+    "id": "jeremy-piven",
+    "name": "Jeremy Piven",
+    "alternateNames": [
+      "Piven",
+      "Ari Gold"
+    ],
+    "categories": [
+      "emmy-winner",
+      "born-1960s",
+      "american"
+    ]
+  },
+  {
+    "id": "ty-burrell",
+    "name": "Ty Burrell",
+    "alternateNames": [
+      "Burrell",
+      "Phil Dunphy"
+    ],
+    "categories": [
+      "emmy-winner",
+      "born-1960s",
+      "american"
+    ]
+  },
+  {
+    "id": "eric-stonestreet",
+    "name": "Eric Stonestreet",
+    "alternateNames": [
+      "Stonestreet",
+      "Cam Tucker"
+    ],
+    "categories": [
+      "emmy-winner",
+      "born-1970s",
+      "american"
+    ]
+  },
+  {
+    "id": "tony-hale",
+    "name": "Tony Hale",
+    "alternateNames": [
+      "Hale",
+      "Buster Bluth",
+      "Gary Walsh"
+    ],
+    "categories": [
+      "emmy-winner",
+      "born-1970s",
+      "american"
+    ]
+  },
+  {
+    "id": "henry-winkler",
+    "name": "Henry Winkler",
+    "alternateNames": [
+      "The Fonz",
+      "Fonzie",
+      "Winkler",
+      "Gene Cousineau"
+    ],
+    "categories": [
+      "emmy-winner",
+      "born-1940s",
+      "american"
+    ]
+  },
+  {
+    "id": "daniel-levy",
+    "name": "Daniel Levy",
+    "alternateNames": [
+      "Dan Levy",
+      "David Rose"
+    ],
+    "categories": [
+      "emmy-winner",
+      "born-1980s",
+      "canadian"
+    ]
+  },
+  {
+    "id": "brett-goldstein",
+    "name": "Brett Goldstein",
+    "alternateNames": [
+      "Goldstein",
+      "Roy Kent"
+    ],
+    "categories": [
+      "emmy-winner",
+      "born-1980s",
+      "british"
+    ]
+  },
+  {
+    "id": "ebon-moss-bachrach",
+    "name": "Ebon Moss-Bachrach",
+    "alternateNames": [
+      "Richie Jerimovich",
+      "Moss-Bachrach"
+    ],
+    "categories": [
+      "emmy-winner",
+      "born-1970s",
+      "american"
+    ]
+  },
+  {
+    "id": "doris-roberts",
+    "name": "Doris Roberts",
+    "alternateNames": [
+      "Roberts",
+      "Marie Barone"
+    ],
+    "categories": [
+      "emmy-winner",
+      "born-1920s",
+      "american"
+    ]
+  },
+  {
+    "id": "kristin-chenoweth",
+    "name": "Kristin Chenoweth",
+    "alternateNames": [
+      "Chenoweth",
+      "Kristin"
+    ],
+    "categories": [
+      "emmy-winner",
+      "born-1960s",
+      "american",
+      "music-to-acting",
+      "tony-winner"
+    ]
+  },
+  {
+    "id": "jane-lynch",
+    "name": "Jane Lynch",
+    "alternateNames": [
+      "Lynch",
+      "Sue Sylvester"
+    ],
+    "categories": [
+      "emmy-winner",
+      "born-1960s",
+      "american",
+      "comedian"
+    ]
+  },
+  {
+    "id": "alex-borstein",
+    "name": "Alex Borstein",
+    "alternateNames": [
+      "Borstein",
+      "Susie Myerson"
+    ],
+    "categories": [
+      "emmy-winner",
+      "born-1970s",
+      "american"
+    ]
+  },
+  {
+    "id": "annie-murphy",
+    "name": "Annie Murphy",
+    "alternateNames": [
+      "Murphy",
+      "Alexis Rose"
+    ],
+    "categories": [
+      "emmy-winner",
+      "born-1980s",
+      "canadian"
+    ]
+  },
+  {
+    "id": "hannah-waddingham",
+    "name": "Hannah Waddingham",
+    "alternateNames": [
+      "Waddingham",
+      "Rebecca Welton"
+    ],
+    "categories": [
+      "emmy-winner",
+      "born-1970s",
+      "british",
+      "music-to-acting"
+    ]
+  },
+  {
+    "id": "sheryl-lee-ralph",
+    "name": "Sheryl Lee Ralph",
+    "alternateNames": [
+      "Ralph",
+      "Barbara Howard"
+    ],
+    "categories": [
+      "emmy-winner",
+      "born-1950s",
+      "american"
+    ]
+  },
+  {
+    "id": "alexander-skarsgard",
+    "name": "Alexander Skarsgård",
+    "alternateNames": [
+      "Alexander Skarsgard",
+      "Skarsgård",
+      "Skarsgard"
+    ],
+    "categories": [
+      "emmy-winner",
+      "born-1970s",
+      "european"
+    ]
+  },
+  {
+    "id": "yahya-abdul-mateen-ii",
+    "name": "Yahya Abdul-Mateen II",
+    "alternateNames": [
+      "Abdul-Mateen",
+      "Doctor Manhattan"
+    ],
+    "categories": [
+      "emmy-winner",
+      "born-1980s",
+      "american"
+    ]
+  },
+  {
+    "id": "evan-peters",
+    "name": "Evan Peters",
+    "alternateNames": [
+      "Peters"
+    ],
+    "categories": [
+      "emmy-winner",
+      "born-1980s",
+      "american"
+    ]
+  },
+  {
+    "id": "murray-bartlett",
+    "name": "Murray Bartlett",
+    "alternateNames": [
+      "Bartlett",
+      "Armond"
+    ],
+    "categories": [
+      "emmy-winner",
+      "born-1970s",
+      "australian"
+    ]
+  },
+  {
+    "id": "paul-walter-hauser",
+    "name": "Paul Walter Hauser",
+    "alternateNames": [
+      "Hauser"
+    ],
+    "categories": [
+      "emmy-winner",
+      "born-1980s",
+      "american"
+    ]
+  },
+  {
+    "id": "merritt-wever",
+    "name": "Merritt Wever",
+    "alternateNames": [
+      "Wever"
+    ],
+    "categories": [
+      "emmy-winner",
+      "born-1980s",
+      "american"
+    ]
+  },
+  {
+    "id": "laura-dern",
+    "name": "Laura Dern",
+    "alternateNames": [
+      "Dern"
+    ],
+    "categories": [
+      "emmy-winner",
+      "oscar-winner",
+      "born-1960s",
+      "american"
+    ]
+  },
+  {
+    "id": "patricia-clarkson",
+    "name": "Patricia Clarkson",
+    "alternateNames": [
+      "Clarkson"
+    ],
+    "categories": [
+      "emmy-winner",
+      "born-1950s",
+      "american"
+    ]
+  },
+  {
+    "id": "julianne-nicholson",
+    "name": "Julianne Nicholson",
+    "alternateNames": [
+      "Nicholson"
+    ],
+    "categories": [
+      "emmy-winner",
+      "born-1970s",
+      "american"
+    ]
+  },
+  {
+    "id": "hannah-einbinder",
+    "name": "Hannah Einbinder",
+    "alternateNames": [
+      "Einbinder",
+      "Ava Daniels"
+    ],
+    "categories": [
+      "emmy-winner",
+      "born-1990s",
+      "american",
+      "comedian",
+      "stand-up"
+    ]
+  },
+  {
+    "id": "jon-stewart",
+    "name": "Jon Stewart",
+    "alternateNames": [
+      "Stewart",
+      "Jonathan Stuart Leibowitz",
+      "The Daily Show"
+    ],
+    "categories": [
+      "emmy-winner",
+      "born-1960s",
+      "american",
+      "comedian",
+      "stand-up"
+    ]
+  },
+  {
+    "id": "mahershala-ali",
+    "name": "Mahershala Ali",
+    "alternateNames": [
+      "Ali"
+    ],
+    "categories": [
+      "oscar-winner",
+      "born-1970s",
+      "american"
+    ]
+  },
+  {
+    "id": "j-k-simmons",
+    "name": "J.K. Simmons",
+    "alternateNames": [
+      "JK Simmons",
+      "Fletcher"
+    ],
+    "categories": [
+      "oscar-winner",
+      "born-1950s",
+      "american"
+    ]
+  },
+  {
+    "id": "sam-rockwell",
+    "name": "Sam Rockwell",
+    "alternateNames": [
+      "Rockwell"
+    ],
+    "categories": [
+      "oscar-winner",
+      "born-1960s",
+      "american"
+    ]
+  },
+  {
+    "id": "daniel-kaluuya",
+    "name": "Daniel Kaluuya",
+    "alternateNames": [
+      "Kaluuya"
+    ],
+    "categories": [
+      "oscar-winner",
+      "born-1980s",
+      "british"
+    ]
+  },
+  {
+    "id": "troy-kotsur",
+    "name": "Troy Kotsur",
+    "alternateNames": [
+      "Kotsur"
+    ],
+    "categories": [
+      "oscar-winner",
+      "born-1960s",
+      "american"
+    ]
+  },
+  {
+    "id": "adrien-brody",
+    "name": "Adrien Brody",
+    "alternateNames": [
+      "Brody"
+    ],
+    "categories": [
+      "oscar-winner",
+      "born-1970s",
+      "american"
+    ]
+  },
+  {
+    "id": "rami-malek",
+    "name": "Rami Malek",
+    "alternateNames": [
+      "Malek",
+      "Freddie Mercury"
+    ],
+    "categories": [
+      "oscar-winner",
+      "born-1980s",
+      "american"
+    ]
+  },
+  {
+    "id": "mark-rylance",
+    "name": "Mark Rylance",
+    "alternateNames": [
+      "Rylance"
+    ],
+    "categories": [
+      "oscar-winner",
+      "born-1960s",
+      "british"
+    ]
+  },
+  {
+    "id": "jeff-bridges",
+    "name": "Jeff Bridges",
+    "alternateNames": [
+      "Bridges",
+      "The Dude"
+    ],
+    "categories": [
+      "oscar-winner",
+      "born-1940s",
+      "american"
+    ]
+  },
+  {
+    "id": "marcia-gay-harden",
+    "name": "Marcia Gay Harden",
+    "alternateNames": [
+      "Harden"
+    ],
+    "categories": [
+      "oscar-winner",
+      "born-1950s",
+      "american"
+    ]
+  },
+  {
+    "id": "melissa-leo",
+    "name": "Melissa Leo",
+    "alternateNames": [
+      "Leo"
+    ],
+    "categories": [
+      "oscar-winner",
+      "born-1960s",
+      "american"
+    ]
+  },
+  {
+    "id": "monique",
+    "name": "Mo'Nique",
+    "alternateNames": [
+      "MoNique",
+      "Mo Nique"
+    ],
+    "categories": [
+      "oscar-winner",
+      "born-1960s",
+      "american",
+      "comedian",
+      "stand-up"
+    ]
+  },
+  {
+    "id": "patricia-arquette",
+    "name": "Patricia Arquette",
+    "alternateNames": [
+      "Arquette"
+    ],
+    "categories": [
+      "oscar-winner",
+      "emmy-winner",
+      "born-1960s",
+      "american"
+    ]
+  },
+  {
+    "id": "alicia-vikander",
+    "name": "Alicia Vikander",
+    "alternateNames": [
+      "Vikander"
+    ],
+    "categories": [
+      "oscar-winner",
+      "born-1980s",
+      "european"
+    ]
+  },
+  {
+    "id": "russell-crowe",
+    "name": "Russell Crowe",
+    "alternateNames": [
+      "Crowe",
+      "Gladiator"
+    ],
+    "categories": [
+      "oscar-winner",
+      "born-1960s",
+      "australian"
+    ]
+  },
+  {
+    "id": "sean-penn",
+    "name": "Sean Penn",
+    "alternateNames": [
+      "Penn"
+    ],
+    "categories": [
+      "oscar-winner",
+      "born-1960s",
+      "american"
+    ]
+  },
+  {
+    "id": "daniel-day-lewis",
+    "name": "Daniel Day-Lewis",
+    "alternateNames": [
+      "Day-Lewis",
+      "DDL"
+    ],
+    "categories": [
+      "oscar-winner",
+      "born-1950s",
+      "british"
+    ]
+  },
+  {
+    "id": "jean-dujardin",
+    "name": "Jean Dujardin",
+    "alternateNames": [
+      "Dujardin"
+    ],
+    "categories": [
+      "oscar-winner",
+      "born-1970s",
+      "european"
+    ]
+  },
+  {
+    "id": "damien-chazelle",
+    "name": "Damien Chazelle",
+    "alternateNames": [
+      "Chazelle"
+    ],
+    "categories": [
+      "oscar-winner",
+      "born-1980s",
+      "american"
+    ]
+  },
+  {
+    "id": "chloe-zhao",
+    "name": "Chloé Zhao",
+    "alternateNames": [
+      "Chloe Zhao",
+      "Zhao"
+    ],
+    "categories": [
+      "oscar-winner",
+      "born-1980s",
+      "from-asia",
+      "american"
+    ]
+  },
+  {
+    "id": "bong-joon-ho",
+    "name": "Bong Joon-ho",
+    "alternateNames": [
+      "Bong Joonho",
+      "Bong",
+      "Director Bong"
+    ],
+    "categories": [
+      "oscar-winner",
+      "born-1960s",
+      "from-asia"
+    ]
+  },
+  {
+    "id": "jamie-lee-curtis",
+    "name": "Jamie Lee Curtis",
+    "alternateNames": [
+      "Curtis",
+      "Halloween Lady"
+    ],
+    "categories": [
+      "oscar-winner",
+      "born-1950s",
+      "american"
+    ]
+  },
+  {
+    "id": "sam-mendes",
+    "name": "Sam Mendes",
+    "alternateNames": [
+      "Mendes"
+    ],
+    "categories": [
+      "oscar-winner",
+      "born-1960s",
+      "british"
+    ]
+  },
+  {
+    "id": "peter-jackson",
+    "name": "Peter Jackson",
+    "alternateNames": [
+      "Jackson",
+      "PJ"
+    ],
+    "categories": [
+      "oscar-winner",
+      "born-1960s",
+      "australian"
+    ]
+  },
+  {
+    "id": "ron-howard",
+    "name": "Ron Howard",
+    "alternateNames": [
+      "Howard",
+      "Richie Cunningham"
+    ],
+    "categories": [
+      "oscar-winner",
+      "born-1950s",
+      "american"
+    ]
+  },
+  {
+    "id": "tom-hooper",
+    "name": "Tom Hooper",
+    "alternateNames": [
+      "Hooper"
+    ],
+    "categories": [
+      "oscar-winner",
+      "born-1970s",
+      "british"
+    ]
+  },
+  {
+    "id": "jim-broadbent",
+    "name": "Jim Broadbent",
+    "alternateNames": [
+      "Broadbent"
+    ],
+    "categories": [
+      "oscar-winner",
+      "born-1940s",
+      "british"
+    ]
+  },
+  {
+    "id": "alan-arkin",
+    "name": "Alan Arkin",
+    "alternateNames": [
+      "Arkin"
+    ],
+    "categories": [
+      "oscar-winner",
+      "born-1930s",
+      "american"
+    ]
+  },
+  {
+    "id": "casey-affleck",
+    "name": "Casey Affleck",
+    "alternateNames": [
+      "Affleck"
+    ],
+    "categories": [
+      "oscar-winner",
+      "born-1970s",
+      "american"
+    ]
+  },
+  {
+    "id": "jon-batiste",
+    "name": "Jon Batiste",
+    "alternateNames": [
+      "Jonathan Batiste",
+      "Batiste"
+    ],
+    "categories": [
+      "grammy-winner",
+      "rnb",
+      "pop",
+      "born-1980s",
+      "american"
+    ]
+  },
+  {
+    "id": "alison-krauss",
+    "name": "Alison Krauss",
+    "alternateNames": [
+      "Krauss"
+    ],
+    "categories": [
+      "grammy-winner",
+      "country",
+      "born-1970s",
+      "american"
+    ]
+  },
+  {
+    "id": "anderson-paak",
+    "name": "Anderson .Paak",
+    "alternateNames": [
+      "Anderson Paak",
+      "Paak",
+      "Silk Sonic"
+    ],
+    "categories": [
+      "grammy-winner",
+      "rnb",
+      "rap",
+      "born-1980s",
+      "american"
+    ]
+  },
+  {
+    "id": "bonnie-raitt",
+    "name": "Bonnie Raitt",
+    "alternateNames": [
+      "Raitt"
+    ],
+    "categories": [
+      "grammy-winner",
+      "rock",
+      "born-1940s",
+      "american"
+    ]
+  },
+  {
+    "id": "kings-of-leon",
+    "name": "Kings of Leon",
+    "alternateNames": [
+      "KOL"
+    ],
+    "categories": [
+      "grammy-winner",
+      "rock",
+      "american"
+    ]
+  },
+  {
+    "id": "hillary-scott",
+    "name": "Hillary Scott",
+    "alternateNames": [
+      "Hillary Scott Tyrrell",
+      "Lady A"
+    ],
+    "categories": [
+      "grammy-winner",
+      "country",
+      "born-1980s",
+      "american"
+    ]
+  },
+  {
+    "id": "gotye",
+    "name": "Gotye",
+    "alternateNames": [
+      "Wouter De Backer"
+    ],
+    "categories": [
+      "grammy-winner",
+      "pop",
+      "born-1980s",
+      "australian",
+      "european"
+    ]
+  },
+  {
+    "id": "kimbra",
+    "name": "Kimbra",
+    "alternateNames": [
+      "Kimbra Lee Johnson"
+    ],
+    "categories": [
+      "grammy-winner",
+      "pop",
+      "born-1990s",
+      "australian"
+    ]
+  },
+  {
+    "id": "esperanza-spalding",
+    "name": "Esperanza Spalding",
+    "alternateNames": [
+      "Spalding"
+    ],
+    "categories": [
+      "grammy-winner",
+      "born-1980s",
+      "american"
+    ]
+  },
+  {
+    "id": "samara-joy",
+    "name": "Samara Joy",
+    "alternateNames": [
+      "Joy",
+      "Samara Joy McLendon"
+    ],
+    "categories": [
+      "grammy-winner",
+      "born-2000s",
+      "american"
+    ]
+  },
+  {
+    "id": "shelby-lynne",
+    "name": "Shelby Lynne",
+    "alternateNames": [
+      "Lynne"
+    ],
+    "categories": [
+      "grammy-winner",
+      "country",
+      "born-1960s",
+      "american"
+    ]
+  },
+  {
+    "id": "zac-brown-band",
+    "name": "Zac Brown Band",
+    "alternateNames": [
+      "ZBB",
+      "Zac Brown"
+    ],
+    "categories": [
+      "grammy-winner",
+      "country",
+      "american"
+    ]
+  },
+  {
+    "id": "beck",
+    "name": "Beck",
+    "alternateNames": [
+      "Beck Hansen"
+    ],
+    "categories": [
+      "grammy-winner",
+      "rock",
+      "pop",
+      "born-1970s",
+      "american"
+    ]
+  },
+  {
+    "id": "daft-punk",
+    "name": "Daft Punk",
+    "alternateNames": [
+      "Thomas Bangalter",
+      "Guy-Manuel de Homem-Christo"
+    ],
+    "categories": [
+      "grammy-winner",
+      "dj-producer",
+      "pop",
+      "european"
+    ]
+  },
+  {
+    "id": "arcade-fire",
+    "name": "Arcade Fire",
+    "alternateNames": [
+      "Win Butler"
+    ],
+    "categories": [
+      "grammy-winner",
+      "rock",
+      "pop",
+      "canadian"
+    ]
+  },
+  {
+    "id": "herbie-hancock",
+    "name": "Herbie Hancock",
+    "alternateNames": [
+      "Hancock"
+    ],
+    "categories": [
+      "grammy-winner",
+      "born-1940s",
+      "american"
+    ]
+  },
+  {
+    "id": "amy-lee",
+    "name": "Amy Lee",
+    "alternateNames": [
+      "Lee",
+      "Evanescence"
+    ],
+    "categories": [
+      "grammy-winner",
+      "rock",
+      "born-1980s",
+      "american"
+    ]
+  },
+  {
+    "id": "nate-ruess",
+    "name": "Nate Ruess",
+    "alternateNames": [
+      "Ruess",
+      "Fun."
+    ],
+    "categories": [
+      "grammy-winner",
+      "pop",
+      "born-1980s",
+      "american"
+    ]
+  },
+  {
+    "id": "bon-iver",
+    "name": "Bon Iver",
+    "alternateNames": [
+      "Justin Vernon",
+      "Vernon"
+    ],
+    "categories": [
+      "grammy-winner",
+      "born-1980s",
+      "american"
+    ]
+  },
+  {
+    "id": "natalie-maines",
+    "name": "Natalie Maines",
+    "alternateNames": [
+      "Maines",
+      "Dixie Chicks",
+      "The Chicks"
+    ],
+    "categories": [
+      "grammy-winner",
+      "country",
+      "born-1970s",
+      "american"
+    ]
+  },
+  {
+    "id": "chris-stapleton",
+    "name": "Chris Stapleton",
+    "alternateNames": [
+      "Stapleton"
+    ],
+    "categories": [
+      "grammy-winner",
+      "country",
+      "rock",
+      "born-1970s",
+      "american"
+    ]
+  },
+  {
+    "id": "brandi-carlile",
+    "name": "Brandi Carlile",
+    "alternateNames": [
+      "Carlile"
+    ],
+    "categories": [
+      "grammy-winner",
+      "country",
+      "rock",
+      "born-1980s",
+      "american"
+    ]
+  },
+  {
+    "id": "sturgill-simpson",
+    "name": "Sturgill Simpson",
+    "alternateNames": [
+      "Simpson"
+    ],
+    "categories": [
+      "grammy-winner",
+      "country",
+      "rock",
+      "born-1970s",
+      "american"
+    ]
+  },
+  {
+    "id": "donald-fagen",
+    "name": "Donald Fagen",
+    "alternateNames": [
+      "Fagen",
+      "Steely Dan"
+    ],
+    "categories": [
+      "grammy-winner",
+      "rock",
+      "born-1940s",
+      "american"
     ]
   }
 ]
