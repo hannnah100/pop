@@ -47,6 +47,7 @@ export default function Crossword() {
   const lastTickRef = useRef(0);
   const recordedRef = useRef(false);
   const gridRef = useRef<HTMLDivElement>(null);
+  const gridSectionRef = useRef<HTMLDivElement>(null);
   const hiddenInputRef = useRef<HTMLInputElement>(null);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
@@ -326,6 +327,25 @@ export default function Crossword() {
     return numbers;
   }, [puzzle, isBlackSquare, rows, cols]);
 
+  const clueNumToCell = useMemo(() => {
+    const map: Record<number, [number, number]> = {};
+    for (const [key, num] of Object.entries(cellNumbers)) {
+      const [r, c] = key.split(',').map(Number);
+      map[num] = [r, c];
+    }
+    return map;
+  }, [cellNumbers]);
+
+  const handleClueClick = useCallback((num: number, dir: 'across' | 'down') => {
+    if (isCompleted) return;
+    const cell = clueNumToCell[num];
+    if (!cell) return;
+    setSelectedCell(cell);
+    setDirection(dir);
+    hiddenInputRef.current?.focus({ preventScroll: true });
+    gridSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, [isCompleted, clueNumToCell]);
+
   if (isLoading || !puzzle) {
     return (
       <div className="flex-1 max-w-5xl mx-auto w-full px-4 py-8 space-y-8">
@@ -398,7 +418,7 @@ export default function Crossword() {
 
       <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
         {/* Grid */}
-        <div className="flex-shrink-0 flex flex-col items-center">
+        <div ref={gridSectionRef} className="flex-shrink-0 flex flex-col items-center">
           <Shake trigger={shakeBoardKey}>
             <div
               className="grid gap-0 bg-[#FFD700] p-[3px] border-[3px] border-black shadow-[6px_6px_0_#000]"
@@ -504,10 +524,11 @@ export default function Crossword() {
                 return (
                   <li
                     key={`across-${num}`}
-                    className={`flex gap-3 p-2 border-l-[3px] font-sans text-sm transition-none ${
+                    onClick={() => handleClueClick(parseInt(num), 'across')}
+                    className={`flex gap-3 p-2 border-l-[3px] font-sans text-sm transition-none cursor-pointer ${
                       isActive
                         ? "border-[#FF1493] bg-[#FF1493]/10 font-bold text-black"
-                        : "border-transparent text-black/60 hover:text-black"
+                        : "border-transparent text-black/60 hover:text-black hover:border-[#FF1493]/40"
                     }`}
                   >
                     <span className="font-black w-5 shrink-0 text-black">{num}</span>
@@ -529,10 +550,11 @@ export default function Crossword() {
                 return (
                   <li
                     key={`down-${num}`}
-                    className={`flex gap-3 p-2 border-l-[3px] font-sans text-sm transition-none ${
+                    onClick={() => handleClueClick(parseInt(num), 'down')}
+                    className={`flex gap-3 p-2 border-l-[3px] font-sans text-sm transition-none cursor-pointer ${
                       isActive
                         ? "border-[#00C853] bg-[#00C853]/10 font-bold text-black"
-                        : "border-transparent text-black/60 hover:text-black"
+                        : "border-transparent text-black/60 hover:text-black hover:border-[#00C853]/40"
                     }`}
                   >
                     <span className="font-black w-5 shrink-0 text-black">{num}</span>
