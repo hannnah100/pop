@@ -14,25 +14,24 @@ interface ClockItPuzzle {
 
 const PUZZLES: ClockItPuzzle[] = CLOCK_IT_JSON as ClockItPuzzle[];
 
-function lcgRng(seed: number) {
-  let s = seed;
-  return () => {
-    s = (1664525 * s + 1013904223) & 0xffffffff;
-    return (s >>> 0) / 4294967296;
-  };
-}
-
 function todayDate(): string {
   return new Date().toISOString().split("T")[0];
 }
 
-function dateSeed(date: string): number {
-  return parseInt(date.replace(/-/g, ""), 10);
-}
-
+/**
+ * Map a calendar date to a puzzle by counting days since a fixed epoch and
+ * cycling through the puzzle list. This guarantees exactly one new puzzle per
+ * calendar day with no consecutive repeats — the previous LCG approach was
+ * broken because consecutive date integers (20260501, 20260502, …) shifted
+ * the LCG output by only ~1.6M out of a 4.3B range, landing in the same
+ * puzzle bin for ~25 consecutive days.
+ */
 function selectPuzzle(date: string): ClockItPuzzle {
-  const rng = lcgRng(dateSeed(date));
-  const index = Math.floor(rng() * PUZZLES.length);
+  const [y, m, d] = date.split("-").map(Number);
+  const dayIndex = Math.floor(
+    (Date.UTC(y, m - 1, d) - Date.UTC(2024, 0, 1)) / 86_400_000,
+  );
+  const index = ((dayIndex % PUZZLES.length) + PUZZLES.length) % PUZZLES.length;
   return PUZZLES[index];
 }
 

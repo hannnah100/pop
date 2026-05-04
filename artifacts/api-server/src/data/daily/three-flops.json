@@ -94,5 +94,245 @@
     "prompt": "Name all MCU movies",
     "totalCount": 33,
     "answers": "[{\"display\":\"Iron Man\",\"hint\":\"2008\",\"correct\":[\"Iron Man\",\"ironman\",\"iron man\"]},{\"display\":\"The Incredible Hulk\",\"hint\":\"2008\",\"correct\":[\"The Incredible Hulk\",\"incredible hulk\",\"hulk\"]},{\"display\":\"Iron Man 2\",\"hint\":\"2010\",\"correct\":[\"Iron Man 2\",\"ironman 2\",\"iron man two\",\"iron man 2\"]},{\"display\":\"Thor\",\"hint\":\"2011\",\"correct\":[\"Thor\"]},{\"display\":\"Captain America: The First Avenger\",\"hint\":\"2011\",\"correct\":[\"Captain America: The First Avenger\",\"captain america\",\"first avenger\",\"captain america 1\"]},{\"display\":\"The Avengers\",\"hint\":\"2012\",\"correct\":[\"The Avengers\",\"avengers\",\"avengers 1\"]},{\"display\":\"Iron Man 3\",\"hint\":\"2013\",\"correct\":[\"Iron Man 3\",\"ironman 3\",\"iron man three\"]},{\"display\":\"Thor: The Dark World\",\"hint\":\"2013\",\"correct\":[\"Thor: The Dark World\",\"dark world\",\"thor 2\"]},{\"display\":\"Captain America: The Winter Soldier\",\"hint\":\"2014\",\"correct\":[\"Captain America: The Winter Soldier\",\"winter soldier\",\"captain america 2\"]},{\"display\":\"Guardians of the Galaxy\",\"hint\":\"2014\",\"correct\":[\"Guardians of the Galaxy\",\"guardians\",\"gotg\",\"guardians of the galaxy 1\"]},{\"display\":\"Avengers: Age of Ultron\",\"hint\":\"2015\",\"correct\":[\"Avengers: Age of Ultron\",\"age of ultron\",\"avengers 2\"]},{\"display\":\"Ant-Man\",\"hint\":\"2015\",\"correct\":[\"Ant-Man\",\"antman\",\"ant man\",\"ant-man 1\"]},{\"display\":\"Captain America: Civil War\",\"hint\":\"2016\",\"correct\":[\"Captain America: Civil War\",\"civil war\",\"captain america 3\"]},{\"display\":\"Doctor Strange\",\"hint\":\"2016\",\"correct\":[\"Doctor Strange\",\"dr strange\",\"dr. strange\"]},{\"display\":\"Guardians of the Galaxy Vol. 2\",\"hint\":\"2017\",\"correct\":[\"Guardians of the Galaxy Vol. 2\",\"guardians 2\",\"gotg 2\",\"guardians of the galaxy 2\"]},{\"display\":\"Spider-Man: Homecoming\",\"hint\":\"2017\",\"correct\":[\"Spider-Man: Homecoming\",\"spiderman homecoming\",\"homecoming\",\"spider man homecoming\"]},{\"display\":\"Thor: Ragnarok\",\"hint\":\"2017\",\"correct\":[\"Thor: Ragnarok\",\"ragnarok\",\"thor 3\"]},{\"display\":\"Black Panther\",\"hint\":\"2018\",\"correct\":[\"Black Panther\",\"black panther 1\"]},{\"display\":\"Avengers: Infinity War\",\"hint\":\"2018\",\"correct\":[\"Avengers: Infinity War\",\"infinity war\",\"avengers 3\"]},{\"display\":\"Ant-Man and the Wasp\",\"hint\":\"2018\",\"correct\":[\"Ant-Man and the Wasp\",\"ant man 2\",\"ant-man 2\"]},{\"display\":\"Captain Marvel\",\"hint\":\"2019\",\"correct\":[\"Captain Marvel\"]},{\"display\":\"Avengers: Endgame\",\"hint\":\"2019\",\"correct\":[\"Avengers: Endgame\",\"endgame\",\"avengers 4\"]},{\"display\":\"Spider-Man: Far From Home\",\"hint\":\"2019\",\"correct\":[\"Spider-Man: Far From Home\",\"far from home\",\"spiderman 2\",\"spider man far from home\"]},{\"display\":\"Black Widow\",\"hint\":\"2021\",\"correct\":[\"Black Widow\"]},{\"display\":\"Shang-Chi and the Legend of the Ten Rings\",\"hint\":\"2021\",\"correct\":[\"Shang-Chi and the Legend of the Ten Rings\",\"shang chi\",\"shang-chi\",\"ten rings\"]},{\"display\":\"Eternals\",\"hint\":\"2021\",\"correct\":[\"Eternals\",\"the eternals\"]},{\"display\":\"Spider-Man: No Way Home\",\"hint\":\"2021\",\"correct\":[\"Spider-Man: No Way Home\",\"no way home\",\"spiderman 3\",\"spider man no way home\"]},{\"display\":\"Doctor Strange in the Multiverse of Madness\",\"hint\":\"2022\",\"correct\":[\"Doctor Strange in the Multiverse of Madness\",\"multiverse of madness\",\"doctor strange 2\",\"dr strange 2\"]},{\"display\":\"Thor: Love and Thunder\",\"hint\":\"2022\",\"correct\":[\"Thor: Love and Thunder\",\"love and thunder\",\"thor 4\"]},{\"display\":\"Black Panther: Wakanda Forever\",\"hint\":\"2022\",\"correct\":[\"Black Panther: Wakanda Forever\",\"wakanda forever\",\"black panther 2\"]},{\"display\":\"Ant-Man and the Wasp: Quantumania\",\"hint\":\"2023\",\"correct\":[\"Ant-Man and the Wasp: Quantumania\",\"quantumania\",\"ant man 3\",\"ant-man 3\"]},{\"display\":\"Guardians of the Galaxy Vol. 3\",\"hint\":\"2023\",\"correct\":[\"Guardians of the Galaxy Vol. 3\",\"guardians 3\",\"gotg 3\",\"guardians of the galaxy 3\"]},{\"display\":\"The Marvels\",\"hint\":\"2023\",\"correct\":[\"The Marvels\",\"marvels\"]}]"
+  },
+  {
+    "id": "office-main-cast",
+    "date": "2026-05-03",
+    "title": "The Office (US) Main Cast",
+    "prompt": "Name the main characters from The Office (US)",
+    "totalCount": 9,
+    "answers": "[{\"display\":\"Michael Scott\",\"hint\":\"Regional Manager\",\"correct\":[\"Michael Scott\",\"Michael\",\"Scott\"]},{\"display\":\"Dwight Schrute\",\"hint\":\"Assistant to the Regional Manager\",\"correct\":[\"Dwight Schrute\",\"Dwight\",\"Schrute\"]},{\"display\":\"Jim Halpert\",\"hint\":\"Sales Rep / prankster\",\"correct\":[\"Jim Halpert\",\"Jim\",\"Halpert\"]},{\"display\":\"Pam Beesly\",\"hint\":\"Receptionist / artist\",\"correct\":[\"Pam Beesly\",\"Pam Halpert\",\"Pam\",\"Beesly\"]},{\"display\":\"Ryan Howard\",\"hint\":\"Temp-turned-VP\",\"correct\":[\"Ryan Howard\",\"Ryan\"]},{\"display\":\"Andy Bernard\",\"hint\":\"Cornell grad / singer\",\"correct\":[\"Andy Bernard\",\"Andy\",\"Bernard\"]},{\"display\":\"Angela Martin\",\"hint\":\"Head of accounting / cat lover\",\"correct\":[\"Angela Martin\",\"Angela\"]},{\"display\":\"Kevin Malone\",\"hint\":\"Accountant / chili fanatic\",\"correct\":[\"Kevin Malone\",\"Kevin\"]},{\"display\":\"Oscar Martinez\",\"hint\":\"Accountant / the sensible one\",\"correct\":[\"Oscar Martinez\",\"Oscar\"]}]"
+  },
+  {
+    "id": "lady-gaga-albums",
+    "date": "2026-05-04",
+    "title": "Lady Gaga Solo Studio Albums",
+    "prompt": "Name all Lady Gaga solo studio albums",
+    "totalCount": 6,
+    "answers": "[{\"display\":\"The Fame\",\"hint\":\"2008\",\"correct\":[\"The Fame\",\"Fame\"]},{\"display\":\"Born This Way\",\"hint\":\"2011\",\"correct\":[\"Born This Way\",\"born this way\"]},{\"display\":\"ARTPOP\",\"hint\":\"2013\",\"correct\":[\"ARTPOP\",\"Art Pop\",\"artpop\"]},{\"display\":\"Joanne\",\"hint\":\"2016\",\"correct\":[\"Joanne\"]},{\"display\":\"Chromatica\",\"hint\":\"2020\",\"correct\":[\"Chromatica\"]},{\"display\":\"Mayhem\",\"hint\":\"2025\",\"correct\":[\"Mayhem\"]}]"
+  },
+  {
+    "id": "summer-olympics-hosts-2000s",
+    "date": "2026-05-05",
+    "title": "Summer Olympics Host Cities (2000-2024)",
+    "prompt": "Name every Summer Olympics host city from 2000 to 2024",
+    "totalCount": 7,
+    "answers": "[{\"display\":\"Sydney\",\"hint\":\"2000 - Australia\",\"correct\":[\"Sydney\"]},{\"display\":\"Athens\",\"hint\":\"2004 - Greece\",\"correct\":[\"Athens\"]},{\"display\":\"Beijing\",\"hint\":\"2008 - China\",\"correct\":[\"Beijing\",\"Peking\"]},{\"display\":\"London\",\"hint\":\"2012 - United Kingdom\",\"correct\":[\"London\"]},{\"display\":\"Rio de Janeiro\",\"hint\":\"2016 - Brazil\",\"correct\":[\"Rio de Janeiro\",\"Rio\"]},{\"display\":\"Tokyo\",\"hint\":\"2020/2021 - Japan\",\"correct\":[\"Tokyo\"]},{\"display\":\"Paris\",\"hint\":\"2024 - France\",\"correct\":[\"Paris\"]}]"
+  },
+  {
+    "id": "eminem-albums",
+    "date": "2026-05-06",
+    "title": "Eminem Studio Albums",
+    "prompt": "Name all Eminem studio albums",
+    "totalCount": 11,
+    "answers": "[{\"display\":\"The Slim Shady LP\",\"hint\":\"1999\",\"correct\":[\"The Slim Shady LP\",\"Slim Shady LP\",\"slim shady\"]},{\"display\":\"The Marshall Mathers LP\",\"hint\":\"2000\",\"correct\":[\"The Marshall Mathers LP\",\"Marshall Mathers LP\",\"MMLP\"]},{\"display\":\"The Eminem Show\",\"hint\":\"2002\",\"correct\":[\"The Eminem Show\",\"Eminem Show\"]},{\"display\":\"Encore\",\"hint\":\"2004\",\"correct\":[\"Encore\"]},{\"display\":\"Relapse\",\"hint\":\"2009\",\"correct\":[\"Relapse\"]},{\"display\":\"Recovery\",\"hint\":\"2010\",\"correct\":[\"Recovery\"]},{\"display\":\"The Marshall Mathers LP 2\",\"hint\":\"2013\",\"correct\":[\"The Marshall Mathers LP 2\",\"Marshall Mathers LP 2\",\"MMLP2\"]},{\"display\":\"Revival\",\"hint\":\"2017\",\"correct\":[\"Revival\"]},{\"display\":\"Kamikaze\",\"hint\":\"2018\",\"correct\":[\"Kamikaze\"]},{\"display\":\"Music to Be Murdered By\",\"hint\":\"2020\",\"correct\":[\"Music to Be Murdered By\",\"Music to Be Murdered\"]},{\"display\":\"The Death of Slim Shady\",\"hint\":\"2024\",\"correct\":[\"The Death of Slim Shady\",\"Death of Slim Shady\"]}]"
+  },
+  {
+    "id": "original-avengers-2012",
+    "date": "2026-05-07",
+    "title": "Original Avengers (2012 Film)",
+    "prompt": "Name the six Avengers who assembled in the 2012 film",
+    "totalCount": 6,
+    "answers": "[{\"display\":\"Iron Man\",\"hint\":\"Tony Stark\",\"correct\":[\"Iron Man\",\"Tony Stark\",\"Tony\"]},{\"display\":\"Captain America\",\"hint\":\"Steve Rogers\",\"correct\":[\"Captain America\",\"Steve Rogers\",\"Steve\",\"Cap\"]},{\"display\":\"Thor\",\"hint\":\"God of Thunder\",\"correct\":[\"Thor\"]},{\"display\":\"Hulk\",\"hint\":\"Bruce Banner\",\"correct\":[\"Hulk\",\"Bruce Banner\",\"Bruce\",\"The Hulk\"]},{\"display\":\"Black Widow\",\"hint\":\"Natasha Romanoff\",\"correct\":[\"Black Widow\",\"Natasha Romanoff\",\"Natasha\"]},{\"display\":\"Hawkeye\",\"hint\":\"Clint Barton\",\"correct\":[\"Hawkeye\",\"Clint Barton\",\"Clint\"]}]"
+  },
+  {
+    "id": "rihanna-albums",
+    "date": "2026-05-08",
+    "title": "Rihanna Studio Albums",
+    "prompt": "Name all Rihanna studio albums",
+    "totalCount": 8,
+    "answers": "[{\"display\":\"Music of the Sun\",\"hint\":\"2005\",\"correct\":[\"Music of the Sun\",\"music of the sun\"]},{\"display\":\"A Girl Like Me\",\"hint\":\"2006\",\"correct\":[\"A Girl Like Me\",\"Girl Like Me\"]},{\"display\":\"Good Girl Gone Bad\",\"hint\":\"2007\",\"correct\":[\"Good Girl Gone Bad\",\"good girl gone bad\",\"GGGB\"]},{\"display\":\"Rated R\",\"hint\":\"2009\",\"correct\":[\"Rated R\",\"rated r\"]},{\"display\":\"Loud\",\"hint\":\"2011\",\"correct\":[\"Loud\"]},{\"display\":\"Talk That Talk\",\"hint\":\"2011\",\"correct\":[\"Talk That Talk\",\"talk that talk\",\"TTT\"]},{\"display\":\"Unapologetic\",\"hint\":\"2012\",\"correct\":[\"Unapologetic\",\"unapologetic\"]},{\"display\":\"Anti\",\"hint\":\"2016\",\"correct\":[\"Anti\",\"anti\"]}]"
+  },
+  {
+    "id": "harry-potter-books",
+    "date": "2026-05-09",
+    "title": "Harry Potter Books",
+    "prompt": "Name all seven Harry Potter books",
+    "totalCount": 7,
+    "answers": "[{\"display\":\"Harry Potter and the Philosopher's Stone\",\"hint\":\"Book 1 - 1997\",\"correct\":[\"Harry Potter and the Philosopher's Stone\",\"Philosopher's Stone\",\"Sorcerer's Stone\",\"Philosopher Stone\"]},{\"display\":\"Harry Potter and the Chamber of Secrets\",\"hint\":\"Book 2 - 1998\",\"correct\":[\"Harry Potter and the Chamber of Secrets\",\"Chamber of Secrets\"]},{\"display\":\"Harry Potter and the Prisoner of Azkaban\",\"hint\":\"Book 3 - 1999\",\"correct\":[\"Harry Potter and the Prisoner of Azkaban\",\"Prisoner of Azkaban\"]},{\"display\":\"Harry Potter and the Goblet of Fire\",\"hint\":\"Book 4 - 2000\",\"correct\":[\"Harry Potter and the Goblet of Fire\",\"Goblet of Fire\"]},{\"display\":\"Harry Potter and the Order of the Phoenix\",\"hint\":\"Book 5 - 2003\",\"correct\":[\"Harry Potter and the Order of the Phoenix\",\"Order of the Phoenix\"]},{\"display\":\"Harry Potter and the Half-Blood Prince\",\"hint\":\"Book 6 - 2005\",\"correct\":[\"Harry Potter and the Half-Blood Prince\",\"Half-Blood Prince\",\"Half Blood Prince\"]},{\"display\":\"Harry Potter and the Deathly Hallows\",\"hint\":\"Book 7 - 2007\",\"correct\":[\"Harry Potter and the Deathly Hallows\",\"Deathly Hallows\"]}]"
+  },
+  {
+    "id": "adele-albums",
+    "date": "2026-05-10",
+    "title": "Adele Studio Albums",
+    "prompt": "Name all Adele studio albums",
+    "totalCount": 4,
+    "answers": "[{\"display\":\"19\",\"hint\":\"2008 - debut\",\"correct\":[\"19\",\"nineteen\"]},{\"display\":\"21\",\"hint\":\"2011 - global smash\",\"correct\":[\"21\",\"twenty-one\",\"twenty one\"]},{\"display\":\"25\",\"hint\":\"2015 - Hello era\",\"correct\":[\"25\",\"twenty-five\",\"twenty five\"]},{\"display\":\"30\",\"hint\":\"2021 - comeback\",\"correct\":[\"30\",\"thirty\"]}]"
+  },
+  {
+    "id": "james-bond-actors",
+    "date": "2026-05-11",
+    "title": "James Bond Actors (Official Films)",
+    "prompt": "Name every actor who has officially played James Bond in an EON Productions film",
+    "totalCount": 6,
+    "answers": "[{\"display\":\"Sean Connery\",\"hint\":\"1962-1967, 1971\",\"correct\":[\"Sean Connery\",\"Connery\"]},{\"display\":\"George Lazenby\",\"hint\":\"1969 - On Her Majesty's Secret Service\",\"correct\":[\"George Lazenby\",\"Lazenby\"]},{\"display\":\"Roger Moore\",\"hint\":\"1973-1985 - seven films\",\"correct\":[\"Roger Moore\",\"Moore\"]},{\"display\":\"Timothy Dalton\",\"hint\":\"1987-1989\",\"correct\":[\"Timothy Dalton\",\"Dalton\"]},{\"display\":\"Pierce Brosnan\",\"hint\":\"1995-2002\",\"correct\":[\"Pierce Brosnan\",\"Brosnan\"]},{\"display\":\"Daniel Craig\",\"hint\":\"2006-2021 - No Time to Die\",\"correct\":[\"Daniel Craig\",\"Craig\"]}]"
+  },
+  {
+    "id": "breaking-bad-characters",
+    "date": "2026-05-12",
+    "title": "Breaking Bad Main Characters",
+    "prompt": "Name the main characters from Breaking Bad",
+    "totalCount": 8,
+    "answers": "[{\"display\":\"Walter White\",\"hint\":\"chemistry teacher turned kingpin\",\"correct\":[\"Walter White\",\"Walt\",\"Heisenberg\",\"Walter\"]},{\"display\":\"Jesse Pinkman\",\"hint\":\"former student and partner\",\"correct\":[\"Jesse Pinkman\",\"Jesse\"]},{\"display\":\"Skyler White\",\"hint\":\"Walter's wife\",\"correct\":[\"Skyler White\",\"Skyler\"]},{\"display\":\"Hank Schrader\",\"hint\":\"DEA agent and Walter's brother-in-law\",\"correct\":[\"Hank Schrader\",\"Hank\"]},{\"display\":\"Marie Schrader\",\"hint\":\"Skyler's sister\",\"correct\":[\"Marie Schrader\",\"Marie\"]},{\"display\":\"Saul Goodman\",\"hint\":\"criminal lawyer\",\"correct\":[\"Saul Goodman\",\"Saul\",\"Jimmy McGill\"]},{\"display\":\"Gustavo Fring\",\"hint\":\"Pollos Hermanos boss\",\"correct\":[\"Gustavo Fring\",\"Gus Fring\",\"Gus\",\"Fring\"]},{\"display\":\"Mike Ehrmantraut\",\"hint\":\"fixer and enforcer\",\"correct\":[\"Mike Ehrmantraut\",\"Mike\"]}]"
+  },
+  {
+    "id": "mj-solo-albums",
+    "date": "2026-05-13",
+    "title": "Michael Jackson Solo Studio Albums",
+    "prompt": "Name all Michael Jackson solo studio albums",
+    "totalCount": 6,
+    "answers": "[{\"display\":\"Off the Wall\",\"hint\":\"1979\",\"correct\":[\"Off the Wall\",\"off the wall\"]},{\"display\":\"Thriller\",\"hint\":\"1982 - best-selling album ever\",\"correct\":[\"Thriller\"]},{\"display\":\"Bad\",\"hint\":\"1987\",\"correct\":[\"Bad\"]},{\"display\":\"Dangerous\",\"hint\":\"1991\",\"correct\":[\"Dangerous\"]},{\"display\":\"HIStory\",\"hint\":\"1995 - new songs on disc 2\",\"correct\":[\"HIStory\",\"History\",\"HIStory Past Present and Future\"]},{\"display\":\"Invincible\",\"hint\":\"2001 - final studio album\",\"correct\":[\"Invincible\"]}]"
+  },
+  {
+    "id": "bts-members",
+    "date": "2026-05-14",
+    "title": "BTS Members",
+    "prompt": "Name all seven members of BTS",
+    "totalCount": 7,
+    "answers": "[{\"display\":\"RM\",\"hint\":\"Kim Namjoon - leader\",\"correct\":[\"RM\",\"Kim Namjoon\",\"Namjoon\",\"Rap Monster\"]},{\"display\":\"Jin\",\"hint\":\"Kim Seokjin\",\"correct\":[\"Jin\",\"Kim Seokjin\",\"Seokjin\"]},{\"display\":\"Suga\",\"hint\":\"Min Yoongi\",\"correct\":[\"Suga\",\"Min Yoongi\",\"Yoongi\",\"Agust D\"]},{\"display\":\"J-Hope\",\"hint\":\"Jung Hoseok\",\"correct\":[\"J-Hope\",\"J Hope\",\"Jung Hoseok\",\"Hoseok\"]},{\"display\":\"Jimin\",\"hint\":\"Park Jimin\",\"correct\":[\"Jimin\",\"Park Jimin\"]},{\"display\":\"V\",\"hint\":\"Kim Taehyung\",\"correct\":[\"V\",\"Kim Taehyung\",\"Taehyung\"]},{\"display\":\"Jungkook\",\"hint\":\"Jeon Jungkook - maknae\",\"correct\":[\"Jungkook\",\"Jeon Jungkook\"]}]"
+  },
+  {
+    "id": "one-direction-members",
+    "date": "2026-05-15",
+    "title": "One Direction Members",
+    "prompt": "Name all five members of One Direction",
+    "totalCount": 5,
+    "answers": "[{\"display\":\"Harry Styles\",\"hint\":\"went solo - megastar\",\"correct\":[\"Harry Styles\",\"Harry\"]},{\"display\":\"Niall Horan\",\"hint\":\"Irish member\",\"correct\":[\"Niall Horan\",\"Niall\"]},{\"display\":\"Louis Tomlinson\",\"hint\":\"songwriter in the group\",\"correct\":[\"Louis Tomlinson\",\"Louis\"]},{\"display\":\"Liam Payne\",\"hint\":\"sang the high notes\",\"correct\":[\"Liam Payne\",\"Liam\"]},{\"display\":\"Zayn Malik\",\"hint\":\"left the group in 2015\",\"correct\":[\"Zayn Malik\",\"Zayn\",\"Malik\"]}]"
+  },
+  {
+    "id": "grammy-song-of-year-2015-2025",
+    "date": "2026-05-16",
+    "title": "Grammy Song of the Year (2015-2025)",
+    "prompt": "Name the Grammy Song of the Year winner - accept song title or artist",
+    "totalCount": 11,
+    "answers": "[{\"display\":\"Sam Smith - Stay With Me\",\"hint\":\"2015 - 57th Grammys\",\"correct\":[\"Stay With Me\",\"Sam Smith\"]},{\"display\":\"Ed Sheeran - Thinking Out Loud\",\"hint\":\"2016 - 58th Grammys\",\"correct\":[\"Thinking Out Loud\",\"Ed Sheeran\"]},{\"display\":\"Adele - Hello\",\"hint\":\"2017 - 59th Grammys\",\"correct\":[\"Hello\",\"Adele Hello\"]},{\"display\":\"Bruno Mars - That's What I Like\",\"hint\":\"2018 - 60th Grammys\",\"correct\":[\"That's What I Like\",\"Bruno Mars\"]},{\"display\":\"Childish Gambino - This Is America\",\"hint\":\"2019 - 61st Grammys\",\"correct\":[\"This Is America\",\"Childish Gambino\"]},{\"display\":\"Billie Eilish - Bad Guy\",\"hint\":\"2020 - 62nd Grammys\",\"correct\":[\"Bad Guy\",\"Billie Eilish Bad Guy\"]},{\"display\":\"H.E.R. - I Can't Breathe\",\"hint\":\"2021 - 63rd Grammys\",\"correct\":[\"I Can't Breathe\",\"HER\",\"H.E.R.\"]},{\"display\":\"Silk Sonic - Leave the Door Open\",\"hint\":\"2022 - 64th Grammys\",\"correct\":[\"Leave the Door Open\",\"Silk Sonic\",\"Bruno Mars Anderson Paak\"]},{\"display\":\"Bonnie Raitt - Just Like That\",\"hint\":\"2023 - 65th Grammys\",\"correct\":[\"Just Like That\",\"Bonnie Raitt\"]},{\"display\":\"Billie Eilish - What Was I Made For?\",\"hint\":\"2024 - 66th Grammys\",\"correct\":[\"What Was I Made For\",\"Billie Eilish What Was I Made For\"]},{\"display\":\"Kendrick Lamar - Not Like Us\",\"hint\":\"2025 - 67th Grammys\",\"correct\":[\"Not Like Us\",\"Kendrick Lamar Not Like Us\",\"Kendrick Lamar\"]}]"
+  },
+  {
+    "id": "ariana-grande-albums",
+    "date": "2026-05-17",
+    "title": "Ariana Grande Studio Albums",
+    "prompt": "Name all Ariana Grande studio albums",
+    "totalCount": 7,
+    "answers": "[{\"display\":\"Yours Truly\",\"hint\":\"2013 - debut\",\"correct\":[\"Yours Truly\",\"yours truly\"]},{\"display\":\"My Everything\",\"hint\":\"2014\",\"correct\":[\"My Everything\",\"my everything\"]},{\"display\":\"Dangerous Woman\",\"hint\":\"2016\",\"correct\":[\"Dangerous Woman\",\"dangerous woman\"]},{\"display\":\"Sweetener\",\"hint\":\"2018\",\"correct\":[\"Sweetener\"]},{\"display\":\"Thank U, Next\",\"hint\":\"2019\",\"correct\":[\"Thank U Next\",\"Thank U, Next\",\"thank u next\"]},{\"display\":\"Positions\",\"hint\":\"2020\",\"correct\":[\"Positions\"]},{\"display\":\"Eternal Sunshine\",\"hint\":\"2024\",\"correct\":[\"Eternal Sunshine\",\"eternal sunshine\"]}]"
+  },
+  {
+    "id": "oscar-best-picture-2016-2025",
+    "date": "2026-05-18",
+    "title": "Oscar Best Picture Winners (2016-2025)",
+    "prompt": "Name every Oscar Best Picture winner from 2016 to 2025",
+    "totalCount": 10,
+    "answers": "[{\"display\":\"Spotlight\",\"hint\":\"2016 - 88th Oscars\",\"correct\":[\"Spotlight\"]},{\"display\":\"Moonlight\",\"hint\":\"2017 - 89th Oscars\",\"correct\":[\"Moonlight\"]},{\"display\":\"The Shape of Water\",\"hint\":\"2018 - 90th Oscars\",\"correct\":[\"The Shape of Water\",\"Shape of Water\"]},{\"display\":\"Green Book\",\"hint\":\"2019 - 91st Oscars\",\"correct\":[\"Green Book\"]},{\"display\":\"Parasite\",\"hint\":\"2020 - 92nd Oscars\",\"correct\":[\"Parasite\"]},{\"display\":\"Nomadland\",\"hint\":\"2021 - 93rd Oscars\",\"correct\":[\"Nomadland\"]},{\"display\":\"CODA\",\"hint\":\"2022 - 94th Oscars\",\"correct\":[\"CODA\",\"Coda\"]},{\"display\":\"Everything Everywhere All at Once\",\"hint\":\"2023 - 95th Oscars\",\"correct\":[\"Everything Everywhere All at Once\",\"EEAAO\",\"Everything Everywhere\"]},{\"display\":\"Oppenheimer\",\"hint\":\"2024 - 96th Oscars\",\"correct\":[\"Oppenheimer\"]},{\"display\":\"Anora\",\"hint\":\"2025 - 97th Oscars\",\"correct\":[\"Anora\"]}]"
+  },
+  {
+    "id": "fast-furious-main-series",
+    "date": "2026-05-19",
+    "title": "Fast and Furious Main Series Films",
+    "prompt": "Name all 10 Fast and Furious numbered main series films",
+    "totalCount": 10,
+    "answers": "[{\"display\":\"The Fast and the Furious\",\"hint\":\"2001 - the original\",\"correct\":[\"The Fast and the Furious\",\"Fast and the Furious\",\"Fast Furious 1\",\"Fast and Furious 1\"]},{\"display\":\"2 Fast 2 Furious\",\"hint\":\"2003\",\"correct\":[\"2 Fast 2 Furious\",\"Two Fast Two Furious\"]},{\"display\":\"The Fast and the Furious: Tokyo Drift\",\"hint\":\"2006\",\"correct\":[\"Tokyo Drift\",\"Fast and Furious Tokyo Drift\",\"The Fast and the Furious Tokyo Drift\"]},{\"display\":\"Fast and Furious\",\"hint\":\"2009 - team reunites\",\"correct\":[\"Fast and Furious\",\"Fast Furious 4\",\"Fast and Furious 4\"]},{\"display\":\"Fast Five\",\"hint\":\"2011\",\"correct\":[\"Fast Five\",\"Fast 5\"]},{\"display\":\"Fast and Furious 6\",\"hint\":\"2013\",\"correct\":[\"Fast and Furious 6\",\"Furious 6\",\"Fast Six\",\"Fast Furious 6\"]},{\"display\":\"Furious 7\",\"hint\":\"2015 - Paul Walker tribute\",\"correct\":[\"Furious 7\",\"Fast and Furious 7\",\"Furious Seven\",\"Fast 7\"]},{\"display\":\"The Fate of the Furious\",\"hint\":\"2017 - F8\",\"correct\":[\"The Fate of the Furious\",\"Fate of the Furious\",\"F8\",\"Fast 8\"]},{\"display\":\"F9\",\"hint\":\"2021\",\"correct\":[\"F9\",\"Fast 9\",\"Fast and Furious 9\"]},{\"display\":\"Fast X\",\"hint\":\"2023\",\"correct\":[\"Fast X\",\"Fast 10\",\"Fast and Furious 10\"]}]"
+  },
+  {
+    "id": "friends-characters-full",
+    "date": "2026-05-20",
+    "title": "Friends Main Characters (Full Names)",
+    "prompt": "Name the six main characters from Friends - first and last name",
+    "totalCount": 6,
+    "answers": "[{\"display\":\"Rachel Green\",\"hint\":\"the fashionable one\",\"correct\":[\"Rachel Green\",\"Rachel\"]},{\"display\":\"Monica Geller\",\"hint\":\"the chef and neat freak\",\"correct\":[\"Monica Geller\",\"Monica\"]},{\"display\":\"Phoebe Buffay\",\"hint\":\"the quirky singer\",\"correct\":[\"Phoebe Buffay\",\"Phoebe\"]},{\"display\":\"Joey Tribbiani\",\"hint\":\"the actor\",\"correct\":[\"Joey Tribbiani\",\"Joey\"]},{\"display\":\"Chandler Bing\",\"hint\":\"could he BE any more sarcastic?\",\"correct\":[\"Chandler Bing\",\"Chandler\"]},{\"display\":\"Ross Geller\",\"hint\":\"the paleontologist\",\"correct\":[\"Ross Geller\",\"Ross\"]}]"
+  },
+  {
+    "id": "billie-eilish-albums",
+    "date": "2026-05-21",
+    "title": "Billie Eilish Studio Albums",
+    "prompt": "Name all Billie Eilish studio albums",
+    "totalCount": 3,
+    "answers": "[{\"display\":\"When We All Fall Asleep, Where Do We Go?\",\"hint\":\"2019 - debut\",\"correct\":[\"When We All Fall Asleep Where Do We Go\",\"When We All Fall Asleep\",\"WWAFAWDWG\"]},{\"display\":\"Happier Than Ever\",\"hint\":\"2021\",\"correct\":[\"Happier Than Ever\",\"happier than ever\"]},{\"display\":\"Hit Me Hard and Soft\",\"hint\":\"2024\",\"correct\":[\"Hit Me Hard and Soft\",\"hit me hard and soft\",\"HMHAS\"]}]"
+  },
+  {
+    "id": "spider-man-film-actors",
+    "date": "2026-05-22",
+    "title": "Live-Action Spider-Man Film Actors",
+    "prompt": "Name the three actors who have played Spider-Man in major live-action film series",
+    "totalCount": 3,
+    "answers": "[{\"display\":\"Tobey Maguire\",\"hint\":\"2002-2007 - Sam Raimi trilogy\",\"correct\":[\"Tobey Maguire\",\"Tobey\",\"Maguire\"]},{\"display\":\"Andrew Garfield\",\"hint\":\"2012-2014 - The Amazing Spider-Man\",\"correct\":[\"Andrew Garfield\",\"Andrew\",\"Garfield\"]},{\"display\":\"Tom Holland\",\"hint\":\"2016-present - MCU Spider-Man\",\"correct\":[\"Tom Holland\",\"Tom\",\"Holland\"]}]"
+  },
+  {
+    "id": "simpsons-family",
+    "date": "2026-05-23",
+    "title": "The Simpsons Nuclear Family",
+    "prompt": "Name all five members of the Simpson family",
+    "totalCount": 5,
+    "answers": "[{\"display\":\"Homer Simpson\",\"hint\":\"D'oh!\",\"correct\":[\"Homer Simpson\",\"Homer\"]},{\"display\":\"Marge Simpson\",\"hint\":\"the blue-haired mom\",\"correct\":[\"Marge Simpson\",\"Marge\"]},{\"display\":\"Bart Simpson\",\"hint\":\"Eat my shorts!\",\"correct\":[\"Bart Simpson\",\"Bart\"]},{\"display\":\"Lisa Simpson\",\"hint\":\"jazz-loving overachiever\",\"correct\":[\"Lisa Simpson\",\"Lisa\"]},{\"display\":\"Maggie Simpson\",\"hint\":\"the baby\",\"correct\":[\"Maggie Simpson\",\"Maggie\"]}]"
+  },
+  {
+    "id": "harry-styles-albums",
+    "date": "2026-05-24",
+    "title": "Harry Styles Solo Studio Albums",
+    "prompt": "Name all Harry Styles solo studio albums",
+    "totalCount": 3,
+    "answers": "[{\"display\":\"Harry Styles\",\"hint\":\"2017 - debut\",\"correct\":[\"Harry Styles\",\"self titled\",\"Harry Styles debut\"]},{\"display\":\"Fine Line\",\"hint\":\"2019\",\"correct\":[\"Fine Line\",\"fine line\"]},{\"display\":\"Harry's House\",\"hint\":\"2022\",\"correct\":[\"Harry's House\",\"Harrys House\"]}]"
+  },
+  {
+    "id": "coldplay-albums",
+    "date": "2026-05-25",
+    "title": "Coldplay Studio Albums",
+    "prompt": "Name all Coldplay studio albums",
+    "totalCount": 10,
+    "answers": "[{\"display\":\"Parachutes\",\"hint\":\"2000 - debut\",\"correct\":[\"Parachutes\"]},{\"display\":\"A Rush of Blood to the Head\",\"hint\":\"2002\",\"correct\":[\"A Rush of Blood to the Head\",\"Rush of Blood to the Head\",\"Rush of Blood\"]},{\"display\":\"X&Y\",\"hint\":\"2005\",\"correct\":[\"X&Y\",\"X and Y\"]},{\"display\":\"Viva la Vida or Death and All His Friends\",\"hint\":\"2008\",\"correct\":[\"Viva la Vida\",\"Viva la Vida or Death and All His Friends\"]},{\"display\":\"Mylo Xyloto\",\"hint\":\"2011\",\"correct\":[\"Mylo Xyloto\"]},{\"display\":\"Ghost Stories\",\"hint\":\"2014\",\"correct\":[\"Ghost Stories\"]},{\"display\":\"A Head Full of Dreams\",\"hint\":\"2015\",\"correct\":[\"A Head Full of Dreams\",\"Head Full of Dreams\"]},{\"display\":\"Everyday Life\",\"hint\":\"2019\",\"correct\":[\"Everyday Life\",\"everyday life\"]},{\"display\":\"Music of the Spheres\",\"hint\":\"2021\",\"correct\":[\"Music of the Spheres\"]},{\"display\":\"Moon Music\",\"hint\":\"2024\",\"correct\":[\"Moon Music\",\"moon music\"]}]"
+  },
+  {
+    "id": "hunger-games-books",
+    "date": "2026-05-26",
+    "title": "The Hunger Games Book Series",
+    "prompt": "Name all four books in the Hunger Games series (including the prequel)",
+    "totalCount": 4,
+    "answers": "[{\"display\":\"The Hunger Games\",\"hint\":\"2008 - Katniss enters the Games\",\"correct\":[\"The Hunger Games\",\"Hunger Games\"]},{\"display\":\"Catching Fire\",\"hint\":\"2009 - Quarter Quell\",\"correct\":[\"Catching Fire\",\"catching fire\"]},{\"display\":\"Mockingjay\",\"hint\":\"2010 - the rebellion\",\"correct\":[\"Mockingjay\",\"mocking jay\"]},{\"display\":\"The Ballad of Songbirds and Snakes\",\"hint\":\"2020 - young Snow prequel\",\"correct\":[\"The Ballad of Songbirds and Snakes\",\"Ballad of Songbirds and Snakes\",\"Ballad of Songbirds\"]}]"
+  },
+  {
+    "id": "star-wars-skywalker-saga",
+    "date": "2026-05-27",
+    "title": "Star Wars Skywalker Saga Films",
+    "prompt": "Name all nine Star Wars Skywalker Saga films (Episodes I-IX)",
+    "totalCount": 9,
+    "answers": "[{\"display\":\"The Phantom Menace\",\"hint\":\"Episode I - 1999\",\"correct\":[\"The Phantom Menace\",\"Phantom Menace\",\"Episode 1\"]},{\"display\":\"Attack of the Clones\",\"hint\":\"Episode II - 2002\",\"correct\":[\"Attack of the Clones\",\"Episode 2\"]},{\"display\":\"Revenge of the Sith\",\"hint\":\"Episode III - 2005\",\"correct\":[\"Revenge of the Sith\",\"Episode 3\",\"Sith\"]},{\"display\":\"A New Hope\",\"hint\":\"Episode IV - 1977\",\"correct\":[\"A New Hope\",\"New Hope\",\"Star Wars\",\"Episode 4\"]},{\"display\":\"The Empire Strikes Back\",\"hint\":\"Episode V - 1980\",\"correct\":[\"The Empire Strikes Back\",\"Empire Strikes Back\",\"Empire\",\"Episode 5\"]},{\"display\":\"Return of the Jedi\",\"hint\":\"Episode VI - 1983\",\"correct\":[\"Return of the Jedi\",\"Jedi\",\"Episode 6\"]},{\"display\":\"The Force Awakens\",\"hint\":\"Episode VII - 2015\",\"correct\":[\"The Force Awakens\",\"Force Awakens\",\"Episode 7\"]},{\"display\":\"The Last Jedi\",\"hint\":\"Episode VIII - 2017\",\"correct\":[\"The Last Jedi\",\"Last Jedi\",\"Episode 8\"]},{\"display\":\"The Rise of Skywalker\",\"hint\":\"Episode IX - 2019\",\"correct\":[\"The Rise of Skywalker\",\"Rise of Skywalker\",\"Episode 9\"]}]"
+  },
+  {
+    "id": "afc-east-teams",
+    "date": "2026-05-28",
+    "title": "NFL AFC East Division Teams",
+    "prompt": "Name all four teams in the NFL AFC East division",
+    "totalCount": 4,
+    "answers": "[{\"display\":\"Buffalo Bills\",\"hint\":\"New York state\",\"correct\":[\"Buffalo Bills\",\"Bills\",\"Buffalo\"]},{\"display\":\"Miami Dolphins\",\"hint\":\"Florida\",\"correct\":[\"Miami Dolphins\",\"Dolphins\",\"Miami\"]},{\"display\":\"New England Patriots\",\"hint\":\"Massachusetts\",\"correct\":[\"New England Patriots\",\"Patriots\",\"Pats\",\"New England\"]},{\"display\":\"New York Jets\",\"hint\":\"based in New Jersey\",\"correct\":[\"New York Jets\",\"Jets\",\"NY Jets\"]}]"
+  },
+  {
+    "id": "stranger-things-s1-cast",
+    "date": "2026-05-29",
+    "title": "Stranger Things Season 1 Main Characters",
+    "prompt": "Name the main characters from Stranger Things Season 1",
+    "totalCount": 10,
+    "answers": "[{\"display\":\"Mike Wheeler\",\"hint\":\"the leader of the group\",\"correct\":[\"Mike Wheeler\",\"Mike\"]},{\"display\":\"Eleven\",\"hint\":\"girl with telekinetic powers\",\"correct\":[\"Eleven\",\"El\",\"011\"]},{\"display\":\"Dustin Henderson\",\"hint\":\"the science kid\",\"correct\":[\"Dustin Henderson\",\"Dustin\"]},{\"display\":\"Lucas Sinclair\",\"hint\":\"the pragmatist\",\"correct\":[\"Lucas Sinclair\",\"Lucas\"]},{\"display\":\"Will Byers\",\"hint\":\"disappeared into the Upside Down\",\"correct\":[\"Will Byers\",\"Will\"]},{\"display\":\"Joyce Byers\",\"hint\":\"Will's mom / Christmas lights\",\"correct\":[\"Joyce Byers\",\"Joyce\"]},{\"display\":\"Jim Hopper\",\"hint\":\"police chief\",\"correct\":[\"Jim Hopper\",\"Hopper\",\"Chief Hopper\"]},{\"display\":\"Nancy Wheeler\",\"hint\":\"Mike's older sister\",\"correct\":[\"Nancy Wheeler\",\"Nancy\"]},{\"display\":\"Jonathan Byers\",\"hint\":\"Will's older brother / photographer\",\"correct\":[\"Jonathan Byers\",\"Jonathan\"]},{\"display\":\"Steve Harrington\",\"hint\":\"the cool jock who grows\",\"correct\":[\"Steve Harrington\",\"Steve\"]}]"
+  },
+  {
+    "id": "mean-girls-characters",
+    "date": "2026-05-30",
+    "title": "Mean Girls Main Characters",
+    "prompt": "Name the five main characters from Mean Girls (2004)",
+    "totalCount": 5,
+    "answers": "[{\"display\":\"Cady Heron\",\"hint\":\"the new girl from Africa\",\"correct\":[\"Cady Heron\",\"Cady\",\"Katy Heron\"]},{\"display\":\"Regina George\",\"hint\":\"Queen Bee of the Plastics\",\"correct\":[\"Regina George\",\"Regina\"]},{\"display\":\"Gretchen Wieners\",\"hint\":\"her dad invented toaster strudel\",\"correct\":[\"Gretchen Wieners\",\"Gretchen\"]},{\"display\":\"Karen Smith\",\"hint\":\"I'm kind of psychic\",\"correct\":[\"Karen Smith\",\"Karen\"]},{\"display\":\"Janis Ian\",\"hint\":\"Cady's first real friend\",\"correct\":[\"Janis Ian\",\"Janis\"]}]"
+  },
+  {
+    "id": "f1-champions-2010-2024",
+    "date": "2026-05-31",
+    "title": "F1 World Champions (Unique, 2010-2024)",
+    "prompt": "Name every unique Formula 1 World Champion from 2010 to 2024",
+    "totalCount": 4,
+    "answers": "[{\"display\":\"Sebastian Vettel\",\"hint\":\"4x champion - 2010-2013\",\"correct\":[\"Sebastian Vettel\",\"Vettel\",\"Seb Vettel\"]},{\"display\":\"Lewis Hamilton\",\"hint\":\"7x champion - 2014-2015, 2017-2020\",\"correct\":[\"Lewis Hamilton\",\"Hamilton\"]},{\"display\":\"Nico Rosberg\",\"hint\":\"champion in 2016 then retired\",\"correct\":[\"Nico Rosberg\",\"Rosberg\"]},{\"display\":\"Max Verstappen\",\"hint\":\"4x champion - 2021-2024\",\"correct\":[\"Max Verstappen\",\"Verstappen\",\"Max\"]}]"
+  },
+  {
+    "id": "grammy-record-of-year-2019-2025",
+    "date": "2026-06-01",
+    "title": "Grammy Record of the Year (2019-2025)",
+    "prompt": "Name the Grammy Record of the Year winner - accept song title or artist",
+    "totalCount": 7,
+    "answers": "[{\"display\":\"Childish Gambino - This Is America\",\"hint\":\"2019 - 61st Grammys\",\"correct\":[\"This Is America\",\"Childish Gambino\"]},{\"display\":\"Billie Eilish - Bad Guy\",\"hint\":\"2020 - 62nd Grammys\",\"correct\":[\"Bad Guy\",\"Billie Eilish Bad Guy\"]},{\"display\":\"Billie Eilish - Everything I Wanted\",\"hint\":\"2021 - 63rd Grammys\",\"correct\":[\"Everything I Wanted\",\"Billie Eilish Everything I Wanted\"]},{\"display\":\"ABBA - I Still Have Faith in You\",\"hint\":\"2022 - 64th Grammys\",\"correct\":[\"I Still Have Faith in You\",\"ABBA I Still Have Faith\",\"ABBA\"]},{\"display\":\"Lizzo - About Damn Time\",\"hint\":\"2023 - 65th Grammys\",\"correct\":[\"About Damn Time\",\"Lizzo About Damn Time\",\"Lizzo\"]},{\"display\":\"Miley Cyrus - Flowers\",\"hint\":\"2024 - 66th Grammys\",\"correct\":[\"Flowers\",\"Miley Cyrus Flowers\",\"Miley Cyrus\"]},{\"display\":\"Kendrick Lamar - Not Like Us\",\"hint\":\"2025 - 67th Grammys\",\"correct\":[\"Not Like Us\",\"Kendrick Lamar Not Like Us\",\"Kendrick Lamar\"]}]"
   }
 ]
