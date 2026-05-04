@@ -161,9 +161,13 @@ if (emptyAlts.length > 0) {
 // Five pre-existing baseline entries (ana-de-armas, rainn-wilson, colin-farrell,
 // gal-gadot, gordon-ramsay) were already thin before this task — exempt them.
 console.log("\n[6] Category count per entry (new entries only)");
-const baselineIds = new Set(
-  JSON.parse(readFileSync(join(DATA_DIR, "pop-box-baseline-ids.json"), "utf-8"))
-);
+const baselineIds = new Set([
+  "ana-de-armas",
+  "rainn-wilson",
+  "colin-farrell",
+  "gal-gadot",
+  "gordon-ramsay",
+]);
 const thin = celebrities.filter(
   (c) =>
     (!c.categories || c.categories.length < 2) && !baselineIds.has(c.id)
@@ -360,8 +364,7 @@ if (badFlags.length > 0) {
 
 
 // ── 13. Factual tag sanity checks ─────────────────────────────────────────
-console.log("
-[13] Factual tag sanity checks");
+console.log("\n[13] Factual tag sanity checks");
 const factualIssues = [];
 for (const c of celebrities) {
   const banned = FACTUAL_DENYLIST[c.id] || [];
