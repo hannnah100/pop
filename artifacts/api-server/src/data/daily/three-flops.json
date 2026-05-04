@@ -53,7 +53,7 @@
     "title": "Super Bowl Champions (2000–2026)",
     "prompt": "Name every Super Bowl winning team since 2000",
     "totalCount": 27,
-    "answers": "[{\"display\":\"St. Louis Rams\",\"hint\":\"2000 • XXXIV\",\"correct\":[\"St. Louis Rams\",\"Rams\",\"Los Angeles Rams\"]},{\"display\":\"Baltimore Ravens\",\"hint\":\"2001 • XXXV\",\"correct\":[\"Baltimore Ravens\",\"Ravens\"]},{\"display\":\"New England Patriots\",\"hint\":\"2002 • XXXVI\",\"correct\":[\"New England Patriots\",\"Patriots\",\"Pats\"]},{\"display\":\"Tampa Bay Buccaneers\",\"hint\":\"2003 • XXXVII\",\"correct\":[\"Tampa Bay Buccaneers\",\"Buccaneers\",\"Bucs\",\"Tampa Bay\"]},{\"display\":\"New England Patriots\",\"hint\":\"2004 • XXXVIII\",\"correct\":[\"New England Patriots\",\"Patriots\",\"Pats\"]},{\"display\":\"New England Patriots\",\"hint\":\"2005 • XXXIX\",\"correct\":[\"New England Patriots\",\"Patriots\",\"Pats\"]},{\"display\":\"Pittsburgh Steelers\",\"hint\":\"2006 • XL\",\"correct\":[\"Pittsburgh Steelers\",\"Steelers\",\"Pittsburgh\"]},{\"display\":\"Indianapolis Colts\",\"hint\":\"2007 • XLI\",\"correct\":[\"Indianapolis Colts\",\"Colts\",\"Indianapolis\"]},{\"display\":\"New York Giants\",\"hint\":\"2008 • XLII\",\"correct\":[\"New York Giants\",\"Giants\",\"NY Giants\"]},{\"display\":\"Pittsburgh Steelers\",\"hint\":\"2009 • XLIII\",\"correct\":[\"Pittsburgh Steelers\",\"Steelers\",\"Pittsburgh\"]},{\"display\":\"New Orleans Saints\",\"hint\":\"2010 • XLIV\",\"correct\":[\"New Orleans Saints\",\"Saints\",\"New Orleans\"]},{\"display\":\"Green Bay Packers\",\"hint\":\"2011 • XLV\",\"correct\":[\"Green Bay Packers\",\"Packers\",\"Green Bay\"]},{\"display\":\"New York Giants\",\"hint\":\"2012 • XLVI\",\"correct\":[\"New York Giants\",\"Giants\",\"NY Giants\"]},{\"display\":\"Baltimore Ravens\",\"hint\":\"2013 • XLVII\",\"correct\":[\"Baltimore Ravens\",\"Ravens\"]},{\"display\":\"Seattle Seahawks\",\"hint\":\"2014 • XLVIII\",\"correct\":[\"Seattle Seahawks\",\"Seahawks\",\"Seattle\"]},{\"display\":\"New England Patriots\",\"hint\":\"2015 • XLIX\",\"correct\":[\"New England Patriots\",\"Patriots\",\"Pats\"]},{\"display\":\"Denver Broncos\",\"hint\":\"2016 • 50\",\"correct\":[\"Denver Broncos\",\"Broncos\",\"Denver\"]},{\"display\":\"New England Patriots\",\"hint\":\"2017 • LI\",\"correct\":[\"New England Patriots\",\"Patriots\",\"Pats\"]},{\"display\":\"Philadelphia Eagles\",\"hint\":\"2018 • LII\",\"correct\":[\"Philadelphia Eagles\",\"Eagles\",\"Philadelphia\"]},{\"display\":\"New England Patriots\",\"hint\":\"2019 • LIII\",\"correct\":[\"New England Patriots\",\"Patriots\",\"Pats\"]},{\"display\":\"Kansas City Chiefs\",\"hint\":\"2020 • LIV\",\"correct\":[\"Kansas City Chiefs\",\"Chiefs\",\"Kansas City\"]},{\"display\":\"Tampa Bay Buccaneers\",\"hint\":\"2021 • LV\",\"correct\":[\"Tampa Bay Buccaneers\",\"Buccaneers\",\"Bucs\",\"Tampa Bay\"]},{\"display\":\"Los Angeles Rams\",\"hint\":\"2022 • LVI\",\"correct\":[\"Los Angeles Rams\",\"Rams\",\"LA Rams\"]},{\"display\":\"Kansas City Chiefs\",\"hint\":\"2023 • LVII\",\"correct\":[\"Kansas City Chiefs\",\"Chiefs\",\"Kansas City\"]},{\"display\":\"Kansas City Chiefs\",\"hint\":\"2024 • LVIII\",\"correct\":[\"Kansas City Chiefs\",\"Chiefs\",\"Kansas City\"]},{\"display\":\"Philadelphia Eagles\",\"hint\":\"2025 • LIX\",\"correct\":[\"Philadelphia Eagles\",\"Eagles\",\"Philadelphia\"]},{\"display\":\"Kansas City Chiefs\",\"hint\":\"2026 • LX\",\"correct\":[\"Kansas City Chiefs\",\"Chiefs\",\"Kansas City\"]}]"
+    "answers": "[{\"display\":\"St. Louis Rams\",\"hint\":\"2000\",\"correct\":[\"St. Louis Rams\",\"Rams\",\"Los Angeles Rams\"]},{\"display\":\"Baltimore Ravens\",\"hint\":\"2001\",\"correct\":[\"Baltimore Ravens\",\"Ravens\"]},{\"display\":\"New England Patriots\",\"hint\":\"2002\",\"correct\":[\"New England Patriots\",\"Patriots\",\"Pats\"]},{\"display\":\"Tampa Bay Buccaneers\",\"hint\":\"2003\",\"correct\":[\"Tampa Bay Buccaneers\",\"Buccaneers\",\"Bucs\",\"Tampa Bay\"]},{\"display\":\"New England Patriots\",\"hint\":\"2004\",\"correct\":[\"New England Patriots\",\"Patriots\",\"Pats\"]},{\"display\":\"New England Patriots\",\"hint\":\"2005\",\"correct\":[\"New England Patriots\",\"Patriots\",\"Pats\"]},{\"display\":\"Pittsburgh Steelers\",\"hint\":\"2006\",\"correct\":[\"Pittsburgh Steelers\",\"Steelers\",\"Pittsburgh\"]},{\"display\":\"Indianapolis Colts\",\"hint\":\"2007\",\"correct\":[\"Indianapolis Colts\",\"Colts\",\"Indianapolis\"]},{\"display\":\"New York Giants\",\"hint\":\"2008\",\"correct\":[\"New York Giants\",\"Giants\",\"NY Giants\"]},{\"display\":\"Pittsburgh Steelers\",\"hint\":\"2009\",\"correct\":[\"Pittsburgh Steelers\",\"Steelers\",\"Pittsburgh\"]},{\"display\":\"New Orleans Saints\",\"hint\":\"2010\",\"correct\":[\"New Orleans Saints\",\"Saints\",\"New Orleans\"]},{\"display\":\"Green Bay Packers\",\"hint\":\"2011\",\"correct\":[\"Green Bay Packers\",\"Packers\",\"Green Bay\"]},{\"display\":\"New York Giants\",\"hint\":\"2012\",\"correct\":[\"New York Giants\",\"Giants\",\"NY Giants\"]},{\"display\":\"Baltimore Ravens\",\"hint\":\"2013\",\"correct\":[\"Baltimore Ravens\",\"Ravens\"]},{\"display\":\"Seattle Seahawks\",\"hint\":\"2014\",\"correct\":[\"Seattle Seahawks\",\"Seahawks\",\"Seattle\"]},{\"display\":\"New England Patriots\",\"hint\":\"2015\",\"correct\":[\"New England Patriots\",\"Patriots\",\"Pats\"]},{\"display\":\"Denver Broncos\",\"hint\":\"2016\",\"correct\":[\"Denver Broncos\",\"Broncos\",\"Denver\"]},{\"display\":\"New England Patriots\",\"hint\":\"2017\",\"correct\":[\"New England Patriots\",\"Patriots\",\"Pats\"]},{\"display\":\"Philadelphia Eagles\",\"hint\":\"2018\",\"correct\":[\"Philadelphia Eagles\",\"Eagles\",\"Philadelphia\"]},{\"display\":\"New England Patriots\",\"hint\":\"2019\",\"correct\":[\"New England Patriots\",\"Patriots\",\"Pats\"]},{\"display\":\"Kansas City Chiefs\",\"hint\":\"2020\",\"correct\":[\"Kansas City Chiefs\",\"Chiefs\",\"Kansas City\"]},{\"display\":\"Tampa Bay Buccaneers\",\"hint\":\"2021\",\"correct\":[\"Tampa Bay Buccaneers\",\"Buccaneers\",\"Bucs\",\"Tampa Bay\"]},{\"display\":\"Los Angeles Rams\",\"hint\":\"2022\",\"correct\":[\"Los Angeles Rams\",\"Rams\",\"LA Rams\"]},{\"display\":\"Kansas City Chiefs\",\"hint\":\"2023\",\"correct\":[\"Kansas City Chiefs\",\"Chiefs\",\"Kansas City\"]},{\"display\":\"Kansas City Chiefs\",\"hint\":\"2024\",\"correct\":[\"Kansas City Chiefs\",\"Chiefs\",\"Kansas City\"]},{\"display\":\"Philadelphia Eagles\",\"hint\":\"2025\",\"correct\":[\"Philadelphia Eagles\",\"Eagles\",\"Philadelphia\"]},{\"display\":\"Kansas City Chiefs\",\"hint\":\"2026\",\"correct\":[\"Kansas City Chiefs\",\"Chiefs\",\"Kansas City\"]}]"
   },
   {
     "id": "drake-albums",
@@ -101,7 +101,7 @@
     "title": "The Office (US) Main Cast",
     "prompt": "Name the main characters from The Office (US)",
     "totalCount": 9,
-    "answers": "[{\"display\":\"Michael Scott\",\"hint\":\"Regional Manager\",\"correct\":[\"Michael Scott\",\"Michael\",\"Scott\"]},{\"display\":\"Dwight Schrute\",\"hint\":\"Assistant to the Regional Manager\",\"correct\":[\"Dwight Schrute\",\"Dwight\",\"Schrute\"]},{\"display\":\"Jim Halpert\",\"hint\":\"Sales Rep / prankster\",\"correct\":[\"Jim Halpert\",\"Jim\",\"Halpert\"]},{\"display\":\"Pam Beesly\",\"hint\":\"Receptionist / artist\",\"correct\":[\"Pam Beesly\",\"Pam Halpert\",\"Pam\",\"Beesly\"]},{\"display\":\"Ryan Howard\",\"hint\":\"Temp-turned-VP\",\"correct\":[\"Ryan Howard\",\"Ryan\"]},{\"display\":\"Andy Bernard\",\"hint\":\"Cornell grad / singer\",\"correct\":[\"Andy Bernard\",\"Andy\",\"Bernard\"]},{\"display\":\"Angela Martin\",\"hint\":\"Head of accounting / cat lover\",\"correct\":[\"Angela Martin\",\"Angela\"]},{\"display\":\"Kevin Malone\",\"hint\":\"Accountant / chili fanatic\",\"correct\":[\"Kevin Malone\",\"Kevin\"]},{\"display\":\"Oscar Martinez\",\"hint\":\"Accountant / the sensible one\",\"correct\":[\"Oscar Martinez\",\"Oscar\"]}]"
+    "answers": "[{\"display\":\"Michael Scott\",\"hint\":\"\",\"correct\":[\"Michael Scott\",\"Michael\",\"Scott\"]},{\"display\":\"Dwight Schrute\",\"hint\":\"\",\"correct\":[\"Dwight Schrute\",\"Dwight\",\"Schrute\"]},{\"display\":\"Jim Halpert\",\"hint\":\"\",\"correct\":[\"Jim Halpert\",\"Jim\",\"Halpert\"]},{\"display\":\"Pam Beesly\",\"hint\":\"\",\"correct\":[\"Pam Beesly\",\"Pam Halpert\",\"Pam\",\"Beesly\"]},{\"display\":\"Ryan Howard\",\"hint\":\"\",\"correct\":[\"Ryan Howard\",\"Ryan\"]},{\"display\":\"Andy Bernard\",\"hint\":\"\",\"correct\":[\"Andy Bernard\",\"Andy\",\"Bernard\"]},{\"display\":\"Angela Martin\",\"hint\":\"\",\"correct\":[\"Angela Martin\",\"Angela\"]},{\"display\":\"Kevin Malone\",\"hint\":\"\",\"correct\":[\"Kevin Malone\",\"Kevin\"]},{\"display\":\"Oscar Martinez\",\"hint\":\"\",\"correct\":[\"Oscar Martinez\",\"Oscar\"]}]"
   },
   {
     "id": "lady-gaga-albums",
@@ -117,7 +117,7 @@
     "title": "Summer Olympics Host Cities (2000-2024)",
     "prompt": "Name every Summer Olympics host city from 2000 to 2024",
     "totalCount": 7,
-    "answers": "[{\"display\":\"Sydney\",\"hint\":\"2000 - Australia\",\"correct\":[\"Sydney\"]},{\"display\":\"Athens\",\"hint\":\"2004 - Greece\",\"correct\":[\"Athens\"]},{\"display\":\"Beijing\",\"hint\":\"2008 - China\",\"correct\":[\"Beijing\",\"Peking\"]},{\"display\":\"London\",\"hint\":\"2012 - United Kingdom\",\"correct\":[\"London\"]},{\"display\":\"Rio de Janeiro\",\"hint\":\"2016 - Brazil\",\"correct\":[\"Rio de Janeiro\",\"Rio\"]},{\"display\":\"Tokyo\",\"hint\":\"2020/2021 - Japan\",\"correct\":[\"Tokyo\"]},{\"display\":\"Paris\",\"hint\":\"2024 - France\",\"correct\":[\"Paris\"]}]"
+    "answers": "[{\"display\":\"Sydney\",\"hint\":\"2000\",\"correct\":[\"Sydney\"]},{\"display\":\"Athens\",\"hint\":\"2004\",\"correct\":[\"Athens\"]},{\"display\":\"Beijing\",\"hint\":\"2008\",\"correct\":[\"Beijing\",\"Peking\"]},{\"display\":\"London\",\"hint\":\"2012\",\"correct\":[\"London\"]},{\"display\":\"Rio de Janeiro\",\"hint\":\"2016\",\"correct\":[\"Rio de Janeiro\",\"Rio\"]},{\"display\":\"Tokyo\",\"hint\":\"2020\",\"correct\":[\"Tokyo\"]},{\"display\":\"Paris\",\"hint\":\"2024\",\"correct\":[\"Paris\"]}]"
   },
   {
     "id": "eminem-albums",
@@ -133,7 +133,7 @@
     "title": "Original Avengers (2012 Film)",
     "prompt": "Name the six Avengers who assembled in the 2012 film",
     "totalCount": 6,
-    "answers": "[{\"display\":\"Iron Man\",\"hint\":\"Tony Stark\",\"correct\":[\"Iron Man\",\"Tony Stark\",\"Tony\"]},{\"display\":\"Captain America\",\"hint\":\"Steve Rogers\",\"correct\":[\"Captain America\",\"Steve Rogers\",\"Steve\",\"Cap\"]},{\"display\":\"Thor\",\"hint\":\"God of Thunder\",\"correct\":[\"Thor\"]},{\"display\":\"Hulk\",\"hint\":\"Bruce Banner\",\"correct\":[\"Hulk\",\"Bruce Banner\",\"Bruce\",\"The Hulk\"]},{\"display\":\"Black Widow\",\"hint\":\"Natasha Romanoff\",\"correct\":[\"Black Widow\",\"Natasha Romanoff\",\"Natasha\"]},{\"display\":\"Hawkeye\",\"hint\":\"Clint Barton\",\"correct\":[\"Hawkeye\",\"Clint Barton\",\"Clint\"]}]"
+    "answers": "[{\"display\":\"Iron Man\",\"hint\":\"\",\"correct\":[\"Iron Man\",\"Tony Stark\",\"Tony\"]},{\"display\":\"Captain America\",\"hint\":\"\",\"correct\":[\"Captain America\",\"Steve Rogers\",\"Steve\",\"Cap\"]},{\"display\":\"Thor\",\"hint\":\"\",\"correct\":[\"Thor\"]},{\"display\":\"Hulk\",\"hint\":\"\",\"correct\":[\"Hulk\",\"Bruce Banner\",\"Bruce\",\"The Hulk\"]},{\"display\":\"Black Widow\",\"hint\":\"\",\"correct\":[\"Black Widow\",\"Natasha Romanoff\",\"Natasha\"]},{\"display\":\"Hawkeye\",\"hint\":\"\",\"correct\":[\"Hawkeye\",\"Clint Barton\",\"Clint\"]}]"
   },
   {
     "id": "rihanna-albums",
@@ -149,7 +149,7 @@
     "title": "Harry Potter Books",
     "prompt": "Name all seven Harry Potter books",
     "totalCount": 7,
-    "answers": "[{\"display\":\"Harry Potter and the Philosopher's Stone\",\"hint\":\"Book 1 - 1997\",\"correct\":[\"Harry Potter and the Philosopher's Stone\",\"Philosopher's Stone\",\"Sorcerer's Stone\",\"Philosopher Stone\"]},{\"display\":\"Harry Potter and the Chamber of Secrets\",\"hint\":\"Book 2 - 1998\",\"correct\":[\"Harry Potter and the Chamber of Secrets\",\"Chamber of Secrets\"]},{\"display\":\"Harry Potter and the Prisoner of Azkaban\",\"hint\":\"Book 3 - 1999\",\"correct\":[\"Harry Potter and the Prisoner of Azkaban\",\"Prisoner of Azkaban\"]},{\"display\":\"Harry Potter and the Goblet of Fire\",\"hint\":\"Book 4 - 2000\",\"correct\":[\"Harry Potter and the Goblet of Fire\",\"Goblet of Fire\"]},{\"display\":\"Harry Potter and the Order of the Phoenix\",\"hint\":\"Book 5 - 2003\",\"correct\":[\"Harry Potter and the Order of the Phoenix\",\"Order of the Phoenix\"]},{\"display\":\"Harry Potter and the Half-Blood Prince\",\"hint\":\"Book 6 - 2005\",\"correct\":[\"Harry Potter and the Half-Blood Prince\",\"Half-Blood Prince\",\"Half Blood Prince\"]},{\"display\":\"Harry Potter and the Deathly Hallows\",\"hint\":\"Book 7 - 2007\",\"correct\":[\"Harry Potter and the Deathly Hallows\",\"Deathly Hallows\"]}]"
+    "answers": "[{\"display\":\"Harry Potter and the Philosopher's Stone\",\"hint\":\"1997\",\"correct\":[\"Harry Potter and the Philosopher's Stone\",\"Philosopher's Stone\",\"Sorcerer's Stone\",\"Philosopher Stone\"]},{\"display\":\"Harry Potter and the Chamber of Secrets\",\"hint\":\"1998\",\"correct\":[\"Harry Potter and the Chamber of Secrets\",\"Chamber of Secrets\"]},{\"display\":\"Harry Potter and the Prisoner of Azkaban\",\"hint\":\"1999\",\"correct\":[\"Harry Potter and the Prisoner of Azkaban\",\"Prisoner of Azkaban\"]},{\"display\":\"Harry Potter and the Goblet of Fire\",\"hint\":\"2000\",\"correct\":[\"Harry Potter and the Goblet of Fire\",\"Goblet of Fire\"]},{\"display\":\"Harry Potter and the Order of the Phoenix\",\"hint\":\"2003\",\"correct\":[\"Harry Potter and the Order of the Phoenix\",\"Order of the Phoenix\"]},{\"display\":\"Harry Potter and the Half-Blood Prince\",\"hint\":\"2005\",\"correct\":[\"Harry Potter and the Half-Blood Prince\",\"Half-Blood Prince\",\"Half Blood Prince\"]},{\"display\":\"Harry Potter and the Deathly Hallows\",\"hint\":\"2007\",\"correct\":[\"Harry Potter and the Deathly Hallows\",\"Deathly Hallows\"]}]"
   },
   {
     "id": "adele-albums",
@@ -157,7 +157,7 @@
     "title": "Adele Studio Albums",
     "prompt": "Name all Adele studio albums",
     "totalCount": 4,
-    "answers": "[{\"display\":\"19\",\"hint\":\"2008 - debut\",\"correct\":[\"19\",\"nineteen\"]},{\"display\":\"21\",\"hint\":\"2011 - global smash\",\"correct\":[\"21\",\"twenty-one\",\"twenty one\"]},{\"display\":\"25\",\"hint\":\"2015 - Hello era\",\"correct\":[\"25\",\"twenty-five\",\"twenty five\"]},{\"display\":\"30\",\"hint\":\"2021 - comeback\",\"correct\":[\"30\",\"thirty\"]}]"
+    "answers": "[{\"display\":\"19\",\"hint\":\"2008\",\"correct\":[\"19\",\"nineteen\"]},{\"display\":\"21\",\"hint\":\"2011\",\"correct\":[\"21\",\"twenty-one\",\"twenty one\"]},{\"display\":\"25\",\"hint\":\"2015\",\"correct\":[\"25\",\"twenty-five\",\"twenty five\"]},{\"display\":\"30\",\"hint\":\"2021\",\"correct\":[\"30\",\"thirty\"]}]"
   },
   {
     "id": "james-bond-actors",
@@ -165,7 +165,7 @@
     "title": "James Bond Actors (Official Films)",
     "prompt": "Name every actor who has officially played James Bond in an EON Productions film",
     "totalCount": 6,
-    "answers": "[{\"display\":\"Sean Connery\",\"hint\":\"1962-1967, 1971\",\"correct\":[\"Sean Connery\",\"Connery\"]},{\"display\":\"George Lazenby\",\"hint\":\"1969 - On Her Majesty's Secret Service\",\"correct\":[\"George Lazenby\",\"Lazenby\"]},{\"display\":\"Roger Moore\",\"hint\":\"1973-1985 - seven films\",\"correct\":[\"Roger Moore\",\"Moore\"]},{\"display\":\"Timothy Dalton\",\"hint\":\"1987-1989\",\"correct\":[\"Timothy Dalton\",\"Dalton\"]},{\"display\":\"Pierce Brosnan\",\"hint\":\"1995-2002\",\"correct\":[\"Pierce Brosnan\",\"Brosnan\"]},{\"display\":\"Daniel Craig\",\"hint\":\"2006-2021 - No Time to Die\",\"correct\":[\"Daniel Craig\",\"Craig\"]}]"
+    "answers": "[{\"display\":\"Sean Connery\",\"hint\":\"\",\"correct\":[\"Sean Connery\",\"Connery\"]},{\"display\":\"George Lazenby\",\"hint\":\"\",\"correct\":[\"George Lazenby\",\"Lazenby\"]},{\"display\":\"Roger Moore\",\"hint\":\"\",\"correct\":[\"Roger Moore\",\"Moore\"]},{\"display\":\"Timothy Dalton\",\"hint\":\"\",\"correct\":[\"Timothy Dalton\",\"Dalton\"]},{\"display\":\"Pierce Brosnan\",\"hint\":\"\",\"correct\":[\"Pierce Brosnan\",\"Brosnan\"]},{\"display\":\"Daniel Craig\",\"hint\":\"\",\"correct\":[\"Daniel Craig\",\"Craig\"]}]"
   },
   {
     "id": "breaking-bad-characters",
@@ -173,7 +173,7 @@
     "title": "Breaking Bad Main Characters",
     "prompt": "Name the main characters from Breaking Bad",
     "totalCount": 8,
-    "answers": "[{\"display\":\"Walter White\",\"hint\":\"chemistry teacher turned kingpin\",\"correct\":[\"Walter White\",\"Walt\",\"Heisenberg\",\"Walter\"]},{\"display\":\"Jesse Pinkman\",\"hint\":\"former student and partner\",\"correct\":[\"Jesse Pinkman\",\"Jesse\"]},{\"display\":\"Skyler White\",\"hint\":\"Walter's wife\",\"correct\":[\"Skyler White\",\"Skyler\"]},{\"display\":\"Hank Schrader\",\"hint\":\"DEA agent and Walter's brother-in-law\",\"correct\":[\"Hank Schrader\",\"Hank\"]},{\"display\":\"Marie Schrader\",\"hint\":\"Skyler's sister\",\"correct\":[\"Marie Schrader\",\"Marie\"]},{\"display\":\"Saul Goodman\",\"hint\":\"criminal lawyer\",\"correct\":[\"Saul Goodman\",\"Saul\",\"Jimmy McGill\"]},{\"display\":\"Gustavo Fring\",\"hint\":\"Pollos Hermanos boss\",\"correct\":[\"Gustavo Fring\",\"Gus Fring\",\"Gus\",\"Fring\"]},{\"display\":\"Mike Ehrmantraut\",\"hint\":\"fixer and enforcer\",\"correct\":[\"Mike Ehrmantraut\",\"Mike\"]}]"
+    "answers": "[{\"display\":\"Walter White\",\"hint\":\"\",\"correct\":[\"Walter White\",\"Walt\",\"Heisenberg\",\"Walter\"]},{\"display\":\"Jesse Pinkman\",\"hint\":\"\",\"correct\":[\"Jesse Pinkman\",\"Jesse\"]},{\"display\":\"Skyler White\",\"hint\":\"\",\"correct\":[\"Skyler White\",\"Skyler\"]},{\"display\":\"Hank Schrader\",\"hint\":\"\",\"correct\":[\"Hank Schrader\",\"Hank\"]},{\"display\":\"Marie Schrader\",\"hint\":\"\",\"correct\":[\"Marie Schrader\",\"Marie\"]},{\"display\":\"Saul Goodman\",\"hint\":\"\",\"correct\":[\"Saul Goodman\",\"Saul\",\"Jimmy McGill\"]},{\"display\":\"Gustavo Fring\",\"hint\":\"\",\"correct\":[\"Gustavo Fring\",\"Gus Fring\",\"Gus\",\"Fring\"]},{\"display\":\"Mike Ehrmantraut\",\"hint\":\"\",\"correct\":[\"Mike Ehrmantraut\",\"Mike\"]}]"
   },
   {
     "id": "mj-solo-albums",
@@ -181,7 +181,7 @@
     "title": "Michael Jackson Solo Studio Albums",
     "prompt": "Name all Michael Jackson solo studio albums",
     "totalCount": 6,
-    "answers": "[{\"display\":\"Off the Wall\",\"hint\":\"1979\",\"correct\":[\"Off the Wall\",\"off the wall\"]},{\"display\":\"Thriller\",\"hint\":\"1982 - best-selling album ever\",\"correct\":[\"Thriller\"]},{\"display\":\"Bad\",\"hint\":\"1987\",\"correct\":[\"Bad\"]},{\"display\":\"Dangerous\",\"hint\":\"1991\",\"correct\":[\"Dangerous\"]},{\"display\":\"HIStory\",\"hint\":\"1995 - new songs on disc 2\",\"correct\":[\"HIStory\",\"History\",\"HIStory Past Present and Future\"]},{\"display\":\"Invincible\",\"hint\":\"2001 - final studio album\",\"correct\":[\"Invincible\"]}]"
+    "answers": "[{\"display\":\"Off the Wall\",\"hint\":\"1979\",\"correct\":[\"Off the Wall\",\"off the wall\"]},{\"display\":\"Thriller\",\"hint\":\"1982\",\"correct\":[\"Thriller\"]},{\"display\":\"Bad\",\"hint\":\"1987\",\"correct\":[\"Bad\"]},{\"display\":\"Dangerous\",\"hint\":\"1991\",\"correct\":[\"Dangerous\"]},{\"display\":\"HIStory\",\"hint\":\"1995\",\"correct\":[\"HIStory\",\"History\",\"HIStory Past Present and Future\"]},{\"display\":\"Invincible\",\"hint\":\"2001\",\"correct\":[\"Invincible\"]}]"
   },
   {
     "id": "bts-members",
@@ -189,7 +189,7 @@
     "title": "BTS Members",
     "prompt": "Name all seven members of BTS",
     "totalCount": 7,
-    "answers": "[{\"display\":\"RM\",\"hint\":\"Kim Namjoon - leader\",\"correct\":[\"RM\",\"Kim Namjoon\",\"Namjoon\",\"Rap Monster\"]},{\"display\":\"Jin\",\"hint\":\"Kim Seokjin\",\"correct\":[\"Jin\",\"Kim Seokjin\",\"Seokjin\"]},{\"display\":\"Suga\",\"hint\":\"Min Yoongi\",\"correct\":[\"Suga\",\"Min Yoongi\",\"Yoongi\",\"Agust D\"]},{\"display\":\"J-Hope\",\"hint\":\"Jung Hoseok\",\"correct\":[\"J-Hope\",\"J Hope\",\"Jung Hoseok\",\"Hoseok\"]},{\"display\":\"Jimin\",\"hint\":\"Park Jimin\",\"correct\":[\"Jimin\",\"Park Jimin\"]},{\"display\":\"V\",\"hint\":\"Kim Taehyung\",\"correct\":[\"V\",\"Kim Taehyung\",\"Taehyung\"]},{\"display\":\"Jungkook\",\"hint\":\"Jeon Jungkook - maknae\",\"correct\":[\"Jungkook\",\"Jeon Jungkook\"]}]"
+    "answers": "[{\"display\":\"RM\",\"hint\":\"\",\"correct\":[\"RM\",\"Kim Namjoon\",\"Namjoon\",\"Rap Monster\"]},{\"display\":\"Jin\",\"hint\":\"\",\"correct\":[\"Jin\",\"Kim Seokjin\",\"Seokjin\"]},{\"display\":\"Suga\",\"hint\":\"\",\"correct\":[\"Suga\",\"Min Yoongi\",\"Yoongi\",\"Agust D\"]},{\"display\":\"J-Hope\",\"hint\":\"\",\"correct\":[\"J-Hope\",\"J Hope\",\"Jung Hoseok\",\"Hoseok\"]},{\"display\":\"Jimin\",\"hint\":\"\",\"correct\":[\"Jimin\",\"Park Jimin\"]},{\"display\":\"V\",\"hint\":\"\",\"correct\":[\"V\",\"Kim Taehyung\",\"Taehyung\"]},{\"display\":\"Jungkook\",\"hint\":\"\",\"correct\":[\"Jungkook\",\"Jeon Jungkook\"]}]"
   },
   {
     "id": "one-direction-members",
@@ -197,7 +197,7 @@
     "title": "One Direction Members",
     "prompt": "Name all five members of One Direction",
     "totalCount": 5,
-    "answers": "[{\"display\":\"Harry Styles\",\"hint\":\"went solo - megastar\",\"correct\":[\"Harry Styles\",\"Harry\"]},{\"display\":\"Niall Horan\",\"hint\":\"Irish member\",\"correct\":[\"Niall Horan\",\"Niall\"]},{\"display\":\"Louis Tomlinson\",\"hint\":\"songwriter in the group\",\"correct\":[\"Louis Tomlinson\",\"Louis\"]},{\"display\":\"Liam Payne\",\"hint\":\"sang the high notes\",\"correct\":[\"Liam Payne\",\"Liam\"]},{\"display\":\"Zayn Malik\",\"hint\":\"left the group in 2015\",\"correct\":[\"Zayn Malik\",\"Zayn\",\"Malik\"]}]"
+    "answers": "[{\"display\":\"Harry Styles\",\"hint\":\"\",\"correct\":[\"Harry Styles\",\"Harry\"]},{\"display\":\"Niall Horan\",\"hint\":\"\",\"correct\":[\"Niall Horan\",\"Niall\"]},{\"display\":\"Louis Tomlinson\",\"hint\":\"\",\"correct\":[\"Louis Tomlinson\",\"Louis\"]},{\"display\":\"Liam Payne\",\"hint\":\"\",\"correct\":[\"Liam Payne\",\"Liam\"]},{\"display\":\"Zayn Malik\",\"hint\":\"\",\"correct\":[\"Zayn Malik\",\"Zayn\",\"Malik\"]}]"
   },
   {
     "id": "grammy-song-of-year-2015-2025",
@@ -205,7 +205,7 @@
     "title": "Grammy Song of the Year (2015-2025)",
     "prompt": "Name the Grammy Song of the Year winner - accept song title or artist",
     "totalCount": 11,
-    "answers": "[{\"display\":\"Sam Smith - Stay With Me\",\"hint\":\"2015 - 57th Grammys\",\"correct\":[\"Stay With Me\",\"Sam Smith\"]},{\"display\":\"Ed Sheeran - Thinking Out Loud\",\"hint\":\"2016 - 58th Grammys\",\"correct\":[\"Thinking Out Loud\",\"Ed Sheeran\"]},{\"display\":\"Adele - Hello\",\"hint\":\"2017 - 59th Grammys\",\"correct\":[\"Hello\",\"Adele Hello\"]},{\"display\":\"Bruno Mars - That's What I Like\",\"hint\":\"2018 - 60th Grammys\",\"correct\":[\"That's What I Like\",\"Bruno Mars\"]},{\"display\":\"Childish Gambino - This Is America\",\"hint\":\"2019 - 61st Grammys\",\"correct\":[\"This Is America\",\"Childish Gambino\"]},{\"display\":\"Billie Eilish - Bad Guy\",\"hint\":\"2020 - 62nd Grammys\",\"correct\":[\"Bad Guy\",\"Billie Eilish Bad Guy\"]},{\"display\":\"H.E.R. - I Can't Breathe\",\"hint\":\"2021 - 63rd Grammys\",\"correct\":[\"I Can't Breathe\",\"HER\",\"H.E.R.\"]},{\"display\":\"Silk Sonic - Leave the Door Open\",\"hint\":\"2022 - 64th Grammys\",\"correct\":[\"Leave the Door Open\",\"Silk Sonic\",\"Bruno Mars Anderson Paak\"]},{\"display\":\"Bonnie Raitt - Just Like That\",\"hint\":\"2023 - 65th Grammys\",\"correct\":[\"Just Like That\",\"Bonnie Raitt\"]},{\"display\":\"Billie Eilish - What Was I Made For?\",\"hint\":\"2024 - 66th Grammys\",\"correct\":[\"What Was I Made For\",\"Billie Eilish What Was I Made For\"]},{\"display\":\"Kendrick Lamar - Not Like Us\",\"hint\":\"2025 - 67th Grammys\",\"correct\":[\"Not Like Us\",\"Kendrick Lamar Not Like Us\",\"Kendrick Lamar\"]}]"
+    "answers": "[{\"display\":\"Sam Smith - Stay With Me\",\"hint\":\"2015\",\"correct\":[\"Stay With Me\",\"Sam Smith\"]},{\"display\":\"Ed Sheeran - Thinking Out Loud\",\"hint\":\"2016\",\"correct\":[\"Thinking Out Loud\",\"Ed Sheeran\"]},{\"display\":\"Adele - Hello\",\"hint\":\"2017\",\"correct\":[\"Hello\",\"Adele Hello\"]},{\"display\":\"Bruno Mars - That's What I Like\",\"hint\":\"2018\",\"correct\":[\"That's What I Like\",\"Bruno Mars\"]},{\"display\":\"Childish Gambino - This Is America\",\"hint\":\"2019\",\"correct\":[\"This Is America\",\"Childish Gambino\"]},{\"display\":\"Billie Eilish - Bad Guy\",\"hint\":\"2020\",\"correct\":[\"Bad Guy\",\"Billie Eilish Bad Guy\"]},{\"display\":\"H.E.R. - I Can't Breathe\",\"hint\":\"2021\",\"correct\":[\"I Can't Breathe\",\"HER\",\"H.E.R.\"]},{\"display\":\"Silk Sonic - Leave the Door Open\",\"hint\":\"2022\",\"correct\":[\"Leave the Door Open\",\"Silk Sonic\",\"Bruno Mars Anderson Paak\"]},{\"display\":\"Bonnie Raitt - Just Like That\",\"hint\":\"2023\",\"correct\":[\"Just Like That\",\"Bonnie Raitt\"]},{\"display\":\"Billie Eilish - What Was I Made For?\",\"hint\":\"2024\",\"correct\":[\"What Was I Made For\",\"Billie Eilish What Was I Made For\"]},{\"display\":\"Kendrick Lamar - Not Like Us\",\"hint\":\"2025\",\"correct\":[\"Not Like Us\",\"Kendrick Lamar Not Like Us\",\"Kendrick Lamar\"]}]"
   },
   {
     "id": "ariana-grande-albums",
@@ -213,7 +213,7 @@
     "title": "Ariana Grande Studio Albums",
     "prompt": "Name all Ariana Grande studio albums",
     "totalCount": 7,
-    "answers": "[{\"display\":\"Yours Truly\",\"hint\":\"2013 - debut\",\"correct\":[\"Yours Truly\",\"yours truly\"]},{\"display\":\"My Everything\",\"hint\":\"2014\",\"correct\":[\"My Everything\",\"my everything\"]},{\"display\":\"Dangerous Woman\",\"hint\":\"2016\",\"correct\":[\"Dangerous Woman\",\"dangerous woman\"]},{\"display\":\"Sweetener\",\"hint\":\"2018\",\"correct\":[\"Sweetener\"]},{\"display\":\"Thank U, Next\",\"hint\":\"2019\",\"correct\":[\"Thank U Next\",\"Thank U, Next\",\"thank u next\"]},{\"display\":\"Positions\",\"hint\":\"2020\",\"correct\":[\"Positions\"]},{\"display\":\"Eternal Sunshine\",\"hint\":\"2024\",\"correct\":[\"Eternal Sunshine\",\"eternal sunshine\"]}]"
+    "answers": "[{\"display\":\"Yours Truly\",\"hint\":\"2013\",\"correct\":[\"Yours Truly\",\"yours truly\"]},{\"display\":\"My Everything\",\"hint\":\"2014\",\"correct\":[\"My Everything\",\"my everything\"]},{\"display\":\"Dangerous Woman\",\"hint\":\"2016\",\"correct\":[\"Dangerous Woman\",\"dangerous woman\"]},{\"display\":\"Sweetener\",\"hint\":\"2018\",\"correct\":[\"Sweetener\"]},{\"display\":\"Thank U, Next\",\"hint\":\"2019\",\"correct\":[\"Thank U Next\",\"Thank U, Next\",\"thank u next\"]},{\"display\":\"Positions\",\"hint\":\"2020\",\"correct\":[\"Positions\"]},{\"display\":\"Eternal Sunshine\",\"hint\":\"2024\",\"correct\":[\"Eternal Sunshine\",\"eternal sunshine\"]}]"
   },
   {
     "id": "oscar-best-picture-2016-2025",
@@ -221,7 +221,7 @@
     "title": "Oscar Best Picture Winners (2016-2025)",
     "prompt": "Name every Oscar Best Picture winner from 2016 to 2025",
     "totalCount": 10,
-    "answers": "[{\"display\":\"Spotlight\",\"hint\":\"2016 - 88th Oscars\",\"correct\":[\"Spotlight\"]},{\"display\":\"Moonlight\",\"hint\":\"2017 - 89th Oscars\",\"correct\":[\"Moonlight\"]},{\"display\":\"The Shape of Water\",\"hint\":\"2018 - 90th Oscars\",\"correct\":[\"The Shape of Water\",\"Shape of Water\"]},{\"display\":\"Green Book\",\"hint\":\"2019 - 91st Oscars\",\"correct\":[\"Green Book\"]},{\"display\":\"Parasite\",\"hint\":\"2020 - 92nd Oscars\",\"correct\":[\"Parasite\"]},{\"display\":\"Nomadland\",\"hint\":\"2021 - 93rd Oscars\",\"correct\":[\"Nomadland\"]},{\"display\":\"CODA\",\"hint\":\"2022 - 94th Oscars\",\"correct\":[\"CODA\",\"Coda\"]},{\"display\":\"Everything Everywhere All at Once\",\"hint\":\"2023 - 95th Oscars\",\"correct\":[\"Everything Everywhere All at Once\",\"EEAAO\",\"Everything Everywhere\"]},{\"display\":\"Oppenheimer\",\"hint\":\"2024 - 96th Oscars\",\"correct\":[\"Oppenheimer\"]},{\"display\":\"Anora\",\"hint\":\"2025 - 97th Oscars\",\"correct\":[\"Anora\"]}]"
+    "answers": "[{\"display\":\"Spotlight\",\"hint\":\"2016\",\"correct\":[\"Spotlight\"]},{\"display\":\"Moonlight\",\"hint\":\"2017\",\"correct\":[\"Moonlight\"]},{\"display\":\"The Shape of Water\",\"hint\":\"2018\",\"correct\":[\"The Shape of Water\",\"Shape of Water\"]},{\"display\":\"Green Book\",\"hint\":\"2019\",\"correct\":[\"Green Book\"]},{\"display\":\"Parasite\",\"hint\":\"2020\",\"correct\":[\"Parasite\"]},{\"display\":\"Nomadland\",\"hint\":\"2021\",\"correct\":[\"Nomadland\"]},{\"display\":\"CODA\",\"hint\":\"2022\",\"correct\":[\"CODA\",\"Coda\"]},{\"display\":\"Everything Everywhere All at Once\",\"hint\":\"2023\",\"correct\":[\"Everything Everywhere All at Once\",\"EEAAO\",\"Everything Everywhere\"]},{\"display\":\"Oppenheimer\",\"hint\":\"2024\",\"correct\":[\"Oppenheimer\"]},{\"display\":\"Anora\",\"hint\":\"2025\",\"correct\":[\"Anora\"]}]"
   },
   {
     "id": "fast-furious-main-series",
@@ -229,7 +229,7 @@
     "title": "Fast and Furious Main Series Films",
     "prompt": "Name all 10 Fast and Furious numbered main series films",
     "totalCount": 10,
-    "answers": "[{\"display\":\"The Fast and the Furious\",\"hint\":\"2001 - the original\",\"correct\":[\"The Fast and the Furious\",\"Fast and the Furious\",\"Fast Furious 1\",\"Fast and Furious 1\"]},{\"display\":\"2 Fast 2 Furious\",\"hint\":\"2003\",\"correct\":[\"2 Fast 2 Furious\",\"Two Fast Two Furious\"]},{\"display\":\"The Fast and the Furious: Tokyo Drift\",\"hint\":\"2006\",\"correct\":[\"Tokyo Drift\",\"Fast and Furious Tokyo Drift\",\"The Fast and the Furious Tokyo Drift\"]},{\"display\":\"Fast and Furious\",\"hint\":\"2009 - team reunites\",\"correct\":[\"Fast and Furious\",\"Fast Furious 4\",\"Fast and Furious 4\"]},{\"display\":\"Fast Five\",\"hint\":\"2011\",\"correct\":[\"Fast Five\",\"Fast 5\"]},{\"display\":\"Fast and Furious 6\",\"hint\":\"2013\",\"correct\":[\"Fast and Furious 6\",\"Furious 6\",\"Fast Six\",\"Fast Furious 6\"]},{\"display\":\"Furious 7\",\"hint\":\"2015 - Paul Walker tribute\",\"correct\":[\"Furious 7\",\"Fast and Furious 7\",\"Furious Seven\",\"Fast 7\"]},{\"display\":\"The Fate of the Furious\",\"hint\":\"2017 - F8\",\"correct\":[\"The Fate of the Furious\",\"Fate of the Furious\",\"F8\",\"Fast 8\"]},{\"display\":\"F9\",\"hint\":\"2021\",\"correct\":[\"F9\",\"Fast 9\",\"Fast and Furious 9\"]},{\"display\":\"Fast X\",\"hint\":\"2023\",\"correct\":[\"Fast X\",\"Fast 10\",\"Fast and Furious 10\"]}]"
+    "answers": "[{\"display\":\"The Fast and the Furious\",\"hint\":\"2001\",\"correct\":[\"The Fast and the Furious\",\"Fast and the Furious\",\"Fast Furious 1\",\"Fast and Furious 1\"]},{\"display\":\"2 Fast 2 Furious\",\"hint\":\"2003\",\"correct\":[\"2 Fast 2 Furious\",\"Two Fast Two Furious\"]},{\"display\":\"The Fast and the Furious: Tokyo Drift\",\"hint\":\"2006\",\"correct\":[\"Tokyo Drift\",\"Fast and Furious Tokyo Drift\",\"The Fast and the Furious Tokyo Drift\"]},{\"display\":\"Fast and Furious\",\"hint\":\"2009\",\"correct\":[\"Fast and Furious\",\"Fast Furious 4\",\"Fast and Furious 4\"]},{\"display\":\"Fast Five\",\"hint\":\"2011\",\"correct\":[\"Fast Five\",\"Fast 5\"]},{\"display\":\"Fast and Furious 6\",\"hint\":\"2013\",\"correct\":[\"Fast and Furious 6\",\"Furious 6\",\"Fast Six\",\"Fast Furious 6\"]},{\"display\":\"Furious 7\",\"hint\":\"2015\",\"correct\":[\"Furious 7\",\"Fast and Furious 7\",\"Furious Seven\",\"Fast 7\"]},{\"display\":\"The Fate of the Furious\",\"hint\":\"2017\",\"correct\":[\"The Fate of the Furious\",\"Fate of the Furious\",\"F8\",\"Fast 8\"]},{\"display\":\"F9\",\"hint\":\"2021\",\"correct\":[\"F9\",\"Fast 9\",\"Fast and Furious 9\"]},{\"display\":\"Fast X\",\"hint\":\"2023\",\"correct\":[\"Fast X\",\"Fast 10\",\"Fast and Furious 10\"]}]"
   },
   {
     "id": "friends-characters-full",
@@ -237,7 +237,7 @@
     "title": "Friends Main Characters (Full Names)",
     "prompt": "Name the six main characters from Friends - first and last name",
     "totalCount": 6,
-    "answers": "[{\"display\":\"Rachel Green\",\"hint\":\"the fashionable one\",\"correct\":[\"Rachel Green\",\"Rachel\"]},{\"display\":\"Monica Geller\",\"hint\":\"the chef and neat freak\",\"correct\":[\"Monica Geller\",\"Monica\"]},{\"display\":\"Phoebe Buffay\",\"hint\":\"the quirky singer\",\"correct\":[\"Phoebe Buffay\",\"Phoebe\"]},{\"display\":\"Joey Tribbiani\",\"hint\":\"the actor\",\"correct\":[\"Joey Tribbiani\",\"Joey\"]},{\"display\":\"Chandler Bing\",\"hint\":\"could he BE any more sarcastic?\",\"correct\":[\"Chandler Bing\",\"Chandler\"]},{\"display\":\"Ross Geller\",\"hint\":\"the paleontologist\",\"correct\":[\"Ross Geller\",\"Ross\"]}]"
+    "answers": "[{\"display\":\"Rachel Green\",\"hint\":\"\",\"correct\":[\"Rachel Green\",\"Rachel\"]},{\"display\":\"Monica Geller\",\"hint\":\"\",\"correct\":[\"Monica Geller\",\"Monica\"]},{\"display\":\"Phoebe Buffay\",\"hint\":\"\",\"correct\":[\"Phoebe Buffay\",\"Phoebe\"]},{\"display\":\"Joey Tribbiani\",\"hint\":\"\",\"correct\":[\"Joey Tribbiani\",\"Joey\"]},{\"display\":\"Chandler Bing\",\"hint\":\"\",\"correct\":[\"Chandler Bing\",\"Chandler\"]},{\"display\":\"Ross Geller\",\"hint\":\"\",\"correct\":[\"Ross Geller\",\"Ross\"]}]"
   },
   {
     "id": "billie-eilish-albums",
@@ -245,7 +245,7 @@
     "title": "Billie Eilish Studio Albums",
     "prompt": "Name all Billie Eilish studio albums",
     "totalCount": 3,
-    "answers": "[{\"display\":\"When We All Fall Asleep, Where Do We Go?\",\"hint\":\"2019 - debut\",\"correct\":[\"When We All Fall Asleep Where Do We Go\",\"When We All Fall Asleep\",\"WWAFAWDWG\"]},{\"display\":\"Happier Than Ever\",\"hint\":\"2021\",\"correct\":[\"Happier Than Ever\",\"happier than ever\"]},{\"display\":\"Hit Me Hard and Soft\",\"hint\":\"2024\",\"correct\":[\"Hit Me Hard and Soft\",\"hit me hard and soft\",\"HMHAS\"]}]"
+    "answers": "[{\"display\":\"When We All Fall Asleep, Where Do We Go?\",\"hint\":\"2019\",\"correct\":[\"When We All Fall Asleep Where Do We Go\",\"When We All Fall Asleep\",\"WWAFAWDWG\"]},{\"display\":\"Happier Than Ever\",\"hint\":\"2021\",\"correct\":[\"Happier Than Ever\",\"happier than ever\"]},{\"display\":\"Hit Me Hard and Soft\",\"hint\":\"2024\",\"correct\":[\"Hit Me Hard and Soft\",\"hit me hard and soft\",\"HMHAS\"]}]"
   },
   {
     "id": "spider-man-film-actors",
@@ -253,7 +253,7 @@
     "title": "Live-Action Spider-Man Film Actors",
     "prompt": "Name the three actors who have played Spider-Man in major live-action film series",
     "totalCount": 3,
-    "answers": "[{\"display\":\"Tobey Maguire\",\"hint\":\"2002-2007 - Sam Raimi trilogy\",\"correct\":[\"Tobey Maguire\",\"Tobey\",\"Maguire\"]},{\"display\":\"Andrew Garfield\",\"hint\":\"2012-2014 - The Amazing Spider-Man\",\"correct\":[\"Andrew Garfield\",\"Andrew\",\"Garfield\"]},{\"display\":\"Tom Holland\",\"hint\":\"2016-present - MCU Spider-Man\",\"correct\":[\"Tom Holland\",\"Tom\",\"Holland\"]}]"
+    "answers": "[{\"display\":\"Tobey Maguire\",\"hint\":\"\",\"correct\":[\"Tobey Maguire\",\"Tobey\",\"Maguire\"]},{\"display\":\"Andrew Garfield\",\"hint\":\"\",\"correct\":[\"Andrew Garfield\",\"Andrew\",\"Garfield\"]},{\"display\":\"Tom Holland\",\"hint\":\"\",\"correct\":[\"Tom Holland\",\"Tom\",\"Holland\"]}]"
   },
   {
     "id": "simpsons-family",
@@ -261,7 +261,7 @@
     "title": "The Simpsons Nuclear Family",
     "prompt": "Name all five members of the Simpson family",
     "totalCount": 5,
-    "answers": "[{\"display\":\"Homer Simpson\",\"hint\":\"D'oh!\",\"correct\":[\"Homer Simpson\",\"Homer\"]},{\"display\":\"Marge Simpson\",\"hint\":\"the blue-haired mom\",\"correct\":[\"Marge Simpson\",\"Marge\"]},{\"display\":\"Bart Simpson\",\"hint\":\"Eat my shorts!\",\"correct\":[\"Bart Simpson\",\"Bart\"]},{\"display\":\"Lisa Simpson\",\"hint\":\"jazz-loving overachiever\",\"correct\":[\"Lisa Simpson\",\"Lisa\"]},{\"display\":\"Maggie Simpson\",\"hint\":\"the baby\",\"correct\":[\"Maggie Simpson\",\"Maggie\"]}]"
+    "answers": "[{\"display\":\"Homer Simpson\",\"hint\":\"\",\"correct\":[\"Homer Simpson\",\"Homer\"]},{\"display\":\"Marge Simpson\",\"hint\":\"\",\"correct\":[\"Marge Simpson\",\"Marge\"]},{\"display\":\"Bart Simpson\",\"hint\":\"\",\"correct\":[\"Bart Simpson\",\"Bart\"]},{\"display\":\"Lisa Simpson\",\"hint\":\"\",\"correct\":[\"Lisa Simpson\",\"Lisa\"]},{\"display\":\"Maggie Simpson\",\"hint\":\"\",\"correct\":[\"Maggie Simpson\",\"Maggie\"]}]"
   },
   {
     "id": "harry-styles-albums",
@@ -269,7 +269,7 @@
     "title": "Harry Styles Solo Studio Albums",
     "prompt": "Name all Harry Styles solo studio albums",
     "totalCount": 3,
-    "answers": "[{\"display\":\"Harry Styles\",\"hint\":\"2017 - debut\",\"correct\":[\"Harry Styles\",\"self titled\",\"Harry Styles debut\"]},{\"display\":\"Fine Line\",\"hint\":\"2019\",\"correct\":[\"Fine Line\",\"fine line\"]},{\"display\":\"Harry's House\",\"hint\":\"2022\",\"correct\":[\"Harry's House\",\"Harrys House\"]}]"
+    "answers": "[{\"display\":\"Harry Styles\",\"hint\":\"2017\",\"correct\":[\"Harry Styles\",\"self titled\",\"Harry Styles debut\"]},{\"display\":\"Fine Line\",\"hint\":\"2019\",\"correct\":[\"Fine Line\",\"fine line\"]},{\"display\":\"Harry's House\",\"hint\":\"2022\",\"correct\":[\"Harry's House\",\"Harrys House\"]}]"
   },
   {
     "id": "coldplay-albums",
@@ -277,7 +277,7 @@
     "title": "Coldplay Studio Albums",
     "prompt": "Name all Coldplay studio albums",
     "totalCount": 10,
-    "answers": "[{\"display\":\"Parachutes\",\"hint\":\"2000 - debut\",\"correct\":[\"Parachutes\"]},{\"display\":\"A Rush of Blood to the Head\",\"hint\":\"2002\",\"correct\":[\"A Rush of Blood to the Head\",\"Rush of Blood to the Head\",\"Rush of Blood\"]},{\"display\":\"X&Y\",\"hint\":\"2005\",\"correct\":[\"X&Y\",\"X and Y\"]},{\"display\":\"Viva la Vida or Death and All His Friends\",\"hint\":\"2008\",\"correct\":[\"Viva la Vida\",\"Viva la Vida or Death and All His Friends\"]},{\"display\":\"Mylo Xyloto\",\"hint\":\"2011\",\"correct\":[\"Mylo Xyloto\"]},{\"display\":\"Ghost Stories\",\"hint\":\"2014\",\"correct\":[\"Ghost Stories\"]},{\"display\":\"A Head Full of Dreams\",\"hint\":\"2015\",\"correct\":[\"A Head Full of Dreams\",\"Head Full of Dreams\"]},{\"display\":\"Everyday Life\",\"hint\":\"2019\",\"correct\":[\"Everyday Life\",\"everyday life\"]},{\"display\":\"Music of the Spheres\",\"hint\":\"2021\",\"correct\":[\"Music of the Spheres\"]},{\"display\":\"Moon Music\",\"hint\":\"2024\",\"correct\":[\"Moon Music\",\"moon music\"]}]"
+    "answers": "[{\"display\":\"Parachutes\",\"hint\":\"2000\",\"correct\":[\"Parachutes\"]},{\"display\":\"A Rush of Blood to the Head\",\"hint\":\"2002\",\"correct\":[\"A Rush of Blood to the Head\",\"Rush of Blood to the Head\",\"Rush of Blood\"]},{\"display\":\"X&Y\",\"hint\":\"2005\",\"correct\":[\"X&Y\",\"X and Y\"]},{\"display\":\"Viva la Vida or Death and All His Friends\",\"hint\":\"2008\",\"correct\":[\"Viva la Vida\",\"Viva la Vida or Death and All His Friends\"]},{\"display\":\"Mylo Xyloto\",\"hint\":\"2011\",\"correct\":[\"Mylo Xyloto\"]},{\"display\":\"Ghost Stories\",\"hint\":\"2014\",\"correct\":[\"Ghost Stories\"]},{\"display\":\"A Head Full of Dreams\",\"hint\":\"2015\",\"correct\":[\"A Head Full of Dreams\",\"Head Full of Dreams\"]},{\"display\":\"Everyday Life\",\"hint\":\"2019\",\"correct\":[\"Everyday Life\",\"everyday life\"]},{\"display\":\"Music of the Spheres\",\"hint\":\"2021\",\"correct\":[\"Music of the Spheres\"]},{\"display\":\"Moon Music\",\"hint\":\"2024\",\"correct\":[\"Moon Music\",\"moon music\"]}]"
   },
   {
     "id": "hunger-games-books",
@@ -285,7 +285,7 @@
     "title": "The Hunger Games Book Series",
     "prompt": "Name all four books in the Hunger Games series (including the prequel)",
     "totalCount": 4,
-    "answers": "[{\"display\":\"The Hunger Games\",\"hint\":\"2008 - Katniss enters the Games\",\"correct\":[\"The Hunger Games\",\"Hunger Games\"]},{\"display\":\"Catching Fire\",\"hint\":\"2009 - Quarter Quell\",\"correct\":[\"Catching Fire\",\"catching fire\"]},{\"display\":\"Mockingjay\",\"hint\":\"2010 - the rebellion\",\"correct\":[\"Mockingjay\",\"mocking jay\"]},{\"display\":\"The Ballad of Songbirds and Snakes\",\"hint\":\"2020 - young Snow prequel\",\"correct\":[\"The Ballad of Songbirds and Snakes\",\"Ballad of Songbirds and Snakes\",\"Ballad of Songbirds\"]}]"
+    "answers": "[{\"display\":\"The Hunger Games\",\"hint\":\"2008\",\"correct\":[\"The Hunger Games\",\"Hunger Games\"]},{\"display\":\"Catching Fire\",\"hint\":\"2009\",\"correct\":[\"Catching Fire\",\"catching fire\"]},{\"display\":\"Mockingjay\",\"hint\":\"2010\",\"correct\":[\"Mockingjay\",\"mocking jay\"]},{\"display\":\"The Ballad of Songbirds and Snakes\",\"hint\":\"2020\",\"correct\":[\"The Ballad of Songbirds and Snakes\",\"Ballad of Songbirds and Snakes\",\"Ballad of Songbirds\"]}]"
   },
   {
     "id": "star-wars-skywalker-saga",
@@ -293,7 +293,7 @@
     "title": "Star Wars Skywalker Saga Films",
     "prompt": "Name all nine Star Wars Skywalker Saga films (Episodes I-IX)",
     "totalCount": 9,
-    "answers": "[{\"display\":\"The Phantom Menace\",\"hint\":\"Episode I - 1999\",\"correct\":[\"The Phantom Menace\",\"Phantom Menace\",\"Episode 1\"]},{\"display\":\"Attack of the Clones\",\"hint\":\"Episode II - 2002\",\"correct\":[\"Attack of the Clones\",\"Episode 2\"]},{\"display\":\"Revenge of the Sith\",\"hint\":\"Episode III - 2005\",\"correct\":[\"Revenge of the Sith\",\"Episode 3\",\"Sith\"]},{\"display\":\"A New Hope\",\"hint\":\"Episode IV - 1977\",\"correct\":[\"A New Hope\",\"New Hope\",\"Star Wars\",\"Episode 4\"]},{\"display\":\"The Empire Strikes Back\",\"hint\":\"Episode V - 1980\",\"correct\":[\"The Empire Strikes Back\",\"Empire Strikes Back\",\"Empire\",\"Episode 5\"]},{\"display\":\"Return of the Jedi\",\"hint\":\"Episode VI - 1983\",\"correct\":[\"Return of the Jedi\",\"Jedi\",\"Episode 6\"]},{\"display\":\"The Force Awakens\",\"hint\":\"Episode VII - 2015\",\"correct\":[\"The Force Awakens\",\"Force Awakens\",\"Episode 7\"]},{\"display\":\"The Last Jedi\",\"hint\":\"Episode VIII - 2017\",\"correct\":[\"The Last Jedi\",\"Last Jedi\",\"Episode 8\"]},{\"display\":\"The Rise of Skywalker\",\"hint\":\"Episode IX - 2019\",\"correct\":[\"The Rise of Skywalker\",\"Rise of Skywalker\",\"Episode 9\"]}]"
+    "answers": "[{\"display\":\"The Phantom Menace\",\"hint\":\"1999\",\"correct\":[\"The Phantom Menace\",\"Phantom Menace\",\"Episode 1\"]},{\"display\":\"Attack of the Clones\",\"hint\":\"2002\",\"correct\":[\"Attack of the Clones\",\"Episode 2\"]},{\"display\":\"Revenge of the Sith\",\"hint\":\"2005\",\"correct\":[\"Revenge of the Sith\",\"Episode 3\",\"Sith\"]},{\"display\":\"A New Hope\",\"hint\":\"1977\",\"correct\":[\"A New Hope\",\"New Hope\",\"Star Wars\",\"Episode 4\"]},{\"display\":\"The Empire Strikes Back\",\"hint\":\"1980\",\"correct\":[\"The Empire Strikes Back\",\"Empire Strikes Back\",\"Empire\",\"Episode 5\"]},{\"display\":\"Return of the Jedi\",\"hint\":\"1983\",\"correct\":[\"Return of the Jedi\",\"Jedi\",\"Episode 6\"]},{\"display\":\"The Force Awakens\",\"hint\":\"2015\",\"correct\":[\"The Force Awakens\",\"Force Awakens\",\"Episode 7\"]},{\"display\":\"The Last Jedi\",\"hint\":\"2017\",\"correct\":[\"The Last Jedi\",\"Last Jedi\",\"Episode 8\"]},{\"display\":\"The Rise of Skywalker\",\"hint\":\"2019\",\"correct\":[\"The Rise of Skywalker\",\"Rise of Skywalker\",\"Episode 9\"]}]"
   },
   {
     "id": "afc-east-teams",
@@ -301,7 +301,7 @@
     "title": "NFL AFC East Division Teams",
     "prompt": "Name all four teams in the NFL AFC East division",
     "totalCount": 4,
-    "answers": "[{\"display\":\"Buffalo Bills\",\"hint\":\"New York state\",\"correct\":[\"Buffalo Bills\",\"Bills\",\"Buffalo\"]},{\"display\":\"Miami Dolphins\",\"hint\":\"Florida\",\"correct\":[\"Miami Dolphins\",\"Dolphins\",\"Miami\"]},{\"display\":\"New England Patriots\",\"hint\":\"Massachusetts\",\"correct\":[\"New England Patriots\",\"Patriots\",\"Pats\",\"New England\"]},{\"display\":\"New York Jets\",\"hint\":\"based in New Jersey\",\"correct\":[\"New York Jets\",\"Jets\",\"NY Jets\"]}]"
+    "answers": "[{\"display\":\"Buffalo Bills\",\"hint\":\"\",\"correct\":[\"Buffalo Bills\",\"Bills\",\"Buffalo\"]},{\"display\":\"Miami Dolphins\",\"hint\":\"\",\"correct\":[\"Miami Dolphins\",\"Dolphins\",\"Miami\"]},{\"display\":\"New England Patriots\",\"hint\":\"\",\"correct\":[\"New England Patriots\",\"Patriots\",\"Pats\",\"New England\"]},{\"display\":\"New York Jets\",\"hint\":\"\",\"correct\":[\"New York Jets\",\"Jets\",\"NY Jets\"]}]"
   },
   {
     "id": "stranger-things-s1-cast",
@@ -309,7 +309,7 @@
     "title": "Stranger Things Season 1 Main Characters",
     "prompt": "Name the main characters from Stranger Things Season 1",
     "totalCount": 10,
-    "answers": "[{\"display\":\"Mike Wheeler\",\"hint\":\"the leader of the group\",\"correct\":[\"Mike Wheeler\",\"Mike\"]},{\"display\":\"Eleven\",\"hint\":\"girl with telekinetic powers\",\"correct\":[\"Eleven\",\"El\",\"011\"]},{\"display\":\"Dustin Henderson\",\"hint\":\"the science kid\",\"correct\":[\"Dustin Henderson\",\"Dustin\"]},{\"display\":\"Lucas Sinclair\",\"hint\":\"the pragmatist\",\"correct\":[\"Lucas Sinclair\",\"Lucas\"]},{\"display\":\"Will Byers\",\"hint\":\"disappeared into the Upside Down\",\"correct\":[\"Will Byers\",\"Will\"]},{\"display\":\"Joyce Byers\",\"hint\":\"Will's mom / Christmas lights\",\"correct\":[\"Joyce Byers\",\"Joyce\"]},{\"display\":\"Jim Hopper\",\"hint\":\"police chief\",\"correct\":[\"Jim Hopper\",\"Hopper\",\"Chief Hopper\"]},{\"display\":\"Nancy Wheeler\",\"hint\":\"Mike's older sister\",\"correct\":[\"Nancy Wheeler\",\"Nancy\"]},{\"display\":\"Jonathan Byers\",\"hint\":\"Will's older brother / photographer\",\"correct\":[\"Jonathan Byers\",\"Jonathan\"]},{\"display\":\"Steve Harrington\",\"hint\":\"the cool jock who grows\",\"correct\":[\"Steve Harrington\",\"Steve\"]}]"
+    "answers": "[{\"display\":\"Mike Wheeler\",\"hint\":\"\",\"correct\":[\"Mike Wheeler\",\"Mike\"]},{\"display\":\"Eleven\",\"hint\":\"\",\"correct\":[\"Eleven\",\"El\",\"011\"]},{\"display\":\"Dustin Henderson\",\"hint\":\"\",\"correct\":[\"Dustin Henderson\",\"Dustin\"]},{\"display\":\"Lucas Sinclair\",\"hint\":\"\",\"correct\":[\"Lucas Sinclair\",\"Lucas\"]},{\"display\":\"Will Byers\",\"hint\":\"\",\"correct\":[\"Will Byers\",\"Will\"]},{\"display\":\"Joyce Byers\",\"hint\":\"\",\"correct\":[\"Joyce Byers\",\"Joyce\"]},{\"display\":\"Jim Hopper\",\"hint\":\"\",\"correct\":[\"Jim Hopper\",\"Hopper\",\"Chief Hopper\"]},{\"display\":\"Nancy Wheeler\",\"hint\":\"\",\"correct\":[\"Nancy Wheeler\",\"Nancy\"]},{\"display\":\"Jonathan Byers\",\"hint\":\"\",\"correct\":[\"Jonathan Byers\",\"Jonathan\"]},{\"display\":\"Steve Harrington\",\"hint\":\"\",\"correct\":[\"Steve Harrington\",\"Steve\"]}]"
   },
   {
     "id": "mean-girls-characters",
@@ -317,7 +317,7 @@
     "title": "Mean Girls Main Characters",
     "prompt": "Name the five main characters from Mean Girls (2004)",
     "totalCount": 5,
-    "answers": "[{\"display\":\"Cady Heron\",\"hint\":\"the new girl from Africa\",\"correct\":[\"Cady Heron\",\"Cady\",\"Katy Heron\"]},{\"display\":\"Regina George\",\"hint\":\"Queen Bee of the Plastics\",\"correct\":[\"Regina George\",\"Regina\"]},{\"display\":\"Gretchen Wieners\",\"hint\":\"her dad invented toaster strudel\",\"correct\":[\"Gretchen Wieners\",\"Gretchen\"]},{\"display\":\"Karen Smith\",\"hint\":\"I'm kind of psychic\",\"correct\":[\"Karen Smith\",\"Karen\"]},{\"display\":\"Janis Ian\",\"hint\":\"Cady's first real friend\",\"correct\":[\"Janis Ian\",\"Janis\"]}]"
+    "answers": "[{\"display\":\"Cady Heron\",\"hint\":\"\",\"correct\":[\"Cady Heron\",\"Cady\",\"Katy Heron\"]},{\"display\":\"Regina George\",\"hint\":\"\",\"correct\":[\"Regina George\",\"Regina\"]},{\"display\":\"Gretchen Wieners\",\"hint\":\"\",\"correct\":[\"Gretchen Wieners\",\"Gretchen\"]},{\"display\":\"Karen Smith\",\"hint\":\"\",\"correct\":[\"Karen Smith\",\"Karen\"]},{\"display\":\"Janis Ian\",\"hint\":\"\",\"correct\":[\"Janis Ian\",\"Janis\"]}]"
   },
   {
     "id": "f1-champions-2010-2024",
@@ -325,7 +325,7 @@
     "title": "F1 World Champions (Unique, 2010-2024)",
     "prompt": "Name every unique Formula 1 World Champion from 2010 to 2024",
     "totalCount": 4,
-    "answers": "[{\"display\":\"Sebastian Vettel\",\"hint\":\"4x champion - 2010-2013\",\"correct\":[\"Sebastian Vettel\",\"Vettel\",\"Seb Vettel\"]},{\"display\":\"Lewis Hamilton\",\"hint\":\"7x champion - 2014-2015, 2017-2020\",\"correct\":[\"Lewis Hamilton\",\"Hamilton\"]},{\"display\":\"Nico Rosberg\",\"hint\":\"champion in 2016 then retired\",\"correct\":[\"Nico Rosberg\",\"Rosberg\"]},{\"display\":\"Max Verstappen\",\"hint\":\"4x champion - 2021-2024\",\"correct\":[\"Max Verstappen\",\"Verstappen\",\"Max\"]}]"
+    "answers": "[{\"display\":\"Sebastian Vettel\",\"hint\":\"\",\"correct\":[\"Sebastian Vettel\",\"Vettel\",\"Seb Vettel\"]},{\"display\":\"Lewis Hamilton\",\"hint\":\"\",\"correct\":[\"Lewis Hamilton\",\"Hamilton\"]},{\"display\":\"Nico Rosberg\",\"hint\":\"\",\"correct\":[\"Nico Rosberg\",\"Rosberg\"]},{\"display\":\"Max Verstappen\",\"hint\":\"\",\"correct\":[\"Max Verstappen\",\"Verstappen\",\"Max\"]}]"
   },
   {
     "id": "grammy-record-of-year-2019-2025",
@@ -333,7 +333,7 @@
     "title": "Grammy Record of the Year (2019-2025)",
     "prompt": "Name the Grammy Record of the Year winner - accept song title or artist",
     "totalCount": 7,
-    "answers": "[{\"display\":\"Childish Gambino - This Is America\",\"hint\":\"2019 - 61st Grammys\",\"correct\":[\"This Is America\",\"Childish Gambino\"]},{\"display\":\"Billie Eilish - Bad Guy\",\"hint\":\"2020 - 62nd Grammys\",\"correct\":[\"Bad Guy\",\"Billie Eilish Bad Guy\"]},{\"display\":\"Billie Eilish - Everything I Wanted\",\"hint\":\"2021 - 63rd Grammys\",\"correct\":[\"Everything I Wanted\",\"Billie Eilish Everything I Wanted\"]},{\"display\":\"ABBA - I Still Have Faith in You\",\"hint\":\"2022 - 64th Grammys\",\"correct\":[\"I Still Have Faith in You\",\"ABBA I Still Have Faith\",\"ABBA\"]},{\"display\":\"Lizzo - About Damn Time\",\"hint\":\"2023 - 65th Grammys\",\"correct\":[\"About Damn Time\",\"Lizzo About Damn Time\",\"Lizzo\"]},{\"display\":\"Miley Cyrus - Flowers\",\"hint\":\"2024 - 66th Grammys\",\"correct\":[\"Flowers\",\"Miley Cyrus Flowers\",\"Miley Cyrus\"]},{\"display\":\"Kendrick Lamar - Not Like Us\",\"hint\":\"2025 - 67th Grammys\",\"correct\":[\"Not Like Us\",\"Kendrick Lamar Not Like Us\",\"Kendrick Lamar\"]}]"
+    "answers": "[{\"display\":\"Childish Gambino - This Is America\",\"hint\":\"2019\",\"correct\":[\"This Is America\",\"Childish Gambino\"]},{\"display\":\"Billie Eilish - Bad Guy\",\"hint\":\"2020\",\"correct\":[\"Bad Guy\",\"Billie Eilish Bad Guy\"]},{\"display\":\"Billie Eilish - Everything I Wanted\",\"hint\":\"2021\",\"correct\":[\"Everything I Wanted\",\"Billie Eilish Everything I Wanted\"]},{\"display\":\"ABBA - I Still Have Faith in You\",\"hint\":\"2022\",\"correct\":[\"I Still Have Faith in You\",\"ABBA I Still Have Faith\",\"ABBA\"]},{\"display\":\"Lizzo - About Damn Time\",\"hint\":\"2023\",\"correct\":[\"About Damn Time\",\"Lizzo About Damn Time\",\"Lizzo\"]},{\"display\":\"Miley Cyrus - Flowers\",\"hint\":\"2024\",\"correct\":[\"Flowers\",\"Miley Cyrus Flowers\",\"Miley Cyrus\"]},{\"display\":\"Kendrick Lamar - Not Like Us\",\"hint\":\"2025\",\"correct\":[\"Not Like Us\",\"Kendrick Lamar Not Like Us\",\"Kendrick Lamar\"]}]"
   },
   {
     "id": "the-beatles-members",
@@ -341,7 +341,7 @@
     "title": "The Beatles Members",
     "prompt": "Name all four members of The Beatles",
     "totalCount": 4,
-    "answers": "[{\"display\":\"John Lennon\",\"hint\":\"vocals, guitar, songwriter\",\"correct\":[\"John Lennon\",\"Lennon\",\"John\"]},{\"display\":\"Paul McCartney\",\"hint\":\"vocals, bass, songwriter\",\"correct\":[\"Paul McCartney\",\"McCartney\",\"Paul\"]},{\"display\":\"George Harrison\",\"hint\":\"lead guitar, quiet Beatle\",\"correct\":[\"George Harrison\",\"Harrison\",\"George\"]},{\"display\":\"Ringo Starr\",\"hint\":\"drums, born Richard Starkey\",\"correct\":[\"Ringo Starr\",\"Ringo\",\"Starr\"]}]"
+    "answers": "[{\"display\":\"John Lennon\",\"hint\":\"\",\"correct\":[\"John Lennon\",\"Lennon\",\"John\"]},{\"display\":\"Paul McCartney\",\"hint\":\"\",\"correct\":[\"Paul McCartney\",\"McCartney\",\"Paul\"]},{\"display\":\"George Harrison\",\"hint\":\"\",\"correct\":[\"George Harrison\",\"Harrison\",\"George\"]},{\"display\":\"Ringo Starr\",\"hint\":\"\",\"correct\":[\"Ringo Starr\",\"Ringo\",\"Starr\"]}]"
   },
   {
     "id": "spice-girls-members",
@@ -349,7 +349,7 @@
     "title": "Spice Girls Members",
     "prompt": "Name all five Spice Girls",
     "totalCount": 5,
-    "answers": "[{\"display\":\"Victoria Beckham\",\"hint\":\"Posh Spice\",\"correct\":[\"Victoria Beckham\",\"Victoria Adams\",\"Posh Spice\",\"Victoria\"]},{\"display\":\"Mel B\",\"hint\":\"Scary Spice\",\"correct\":[\"Mel B\",\"Melanie Brown\",\"Scary Spice\",\"Mel Brown\"]},{\"display\":\"Emma Bunton\",\"hint\":\"Baby Spice\",\"correct\":[\"Emma Bunton\",\"Baby Spice\",\"Emma\"]},{\"display\":\"Mel C\",\"hint\":\"Sporty Spice\",\"correct\":[\"Mel C\",\"Melanie Chisholm\",\"Sporty Spice\",\"Mel Chisholm\"]},{\"display\":\"Geri Halliwell\",\"hint\":\"Ginger Spice\",\"correct\":[\"Geri Halliwell\",\"Geri Horner\",\"Ginger Spice\",\"Geri\"]}]"
+    "answers": "[{\"display\":\"Victoria Beckham\",\"hint\":\"\",\"correct\":[\"Victoria Beckham\",\"Victoria Adams\",\"Posh Spice\",\"Victoria\"]},{\"display\":\"Mel B\",\"hint\":\"\",\"correct\":[\"Mel B\",\"Melanie Brown\",\"Scary Spice\",\"Mel Brown\"]},{\"display\":\"Emma Bunton\",\"hint\":\"\",\"correct\":[\"Emma Bunton\",\"Baby Spice\",\"Emma\"]},{\"display\":\"Mel C\",\"hint\":\"\",\"correct\":[\"Mel C\",\"Melanie Chisholm\",\"Sporty Spice\",\"Mel Chisholm\"]},{\"display\":\"Geri Halliwell\",\"hint\":\"\",\"correct\":[\"Geri Halliwell\",\"Geri Horner\",\"Ginger Spice\",\"Geri\"]}]"
   },
   {
     "id": "nsync-members",
@@ -357,7 +357,7 @@
     "title": "NSYNC Members",
     "prompt": "Name all five members of NSYNC",
     "totalCount": 5,
-    "answers": "[{\"display\":\"Justin Timberlake\",\"hint\":\"solo megastar\",\"correct\":[\"Justin Timberlake\",\"JT\",\"Justin\"]},{\"display\":\"JC Chasez\",\"hint\":\"co-lead vocalist\",\"correct\":[\"JC Chasez\",\"JC\",\"Joshua Chasez\"]},{\"display\":\"Chris Kirkpatrick\",\"hint\":\"founding member\",\"correct\":[\"Chris Kirkpatrick\",\"Chris\"]},{\"display\":\"Joey Fatone\",\"hint\":\"actor and singer\",\"correct\":[\"Joey Fatone\",\"Joey\"]},{\"display\":\"Lance Bass\",\"hint\":\"bass vocalist, aspiring astronaut\",\"correct\":[\"Lance Bass\",\"Lance\"]}]"
+    "answers": "[{\"display\":\"Justin Timberlake\",\"hint\":\"\",\"correct\":[\"Justin Timberlake\",\"JT\",\"Justin\"]},{\"display\":\"JC Chasez\",\"hint\":\"\",\"correct\":[\"JC Chasez\",\"JC\",\"Joshua Chasez\"]},{\"display\":\"Chris Kirkpatrick\",\"hint\":\"\",\"correct\":[\"Chris Kirkpatrick\",\"Chris\"]},{\"display\":\"Joey Fatone\",\"hint\":\"\",\"correct\":[\"Joey Fatone\",\"Joey\"]},{\"display\":\"Lance Bass\",\"hint\":\"\",\"correct\":[\"Lance Bass\",\"Lance\"]}]"
   },
   {
     "id": "backstreet-boys-members",
@@ -365,7 +365,7 @@
     "title": "Backstreet Boys Members",
     "prompt": "Name all five Backstreet Boys",
     "totalCount": 5,
-    "answers": "[{\"display\":\"A.J. McLean\",\"hint\":\"Bone\",\"correct\":[\"A.J. McLean\",\"AJ McLean\",\"AJ\",\"Alexander McLean\"]},{\"display\":\"Howie Dorough\",\"hint\":\"Sweet D\",\"correct\":[\"Howie Dorough\",\"Howie D\",\"Howie\"]},{\"display\":\"Nick Carter\",\"hint\":\"youngest original member\",\"correct\":[\"Nick Carter\",\"Nick\"]},{\"display\":\"Kevin Richardson\",\"hint\":\"left briefly in 2006, returned in 2012\",\"correct\":[\"Kevin Richardson\",\"Kevin\"]},{\"display\":\"Brian Littrell\",\"hint\":\"Rok\",\"correct\":[\"Brian Littrell\",\"Brian\"]}]"
+    "answers": "[{\"display\":\"A.J. McLean\",\"hint\":\"\",\"correct\":[\"A.J. McLean\",\"AJ McLean\",\"AJ\",\"Alexander McLean\"]},{\"display\":\"Howie Dorough\",\"hint\":\"\",\"correct\":[\"Howie Dorough\",\"Howie D\",\"Howie\"]},{\"display\":\"Nick Carter\",\"hint\":\"\",\"correct\":[\"Nick Carter\",\"Nick\"]},{\"display\":\"Kevin Richardson\",\"hint\":\"\",\"correct\":[\"Kevin Richardson\",\"Kevin\"]},{\"display\":\"Brian Littrell\",\"hint\":\"\",\"correct\":[\"Brian Littrell\",\"Brian\"]}]"
   },
   {
     "id": "destinys-child-members",
@@ -373,7 +373,7 @@
     "title": "Destiny's Child Final Lineup",
     "prompt": "Name the three members of Destiny's Child final lineup",
     "totalCount": 3,
-    "answers": "[{\"display\":\"Beyoncé\",\"hint\":\"frontwoman, went solo in 2003\",\"correct\":[\"Beyonce\",\"Beyoncé\"]},{\"display\":\"Kelly Rowland\",\"hint\":\"vocalist, solo career followed\",\"correct\":[\"Kelly Rowland\",\"Kelly\"]},{\"display\":\"Michelle Williams\",\"hint\":\"joined in 2000\",\"correct\":[\"Michelle Williams\",\"Michelle\"]}]"
+    "answers": "[{\"display\":\"Beyoncé\",\"hint\":\"\",\"correct\":[\"Beyonce\",\"Beyoncé\"]},{\"display\":\"Kelly Rowland\",\"hint\":\"\",\"correct\":[\"Kelly Rowland\",\"Kelly\"]},{\"display\":\"Michelle Williams\",\"hint\":\"\",\"correct\":[\"Michelle Williams\",\"Michelle\"]}]"
   },
   {
     "id": "bruno-mars-albums",
@@ -381,7 +381,7 @@
     "title": "Bruno Mars Solo Studio Albums",
     "prompt": "Name all Bruno Mars solo studio albums",
     "totalCount": 3,
-    "answers": "[{\"display\":\"Doo-Wops & Hooligans\",\"hint\":\"2010 - Just the Way You Are era\",\"correct\":[\"Doo-Wops and Hooligans\",\"Doo-Wops & Hooligans\",\"doo wops\"]},{\"display\":\"Unorthodox Jukebox\",\"hint\":\"2012 - Locked Out of Heaven era\",\"correct\":[\"Unorthodox Jukebox\",\"unorthodox jukebox\"]},{\"display\":\"24K Magic\",\"hint\":\"2016 - That's What I Like era\",\"correct\":[\"24K Magic\",\"24k Magic\",\"24 Karat Magic\"]}]"
+    "answers": "[{\"display\":\"Doo-Wops & Hooligans\",\"hint\":\"2010\",\"correct\":[\"Doo-Wops and Hooligans\",\"Doo-Wops & Hooligans\",\"doo wops\"]},{\"display\":\"Unorthodox Jukebox\",\"hint\":\"2012\",\"correct\":[\"Unorthodox Jukebox\",\"unorthodox jukebox\"]},{\"display\":\"24K Magic\",\"hint\":\"2016\",\"correct\":[\"24K Magic\",\"24k Magic\",\"24 Karat Magic\"]}]"
   },
   {
     "id": "katy-perry-albums",
@@ -389,7 +389,7 @@
     "title": "Katy Perry Studio Albums",
     "prompt": "Name all Katy Perry studio albums",
     "totalCount": 6,
-    "answers": "[{\"display\":\"One of the Boys\",\"hint\":\"2008 - debut major label\",\"correct\":[\"One of the Boys\",\"one of the boys\"]},{\"display\":\"Teenage Dream\",\"hint\":\"2010 - five number one singles\",\"correct\":[\"Teenage Dream\",\"teenage dream\"]},{\"display\":\"Prism\",\"hint\":\"2013 - Roar era\",\"correct\":[\"Prism\",\"prism\"]},{\"display\":\"Witness\",\"hint\":\"2017\",\"correct\":[\"Witness\",\"witness\"]},{\"display\":\"Smile\",\"hint\":\"2020\",\"correct\":[\"Smile\",\"smile\"]},{\"display\":\"143\",\"hint\":\"2024\",\"correct\":[\"143\",\"one forty three\"]}]"
+    "answers": "[{\"display\":\"One of the Boys\",\"hint\":\"2008\",\"correct\":[\"One of the Boys\",\"one of the boys\"]},{\"display\":\"Teenage Dream\",\"hint\":\"2010\",\"correct\":[\"Teenage Dream\",\"teenage dream\"]},{\"display\":\"Prism\",\"hint\":\"2013\",\"correct\":[\"Prism\",\"prism\"]},{\"display\":\"Witness\",\"hint\":\"2017\",\"correct\":[\"Witness\",\"witness\"]},{\"display\":\"Smile\",\"hint\":\"2020\",\"correct\":[\"Smile\",\"smile\"]},{\"display\":\"143\",\"hint\":\"2024\",\"correct\":[\"143\",\"one forty three\"]}]"
   },
   {
     "id": "the-weeknd-albums",
@@ -397,7 +397,7 @@
     "title": "The Weeknd Studio Albums",
     "prompt": "Name all The Weeknd studio albums",
     "totalCount": 6,
-    "answers": "[{\"display\":\"Kiss Land\",\"hint\":\"2013 - debut studio album\",\"correct\":[\"Kiss Land\",\"kiss land\"]},{\"display\":\"Beauty Behind the Madness\",\"hint\":\"2015 - Can't Feel My Face era\",\"correct\":[\"Beauty Behind the Madness\",\"beauty behind the madness\",\"BBTM\"]},{\"display\":\"Starboy\",\"hint\":\"2016\",\"correct\":[\"Starboy\",\"starboy\"]},{\"display\":\"After Hours\",\"hint\":\"2020 - Blinding Lights era\",\"correct\":[\"After Hours\",\"after hours\"]},{\"display\":\"Dawn FM\",\"hint\":\"2022\",\"correct\":[\"Dawn FM\",\"dawn fm\"]},{\"display\":\"Hurry Up Tomorrow\",\"hint\":\"2025\",\"correct\":[\"Hurry Up Tomorrow\",\"hurry up tomorrow\"]}]"
+    "answers": "[{\"display\":\"Kiss Land\",\"hint\":\"2013\",\"correct\":[\"Kiss Land\",\"kiss land\"]},{\"display\":\"Beauty Behind the Madness\",\"hint\":\"2015\",\"correct\":[\"Beauty Behind the Madness\",\"beauty behind the madness\",\"BBTM\"]},{\"display\":\"Starboy\",\"hint\":\"2016\",\"correct\":[\"Starboy\",\"starboy\"]},{\"display\":\"After Hours\",\"hint\":\"2020\",\"correct\":[\"After Hours\",\"after hours\"]},{\"display\":\"Dawn FM\",\"hint\":\"2022\",\"correct\":[\"Dawn FM\",\"dawn fm\"]},{\"display\":\"Hurry Up Tomorrow\",\"hint\":\"2025\",\"correct\":[\"Hurry Up Tomorrow\",\"hurry up tomorrow\"]}]"
   },
   {
     "id": "christopher-nolan-films",
@@ -405,7 +405,7 @@
     "title": "Christopher Nolan Films",
     "prompt": "Name all Christopher Nolan feature films as director",
     "totalCount": 12,
-    "answers": "[{\"display\":\"Following\",\"hint\":\"1998 - debut\",\"correct\":[\"Following\"]},{\"display\":\"Memento\",\"hint\":\"2000 - told in reverse\",\"correct\":[\"Memento\"]},{\"display\":\"Insomnia\",\"hint\":\"2002 - Al Pacino and Robin Williams\",\"correct\":[\"Insomnia\"]},{\"display\":\"Batman Begins\",\"hint\":\"2005\",\"correct\":[\"Batman Begins\"]},{\"display\":\"The Prestige\",\"hint\":\"2006 - dueling magicians\",\"correct\":[\"The Prestige\",\"Prestige\"]},{\"display\":\"The Dark Knight\",\"hint\":\"2008 - Heath Ledger's Joker\",\"correct\":[\"The Dark Knight\",\"Dark Knight\"]},{\"display\":\"Inception\",\"hint\":\"2010 - dreams within dreams\",\"correct\":[\"Inception\"]},{\"display\":\"The Dark Knight Rises\",\"hint\":\"2012\",\"correct\":[\"The Dark Knight Rises\",\"Dark Knight Rises\"]},{\"display\":\"Interstellar\",\"hint\":\"2014 - space and time\",\"correct\":[\"Interstellar\"]},{\"display\":\"Dunkirk\",\"hint\":\"2017 - WWII evacuation\",\"correct\":[\"Dunkirk\"]},{\"display\":\"Tenet\",\"hint\":\"2020 - time inversion\",\"correct\":[\"Tenet\"]},{\"display\":\"Oppenheimer\",\"hint\":\"2023 - atomic bomb\",\"correct\":[\"Oppenheimer\"]}]"
+    "answers": "[{\"display\":\"Following\",\"hint\":\"1998\",\"correct\":[\"Following\"]},{\"display\":\"Memento\",\"hint\":\"2000\",\"correct\":[\"Memento\"]},{\"display\":\"Insomnia\",\"hint\":\"2002\",\"correct\":[\"Insomnia\"]},{\"display\":\"Batman Begins\",\"hint\":\"2005\",\"correct\":[\"Batman Begins\"]},{\"display\":\"The Prestige\",\"hint\":\"2006\",\"correct\":[\"The Prestige\",\"Prestige\"]},{\"display\":\"The Dark Knight\",\"hint\":\"2008\",\"correct\":[\"The Dark Knight\",\"Dark Knight\"]},{\"display\":\"Inception\",\"hint\":\"2010\",\"correct\":[\"Inception\"]},{\"display\":\"The Dark Knight Rises\",\"hint\":\"2012\",\"correct\":[\"The Dark Knight Rises\",\"Dark Knight Rises\"]},{\"display\":\"Interstellar\",\"hint\":\"2014\",\"correct\":[\"Interstellar\"]},{\"display\":\"Dunkirk\",\"hint\":\"2017\",\"correct\":[\"Dunkirk\"]},{\"display\":\"Tenet\",\"hint\":\"2020\",\"correct\":[\"Tenet\"]},{\"display\":\"Oppenheimer\",\"hint\":\"2023\",\"correct\":[\"Oppenheimer\"]}]"
   },
   {
     "id": "tarantino-films",
@@ -413,7 +413,7 @@
     "title": "Quentin Tarantino Films",
     "prompt": "Name all Quentin Tarantino feature films as director",
     "totalCount": 10,
-    "answers": "[{\"display\":\"Reservoir Dogs\",\"hint\":\"1992 - debut\",\"correct\":[\"Reservoir Dogs\",\"reservoir dogs\"]},{\"display\":\"Pulp Fiction\",\"hint\":\"1994 - Palme d'Or winner\",\"correct\":[\"Pulp Fiction\",\"pulp fiction\"]},{\"display\":\"Jackie Brown\",\"hint\":\"1997 - Pam Grier\",\"correct\":[\"Jackie Brown\",\"jackie brown\"]},{\"display\":\"Kill Bill: Volume 1\",\"hint\":\"2003 - The Bride's revenge begins\",\"correct\":[\"Kill Bill Volume 1\",\"Kill Bill Vol 1\",\"Kill Bill 1\",\"Kill Bill\"]},{\"display\":\"Kill Bill: Volume 2\",\"hint\":\"2004 - The Bride's revenge concludes\",\"correct\":[\"Kill Bill Volume 2\",\"Kill Bill Vol 2\",\"Kill Bill 2\"]},{\"display\":\"Death Proof\",\"hint\":\"2007 - grindhouse slasher\",\"correct\":[\"Death Proof\",\"death proof\"]},{\"display\":\"Inglourious Basterds\",\"hint\":\"2009 - WWII alt-history\",\"correct\":[\"Inglourious Basterds\",\"Inglorious Basterds\",\"inglourious basterds\"]},{\"display\":\"Django Unchained\",\"hint\":\"2012 - Jamie Foxx, Leonardo DiCaprio\",\"correct\":[\"Django Unchained\",\"django unchained\",\"Django\"]},{\"display\":\"The Hateful Eight\",\"hint\":\"2015 - snowed-in western\",\"correct\":[\"The Hateful Eight\",\"Hateful Eight\",\"hateful eight\"]},{\"display\":\"Once Upon a Time in Hollywood\",\"hint\":\"2019 - 1969 Los Angeles\",\"correct\":[\"Once Upon a Time in Hollywood\",\"once upon a time in hollywood\",\"OUATIH\"]}]"
+    "answers": "[{\"display\":\"Reservoir Dogs\",\"hint\":\"1992\",\"correct\":[\"Reservoir Dogs\",\"reservoir dogs\"]},{\"display\":\"Pulp Fiction\",\"hint\":\"1994\",\"correct\":[\"Pulp Fiction\",\"pulp fiction\"]},{\"display\":\"Jackie Brown\",\"hint\":\"1997\",\"correct\":[\"Jackie Brown\",\"jackie brown\"]},{\"display\":\"Kill Bill: Volume 1\",\"hint\":\"2003\",\"correct\":[\"Kill Bill Volume 1\",\"Kill Bill Vol 1\",\"Kill Bill 1\",\"Kill Bill\"]},{\"display\":\"Kill Bill: Volume 2\",\"hint\":\"2004\",\"correct\":[\"Kill Bill Volume 2\",\"Kill Bill Vol 2\",\"Kill Bill 2\"]},{\"display\":\"Death Proof\",\"hint\":\"2007\",\"correct\":[\"Death Proof\",\"death proof\"]},{\"display\":\"Inglourious Basterds\",\"hint\":\"2009\",\"correct\":[\"Inglourious Basterds\",\"Inglorious Basterds\",\"inglourious basterds\"]},{\"display\":\"Django Unchained\",\"hint\":\"2012\",\"correct\":[\"Django Unchained\",\"django unchained\",\"Django\"]},{\"display\":\"The Hateful Eight\",\"hint\":\"2015\",\"correct\":[\"The Hateful Eight\",\"Hateful Eight\",\"hateful eight\"]},{\"display\":\"Once Upon a Time in Hollywood\",\"hint\":\"2019\",\"correct\":[\"Once Upon a Time in Hollywood\",\"once upon a time in hollywood\",\"OUATIH\"]}]"
   },
   {
     "id": "oscar-best-actor-2010-2025",
@@ -421,7 +421,7 @@
     "title": "Oscar Best Actor Winners (2010-2025)",
     "prompt": "Name every Oscar Best Actor winner from 2010 to 2025 - accept actor or film",
     "totalCount": 16,
-    "answers": "[{\"display\":\"Jeff Bridges - Crazy Heart\",\"hint\":\"2010 - 82nd Oscars\",\"correct\":[\"Jeff Bridges\",\"Crazy Heart\",\"Jeff Bridges Crazy Heart\"]},{\"display\":\"Colin Firth - The King's Speech\",\"hint\":\"2011\",\"correct\":[\"Colin Firth\",\"The King's Speech\",\"King's Speech\"]},{\"display\":\"Jean Dujardin - The Artist\",\"hint\":\"2012\",\"correct\":[\"Jean Dujardin\",\"The Artist\"]},{\"display\":\"Daniel Day-Lewis - Lincoln\",\"hint\":\"2013\",\"correct\":[\"Daniel Day-Lewis\",\"Lincoln\"]},{\"display\":\"Matthew McConaughey - Dallas Buyers Club\",\"hint\":\"2014\",\"correct\":[\"Matthew McConaughey\",\"Dallas Buyers Club\"]},{\"display\":\"Eddie Redmayne - The Theory of Everything\",\"hint\":\"2015\",\"correct\":[\"Eddie Redmayne\",\"The Theory of Everything\",\"Theory of Everything\"]},{\"display\":\"Leonardo DiCaprio - The Revenant\",\"hint\":\"2016 - finally!\",\"correct\":[\"Leonardo DiCaprio\",\"Leonardo\",\"Leo DiCaprio\",\"The Revenant\",\"Revenant\"]},{\"display\":\"Casey Affleck - Manchester by the Sea\",\"hint\":\"2017\",\"correct\":[\"Casey Affleck\",\"Manchester by the Sea\",\"Manchester\"]},{\"display\":\"Gary Oldman - Darkest Hour\",\"hint\":\"2018 - Churchill\",\"correct\":[\"Gary Oldman\",\"Darkest Hour\"]},{\"display\":\"Rami Malek - Bohemian Rhapsody\",\"hint\":\"2019 - Freddie Mercury\",\"correct\":[\"Rami Malek\",\"Bohemian Rhapsody\"]},{\"display\":\"Joaquin Phoenix - Joker\",\"hint\":\"2020\",\"correct\":[\"Joaquin Phoenix\",\"Joker\",\"Joaquin\"]},{\"display\":\"Anthony Hopkins - The Father\",\"hint\":\"2021\",\"correct\":[\"Anthony Hopkins\",\"The Father\"]},{\"display\":\"Will Smith - King Richard\",\"hint\":\"2022\",\"correct\":[\"Will Smith\",\"King Richard\"]},{\"display\":\"Brendan Fraser - The Whale\",\"hint\":\"2023 - comeback\",\"correct\":[\"Brendan Fraser\",\"The Whale\",\"Brendan\"]},{\"display\":\"Cillian Murphy - Oppenheimer\",\"hint\":\"2024\",\"correct\":[\"Cillian Murphy\",\"Cillian\",\"Oppenheimer\"]},{\"display\":\"Adrien Brody - The Brutalist\",\"hint\":\"2025\",\"correct\":[\"Adrien Brody\",\"The Brutalist\",\"Adrien\"]}]"
+    "answers": "[{\"display\":\"Jeff Bridges - Crazy Heart\",\"hint\":\"2010\",\"correct\":[\"Jeff Bridges\",\"Crazy Heart\",\"Jeff Bridges Crazy Heart\"]},{\"display\":\"Colin Firth - The King's Speech\",\"hint\":\"2011\",\"correct\":[\"Colin Firth\",\"The King's Speech\",\"King's Speech\"]},{\"display\":\"Jean Dujardin - The Artist\",\"hint\":\"2012\",\"correct\":[\"Jean Dujardin\",\"The Artist\"]},{\"display\":\"Daniel Day-Lewis - Lincoln\",\"hint\":\"2013\",\"correct\":[\"Daniel Day-Lewis\",\"Lincoln\"]},{\"display\":\"Matthew McConaughey - Dallas Buyers Club\",\"hint\":\"2014\",\"correct\":[\"Matthew McConaughey\",\"Dallas Buyers Club\"]},{\"display\":\"Eddie Redmayne - The Theory of Everything\",\"hint\":\"2015\",\"correct\":[\"Eddie Redmayne\",\"The Theory of Everything\",\"Theory of Everything\"]},{\"display\":\"Leonardo DiCaprio - The Revenant\",\"hint\":\"2016\",\"correct\":[\"Leonardo DiCaprio\",\"Leonardo\",\"Leo DiCaprio\",\"The Revenant\",\"Revenant\"]},{\"display\":\"Casey Affleck - Manchester by the Sea\",\"hint\":\"2017\",\"correct\":[\"Casey Affleck\",\"Manchester by the Sea\",\"Manchester\"]},{\"display\":\"Gary Oldman - Darkest Hour\",\"hint\":\"2018\",\"correct\":[\"Gary Oldman\",\"Darkest Hour\"]},{\"display\":\"Rami Malek - Bohemian Rhapsody\",\"hint\":\"2019\",\"correct\":[\"Rami Malek\",\"Bohemian Rhapsody\"]},{\"display\":\"Joaquin Phoenix - Joker\",\"hint\":\"2020\",\"correct\":[\"Joaquin Phoenix\",\"Joker\",\"Joaquin\"]},{\"display\":\"Anthony Hopkins - The Father\",\"hint\":\"2021\",\"correct\":[\"Anthony Hopkins\",\"The Father\"]},{\"display\":\"Will Smith - King Richard\",\"hint\":\"2022\",\"correct\":[\"Will Smith\",\"King Richard\"]},{\"display\":\"Brendan Fraser - The Whale\",\"hint\":\"2023\",\"correct\":[\"Brendan Fraser\",\"The Whale\",\"Brendan\"]},{\"display\":\"Cillian Murphy - Oppenheimer\",\"hint\":\"2024\",\"correct\":[\"Cillian Murphy\",\"Cillian\",\"Oppenheimer\"]},{\"display\":\"Adrien Brody - The Brutalist\",\"hint\":\"2025\",\"correct\":[\"Adrien Brody\",\"The Brutalist\",\"Adrien\"]}]"
   },
   {
     "id": "oscar-best-director-2010-2025",
@@ -429,7 +429,7 @@
     "title": "Oscar Best Director Winners (2010-2025)",
     "prompt": "Name every Oscar Best Director winner from 2010 to 2025 - accept director or film",
     "totalCount": 16,
-    "answers": "[{\"display\":\"Kathryn Bigelow - The Hurt Locker\",\"hint\":\"2010 - first woman to win\",\"correct\":[\"Kathryn Bigelow\",\"The Hurt Locker\",\"Hurt Locker\"]},{\"display\":\"Tom Hooper - The King's Speech\",\"hint\":\"2011\",\"correct\":[\"Tom Hooper\",\"The King's Speech\",\"King's Speech\"]},{\"display\":\"Michel Hazanavicius - The Artist\",\"hint\":\"2012\",\"correct\":[\"Michel Hazanavicius\",\"The Artist\"]},{\"display\":\"Ang Lee - Life of Pi\",\"hint\":\"2013\",\"correct\":[\"Ang Lee\",\"Life of Pi\"]},{\"display\":\"Alfonso Cuaron - Gravity\",\"hint\":\"2014\",\"correct\":[\"Alfonso Cuaron\",\"Alfonso Cuarón\",\"Gravity\"]},{\"display\":\"Alejandro Inarritu - Birdman\",\"hint\":\"2015\",\"correct\":[\"Alejandro Inarritu\",\"Alejandro Iñárritu\",\"Birdman\"]},{\"display\":\"Alejandro Inarritu - The Revenant\",\"hint\":\"2016 - back-to-back wins\",\"correct\":[\"Alejandro Inarritu\",\"Alejandro Iñárritu\",\"The Revenant\",\"Revenant\"]},{\"display\":\"Damien Chazelle - La La Land\",\"hint\":\"2017 - youngest Best Director\",\"correct\":[\"Damien Chazelle\",\"La La Land\"]},{\"display\":\"Guillermo del Toro - The Shape of Water\",\"hint\":\"2018\",\"correct\":[\"Guillermo del Toro\",\"The Shape of Water\",\"Shape of Water\"]},{\"display\":\"Alfonso Cuaron - Roma\",\"hint\":\"2019 - back-to-back wins\",\"correct\":[\"Alfonso Cuaron\",\"Alfonso Cuarón\",\"Roma\"]},{\"display\":\"Bong Joon-ho - Parasite\",\"hint\":\"2020 - first non-English winner\",\"correct\":[\"Bong Joon-ho\",\"Bong Joon Ho\",\"Parasite\"]},{\"display\":\"Chloe Zhao - Nomadland\",\"hint\":\"2021\",\"correct\":[\"Chloe Zhao\",\"Chloé Zhao\",\"Nomadland\"]},{\"display\":\"Jane Campion - The Power of the Dog\",\"hint\":\"2022\",\"correct\":[\"Jane Campion\",\"The Power of the Dog\",\"Power of the Dog\"]},{\"display\":\"Daniels - Everything Everywhere All at Once\",\"hint\":\"2023 - Daniel Kwan and Daniel Scheinert\",\"correct\":[\"Daniels\",\"Daniel Kwan\",\"Daniel Scheinert\",\"Everything Everywhere All at Once\",\"EEAAO\"]},{\"display\":\"Christopher Nolan - Oppenheimer\",\"hint\":\"2024\",\"correct\":[\"Christopher Nolan\",\"Nolan\",\"Oppenheimer\"]},{\"display\":\"Brady Corbet - The Brutalist\",\"hint\":\"2025\",\"correct\":[\"Brady Corbet\",\"The Brutalist\"]}]"
+    "answers": "[{\"display\":\"Kathryn Bigelow - The Hurt Locker\",\"hint\":\"2010\",\"correct\":[\"Kathryn Bigelow\",\"The Hurt Locker\",\"Hurt Locker\"]},{\"display\":\"Tom Hooper - The King's Speech\",\"hint\":\"2011\",\"correct\":[\"Tom Hooper\",\"The King's Speech\",\"King's Speech\"]},{\"display\":\"Michel Hazanavicius - The Artist\",\"hint\":\"2012\",\"correct\":[\"Michel Hazanavicius\",\"The Artist\"]},{\"display\":\"Ang Lee - Life of Pi\",\"hint\":\"2013\",\"correct\":[\"Ang Lee\",\"Life of Pi\"]},{\"display\":\"Alfonso Cuaron - Gravity\",\"hint\":\"2014\",\"correct\":[\"Alfonso Cuaron\",\"Alfonso Cuarón\",\"Gravity\"]},{\"display\":\"Alejandro Inarritu - Birdman\",\"hint\":\"2015\",\"correct\":[\"Alejandro Inarritu\",\"Alejandro Iñárritu\",\"Birdman\"]},{\"display\":\"Alejandro Inarritu - The Revenant\",\"hint\":\"2016\",\"correct\":[\"Alejandro Inarritu\",\"Alejandro Iñárritu\",\"The Revenant\",\"Revenant\"]},{\"display\":\"Damien Chazelle - La La Land\",\"hint\":\"2017\",\"correct\":[\"Damien Chazelle\",\"La La Land\"]},{\"display\":\"Guillermo del Toro - The Shape of Water\",\"hint\":\"2018\",\"correct\":[\"Guillermo del Toro\",\"The Shape of Water\",\"Shape of Water\"]},{\"display\":\"Alfonso Cuaron - Roma\",\"hint\":\"2019\",\"correct\":[\"Alfonso Cuaron\",\"Alfonso Cuarón\",\"Roma\"]},{\"display\":\"Bong Joon-ho - Parasite\",\"hint\":\"2020\",\"correct\":[\"Bong Joon-ho\",\"Bong Joon Ho\",\"Parasite\"]},{\"display\":\"Chloe Zhao - Nomadland\",\"hint\":\"2021\",\"correct\":[\"Chloe Zhao\",\"Chloé Zhao\",\"Nomadland\"]},{\"display\":\"Jane Campion - The Power of the Dog\",\"hint\":\"2022\",\"correct\":[\"Jane Campion\",\"The Power of the Dog\",\"Power of the Dog\"]},{\"display\":\"Daniels - Everything Everywhere All at Once\",\"hint\":\"2023\",\"correct\":[\"Daniels\",\"Daniel Kwan\",\"Daniel Scheinert\",\"Everything Everywhere All at Once\",\"EEAAO\"]},{\"display\":\"Christopher Nolan - Oppenheimer\",\"hint\":\"2024\",\"correct\":[\"Christopher Nolan\",\"Nolan\",\"Oppenheimer\"]},{\"display\":\"Brady Corbet - The Brutalist\",\"hint\":\"2025\",\"correct\":[\"Brady Corbet\",\"The Brutalist\"]}]"
   },
   {
     "id": "us-presidents-since-1990",
@@ -437,7 +437,7 @@
     "title": "US Presidents Since 1990",
     "prompt": "Name every person who has served as US President since 1990",
     "totalCount": 6,
-    "answers": "[{\"display\":\"George H.W. Bush\",\"hint\":\"41st President (1989-1993)\",\"correct\":[\"George H.W. Bush\",\"George Bush\",\"George Herbert Walker Bush\",\"Bush Sr\",\"GHWB\"]},{\"display\":\"Bill Clinton\",\"hint\":\"42nd President (1993-2001)\",\"correct\":[\"Bill Clinton\",\"William Clinton\",\"Clinton\"]},{\"display\":\"George W. Bush\",\"hint\":\"43rd President (2001-2009)\",\"correct\":[\"George W. Bush\",\"George W Bush\",\"Bush Jr\",\"W\"]},{\"display\":\"Barack Obama\",\"hint\":\"44th President (2009-2017)\",\"correct\":[\"Barack Obama\",\"Obama\",\"Barack\"]},{\"display\":\"Donald Trump\",\"hint\":\"45th and 47th President\",\"correct\":[\"Donald Trump\",\"Trump\",\"Donald\"]},{\"display\":\"Joe Biden\",\"hint\":\"46th President (2021-2025)\",\"correct\":[\"Joe Biden\",\"Biden\",\"Joseph Biden\"]}]"
+    "answers": "[{\"display\":\"George H.W. Bush\",\"hint\":\"1989\",\"correct\":[\"George H.W. Bush\",\"George Bush\",\"George Herbert Walker Bush\",\"Bush Sr\",\"GHWB\"]},{\"display\":\"Bill Clinton\",\"hint\":\"1993\",\"correct\":[\"Bill Clinton\",\"William Clinton\",\"Clinton\"]},{\"display\":\"George W. Bush\",\"hint\":\"2001\",\"correct\":[\"George W. Bush\",\"George W Bush\",\"Bush Jr\",\"W\"]},{\"display\":\"Barack Obama\",\"hint\":\"2009\",\"correct\":[\"Barack Obama\",\"Obama\",\"Barack\"]},{\"display\":\"Donald Trump\",\"hint\":\"45th and 47th President\",\"correct\":[\"Donald Trump\",\"Trump\",\"Donald\"]},{\"display\":\"Joe Biden\",\"hint\":\"2021\",\"correct\":[\"Joe Biden\",\"Biden\",\"Joseph Biden\"]}]"
   },
   {
     "id": "ivy-league-universities",
@@ -445,7 +445,7 @@
     "title": "Ivy League Universities",
     "prompt": "Name all eight Ivy League universities",
     "totalCount": 8,
-    "answers": "[{\"display\":\"Harvard University\",\"hint\":\"Cambridge, Massachusetts\",\"correct\":[\"Harvard\",\"Harvard University\"]},{\"display\":\"Yale University\",\"hint\":\"New Haven, Connecticut\",\"correct\":[\"Yale\",\"Yale University\"]},{\"display\":\"Princeton University\",\"hint\":\"Princeton, New Jersey\",\"correct\":[\"Princeton\",\"Princeton University\"]},{\"display\":\"Columbia University\",\"hint\":\"New York City\",\"correct\":[\"Columbia\",\"Columbia University\"]},{\"display\":\"University of Pennsylvania\",\"hint\":\"Philadelphia - Wharton School\",\"correct\":[\"University of Pennsylvania\",\"Penn\",\"UPenn\"]},{\"display\":\"Brown University\",\"hint\":\"Providence, Rhode Island\",\"correct\":[\"Brown\",\"Brown University\"]},{\"display\":\"Dartmouth College\",\"hint\":\"Hanover, New Hampshire\",\"correct\":[\"Dartmouth\",\"Dartmouth College\"]},{\"display\":\"Cornell University\",\"hint\":\"Ithaca, New York\",\"correct\":[\"Cornell\",\"Cornell University\"]}]"
+    "answers": "[{\"display\":\"Harvard University\",\"hint\":\"Cambridge, Massachusetts\",\"correct\":[\"Harvard\",\"Harvard University\"]},{\"display\":\"Yale University\",\"hint\":\"New Haven, Connecticut\",\"correct\":[\"Yale\",\"Yale University\"]},{\"display\":\"Princeton University\",\"hint\":\"Princeton, New Jersey\",\"correct\":[\"Princeton\",\"Princeton University\"]},{\"display\":\"Columbia University\",\"hint\":\"New York City\",\"correct\":[\"Columbia\",\"Columbia University\"]},{\"display\":\"University of Pennsylvania\",\"hint\":\"Philadelphia\",\"correct\":[\"University of Pennsylvania\",\"Penn\",\"UPenn\"]},{\"display\":\"Brown University\",\"hint\":\"Providence, Rhode Island\",\"correct\":[\"Brown\",\"Brown University\"]},{\"display\":\"Dartmouth College\",\"hint\":\"Hanover, New Hampshire\",\"correct\":[\"Dartmouth\",\"Dartmouth College\"]},{\"display\":\"Cornell University\",\"hint\":\"Ithaca, New York\",\"correct\":[\"Cornell\",\"Cornell University\"]}]"
   },
   {
     "id": "planets-solar-system",
@@ -453,7 +453,7 @@
     "title": "Planets in Our Solar System",
     "prompt": "Name all eight planets in our solar system (in order from the sun)",
     "totalCount": 8,
-    "answers": "[{\"display\":\"Mercury\",\"hint\":\"1st - closest to the sun\",\"correct\":[\"Mercury\"]},{\"display\":\"Venus\",\"hint\":\"2nd - hottest planet\",\"correct\":[\"Venus\"]},{\"display\":\"Earth\",\"hint\":\"3rd - home\",\"correct\":[\"Earth\"]},{\"display\":\"Mars\",\"hint\":\"4th - the Red Planet\",\"correct\":[\"Mars\"]},{\"display\":\"Jupiter\",\"hint\":\"5th - largest planet\",\"correct\":[\"Jupiter\"]},{\"display\":\"Saturn\",\"hint\":\"6th - famous rings\",\"correct\":[\"Saturn\"]},{\"display\":\"Uranus\",\"hint\":\"7th - rotates on its side\",\"correct\":[\"Uranus\"]},{\"display\":\"Neptune\",\"hint\":\"8th - furthest from the sun\",\"correct\":[\"Neptune\"]}]"
+    "answers": "[{\"display\":\"Mercury\",\"hint\":\"1st\",\"correct\":[\"Mercury\"]},{\"display\":\"Venus\",\"hint\":\"2nd\",\"correct\":[\"Venus\"]},{\"display\":\"Earth\",\"hint\":\"3rd\",\"correct\":[\"Earth\"]},{\"display\":\"Mars\",\"hint\":\"4th\",\"correct\":[\"Mars\"]},{\"display\":\"Jupiter\",\"hint\":\"5th\",\"correct\":[\"Jupiter\"]},{\"display\":\"Saturn\",\"hint\":\"6th\",\"correct\":[\"Saturn\"]},{\"display\":\"Uranus\",\"hint\":\"7th\",\"correct\":[\"Uranus\"]},{\"display\":\"Neptune\",\"hint\":\"8th\",\"correct\":[\"Neptune\"]}]"
   },
   {
     "id": "fifa-world-cup-winners-1998",
@@ -461,7 +461,7 @@
     "title": "FIFA World Cup Winners Since 1998",
     "prompt": "Name every country to win the FIFA World Cup from 1998 to 2022",
     "totalCount": 6,
-    "answers": "[{\"display\":\"France\",\"hint\":\"1998 • hosted and won; also 2018\",\"correct\":[\"France\"]},{\"display\":\"Brazil\",\"hint\":\"2002 • Ronaldo's redemption\",\"correct\":[\"Brazil\"]},{\"display\":\"Italy\",\"hint\":\"2006 • Zidane headbutt final\",\"correct\":[\"Italy\"]},{\"display\":\"Spain\",\"hint\":\"2010 • first European team to win in the Americas\",\"correct\":[\"Spain\"]},{\"display\":\"Germany\",\"hint\":\"2014 • 7-1 vs Brazil\",\"correct\":[\"Germany\"]},{\"display\":\"Argentina\",\"hint\":\"2022 • Messi finally wins it\",\"correct\":[\"Argentina\"]}]"
+    "answers": "[{\"display\":\"France\",\"hint\":\"1998\",\"correct\":[\"France\"]},{\"display\":\"Brazil\",\"hint\":\"2002\",\"correct\":[\"Brazil\"]},{\"display\":\"Italy\",\"hint\":\"2006\",\"correct\":[\"Italy\"]},{\"display\":\"Spain\",\"hint\":\"2010\",\"correct\":[\"Spain\"]},{\"display\":\"Germany\",\"hint\":\"2014\",\"correct\":[\"Germany\"]},{\"display\":\"Argentina\",\"hint\":\"2022\",\"correct\":[\"Argentina\"]}]"
   },
   {
     "id": "seinfeld-characters",
@@ -469,7 +469,7 @@
     "title": "Seinfeld Main Characters",
     "prompt": "Name the four main characters from Seinfeld",
     "totalCount": 4,
-    "answers": "[{\"display\":\"Jerry Seinfeld\",\"hint\":\"the comedian\",\"correct\":[\"Jerry Seinfeld\",\"Jerry\",\"Seinfeld\"]},{\"display\":\"George Costanza\",\"hint\":\"short, stocky, slow-witted, bald man\",\"correct\":[\"George Costanza\",\"George\",\"Costanza\"]},{\"display\":\"Elaine Benes\",\"hint\":\"Jerry's ex-girlfriend\",\"correct\":[\"Elaine Benes\",\"Elaine\"]},{\"display\":\"Cosmo Kramer\",\"hint\":\"the wacky neighbor\",\"correct\":[\"Cosmo Kramer\",\"Kramer\",\"Cosmo\"]}]"
+    "answers": "[{\"display\":\"Jerry Seinfeld\",\"hint\":\"\",\"correct\":[\"Jerry Seinfeld\",\"Jerry\",\"Seinfeld\"]},{\"display\":\"George Costanza\",\"hint\":\"\",\"correct\":[\"George Costanza\",\"George\",\"Costanza\"]},{\"display\":\"Elaine Benes\",\"hint\":\"\",\"correct\":[\"Elaine Benes\",\"Elaine\"]},{\"display\":\"Cosmo Kramer\",\"hint\":\"\",\"correct\":[\"Cosmo Kramer\",\"Kramer\",\"Cosmo\"]}]"
   },
   {
     "id": "himym-characters",
@@ -477,7 +477,7 @@
     "title": "How I Met Your Mother Main Characters",
     "prompt": "Name the five main characters from How I Met Your Mother",
     "totalCount": 5,
-    "answers": "[{\"display\":\"Ted Mosby\",\"hint\":\"the architect narrator\",\"correct\":[\"Ted Mosby\",\"Ted\",\"Mosby\"]},{\"display\":\"Marshall Eriksen\",\"hint\":\"the lawyer\",\"correct\":[\"Marshall Eriksen\",\"Marshall\"]},{\"display\":\"Lily Aldrin\",\"hint\":\"the kindergarten teacher\",\"correct\":[\"Lily Aldrin\",\"Lily\"]},{\"display\":\"Barney Stinson\",\"hint\":\"LEGENDARY\",\"correct\":[\"Barney Stinson\",\"Barney\"]},{\"display\":\"Robin Scherbatsky\",\"hint\":\"the Canadian journalist\",\"correct\":[\"Robin Scherbatsky\",\"Robin\"]}]"
+    "answers": "[{\"display\":\"Ted Mosby\",\"hint\":\"\",\"correct\":[\"Ted Mosby\",\"Ted\",\"Mosby\"]},{\"display\":\"Marshall Eriksen\",\"hint\":\"\",\"correct\":[\"Marshall Eriksen\",\"Marshall\"]},{\"display\":\"Lily Aldrin\",\"hint\":\"\",\"correct\":[\"Lily Aldrin\",\"Lily\"]},{\"display\":\"Barney Stinson\",\"hint\":\"\",\"correct\":[\"Barney Stinson\",\"Barney\"]},{\"display\":\"Robin Scherbatsky\",\"hint\":\"\",\"correct\":[\"Robin Scherbatsky\",\"Robin\"]}]"
   },
   {
     "id": "big-bang-theory-characters",
@@ -485,7 +485,7 @@
     "title": "The Big Bang Theory Main Characters",
     "prompt": "Name the seven main characters from The Big Bang Theory",
     "totalCount": 7,
-    "answers": "[{\"display\":\"Sheldon Cooper\",\"hint\":\"theoretical physicist, bazinga!\",\"correct\":[\"Sheldon Cooper\",\"Sheldon\"]},{\"display\":\"Leonard Hofstadter\",\"hint\":\"experimental physicist\",\"correct\":[\"Leonard Hofstadter\",\"Leonard\"]},{\"display\":\"Penny\",\"hint\":\"the neighbor turned actress / pharma sales\",\"correct\":[\"Penny\",\"Penny Hofstadter\"]},{\"display\":\"Howard Wolowitz\",\"hint\":\"aerospace engineer, went to space\",\"correct\":[\"Howard Wolowitz\",\"Howard\"]},{\"display\":\"Raj Koothrappali\",\"hint\":\"astrophysicist from India\",\"correct\":[\"Raj Koothrappali\",\"Raj\",\"Rajesh Koothrappali\"]},{\"display\":\"Bernadette Rostenkowski\",\"hint\":\"microbiologist, married Howard\",\"correct\":[\"Bernadette Rostenkowski\",\"Bernadette\"]},{\"display\":\"Amy Farrah Fowler\",\"hint\":\"neurobiologist, Sheldon's girlfriend/wife\",\"correct\":[\"Amy Farrah Fowler\",\"Amy\"]}]"
+    "answers": "[{\"display\":\"Sheldon Cooper\",\"hint\":\"\",\"correct\":[\"Sheldon Cooper\",\"Sheldon\"]},{\"display\":\"Leonard Hofstadter\",\"hint\":\"\",\"correct\":[\"Leonard Hofstadter\",\"Leonard\"]},{\"display\":\"Penny\",\"hint\":\"\",\"correct\":[\"Penny\",\"Penny Hofstadter\"]},{\"display\":\"Howard Wolowitz\",\"hint\":\"\",\"correct\":[\"Howard Wolowitz\",\"Howard\"]},{\"display\":\"Raj Koothrappali\",\"hint\":\"\",\"correct\":[\"Raj Koothrappali\",\"Raj\",\"Rajesh Koothrappali\"]},{\"display\":\"Bernadette Rostenkowski\",\"hint\":\"\",\"correct\":[\"Bernadette Rostenkowski\",\"Bernadette\"]},{\"display\":\"Amy Farrah Fowler\",\"hint\":\"\",\"correct\":[\"Amy Farrah Fowler\",\"Amy\"]}]"
   },
   {
     "id": "justin-timberlake-albums",
@@ -493,7 +493,7 @@
     "title": "Justin Timberlake Studio Albums",
     "prompt": "Name all Justin Timberlake studio albums",
     "totalCount": 6,
-    "answers": "[{\"display\":\"Justified\",\"hint\":\"2002 - debut solo\",\"correct\":[\"Justified\"]},{\"display\":\"FutureSex/LoveSounds\",\"hint\":\"2006 - SexyBack era\",\"correct\":[\"FutureSex/LoveSounds\",\"FutureSex LoveSounds\",\"Future Sex Love Sounds\"]},{\"display\":\"The 20/20 Experience\",\"hint\":\"2013 - Suit & Tie era\",\"correct\":[\"The 20/20 Experience\",\"20/20 Experience\",\"2020 Experience\"]},{\"display\":\"The 20/20 Experience - 2 of 2\",\"hint\":\"2013 - same year second half\",\"correct\":[\"The 20/20 Experience 2 of 2\",\"20/20 Experience 2\",\"2020 Experience 2\"]},{\"display\":\"Man of the Woods\",\"hint\":\"2018\",\"correct\":[\"Man of the Woods\",\"man of the woods\"]},{\"display\":\"Everything I Thought It Was\",\"hint\":\"2024\",\"correct\":[\"Everything I Thought It Was\",\"everything i thought it was\"]}]"
+    "answers": "[{\"display\":\"Justified\",\"hint\":\"2002\",\"correct\":[\"Justified\"]},{\"display\":\"FutureSex/LoveSounds\",\"hint\":\"2006\",\"correct\":[\"FutureSex/LoveSounds\",\"FutureSex LoveSounds\",\"Future Sex Love Sounds\"]},{\"display\":\"The 20/20 Experience\",\"hint\":\"2013\",\"correct\":[\"The 20/20 Experience\",\"20/20 Experience\",\"2020 Experience\"]},{\"display\":\"The 20/20 Experience - 2 of 2\",\"hint\":\"2013\",\"correct\":[\"The 20/20 Experience 2 of 2\",\"20/20 Experience 2\",\"2020 Experience 2\"]},{\"display\":\"Man of the Woods\",\"hint\":\"2018\",\"correct\":[\"Man of the Woods\",\"man of the woods\"]},{\"display\":\"Everything I Thought It Was\",\"hint\":\"2024\",\"correct\":[\"Everything I Thought It Was\",\"everything i thought it was\"]}]"
   },
   {
     "id": "justin-bieber-albums",
@@ -501,7 +501,7 @@
     "title": "Justin Bieber Studio Albums",
     "prompt": "Name all Justin Bieber studio albums",
     "totalCount": 5,
-    "answers": "[{\"display\":\"My World 2.0\",\"hint\":\"2010 - Baby era\",\"correct\":[\"My World 2.0\",\"My World 2\",\"My World Two\"]},{\"display\":\"Believe\",\"hint\":\"2012\",\"correct\":[\"Believe\",\"believe\"]},{\"display\":\"Purpose\",\"hint\":\"2015 - Sorry and Love Yourself era\",\"correct\":[\"Purpose\",\"purpose\"]},{\"display\":\"Changes\",\"hint\":\"2020\",\"correct\":[\"Changes\",\"changes\"]},{\"display\":\"Justice\",\"hint\":\"2021\",\"correct\":[\"Justice\",\"justice\"]}]"
+    "answers": "[{\"display\":\"My World 2.0\",\"hint\":\"2010\",\"correct\":[\"My World 2.0\",\"My World 2\",\"My World Two\"]},{\"display\":\"Believe\",\"hint\":\"2012\",\"correct\":[\"Believe\",\"believe\"]},{\"display\":\"Purpose\",\"hint\":\"2015\",\"correct\":[\"Purpose\",\"purpose\"]},{\"display\":\"Changes\",\"hint\":\"2020\",\"correct\":[\"Changes\",\"changes\"]},{\"display\":\"Justice\",\"hint\":\"2021\",\"correct\":[\"Justice\",\"justice\"]}]"
   },
   {
     "id": "dua-lipa-albums",
@@ -509,7 +509,7 @@
     "title": "Dua Lipa Studio Albums",
     "prompt": "Name all Dua Lipa studio albums",
     "totalCount": 3,
-    "answers": "[{\"display\":\"Dua Lipa\",\"hint\":\"2017 - self-titled debut\",\"correct\":[\"Dua Lipa\",\"dua lipa self titled\",\"dua lipa debut\"]},{\"display\":\"Future Nostalgia\",\"hint\":\"2020 - Levitating era\",\"correct\":[\"Future Nostalgia\",\"future nostalgia\"]},{\"display\":\"Radical Optimism\",\"hint\":\"2024\",\"correct\":[\"Radical Optimism\",\"radical optimism\"]}]"
+    "answers": "[{\"display\":\"Dua Lipa\",\"hint\":\"2017\",\"correct\":[\"Dua Lipa\",\"dua lipa self titled\",\"dua lipa debut\"]},{\"display\":\"Future Nostalgia\",\"hint\":\"2020\",\"correct\":[\"Future Nostalgia\",\"future nostalgia\"]},{\"display\":\"Radical Optimism\",\"hint\":\"2024\",\"correct\":[\"Radical Optimism\",\"radical optimism\"]}]"
   },
   {
     "id": "tyler-the-creator-albums",
@@ -517,7 +517,7 @@
     "title": "Tyler, the Creator Studio Albums",
     "prompt": "Name all Tyler, the Creator studio albums",
     "totalCount": 7,
-    "answers": "[{\"display\":\"Goblin\",\"hint\":\"2011 - debut studio album\",\"correct\":[\"Goblin\",\"goblin\"]},{\"display\":\"Wolf\",\"hint\":\"2013\",\"correct\":[\"Wolf\",\"wolf\"]},{\"display\":\"Cherry Bomb\",\"hint\":\"2015\",\"correct\":[\"Cherry Bomb\",\"cherry bomb\"]},{\"display\":\"Flower Boy\",\"hint\":\"2017 - breakout critical hit\",\"correct\":[\"Flower Boy\",\"flower boy\",\"Scum Fuck Flower Boy\"]},{\"display\":\"Igor\",\"hint\":\"2019 - won Grammy for Rap Album\",\"correct\":[\"Igor\",\"igor\"]},{\"display\":\"Call Me If You Get Lost\",\"hint\":\"2021\",\"correct\":[\"Call Me If You Get Lost\",\"call me if you get lost\",\"CMIYGL\"]},{\"display\":\"Chromakopia\",\"hint\":\"2024\",\"correct\":[\"Chromakopia\",\"chromakopia\"]}]"
+    "answers": "[{\"display\":\"Goblin\",\"hint\":\"2011\",\"correct\":[\"Goblin\",\"goblin\"]},{\"display\":\"Wolf\",\"hint\":\"2013\",\"correct\":[\"Wolf\",\"wolf\"]},{\"display\":\"Cherry Bomb\",\"hint\":\"2015\",\"correct\":[\"Cherry Bomb\",\"cherry bomb\"]},{\"display\":\"Flower Boy\",\"hint\":\"2017\",\"correct\":[\"Flower Boy\",\"flower boy\",\"Scum Fuck Flower Boy\"]},{\"display\":\"Igor\",\"hint\":\"2019\",\"correct\":[\"Igor\",\"igor\"]},{\"display\":\"Call Me If You Get Lost\",\"hint\":\"2021\",\"correct\":[\"Call Me If You Get Lost\",\"call me if you get lost\",\"CMIYGL\"]},{\"display\":\"Chromakopia\",\"hint\":\"2024\",\"correct\":[\"Chromakopia\",\"chromakopia\"]}]"
   },
   {
     "id": "kendrick-lamar-albums",
@@ -525,7 +525,7 @@
     "title": "Kendrick Lamar Studio Albums",
     "prompt": "Name all Kendrick Lamar studio albums",
     "totalCount": 6,
-    "answers": "[{\"display\":\"Section.80\",\"hint\":\"2011 - debut\",\"correct\":[\"Section.80\",\"Section 80\",\"section 80\"]},{\"display\":\"good kid, m.A.A.d city\",\"hint\":\"2012 - Compton masterpiece\",\"correct\":[\"good kid m.A.A.d city\",\"good kid maad city\",\"gkmc\"]},{\"display\":\"To Pimp a Butterfly\",\"hint\":\"2015 - Alright era\",\"correct\":[\"To Pimp a Butterfly\",\"TPAB\",\"to pimp a butterfly\"]},{\"display\":\"DAMN.\",\"hint\":\"2017 - Pulitzer Prize winner\",\"correct\":[\"DAMN.\",\"DAMN\",\"damn\"]},{\"display\":\"Mr. Morale & The Big Steppers\",\"hint\":\"2022\",\"correct\":[\"Mr. Morale & The Big Steppers\",\"Mr Morale\",\"Mr. Morale\"]},{\"display\":\"GNX\",\"hint\":\"2024\",\"correct\":[\"GNX\",\"gnx\"]}]"
+    "answers": "[{\"display\":\"Section.80\",\"hint\":\"2011\",\"correct\":[\"Section.80\",\"Section 80\",\"section 80\"]},{\"display\":\"good kid, m.A.A.d city\",\"hint\":\"2012\",\"correct\":[\"good kid m.A.A.d city\",\"good kid maad city\",\"gkmc\"]},{\"display\":\"To Pimp a Butterfly\",\"hint\":\"2015\",\"correct\":[\"To Pimp a Butterfly\",\"TPAB\",\"to pimp a butterfly\"]},{\"display\":\"DAMN.\",\"hint\":\"2017\",\"correct\":[\"DAMN.\",\"DAMN\",\"damn\"]},{\"display\":\"Mr. Morale & The Big Steppers\",\"hint\":\"2022\",\"correct\":[\"Mr. Morale & The Big Steppers\",\"Mr Morale\",\"Mr. Morale\"]},{\"display\":\"GNX\",\"hint\":\"2024\",\"correct\":[\"GNX\",\"gnx\"]}]"
   },
   {
     "id": "post-malone-albums",
@@ -533,7 +533,7 @@
     "title": "Post Malone Studio Albums",
     "prompt": "Name all Post Malone studio albums",
     "totalCount": 6,
-    "answers": "[{\"display\":\"Stoney\",\"hint\":\"2016 - Congratulations era\",\"correct\":[\"Stoney\",\"stoney\"]},{\"display\":\"beerbongs & bentleys\",\"hint\":\"2018 - Rockstar era\",\"correct\":[\"beerbongs & bentleys\",\"beerbongs and bentleys\",\"beerbongs bentleys\"]},{\"display\":\"Hollywood's Bleeding\",\"hint\":\"2019 - Circles era\",\"correct\":[\"Hollywood's Bleeding\",\"Hollywoods Bleeding\",\"hollywood's bleeding\"]},{\"display\":\"Twelve Carat Toothache\",\"hint\":\"2022\",\"correct\":[\"Twelve Carat Toothache\",\"twelve carat toothache\",\"12 carat toothache\"]},{\"display\":\"Austin\",\"hint\":\"2023\",\"correct\":[\"Austin\",\"austin\"]},{\"display\":\"F-1 Trillion\",\"hint\":\"2024 - country album\",\"correct\":[\"F-1 Trillion\",\"F1 Trillion\",\"f1 trillion\"]}]"
+    "answers": "[{\"display\":\"Stoney\",\"hint\":\"2016\",\"correct\":[\"Stoney\",\"stoney\"]},{\"display\":\"beerbongs & bentleys\",\"hint\":\"2018\",\"correct\":[\"beerbongs & bentleys\",\"beerbongs and bentleys\",\"beerbongs bentleys\"]},{\"display\":\"Hollywood's Bleeding\",\"hint\":\"2019\",\"correct\":[\"Hollywood's Bleeding\",\"Hollywoods Bleeding\",\"hollywood's bleeding\"]},{\"display\":\"Twelve Carat Toothache\",\"hint\":\"2022\",\"correct\":[\"Twelve Carat Toothache\",\"twelve carat toothache\",\"12 carat toothache\"]},{\"display\":\"Austin\",\"hint\":\"2023\",\"correct\":[\"Austin\",\"austin\"]},{\"display\":\"F-1 Trillion\",\"hint\":\"2024\",\"correct\":[\"F-1 Trillion\",\"F1 Trillion\",\"f1 trillion\"]}]"
   },
   {
     "id": "rolling-stones-founding",
@@ -541,7 +541,7 @@
     "title": "Rolling Stones Founding Members",
     "prompt": "Name the five founding members of The Rolling Stones",
     "totalCount": 5,
-    "answers": "[{\"display\":\"Mick Jagger\",\"hint\":\"lead vocalist\",\"correct\":[\"Mick Jagger\",\"Mick\",\"Jagger\"]},{\"display\":\"Keith Richards\",\"hint\":\"guitarist and co-songwriter\",\"correct\":[\"Keith Richards\",\"Keith\",\"Richards\"]},{\"display\":\"Brian Jones\",\"hint\":\"founding member, died 1969\",\"correct\":[\"Brian Jones\",\"Brian\",\"Jones\"]},{\"display\":\"Charlie Watts\",\"hint\":\"drummer, died 2021\",\"correct\":[\"Charlie Watts\",\"Charlie\",\"Watts\"]},{\"display\":\"Bill Wyman\",\"hint\":\"bassist, left in 1993\",\"correct\":[\"Bill Wyman\",\"Bill\",\"Wyman\"]}]"
+    "answers": "[{\"display\":\"Mick Jagger\",\"hint\":\"\",\"correct\":[\"Mick Jagger\",\"Mick\",\"Jagger\"]},{\"display\":\"Keith Richards\",\"hint\":\"\",\"correct\":[\"Keith Richards\",\"Keith\",\"Richards\"]},{\"display\":\"Brian Jones\",\"hint\":\"\",\"correct\":[\"Brian Jones\",\"Brian\",\"Jones\"]},{\"display\":\"Charlie Watts\",\"hint\":\"\",\"correct\":[\"Charlie Watts\",\"Charlie\",\"Watts\"]},{\"display\":\"Bill Wyman\",\"hint\":\"\",\"correct\":[\"Bill Wyman\",\"Bill\",\"Wyman\"]}]"
   },
   {
     "id": "u2-members",
@@ -549,7 +549,7 @@
     "title": "U2 Members",
     "prompt": "Name all four members of U2",
     "totalCount": 4,
-    "answers": "[{\"display\":\"Bono\",\"hint\":\"lead vocalist, real name Paul Hewson\",\"correct\":[\"Bono\",\"Paul Hewson\"]},{\"display\":\"The Edge\",\"hint\":\"guitarist, real name David Evans\",\"correct\":[\"The Edge\",\"Edge\",\"David Evans\"]},{\"display\":\"Adam Clayton\",\"hint\":\"bassist\",\"correct\":[\"Adam Clayton\",\"Adam\"]},{\"display\":\"Larry Mullen Jr.\",\"hint\":\"drummer, posted the notice that started U2\",\"correct\":[\"Larry Mullen Jr.\",\"Larry Mullen\",\"Larry\",\"Larry Mullen Junior\"]}]"
+    "answers": "[{\"display\":\"Bono\",\"hint\":\"\",\"correct\":[\"Bono\",\"Paul Hewson\"]},{\"display\":\"The Edge\",\"hint\":\"\",\"correct\":[\"The Edge\",\"Edge\",\"David Evans\"]},{\"display\":\"Adam Clayton\",\"hint\":\"\",\"correct\":[\"Adam Clayton\",\"Adam\"]},{\"display\":\"Larry Mullen Jr.\",\"hint\":\"\",\"correct\":[\"Larry Mullen Jr.\",\"Larry Mullen\",\"Larry\",\"Larry Mullen Junior\"]}]"
   },
   {
     "id": "rhcp-classic-lineup",
@@ -557,7 +557,7 @@
     "title": "Red Hot Chili Peppers Classic Lineup",
     "prompt": "Name the four members of the Red Hot Chili Peppers classic lineup",
     "totalCount": 4,
-    "answers": "[{\"display\":\"Anthony Kiedis\",\"hint\":\"lead vocalist\",\"correct\":[\"Anthony Kiedis\",\"Anthony\",\"Kiedis\"]},{\"display\":\"Flea\",\"hint\":\"bassist, real name Michael Balzary\",\"correct\":[\"Flea\",\"Michael Balzary\"]},{\"display\":\"Chad Smith\",\"hint\":\"drummer\",\"correct\":[\"Chad Smith\",\"Chad\"]},{\"display\":\"John Frusciante\",\"hint\":\"guitarist, left and rejoined multiple times\",\"correct\":[\"John Frusciante\",\"Frusciante\",\"John\"]}]"
+    "answers": "[{\"display\":\"Anthony Kiedis\",\"hint\":\"\",\"correct\":[\"Anthony Kiedis\",\"Anthony\",\"Kiedis\"]},{\"display\":\"Flea\",\"hint\":\"\",\"correct\":[\"Flea\",\"Michael Balzary\"]},{\"display\":\"Chad Smith\",\"hint\":\"\",\"correct\":[\"Chad Smith\",\"Chad\"]},{\"display\":\"John Frusciante\",\"hint\":\"\",\"correct\":[\"John Frusciante\",\"Frusciante\",\"John\"]}]"
   },
   {
     "id": "uk-prime-ministers-2000",
@@ -565,7 +565,7 @@
     "title": "UK Prime Ministers Since 2000",
     "prompt": "Name every UK Prime Minister since 2000",
     "totalCount": 8,
-    "answers": "[{\"display\":\"Tony Blair\",\"hint\":\"1997-2007 - Labour\",\"correct\":[\"Tony Blair\",\"Blair\"]},{\"display\":\"Gordon Brown\",\"hint\":\"2007-2010 - Labour\",\"correct\":[\"Gordon Brown\",\"Brown\"]},{\"display\":\"David Cameron\",\"hint\":\"2010-2016 - Conservative\",\"correct\":[\"David Cameron\",\"Cameron\"]},{\"display\":\"Theresa May\",\"hint\":\"2016-2019 - Conservative\",\"correct\":[\"Theresa May\",\"May\"]},{\"display\":\"Boris Johnson\",\"hint\":\"2019-2022 - Conservative\",\"correct\":[\"Boris Johnson\",\"Boris\",\"Johnson\",\"BoJo\"]},{\"display\":\"Liz Truss\",\"hint\":\"2022 - 45 days in office\",\"correct\":[\"Liz Truss\",\"Truss\",\"Elizabeth Truss\"]},{\"display\":\"Rishi Sunak\",\"hint\":\"2022-2024 - Conservative\",\"correct\":[\"Rishi Sunak\",\"Sunak\",\"Rishi\"]},{\"display\":\"Keir Starmer\",\"hint\":\"2024-present - Labour\",\"correct\":[\"Keir Starmer\",\"Starmer\",\"Keir\"]}]"
+    "answers": "[{\"display\":\"Tony Blair\",\"hint\":\"1997\",\"correct\":[\"Tony Blair\",\"Blair\"]},{\"display\":\"Gordon Brown\",\"hint\":\"2007\",\"correct\":[\"Gordon Brown\",\"Brown\"]},{\"display\":\"David Cameron\",\"hint\":\"2010\",\"correct\":[\"David Cameron\",\"Cameron\"]},{\"display\":\"Theresa May\",\"hint\":\"2016\",\"correct\":[\"Theresa May\",\"May\"]},{\"display\":\"Boris Johnson\",\"hint\":\"2019\",\"correct\":[\"Boris Johnson\",\"Boris\",\"Johnson\",\"BoJo\"]},{\"display\":\"Liz Truss\",\"hint\":\"2022\",\"correct\":[\"Liz Truss\",\"Truss\",\"Elizabeth Truss\"]},{\"display\":\"Rishi Sunak\",\"hint\":\"2022\",\"correct\":[\"Rishi Sunak\",\"Sunak\",\"Rishi\"]},{\"display\":\"Keir Starmer\",\"hint\":\"2024\",\"correct\":[\"Keir Starmer\",\"Starmer\",\"Keir\"]}]"
   },
   {
     "id": "seven-wonders-ancient",
@@ -573,7 +573,7 @@
     "title": "Seven Wonders of the Ancient World",
     "prompt": "Name all seven Wonders of the Ancient World",
     "totalCount": 7,
-    "answers": "[{\"display\":\"Great Pyramid of Giza\",\"hint\":\"only wonder still standing\",\"correct\":[\"Great Pyramid of Giza\",\"Great Pyramid\",\"Pyramid of Giza\",\"Pyramids of Giza\"]},{\"display\":\"Hanging Gardens of Babylon\",\"hint\":\"legendary gardens in Mesopotamia\",\"correct\":[\"Hanging Gardens of Babylon\",\"Hanging Gardens\",\"Gardens of Babylon\"]},{\"display\":\"Statue of Zeus at Olympia\",\"hint\":\"colossal seated god\",\"correct\":[\"Statue of Zeus at Olympia\",\"Statue of Zeus\",\"Zeus at Olympia\"]},{\"display\":\"Temple of Artemis at Ephesus\",\"hint\":\"Greek goddess's temple in Turkey\",\"correct\":[\"Temple of Artemis at Ephesus\",\"Temple of Artemis\",\"Artemis at Ephesus\"]},{\"display\":\"Mausoleum at Halicarnassus\",\"hint\":\"gave us the word mausoleum\",\"correct\":[\"Mausoleum at Halicarnassus\",\"Mausoleum\",\"Halicarnassus\"]},{\"display\":\"Colossus of Rhodes\",\"hint\":\"giant statue at a harbor entrance\",\"correct\":[\"Colossus of Rhodes\",\"Colossus\",\"Rhodes\"]},{\"display\":\"Lighthouse of Alexandria\",\"hint\":\"ancient pharos landmark\",\"correct\":[\"Lighthouse of Alexandria\",\"Pharos of Alexandria\",\"Pharos\",\"Alexandria Lighthouse\"]}]"
+    "answers": "[{\"display\":\"Great Pyramid of Giza\",\"hint\":\"\",\"correct\":[\"Great Pyramid of Giza\",\"Great Pyramid\",\"Pyramid of Giza\",\"Pyramids of Giza\"]},{\"display\":\"Hanging Gardens of Babylon\",\"hint\":\"\",\"correct\":[\"Hanging Gardens of Babylon\",\"Hanging Gardens\",\"Gardens of Babylon\"]},{\"display\":\"Statue of Zeus at Olympia\",\"hint\":\"\",\"correct\":[\"Statue of Zeus at Olympia\",\"Statue of Zeus\",\"Zeus at Olympia\"]},{\"display\":\"Temple of Artemis at Ephesus\",\"hint\":\"\",\"correct\":[\"Temple of Artemis at Ephesus\",\"Temple of Artemis\",\"Artemis at Ephesus\"]},{\"display\":\"Mausoleum at Halicarnassus\",\"hint\":\"\",\"correct\":[\"Mausoleum at Halicarnassus\",\"Mausoleum\",\"Halicarnassus\"]},{\"display\":\"Colossus of Rhodes\",\"hint\":\"\",\"correct\":[\"Colossus of Rhodes\",\"Colossus\",\"Rhodes\"]},{\"display\":\"Lighthouse of Alexandria\",\"hint\":\"\",\"correct\":[\"Lighthouse of Alexandria\",\"Pharos of Alexandria\",\"Pharos\",\"Alexandria Lighthouse\"]}]"
   },
   {
     "id": "new-seven-wonders",
@@ -581,7 +581,7 @@
     "title": "New Seven Wonders of the World",
     "prompt": "Name the New Seven Wonders of the World (voted in 2007)",
     "totalCount": 7,
-    "answers": "[{\"display\":\"Great Wall of China\",\"hint\":\"China\",\"correct\":[\"Great Wall of China\",\"Great Wall\",\"Chinese Wall\"]},{\"display\":\"Petra\",\"hint\":\"Jordan - rose-red city\",\"correct\":[\"Petra\",\"petra\"]},{\"display\":\"Christ the Redeemer\",\"hint\":\"Brazil - Rio de Janeiro\",\"correct\":[\"Christ the Redeemer\",\"Christ the Redeemer statue\",\"Rio statue\"]},{\"display\":\"Machu Picchu\",\"hint\":\"Peru - Inca citadel\",\"correct\":[\"Machu Picchu\",\"Machu Pichu\",\"machu picchu\"]},{\"display\":\"Chichen Itza\",\"hint\":\"Mexico - Maya pyramid El Castillo\",\"correct\":[\"Chichen Itza\",\"Chichen Itzá\",\"chichen itza\"]},{\"display\":\"The Colosseum\",\"hint\":\"Italy - Rome's ancient amphitheater\",\"correct\":[\"The Colosseum\",\"Colosseum\",\"Coliseum\"]},{\"display\":\"Taj Mahal\",\"hint\":\"India - white marble mausoleum\",\"correct\":[\"Taj Mahal\",\"taj mahal\"]}]"
+    "answers": "[{\"display\":\"Great Wall of China\",\"hint\":\"\",\"correct\":[\"Great Wall of China\",\"Great Wall\",\"Chinese Wall\"]},{\"display\":\"Petra\",\"hint\":\"\",\"correct\":[\"Petra\",\"petra\"]},{\"display\":\"Christ the Redeemer\",\"hint\":\"\",\"correct\":[\"Christ the Redeemer\",\"Christ the Redeemer statue\",\"Rio statue\"]},{\"display\":\"Machu Picchu\",\"hint\":\"\",\"correct\":[\"Machu Picchu\",\"Machu Pichu\",\"machu picchu\"]},{\"display\":\"Chichen Itza\",\"hint\":\"\",\"correct\":[\"Chichen Itza\",\"Chichen Itzá\",\"chichen itza\"]},{\"display\":\"The Colosseum\",\"hint\":\"\",\"correct\":[\"The Colosseum\",\"Colosseum\",\"Coliseum\"]},{\"display\":\"Taj Mahal\",\"hint\":\"\",\"correct\":[\"Taj Mahal\",\"taj mahal\"]}]"
   },
   {
     "id": "g7-countries",
@@ -589,7 +589,7 @@
     "title": "G7 Member Countries",
     "prompt": "Name all seven members of the G7",
     "totalCount": 7,
-    "answers": "[{\"display\":\"Canada\",\"hint\":\"North America\",\"correct\":[\"Canada\",\"canada\"]},{\"display\":\"France\",\"hint\":\"Europe\",\"correct\":[\"France\",\"france\"]},{\"display\":\"Germany\",\"hint\":\"Europe\",\"correct\":[\"Germany\",\"germany\"]},{\"display\":\"Italy\",\"hint\":\"Europe\",\"correct\":[\"Italy\",\"italy\"]},{\"display\":\"Japan\",\"hint\":\"Asia\",\"correct\":[\"Japan\",\"japan\"]},{\"display\":\"United Kingdom\",\"hint\":\"Europe\",\"correct\":[\"United Kingdom\",\"UK\",\"Great Britain\",\"Britain\"]},{\"display\":\"United States\",\"hint\":\"North America\",\"correct\":[\"United States\",\"USA\",\"US\",\"America\"]}]"
+    "answers": "[{\"display\":\"Canada\",\"hint\":\"\",\"correct\":[\"Canada\",\"canada\"]},{\"display\":\"France\",\"hint\":\"\",\"correct\":[\"France\",\"france\"]},{\"display\":\"Germany\",\"hint\":\"\",\"correct\":[\"Germany\",\"germany\"]},{\"display\":\"Italy\",\"hint\":\"\",\"correct\":[\"Italy\",\"italy\"]},{\"display\":\"Japan\",\"hint\":\"\",\"correct\":[\"Japan\",\"japan\"]},{\"display\":\"United Kingdom\",\"hint\":\"\",\"correct\":[\"United Kingdom\",\"UK\",\"Great Britain\",\"Britain\"]},{\"display\":\"United States\",\"hint\":\"\",\"correct\":[\"United States\",\"USA\",\"US\",\"America\"]}]"
   },
   {
     "id": "nfl-nfc-east",
@@ -597,7 +597,7 @@
     "title": "NFL NFC East Teams",
     "prompt": "Name all four NFL NFC East division teams",
     "totalCount": 4,
-    "answers": "[{\"display\":\"Dallas Cowboys\",\"hint\":\"America's Team\",\"correct\":[\"Dallas Cowboys\",\"Cowboys\",\"Dallas\"]},{\"display\":\"New York Giants\",\"hint\":\"MetLife Stadium\",\"correct\":[\"New York Giants\",\"Giants\",\"NY Giants\"]},{\"display\":\"Philadelphia Eagles\",\"hint\":\"City of Brotherly Love\",\"correct\":[\"Philadelphia Eagles\",\"Eagles\",\"Philadelphia\",\"Philly Eagles\"]},{\"display\":\"Washington Commanders\",\"hint\":\"formerly Redskins, then Football Team\",\"correct\":[\"Washington Commanders\",\"Commanders\",\"Washington\",\"Washington Football Team\"]}]"
+    "answers": "[{\"display\":\"Dallas Cowboys\",\"hint\":\"\",\"correct\":[\"Dallas Cowboys\",\"Cowboys\",\"Dallas\"]},{\"display\":\"New York Giants\",\"hint\":\"\",\"correct\":[\"New York Giants\",\"Giants\",\"NY Giants\"]},{\"display\":\"Philadelphia Eagles\",\"hint\":\"\",\"correct\":[\"Philadelphia Eagles\",\"Eagles\",\"Philadelphia\",\"Philly Eagles\"]},{\"display\":\"Washington Commanders\",\"hint\":\"\",\"correct\":[\"Washington Commanders\",\"Commanders\",\"Washington\",\"Washington Football Team\"]}]"
   },
   {
     "id": "nfl-nfc-west",
@@ -605,7 +605,7 @@
     "title": "NFL NFC West Teams",
     "prompt": "Name all four NFL NFC West division teams",
     "totalCount": 4,
-    "answers": "[{\"display\":\"Arizona Cardinals\",\"hint\":\"oldest NFL franchise\",\"correct\":[\"Arizona Cardinals\",\"Cardinals\",\"Arizona\"]},{\"display\":\"Los Angeles Rams\",\"hint\":\"SoFi Stadium\",\"correct\":[\"Los Angeles Rams\",\"LA Rams\",\"Rams\"]},{\"display\":\"San Francisco 49ers\",\"hint\":\"Levi's Stadium\",\"correct\":[\"San Francisco 49ers\",\"49ers\",\"Niners\",\"San Francisco\"]},{\"display\":\"Seattle Seahawks\",\"hint\":\"12th Man\",\"correct\":[\"Seattle Seahawks\",\"Seahawks\",\"Seattle\"]}]"
+    "answers": "[{\"display\":\"Arizona Cardinals\",\"hint\":\"\",\"correct\":[\"Arizona Cardinals\",\"Cardinals\",\"Arizona\"]},{\"display\":\"Los Angeles Rams\",\"hint\":\"\",\"correct\":[\"Los Angeles Rams\",\"LA Rams\",\"Rams\"]},{\"display\":\"San Francisco 49ers\",\"hint\":\"\",\"correct\":[\"San Francisco 49ers\",\"49ers\",\"Niners\",\"San Francisco\"]},{\"display\":\"Seattle Seahawks\",\"hint\":\"\",\"correct\":[\"Seattle Seahawks\",\"Seahawks\",\"Seattle\"]}]"
   },
   {
     "id": "nfl-nfc-north",
@@ -613,7 +613,7 @@
     "title": "NFL NFC North Teams",
     "prompt": "Name all four NFL NFC North division teams",
     "totalCount": 4,
-    "answers": "[{\"display\":\"Chicago Bears\",\"hint\":\"Soldier Field - oldest franchise in NFC North\",\"correct\":[\"Chicago Bears\",\"Bears\",\"Chicago\"]},{\"display\":\"Detroit Lions\",\"hint\":\"Ford Field - suffered long droughts\",\"correct\":[\"Detroit Lions\",\"Lions\",\"Detroit\"]},{\"display\":\"Green Bay Packers\",\"hint\":\"Lambeau Field - Titletown\",\"correct\":[\"Green Bay Packers\",\"Packers\",\"Green Bay\",\"Cheeseheads\"]},{\"display\":\"Minnesota Vikings\",\"hint\":\"US Bank Stadium\",\"correct\":[\"Minnesota Vikings\",\"Vikings\",\"Minnesota\"]}]"
+    "answers": "[{\"display\":\"Chicago Bears\",\"hint\":\"\",\"correct\":[\"Chicago Bears\",\"Bears\",\"Chicago\"]},{\"display\":\"Detroit Lions\",\"hint\":\"\",\"correct\":[\"Detroit Lions\",\"Lions\",\"Detroit\"]},{\"display\":\"Green Bay Packers\",\"hint\":\"\",\"correct\":[\"Green Bay Packers\",\"Packers\",\"Green Bay\",\"Cheeseheads\"]},{\"display\":\"Minnesota Vikings\",\"hint\":\"\",\"correct\":[\"Minnesota Vikings\",\"Vikings\",\"Minnesota\"]}]"
   },
   {
     "id": "nfl-nfc-south",
@@ -621,7 +621,7 @@
     "title": "NFL NFC South Teams",
     "prompt": "Name all four NFL NFC South division teams",
     "totalCount": 4,
-    "answers": "[{\"display\":\"Atlanta Falcons\",\"hint\":\"Mercedes-Benz Stadium\",\"correct\":[\"Atlanta Falcons\",\"Falcons\",\"Atlanta\"]},{\"display\":\"Carolina Panthers\",\"hint\":\"Bank of America Stadium\",\"correct\":[\"Carolina Panthers\",\"Panthers\",\"Carolina\"]},{\"display\":\"New Orleans Saints\",\"hint\":\"Superdome - Who Dat Nation\",\"correct\":[\"New Orleans Saints\",\"Saints\",\"New Orleans\"]},{\"display\":\"Tampa Bay Buccaneers\",\"hint\":\"Brady's former team\",\"correct\":[\"Tampa Bay Buccaneers\",\"Buccaneers\",\"Bucs\",\"Tampa Bay\",\"Tampa\"]}]"
+    "answers": "[{\"display\":\"Atlanta Falcons\",\"hint\":\"\",\"correct\":[\"Atlanta Falcons\",\"Falcons\",\"Atlanta\"]},{\"display\":\"Carolina Panthers\",\"hint\":\"\",\"correct\":[\"Carolina Panthers\",\"Panthers\",\"Carolina\"]},{\"display\":\"New Orleans Saints\",\"hint\":\"\",\"correct\":[\"New Orleans Saints\",\"Saints\",\"New Orleans\"]},{\"display\":\"Tampa Bay Buccaneers\",\"hint\":\"\",\"correct\":[\"Tampa Bay Buccaneers\",\"Buccaneers\",\"Bucs\",\"Tampa Bay\",\"Tampa\"]}]"
   },
   {
     "id": "nfl-afc-north",
@@ -629,7 +629,7 @@
     "title": "NFL AFC North Teams",
     "prompt": "Name all four NFL AFC North division teams",
     "totalCount": 4,
-    "answers": "[{\"display\":\"Baltimore Ravens\",\"hint\":\"M&T Bank Stadium - two Super Bowls\",\"correct\":[\"Baltimore Ravens\",\"Ravens\",\"Baltimore\"]},{\"display\":\"Cincinnati Bengals\",\"hint\":\"Paycor Stadium\",\"correct\":[\"Cincinnati Bengals\",\"Bengals\",\"Cincinnati\"]},{\"display\":\"Cleveland Browns\",\"hint\":\"notoriously had the Dawg Pound\",\"correct\":[\"Cleveland Browns\",\"Browns\",\"Cleveland\"]},{\"display\":\"Pittsburgh Steelers\",\"hint\":\"Acrisure Stadium - most Super Bowl wins\",\"correct\":[\"Pittsburgh Steelers\",\"Steelers\",\"Pittsburgh\"]}]"
+    "answers": "[{\"display\":\"Baltimore Ravens\",\"hint\":\"\",\"correct\":[\"Baltimore Ravens\",\"Ravens\",\"Baltimore\"]},{\"display\":\"Cincinnati Bengals\",\"hint\":\"\",\"correct\":[\"Cincinnati Bengals\",\"Bengals\",\"Cincinnati\"]},{\"display\":\"Cleveland Browns\",\"hint\":\"\",\"correct\":[\"Cleveland Browns\",\"Browns\",\"Cleveland\"]},{\"display\":\"Pittsburgh Steelers\",\"hint\":\"\",\"correct\":[\"Pittsburgh Steelers\",\"Steelers\",\"Pittsburgh\"]}]"
   },
   {
     "id": "nfl-afc-south",
@@ -637,7 +637,7 @@
     "title": "NFL AFC South Teams",
     "prompt": "Name all four NFL AFC South division teams",
     "totalCount": 4,
-    "answers": "[{\"display\":\"Houston Texans\",\"hint\":\"NRG Stadium\",\"correct\":[\"Houston Texans\",\"Texans\",\"Houston\"]},{\"display\":\"Indianapolis Colts\",\"hint\":\"Lucas Oil Stadium - Peyton Manning's home\",\"correct\":[\"Indianapolis Colts\",\"Colts\",\"Indianapolis\",\"Indy Colts\"]},{\"display\":\"Jacksonville Jaguars\",\"hint\":\"EverBank Stadium\",\"correct\":[\"Jacksonville Jaguars\",\"Jaguars\",\"Jacksonville\",\"Jags\"]},{\"display\":\"Tennessee Titans\",\"hint\":\"Nissan Stadium\",\"correct\":[\"Tennessee Titans\",\"Titans\",\"Tennessee\"]}]"
+    "answers": "[{\"display\":\"Houston Texans\",\"hint\":\"\",\"correct\":[\"Houston Texans\",\"Texans\",\"Houston\"]},{\"display\":\"Indianapolis Colts\",\"hint\":\"\",\"correct\":[\"Indianapolis Colts\",\"Colts\",\"Indianapolis\",\"Indy Colts\"]},{\"display\":\"Jacksonville Jaguars\",\"hint\":\"\",\"correct\":[\"Jacksonville Jaguars\",\"Jaguars\",\"Jacksonville\",\"Jags\"]},{\"display\":\"Tennessee Titans\",\"hint\":\"\",\"correct\":[\"Tennessee Titans\",\"Titans\",\"Tennessee\"]}]"
   },
   {
     "id": "nfl-afc-west",
@@ -645,7 +645,7 @@
     "title": "NFL AFC West Teams",
     "prompt": "Name all four NFL AFC West division teams",
     "totalCount": 4,
-    "answers": "[{\"display\":\"Denver Broncos\",\"hint\":\"Empower Field at Mile High\",\"correct\":[\"Denver Broncos\",\"Broncos\",\"Denver\"]},{\"display\":\"Kansas City Chiefs\",\"hint\":\"Arrowhead Stadium - dynasty team\",\"correct\":[\"Kansas City Chiefs\",\"Chiefs\",\"Kansas City\",\"KC Chiefs\"]},{\"display\":\"Las Vegas Raiders\",\"hint\":\"Allegiant Stadium - moved from Oakland\",\"correct\":[\"Las Vegas Raiders\",\"Raiders\",\"Las Vegas\",\"Oakland Raiders\"]},{\"display\":\"Los Angeles Chargers\",\"hint\":\"SoFi Stadium\",\"correct\":[\"Los Angeles Chargers\",\"LA Chargers\",\"Chargers\"]}]"
+    "answers": "[{\"display\":\"Denver Broncos\",\"hint\":\"\",\"correct\":[\"Denver Broncos\",\"Broncos\",\"Denver\"]},{\"display\":\"Kansas City Chiefs\",\"hint\":\"\",\"correct\":[\"Kansas City Chiefs\",\"Chiefs\",\"Kansas City\",\"KC Chiefs\"]},{\"display\":\"Las Vegas Raiders\",\"hint\":\"\",\"correct\":[\"Las Vegas Raiders\",\"Raiders\",\"Las Vegas\",\"Oakland Raiders\"]},{\"display\":\"Los Angeles Chargers\",\"hint\":\"\",\"correct\":[\"Los Angeles Chargers\",\"LA Chargers\",\"Chargers\"]}]"
   },
   {
     "id": "got-great-houses",
@@ -861,7 +861,7 @@
     "title": "FIFA World Cup Host Countries (2006-2026)",
     "prompt": "Name every country that has hosted the FIFA World Cup from 2006 to 2026",
     "totalCount": 8,
-    "answers": "[{\"display\":\"Germany\",\"hint\":\"2006\",\"correct\":[\"Germany\",\"germany\"]},{\"display\":\"South Africa\",\"hint\":\"2010 - first African host\",\"correct\":[\"South Africa\",\"south africa\"]},{\"display\":\"Brazil\",\"hint\":\"2014\",\"correct\":[\"Brazil\",\"brazil\"]},{\"display\":\"Russia\",\"hint\":\"2018\",\"correct\":[\"Russia\",\"russia\"]},{\"display\":\"Qatar\",\"hint\":\"2022 - first Middle Eastern host\",\"correct\":[\"Qatar\",\"qatar\"]},{\"display\":\"United States\",\"hint\":\"2026 - co-host with Canada and Mexico\",\"correct\":[\"United States\",\"USA\",\"US\",\"America\"]},{\"display\":\"Canada\",\"hint\":\"2026 - co-host\",\"correct\":[\"Canada\",\"canada\"]},{\"display\":\"Mexico\",\"hint\":\"2026 - co-host (third time hosting)\",\"correct\":[\"Mexico\",\"mexico\"]}]"
+    "answers": "[{\"display\":\"Germany\",\"hint\":\"2006\",\"correct\":[\"Germany\",\"germany\"]},{\"display\":\"South Africa\",\"hint\":\"2010\",\"correct\":[\"South Africa\",\"south africa\"]},{\"display\":\"Brazil\",\"hint\":\"2014\",\"correct\":[\"Brazil\",\"brazil\"]},{\"display\":\"Russia\",\"hint\":\"2018\",\"correct\":[\"Russia\",\"russia\"]},{\"display\":\"Qatar\",\"hint\":\"2022\",\"correct\":[\"Qatar\",\"qatar\"]},{\"display\":\"United States\",\"hint\":\"2026\",\"correct\":[\"United States\",\"USA\",\"US\",\"America\"]},{\"display\":\"Canada\",\"hint\":\"2026\",\"correct\":[\"Canada\",\"canada\"]},{\"display\":\"Mexico\",\"hint\":\"2026\",\"correct\":[\"Mexico\",\"mexico\"]}]"
   },
   {
     "id": "wimbledon-mens-unique-champs",
@@ -869,7 +869,7 @@
     "title": "Wimbledon Men's Unique Champions (2010-2024)",
     "prompt": "Name the five players who have won Wimbledon Men's Singles from 2010 to 2024",
     "totalCount": 5,
-    "answers": "[{\"display\":\"Rafael Nadal\",\"hint\":\"won 2010 - 22 Grand Slams total\",\"correct\":[\"Rafael Nadal\",\"Nadal\",\"Rafa\",\"Rafa Nadal\"]},{\"display\":\"Novak Djokovic\",\"hint\":\"won 7 times in this period\",\"correct\":[\"Novak Djokovic\",\"Djokovic\",\"Novak\"]},{\"display\":\"Roger Federer\",\"hint\":\"won 2012, 2017 - 8 Wimbledon titles total\",\"correct\":[\"Roger Federer\",\"Federer\",\"Roger\"]},{\"display\":\"Andy Murray\",\"hint\":\"won 2013, 2016 - British champion\",\"correct\":[\"Andy Murray\",\"Murray\",\"Andrew Murray\"]},{\"display\":\"Carlos Alcaraz\",\"hint\":\"won 2023, 2024 - youngest champion in modern era\",\"correct\":[\"Carlos Alcaraz\",\"Alcaraz\",\"Carlos\"]}]"
+    "answers": "[{\"display\":\"Rafael Nadal\",\"hint\":\"\",\"correct\":[\"Rafael Nadal\",\"Nadal\",\"Rafa\",\"Rafa Nadal\"]},{\"display\":\"Novak Djokovic\",\"hint\":\"\",\"correct\":[\"Novak Djokovic\",\"Djokovic\",\"Novak\"]},{\"display\":\"Roger Federer\",\"hint\":\"\",\"correct\":[\"Roger Federer\",\"Federer\",\"Roger\"]},{\"display\":\"Andy Murray\",\"hint\":\"\",\"correct\":[\"Andy Murray\",\"Murray\",\"Andrew Murray\"]},{\"display\":\"Carlos Alcaraz\",\"hint\":\"\",\"correct\":[\"Carlos Alcaraz\",\"Alcaraz\",\"Carlos\"]}]"
   },
   {
     "id": "grammy-best-new-artist-2015-2025",
@@ -877,7 +877,7 @@
     "title": "Grammy Best New Artist (2015-2025)",
     "prompt": "Name the Grammy Best New Artist winner - accept artist name",
     "totalCount": 11,
-    "answers": "[{\"display\":\"Sam Smith\",\"hint\":\"2015 - 57th Grammys\",\"correct\":[\"Sam Smith\",\"Sam\"]},{\"display\":\"Meghan Trainor\",\"hint\":\"2016 - All About That Bass\",\"correct\":[\"Meghan Trainor\",\"Meghan\"]},{\"display\":\"Chance the Rapper\",\"hint\":\"2017 - indie rapper\",\"correct\":[\"Chance the Rapper\",\"Chance\",\"Chancelor Bennett\"]},{\"display\":\"Alessia Cara\",\"hint\":\"2018 - Here\",\"correct\":[\"Alessia Cara\",\"Alessia\"]},{\"display\":\"Dua Lipa\",\"hint\":\"2019\",\"correct\":[\"Dua Lipa\",\"Dua\"]},{\"display\":\"Billie Eilish\",\"hint\":\"2020 - youngest winner ever at the time\",\"correct\":[\"Billie Eilish\",\"Billie\"]},{\"display\":\"Megan Thee Stallion\",\"hint\":\"2021 - Hot Girl Summer\",\"correct\":[\"Megan Thee Stallion\",\"Megan Thee Stallion\",\"Megan\"]},{\"display\":\"Olivia Rodrigo\",\"hint\":\"2022 - drivers license\",\"correct\":[\"Olivia Rodrigo\",\"Olivia\"]},{\"display\":\"Samara Joy\",\"hint\":\"2023 - jazz singer\",\"correct\":[\"Samara Joy\",\"Samara\"]},{\"display\":\"Victoria Monet\",\"hint\":\"2024\",\"correct\":[\"Victoria Monet\",\"Victoria Monét\",\"Victoria\"]},{\"display\":\"Chappell Roan\",\"hint\":\"2025 - Good Luck, Babe!\",\"correct\":[\"Chappell Roan\",\"Chappell\"]}]"
+    "answers": "[{\"display\":\"Sam Smith\",\"hint\":\"2015\",\"correct\":[\"Sam Smith\",\"Sam\"]},{\"display\":\"Meghan Trainor\",\"hint\":\"2016\",\"correct\":[\"Meghan Trainor\",\"Meghan\"]},{\"display\":\"Chance the Rapper\",\"hint\":\"2017\",\"correct\":[\"Chance the Rapper\",\"Chance\",\"Chancelor Bennett\"]},{\"display\":\"Alessia Cara\",\"hint\":\"2018\",\"correct\":[\"Alessia Cara\",\"Alessia\"]},{\"display\":\"Dua Lipa\",\"hint\":\"2019\",\"correct\":[\"Dua Lipa\",\"Dua\"]},{\"display\":\"Billie Eilish\",\"hint\":\"2020\",\"correct\":[\"Billie Eilish\",\"Billie\"]},{\"display\":\"Megan Thee Stallion\",\"hint\":\"2021\",\"correct\":[\"Megan Thee Stallion\",\"Megan Thee Stallion\",\"Megan\"]},{\"display\":\"Olivia Rodrigo\",\"hint\":\"2022\",\"correct\":[\"Olivia Rodrigo\",\"Olivia\"]},{\"display\":\"Samara Joy\",\"hint\":\"2023\",\"correct\":[\"Samara Joy\",\"Samara\"]},{\"display\":\"Victoria Monet\",\"hint\":\"2024\",\"correct\":[\"Victoria Monet\",\"Victoria Monét\",\"Victoria\"]},{\"display\":\"Chappell Roan\",\"hint\":\"2025\",\"correct\":[\"Chappell Roan\",\"Chappell\"]}]"
   },
   {
     "id": "brics-original-members",
@@ -885,7 +885,7 @@
     "title": "BRICS Original Member Countries",
     "prompt": "Name the five original BRICS member countries",
     "totalCount": 5,
-    "answers": "[{\"display\":\"Brazil\",\"hint\":\"B\",\"correct\":[\"Brazil\",\"brazil\"]},{\"display\":\"Russia\",\"hint\":\"R\",\"correct\":[\"Russia\",\"russia\"]},{\"display\":\"India\",\"hint\":\"I\",\"correct\":[\"India\",\"india\"]},{\"display\":\"China\",\"hint\":\"C\",\"correct\":[\"China\",\"china\"]},{\"display\":\"South Africa\",\"hint\":\"S - joined in 2010\",\"correct\":[\"South Africa\",\"south africa\"]}]"
+    "answers": "[{\"display\":\"Brazil\",\"hint\":\"\",\"correct\":[\"Brazil\",\"brazil\"]},{\"display\":\"Russia\",\"hint\":\"\",\"correct\":[\"Russia\",\"russia\"]},{\"display\":\"India\",\"hint\":\"\",\"correct\":[\"India\",\"india\"]},{\"display\":\"China\",\"hint\":\"\",\"correct\":[\"China\",\"china\"]},{\"display\":\"South Africa\",\"hint\":\"\",\"correct\":[\"South Africa\",\"south africa\"]}]"
   },
   {
     "id": "playstation-consoles",
@@ -893,7 +893,7 @@
     "title": "PlayStation Home Consoles",
     "prompt": "Name all five PlayStation home consoles in order",
     "totalCount": 5,
-    "answers": "[{\"display\":\"PlayStation (PS1)\",\"hint\":\"1994 - launched the brand\",\"correct\":[\"PlayStation\",\"PS1\",\"Playstation 1\"]},{\"display\":\"PlayStation 2 (PS2)\",\"hint\":\"2000 - best-selling console ever\",\"correct\":[\"PlayStation 2\",\"PS2\",\"Playstation Two\"]},{\"display\":\"PlayStation 3 (PS3)\",\"hint\":\"2006 - Blu-ray included\",\"correct\":[\"PlayStation 3\",\"PS3\",\"Playstation Three\"]},{\"display\":\"PlayStation 4 (PS4)\",\"hint\":\"2013 - Spider-Man, God of War era\",\"correct\":[\"PlayStation 4\",\"PS4\",\"Playstation Four\"]},{\"display\":\"PlayStation 5 (PS5)\",\"hint\":\"2020 - hard to find at launch\",\"correct\":[\"PlayStation 5\",\"PS5\",\"Playstation Five\"]}]"
+    "answers": "[{\"display\":\"PlayStation (PS1)\",\"hint\":\"1994\",\"correct\":[\"PlayStation\",\"PS1\",\"Playstation 1\"]},{\"display\":\"PlayStation 2 (PS2)\",\"hint\":\"2000\",\"correct\":[\"PlayStation 2\",\"PS2\",\"Playstation Two\"]},{\"display\":\"PlayStation 3 (PS3)\",\"hint\":\"2006\",\"correct\":[\"PlayStation 3\",\"PS3\",\"Playstation Three\"]},{\"display\":\"PlayStation 4 (PS4)\",\"hint\":\"2013\",\"correct\":[\"PlayStation 4\",\"PS4\",\"Playstation Four\"]},{\"display\":\"PlayStation 5 (PS5)\",\"hint\":\"2020\",\"correct\":[\"PlayStation 5\",\"PS5\",\"Playstation Five\"]}]"
   },
   {
     "id": "nintendo-home-consoles",
@@ -901,7 +901,7 @@
     "title": "Nintendo Home Consoles",
     "prompt": "Name all major Nintendo home consoles in order",
     "totalCount": 7,
-    "answers": "[{\"display\":\"NES (Nintendo Entertainment System)\",\"hint\":\"1983/1985 - Mario Bros, Zelda\",\"correct\":[\"NES\",\"Nintendo Entertainment System\",\"Famicom\",\"NES Nintendo\"]},{\"display\":\"Super NES (SNES)\",\"hint\":\"1990/1991 - 16-bit era\",\"correct\":[\"Super NES\",\"SNES\",\"Super Nintendo\",\"Super Famicom\"]},{\"display\":\"Nintendo 64\",\"hint\":\"1996 - Mario 64, Ocarina of Time\",\"correct\":[\"Nintendo 64\",\"N64\",\"Nintendo Sixty-Four\"]},{\"display\":\"Nintendo GameCube\",\"hint\":\"2001 - handle on the back\",\"correct\":[\"Nintendo GameCube\",\"GameCube\",\"Game Cube\"]},{\"display\":\"Wii\",\"hint\":\"2006 - motion controls, Wii Sports\",\"correct\":[\"Wii\",\"wii\"]},{\"display\":\"Wii U\",\"hint\":\"2012 - the gamepad controller\",\"correct\":[\"Wii U\",\"wiiu\",\"wii u\"]},{\"display\":\"Nintendo Switch\",\"hint\":\"2017 - hybrid home/portable console\",\"correct\":[\"Nintendo Switch\",\"Switch\",\"nintendo switch\"]}]"
+    "answers": "[{\"display\":\"NES (Nintendo Entertainment System)\",\"hint\":\"1983\",\"correct\":[\"NES\",\"Nintendo Entertainment System\",\"Famicom\",\"NES Nintendo\"]},{\"display\":\"Super NES (SNES)\",\"hint\":\"1990\",\"correct\":[\"Super NES\",\"SNES\",\"Super Nintendo\",\"Super Famicom\"]},{\"display\":\"Nintendo 64\",\"hint\":\"1996\",\"correct\":[\"Nintendo 64\",\"N64\",\"Nintendo Sixty-Four\"]},{\"display\":\"Nintendo GameCube\",\"hint\":\"2001\",\"correct\":[\"Nintendo GameCube\",\"GameCube\",\"Game Cube\"]},{\"display\":\"Wii\",\"hint\":\"2006\",\"correct\":[\"Wii\",\"wii\"]},{\"display\":\"Wii U\",\"hint\":\"2012\",\"correct\":[\"Wii U\",\"wiiu\",\"wii u\"]},{\"display\":\"Nintendo Switch\",\"hint\":\"2017\",\"correct\":[\"Nintendo Switch\",\"Switch\",\"nintendo switch\"]}]"
   },
   {
     "id": "gta-main-games",
@@ -909,7 +909,7 @@
     "title": "Grand Theft Auto Main Series Games",
     "prompt": "Name the five major Grand Theft Auto 3D and HD universe games",
     "totalCount": 5,
-    "answers": "[{\"display\":\"Grand Theft Auto III\",\"hint\":\"2001 - the 3D era began in Liberty City\",\"correct\":[\"Grand Theft Auto III\",\"GTA III\",\"GTA 3\",\"Grand Theft Auto 3\"]},{\"display\":\"Grand Theft Auto: Vice City\",\"hint\":\"2002 - 1980s Miami\",\"correct\":[\"Grand Theft Auto Vice City\",\"GTA Vice City\",\"Vice City\"]},{\"display\":\"Grand Theft Auto: San Andreas\",\"hint\":\"2004 - Los Santos, CJ\",\"correct\":[\"Grand Theft Auto San Andreas\",\"GTA San Andreas\",\"San Andreas\"]},{\"display\":\"Grand Theft Auto IV\",\"hint\":\"2008 - Niko Bellic in Liberty City\",\"correct\":[\"Grand Theft Auto IV\",\"GTA IV\",\"GTA 4\",\"Grand Theft Auto 4\"]},{\"display\":\"Grand Theft Auto V\",\"hint\":\"2013 - three protagonists, GTA Online\",\"correct\":[\"Grand Theft Auto V\",\"GTA V\",\"GTA 5\",\"Grand Theft Auto 5\"]}]"
+    "answers": "[{\"display\":\"Grand Theft Auto III\",\"hint\":\"2001\",\"correct\":[\"Grand Theft Auto III\",\"GTA III\",\"GTA 3\",\"Grand Theft Auto 3\"]},{\"display\":\"Grand Theft Auto: Vice City\",\"hint\":\"2002\",\"correct\":[\"Grand Theft Auto Vice City\",\"GTA Vice City\",\"Vice City\"]},{\"display\":\"Grand Theft Auto: San Andreas\",\"hint\":\"2004\",\"correct\":[\"Grand Theft Auto San Andreas\",\"GTA San Andreas\",\"San Andreas\"]},{\"display\":\"Grand Theft Auto IV\",\"hint\":\"2008\",\"correct\":[\"Grand Theft Auto IV\",\"GTA IV\",\"GTA 4\",\"Grand Theft Auto 4\"]},{\"display\":\"Grand Theft Auto V\",\"hint\":\"2013\",\"correct\":[\"Grand Theft Auto V\",\"GTA V\",\"GTA 5\",\"Grand Theft Auto 5\"]}]"
   },
   {
     "id": "radiohead-members",
@@ -917,7 +917,7 @@
     "title": "Radiohead Members",
     "prompt": "Name all five members of Radiohead",
     "totalCount": 5,
-    "answers": "[{\"display\":\"Thom Yorke\",\"hint\":\"lead vocalist and pianist\",\"correct\":[\"Thom Yorke\",\"Thom\",\"Tom Yorke\"]},{\"display\":\"Jonny Greenwood\",\"hint\":\"lead guitarist and film composer\",\"correct\":[\"Jonny Greenwood\",\"Jonny\",\"Jonathan Greenwood\"]},{\"display\":\"Colin Greenwood\",\"hint\":\"bassist, Jonny's brother\",\"correct\":[\"Colin Greenwood\",\"Colin\"]},{\"display\":\"Ed O'Brien\",\"hint\":\"rhythm guitarist\",\"correct\":[\"Ed O'Brien\",\"Ed O Brien\",\"Ed\",\"Edward O'Brien\"]},{\"display\":\"Phil Selway\",\"hint\":\"drummer\",\"correct\":[\"Phil Selway\",\"Phil\",\"Philip Selway\"]}]"
+    "answers": "[{\"display\":\"Thom Yorke\",\"hint\":\"\",\"correct\":[\"Thom Yorke\",\"Thom\",\"Tom Yorke\"]},{\"display\":\"Jonny Greenwood\",\"hint\":\"\",\"correct\":[\"Jonny Greenwood\",\"Jonny\",\"Jonathan Greenwood\"]},{\"display\":\"Colin Greenwood\",\"hint\":\"\",\"correct\":[\"Colin Greenwood\",\"Colin\"]},{\"display\":\"Ed O'Brien\",\"hint\":\"\",\"correct\":[\"Ed O'Brien\",\"Ed O Brien\",\"Ed\",\"Edward O'Brien\"]},{\"display\":\"Phil Selway\",\"hint\":\"\",\"correct\":[\"Phil Selway\",\"Phil\",\"Philip Selway\"]}]"
   },
   {
     "id": "natural-wonders-world",
@@ -925,7 +925,7 @@
     "title": "Seven Wonders of the Natural World",
     "prompt": "Name the seven Wonders of the Natural World (CNN list)",
     "totalCount": 7,
-    "answers": "[{\"display\":\"Grand Canyon\",\"hint\":\"USA - carved by the Colorado River\",\"correct\":[\"Grand Canyon\",\"grand canyon\"]},{\"display\":\"Great Barrier Reef\",\"hint\":\"Australia - largest coral reef system\",\"correct\":[\"Great Barrier Reef\",\"great barrier reef\"]},{\"display\":\"Harbor of Rio de Janeiro\",\"hint\":\"Brazil - Guanabara Bay\",\"correct\":[\"Harbor of Rio de Janeiro\",\"Rio Harbor\",\"Guanabara Bay\",\"Rio de Janeiro Harbor\",\"Rio Harbour\"]},{\"display\":\"Mount Everest\",\"hint\":\"Nepal/Tibet - highest point on Earth\",\"correct\":[\"Mount Everest\",\"Everest\",\"Mt Everest\",\"Mt. Everest\"]},{\"display\":\"Northern Lights\",\"hint\":\"Arctic - Aurora Borealis\",\"correct\":[\"Northern Lights\",\"Aurora Borealis\",\"Aurora\",\"Northern Lights Aurora\"]},{\"display\":\"Paricutin volcano\",\"hint\":\"Mexico - youngest volcano\",\"correct\":[\"Paricutin\",\"Paricutín\",\"paricutin volcano\"]},{\"display\":\"Victoria Falls\",\"hint\":\"Zimbabwe/Zambia - Mosi-oa-Tunya\",\"correct\":[\"Victoria Falls\",\"victoria falls\"]}]"
+    "answers": "[{\"display\":\"Grand Canyon\",\"hint\":\"\",\"correct\":[\"Grand Canyon\",\"grand canyon\"]},{\"display\":\"Great Barrier Reef\",\"hint\":\"\",\"correct\":[\"Great Barrier Reef\",\"great barrier reef\"]},{\"display\":\"Harbor of Rio de Janeiro\",\"hint\":\"\",\"correct\":[\"Harbor of Rio de Janeiro\",\"Rio Harbor\",\"Guanabara Bay\",\"Rio de Janeiro Harbor\",\"Rio Harbour\"]},{\"display\":\"Mount Everest\",\"hint\":\"\",\"correct\":[\"Mount Everest\",\"Everest\",\"Mt Everest\",\"Mt. Everest\"]},{\"display\":\"Northern Lights\",\"hint\":\"\",\"correct\":[\"Northern Lights\",\"Aurora Borealis\",\"Aurora\",\"Northern Lights Aurora\"]},{\"display\":\"Paricutin volcano\",\"hint\":\"\",\"correct\":[\"Paricutin\",\"Paricutín\",\"paricutin volcano\"]},{\"display\":\"Victoria Falls\",\"hint\":\"\",\"correct\":[\"Victoria Falls\",\"victoria falls\"]}]"
   },
   {
     "id": "hunger-games-films",
@@ -933,7 +933,7 @@
     "title": "The Hunger Games Film Series",
     "prompt": "Name all five Hunger Games films",
     "totalCount": 5,
-    "answers": "[{\"display\":\"The Hunger Games\",\"hint\":\"2012 - Katniss enters the arena\",\"correct\":[\"The Hunger Games\",\"Hunger Games\",\"Hunger Games 1\"]},{\"display\":\"Catching Fire\",\"hint\":\"2013 - Quarter Quell\",\"correct\":[\"Catching Fire\",\"The Hunger Games Catching Fire\",\"Hunger Games Catching Fire\"]},{\"display\":\"Mockingjay Part 1\",\"hint\":\"2014 - the revolution begins\",\"correct\":[\"Mockingjay Part 1\",\"Mockingjay Part One\",\"Mockingjay 1\"]},{\"display\":\"Mockingjay Part 2\",\"hint\":\"2015 - the revolution ends\",\"correct\":[\"Mockingjay Part 2\",\"Mockingjay Part Two\",\"Mockingjay 2\"]},{\"display\":\"The Ballad of Songbirds and Snakes\",\"hint\":\"2023 - young President Snow prequel\",\"correct\":[\"The Ballad of Songbirds and Snakes\",\"Ballad of Songbirds and Snakes\",\"Songbirds and Snakes\",\"Ballad of Songbirds\"]}]"
+    "answers": "[{\"display\":\"The Hunger Games\",\"hint\":\"2012\",\"correct\":[\"The Hunger Games\",\"Hunger Games\",\"Hunger Games 1\"]},{\"display\":\"Catching Fire\",\"hint\":\"2013\",\"correct\":[\"Catching Fire\",\"The Hunger Games Catching Fire\",\"Hunger Games Catching Fire\"]},{\"display\":\"Mockingjay Part 1\",\"hint\":\"2014\",\"correct\":[\"Mockingjay Part 1\",\"Mockingjay Part One\",\"Mockingjay 1\"]},{\"display\":\"Mockingjay Part 2\",\"hint\":\"2015\",\"correct\":[\"Mockingjay Part 2\",\"Mockingjay Part Two\",\"Mockingjay 2\"]},{\"display\":\"The Ballad of Songbirds and Snakes\",\"hint\":\"2023\",\"correct\":[\"The Ballad of Songbirds and Snakes\",\"Ballad of Songbirds and Snakes\",\"Songbirds and Snakes\",\"Ballad of Songbirds\"]}]"
   },
   {
     "id": "vampire-weekend-albums",
@@ -941,7 +941,7 @@
     "title": "Vampire Weekend Studio Albums",
     "prompt": "Name all Vampire Weekend studio albums",
     "totalCount": 5,
-    "answers": "[{\"display\":\"Vampire Weekend\",\"hint\":\"2008 - self-titled debut\",\"correct\":[\"Vampire Weekend\",\"vampire weekend debut\",\"vampire weekend self titled\"]},{\"display\":\"Contra\",\"hint\":\"2010\",\"correct\":[\"Contra\",\"contra\"]},{\"display\":\"Modern Vampires of the City\",\"hint\":\"2013 - won Grammy for Alternative Album\",\"correct\":[\"Modern Vampires of the City\",\"modern vampires of the city\",\"MVOTC\"]},{\"display\":\"Father of the Bride\",\"hint\":\"2019 - double album\",\"correct\":[\"Father of the Bride\",\"father of the bride\",\"FOTB\"]},{\"display\":\"Only God Was Above Us\",\"hint\":\"2024\",\"correct\":[\"Only God Was Above Us\",\"only god was above us\",\"OGWAU\"]}]"
+    "answers": "[{\"display\":\"Vampire Weekend\",\"hint\":\"2008\",\"correct\":[\"Vampire Weekend\",\"vampire weekend debut\",\"vampire weekend self titled\"]},{\"display\":\"Contra\",\"hint\":\"2010\",\"correct\":[\"Contra\",\"contra\"]},{\"display\":\"Modern Vampires of the City\",\"hint\":\"2013\",\"correct\":[\"Modern Vampires of the City\",\"modern vampires of the city\",\"MVOTC\"]},{\"display\":\"Father of the Bride\",\"hint\":\"2019\",\"correct\":[\"Father of the Bride\",\"father of the bride\",\"FOTB\"]},{\"display\":\"Only God Was Above Us\",\"hint\":\"2024\",\"correct\":[\"Only God Was Above Us\",\"only god was above us\",\"OGWAU\"]}]"
   },
   {
     "id": "peaky-blinders-characters",
@@ -949,7 +949,7 @@
     "title": "Peaky Blinders Main Characters",
     "prompt": "Name the main characters from Peaky Blinders",
     "totalCount": 8,
-    "answers": "[{\"display\":\"Tommy Shelby\",\"hint\":\"the mastermind\",\"correct\":[\"Tommy Shelby\",\"Tommy\",\"Thomas Shelby\"]},{\"display\":\"Arthur Shelby\",\"hint\":\"hot-headed eldest brother\",\"correct\":[\"Arthur Shelby\",\"Arthur\"]},{\"display\":\"Polly Gray\",\"hint\":\"aunt and matriarch of the Shelby family\",\"correct\":[\"Polly Gray\",\"Polly\",\"Polly Shelby\",\"Elizabeth Shelby\"]},{\"display\":\"John Shelby\",\"hint\":\"third Shelby brother\",\"correct\":[\"John Shelby\",\"John\"]},{\"display\":\"Ada Shelby\",\"hint\":\"only sister\",\"correct\":[\"Ada Shelby\",\"Ada\"]},{\"display\":\"Michael Gray\",\"hint\":\"Polly's son\",\"correct\":[\"Michael Gray\",\"Michael\"]},{\"display\":\"Alfie Solomons\",\"hint\":\"Jewish gang leader played by Tom Hardy\",\"correct\":[\"Alfie Solomons\",\"Alfie\",\"Solomons\"]},{\"display\":\"Finn Shelby\",\"hint\":\"youngest Shelby brother\",\"correct\":[\"Finn Shelby\",\"Finn\"]}]"
+    "answers": "[{\"display\":\"Tommy Shelby\",\"hint\":\"\",\"correct\":[\"Tommy Shelby\",\"Tommy\",\"Thomas Shelby\"]},{\"display\":\"Arthur Shelby\",\"hint\":\"\",\"correct\":[\"Arthur Shelby\",\"Arthur\"]},{\"display\":\"Polly Gray\",\"hint\":\"\",\"correct\":[\"Polly Gray\",\"Polly\",\"Polly Shelby\",\"Elizabeth Shelby\"]},{\"display\":\"John Shelby\",\"hint\":\"\",\"correct\":[\"John Shelby\",\"John\"]},{\"display\":\"Ada Shelby\",\"hint\":\"\",\"correct\":[\"Ada Shelby\",\"Ada\"]},{\"display\":\"Michael Gray\",\"hint\":\"\",\"correct\":[\"Michael Gray\",\"Michael\"]},{\"display\":\"Alfie Solomons\",\"hint\":\"\",\"correct\":[\"Alfie Solomons\",\"Alfie\",\"Solomons\"]},{\"display\":\"Finn Shelby\",\"hint\":\"\",\"correct\":[\"Finn Shelby\",\"Finn\"]}]"
   },
   {
     "id": "house-of-dragon-characters",
@@ -957,7 +957,7 @@
     "title": "House of the Dragon Main Characters",
     "prompt": "Name the main characters from House of the Dragon",
     "totalCount": 8,
-    "answers": "[{\"display\":\"Rhaenyra Targaryen\",\"hint\":\"the would-be queen\",\"correct\":[\"Rhaenyra Targaryen\",\"Rhaenyra\",\"Rhaenyra Targaryan\"]},{\"display\":\"Daemon Targaryen\",\"hint\":\"the rogue prince, Matt Smith\",\"correct\":[\"Daemon Targaryen\",\"Daemon\",\"Daemon Targaryan\"]},{\"display\":\"Alicent Hightower\",\"hint\":\"queen consort, Rhaenyra's rival\",\"correct\":[\"Alicent Hightower\",\"Alicent\"]},{\"display\":\"King Viserys I\",\"hint\":\"the well-meaning king\",\"correct\":[\"King Viserys\",\"Viserys\",\"Viserys Targaryen\"]},{\"display\":\"Aegon II\",\"hint\":\"Alicent's son, claimed the throne\",\"correct\":[\"Aegon II\",\"Aegon\",\"Aegon Targaryen\"]},{\"display\":\"Aemond Targaryen\",\"hint\":\"one-eyed prince, rides Vhagar\",\"correct\":[\"Aemond Targaryen\",\"Aemond\"]},{\"display\":\"Criston Cole\",\"hint\":\"kingsguard turned small council member\",\"correct\":[\"Criston Cole\",\"Ser Criston Cole\",\"Cole\"]},{\"display\":\"Otto Hightower\",\"hint\":\"Hand of the King, Alicent's father\",\"correct\":[\"Otto Hightower\",\"Otto\"]}]"
+    "answers": "[{\"display\":\"Rhaenyra Targaryen\",\"hint\":\"\",\"correct\":[\"Rhaenyra Targaryen\",\"Rhaenyra\",\"Rhaenyra Targaryan\"]},{\"display\":\"Daemon Targaryen\",\"hint\":\"\",\"correct\":[\"Daemon Targaryen\",\"Daemon\",\"Daemon Targaryan\"]},{\"display\":\"Alicent Hightower\",\"hint\":\"\",\"correct\":[\"Alicent Hightower\",\"Alicent\"]},{\"display\":\"King Viserys I\",\"hint\":\"\",\"correct\":[\"King Viserys\",\"Viserys\",\"Viserys Targaryen\"]},{\"display\":\"Aegon II\",\"hint\":\"\",\"correct\":[\"Aegon II\",\"Aegon\",\"Aegon Targaryen\"]},{\"display\":\"Aemond Targaryen\",\"hint\":\"\",\"correct\":[\"Aemond Targaryen\",\"Aemond\"]},{\"display\":\"Criston Cole\",\"hint\":\"\",\"correct\":[\"Criston Cole\",\"Ser Criston Cole\",\"Cole\"]},{\"display\":\"Otto Hightower\",\"hint\":\"\",\"correct\":[\"Otto Hightower\",\"Otto\"]}]"
   },
   {
     "id": "stark-children-got",
@@ -965,7 +965,7 @@
     "title": "Stark Children in Game of Thrones",
     "prompt": "Name all six Stark children in Game of Thrones",
     "totalCount": 6,
-    "answers": "[{\"display\":\"Robb Stark\",\"hint\":\"eldest son, King in the North\",\"correct\":[\"Robb Stark\",\"Robb\",\"Rob Stark\"]},{\"display\":\"Sansa Stark\",\"hint\":\"the eldest daughter\",\"correct\":[\"Sansa Stark\",\"Sansa\"]},{\"display\":\"Arya Stark\",\"hint\":\"the fighter, Valar Morghulis\",\"correct\":[\"Arya Stark\",\"Arya\"]},{\"display\":\"Bran Stark\",\"hint\":\"the Three-Eyed Raven\",\"correct\":[\"Bran Stark\",\"Bran\",\"Brandon Stark\"]},{\"display\":\"Rickon Stark\",\"hint\":\"youngest Stark, killed in the Battle of the Bastards\",\"correct\":[\"Rickon Stark\",\"Rickon\"]},{\"display\":\"Jon Snow\",\"hint\":\"actually Aegon Targaryen, raised as a Stark\",\"correct\":[\"Jon Snow\",\"Jon\",\"Aegon Targaryen\",\"Aegon\"]}]"
+    "answers": "[{\"display\":\"Robb Stark\",\"hint\":\"\",\"correct\":[\"Robb Stark\",\"Robb\",\"Rob Stark\"]},{\"display\":\"Sansa Stark\",\"hint\":\"\",\"correct\":[\"Sansa Stark\",\"Sansa\"]},{\"display\":\"Arya Stark\",\"hint\":\"\",\"correct\":[\"Arya Stark\",\"Arya\"]},{\"display\":\"Bran Stark\",\"hint\":\"\",\"correct\":[\"Bran Stark\",\"Bran\",\"Brandon Stark\"]},{\"display\":\"Rickon Stark\",\"hint\":\"\",\"correct\":[\"Rickon Stark\",\"Rickon\"]},{\"display\":\"Jon Snow\",\"hint\":\"\",\"correct\":[\"Jon Snow\",\"Jon\",\"Aegon Targaryen\",\"Aegon\"]}]"
   },
   {
     "id": "yellowstone-characters",
@@ -973,7 +973,7 @@
     "title": "Yellowstone Main Characters",
     "prompt": "Name the main characters from Yellowstone",
     "totalCount": 7,
-    "answers": "[{\"display\":\"John Dutton\",\"hint\":\"patriarch of the Dutton ranch\",\"correct\":[\"John Dutton\",\"John\"]},{\"display\":\"Beth Dutton\",\"hint\":\"fierce daughter and business powerhouse\",\"correct\":[\"Beth Dutton\",\"Beth\"]},{\"display\":\"Jamie Dutton\",\"hint\":\"adopted son turned politician\",\"correct\":[\"Jamie Dutton\",\"Jamie\"]},{\"display\":\"Kayce Dutton\",\"hint\":\"veteran son\",\"correct\":[\"Kayce Dutton\",\"Kayce\",\"Casey\"]},{\"display\":\"Monica Dutton\",\"hint\":\"Kayce's wife and Native American teacher\",\"correct\":[\"Monica Dutton\",\"Monica\",\"Monica Long\"]},{\"display\":\"Rip Wheeler\",\"hint\":\"Beth's love, loyal ranch hand\",\"correct\":[\"Rip Wheeler\",\"Rip\"]},{\"display\":\"Lloyd Pierce\",\"hint\":\"veteran cowhand\",\"correct\":[\"Lloyd Pierce\",\"Lloyd\"]}]"
+    "answers": "[{\"display\":\"John Dutton\",\"hint\":\"\",\"correct\":[\"John Dutton\",\"John\"]},{\"display\":\"Beth Dutton\",\"hint\":\"\",\"correct\":[\"Beth Dutton\",\"Beth\"]},{\"display\":\"Jamie Dutton\",\"hint\":\"\",\"correct\":[\"Jamie Dutton\",\"Jamie\"]},{\"display\":\"Kayce Dutton\",\"hint\":\"\",\"correct\":[\"Kayce Dutton\",\"Kayce\",\"Casey\"]},{\"display\":\"Monica Dutton\",\"hint\":\"\",\"correct\":[\"Monica Dutton\",\"Monica\",\"Monica Long\"]},{\"display\":\"Rip Wheeler\",\"hint\":\"\",\"correct\":[\"Rip Wheeler\",\"Rip\"]},{\"display\":\"Lloyd Pierce\",\"hint\":\"\",\"correct\":[\"Lloyd Pierce\",\"Lloyd\"]}]"
   },
   {
     "id": "the-wire-characters",
@@ -981,7 +981,7 @@
     "title": "The Wire Main Characters",
     "prompt": "Name main characters from The Wire",
     "totalCount": 8,
-    "answers": "[{\"display\":\"Jimmy McNulty\",\"hint\":\"rogue detective\",\"correct\":[\"Jimmy McNulty\",\"McNulty\",\"James McNulty\"]},{\"display\":\"Omar Little\",\"hint\":\"stickup man who robs drug dealers\",\"correct\":[\"Omar Little\",\"Omar\"]},{\"display\":\"Stringer Bell\",\"hint\":\"Barksdale's business-minded lieutenant\",\"correct\":[\"Stringer Bell\",\"Stringer\",\"String\"]},{\"display\":\"Avon Barksdale\",\"hint\":\"drug kingpin\",\"correct\":[\"Avon Barksdale\",\"Avon\",\"Barksdale\"]},{\"display\":\"Bunk Moreland\",\"hint\":\"McNulty's partner and friend\",\"correct\":[\"Bunk Moreland\",\"Bunk\"]},{\"display\":\"Lester Freamon\",\"hint\":\"brilliant detail detective\",\"correct\":[\"Lester Freamon\",\"Lester\"]},{\"display\":\"Kima Greggs\",\"hint\":\"detective and recurring anchor\",\"correct\":[\"Kima Greggs\",\"Kima\"]},{\"display\":\"Clay Davis\",\"hint\":\"corrupt politician\",\"correct\":[\"Clay Davis\",\"Clay\",\"Sheeeeit\"]}]"
+    "answers": "[{\"display\":\"Jimmy McNulty\",\"hint\":\"\",\"correct\":[\"Jimmy McNulty\",\"McNulty\",\"James McNulty\"]},{\"display\":\"Omar Little\",\"hint\":\"\",\"correct\":[\"Omar Little\",\"Omar\"]},{\"display\":\"Stringer Bell\",\"hint\":\"\",\"correct\":[\"Stringer Bell\",\"Stringer\",\"String\"]},{\"display\":\"Avon Barksdale\",\"hint\":\"\",\"correct\":[\"Avon Barksdale\",\"Avon\",\"Barksdale\"]},{\"display\":\"Bunk Moreland\",\"hint\":\"\",\"correct\":[\"Bunk Moreland\",\"Bunk\"]},{\"display\":\"Lester Freamon\",\"hint\":\"\",\"correct\":[\"Lester Freamon\",\"Lester\"]},{\"display\":\"Kima Greggs\",\"hint\":\"\",\"correct\":[\"Kima Greggs\",\"Kima\"]},{\"display\":\"Clay Davis\",\"hint\":\"\",\"correct\":[\"Clay Davis\",\"Clay\",\"Sheeeeit\"]}]"
   },
   {
     "id": "frasier-characters",
@@ -989,7 +989,7 @@
     "title": "Frasier Main Characters",
     "prompt": "Name the five main characters from Frasier",
     "totalCount": 5,
-    "answers": "[{\"display\":\"Frasier Crane\",\"hint\":\"Seattle radio psychiatrist\",\"correct\":[\"Frasier Crane\",\"Frasier\",\"Dr. Frasier Crane\"]},{\"display\":\"Martin Crane\",\"hint\":\"Frasier's retired cop father\",\"correct\":[\"Martin Crane\",\"Martin\",\"Marty Crane\"]},{\"display\":\"Niles Crane\",\"hint\":\"Frasier's pretentious younger brother\",\"correct\":[\"Niles Crane\",\"Niles\"]},{\"display\":\"Daphne Moon\",\"hint\":\"Martin's British physical therapist\",\"correct\":[\"Daphne Moon\",\"Daphne\",\"Daphne Crane\"]},{\"display\":\"Roz Doyle\",\"hint\":\"Frasier's producer at KACL\",\"correct\":[\"Roz Doyle\",\"Roz\"]}]"
+    "answers": "[{\"display\":\"Frasier Crane\",\"hint\":\"\",\"correct\":[\"Frasier Crane\",\"Frasier\",\"Dr. Frasier Crane\"]},{\"display\":\"Martin Crane\",\"hint\":\"\",\"correct\":[\"Martin Crane\",\"Martin\",\"Marty Crane\"]},{\"display\":\"Niles Crane\",\"hint\":\"\",\"correct\":[\"Niles Crane\",\"Niles\"]},{\"display\":\"Daphne Moon\",\"hint\":\"\",\"correct\":[\"Daphne Moon\",\"Daphne\",\"Daphne Crane\"]},{\"display\":\"Roz Doyle\",\"hint\":\"\",\"correct\":[\"Roz Doyle\",\"Roz\"]}]"
   },
   {
     "id": "modern-family-adults",
@@ -997,7 +997,7 @@
     "title": "Modern Family Main Adult Characters",
     "prompt": "Name the main adult characters from Modern Family",
     "totalCount": 6,
-    "answers": "[{\"display\":\"Jay Pritchett\",\"hint\":\"the patriarch\",\"correct\":[\"Jay Pritchett\",\"Jay\"]},{\"display\":\"Gloria Pritchett\",\"hint\":\"Jay's Colombian wife\",\"correct\":[\"Gloria Pritchett\",\"Gloria\"]},{\"display\":\"Claire Dunphy\",\"hint\":\"Jay's daughter\",\"correct\":[\"Claire Dunphy\",\"Claire\"]},{\"display\":\"Phil Dunphy\",\"hint\":\"Claire's cheerful realtor husband\",\"correct\":[\"Phil Dunphy\",\"Phil\"]},{\"display\":\"Mitchell Pritchett\",\"hint\":\"Jay's son\",\"correct\":[\"Mitchell Pritchett\",\"Mitchell\",\"Mitch\"]},{\"display\":\"Cameron Tucker\",\"hint\":\"Mitchell's exuberant husband\",\"correct\":[\"Cameron Tucker\",\"Cameron\",\"Cam\"]}]"
+    "answers": "[{\"display\":\"Jay Pritchett\",\"hint\":\"\",\"correct\":[\"Jay Pritchett\",\"Jay\"]},{\"display\":\"Gloria Pritchett\",\"hint\":\"\",\"correct\":[\"Gloria Pritchett\",\"Gloria\"]},{\"display\":\"Claire Dunphy\",\"hint\":\"\",\"correct\":[\"Claire Dunphy\",\"Claire\"]},{\"display\":\"Phil Dunphy\",\"hint\":\"\",\"correct\":[\"Phil Dunphy\",\"Phil\"]},{\"display\":\"Mitchell Pritchett\",\"hint\":\"\",\"correct\":[\"Mitchell Pritchett\",\"Mitchell\",\"Mitch\"]},{\"display\":\"Cameron Tucker\",\"hint\":\"\",\"correct\":[\"Cameron Tucker\",\"Cameron\",\"Cam\"]}]"
   },
   {
     "id": "abba-members",
@@ -1005,7 +1005,7 @@
     "title": "ABBA Members",
     "prompt": "Name all four members of ABBA",
     "totalCount": 4,
-    "answers": "[{\"display\":\"Agnetha Faltskog\",\"hint\":\"A - blonde vocalist, Dancing Queen lead\",\"correct\":[\"Agnetha Faltskog\",\"Agnetha Fältskog\",\"Agnetha\"]},{\"display\":\"Bjorn Ulvaeus\",\"hint\":\"B - guitarist and songwriter\",\"correct\":[\"Bjorn Ulvaeus\",\"Björn Ulvaeus\",\"Bjorn\"]},{\"display\":\"Benny Andersson\",\"hint\":\"B - keyboardist and main composer\",\"correct\":[\"Benny Andersson\",\"Benny\"]},{\"display\":\"Anni-Frid Lyngstad\",\"hint\":\"A - brunette vocalist, called Frida\",\"correct\":[\"Anni-Frid Lyngstad\",\"Anni-Frid\",\"Frida\",\"Agnetha Frid\",\"Lyngstad\"]}]"
+    "answers": "[{\"display\":\"Agnetha Faltskog\",\"hint\":\"\",\"correct\":[\"Agnetha Faltskog\",\"Agnetha Fältskog\",\"Agnetha\"]},{\"display\":\"Bjorn Ulvaeus\",\"hint\":\"\",\"correct\":[\"Bjorn Ulvaeus\",\"Björn Ulvaeus\",\"Bjorn\"]},{\"display\":\"Benny Andersson\",\"hint\":\"\",\"correct\":[\"Benny Andersson\",\"Benny\"]},{\"display\":\"Anni-Frid Lyngstad\",\"hint\":\"\",\"correct\":[\"Anni-Frid Lyngstad\",\"Anni-Frid\",\"Frida\",\"Agnetha Frid\",\"Lyngstad\"]}]"
   },
   {
     "id": "foo-fighters-lineup",
@@ -1013,7 +1013,7 @@
     "title": "Foo Fighters Main Lineup Members",
     "prompt": "Name the main members of Foo Fighters",
     "totalCount": 6,
-    "answers": "[{\"display\":\"Dave Grohl\",\"hint\":\"vocalist, guitarist, former Nirvana drummer\",\"correct\":[\"Dave Grohl\",\"David Grohl\",\"Grohl\"]},{\"display\":\"Nate Mendel\",\"hint\":\"bassist since 1995\",\"correct\":[\"Nate Mendel\",\"Nate\"]},{\"display\":\"Taylor Hawkins\",\"hint\":\"drummer, died 2022\",\"correct\":[\"Taylor Hawkins\",\"Taylor\",\"Hawkins\"]},{\"display\":\"Chris Shiflett\",\"hint\":\"lead guitarist since 1999\",\"correct\":[\"Chris Shiflett\",\"Chris\",\"Shiflett\"]},{\"display\":\"Pat Smear\",\"hint\":\"rhythm guitarist, on and off since 1994\",\"correct\":[\"Pat Smear\",\"Pat\",\"Georg Ruthenberg\"]},{\"display\":\"Rami Jaffee\",\"hint\":\"keyboardist since 2007\",\"correct\":[\"Rami Jaffee\",\"Rami\",\"Jaffee\"]}]"
+    "answers": "[{\"display\":\"Dave Grohl\",\"hint\":\"\",\"correct\":[\"Dave Grohl\",\"David Grohl\",\"Grohl\"]},{\"display\":\"Nate Mendel\",\"hint\":\"\",\"correct\":[\"Nate Mendel\",\"Nate\"]},{\"display\":\"Taylor Hawkins\",\"hint\":\"\",\"correct\":[\"Taylor Hawkins\",\"Taylor\",\"Hawkins\"]},{\"display\":\"Chris Shiflett\",\"hint\":\"\",\"correct\":[\"Chris Shiflett\",\"Chris\",\"Shiflett\"]},{\"display\":\"Pat Smear\",\"hint\":\"\",\"correct\":[\"Pat Smear\",\"Pat\",\"Georg Ruthenberg\"]},{\"display\":\"Rami Jaffee\",\"hint\":\"\",\"correct\":[\"Rami Jaffee\",\"Rami\",\"Jaffee\"]}]"
   },
   {
     "id": "us-states-border-mexico",
@@ -1021,7 +1021,7 @@
     "title": "US States Bordering Mexico",
     "prompt": "Name the four US states that share a border with Mexico",
     "totalCount": 4,
-    "answers": "[{\"display\":\"California\",\"hint\":\"westernmost border state\",\"correct\":[\"California\",\"california\",\"CA\"]},{\"display\":\"Arizona\",\"hint\":\"Grand Canyon State\",\"correct\":[\"Arizona\",\"arizona\",\"AZ\"]},{\"display\":\"New Mexico\",\"hint\":\"Land of Enchantment\",\"correct\":[\"New Mexico\",\"new mexico\",\"NM\"]},{\"display\":\"Texas\",\"hint\":\"Lone Star State - longest border with Mexico\",\"correct\":[\"Texas\",\"texas\",\"TX\"]}]"
+    "answers": "[{\"display\":\"California\",\"hint\":\"\",\"correct\":[\"California\",\"california\",\"CA\"]},{\"display\":\"Arizona\",\"hint\":\"\",\"correct\":[\"Arizona\",\"arizona\",\"AZ\"]},{\"display\":\"New Mexico\",\"hint\":\"\",\"correct\":[\"New Mexico\",\"new mexico\",\"NM\"]},{\"display\":\"Texas\",\"hint\":\"\",\"correct\":[\"Texas\",\"texas\",\"TX\"]}]"
   },
   {
     "id": "us-states-border-canada",
@@ -1029,7 +1029,7 @@
     "title": "US States Bordering Canada",
     "prompt": "Name all 13 US states that share a border with Canada",
     "totalCount": 13,
-    "answers": "[{\"display\":\"Alaska\",\"hint\":\"far northwest\",\"correct\":[\"Alaska\",\"alaska\",\"AK\"]},{\"display\":\"Washington\",\"hint\":\"Pacific Northwest\",\"correct\":[\"Washington\",\"washington\",\"WA\"]},{\"display\":\"Idaho\",\"hint\":\"panhandle touches Canada\",\"correct\":[\"Idaho\",\"idaho\",\"ID\"]},{\"display\":\"Montana\",\"hint\":\"Big Sky Country\",\"correct\":[\"Montana\",\"montana\",\"MT\"]},{\"display\":\"North Dakota\",\"hint\":\"Northern Plains\",\"correct\":[\"North Dakota\",\"north dakota\",\"ND\"]},{\"display\":\"Minnesota\",\"hint\":\"Land of 10,000 Lakes\",\"correct\":[\"Minnesota\",\"minnesota\",\"MN\"]},{\"display\":\"Michigan\",\"hint\":\"Great Lakes state\",\"correct\":[\"Michigan\",\"michigan\",\"MI\"]},{\"display\":\"Ohio\",\"hint\":\"borders Lake Erie which touches Canada\",\"correct\":[\"Ohio\",\"ohio\",\"OH\"]},{\"display\":\"Pennsylvania\",\"hint\":\"Lake Erie coastline\",\"correct\":[\"Pennsylvania\",\"pennsylvania\",\"PA\"]},{\"display\":\"New York\",\"hint\":\"Great Lakes and St. Lawrence border\",\"correct\":[\"New York\",\"new york\",\"NY\"]},{\"display\":\"Vermont\",\"hint\":\"New England\",\"correct\":[\"Vermont\",\"vermont\",\"VT\"]},{\"display\":\"New Hampshire\",\"hint\":\"tiny northern border\",\"correct\":[\"New Hampshire\",\"new hampshire\",\"NH\"]},{\"display\":\"Maine\",\"hint\":\"northeasternmost state\",\"correct\":[\"Maine\",\"maine\",\"ME\"]}]"
+    "answers": "[{\"display\":\"Alaska\",\"hint\":\"\",\"correct\":[\"Alaska\",\"alaska\",\"AK\"]},{\"display\":\"Washington\",\"hint\":\"\",\"correct\":[\"Washington\",\"washington\",\"WA\"]},{\"display\":\"Idaho\",\"hint\":\"\",\"correct\":[\"Idaho\",\"idaho\",\"ID\"]},{\"display\":\"Montana\",\"hint\":\"\",\"correct\":[\"Montana\",\"montana\",\"MT\"]},{\"display\":\"North Dakota\",\"hint\":\"\",\"correct\":[\"North Dakota\",\"north dakota\",\"ND\"]},{\"display\":\"Minnesota\",\"hint\":\"\",\"correct\":[\"Minnesota\",\"minnesota\",\"MN\"]},{\"display\":\"Michigan\",\"hint\":\"\",\"correct\":[\"Michigan\",\"michigan\",\"MI\"]},{\"display\":\"Ohio\",\"hint\":\"\",\"correct\":[\"Ohio\",\"ohio\",\"OH\"]},{\"display\":\"Pennsylvania\",\"hint\":\"\",\"correct\":[\"Pennsylvania\",\"pennsylvania\",\"PA\"]},{\"display\":\"New York\",\"hint\":\"\",\"correct\":[\"New York\",\"new york\",\"NY\"]},{\"display\":\"Vermont\",\"hint\":\"\",\"correct\":[\"Vermont\",\"vermont\",\"VT\"]},{\"display\":\"New Hampshire\",\"hint\":\"\",\"correct\":[\"New Hampshire\",\"new hampshire\",\"NH\"]},{\"display\":\"Maine\",\"hint\":\"\",\"correct\":[\"Maine\",\"maine\",\"ME\"]}]"
   },
   {
     "id": "fifth-harmony-members",
@@ -1037,7 +1037,7 @@
     "title": "Fifth Harmony Members",
     "prompt": "Name all five members of Fifth Harmony",
     "totalCount": 5,
-    "answers": "[{\"display\":\"Ally Brooke\",\"hint\":\"first auditioned in Season 1\",\"correct\":[\"Ally Brooke\",\"Ally\",\"Ally Hernandez\"]},{\"display\":\"Normani\",\"hint\":\"went solo as Normani Kordei\",\"correct\":[\"Normani\",\"Normani Kordei\",\"Normani Hamilton\"]},{\"display\":\"Dinah Jane\",\"hint\":\"Tongan-American vocalist\",\"correct\":[\"Dinah Jane\",\"Dinah Jane Hansen\",\"Dinah\"]},{\"display\":\"Lauren Jauregui\",\"hint\":\"known for her powerful voice\",\"correct\":[\"Lauren Jauregui\",\"Lauren\"]},{\"display\":\"Camila Cabello\",\"hint\":\"left in 2016, became solo superstar\",\"correct\":[\"Camila Cabello\",\"Camila\"]}]"
+    "answers": "[{\"display\":\"Ally Brooke\",\"hint\":\"\",\"correct\":[\"Ally Brooke\",\"Ally\",\"Ally Hernandez\"]},{\"display\":\"Normani\",\"hint\":\"\",\"correct\":[\"Normani\",\"Normani Kordei\",\"Normani Hamilton\"]},{\"display\":\"Dinah Jane\",\"hint\":\"\",\"correct\":[\"Dinah Jane\",\"Dinah Jane Hansen\",\"Dinah\"]},{\"display\":\"Lauren Jauregui\",\"hint\":\"\",\"correct\":[\"Lauren Jauregui\",\"Lauren\"]},{\"display\":\"Camila Cabello\",\"hint\":\"\",\"correct\":[\"Camila Cabello\",\"Camila\"]}]"
   },
   {
     "id": "game-awards-goty-2015-2024",
@@ -1045,7 +1045,7 @@
     "title": "The Game Awards Game of the Year (2015-2024)",
     "prompt": "Name the Game of the Year winner at The Game Awards - accept game or year",
     "totalCount": 10,
-    "answers": "[{\"display\":\"The Witcher 3: Wild Hunt\",\"hint\":\"2015 - open world RPG\",\"correct\":[\"The Witcher 3 Wild Hunt\",\"Witcher 3\",\"The Witcher 3\"]},{\"display\":\"Overwatch\",\"hint\":\"2016 - Blizzard team shooter\",\"correct\":[\"Overwatch\",\"overwatch\"]},{\"display\":\"The Legend of Zelda: Breath of the Wild\",\"hint\":\"2017 - Nintendo open world\",\"correct\":[\"Breath of the Wild\",\"Zelda Breath of the Wild\",\"Legend of Zelda Breath of the Wild\",\"BOTW\"]},{\"display\":\"God of War\",\"hint\":\"2018 - Kratos goes to Norse mythology\",\"correct\":[\"God of War\",\"god of war\",\"GOW\"]},{\"display\":\"Sekiro: Shadows Die Twice\",\"hint\":\"2019 - FromSoftware\",\"correct\":[\"Sekiro Shadows Die Twice\",\"Sekiro\",\"sekiro\"]},{\"display\":\"The Last of Us Part II\",\"hint\":\"2020 - post-apocalyptic sequel\",\"correct\":[\"The Last of Us Part II\",\"The Last of Us Part 2\",\"Last of Us Part 2\",\"TLOU2\"]},{\"display\":\"It Takes Two\",\"hint\":\"2021 - cooperative adventure\",\"correct\":[\"It Takes Two\",\"it takes two\"]},{\"display\":\"Elden Ring\",\"hint\":\"2022 - FromSoftware open world\",\"correct\":[\"Elden Ring\",\"elden ring\"]},{\"display\":\"Baldur's Gate 3\",\"hint\":\"2023 - Larian Studios RPG\",\"correct\":[\"Baldur's Gate 3\",\"Baldurs Gate 3\",\"BG3\"]},{\"display\":\"Astro Bot\",\"hint\":\"2024 - PlayStation platformer\",\"correct\":[\"Astro Bot\",\"astro bot\",\"Astrobot\"]}]"
+    "answers": "[{\"display\":\"The Witcher 3: Wild Hunt\",\"hint\":\"2015\",\"correct\":[\"The Witcher 3 Wild Hunt\",\"Witcher 3\",\"The Witcher 3\"]},{\"display\":\"Overwatch\",\"hint\":\"2016\",\"correct\":[\"Overwatch\",\"overwatch\"]},{\"display\":\"The Legend of Zelda: Breath of the Wild\",\"hint\":\"2017\",\"correct\":[\"Breath of the Wild\",\"Zelda Breath of the Wild\",\"Legend of Zelda Breath of the Wild\",\"BOTW\"]},{\"display\":\"God of War\",\"hint\":\"2018\",\"correct\":[\"God of War\",\"god of war\",\"GOW\"]},{\"display\":\"Sekiro: Shadows Die Twice\",\"hint\":\"2019\",\"correct\":[\"Sekiro Shadows Die Twice\",\"Sekiro\",\"sekiro\"]},{\"display\":\"The Last of Us Part II\",\"hint\":\"2020\",\"correct\":[\"The Last of Us Part II\",\"The Last of Us Part 2\",\"Last of Us Part 2\",\"TLOU2\"]},{\"display\":\"It Takes Two\",\"hint\":\"2021\",\"correct\":[\"It Takes Two\",\"it takes two\"]},{\"display\":\"Elden Ring\",\"hint\":\"2022\",\"correct\":[\"Elden Ring\",\"elden ring\"]},{\"display\":\"Baldur's Gate 3\",\"hint\":\"2023\",\"correct\":[\"Baldur's Gate 3\",\"Baldurs Gate 3\",\"BG3\"]},{\"display\":\"Astro Bot\",\"hint\":\"2024\",\"correct\":[\"Astro Bot\",\"astro bot\",\"Astrobot\"]}]"
   },
   {
     "id": "oscar-best-animated-2010-2025",
@@ -1053,7 +1053,7 @@
     "title": "Oscar Best Animated Feature (2010-2025)",
     "prompt": "Name every Oscar Best Animated Feature winner from 2010 to 2025",
     "totalCount": 16,
-    "answers": "[{\"display\":\"Up\",\"hint\":\"2010 - Pixar, 'Adventure is out there'\",\"correct\":[\"Up\",\"up\"]},{\"display\":\"Toy Story 3\",\"hint\":\"2011 - Pixar, the gang goes to college\",\"correct\":[\"Toy Story 3\",\"toy story 3\"]},{\"display\":\"Rango\",\"hint\":\"2012 - animated western, Johnny Depp\",\"correct\":[\"Rango\",\"rango\"]},{\"display\":\"Brave\",\"hint\":\"2013 - Pixar, Scottish princess\",\"correct\":[\"Brave\",\"brave\"]},{\"display\":\"Frozen\",\"hint\":\"2014 - Let It Go\",\"correct\":[\"Frozen\",\"frozen\"]},{\"display\":\"Big Hero 6\",\"hint\":\"2015 - Disney and Marvel collaboration\",\"correct\":[\"Big Hero 6\",\"big hero 6\"]},{\"display\":\"Inside Out\",\"hint\":\"2016 - Pixar, emotions as characters\",\"correct\":[\"Inside Out\",\"inside out\"]},{\"display\":\"Zootopia\",\"hint\":\"2017 - anthropomorphic city\",\"correct\":[\"Zootopia\",\"zootopia\"]},{\"display\":\"Coco\",\"hint\":\"2018 - Pixar, Dia de los Muertos\",\"correct\":[\"Coco\",\"coco\"]},{\"display\":\"Spider-Man: Into the Spider-Verse\",\"hint\":\"2019 - Miles Morales\",\"correct\":[\"Spider-Man Into the Spider-Verse\",\"Into the Spider-Verse\",\"Spider-Verse\",\"Spider Man Into the Spider Verse\"]},{\"display\":\"Toy Story 4\",\"hint\":\"2020 - Pixar, Forky\",\"correct\":[\"Toy Story 4\",\"toy story 4\"]},{\"display\":\"Soul\",\"hint\":\"2021 - Pixar, jazz and the afterlife\",\"correct\":[\"Soul\",\"soul\"]},{\"display\":\"Encanto\",\"hint\":\"2022 - We Don't Talk About Bruno\",\"correct\":[\"Encanto\",\"encanto\"]},{\"display\":\"Guillermo del Toro's Pinocchio\",\"hint\":\"2023 - stop-motion\",\"correct\":[\"Guillermo del Toro's Pinocchio\",\"Pinocchio\",\"del Toro Pinocchio\",\"Guillermo del Toro Pinocchio\"]},{\"display\":\"The Boy and the Heron\",\"hint\":\"2024 - Hayao Miyazaki\",\"correct\":[\"The Boy and the Heron\",\"Boy and the Heron\",\"The Boy & The Heron\"]},{\"display\":\"Flow\",\"hint\":\"2025 - Latvian animated film\",\"correct\":[\"Flow\",\"flow\"]}]"
+    "answers": "[{\"display\":\"Up\",\"hint\":\"2010\",\"correct\":[\"Up\",\"up\"]},{\"display\":\"Toy Story 3\",\"hint\":\"2011\",\"correct\":[\"Toy Story 3\",\"toy story 3\"]},{\"display\":\"Rango\",\"hint\":\"2012\",\"correct\":[\"Rango\",\"rango\"]},{\"display\":\"Brave\",\"hint\":\"2013\",\"correct\":[\"Brave\",\"brave\"]},{\"display\":\"Frozen\",\"hint\":\"2014\",\"correct\":[\"Frozen\",\"frozen\"]},{\"display\":\"Big Hero 6\",\"hint\":\"2015\",\"correct\":[\"Big Hero 6\",\"big hero 6\"]},{\"display\":\"Inside Out\",\"hint\":\"2016\",\"correct\":[\"Inside Out\",\"inside out\"]},{\"display\":\"Zootopia\",\"hint\":\"2017\",\"correct\":[\"Zootopia\",\"zootopia\"]},{\"display\":\"Coco\",\"hint\":\"2018\",\"correct\":[\"Coco\",\"coco\"]},{\"display\":\"Spider-Man: Into the Spider-Verse\",\"hint\":\"2019\",\"correct\":[\"Spider-Man Into the Spider-Verse\",\"Into the Spider-Verse\",\"Spider-Verse\",\"Spider Man Into the Spider Verse\"]},{\"display\":\"Toy Story 4\",\"hint\":\"2020\",\"correct\":[\"Toy Story 4\",\"toy story 4\"]},{\"display\":\"Soul\",\"hint\":\"2021\",\"correct\":[\"Soul\",\"soul\"]},{\"display\":\"Encanto\",\"hint\":\"2022\",\"correct\":[\"Encanto\",\"encanto\"]},{\"display\":\"Guillermo del Toro's Pinocchio\",\"hint\":\"2023\",\"correct\":[\"Guillermo del Toro's Pinocchio\",\"Pinocchio\",\"del Toro Pinocchio\",\"Guillermo del Toro Pinocchio\"]},{\"display\":\"The Boy and the Heron\",\"hint\":\"2024\",\"correct\":[\"The Boy and the Heron\",\"Boy and the Heron\",\"The Boy & The Heron\"]},{\"display\":\"Flow\",\"hint\":\"2025\",\"correct\":[\"Flow\",\"flow\"]}]"
   },
   {
     "id": "little-mix-albums",
@@ -1061,7 +1061,7 @@
     "title": "Little Mix Studio Albums",
     "prompt": "Name all Little Mix studio albums",
     "totalCount": 6,
-    "answers": "[{\"display\":\"DNA\",\"hint\":\"2012 - debut\",\"correct\":[\"DNA\",\"dna\"]},{\"display\":\"Salute\",\"hint\":\"2013\",\"correct\":[\"Salute\",\"salute\"]},{\"display\":\"Get Weird\",\"hint\":\"2015\",\"correct\":[\"Get Weird\",\"get weird\"]},{\"display\":\"Glory Days\",\"hint\":\"2016 - Shout Out to My Ex era\",\"correct\":[\"Glory Days\",\"glory days\"]},{\"display\":\"LM5\",\"hint\":\"2018\",\"correct\":[\"LM5\",\"lm5\"]},{\"display\":\"Confetti\",\"hint\":\"2020 - final album as a foursome\",\"correct\":[\"Confetti\",\"confetti\"]}]"
+    "answers": "[{\"display\":\"DNA\",\"hint\":\"2012\",\"correct\":[\"DNA\",\"dna\"]},{\"display\":\"Salute\",\"hint\":\"2013\",\"correct\":[\"Salute\",\"salute\"]},{\"display\":\"Get Weird\",\"hint\":\"2015\",\"correct\":[\"Get Weird\",\"get weird\"]},{\"display\":\"Glory Days\",\"hint\":\"2016\",\"correct\":[\"Glory Days\",\"glory days\"]},{\"display\":\"LM5\",\"hint\":\"2018\",\"correct\":[\"LM5\",\"lm5\"]},{\"display\":\"Confetti\",\"hint\":\"2020\",\"correct\":[\"Confetti\",\"confetti\"]}]"
   },
   {
     "id": "emma-stone-movies",
