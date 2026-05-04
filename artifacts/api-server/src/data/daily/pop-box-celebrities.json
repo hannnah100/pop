@@ -54,16 +54,16 @@
       "Ari"
     ],
     "categories": [
-      "american",
-      "beauty-brand-owner",
-      "billboard-1",
-      "born-1990s",
-      "grammy-winner",
-      "ig-100m",
-      "music-to-acting",
       "pop",
+      "grammy-winner",
+      "billboard-1",
+      "world-tour",
+      "born-1990s",
+      "american",
+      "ig-100m",
       "publicly-divorced",
-      "world-tour"
+      "beauty-brand-owner",
+      "music-to-acting"
     ]
   },
   {
@@ -73,13 +73,13 @@
       "Dua"
     ],
     "categories": [
+      "pop",
+      "grammy-winner",
       "billboard-1",
+      "world-tour",
       "born-1990s",
       "british",
-      "grammy-winner",
-      "ig-100m",
-      "pop",
-      "world-tour"
+      "ig-100m"
     ]
   },
   {
@@ -89,13 +89,13 @@
       "Olivia"
     ],
     "categories": [
-      "american",
-      "billboard-1",
-      "born-2000s",
-      "disney-channel-alum",
-      "grammy-winner",
       "pop",
-      "world-tour"
+      "grammy-winner",
+      "billboard-1",
+      "world-tour",
+      "born-2000s",
+      "american",
+      "disney-channel-alum"
     ]
   },
   {
@@ -105,13 +105,14 @@
       "Sabrina"
     ],
     "categories": [
-      "american",
-      "billboard-1",
-      "blonde",
-      "born-1990s",
-      "disney-channel-alum",
       "pop",
-      "world-tour"
+      "grammy-winner",
+      "billboard-1",
+      "world-tour",
+      "born-1990s",
+      "american",
+      "blonde",
+      "disney-channel-alum"
     ]
   },
   {
@@ -284,15 +285,11 @@
       "Onika"
     ],
     "categories": [
-      "american",
-      "been-on-snl",
-      "billboard-1",
-      "born-1980s",
-      "ig-100m",
-      "pop",
-      "publicly-divorced",
       "rap",
-      "world-tour"
+      "billboard-1",
+      "world-tour",
+      "born-1980s",
+      "ig-100m"
     ]
   },
   {
@@ -461,10 +458,10 @@
       "Solana Rowe"
     ],
     "categories": [
-      "american",
-      "born-1980s",
+      "rnb",
       "grammy-winner",
-      "rnb"
+      "born-1980s",
+      "american"
     ]
   },
   {
@@ -519,14 +516,13 @@
       "Carrie"
     ],
     "categories": [
-      "american",
-      "billboard-1",
-      "blonde",
-      "born-1980s",
       "country",
-      "grammy-winner",
       "pop",
-      "won-reality-show"
+      "grammy-winner",
+      "billboard-1",
+      "born-1980s",
+      "american",
+      "blonde"
     ]
   },
   {
@@ -580,14 +576,12 @@
       "Dolly"
     ],
     "categories": [
-      "american",
-      "beauty-brand-owner",
-      "blonde",
       "country",
-      "emmy-winner",
       "grammy-winner",
-      "pop",
-      "world-tour"
+      "world-tour",
+      "american",
+      "blonde",
+      "beauty-brand-owner"
     ]
   },
   {
@@ -734,12 +728,11 @@
       "Rolling Stones Mick"
     ],
     "categories": [
-      "band-member",
-      "british",
-      "grammy-winner",
-      "publicly-divorced",
       "rock",
-      "world-tour"
+      "grammy-winner",
+      "world-tour",
+      "british",
+      "publicly-divorced"
     ]
   },
   {
@@ -749,16 +742,15 @@
       "Adele Adkins"
     ],
     "categories": [
-      "billboard-1",
-      "born-1980s",
-      "british",
-      "emmy-winner",
+      "pop",
+      "rnb",
       "grammy-winner",
       "oscar-winner",
-      "pop",
-      "publicly-divorced",
-      "rnb",
-      "world-tour"
+      "billboard-1",
+      "world-tour",
+      "born-1980s",
+      "british",
+      "publicly-divorced"
     ]
   },
   {
@@ -768,15 +760,14 @@
       "Ed"
     ],
     "categories": [
+      "pop",
+      "grammy-winner",
       "billboard-1",
+      "world-tour",
       "born-1990s",
       "british",
-      "grammy-winner",
-      "ig-100m",
-      "married-another-celeb",
-      "pop",
       "redhead",
-      "world-tour"
+      "ig-100m"
     ]
   },
   {
@@ -802,15 +793,14 @@
       "Billie"
     ],
     "categories": [
-      "american",
-      "billboard-1",
-      "born-2000s",
-      "emmy-winner",
-      "grammy-winner",
-      "ig-100m",
-      "oscar-winner",
       "pop",
-      "world-tour"
+      "grammy-winner",
+      "oscar-winner",
+      "billboard-1",
+      "world-tour",
+      "born-2000s",
+      "american",
+      "ig-100m"
     ]
   },
   {
@@ -821,7 +811,7 @@
     ],
     "categories": [
       "pop",
-      "latino",
+      "latin",
       "grammy-winner",
       "billboard-1",
       "world-tour",
@@ -836,7 +826,7 @@
     ],
     "categories": [
       "pop",
-      "latino",
+      "latin",
       "billboard-1",
       "world-tour",
       "born-1990s",
@@ -852,7 +842,7 @@
       "Benito"
     ],
     "categories": [
-      "latino",
+      "latin",
       "rap",
       "grammy-winner",
       "billboard-1",
@@ -871,7 +861,7 @@
     ],
     "categories": [
       "pop",
-      "latino",
+      "latin",
       "rnb",
       "billboard-1",
       "world-tour",
@@ -958,11 +948,10 @@
       "Meryl"
     ],
     "categories": [
+      "oscar-winner",
+      "emmy-winner",
       "american",
       "blonde",
-      "emmy-winner",
-      "golden-globe-winner",
-      "oscar-winner",
       "publicly-divorced"
     ]
   },
@@ -989,13 +978,11 @@
       "William Pitt"
     ],
     "categories": [
+      "oscar-winner",
       "american",
       "blonde",
-      "emmy-winner",
-      "golden-globe-winner",
-      "married-another-celeb",
-      "oscar-winner",
-      "publicly-divorced"
+      "publicly-divorced",
+      "married-another-celeb"
     ]
   },
   {
@@ -1021,11 +1008,10 @@
       "J Law"
     ],
     "categories": [
-      "american",
-      "blonde",
+      "oscar-winner",
       "born-1990s",
-      "hunger-games",
-      "oscar-winner"
+      "american",
+      "blonde"
     ]
   },
   {
@@ -1048,10 +1034,9 @@
       "Margot"
     ],
     "categories": [
-      "australian",
-      "blonde",
       "born-1990s",
-      "dc-actor"
+      "australian",
+      "blonde"
     ]
   },
   {
@@ -1171,15 +1156,15 @@
       "Sel"
     ],
     "categories": [
-      "american",
-      "beauty-brand-owner",
-      "billboard-1",
-      "billionaire",
-      "born-1990s",
+      "pop",
       "disney-channel-alum",
+      "billboard-1",
+      "born-1990s",
+      "american",
       "ig-100m",
-      "music-to-acting",
-      "pop"
+      "billionaire",
+      "beauty-brand-owner",
+      "music-to-acting"
     ]
   },
   {
@@ -1236,10 +1221,9 @@
       "Tina"
     ],
     "categories": [
-      "american",
-      "emmy-winner",
       "snl-cast",
-      "written-book"
+      "emmy-winner",
+      "american"
     ]
   },
   {
@@ -1249,12 +1233,11 @@
       "Amy"
     ],
     "categories": [
+      "snl-cast",
+      "emmy-winner",
       "american",
       "blonde",
-      "emmy-winner",
-      "golden-globe-winner",
-      "publicly-divorced",
-      "snl-cast"
+      "publicly-divorced"
     ]
   },
   {
@@ -1264,9 +1247,9 @@
       "Pete"
     ],
     "categories": [
-      "american",
+      "snl-cast",
       "born-1990s",
-      "snl-cast"
+      "american"
     ]
   },
   {
@@ -1276,11 +1259,11 @@
       "Bill"
     ],
     "categories": [
-      "american",
-      "born-1970s",
+      "snl-cast",
       "emmy-winner",
-      "publicly-divorced",
-      "snl-cast"
+      "born-1970s",
+      "american",
+      "publicly-divorced"
     ]
   },
   {
@@ -1290,10 +1273,10 @@
       "Maya"
     ],
     "categories": [
-      "american",
-      "born-1970s",
+      "snl-cast",
       "emmy-winner",
-      "snl-cast"
+      "born-1970s",
+      "american"
     ]
   },
   {
@@ -1303,12 +1286,11 @@
       "Kristen"
     ],
     "categories": [
+      "snl-cast",
+      "born-1970s",
       "american",
       "blonde",
-      "born-1970s",
-      "emmy-winner",
-      "publicly-divorced",
-      "snl-cast"
+      "publicly-divorced"
     ]
   },
   {
@@ -1332,15 +1314,13 @@
       "Kimberly Kardashian"
     ],
     "categories": [
-      "american",
-      "beauty-brand-owner",
-      "billionaire",
+      "reality-tv-star",
       "born-1980s",
-      "has-fashion-line",
-      "has-podcast",
+      "american",
       "ig-100m",
-      "publicly-divorced",
-      "reality-tv-star"
+      "billionaire",
+      "beauty-brand-owner",
+      "publicly-divorced"
     ]
   },
   {
@@ -1350,13 +1330,11 @@
       "Kylie"
     ],
     "categories": [
-      "american",
-      "beauty-brand-owner",
-      "born-1990s",
-      "has-fashion-line",
-      "ig-100m",
       "reality-tv-star",
-      "social-to-mainstream"
+      "born-1990s",
+      "american",
+      "ig-100m",
+      "beauty-brand-owner"
     ]
   },
   {
@@ -1408,13 +1386,11 @@
       "Bruce Jenner"
     ],
     "categories": [
-      "american",
-      "athlete",
+      "reality-tv-star",
       "athlete-entertainer",
-      "married-another-celeb",
-      "olympian",
+      "american",
       "publicly-divorced",
-      "reality-tv-star"
+      "married-another-celeb"
     ]
   },
   {
@@ -1439,10 +1415,9 @@
       "Dwayne 'The Rock' Johnson"
     ],
     "categories": [
-      "american",
       "athlete-entertainer",
       "born-1970s",
-      "fast-furious",
+      "american",
       "ig-100m",
       "publicly-divorced"
     ]
@@ -1454,11 +1429,9 @@
       "Cena"
     ],
     "categories": [
-      "american",
       "athlete-entertainer",
       "born-1970s",
-      "dc-actor",
-      "fast-furious",
+      "american",
       "publicly-divorced"
     ]
   },
@@ -1470,12 +1443,9 @@
       "Shaquille Oneal"
     ],
     "categories": [
-      "american",
-      "athlete",
       "athlete-entertainer",
       "born-1970s",
-      "has-podcast",
-      "nba",
+      "american",
       "publicly-divorced"
     ]
   },
@@ -1488,14 +1458,11 @@
       "Lebron"
     ],
     "categories": [
-      "american",
-      "athlete",
       "athlete-entertainer",
       "billionaire",
       "born-1980s",
-      "ig-100m",
-      "nba",
-      "olympian"
+      "american",
+      "ig-100m"
     ]
   },
   {
@@ -1505,14 +1472,10 @@
       "Serena"
     ],
     "categories": [
-      "american",
-      "athlete",
       "athlete-entertainer",
-      "beauty-brand-owner",
       "born-1980s",
-      "married-another-celeb",
-      "olympian",
-      "tennis"
+      "american",
+      "married-another-celeb"
     ]
   },
   {
@@ -1523,13 +1486,10 @@
       "CR7"
     ],
     "categories": [
-      "athlete",
       "athlete-entertainer",
-      "billionaire",
       "born-1980s",
       "ig-100m",
-      "premier-league",
-      "soccer"
+      "billionaire"
     ]
   },
   {
@@ -1540,12 +1500,9 @@
       "Leo Messi"
     ],
     "categories": [
-      "athlete",
       "athlete-entertainer",
       "born-1980s",
-      "ig-100m",
-      "latino",
-      "soccer"
+      "ig-100m"
     ]
   },
   {
@@ -1697,13 +1654,13 @@
       "Shawn"
     ],
     "categories": [
+      "pop",
       "billboard-1",
+      "world-tour",
       "born-1990s",
       "canadian",
       "ig-100m",
-      "pop",
-      "social-to-mainstream",
-      "world-tour"
+      "social-to-mainstream"
     ]
   },
   {
@@ -1941,16 +1898,14 @@
       "Reginald Dwight"
     ],
     "categories": [
-      "billboard-1",
-      "british",
-      "emmy-winner",
+      "pop",
+      "rock",
       "grammy-winner",
       "oscar-winner",
-      "pop",
-      "publicly-divorced",
-      "rock",
-      "tony-winner",
-      "world-tour"
+      "billboard-1",
+      "world-tour",
+      "british",
+      "publicly-divorced"
     ]
   },
   {
@@ -1961,16 +1916,14 @@
       "Sir Paul"
     ],
     "categories": [
-      "band-member",
-      "billboard-1",
-      "billionaire",
-      "british",
-      "grammy-winner",
-      "married-another-celeb",
-      "pop",
-      "publicly-divorced",
       "rock",
-      "world-tour"
+      "pop",
+      "grammy-winner",
+      "billboard-1",
+      "world-tour",
+      "british",
+      "publicly-divorced",
+      "billionaire"
     ]
   },
   {
@@ -2210,18 +2163,16 @@
       "Kelly"
     ],
     "categories": [
-      "american",
-      "billboard-1",
-      "blonde",
-      "born-1980s",
-      "country",
-      "emmy-winner",
-      "golden-globe-winner",
-      "grammy-winner",
       "pop",
-      "publicly-divorced",
-      "won-reality-show",
-      "world-tour"
+      "country",
+      "grammy-winner",
+      "emmy-winner",
+      "billboard-1",
+      "world-tour",
+      "born-1980s",
+      "american",
+      "blonde",
+      "publicly-divorced"
     ]
   },
   {
@@ -2232,10 +2183,11 @@
       "Carolina Giraldo"
     ],
     "categories": [
-      "born-1990s",
-      "latino",
+      "latin",
       "pop",
-      "world-tour"
+      "grammy-winner",
+      "world-tour",
+      "born-1990s"
     ]
   },
   {
@@ -2245,7 +2197,7 @@
       "Rosalia"
     ],
     "categories": [
-      "latino",
+      "latin",
       "pop",
       "grammy-winner",
       "born-1990s"
@@ -2258,7 +2210,7 @@
       "Juan Luis Londono"
     ],
     "categories": [
-      "latino",
+      "latin",
       "billboard-1",
       "world-tour",
       "born-1990s",
@@ -2272,7 +2224,7 @@
       "Jose Balvin"
     ],
     "categories": [
-      "latino",
+      "latin",
       "billboard-1",
       "world-tour",
       "born-1980s",
@@ -2286,7 +2238,7 @@
       "Ramon Ayala"
     ],
     "categories": [
-      "latino",
+      "latin",
       "rap",
       "world-tour",
       "born-1970s"
@@ -2299,7 +2251,7 @@
       "Marc"
     ],
     "categories": [
-      "latino",
+      "latin",
       "grammy-winner",
       "world-tour",
       "publicly-divorced",
@@ -2314,7 +2266,7 @@
       "Armando Perez"
     ],
     "categories": [
-      "latino",
+      "latin",
       "rap",
       "billboard-1",
       "world-tour",
@@ -2328,7 +2280,7 @@
       "Enrique"
     ],
     "categories": [
-      "latino",
+      "latin",
       "pop",
       "grammy-winner",
       "billboard-1",
@@ -2343,7 +2295,7 @@
       "Ricky"
     ],
     "categories": [
-      "latino",
+      "latin",
       "pop",
       "grammy-winner",
       "billboard-1",
@@ -2359,7 +2311,7 @@
       "Selena Q"
     ],
     "categories": [
-      "latino",
+      "latin",
       "pop",
       "grammy-winner",
       "american"
@@ -2372,7 +2324,7 @@
       "Camilo Echeverry"
     ],
     "categories": [
-      "latino",
+      "latin",
       "pop",
       "born-1990s",
       "married-another-celeb"
@@ -2386,7 +2338,7 @@
       "Rebbeca Gomez"
     ],
     "categories": [
-      "latino",
+      "latin",
       "pop",
       "born-1990s",
       "american"
@@ -2531,16 +2483,15 @@
       "Glover"
     ],
     "categories": [
-      "american",
-      "billboard-1",
-      "born-1980s",
-      "emmy-winner",
-      "grammy-winner",
-      "music-to-acting",
-      "pop",
       "rap",
       "rnb",
-      "star-wars"
+      "pop",
+      "grammy-winner",
+      "emmy-winner",
+      "billboard-1",
+      "born-1980s",
+      "american",
+      "music-to-acting"
     ]
   },
   {
@@ -2676,11 +2627,10 @@
       "Charlotte Aitchison"
     ],
     "categories": [
-      "born-1990s",
-      "british",
-      "grammy-winner",
       "pop",
-      "world-tour"
+      "world-tour",
+      "born-1990s",
+      "british"
     ]
   },
   {
@@ -2720,12 +2670,12 @@
       "Kayleigh Amstutz"
     ],
     "categories": [
-      "american",
-      "born-1990s",
-      "grammy-winner",
       "pop",
-      "redhead",
-      "world-tour"
+      "grammy-winner",
+      "world-tour",
+      "born-1990s",
+      "american",
+      "redhead"
     ]
   },
   {
@@ -2776,8 +2726,6 @@
     ],
     "categories": [
       "american",
-      "born-1960s",
-      "golden-globe-winner",
       "publicly-divorced"
     ]
   },
@@ -2789,11 +2737,8 @@
       "Thomas Hanks"
     ],
     "categories": [
-      "american",
-      "born-1950s",
-      "emmy-winner",
-      "golden-globe-winner",
-      "oscar-winner"
+      "oscar-winner",
+      "american"
     ]
   },
   {
@@ -2803,10 +2748,8 @@
       "Denzel"
     ],
     "categories": [
-      "american",
-      "emmy-winner",
       "oscar-winner",
-      "tony-winner"
+      "american"
     ]
   },
   {
@@ -2817,13 +2760,12 @@
       "Willard Smith"
     ],
     "categories": [
-      "american",
-      "billboard-1",
-      "dc-actor",
-      "ig-100m",
-      "music-to-acting",
+      "rap",
       "oscar-winner",
-      "rap"
+      "billboard-1",
+      "american",
+      "ig-100m",
+      "music-to-acting"
     ]
   },
   {
@@ -2833,10 +2775,8 @@
       "Morgan"
     ],
     "categories": [
-      "american",
-      "emmy-winner",
-      "golden-globe-winner",
       "oscar-winner",
+      "american",
       "publicly-divorced"
     ]
   },
@@ -2848,10 +2788,8 @@
       "Bobby D"
     ],
     "categories": [
-      "american",
-      "emmy-winner",
-      "golden-globe-winner",
       "oscar-winner",
+      "american",
       "publicly-divorced"
     ]
   },
@@ -2862,10 +2800,9 @@
       "Pacino"
     ],
     "categories": [
-      "american",
+      "oscar-winner",
       "emmy-winner",
-      "golden-globe-winner",
-      "oscar-winner"
+      "american"
     ]
   },
   {
@@ -2875,10 +2812,8 @@
       "Jack"
     ],
     "categories": [
-      "american",
-      "emmy-winner",
-      "golden-globe-winner",
       "oscar-winner",
+      "american",
       "publicly-divorced"
     ]
   },
@@ -2889,11 +2824,8 @@
       "Clooney"
     ],
     "categories": [
-      "american",
-      "emmy-winner",
-      "golden-globe-winner",
-      "married-another-celeb",
-      "oscar-winner"
+      "oscar-winner",
+      "american"
     ]
   },
   {
@@ -2903,11 +2835,9 @@
       "Damon"
     ],
     "categories": [
-      "american",
+      "oscar-winner",
       "born-1970s",
-      "emmy-winner",
-      "golden-globe-winner",
-      "oscar-winner"
+      "american"
     ]
   },
   {
@@ -2917,12 +2847,11 @@
       "Affleck"
     ],
     "categories": [
-      "american",
-      "born-1970s",
-      "dc-actor",
-      "married-another-celeb",
       "oscar-winner",
-      "publicly-divorced"
+      "born-1970s",
+      "american",
+      "publicly-divorced",
+      "married-another-celeb"
     ]
   },
   {
@@ -2995,12 +2924,11 @@
       "Reynolds"
     ],
     "categories": [
+      "mcu-actor",
       "born-1970s",
       "canadian",
-      "dc-actor",
-      "married-another-celeb",
-      "mcu-actor",
-      "publicly-divorced"
+      "publicly-divorced",
+      "married-another-celeb"
     ]
   },
   {
@@ -3011,9 +2939,8 @@
       "Jake"
     ],
     "categories": [
-      "american",
       "born-1980s",
-      "mcu-actor"
+      "american"
     ]
   },
   {
@@ -3023,9 +2950,8 @@
       "Driver"
     ],
     "categories": [
-      "american",
       "born-1980s",
-      "star-wars"
+      "american"
     ]
   },
   {
@@ -3046,10 +2972,8 @@
       "Oscar"
     ],
     "categories": [
-      "american",
       "born-1970s",
-      "mcu-actor",
-      "star-wars"
+      "american"
     ]
   },
   {
@@ -3059,11 +2983,10 @@
       "Leto"
     ],
     "categories": [
-      "american",
-      "born-1970s",
-      "dc-actor",
       "oscar-winner",
-      "rock"
+      "rock",
+      "born-1970s",
+      "american"
     ]
   },
   {
@@ -3074,8 +2997,8 @@
       "Sam Jackson"
     ],
     "categories": [
-      "american",
-      "mcu-actor"
+      "mcu-actor",
+      "american"
     ]
   },
   {
@@ -3085,9 +3008,9 @@
       "Cumberbatch"
     ],
     "categories": [
+      "mcu-actor",
       "born-1970s",
-      "british",
-      "mcu-actor"
+      "british"
     ]
   },
   {
@@ -3111,9 +3034,9 @@
       "Ruffalo"
     ],
     "categories": [
-      "american",
+      "mcu-actor",
       "emmy-winner",
-      "mcu-actor"
+      "american"
     ]
   },
   {
@@ -3123,9 +3046,9 @@
       "Rudd"
     ],
     "categories": [
-      "american",
+      "mcu-actor",
       "born-1970s",
-      "mcu-actor"
+      "american"
     ]
   },
   {
@@ -3135,9 +3058,9 @@
       "Mackie"
     ],
     "categories": [
-      "american",
+      "mcu-actor",
       "born-1970s",
-      "mcu-actor"
+      "american"
     ]
   },
   {
@@ -3147,9 +3070,9 @@
       "Sebastian"
     ],
     "categories": [
-      "american",
+      "mcu-actor",
       "born-1980s",
-      "mcu-actor"
+      "american"
     ]
   },
   {
@@ -3159,11 +3082,11 @@
       "Brie"
     ],
     "categories": [
-      "american",
-      "blonde",
-      "born-1980s",
       "mcu-actor",
-      "oscar-winner"
+      "oscar-winner",
+      "born-1980s",
+      "american",
+      "blonde"
     ]
   },
   {
@@ -3173,10 +3096,10 @@
       "Lizzie Olsen"
     ],
     "categories": [
-      "american",
-      "blonde",
+      "mcu-actor",
       "born-1980s",
-      "mcu-actor"
+      "american",
+      "blonde"
     ]
   },
   {
@@ -3186,9 +3109,9 @@
       "Karen"
     ],
     "categories": [
+      "mcu-actor",
       "born-1980s",
       "british",
-      "mcu-actor",
       "redhead"
     ]
   },
@@ -3199,9 +3122,9 @@
       "Letitia"
     ],
     "categories": [
+      "mcu-actor",
       "born-1990s",
-      "british",
-      "mcu-actor"
+      "british"
     ]
   },
   {
@@ -3211,9 +3134,9 @@
       "Cheadle"
     ],
     "categories": [
-      "american",
+      "mcu-actor",
       "emmy-winner",
-      "mcu-actor"
+      "american"
     ]
   },
   {
@@ -3223,8 +3146,8 @@
       "Renner"
     ],
     "categories": [
-      "american",
       "mcu-actor",
+      "american",
       "publicly-divorced"
     ]
   },
@@ -3246,13 +3169,10 @@
       "Julia"
     ],
     "categories": [
-      "american",
-      "born-1960s",
-      "emmy-winner",
-      "married-another-celeb",
       "oscar-winner",
-      "publicly-divorced",
-      "redhead"
+      "american",
+      "redhead",
+      "publicly-divorced"
     ]
   },
   {
@@ -3262,14 +3182,12 @@
       "Nicole"
     ],
     "categories": [
+      "oscar-winner",
+      "emmy-winner",
       "australian",
       "blonde",
-      "born-1960s",
-      "emmy-winner",
-      "golden-globe-winner",
-      "married-another-celeb",
-      "oscar-winner",
-      "publicly-divorced"
+      "publicly-divorced",
+      "married-another-celeb"
     ]
   },
   {
@@ -3279,12 +3197,9 @@
       "Cate"
     ],
     "categories": [
+      "oscar-winner",
       "australian",
-      "blonde",
-      "emmy-winner",
-      "golden-globe-winner",
-      "mcu-actor",
-      "oscar-winner"
+      "blonde"
     ]
   },
   {
@@ -3294,10 +3209,9 @@
       "Charlize"
     ],
     "categories": [
-      "blonde",
+      "oscar-winner",
       "born-1970s",
-      "golden-globe-winner",
-      "oscar-winner"
+      "blonde"
     ]
   },
   {
@@ -3307,10 +3221,8 @@
       "Halle"
     ],
     "categories": [
-      "american",
-      "born-1960s",
-      "golden-globe-winner",
       "oscar-winner",
+      "american",
       "publicly-divorced"
     ]
   },
@@ -3321,12 +3233,11 @@
       "Reese"
     ],
     "categories": [
+      "oscar-winner",
+      "emmy-winner",
+      "born-1970s",
       "american",
       "blonde",
-      "born-1970s",
-      "emmy-winner",
-      "married-another-celeb",
-      "oscar-winner",
       "publicly-divorced"
     ]
   },
@@ -3349,10 +3260,9 @@
       "Natalie"
     ],
     "categories": [
-      "born-1980s",
       "mcu-actor",
       "oscar-winner",
-      "star-wars"
+      "born-1980s"
     ]
   },
   {
@@ -3425,9 +3335,7 @@
       "Ana"
     ],
     "categories": [
-      "born-1980s",
-      "european",
-      "latino"
+      "born-1980s"
     ]
   },
   {
@@ -3494,10 +3402,9 @@
       "Rachel Green"
     ],
     "categories": [
+      "emmy-winner",
       "american",
       "blonde",
-      "emmy-winner",
-      "golden-globe-winner",
       "publicly-divorced"
     ]
   },
@@ -3607,9 +3514,7 @@
       "Dwight Schrute"
     ],
     "categories": [
-      "american",
-      "born-1960s",
-      "comedian"
+      "american"
     ]
   },
   {
@@ -3644,10 +3549,9 @@
       "Will"
     ],
     "categories": [
+      "snl-cast",
       "american",
-      "been-on-snl",
-      "blonde",
-      "snl-cast"
+      "blonde"
     ]
   },
   {
@@ -3657,9 +3561,8 @@
       "Sandler"
     ],
     "categories": [
-      "american",
-      "been-on-snl",
-      "snl-cast"
+      "snl-cast",
+      "american"
     ]
   },
   {
@@ -3670,10 +3573,9 @@
       "Austin Powers"
     ],
     "categories": [
-      "been-on-snl",
+      "snl-cast",
       "canadian",
-      "publicly-divorced",
-      "snl-cast"
+      "publicly-divorced"
     ]
   },
   {
@@ -3683,11 +3585,10 @@
       "Eddie"
     ],
     "categories": [
-      "american",
-      "been-on-snl",
+      "snl-cast",
       "grammy-winner",
-      "publicly-divorced",
-      "snl-cast"
+      "american",
+      "publicly-divorced"
     ]
   },
   {
@@ -3697,11 +3598,11 @@
       "Samberg"
     ],
     "categories": [
-      "american",
-      "born-1970s",
+      "snl-cast",
       "emmy-winner",
-      "married-another-celeb",
-      "snl-cast"
+      "born-1970s",
+      "american",
+      "married-another-celeb"
     ]
   },
   {
@@ -3711,9 +3612,9 @@
       "Bowen"
     ],
     "categories": [
-      "american",
+      "snl-cast",
       "born-1990s",
-      "snl-cast"
+      "american"
     ]
   },
   {
@@ -3736,11 +3637,11 @@
       "Kate"
     ],
     "categories": [
-      "american",
-      "blonde",
-      "born-1980s",
+      "snl-cast",
       "emmy-winner",
-      "snl-cast"
+      "born-1980s",
+      "american",
+      "blonde"
     ]
   },
   {
@@ -3799,10 +3700,10 @@
       "Tyra"
     ],
     "categories": [
-      "american",
-      "born-1970s",
+      "reality-tv-star",
       "emmy-winner",
-      "reality-tv-star"
+      "born-1970s",
+      "american"
     ]
   },
   {
@@ -3812,12 +3713,12 @@
       "Heidi"
     ],
     "categories": [
-      "blonde",
-      "born-1970s",
+      "reality-tv-star",
       "emmy-winner",
-      "married-another-celeb",
+      "born-1970s",
+      "blonde",
       "publicly-divorced",
-      "reality-tv-star"
+      "married-another-celeb"
     ]
   },
   {
@@ -3879,14 +3780,10 @@
       "TB12"
     ],
     "categories": [
-      "american",
-      "athlete",
       "athlete-entertainer",
-      "billionaire",
       "born-1970s",
+      "american",
       "ig-100m",
-      "married-another-celeb",
-      "nfl",
       "publicly-divorced"
     ]
   },
@@ -3898,11 +3795,9 @@
       "His Airness"
     ],
     "categories": [
-      "american",
-      "athlete",
       "athlete-entertainer",
       "billionaire",
-      "nba",
+      "american",
       "publicly-divorced"
     ]
   },
@@ -3913,14 +3808,11 @@
       "Tiger"
     ],
     "categories": [
-      "american",
-      "athlete",
       "athlete-entertainer",
-      "billionaire",
       "born-1970s",
-      "from-asia",
-      "olympian",
-      "publicly-divorced"
+      "american",
+      "publicly-divorced",
+      "billionaire"
     ]
   },
   {
@@ -3930,12 +3822,10 @@
       "Caitlin"
     ],
     "categories": [
-      "american",
-      "athlete",
       "athlete-entertainer",
-      "blonde",
       "born-2000s",
-      "nba"
+      "american",
+      "blonde"
     ]
   },
   {
@@ -3945,12 +3835,10 @@
       "Mahomes"
     ],
     "categories": [
-      "american",
-      "athlete",
       "athlete-entertainer",
       "born-1990s",
-      "married-another-celeb",
-      "nfl"
+      "american",
+      "married-another-celeb"
     ]
   },
   {
@@ -3961,12 +3849,10 @@
       "Steph"
     ],
     "categories": [
-      "american",
-      "athlete",
       "athlete-entertainer",
       "born-1980s",
-      "ig-100m",
-      "nba"
+      "american",
+      "ig-100m"
     ]
   },
   {
@@ -3976,13 +3862,9 @@
       "Naomi"
     ],
     "categories": [
-      "athlete",
       "athlete-entertainer",
       "born-1990s",
-      "from-asia",
-      "ig-100m",
-      "olympian",
-      "tennis"
+      "ig-100m"
     ]
   },
   {
@@ -3992,12 +3874,9 @@
       "Kelce"
     ],
     "categories": [
-      "american",
-      "athlete",
       "athlete-entertainer",
       "born-1980s",
-      "married-another-celeb",
-      "nfl"
+      "american"
     ]
   },
   {
@@ -4007,11 +3886,9 @@
       "Rodgers"
     ],
     "categories": [
-      "american",
-      "athlete",
       "athlete-entertainer",
       "born-1980s",
-      "nfl"
+      "american"
     ]
   },
   {
@@ -4021,12 +3898,10 @@
       "Simone"
     ],
     "categories": [
-      "american",
-      "athlete",
       "athlete-entertainer",
       "born-1990s",
-      "married-another-celeb",
-      "olympian"
+      "american",
+      "married-another-celeb"
     ]
   },
   {
@@ -4049,14 +3924,11 @@
       "Becks"
     ],
     "categories": [
-      "athlete",
       "athlete-entertainer",
       "born-1970s",
       "british",
       "ig-100m",
-      "married-another-celeb",
-      "premier-league",
-      "soccer"
+      "married-another-celeb"
     ]
   },
   {
@@ -4066,12 +3938,9 @@
       "Neymar Jr"
     ],
     "categories": [
-      "athlete",
       "athlete-entertainer",
       "born-1990s",
-      "ig-100m",
-      "latino",
-      "soccer"
+      "ig-100m"
     ]
   },
   {
@@ -4286,12 +4155,11 @@
       "Mulaney"
     ],
     "categories": [
-      "american",
-      "born-1980s",
-      "emmy-winner",
-      "publicly-divorced",
       "snl-cast",
-      "stand-up"
+      "emmy-winner",
+      "born-1980s",
+      "american",
+      "publicly-divorced"
     ]
   },
   {
@@ -4301,11 +4169,10 @@
       "Chappelle"
     ],
     "categories": [
-      "american",
-      "born-1970s",
-      "emmy-winner",
       "grammy-winner",
-      "stand-up"
+      "emmy-winner",
+      "born-1970s",
+      "american"
     ]
   },
   {
@@ -4315,12 +4182,10 @@
       "Kevin"
     ],
     "categories": [
-      "american",
       "born-1970s",
-      "has-podcast",
+      "american",
       "ig-100m",
-      "publicly-divorced",
-      "stand-up"
+      "publicly-divorced"
     ]
   },
   {
@@ -4330,12 +4195,10 @@
       "Amy"
     ],
     "categories": [
-      "american",
-      "blonde",
-      "born-1980s",
       "emmy-winner",
-      "snl-host",
-      "stand-up"
+      "born-1980s",
+      "american",
+      "blonde"
     ]
   },
   {
@@ -4345,11 +4208,10 @@
       "Ali"
     ],
     "categories": [
-      "american",
-      "born-1980s",
       "emmy-winner",
-      "publicly-divorced",
-      "stand-up"
+      "born-1980s",
+      "american",
+      "publicly-divorced"
     ]
   },
   {
@@ -4359,11 +4221,10 @@
       "Viola"
     ],
     "categories": [
-      "american",
-      "dc-actor",
+      "oscar-winner",
       "emmy-winner",
       "grammy-winner",
-      "oscar-winner"
+      "american"
     ]
   },
   {
@@ -4422,7 +4283,7 @@
       "Salma"
     ],
     "categories": [
-      "latino",
+      "latin",
       "mcu-actor"
     ]
   },
@@ -4434,11 +4295,9 @@
       "Penelope"
     ],
     "categories": [
-      "born-1970s",
-      "european",
-      "latino",
-      "married-another-celeb",
-      "oscar-winner"
+      "latin",
+      "oscar-winner",
+      "married-another-celeb"
     ]
   },
   {
@@ -4496,11 +4355,9 @@
       "Idris"
     ],
     "categories": [
+      "mcu-actor",
       "born-1970s",
       "british",
-      "dc-actor",
-      "fast-furious",
-      "mcu-actor",
       "publicly-divorced"
     ]
   },
@@ -4512,9 +4369,9 @@
       "MBJ"
     ],
     "categories": [
-      "american",
+      "mcu-actor",
       "born-1980s",
-      "mcu-actor"
+      "american"
     ]
   },
   {
@@ -4524,8 +4381,8 @@
       "Chadwick"
     ],
     "categories": [
-      "american",
-      "mcu-actor"
+      "mcu-actor",
+      "american"
     ]
   },
   {
@@ -4547,10 +4404,9 @@
       "Liam"
     ],
     "categories": [
-      "band-member",
+      "pop",
       "born-1990s",
-      "british",
-      "pop"
+      "british"
     ]
   },
   {
@@ -4560,14 +4416,13 @@
       "Zayn"
     ],
     "categories": [
-      "band-member",
-      "billboard-1",
-      "born-1990s",
-      "british",
-      "ig-100m",
       "pop",
       "rnb",
-      "world-tour"
+      "billboard-1",
+      "world-tour",
+      "born-1990s",
+      "british",
+      "ig-100m"
     ]
   },
   {
@@ -4577,10 +4432,9 @@
       "Louis"
     ],
     "categories": [
-      "band-member",
+      "pop",
       "born-1990s",
-      "british",
-      "pop"
+      "british"
     ]
   },
   {
@@ -5604,7 +5458,7 @@
     "categories": [
       "pop",
       "rnb",
-      "latino",
+      "latin",
       "grammy-winner",
       "born-1990s",
       "american"
@@ -5648,7 +5502,7 @@
     "categories": [
       "social-to-mainstream",
       "born-1990s",
-      "latino",
+      "latin",
       "blonde"
     ]
   },
@@ -5657,16 +5511,12 @@
     "name": "Lilly Singh",
     "alternateNames": [
       "Superwoman",
-      "IISuperwomanII",
-      "Lilly"
+      "IISuperwomanII"
     ],
     "categories": [
+      "social-to-mainstream",
       "born-1980s",
-      "canadian",
-      "comedian",
-      "from-asia",
-      "presenter",
-      "social-to-mainstream"
+      "canadian"
     ]
   },
   {
@@ -5785,10 +5635,10 @@
       "The Animal"
     ],
     "categories": [
-      "american",
+      "mcu-actor",
       "athlete-entertainer",
       "born-1970s",
-      "mcu-actor"
+      "american"
     ]
   },
   {
@@ -5799,10 +5649,9 @@
       "Lupita Nyongo"
     ],
     "categories": [
-      "born-1980s",
       "mcu-actor",
       "oscar-winner",
-      "star-wars"
+      "born-1980s"
     ]
   },
   {
@@ -5812,9 +5661,9 @@
       "Evangeline"
     ],
     "categories": [
+      "mcu-actor",
       "born-1980s",
-      "canadian",
-      "mcu-actor"
+      "canadian"
     ]
   },
   {
@@ -5836,9 +5685,9 @@
       "Simu"
     ],
     "categories": [
+      "mcu-actor",
       "born-1980s",
-      "canadian",
-      "mcu-actor"
+      "canadian"
     ]
   },
   {
@@ -5860,9 +5709,9 @@
       "Tessa"
     ],
     "categories": [
-      "american",
+      "mcu-actor",
       "born-1980s",
-      "mcu-actor"
+      "american"
     ]
   },
   {
@@ -5874,10 +5723,9 @@
       "Dominic Toretto"
     ],
     "categories": [
-      "american",
+      "mcu-actor",
       "born-1970s",
-      "fast-furious",
-      "mcu-actor"
+      "american"
     ]
   },
   {
@@ -5902,8 +5750,7 @@
     ],
     "categories": [
       "born-1990s",
-      "british",
-      "star-wars"
+      "british"
     ]
   },
   {
@@ -5915,8 +5762,7 @@
     ],
     "categories": [
       "born-1990s",
-      "british",
-      "star-wars"
+      "british"
     ]
   },
   {
@@ -5939,10 +5785,9 @@
       "Hermione Granger"
     ],
     "categories": [
-      "blonde",
       "born-1990s",
       "british",
-      "harry-potter"
+      "blonde"
     ]
   },
   {
@@ -5954,8 +5799,7 @@
     ],
     "categories": [
       "born-1980s",
-      "british",
-      "harry-potter"
+      "british"
     ]
   },
   {
@@ -5968,7 +5812,6 @@
     "categories": [
       "born-1980s",
       "british",
-      "harry-potter",
       "redhead"
     ]
   },
@@ -6006,11 +5849,8 @@
       "Zoe"
     ],
     "categories": [
-      "american",
       "born-1980s",
-      "dc-actor",
-      "married-another-celeb",
-      "mcu-actor",
+      "american",
       "publicly-divorced"
     ]
   },
@@ -6072,7 +5912,7 @@
     "categories": [
       "born-1970s",
       "american",
-      "latino",
+      "latin",
       "publicly-divorced"
     ]
   },
@@ -6084,7 +5924,7 @@
     ],
     "categories": [
       "born-1970s",
-      "latino",
+      "latin",
       "publicly-divorced",
       "beauty-brand-owner",
       "married-another-celeb"
@@ -6110,10 +5950,7 @@
       "Colin F"
     ],
     "categories": [
-      "born-1970s",
-      "european",
-      "golden-globe-winner",
-      "irish"
+      "born-1970s"
     ]
   },
   {
@@ -6124,11 +5961,10 @@
       "Aquaman Momoa"
     ],
     "categories": [
-      "american",
       "born-1970s",
-      "dc-actor",
-      "married-another-celeb",
-      "publicly-divorced"
+      "american",
+      "publicly-divorced",
+      "married-another-celeb"
     ]
   },
   {
@@ -6139,8 +5975,7 @@
       "Wonder Woman"
     ],
     "categories": [
-      "born-1980s",
-      "dc-actor"
+      "born-1980s"
     ]
   },
   {
@@ -6152,8 +5987,7 @@
     ],
     "categories": [
       "born-1980s",
-      "british",
-      "dc-actor"
+      "british"
     ]
   },
   {
@@ -6200,9 +6034,9 @@
       "Glen"
     ],
     "categories": [
+      "born-1980s",
       "american",
-      "blonde",
-      "born-1980s"
+      "blonde"
     ]
   },
   {
@@ -6264,10 +6098,10 @@
       "Gamora"
     ],
     "categories": [
-      "american",
+      "mcu-actor",
       "born-1970s",
-      "married-another-celeb",
-      "mcu-actor"
+      "american",
+      "married-another-celeb"
     ]
   },
   {
@@ -6351,11 +6185,9 @@
       "Black Mamba"
     ],
     "categories": [
-      "american",
-      "athlete",
       "athlete-entertainer",
       "born-1970s",
-      "nba"
+      "american"
     ]
   },
   {
@@ -6365,11 +6197,9 @@
       "Peyton"
     ],
     "categories": [
-      "american",
-      "athlete",
       "athlete-entertainer",
       "born-1970s",
-      "nfl"
+      "american"
     ]
   },
   {
@@ -6380,11 +6210,8 @@
       "Fed"
     ],
     "categories": [
-      "athlete",
       "athlete-entertainer",
-      "born-1980s",
-      "married-another-celeb",
-      "tennis"
+      "born-1980s"
     ]
   },
   {
@@ -6395,11 +6222,8 @@
       "Rafa"
     ],
     "categories": [
-      "athlete",
       "athlete-entertainer",
-      "born-1980s",
-      "european",
-      "tennis"
+      "born-1980s"
     ]
   },
   {
@@ -6410,10 +6234,8 @@
       "Lightning Bolt"
     ],
     "categories": [
-      "athlete",
       "athlete-entertainer",
-      "born-1980s",
-      "olympian"
+      "born-1980s"
     ]
   },
   {
@@ -6424,11 +6246,9 @@
       "Hamilton F1"
     ],
     "categories": [
-      "athlete",
       "athlete-entertainer",
       "born-1980s",
-      "british",
-      "f1"
+      "british"
     ]
   },
   {
@@ -6439,11 +6259,8 @@
       "Greek Freak"
     ],
     "categories": [
-      "athlete",
       "athlete-entertainer",
-      "born-1990s",
-      "nba",
-      "olympian"
+      "born-1990s"
     ]
   },
   {
@@ -6454,12 +6271,9 @@
       "Slim Reaper"
     ],
     "categories": [
-      "american",
-      "athlete",
       "athlete-entertainer",
       "born-1980s",
-      "nba",
-      "olympian"
+      "american"
     ]
   },
   {
@@ -6470,11 +6284,10 @@
       "Pretty Boy Floyd"
     ],
     "categories": [
-      "american",
-      "athlete",
       "athlete-entertainer",
       "billionaire",
-      "born-1970s"
+      "born-1970s",
+      "american"
     ]
   },
   {
@@ -6486,10 +6299,8 @@
       "Nole"
     ],
     "categories": [
-      "athlete",
       "athlete-entertainer",
-      "born-1980s",
-      "tennis"
+      "born-1980s"
     ]
   },
   {
@@ -6500,11 +6311,9 @@
       "RuPaul Charles"
     ],
     "categories": [
-      "american",
-      "drag-race",
+      "reality-tv-star",
       "emmy-winner",
-      "grammy-winner",
-      "reality-tv-star"
+      "american"
     ]
   },
   {
@@ -6531,9 +6340,9 @@
       "Survivor Jeff"
     ],
     "categories": [
-      "american",
+      "reality-tv-star",
       "emmy-winner",
-      "reality-tv-star"
+      "american"
     ]
   },
   {
@@ -6544,13 +6353,11 @@
       "Molly Mae Hague"
     ],
     "categories": [
-      "beauty-brand-owner",
-      "blonde",
+      "reality-tv-star",
       "born-1990s",
       "british",
-      "has-fashion-line",
-      "love-island",
-      "reality-tv-star"
+      "blonde",
+      "beauty-brand-owner"
     ]
   },
   {
@@ -6663,8 +6470,7 @@
       "Chef Ramsay"
     ],
     "categories": [
-      "british",
-      "emmy-winner"
+      "british"
     ]
   },
   {
@@ -6674,11 +6480,11 @@
       "Cecily"
     ],
     "categories": [
-      "american",
-      "blonde",
-      "born-1980s",
+      "snl-cast",
       "emmy-winner",
-      "snl-cast"
+      "born-1980s",
+      "american",
+      "blonde"
     ]
   },
   {
@@ -6704,11 +6510,10 @@
       "Keegan"
     ],
     "categories": [
-      "american",
-      "born-1970s",
       "emmy-winner",
-      "publicly-divorced",
-      "snl-host"
+      "born-1970s",
+      "american",
+      "publicly-divorced"
     ]
   },
   {
@@ -6960,11 +6765,11 @@
       "El Negrito Ojos Claros"
     ],
     "categories": [
-      "born-1990s",
-      "latino",
+      "latin",
       "pop",
       "rnb",
-      "world-tour"
+      "world-tour",
+      "born-1990s"
     ]
   },
   {
@@ -6975,7 +6780,7 @@
       "Larissa de Macedo Machado"
     ],
     "categories": [
-      "latino",
+      "latin",
       "pop",
       "born-1990s"
     ]
@@ -6987,7 +6792,7 @@
       "Nodal"
     ],
     "categories": [
-      "latino",
+      "latin",
       "country",
       "world-tour",
       "born-1990s"
@@ -7000,7 +6805,7 @@
       "Frontera"
     ],
     "categories": [
-      "latino",
+      "latin",
       "world-tour"
     ]
   },
@@ -7274,10 +7079,9 @@
       "Jude"
     ],
     "categories": [
-      "british",
       "born-1970s",
-      "harry-potter",
-      "golden-globe-winner"
+      "british",
+      "harry-potter"
     ]
   },
   {
@@ -7567,9 +7371,8 @@
       "Tom"
     ],
     "categories": [
-      "british",
       "born-1970s",
-      "sag-winner"
+      "british"
     ]
   },
   {
@@ -7646,9 +7449,8 @@
       "Suranne"
     ],
     "categories": [
-      "british",
       "born-1970s",
-      "emmy-winner"
+      "british"
     ]
   },
   {
@@ -8511,8 +8313,7 @@
     "categories": [
       "british",
       "irish",
-      "presenter",
-      "emmy-winner"
+      "presenter"
     ]
   },
   {
@@ -11882,9 +11683,9 @@
       "Little Mix"
     ],
     "categories": [
+      "band-member",
       "british",
       "pop",
-      "band-member",
       "won-reality-show"
     ]
   },
@@ -11895,10 +11696,10 @@
       "Westlife"
     ],
     "categories": [
+      "band-member",
       "british",
       "irish",
       "pop",
-      "band-member",
       "world-tour"
     ]
   },
@@ -11909,10 +11710,10 @@
       "Boyzone"
     ],
     "categories": [
+      "band-member",
       "british",
       "irish",
-      "pop",
-      "band-member"
+      "pop"
     ]
   },
   {
@@ -11936,9 +11737,9 @@
       "Take That"
     ],
     "categories": [
+      "band-member",
       "british",
       "pop",
-      "band-member",
       "world-tour"
     ]
   },
@@ -12057,9 +11858,9 @@
       "Oasis"
     ],
     "categories": [
+      "band-member",
       "british",
       "rock",
-      "band-member",
       "world-tour"
     ]
   },
@@ -12277,9 +12078,9 @@
       "The Cure band"
     ],
     "categories": [
+      "band-member",
       "british",
-      "rock",
-      "band-member"
+      "rock"
     ]
   },
   {
@@ -12289,9 +12090,9 @@
       "Depeche Mode"
     ],
     "categories": [
+      "band-member",
       "british",
-      "rock",
-      "band-member"
+      "rock"
     ]
   },
   {
@@ -12301,9 +12102,9 @@
       "New Order"
     ],
     "categories": [
+      "band-member",
       "british",
-      "rock",
-      "band-member"
+      "rock"
     ]
   },
   {
@@ -12425,8 +12226,8 @@
     ],
     "categories": [
       "american",
-      "rap",
-      "band-member"
+      "band-member",
+      "rap"
     ]
   },
   {
@@ -17464,10 +17265,9 @@
       "Dire Straits"
     ],
     "categories": [
-      "british",
-      "rock",
       "band-member",
-      "grammy-winner"
+      "british",
+      "rock"
     ]
   },
   {
@@ -17596,10 +17396,9 @@
       "Culture Club"
     ],
     "categories": [
-      "british",
-      "pop",
       "band-member",
-      "grammy-winner"
+      "british",
+      "pop"
     ]
   },
   {
@@ -17648,9 +17447,9 @@
       "Aha"
     ],
     "categories": [
+      "band-member",
       "european",
-      "pop",
-      "band-member"
+      "pop"
     ]
   },
   {
@@ -17673,9 +17472,9 @@
       "Ace of Base"
     ],
     "categories": [
+      "band-member",
       "european",
-      "pop",
-      "band-member"
+      "pop"
     ]
   },
   {
@@ -17685,9 +17484,9 @@
       "Roxette"
     ],
     "categories": [
+      "band-member",
       "european",
-      "pop",
-      "band-member"
+      "pop"
     ]
   },
   {
@@ -19631,8 +19430,8 @@
     ],
     "categories": [
       "american",
-      "rock",
-      "band-member"
+      "band-member",
+      "rock"
     ]
   },
   {
@@ -19643,8 +19442,8 @@
     ],
     "categories": [
       "american",
-      "rock",
-      "band-member"
+      "band-member",
+      "rock"
     ]
   },
   {
@@ -19655,8 +19454,8 @@
     ],
     "categories": [
       "american",
-      "rock",
-      "band-member"
+      "band-member",
+      "rock"
     ]
   },
   {
@@ -20281,11 +20080,10 @@
     ],
     "categories": [
       "american",
+      "been-on-snl",
       "born-1960s",
-      "emmy-winner",
-      "golden-globe-winner",
       "comedian",
-      "been-on-snl"
+      "golden-globe-winner"
     ]
   },
   {
@@ -20442,9 +20240,8 @@
       "Damson"
     ],
     "categories": [
-      "british",
       "born-1990s",
-      "emmy-winner",
+      "british",
       "golden-globe-winner"
     ]
   },
@@ -20455,27 +20252,24 @@
       "Oliver"
     ],
     "categories": [
-      "british",
       "born-1980s",
-      "emmy-winner"
+      "british"
     ]
   },
   {
     "id": "zendaya",
     "name": "Zendaya",
     "alternateNames": [
-      "Zendaya Coleman",
-      "Z"
+      "Zendaya Coleman"
     ],
     "categories": [
-      "american",
-      "born-1990s",
       "emmy-winner",
-      "golden-globe-winner",
-      "ig-100m",
       "disney-channel-alum",
-      "pop",
-      "beauty-brand-owner"
+      "born-1990s",
+      "american",
+      "ig-100m",
+      "mcu-actor",
+      "music-to-acting"
     ]
   },
   {
@@ -20485,13 +20279,12 @@
       "Lenny"
     ],
     "categories": [
-      "american",
-      "born-1960s",
       "rock",
-      "rnb",
       "grammy-winner",
-      "married-another-celeb",
-      "publicly-divorced"
+      "world-tour",
+      "american",
+      "publicly-divorced",
+      "music-to-acting"
     ]
   },
   {
