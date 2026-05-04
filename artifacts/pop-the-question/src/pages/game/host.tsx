@@ -1837,7 +1837,7 @@ export default function GameHost() {
                       onClick={() => handleWofSetPack(pack.id)}
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
-                      className={`relative w-full text-left border-[3px] border-black p-4 focus-visible:outline-none ${wofSelectedPackId === pack.id ? "bg-[#7C3AED] shadow-[5px_5px_0_#000]" : "bg-white shadow-[4px_4px_0_#000] hover:bg-[#FFF8E7]"}`}
+                      className={`relative w-full text-left border-[3px] border-black p-4 focus-visible:outline-none ${wofSelectedPackId === pack.id ? "bg-[#B97AD7] shadow-[5px_5px_0_#000]" : "bg-white shadow-[4px_4px_0_#000] hover:bg-[#FFF8E7]"}`}
                     >
                       {wofSelectedPackId === pack.id && (
                         <span className="absolute top-3 right-3 w-6 h-6 bg-black flex items-center justify-center">
@@ -1915,7 +1915,7 @@ export default function GameHost() {
                     onClick={() => handleScatSetConfig(n, scatDifficulty)}
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.96 }}
-                    className={`w-16 h-16 font-display font-black text-2xl border-[3px] border-black focus-visible:outline-none ${scatRoundCount === n ? "bg-[#FF6B35] text-white shadow-[5px_5px_0_#000]" : "bg-white shadow-[4px_4px_0_#000] hover:bg-[#FFF8E7]"}`}
+                    className={`w-16 h-16 font-display font-black text-2xl border-[3px] border-black focus-visible:outline-none ${scatRoundCount === n ? "bg-[#38BDF8] text-white shadow-[5px_5px_0_#000]" : "bg-white shadow-[4px_4px_0_#000] hover:bg-[#FFF8E7]"}`}
                     data-testid={`btn-scat-rounds-${n}`}
                   >
                     {n}
@@ -1938,7 +1938,7 @@ export default function GameHost() {
                     onClick={() => handleScatSetConfig(scatRoundCount, d)}
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
-                    className={`px-8 py-4 font-display font-black text-xl uppercase border-[3px] border-black focus-visible:outline-none ${scatDifficulty === d ? "bg-[#FF6B35] text-white shadow-[5px_5px_0_#000]" : "bg-white shadow-[4px_4px_0_#000] hover:bg-[#FFF8E7]"}`}
+                    className={`px-8 py-4 font-display font-black text-xl uppercase border-[3px] border-black focus-visible:outline-none ${scatDifficulty === d ? "bg-[#38BDF8] text-white shadow-[5px_5px_0_#000]" : "bg-white shadow-[4px_4px_0_#000] hover:bg-[#FFF8E7]"}`}
                     data-testid={`btn-scat-diff-${d}`}
                   >
                     {d}
@@ -1961,11 +1961,11 @@ export default function GameHost() {
         <div className="flex-1 flex flex-col bg-[#FFF8E7] p-6 gap-6">
           <header className="flex justify-between items-center flex-wrap gap-3">
             <div className="font-display font-black text-black text-xl bg-white border-[3px] border-black shadow-[3px_3px_0_#000] px-6 py-3 uppercase tracking-widest">
-              ROOM: <span style={{ color: "#FF6B35" }}>{roomCode}</span>
+              ROOM: <span style={{ color: "#38BDF8" }}>{roomCode}</span>
             </div>
             {isDemo && <DemoBadge />}
             <div className="font-display font-black text-black text-xl bg-white border-[3px] border-black shadow-[3px_3px_0_#000] px-6 py-3 uppercase">
-              Round <span style={{ color: "#FF6B35" }}>{scatRound}</span> / {scatTotalRounds}
+              Round <span style={{ color: "#38BDF8" }}>{scatRound}</span> / {scatTotalRounds}
             </div>
           </header>
 
@@ -1973,7 +1973,7 @@ export default function GameHost() {
             {/* Main panel */}
             <div className="flex-1 flex flex-col gap-6">
               {/* Letter + timer */}
-              <div className={`flex items-center justify-between p-6 border-[4px] border-black shadow-[6px_6px_0_#000] ${scatAlertActive ? "bg-[#FF1493]" : "bg-[#FF6B35]"}`}>
+              <div className={`flex items-center justify-between p-6 border-[4px] border-black shadow-[6px_6px_0_#000] ${scatAlertActive ? "bg-[#FF1493]" : "bg-[#38BDF8]"}`}>
                 <div>
                   <p className="font-display font-black text-white/70 text-sm uppercase tracking-widest mb-1">This round&apos;s letter</p>
                   <div className="font-display font-black text-white text-[8rem] leading-none" style={{ textShadow: "4px 4px 0 rgba(0,0,0,0.3)" }}>
@@ -1992,12 +1992,12 @@ export default function GameHost() {
               <div className="bg-white border-[3px] border-black shadow-[4px_4px_0_#000] p-4">
                 <div className="flex items-center justify-between mb-3">
                   <span className="font-display font-black text-black uppercase text-sm">Answers submitted</span>
-                  <span className="font-display font-black" style={{ color: "#FF6B35" }}>{scatSubmitted} / {scatTotal}</span>
+                  <span className="font-display font-black" style={{ color: "#38BDF8" }}>{scatSubmitted} / {scatTotal}</span>
                 </div>
                 <div className="w-full bg-black/10 border-[2px] border-black h-4">
                   <motion.div
                     className="h-full"
-                    style={{ backgroundColor: "#FF6B35" }}
+                    style={{ backgroundColor: "#38BDF8" }}
                     animate={{ width: `${(scatSubmitted / Math.max(1, scatTotal)) * 100}%` }}
                     transition={{ duration: 0.5 }}
                   />
@@ -2008,11 +2008,11 @@ export default function GameHost() {
 
               {/* Categories list */}
               <div className="bg-white border-[3px] border-black shadow-[4px_4px_0_#000] p-4">
-                <h3 className="font-display font-black text-black uppercase text-lg mb-4 border-b-[3px] border-black pb-2">Categories — must start with <span style={{ color: "#FF6B35" }}>{scatLetter}</span></h3>
+                <h3 className="font-display font-black text-black uppercase text-lg mb-4 border-b-[3px] border-black pb-2">Categories — must start with <span style={{ color: "#38BDF8" }}>{scatLetter}</span></h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                   {scatCategories.map((cat) => (
                     <div key={cat.id} className="flex items-center gap-3 p-3 border-[2px] border-black bg-[#FFF8E7]">
-                      <div className="w-8 h-8 flex items-center justify-center font-display font-black text-white text-sm flex-shrink-0" style={{ backgroundColor: "#FF6B35" }}>
+                      <div className="w-8 h-8 flex items-center justify-center font-display font-black text-white text-sm flex-shrink-0" style={{ backgroundColor: "#38BDF8" }}>
                         {scatLetter}
                       </div>
                       <span className="font-display font-black text-black text-sm uppercase">{cat.name}</span>
@@ -2042,7 +2042,7 @@ export default function GameHost() {
                         {p.isBot && <Bot className="w-3 h-3 text-black/40" />}
                         <span className="font-display font-black text-black text-sm uppercase truncate max-w-[100px]">{p.name}</span>
                       </div>
-                      <span className="font-display font-black text-sm" style={{ color: "#FF6B35" }}>{p.score ?? 0}pt</span>
+                      <span className="font-display font-black text-sm" style={{ color: "#38BDF8" }}>{p.score ?? 0}pt</span>
                     </div>
                   ))}
                 </div>
@@ -2058,7 +2058,7 @@ export default function GameHost() {
         <div className="flex-1 flex flex-col bg-[#FFF8E7] p-6 gap-6">
           <header className="flex justify-between items-center flex-wrap gap-3">
             <div className="font-display font-black text-black text-xl bg-white border-[3px] border-black shadow-[3px_3px_0_#000] px-6 py-3 uppercase tracking-widest">
-              Round {scatRound} Results — <span style={{ color: "#FF6B35" }}>Letter {scatLetter}</span>
+              Round {scatRound} Results — <span style={{ color: "#38BDF8" }}>Letter {scatLetter}</span>
             </div>
             {isDemo && <DemoBadge />}
             <div className="flex gap-3">
@@ -2078,7 +2078,7 @@ export default function GameHost() {
             <div className="flex-1 space-y-4 overflow-auto">
               {scatResults.map((cat) => (
                 <div key={cat.categoryId} className="bg-white border-[3px] border-black shadow-[4px_4px_0_#000]">
-                  <div className="p-3 border-b-[3px] border-black flex items-center gap-3" style={{ backgroundColor: "#FF6B35" }}>
+                  <div className="p-3 border-b-[3px] border-black flex items-center gap-3" style={{ backgroundColor: "#38BDF8" }}>
                     <span className="w-8 h-8 flex items-center justify-center font-display font-black text-white text-sm bg-black/20">{scatLetter}</span>
                     <span className="font-display font-black text-white uppercase text-sm">{cat.categoryName}</span>
                   </div>
@@ -3459,13 +3459,13 @@ export default function GameHost() {
           <div className="flex gap-3">
             {wofPuzzleOver.isLastPuzzle ? (
               <Button size="lg" onClick={handleWofEndGame}
-                className="text-lg px-6 py-5 font-bold gap-2 bg-[#7C3AED] hover:bg-[#7C3AED]/90 text-white"
+                className="text-lg px-6 py-5 font-bold gap-2 bg-[#B97AD7] hover:bg-[#B97AD7]/90 text-white"
                 data-testid="btn-wof-final-standings">
                 <Trophy className="w-5 h-5" /> Final Standings
               </Button>
             ) : (
               <Button size="lg" onClick={handleWofNextPuzzle}
-                className="text-lg px-6 py-5 font-bold gap-2 bg-[#7C3AED] hover:bg-[#7C3AED]/90 text-white"
+                className="text-lg px-6 py-5 font-bold gap-2 bg-[#B97AD7] hover:bg-[#B97AD7]/90 text-white"
                 data-testid="btn-wof-next-puzzle">
                 Next Puzzle <ChevronRight className="w-5 h-5" />
               </Button>
@@ -3503,7 +3503,7 @@ export default function GameHost() {
     return (
       <div className="flex-1 flex flex-col bg-[#FFF8E7] min-h-0">
         {/* Header */}
-        <header className="flex justify-between items-center px-6 py-3 bg-[#7C3AED] border-b-[4px] border-black">
+        <header className="flex justify-between items-center px-6 py-3 bg-[#B97AD7] border-b-[4px] border-black">
           <div className="font-display font-black text-white text-xl uppercase tracking-widest">
             ROOM: <span className="text-[#FFD700]">{roomCode}</span>
           </div>
@@ -3550,7 +3550,7 @@ export default function GameHost() {
                   initial={{ scale: 0.8, opacity: 0, y: -10 }}
                   animate={{ scale: 1, opacity: 1, y: 0 }}
                   exit={{ scale: 0.8, opacity: 0 }}
-                  className={`w-full max-w-md border-[4px] border-black shadow-[6px_6px_0_#000] p-5 flex flex-col gap-3 ${wofPendingSolve.isVerbal ? "bg-[#7C3AED]" : "bg-[#FF1493]"}`}
+                  className={`w-full max-w-md border-[4px] border-black shadow-[6px_6px_0_#000] p-5 flex flex-col gap-3 ${wofPendingSolve.isVerbal ? "bg-[#B97AD7]" : "bg-[#FF1493]"}`}
                 >
                   <p className="font-display font-black text-white uppercase text-xl tracking-widest text-center">
                     {wofPendingSolve.isVerbal ? "🎤 Verbal Solve!" : "Solve Attempt!"}
@@ -3595,7 +3595,7 @@ export default function GameHost() {
             <AnimatePresence mode="wait">
               {!wofSpinning && !wofPendingSolve && wofPuzzleOver ? (
                 <motion.div key="puzzleover" initial={{ scale: 0.7, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}
-                  className="flex flex-col items-center gap-2 bg-[#7C3AED] border-[3px] border-black shadow-[6px_6px_0_#000] px-8 py-5 text-white text-center">
+                  className="flex flex-col items-center gap-2 bg-[#B97AD7] border-[3px] border-black shadow-[6px_6px_0_#000] px-8 py-5 text-white text-center">
                   <p className="font-display font-black text-2xl uppercase tracking-wide">Puzzle Solved!</p>
                   <p className="font-display text-4xl font-black text-[#FFD700]">{wofPuzzleOver.answer}</p>
                   {!wofPuzzleOver.isLastPuzzle && (
@@ -3682,7 +3682,7 @@ export default function GameHost() {
               <h3 className="font-display font-black text-xl uppercase mb-4 border-b-[3px] border-black pb-2">Scores</h3>
               <div className="space-y-3">
                 {[...wofScores].sort((a, b) => b.score - a.score).map((s, idx) => (
-                  <div key={s.id} className={`flex items-center justify-between p-3 border-[2px] border-black ${s.id === wofControllerId ? "bg-[#7C3AED] text-white" : "bg-[#FFF8E7] text-black"}`}>
+                  <div key={s.id} className={`flex items-center justify-between p-3 border-[2px] border-black ${s.id === wofControllerId ? "bg-[#B97AD7] text-white" : "bg-[#FFF8E7] text-black"}`}>
                     <div className="flex items-center gap-2">
                       <span className="font-display font-black text-lg w-6">#{idx + 1}</span>
                       {s.isBot && <Bot className="w-4 h-4 opacity-60" />}

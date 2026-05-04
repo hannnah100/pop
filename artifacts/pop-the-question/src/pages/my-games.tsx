@@ -30,7 +30,7 @@ interface ConfirmState {
 
 const KIND_META: Record<GameKind, { label: string; icon: typeof Grid3x3; bg: string; editPath: string; gameType: string }> = {
   jeopardy: { label: "Jeopardy", icon: Grid3x3, bg: "#FFC107", editPath: "/create-game/jeopardy", gameType: "jeopardy" },
-  wof: { label: "Wheel of Fortune", icon: CircleDot, bg: "#7C3AED", editPath: "/create-game/wof", gameType: "wheel-of-fortune" },
+  wof: { label: "Wheel of Fortune", icon: CircleDot, bg: "#B97AD7", editPath: "/create-game/wof", gameType: "wheel-of-fortune" },
   quiz: { label: "Pub Quiz", icon: Beer, bg: "#00C853", editPath: "/create-game/quiz", gameType: "pub-quiz" },
 };
 

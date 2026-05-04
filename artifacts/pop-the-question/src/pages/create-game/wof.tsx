@@ -179,7 +179,7 @@ export default function WofCreator() {
 
   return (
     <div className="flex-1 flex flex-col w-full overflow-x-hidden">
-      <header className="relative bg-[#7C3AED] border-b-[4px] border-black px-4 pt-8 pb-6 text-center overflow-hidden">
+      <header className="relative bg-[#B97AD7] border-b-[4px] border-black px-4 pt-8 pb-6 text-center overflow-hidden">
         <div className="relative z-10">
           <h1
             className="font-display font-black uppercase leading-none comic-headline text-white"
@@ -201,7 +201,7 @@ export default function WofCreator() {
               Pack Name <span className="text-[#FF1493]">*</span>
             </label>
             <input
-              className={`w-full border-[3px] px-4 py-3 font-sans text-base focus:outline-none focus:border-[#7C3AED] ${errors["title"] ? "border-[#FF1493] bg-red-50" : "border-black"}`}
+              className={`w-full border-[3px] px-4 py-3 font-sans text-base focus:outline-none focus:border-[#B97AD7] ${errors["title"] ? "border-[#FF1493] bg-red-50" : "border-black"}`}
               placeholder="e.g. TV Classics"
               value={form.title}
               onChange={(e) => {
@@ -213,7 +213,7 @@ export default function WofCreator() {
           </div>
 
           {/* Puzzles */}
-          <div className="bg-[#7C3AED] border-[4px] border-black shadow-[6px_6px_0_#000] p-4">
+          <div className="bg-[#B97AD7] border-[4px] border-black shadow-[6px_6px_0_#000] p-4">
             <div className="flex items-center justify-between mb-4">
               <h2 className="font-display font-black text-white text-2xl uppercase">
                 🧩 Puzzles ({form.puzzles.length}/50)
@@ -255,7 +255,7 @@ export default function WofCreator() {
                             Category <span className="text-[#FF1493]">*</span>
                           </label>
                           <select
-                            className={`w-full border-[2px] px-3 py-2 font-sans text-sm bg-white focus:outline-none focus:border-[#7C3AED] ${errors[`puzzle-${i}-category`] ? "border-[#FF1493]" : "border-black"}`}
+                            className={`w-full border-[2px] px-3 py-2 font-sans text-sm bg-white focus:outline-none focus:border-[#B97AD7] ${errors[`puzzle-${i}-category`] ? "border-[#FF1493]" : "border-black"}`}
                             value={puzzle.category}
                             onChange={(e) => updatePuzzle(i, "category", e.target.value)}
                           >
@@ -269,7 +269,7 @@ export default function WofCreator() {
                             Optional Hint
                           </label>
                           <input
-                            className="w-full border-[2px] border-black px-3 py-2 font-sans text-sm focus:outline-none focus:border-[#7C3AED]"
+                            className="w-full border-[2px] border-black px-3 py-2 font-sans text-sm focus:outline-none focus:border-[#B97AD7]"
                             placeholder="e.g. It's a 90s sitcom"
                             value={puzzle.hint}
                             onChange={(e) => updatePuzzle(i, "hint", e.target.value)}
@@ -281,7 +281,7 @@ export default function WofCreator() {
                           Puzzle Phrase <span className="text-[#FF1493]">*</span>
                         </label>
                         <input
-                          className={`w-full border-[2px] px-3 py-2 font-sans text-sm uppercase font-bold focus:outline-none focus:border-[#7C3AED] ${errors[`puzzle-${i}-answer`] ? "border-[#FF1493] bg-red-50" : "border-black bg-white"}`}
+                          className={`w-full border-[2px] px-3 py-2 font-sans text-sm uppercase font-bold focus:outline-none focus:border-[#B97AD7] ${errors[`puzzle-${i}-answer`] ? "border-[#FF1493] bg-red-50" : "border-black bg-white"}`}
                           placeholder="THE FRESH PRINCE OF BEL-AIR"
                           value={puzzle.answer}
                           onChange={(e) => updatePuzzle(i, "answer", e.target.value)}
@@ -318,7 +318,7 @@ export default function WofCreator() {
           {/* Save + back */}
           <div className="flex gap-4 flex-wrap">
             <Button
-              className="font-display font-black uppercase text-lg px-10 py-5 bg-[#7C3AED] text-white border-[3px] border-black shadow-[5px_5px_0_#000] hover:shadow-[3px_3px_0_#000] hover:translate-x-0.5 hover:translate-y-0.5 transition-all"
+              className="font-display font-black uppercase text-lg px-10 py-5 bg-[#B97AD7] text-white border-[3px] border-black shadow-[5px_5px_0_#000] hover:shadow-[3px_3px_0_#000] hover:translate-x-0.5 hover:translate-y-0.5 transition-all"
               onClick={handleSave}
               disabled={saving}
             >

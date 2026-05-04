@@ -66,7 +66,7 @@ const GAME_CARDS = [
     description:
       "Spin the wheel to earn cash, guess letters, and race to solve the puzzle before anyone else. Three pop-culture puzzle packs.",
     Icon: CircleDot,
-    bg: "#7C3AED",
+    bg: "#B97AD7",
     accent: "#FFD700",
     testId: "btn-host-wof",
   },
@@ -77,7 +77,7 @@ const GAME_CARDS = [
     description:
       "Race the clock to fill in pop-culture categories starting with the same letter. Unique answers score — duplicates don't.",
     Icon: LayoutList,
-    bg: "#FF6B35",
+    bg: "#38BDF8",
     accent: "#FFD700",
     testId: "btn-host-scattergories",
   },

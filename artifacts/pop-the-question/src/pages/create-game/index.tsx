@@ -27,7 +27,7 @@ const GAME_TYPES = [
     description:
       "Create a puzzle pack with phrases, categories, and optional hints. Watch tiles reveal as you type.",
     Icon: CircleDot,
-    bg: "#7C3AED",
+    bg: "#B97AD7",
     accent: "#FFD700",
     path: "/create-game/wof",
   },
@@ -94,7 +94,7 @@ export default function CreateGamePicker() {
                   </h2>
                   <p
                     className="text-xs font-bold uppercase tracking-wide mb-3"
-                    style={{ color: game.bg === "#00C853" ? "#008C3A" : game.bg === "#7C3AED" ? "#5B21B6" : game.bg }}
+                    style={{ color: game.bg === "#00C853" ? "#008C3A" : game.bg === "#B97AD7" ? "#5B21B6" : game.bg }}
                   >
                     {game.tagline}
                   </p>

@@ -2595,7 +2595,7 @@ export default function GamePlayer() {
     function renderContent() {
     if (wofPuzzleOver) {
       return (
-        <div className="flex flex-col min-h-[100dvh] bg-[#7C3AED] items-center justify-center text-center p-6 space-y-5">
+        <div className="flex flex-col min-h-[100dvh] bg-[#B97AD7] items-center justify-center text-center p-6 space-y-5">
           <motion.div initial={{ scale: 0.7, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}
             transition={{ type: "spring", stiffness: 180, damping: 26 }} className="space-y-3">
             <p className="font-display font-black text-white/70 uppercase tracking-widest text-lg">Puzzle Solved!</p>
@@ -2614,7 +2614,7 @@ export default function GamePlayer() {
     return (
       <div className="flex flex-col min-h-[100dvh] bg-[#FFF8E7]">
         {/* Header */}
-        <div className="bg-[#7C3AED] border-b-[4px] border-black px-4 py-3 flex justify-between items-center">
+        <div className="bg-[#B97AD7] border-b-[4px] border-black px-4 py-3 flex justify-between items-center">
           <div className="font-display font-black text-white uppercase tracking-wide text-sm">
             Puzzle {wofPuzzleIndex + 1}/{wofTotalPuzzles}
           </div>
@@ -2650,7 +2650,7 @@ export default function GamePlayer() {
           <AnimatePresence mode="wait">
             {isMyTurn ? (
               <motion.div key="myturn" initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }}
-                className="bg-[#7C3AED] border-[3px] border-black shadow-[4px_4px_0_#000] px-4 py-3 text-center">
+                className="bg-[#B97AD7] border-[3px] border-black shadow-[4px_4px_0_#000] px-4 py-3 text-center">
                 <p className="font-display font-black text-white uppercase text-lg tracking-wide">Your Turn!</p>
               </motion.div>
             ) : (
@@ -2692,7 +2692,7 @@ export default function GamePlayer() {
             <div className="flex flex-col gap-3">
               {/* Spin button */}
               {canSpin && (
-                <Button onClick={handleSpin} className="w-full py-6 text-xl font-display font-black uppercase bg-[#7C3AED] hover:bg-[#7C3AED]/90 text-white border-[3px] border-black shadow-[4px_4px_0_#000]">
+                <Button onClick={handleSpin} className="w-full py-6 text-xl font-display font-black uppercase bg-[#B97AD7] hover:bg-[#B97AD7]/90 text-white border-[3px] border-black shadow-[4px_4px_0_#000]">
                   🎡 Spin the Wheel!
                 </Button>
               )}
@@ -2746,7 +2746,7 @@ export default function GamePlayer() {
                       setWofSpeakNow(true);
                       hapticTap();
                     }}
-                    className="w-full bg-[#7C3AED] hover:bg-[#7C3AED]/90 text-white border-[2px] border-black font-display font-black uppercase"
+                    className="w-full bg-[#B97AD7] hover:bg-[#B97AD7]/90 text-white border-[2px] border-black font-display font-black uppercase"
                     data-testid="btn-wof-say-it"
                   >
                     🎤 Say It Out Loud
@@ -2759,7 +2759,7 @@ export default function GamePlayer() {
                 <motion.div
                   initial={{ scale: 0.9, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
-                  className="bg-[#7C3AED] border-[3px] border-black shadow-[4px_4px_0_#000] px-4 py-5 text-center flex flex-col gap-3"
+                  className="bg-[#B97AD7] border-[3px] border-black shadow-[4px_4px_0_#000] px-4 py-5 text-center flex flex-col gap-3"
                 >
                   <p className="font-display font-black text-white text-4xl">🎤</p>
                   <p className="font-display font-black text-white uppercase text-xl tracking-widest">Speak Now!</p>
@@ -2847,7 +2847,7 @@ export default function GamePlayer() {
             <p className="font-display font-black text-black/40 uppercase text-xs tracking-widest mb-2">Scores</p>
             <div className="space-y-1">
               {[...wofScores].sort((a, b) => b.score - a.score).map((s) => (
-                <div key={s.id} className={`flex justify-between items-center px-3 py-2 border-[2px] border-black ${s.id === me?.id ? "bg-[#7C3AED] text-white" : s.id === wofControllerId ? "bg-[#FFD700] text-black" : "bg-white text-black"}`}>
+                <div key={s.id} className={`flex justify-between items-center px-3 py-2 border-[2px] border-black ${s.id === me?.id ? "bg-[#B97AD7] text-white" : s.id === wofControllerId ? "bg-[#FFD700] text-black" : "bg-white text-black"}`}>
                   <span className="font-display font-black text-sm uppercase truncate max-w-[120px]">{s.name}</span>
                   <div className="flex flex-col items-end">
                     <span className="font-display font-black text-sm">${s.score.toLocaleString()}</span>
@@ -2885,7 +2885,7 @@ export default function GamePlayer() {
     // Waiting for first round to start
     if (!scatPhase) {
       return (
-        <div className="flex flex-col min-h-[100dvh] bg-[#FF6B35] items-center justify-center text-center space-y-6 p-6">
+        <div className="flex flex-col min-h-[100dvh] bg-[#38BDF8] items-center justify-center text-center space-y-6 p-6">
           <LeaveGameBtn onClick={() => setConfirmLeave(true)} />
           <div className="font-display font-black text-white text-[8rem] leading-none" style={{ textShadow: "4px 4px 0 rgba(0,0,0,0.3)" }}>
             S
@@ -2900,10 +2900,10 @@ export default function GamePlayer() {
     // Round phase — show answer inputs
     if (scatPhase === "round") {
       return (
-        <div className={`flex flex-col min-h-[100dvh] ${scatAlertActive ? "bg-[#FF1493]" : "bg-[#FF6B35]"}`}>
+        <div className={`flex flex-col min-h-[100dvh] ${scatAlertActive ? "bg-[#FF1493]" : "bg-[#38BDF8]"}`}>
           <LeaveGameBtn onClick={() => setConfirmLeave(true)} />
           {/* Header with letter + timer */}
-          <header className="sticky top-0 z-10 px-4 py-3 border-b-[4px] border-black flex items-center justify-between" style={{ backgroundColor: scatAlertActive ? "#FF1493" : "#FF6B35" }}>
+          <header className="sticky top-0 z-10 px-4 py-3 border-b-[4px] border-black flex items-center justify-between" style={{ backgroundColor: scatAlertActive ? "#FF1493" : "#38BDF8" }}>
             <div>
               <p className="font-display font-black text-white/70 text-xs uppercase tracking-widest">Letter</p>
               <div className="font-display font-black text-white text-5xl leading-none">{scatLetter}</div>
@@ -2933,15 +2933,15 @@ export default function GamePlayer() {
             {!scatSubmitted ? (
               <>
                 <p className="font-display font-black text-black/50 text-xs uppercase tracking-widest mb-1">
-                  Each answer must start with <span style={{ color: "#FF6B35" }}>{scatLetter}</span>
+                  Each answer must start with <span style={{ color: "#38BDF8" }}>{scatLetter}</span>
                 </p>
                 {scatCategories.map((cat) => (
                   <div key={cat.id} className="bg-white border-[3px] border-black shadow-[3px_3px_0_#000]">
-                    <div className="px-3 py-2 border-b-[2px] border-black" style={{ backgroundColor: "#FF6B35" }}>
+                    <div className="px-3 py-2 border-b-[2px] border-black" style={{ backgroundColor: "#38BDF8" }}>
                       <p className="font-display font-black text-white text-sm uppercase">{cat.name}</p>
                     </div>
                     <div className="flex items-center">
-                      <div className="w-10 flex items-center justify-center font-display font-black text-lg border-r-[2px] border-black h-full py-3" style={{ color: "#FF6B35" }}>
+                      <div className="w-10 flex items-center justify-center font-display font-black text-lg border-r-[2px] border-black h-full py-3" style={{ color: "#38BDF8" }}>
                         {scatLetter}
                       </div>
                       <input
@@ -2975,7 +2975,7 @@ export default function GamePlayer() {
                 <button
                   onClick={handleScatSubmit}
                   className="w-full py-5 mt-2 font-display font-black text-xl uppercase border-[3px] border-black shadow-[4px_4px_0_#000] active:shadow-[2px_2px_0_#000] active:translate-y-[2px]"
-                  style={{ backgroundColor: "#FF6B35", color: "white" }}
+                  style={{ backgroundColor: "#38BDF8", color: "white" }}
                   data-testid="btn-scat-submit"
                 >
                   Submit Answers ✓
@@ -2988,7 +2988,7 @@ export default function GamePlayer() {
                   animate={{ scale: 1, rotate: 0 }}
                   transition={{ type: "spring", stiffness: 220, damping: 28 }}
                   className="w-24 h-24 flex items-center justify-center border-[4px] border-black shadow-[4px_4px_0_#000]"
-                  style={{ backgroundColor: "#FF6B35" }}
+                  style={{ backgroundColor: "#38BDF8" }}
                 >
                   <span className="text-5xl">✓</span>
                 </motion.div>
@@ -3022,7 +3022,7 @@ export default function GamePlayer() {
       return (
         <div className="flex flex-col min-h-[100dvh] bg-[#FFF8E7]">
           <LeaveGameBtn onClick={() => setConfirmLeave(true)} />
-          <header className="px-4 py-4 border-b-[4px] border-black" style={{ backgroundColor: "#FF6B35" }}>
+          <header className="px-4 py-4 border-b-[4px] border-black" style={{ backgroundColor: "#38BDF8" }}>
             <p className="font-display font-black text-white/70 text-xs uppercase tracking-widest">Round {scatRound} Results</p>
             <div className="flex items-center gap-3 mt-1">
               <span className="font-display font-black text-white text-5xl leading-none">{scatLetter}</span>
@@ -3037,7 +3037,7 @@ export default function GamePlayer() {
             <h3 className="font-display font-black text-black uppercase text-sm tracking-widest">Your answers</h3>
             {myResults.map((cat) => (
               <div key={cat.categoryId} className="bg-white border-[3px] border-black shadow-[3px_3px_0_#000]">
-                <div className="px-3 py-2 border-b-[2px] border-black" style={{ backgroundColor: "#FF6B35" }}>
+                <div className="px-3 py-2 border-b-[2px] border-black" style={{ backgroundColor: "#38BDF8" }}>
                   <p className="font-display font-black text-white text-sm uppercase">{cat.categoryName}</p>
                 </div>
                 <div className="p-3">

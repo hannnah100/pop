@@ -19,7 +19,7 @@ function segmentColor(v: WofWheelValue): string {
   if (v === "FREE_PLAY") return "#00C853";
   if (v >= 2000) return "#FF1493";
   if (v >= 1000) return "#FF6B35";
-  if (v >= 700)  return "#7C3AED";
+  if (v >= 700)  return "#B97AD7";
   return "#FFD700";
 }
 
@@ -43,7 +43,7 @@ function overlayBg(v: WofWheelValue): string {
   if (v === "FREE_PLAY") return "#00C853";
   if ((v as number) >= 2000) return "#FF1493";
   if ((v as number) >= 1000) return "#FF6B35";
-  if ((v as number) >= 700) return "#7C3AED";
+  if ((v as number) >= 700) return "#B97AD7";
   return "#FFD700";
 }
 
@@ -330,7 +330,7 @@ export function WofWheel({ spinning, spinIndex, value, spinnerName, size = 280 }
                 value === "FREE_PLAY" ? "bg-[#00C853] text-white" :
                 (value as number) >= 2000 ? "bg-[#FF1493] text-white" :
                 (value as number) >= 1000 ? "bg-[#FF6B35] text-white" :
-                (value as number) >= 700 ? "bg-[#7C3AED] text-white" :
+                (value as number) >= 700 ? "bg-[#B97AD7] text-white" :
                 "bg-[#FFD700] text-black"
               }`}
             data-testid="wof-result-banner"
