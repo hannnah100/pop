@@ -15917,7 +15917,8 @@
       "Harriet"
     ],
     "categories": [
-      "british"
+      "british",
+      "presenter"
     ]
   },
   {
@@ -18646,7 +18647,8 @@
       "John"
     ],
     "categories": [
-      "from-asia"
+      "from-asia",
+      "presenter"
     ]
   },
   {
@@ -18792,7 +18794,8 @@
       "Ridley"
     ],
     "categories": [
-      "british"
+      "british",
+      "presenter"
     ]
   },
   {
@@ -20372,6 +20375,19 @@
     "categories": [
       "british",
       "born-1990s"
+    ]
+  },
+  {
+    "id": "regina-king",
+    "name": "Regina King",
+    "alternateNames": [
+      "Regina"
+    ],
+    "categories": [
+      "american",
+      "born-1970s",
+      "emmy-winner",
+      "golden-globe-winner"
     ]
   }
 ]

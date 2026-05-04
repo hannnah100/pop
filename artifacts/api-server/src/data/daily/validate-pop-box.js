@@ -175,6 +175,20 @@ const priorityIds = [
   "jack-whitehall",
   "kenan-thompson",
   "alix-earle",
+  "phoebe-dynevor",
+  "timothee-chalamet",
+  "florence-pugh",
+  "ncuti-gatwa",
+  "jonathan-bailey",
+  "austin-butler",
+  "lily-james",
+  "sydney-sweeney",
+  "doja-cat",
+  "zendaya",
+  "sabrina-carpenter",
+  "ice-spice",
+  "lupita-nyongo",
+  "regina-king"
 ];
 const missingPriority = priorityIds.filter((id) => !uniqueIds.has(id));
 if (missingPriority.length > 0) {
@@ -210,6 +224,11 @@ celebrities.forEach((c) =>
     catCounts[t] = (catCounts[t] || 0) + 1;
   })
 );
+const britishNonMusician = celebrities.filter((c) =>
+  (c.categories || []).includes("british") &&
+  !(c.categories || []).some((t) => ["pop","rap","rock","rnb","country","dj-producer","band-member","musician"].includes(t))
+);
+catCounts["british-non-musician"] = britishNonMusician.length;
 const minCoverage = {
   comedian: 50,
   athlete: 100,
@@ -225,6 +244,7 @@ const minCoverage = {
   latino: 30,
   "from-asia": 30,
   "band-member": 50,
+  "british-non-musician": 10,
 };
 let coverageFailed = false;
 Object.entries(minCoverage).forEach(([tag, min]) => {
@@ -273,6 +293,7 @@ const displayCats = [
   "born-1980s",
   "born-1990s",
   "born-2000s",
+  "british-non-musician",
 ];
 displayCats.forEach((cat) => {
   const count = catCounts[cat] || 0;
