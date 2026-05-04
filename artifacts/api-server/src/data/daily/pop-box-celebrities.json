@@ -7159,7 +7159,6 @@
     ],
     "categories": [
       "british",
-      "emmy-winner",
       "golden-globe-winner",
       "oscar-winner"
     ]
@@ -7186,7 +7185,6 @@
     ],
     "categories": [
       "british",
-      "emmy-winner",
       "harry-potter",
       "oscar-winner"
     ]
@@ -7200,7 +7198,6 @@
     ],
     "categories": [
       "british",
-      "emmy-winner",
       "golden-globe-winner",
       "oscar-winner"
     ]
@@ -7213,9 +7210,8 @@
       "Bilbo"
     ],
     "categories": [
-      "british",
       "born-1970s",
-      "emmy-winner",
+      "british",
       "mcu-actor"
     ]
   },
@@ -7483,10 +7479,9 @@
       "Andrew"
     ],
     "categories": [
-      "british",
       "born-1980s",
-      "mcu-actor",
-      "golden-globe-winner"
+      "british",
+      "mcu-actor"
     ]
   },
   {
@@ -8673,8 +8668,7 @@
     ],
     "categories": [
       "british",
-      "comedian",
-      "emmy-winner"
+      "comedian"
     ]
   },
   {
@@ -8926,14 +8920,13 @@
     ],
     "categories": [
       "american",
-      "comedian",
-      "stand-up",
-      "oscar-winner",
-      "emmy-winner",
-      "grammy-winner",
+      "been-on-snl",
       "born-1950s",
+      "comedian",
+      "grammy-winner",
+      "oscar-winner",
       "snl-host",
-      "been-on-snl"
+      "stand-up"
     ]
   },
   {
@@ -8958,12 +8951,11 @@
     ],
     "categories": [
       "american",
-      "comedian",
-      "stand-up",
-      "emmy-winner",
       "been-on-snl",
+      "billionaire",
+      "comedian",
       "has-podcast",
-      "billionaire"
+      "stand-up"
     ]
   },
   {
@@ -9080,10 +9072,9 @@
     ],
     "categories": [
       "american",
-      "comedian",
-      "snl-cast",
       "been-on-snl",
-      "emmy-winner"
+      "comedian",
+      "snl-cast"
     ]
   },
   {
@@ -9132,11 +9123,10 @@
     ],
     "categories": [
       "american",
-      "comedian",
-      "snl-cast",
+      "been-on-snl",
       "born-1960s",
-      "emmy-winner",
-      "been-on-snl"
+      "comedian",
+      "snl-cast"
     ]
   },
   {
@@ -9147,12 +9137,11 @@
     ],
     "categories": [
       "american",
-      "comedian",
-      "stand-up",
+      "been-on-snl",
       "born-1970s",
+      "comedian",
       "snl-cast",
-      "emmy-winner",
-      "been-on-snl"
+      "stand-up"
     ]
   },
   {
@@ -9163,10 +9152,9 @@
     ],
     "categories": [
       "american",
-      "comedian",
-      "stand-up",
       "born-1960s",
-      "emmy-winner"
+      "comedian",
+      "stand-up"
     ]
   },
   {
@@ -9189,11 +9177,10 @@
     ],
     "categories": [
       "american",
-      "comedian",
-      "stand-up",
       "born-1980s",
+      "comedian",
       "from-asia",
-      "emmy-winner"
+      "stand-up"
     ]
   },
   {
@@ -9350,8 +9337,7 @@
     "categories": [
       "australian",
       "comedian",
-      "stand-up",
-      "emmy-winner"
+      "stand-up"
     ]
   },
   {
@@ -9782,10 +9768,10 @@
       "Emmitt"
     ],
     "categories": [
+      "american",
       "athlete",
       "nfl",
-      "american",
-      "strictly"
+      "won-reality-show"
     ]
   },
   {
@@ -14022,9 +14008,8 @@
     ],
     "categories": [
       "american",
-      "reality-tv-star",
       "drag-race",
-      "tony-winner"
+      "reality-tv-star"
     ]
   },
   {
@@ -14365,13 +14350,12 @@
     ],
     "categories": [
       "american",
-      "reality-tv-star",
       "bravo",
-      "real-housewives",
-      "pop",
       "grammy-winner",
       "married-another-celeb",
-      "tony-winner"
+      "pop",
+      "real-housewives",
+      "reality-tv-star"
     ]
   },
   {
@@ -14562,8 +14546,7 @@
     ],
     "categories": [
       "american",
-      "reality-tv-star",
-      "emmy-winner"
+      "reality-tv-star"
     ]
   },
   {
@@ -14638,9 +14621,8 @@
     ],
     "categories": [
       "american",
-      "presenter",
-      "emmy-winner",
-      "born-1950s"
+      "born-1950s",
+      "presenter"
     ]
   },
   {
@@ -14651,10 +14633,9 @@
     ],
     "categories": [
       "american",
-      "presenter",
-      "emmy-winner",
+      "billionaire",
       "born-1960s",
-      "billionaire"
+      "presenter"
     ]
   },
   {
@@ -15242,10 +15223,9 @@
     ],
     "categories": [
       "american",
-      "social-to-mainstream",
-      "comedian",
       "born-1980s",
-      "emmy-winner"
+      "comedian",
+      "social-to-mainstream"
     ]
   },
   {
@@ -15583,8 +15563,7 @@
     ],
     "categories": [
       "american",
-      "born-1970s",
-      "emmy-winner"
+      "born-1970s"
     ]
   },
   {
@@ -15630,8 +15609,7 @@
     ],
     "categories": [
       "american",
-      "born-1970s",
-      "emmy-winner"
+      "born-1970s"
     ]
   },
   {
@@ -15643,8 +15621,7 @@
     "categories": [
       "american",
       "born-1980s",
-      "pop",
-      "golden-globe-winner"
+      "pop"
     ]
   },
   {
@@ -15729,8 +15706,7 @@
     ],
     "categories": [
       "american",
-      "emmy-winner",
-      "tony-winner"
+      "emmy-winner"
     ]
   },
   {
@@ -15742,8 +15718,7 @@
     "categories": [
       "american",
       "emmy-winner",
-      "tony-winner",
-      "oscar-winner"
+      "tony-winner"
     ]
   },
   {
@@ -15829,8 +15804,7 @@
     ],
     "categories": [
       "born-1990s",
-      "british",
-      "golden-globe-winner"
+      "british"
     ]
   },
   {
@@ -15866,11 +15840,9 @@
     ],
     "categories": [
       "american",
-      "comedian",
       "been-on-snl",
-      "emmy-winner",
-      "grammy-winner",
-      "tony-winner"
+      "comedian",
+      "grammy-winner"
     ]
   },
   {
@@ -15881,14 +15853,12 @@
       "Marty"
     ],
     "categories": [
+      "been-on-snl",
+      "born-1950s",
       "canadian",
       "comedian",
-      "snl-cast",
-      "emmy-winner",
       "golden-globe-winner",
-      "tony-winner",
-      "been-on-snl",
-      "born-1950s"
+      "snl-cast"
     ]
   },
   {
@@ -15899,8 +15869,7 @@
     ],
     "categories": [
       "american",
-      "born-1980s",
-      "emmy-winner"
+      "born-1980s"
     ]
   },
   {
@@ -15912,9 +15881,8 @@
       "Thandie"
     ],
     "categories": [
-      "british",
       "born-1970s",
-      "emmy-winner",
+      "british",
       "golden-globe-winner"
     ]
   },
@@ -15927,7 +15895,6 @@
     "categories": [
       "american",
       "born-1960s",
-      "emmy-winner",
       "mcu-actor"
     ]
   },
@@ -15940,7 +15907,6 @@
     "categories": [
       "american",
       "born-1950s",
-      "emmy-winner",
       "golden-globe-winner"
     ]
   },
@@ -15951,8 +15917,7 @@
       "Harriet"
     ],
     "categories": [
-      "british",
-      "emmy-winner"
+      "british"
     ]
   },
   {
@@ -16109,8 +16074,7 @@
     "categories": [
       "american",
       "born-1970s",
-      "hunger-games",
-      "emmy-winner"
+      "hunger-games"
     ]
   },
   {
@@ -16122,9 +16086,7 @@
     "categories": [
       "american",
       "born-1960s",
-      "emmy-winner",
-      "hunger-games",
-      "oscar-winner"
+      "hunger-games"
     ]
   },
   {
@@ -16213,8 +16175,6 @@
     "categories": [
       "american",
       "born-1950s",
-      "oscar-winner",
-      "emmy-winner",
       "golden-globe-winner",
       "mcu-actor"
     ]
@@ -16241,8 +16201,7 @@
     "categories": [
       "american",
       "born-1950s",
-      "oscar-winner",
-      "emmy-winner"
+      "oscar-winner"
     ]
   },
   {
@@ -16283,9 +16242,8 @@
       "american",
       "born-1950s",
       "dc-actor",
-      "mcu-actor",
       "golden-globe-winner",
-      "emmy-winner"
+      "mcu-actor"
     ]
   },
   {
@@ -16318,10 +16276,8 @@
       "Cynthia"
     ],
     "categories": [
-      "british",
       "born-1980s",
-      "oscar-winner",
-      "emmy-winner",
+      "british",
       "grammy-winner",
       "tony-winner"
     ]
@@ -16360,10 +16316,8 @@
     "categories": [
       "american",
       "born-1960s",
-      "emmy-winner",
-      "tony-winner",
-      "oscar-winner",
-      "golden-globe-winner"
+      "golden-globe-winner",
+      "tony-winner"
     ]
   },
   {
@@ -16477,7 +16431,6 @@
     "categories": [
       "american",
       "born-1970s",
-      "emmy-winner",
       "redhead"
     ]
   },
@@ -16555,9 +16508,8 @@
       "Mads"
     ],
     "categories": [
-      "european",
       "born-1960s",
-      "emmy-winner"
+      "european"
     ]
   },
   {
@@ -16590,9 +16542,8 @@
       "The Doctor"
     ],
     "categories": [
-      "british",
       "born-1970s",
-      "emmy-winner"
+      "british"
     ]
   },
   {
@@ -16602,10 +16553,9 @@
       "Peter"
     ],
     "categories": [
-      "british",
       "born-1950s",
-      "oscar-winner",
-      "emmy-winner"
+      "british",
+      "oscar-winner"
     ]
   },
   {
@@ -16639,9 +16589,8 @@
       "Ruth"
     ],
     "categories": [
-      "british",
       "born-1980s",
-      "emmy-winner",
+      "british",
       "golden-globe-winner"
     ]
   },
@@ -16711,9 +16660,8 @@
       "John"
     ],
     "categories": [
-      "british",
       "born-1970s",
-      "emmy-winner"
+      "british"
     ]
   },
   {
@@ -16723,9 +16671,8 @@
       "Sheridan"
     ],
     "categories": [
-      "british",
       "born-1980s",
-      "emmy-winner"
+      "british"
     ]
   },
   {
@@ -16749,8 +16696,6 @@
     "categories": [
       "american",
       "born-1960s",
-      "emmy-winner",
-      "golden-globe-winner",
       "has-podcast"
     ]
   },
@@ -17317,11 +17262,10 @@
       "Beverley"
     ],
     "categories": [
-      "british",
-      "rnb",
-      "pop",
       "born-1970s",
-      "tony-winner"
+      "british",
+      "pop",
+      "rnb"
     ]
   },
   {
@@ -18504,9 +18448,8 @@
     "categories": [
       "american",
       "born-1970s",
-      "emmy-winner",
-      "mcu-actor",
-      "latino"
+      "latino",
+      "mcu-actor"
     ]
   },
   {
@@ -18604,7 +18547,6 @@
       "american",
       "born-1970s",
       "golden-globe-winner",
-      "emmy-winner",
       "latino"
     ]
   },
@@ -18618,9 +18560,8 @@
     "categories": [
       "american",
       "born-1960s",
-      "oscar-winner",
-      "emmy-winner",
-      "latino"
+      "latino",
+      "oscar-winner"
     ]
   },
   {
@@ -18705,8 +18646,7 @@
       "John"
     ],
     "categories": [
-      "from-asia",
-      "oscar-winner"
+      "from-asia"
     ]
   },
   {
@@ -18716,10 +18656,9 @@
       "Jackie"
     ],
     "categories": [
-      "from-asia",
-      "born-1950s",
-      "oscar-winner",
       "athlete-entertainer",
+      "born-1950s",
+      "from-asia",
       "ig-100m"
     ]
   },
@@ -18787,9 +18726,8 @@
     ],
     "categories": [
       "american",
-      "oscar-winner",
-      "emmy-winner",
-      "golden-globe-winner"
+      "golden-globe-winner",
+      "oscar-winner"
     ]
   },
   {
@@ -18800,9 +18738,8 @@
     ],
     "categories": [
       "american",
-      "oscar-winner",
-      "emmy-winner",
-      "golden-globe-winner"
+      "golden-globe-winner",
+      "oscar-winner"
     ]
   },
   {
@@ -18842,11 +18779,10 @@
       "Nolan"
     ],
     "categories": [
-      "british",
       "born-1970s",
-      "oscar-winner",
-      "emmy-winner",
-      "golden-globe-winner"
+      "british",
+      "golden-globe-winner",
+      "oscar-winner"
     ]
   },
   {
@@ -18856,8 +18792,7 @@
       "Ridley"
     ],
     "categories": [
-      "british",
-      "golden-globe-winner"
+      "british"
     ]
   },
   {
@@ -18928,10 +18863,7 @@
     ],
     "categories": [
       "american",
-      "born-1980s",
-      "oscar-winner",
-      "golden-globe-winner",
-      "emmy-winner"
+      "born-1980s"
     ]
   },
   {
@@ -18943,8 +18875,7 @@
     "categories": [
       "american",
       "born-1980s",
-      "dc-actor",
-      "tony-winner"
+      "dc-actor"
     ]
   },
   {
@@ -19027,11 +18958,10 @@
       "Vision"
     ],
     "categories": [
-      "british",
       "born-1970s",
-      "mcu-actor",
-      "emmy-winner",
-      "married-another-celeb"
+      "british",
+      "married-another-celeb",
+      "mcu-actor"
     ]
   },
   {
@@ -19069,12 +18999,11 @@
       "Michelle"
     ],
     "categories": [
-      "from-asia",
       "born-1960s",
-      "oscar-winner",
-      "emmy-winner",
+      "from-asia",
       "golden-globe-winner",
-      "mcu-actor"
+      "mcu-actor",
+      "oscar-winner"
     ]
   },
   {
@@ -19300,8 +19229,7 @@
     "categories": [
       "american",
       "country",
-      "grammy-winner",
-      "emmy-winner"
+      "grammy-winner"
     ]
   },
   {
@@ -19512,7 +19440,6 @@
     "categories": [
       "american",
       "born-1970s",
-      "emmy-winner",
       "dc-actor"
     ]
   },
@@ -19525,8 +19452,6 @@
     "categories": [
       "american",
       "born-1960s",
-      "emmy-winner",
-      "golden-globe-winner",
       "mcu-actor"
     ]
   },
@@ -19549,10 +19474,9 @@
       "Ruth"
     ],
     "categories": [
-      "british",
-      "irish",
       "born-1980s",
-      "golden-globe-winner"
+      "british",
+      "irish"
     ]
   },
   {
@@ -19563,10 +19487,9 @@
       "Caitriona"
     ],
     "categories": [
-      "british",
-      "irish",
       "born-1970s",
-      "golden-globe-winner"
+      "british",
+      "irish"
     ]
   },
   {
@@ -19647,9 +19570,8 @@
     "categories": [
       "american",
       "born-1950s",
-      "oscar-winner",
-      "emmy-winner",
       "golden-globe-winner",
+      "oscar-winner",
       "publicly-divorced"
     ]
   },
@@ -19675,8 +19597,7 @@
     ],
     "categories": [
       "american",
-      "oscar-winner",
-      "emmy-winner"
+      "oscar-winner"
     ]
   },
   {
@@ -19687,9 +19608,7 @@
     ],
     "categories": [
       "american",
-      "oscar-winner",
-      "emmy-winner",
-      "tony-winner"
+      "oscar-winner"
     ]
   },
   {
@@ -19700,9 +19619,8 @@
     ],
     "categories": [
       "american",
-      "oscar-winner",
-      "emmy-winner",
-      "golden-globe-winner"
+      "golden-globe-winner",
+      "oscar-winner"
     ]
   },
   {
@@ -19715,11 +19633,10 @@
     ],
     "categories": [
       "american",
-      "oscar-winner",
+      "billionaire",
       "emmy-winner",
       "grammy-winner",
-      "tony-winner",
-      "billionaire"
+      "oscar-winner"
     ]
   },
   {
@@ -19731,11 +19648,10 @@
     ],
     "categories": [
       "american",
-      "emmy-winner",
-      "grammy-winner",
-      "tony-winner",
+      "been-on-snl",
       "golden-globe-winner",
-      "been-on-snl"
+      "grammy-winner",
+      "tony-winner"
     ]
   },
   {
@@ -19746,12 +19662,11 @@
     ],
     "categories": [
       "american",
-      "oscar-winner",
-      "emmy-winner",
       "grammy-winner",
-      "tony-winner",
       "married-another-celeb",
-      "publicly-divorced"
+      "oscar-winner",
+      "publicly-divorced",
+      "tony-winner"
     ]
   },
   {
@@ -19763,10 +19678,7 @@
     ],
     "categories": [
       "american",
-      "oscar-winner",
-      "emmy-winner",
       "grammy-winner",
-      "tony-winner",
       "married-another-celeb",
       "publicly-divorced"
     ]
@@ -19926,8 +19838,7 @@
       "american",
       "born-1950s",
       "emmy-winner",
-      "golden-globe-winner",
-      "tony-winner"
+      "golden-globe-winner"
     ]
   },
   {
@@ -20042,7 +19953,6 @@
     "categories": [
       "american",
       "born-1970s",
-      "emmy-winner",
       "golden-globe-winner"
     ]
   },
@@ -20082,8 +19992,7 @@
       "american",
       "been-on-snl",
       "born-1960s",
-      "comedian",
-      "golden-globe-winner"
+      "comedian"
     ]
   },
   {
@@ -20095,8 +20004,7 @@
     ],
     "categories": [
       "american",
-      "born-1970s",
-      "emmy-winner"
+      "born-1970s"
     ]
   },
   {
@@ -20106,10 +20014,9 @@
       "Matt"
     ],
     "categories": [
-      "british",
       "born-1970s",
+      "british",
       "comedian",
-      "emmy-winner",
       "panel-show",
       "taskmaster"
     ]
@@ -20241,8 +20148,7 @@
     ],
     "categories": [
       "born-1990s",
-      "british",
-      "golden-globe-winner"
+      "british"
     ]
   },
   {
@@ -20437,11 +20343,10 @@
     ],
     "categories": [
       "american",
-      "comedian",
+      "been-on-snl",
       "born-1970s",
-      "snl-cast",
-      "emmy-winner",
-      "been-on-snl"
+      "comedian",
+      "snl-cast"
     ]
   },
   {
@@ -20455,6 +20360,18 @@
       "social-to-mainstream",
       "born-2000s",
       "has-podcast"
+    ]
+  },
+  {
+    "id": "phoebe-dynevor",
+    "name": "Phoebe Dynevor",
+    "alternateNames": [
+      "Phoebe",
+      "Daphne Bridgerton"
+    ],
+    "categories": [
+      "british",
+      "born-1990s"
     ]
   }
 ]
