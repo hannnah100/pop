@@ -30,7 +30,7 @@ const SLUG_RE = /^[a-z0-9-]+$/;
 const FACTUAL_DENYLIST = {
   "gabby-windey": ["strictly"],
   "jojo-fletcher": ["won-reality-show"],
-  "debra-messing": ["golden-globe-winner"],
+  "debra-messing": ["emmy-winner"],
   "betty-white": ["golden-globe-winner"]
 };
 
@@ -360,7 +360,8 @@ if (badFlags.length > 0) {
 
 
 // ── 13. Factual tag sanity checks ─────────────────────────────────────────
-console.log("\n[13] Factual tag sanity checks");
+console.log("
+[13] Factual tag sanity checks");
 const factualIssues = [];
 for (const c of celebrities) {
   const banned = FACTUAL_DENYLIST[c.id] || [];
