@@ -27,6 +27,13 @@ const bornCats = [
 ];
 const SLUG_RE = /^[a-z0-9-]+$/;
 
+const FACTUAL_DENYLIST = {
+  "gabby-windey": ["strictly"],
+  "jojo-fletcher": ["won-reality-show"],
+  "debra-messing": ["golden-globe-winner"],
+  "betty-white": ["golden-globe-winner"]
+};
+
 const IG_100M_ALLOWLIST = new Set([
   "dua-lipa",
   "justin-bieber",
@@ -352,24 +359,13 @@ if (badFlags.length > 0) {
 }
 
 
-// ── 13. Factual tag sanity checks ───────────────────────────────────────────
+// ── 13. Factual tag sanity checks ─────────────────────────────────────────
 console.log("\n[13] Factual tag sanity checks");
 const factualIssues = [];
-const deny = {
-  "tristan-thompson": ["married-another-celeb", "publicly-divorced"],
-  "odell-beckham-jr": ["married-another-celeb"],
-  "neymar-jr": ["european", "married-another-celeb"],
-  "vinicius-jr": ["european"],
-  "ronaldinho": ["european"],
-  "canelo-alvarez": ["european"],
-  "paulo-londra": ["european"],
-  "sean-paul": ["american"],
-  "davido": ["american"],
-  "fireboy-dml": ["american"],
-};
 for (const c of celebrities) {
-  const bad = deny[c.id]?.filter((t) => (c.categories || []).includes(t));
-  if (bad?.length) factualIssues.push(`${c.id}:${bad.join('|')}`);
+  const banned = FACTUAL_DENYLIST[c.id] || [];
+  const hits = banned.filter((t) => (c.categories || []).includes(t));
+  if (hits.length) factualIssues.push(`${c.id}:${hits.join('|')}`);
 }
 if (factualIssues.length > 0) {
   fail(`Factual tag issues: ${factualIssues.join(', ')}`);
