@@ -588,7 +588,6 @@
       "emmy-winner",
       "grammy-winner",
       "pop",
-      "tony-winner",
       "world-tour"
     ]
   },
@@ -2724,7 +2723,6 @@
     "categories": [
       "american",
       "born-1990s",
-      "born-2000s",
       "grammy-winner",
       "pop",
       "redhead",
@@ -6550,12 +6548,10 @@
       "beauty-brand-owner",
       "blonde",
       "born-1990s",
-      "born-2000s",
       "british",
       "has-fashion-line",
       "love-island",
-      "reality-tv-star",
-      "won-reality-show"
+      "reality-tv-star"
     ]
   },
   {
@@ -7188,10 +7184,10 @@
       "Ayo"
     ],
     "categories": [
-      "emmy-winner",
       "american",
-      "born-2000s",
-      "comedian"
+      "born-1990s",
+      "comedian",
+      "emmy-winner"
     ]
   },
   {
@@ -8630,8 +8626,7 @@
     "categories": [
       "british",
       "presenter",
-      "reality-tv-star",
-      "won-reality-show"
+      "reality-tv-star"
     ]
   },
   {
@@ -20547,6 +20542,40 @@
       "british",
       "born-1980s",
       "emmy-winner"
+    ]
+  },
+  {
+    "id": "zendaya",
+    "name": "Zendaya",
+    "alternateNames": [
+      "Zendaya Coleman",
+      "Z"
+    ],
+    "categories": [
+      "american",
+      "born-1990s",
+      "emmy-winner",
+      "golden-globe-winner",
+      "ig-100m",
+      "disney-channel-alum",
+      "pop",
+      "beauty-brand-owner"
+    ]
+  },
+  {
+    "id": "lenny-kravitz",
+    "name": "Lenny Kravitz",
+    "alternateNames": [
+      "Lenny"
+    ],
+    "categories": [
+      "american",
+      "born-1960s",
+      "rock",
+      "rnb",
+      "grammy-winner",
+      "married-another-celeb",
+      "publicly-divorced"
     ]
   }
 ]
