@@ -301,6 +301,26 @@ displayCats.forEach((cat) => {
   console.log(`    ${cat.padEnd(22)} ${String(count).padStart(4)}  ${bar}`);
 });
 
+
+// ── 13. High-risk tag sanity checks ─────────────────────────────────────────
+console.log("\n[13] High-risk tag sanity checks");
+const flagged = [
+  ["bo-jackson", "olympian"],
+  ["ovie-soko", "nba"],
+  ["lucille-ball", "billionaire"],
+  ["larry-david", "billionaire"],
+  ["anderson-cooper", "billionaire"],
+];
+const badFlags = flagged.filter(([id, tag]) => {
+  const c = celebrities.find((x) => x.id === id);
+  return c && (c.categories || []).includes(tag);
+});
+if (badFlags.length > 0) {
+  fail(`High-risk false tags: ${badFlags.map(([id, tag]) => `${id}:${tag}`).join(", ")}`);
+} else {
+  ok("No high-risk false tags detected");
+}
+
 // ── Summary ──────────────────────────────────────────────────────────────────
 console.log("\n" + "═".repeat(60));
 if (failures === 0) {
