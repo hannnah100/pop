@@ -513,7 +513,7 @@ export default function PopBox() {
                 className="flex flex-col gap-2 bg-[#FFF8E7] border-[3px] border-black shadow-[4px_4px_0_#000] p-3"
               >
                 <div className="flex items-center justify-between">
-                  <span className="font-display font-black uppercase text-xs text-black/70">
+                  <span className="font-display font-black uppercase text-sm tracking-wide text-black/70">
                     {grid.mode === "artist-alphabet" || grid.mode === "actor-alphabet" ? (
                       <>
                         <span className="text-black">

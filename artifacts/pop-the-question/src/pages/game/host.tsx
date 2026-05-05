@@ -1495,8 +1495,6 @@ export default function GameHost() {
               className={`w-5 h-5 border-[2px] border-black shadow-[2px_2px_0_#000] transition-colors duration-300 ${
                 state === "answered"
                   ? "bg-[#00C853]"
-                  : state === "typing"
-                  ? "bg-[#FFD700]"
                   : "bg-white"
               }`}
               title={p.name}
@@ -3182,7 +3180,7 @@ export default function GameHost() {
                   key={ci}
                   className="bg-gradient-to-b from-blue-700 to-blue-900 rounded-md px-2 py-3 md:py-4 text-center border-2 border-blue-400/40 shadow-[0_4px_18px_-2px_rgba(0,0,0,0.5)]"
                 >
-                  <p className="text-sm md:text-base lg:text-xl font-extrabold font-display uppercase tracking-tight text-yellow-200 leading-tight">
+                  <p className="text-base md:text-xl lg:text-2xl font-extrabold font-display uppercase tracking-tight text-yellow-200 leading-tight">
                     {cat.name}
                   </p>
                 </div>
