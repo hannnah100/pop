@@ -465,7 +465,7 @@ export default function PopBox() {
         {grid.columnCategories.map((cat) => (
           <div
             key={cat.id}
-            className={`aspect-square border-[3px] border-black shadow-[3px_3px_0_#000] p-1 flex items-center justify-center text-center ${
+            className={`aspect-square overflow-hidden border-[3px] border-black shadow-[3px_3px_0_#000] p-1 flex items-center justify-center text-center ${
               grid.mode === "artist-alphabet" || grid.mode === "actor-alphabet"
                 ? "bg-[#FF6B35]"
                 : "bg-[#00E5FF]"
@@ -700,7 +700,7 @@ function Row(props: {
   return (
     <>
       {/* Row header */}
-      <div className="aspect-square bg-[#00E5FF] border-[3px] border-black shadow-[3px_3px_0_#000] p-1 flex items-center justify-center text-center">
+      <div className="aspect-square overflow-hidden bg-[#00E5FF] border-[3px] border-black shadow-[3px_3px_0_#000] p-1 flex items-center justify-center text-center">
         <span className="font-display font-black text-2xl sm:text-3xl md:text-4xl leading-none uppercase tracking-widest text-black">
           {rowCat.label}
         </span>
