@@ -136,10 +136,12 @@
     "id": "austin-butler",
     "name": "Austin Butler",
     "titles": [
+      "Carrie Diaries",
       "Dune: Part Two",
       "Elvis",
       "Masters of the Air",
       "Once Upon a Time in Hollywood",
+      "The Bikeriders",
       "The Shannara Chronicles",
       "Switched at Birth"
     ]
@@ -166,7 +168,8 @@
     "titles": [
       "Aftersun", "All of Us Strangers",
       "Carmen",
-      "Gladiator II",
+      "Foe",
+      "Gladiator II", "God's Creatures",
       "Normal People"
     ]
   },
@@ -268,6 +271,7 @@
       "Get Out",
       "Johnny English Strikes Again", "Judas and the Black Messiah",
       "Nope",
+      "Skins",
       "Sicario",
       "Widows"
     ]
@@ -276,12 +280,15 @@
     "id": "ana-de-armas",
     "name": "Ana de Armas",
     "titles": [
+      "Ballerina",
+      "Blade Runner 2049",
       "Blonde",
       "Deep Water",
       "The Gray Man",
       "Hands of Stone",
       "Knives Out",
       "No Time to Die",
+      "Sergio",
       "War Dogs"
     ]
   }

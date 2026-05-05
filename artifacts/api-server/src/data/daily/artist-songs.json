@@ -98,18 +98,18 @@
     "name": "Billie Eilish",
     "songs": [
       "all the good girls go to hell",
-      "bad guy", "bellyache", "Bored", "bury a friend",
-      "come out and play",
+      "bad guy", "bellyache", "Birds of a Feather", "Bored", "bury a friend",
+      "Chihiro", "come out and play",
       "everything i wanted",
       "Getting Older", "goldwing",
       "Happier Than Ever", "hostage",
       "idontwannabeyouanymore", "ilomilo", "i love you",
-      "Lovely",
+      "Lovely", "Lunch",
       "Male Fantasy", "my future", "my strange addiction",
       "NDA", "no time to die",
       "ocean eyes", "overheated",
-      "therefore i am",
-      "when the party's over", "What Was I Made For?", "wish you were gay",
+      "The Greatest", "therefore i am", "TV",
+      "when the party's over", "What Was I Made For?", "Wildflower", "wish you were gay",
       "your power"
     ]
   },
@@ -241,17 +241,22 @@
     "id": "sza",
     "name": "SZA",
     "songs": [
-      "All the Stars",
+      "20 Something", "All the Stars",
+      "Blind", "Broken Clocks",
       "Conceited", "Ctrl",
-      "Ghost in the Machine", "Good Days", "Good Looks",
+      "Drew Barrymore",
+      "F2F", "Far",
+      "Ghost in the Machine", "Gone Girl", "Good Days", "Good Looks",
+      "Her", "How Does It Feel",
       "I Hate U",
       "Kill Bill",
-      "Normal Girl",
+      "Low", "Love Galore",
+      "Nobody Gets Me", "Normal Girl", "Notice Me",
       "Open Arms",
-      "Pretty Little Birds",
-      "Snooze", "SOS",
-      "Tired",
-      "Used"
+      "Pretty Little Birds", "PSA",
+      "Seek & Destroy", "Shirt", "Smoking on My Ex Pack", "Snooze", "SOS", "Special", "Supermodel",
+      "The Weekend", "Tired",
+      "Ungrateful", "Used"
     ]
   },
   {
@@ -315,16 +320,18 @@
     "name": "21 Savage",
     "songs": [
       "a lot",
-      "ball w/o you",
+      "ball w/o you", "Bank Account",
       "Dangerous",
       "Famous",
       "glock in my lap",
+      "Immortal",
       "Knife Talk",
-      "Monster",
-      "No Heart",
-      "Red Opps",
-      "Savage Mode",
-      "Spiral"
+      "Mr. Right Now", "Monster",
+      "No Heart", "Nothin New", "Numb",
+      "Out for the Night",
+      "Pad Lock",
+      "Red Opps", "runnin",
+      "Savage Mode", "Spiral"
     ]
   },
   {
@@ -350,15 +357,19 @@
     "id": "megan-thee-stallion",
     "name": "Megan Thee Stallion",
     "songs": [
-      "Big Ole Freak", "Body",
-      "Cash Shit",
+      "Anxiety",
+      "Big Ole Freak", "Body", "BOA",
+      "Captain Hook", "Cash Shit", "Cobra", "Cognac Queen",
       "Freaky Girls", "Fever",
       "Girls in the Hood",
+      "Her",
       "Hot Girl Summer",
+      "Mamushi", "Movie",
       "Plan B", "Pressurelicious",
       "Ride or Die",
       "Savage", "Sweetest Pie",
-      "Thot Shit"
+      "Thot Shit",
+      "Ungrateful"
     ]
   },
   {
@@ -368,10 +379,13 @@
       "Dead Right Now",
       "HOLIDAY",
       "INDUSTRY BABY",
+      "J Christ",
       "Lost in the Citadel",
       "MONTERO (Call Me By Your Name)",
+      "New",
       "Old Town Road",
       "PANINI",
+      "Rodeo",
       "SCOOP", "SUN GOES DOWN", "STAR WALKIN'",
       "THAT'S WHAT I WANT"
     ]
@@ -380,14 +394,19 @@
     "id": "lizzo",
     "name": "Lizzo",
     "songs": [
-      "About Damn Time",
+      "2 Be Loved (Am I Ready)", "About Damn Time",
+      "Birthday Girl", "Boys", "Break Up Twice",
       "Cuz I Love You",
+      "Fitness",
       "Good as Hell", "Grrls",
       "Jerome", "Juice",
+      "Like a Girl",
+      "My Skin",
+      "Naked",
       "Phone",
       "Rumors",
-      "Soulmate",
-      "Truth Hurts",
+      "Special", "Soulmate",
+      "Tempo", "Truth Hurts",
       "Water Me"
     ]
   }
