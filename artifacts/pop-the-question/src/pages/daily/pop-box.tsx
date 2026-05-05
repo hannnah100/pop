@@ -462,7 +462,7 @@ export default function PopBox() {
           <LightningDoodle className="w-7 h-9 text-black opacity-50" />
         </div>
         {/* Column headers */}
-        {grid.columnCategories.map((cat) => (
+        {grid.columnCategories.map((cat, idx) => (
           <div
             key={cat.id}
             className={`aspect-square border-[3px] border-black shadow-[3px_3px_0_#000] p-1 flex items-center justify-center text-center ${
@@ -471,7 +471,7 @@ export default function PopBox() {
                 : "bg-[#00E5FF]"
             }`}
           >
-            <span className="font-display font-black text-2xl sm:text-3xl md:text-4xl leading-none uppercase tracking-widest text-black">
+            <span className={`font-display font-black text-2xl sm:text-3xl md:text-4xl leading-none uppercase tracking-widest text-black ${idx === 0 ? "rotate-0" : ""}`}>
               {cat.label}
             </span>
           </div>
@@ -479,21 +479,14 @@ export default function PopBox() {
 
         {/* Rows */}
         {grid.rowCategories.map((rowCat, r) => (
-          <Row
+          <div
             key={rowCat.id}
-            rowCat={rowCat}
-            r={r}
-            cells={cells}
-            activeCell={activeCell}
-            onOpen={openCell}
-            shakeKey={shakeKey}
-            shakeCellIdx={shakeCellIdx}
-            gameOver={gameOver}
-            reduced={reduced}
-            registerRef={(idx, el) => {
-              cellRefs.current[idx] = el;
-            }}
-          />
+            className="aspect-square border-[3px] border-black shadow-[3px_3px_0_#000] p-1 flex items-center justify-center text-center bg-[#00E5FF]"
+          >
+            <span className="font-display font-black text-2xl sm:text-3xl md:text-4xl leading-none uppercase tracking-widest text-black">
+              {rowCat.label}
+            </span>
+          </div>
         ))}
       </div>
 
