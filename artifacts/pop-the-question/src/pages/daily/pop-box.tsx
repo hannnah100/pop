@@ -471,7 +471,7 @@ export default function PopBox() {
                 : "bg-[#00E5FF]"
             }`}
           >
-            <span className="font-display font-black text-sm sm:text-base md:text-lg leading-none uppercase tracking-widest text-black">
+            <span className="font-display font-black text-base sm:text-xl md:text-2xl leading-none uppercase tracking-widest text-black">
               {cat.label}
             </span>
           </div>
