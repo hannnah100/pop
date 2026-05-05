@@ -97,8 +97,7 @@ export default function Home() {
                   <span style={{ color: "#FF6B35" }}>group</span>
                   <span style={{ color: "#00E5FF" }}>chat's</span>
                   <span style={{ color: "#00F5A0" }}>new</span>
-                  <span style={{ color: "#FF006E" }}>favorite</span>
-                  <span style={{ color: "#FFD700" }}>game</span>
+                  <span style={{ color: "#FFD700" }}>obsession</span>
                 </p>
               </div>
               <StarDoodle aria-hidden="true" className="w-6 h-6 md:w-8 md:h-8 text-[#FF1493] shrink-0" />

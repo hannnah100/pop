@@ -114,6 +114,7 @@ export const GetTodayPopBoxResponse = zod.object({
   id: zod.string(),
   date: zod.string(),
   difficulty: zod.enum(["easy", "medium", "hard"]),
+  mode: zod.enum(["celebrity-categories", "artist-alphabet", "actor-alphabet"]).optional().default("celebrity-categories"),
   rowCategories: zod.array(
     zod.object({
       id: zod.string(),
@@ -151,6 +152,7 @@ export const GetPopBoxByIdResponse = zod.object({
   id: zod.string(),
   date: zod.string(),
   difficulty: zod.enum(["easy", "medium", "hard"]),
+  mode: zod.enum(["celebrity-categories", "artist-alphabet", "actor-alphabet"]).optional().default("celebrity-categories"),
   rowCategories: zod.array(
     zod.object({
       id: zod.string(),

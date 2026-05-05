@@ -628,5 +628,197 @@
     "difficulty": "easy",
     "rowCategoryIds": "[\"beauty-brand-owner\",\"born-1990s\",\"rnb\"]",
     "columnCategoryIds": "[\"music-to-acting\",\"american\",\"blonde\"]"
+  },
+  {
+    "id": "artist-alpha-2026-05-06",
+    "date": "2026-05-06",
+    "mode": "artist-alphabet",
+    "difficulty": "medium",
+    "rowCategoryIds": "[\"B-C\",\"L-M-N\",\"S-T\"]",
+    "columnCategoryIds": "[\"taylor-swift\",\"ariana-grande\",\"ed-sheeran\"]"
+  },
+  {
+    "id": "actor-alpha-2026-05-08",
+    "date": "2026-05-08",
+    "mode": "actor-alphabet",
+    "difficulty": "medium",
+    "rowCategoryIds": "[\"A-B-C-D-E\",\"F-G-H-I-J-K\",\"S-T-U-V-W\"]",
+    "columnCategoryIds": "[\"tom-holland\",\"zendaya\",\"timothee-chalamet\"]"
+  },
+  {
+    "id": "artist-alpha-sat-2026-05-09",
+    "date": "2026-05-09",
+    "mode": "artist-alphabet",
+    "difficulty": "medium",
+    "rowCategoryIds": "[\"B-C\",\"I\",\"S-T\"]",
+    "columnCategoryIds": "[\"ariana-grande\",\"the-weeknd\",\"ed-sheeran\"]"
+  },
+  {
+    "id": "artist-alpha-2026-05-13",
+    "date": "2026-05-13",
+    "mode": "artist-alphabet",
+    "difficulty": "medium",
+    "rowCategoryIds": "[\"B-C\",\"L-N\",\"S-T\"]",
+    "columnCategoryIds": "[\"dua-lipa\",\"billie-eilish\",\"drake\"]"
+  },
+  {
+    "id": "actor-alpha-2026-05-15",
+    "date": "2026-05-15",
+    "mode": "actor-alphabet",
+    "difficulty": "medium",
+    "rowCategoryIds": "[\"A-B-C-D-E\",\"F-G-H-I-J-K\",\"L-M-N-O-P\"]",
+    "columnCategoryIds": "[\"margot-robbie\",\"florence-pugh\",\"emma-stone\"]"
+  },
+  {
+    "id": "artist-alpha-sat-2026-05-16",
+    "date": "2026-05-16",
+    "mode": "artist-alphabet",
+    "difficulty": "medium",
+    "rowCategoryIds": "[\"B-C\",\"G-H\",\"W\"]",
+    "columnCategoryIds": "[\"billie-eilish\",\"harry-styles\",\"post-malone\"]"
+  },
+  {
+    "id": "artist-alpha-2026-05-20",
+    "date": "2026-05-20",
+    "mode": "artist-alphabet",
+    "difficulty": "medium",
+    "rowCategoryIds": "[\"B-C\",\"H-I\",\"S-T\"]",
+    "columnCategoryIds": "[\"the-weeknd\",\"kendrick-lamar\",\"post-malone\"]"
+  },
+  {
+    "id": "actor-alpha-2026-05-22",
+    "date": "2026-05-22",
+    "mode": "actor-alphabet",
+    "difficulty": "medium",
+    "rowCategoryIds": "[\"B-C-D-E\",\"F-G-H-I-J-K\",\"L-M-N-O-P\"]",
+    "columnCategoryIds": "[\"leonardo-dicaprio\",\"adam-driver\",\"ryan-gosling\"]"
+  },
+  {
+    "id": "artist-alpha-sat-2026-05-23",
+    "date": "2026-05-23",
+    "mode": "artist-alphabet",
+    "difficulty": "medium",
+    "rowCategoryIds": "[\"B-C\",\"G-N\",\"S-T\"]",
+    "columnCategoryIds": "[\"drake\",\"sza\",\"doja-cat\"]"
+  },
+  {
+    "id": "artist-alpha-2026-05-27",
+    "date": "2026-05-27",
+    "mode": "artist-alphabet",
+    "difficulty": "medium",
+    "rowCategoryIds": "[\"G-H\",\"M-N\",\"O-S\"]",
+    "columnCategoryIds": "[\"harry-styles\",\"sza\",\"lil-nas-x\"]"
+  },
+  {
+    "id": "actor-alpha-2026-05-29",
+    "date": "2026-05-29",
+    "mode": "actor-alphabet",
+    "difficulty": "medium",
+    "rowCategoryIds": "[\"F-G-H-I-J-K\",\"L-M-N-O-P\",\"S-T-U-V-W\"]",
+    "columnCategoryIds": "[\"pedro-pascal\",\"oscar-isaac\",\"anya-taylor-joy\"]"
+  },
+  {
+    "id": "artist-alpha-sat-2026-05-30",
+    "date": "2026-05-30",
+    "mode": "artist-alphabet",
+    "difficulty": "medium",
+    "rowCategoryIds": "[\"B-C\",\"E-F\",\"S-T\"]",
+    "columnCategoryIds": "[\"taylor-swift\",\"sabrina-carpenter\",\"ariana-grande\"]"
+  },
+  {
+    "id": "artist-alpha-2026-06-03",
+    "date": "2026-06-03",
+    "mode": "artist-alphabet",
+    "difficulty": "medium",
+    "rowCategoryIds": "[\"B-C\",\"G-H\",\"S-T\"]",
+    "columnCategoryIds": "[\"sabrina-carpenter\",\"olivia-rodrigo\",\"lizzo\"]"
+  },
+  {
+    "id": "actor-alpha-2026-06-05",
+    "date": "2026-06-05",
+    "mode": "actor-alphabet",
+    "difficulty": "medium",
+    "rowCategoryIds": "[\"A-B-C-D-E\",\"F-G-H-I-J-K\",\"S-T-U-V-W\"]",
+    "columnCategoryIds": "[\"daniel-kaluuya\",\"lupita-nyongo\",\"michael-b-jordan\"]"
+  },
+  {
+    "id": "artist-alpha-sat-2026-06-06",
+    "date": "2026-06-06",
+    "mode": "artist-alphabet",
+    "difficulty": "medium",
+    "rowCategoryIds": "[\"B-C\",\"G-H\",\"T\"]",
+    "columnCategoryIds": "[\"olivia-rodrigo\",\"billie-eilish\",\"lizzo\"]"
+  },
+  {
+    "id": "artist-alpha-2026-06-10",
+    "date": "2026-06-10",
+    "mode": "artist-alphabet",
+    "difficulty": "medium",
+    "rowCategoryIds": "[\"A-B\",\"L-N\",\"S-T\"]",
+    "columnCategoryIds": "[\"taylor-swift\",\"dua-lipa\",\"kendrick-lamar\"]"
+  },
+  {
+    "id": "actor-alpha-2026-06-12",
+    "date": "2026-06-12",
+    "mode": "actor-alphabet",
+    "difficulty": "medium",
+    "rowCategoryIds": "[\"A-B-C-D-E\",\"F-G-H-I-J-K\",\"L-M-N-O-P\"]",
+    "columnCategoryIds": "[\"paul-mescal\",\"anya-taylor-joy\",\"florence-pugh\"]"
+  },
+  {
+    "id": "artist-alpha-sat-2026-06-13",
+    "date": "2026-06-13",
+    "mode": "artist-alphabet",
+    "difficulty": "medium",
+    "rowCategoryIds": "[\"B-C\",\"D-F\",\"S-T\"]",
+    "columnCategoryIds": "[\"the-weeknd\",\"dua-lipa\",\"harry-styles\"]"
+  },
+  {
+    "id": "artist-alpha-2026-06-17",
+    "date": "2026-06-17",
+    "mode": "artist-alphabet",
+    "difficulty": "medium",
+    "rowCategoryIds": "[\"B-C\",\"I\",\"S-T\"]",
+    "columnCategoryIds": "[\"ariana-grande\",\"the-weeknd\",\"ed-sheeran\"]"
+  },
+  {
+    "id": "actor-alpha-2026-06-19",
+    "date": "2026-06-19",
+    "mode": "actor-alphabet",
+    "difficulty": "medium",
+    "rowCategoryIds": "[\"A-B-C-D-E\",\"L-M-N-O-P\",\"S-T-U-V-W\"]",
+    "columnCategoryIds": "[\"saoirse-ronan\",\"john-boyega\",\"oscar-isaac\"]"
+  },
+  {
+    "id": "artist-alpha-sat-2026-06-20",
+    "date": "2026-06-20",
+    "mode": "artist-alphabet",
+    "difficulty": "medium",
+    "rowCategoryIds": "[\"B-C\",\"L-M-N\",\"S-T\"]",
+    "columnCategoryIds": "[\"taylor-swift\",\"ariana-grande\",\"ed-sheeran\"]"
+  },
+  {
+    "id": "artist-alpha-2026-06-24",
+    "date": "2026-06-24",
+    "mode": "artist-alphabet",
+    "difficulty": "medium",
+    "rowCategoryIds": "[\"B-C\",\"G-H\",\"W\"]",
+    "columnCategoryIds": "[\"billie-eilish\",\"harry-styles\",\"post-malone\"]"
+  },
+  {
+    "id": "actor-alpha-2026-06-26",
+    "date": "2026-06-26",
+    "mode": "actor-alphabet",
+    "difficulty": "medium",
+    "rowCategoryIds": "[\"A-B-C-D-E\",\"F-G-H-I-J-K\",\"S-T-U-V-W\"]",
+    "columnCategoryIds": "[\"tom-holland\",\"zendaya\",\"timothee-chalamet\"]"
+  },
+  {
+    "id": "artist-alpha-sat-2026-06-27",
+    "date": "2026-06-27",
+    "mode": "artist-alphabet",
+    "difficulty": "medium",
+    "rowCategoryIds": "[\"B-C\",\"L-N\",\"S-T\"]",
+    "columnCategoryIds": "[\"dua-lipa\",\"billie-eilish\",\"drake\"]"
   }
 ]

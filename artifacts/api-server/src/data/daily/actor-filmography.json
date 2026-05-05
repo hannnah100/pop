@@ -1,0 +1,288 @@
+[
+  {
+    "id": "tom-holland",
+    "name": "Tom Holland",
+    "titles": [
+      "Avengers: Endgame", "Avengers: Infinity War",
+      "Captain America: Civil War", "Chaos Walking", "Cherry",
+      "Edge of Winter",
+      "In the Heart of the Sea",
+      "Spider-Man: Far from Home", "Spider-Man: Homecoming", "Spider-Man: No Way Home",
+      "The Devil All the Time", "The Impossible",
+      "Uncharted"
+    ]
+  },
+  {
+    "id": "zendaya",
+    "name": "Zendaya",
+    "titles": [
+      "Challengers",
+      "Dune", "Dune: Part Two",
+      "Euphoria",
+      "Greatest Showman",
+      "K.C. Undercover",
+      "Malcolm & Marie",
+      "Shake It Up",
+      "Spider-Man: Far from Home", "Spider-Man: Homecoming", "Spider-Man: No Way Home",
+      "Zapped"
+    ]
+  },
+  {
+    "id": "timothee-chalamet",
+    "name": "Timothée Chalamet",
+    "titles": [
+      "A Complete Unknown",
+      "Beautiful Boy", "Bones and All",
+      "Call Me by Your Name",
+      "Dune", "Dune: Part Two",
+      "Hot Summer Nights",
+      "Lady Bird", "Little Women",
+      "The French Dispatch",
+      "Wonka"
+    ]
+  },
+  {
+    "id": "florence-pugh",
+    "name": "Florence Pugh",
+    "titles": [
+      "A Good Person",
+      "Black Widow",
+      "Don't Worry Darling", "Dune: Part Two",
+      "Fighting with My Family",
+      "Lady Macbeth", "Little Women",
+      "Midsommar",
+      "Oppenheimer",
+      "The Wonder",
+      "We Live in Time"
+    ]
+  },
+  {
+    "id": "margot-robbie",
+    "name": "Margot Robbie",
+    "titles": [
+      "Babylon", "Barbie", "Birds of Prey", "The Big Short",
+      "Focus",
+      "I, Tonya",
+      "Mary Queen of Scots",
+      "Once Upon a Time in Hollywood",
+      "Suicide Squad", "The Suicide Squad",
+      "The Wolf of Wall Street"
+    ]
+  },
+  {
+    "id": "leonardo-dicaprio",
+    "name": "Leonardo DiCaprio",
+    "titles": [
+      "Blood Diamond",
+      "Catch Me If You Can",
+      "Django Unchained", "Don't Look Up",
+      "Gangs of New York", "The Great Gatsby",
+      "Inception",
+      "Killers of the Flower Moon",
+      "Once Upon a Time in Hollywood",
+      "The Revenant", "Romeo + Juliet",
+      "Shutter Island",
+      "Titanic",
+      "The Wolf of Wall Street",
+      "What's Eating Gilbert Grape"
+    ]
+  },
+  {
+    "id": "emma-stone",
+    "name": "Emma Stone",
+    "titles": [
+      "The Amazing Spider-Man", "The Amazing Spider-Man 2",
+      "Battle of the Sexes", "Birdman",
+      "Cruella",
+      "Easy A",
+      "The Favourite",
+      "The Help",
+      "La La Land",
+      "Maniac",
+      "Poor Things",
+      "Zombieland"
+    ]
+  },
+  {
+    "id": "ryan-gosling",
+    "name": "Ryan Gosling",
+    "titles": [
+      "Barbie", "The Big Short", "Blade Runner 2049",
+      "Crazy Stupid Love",
+      "Drive",
+      "The Fall Guy", "First Man",
+      "Gangster Squad", "The Gray Man",
+      "Half Nelson",
+      "La La Land", "Lars and the Real Girl",
+      "The Notebook",
+      "The Place Beyond the Pines"
+    ]
+  },
+  {
+    "id": "saoirse-ronan",
+    "name": "Saoirse Ronan",
+    "titles": [
+      "Ammonite", "Atonement",
+      "Brooklyn", "Byzantium",
+      "The Grand Budapest Hotel",
+      "Hanna",
+      "Lady Bird", "Little Women", "The Lovely Bones",
+      "Mary Queen of Scots",
+      "On Chesil Beach",
+      "The Seagull"
+    ]
+  },
+  {
+    "id": "austin-butler",
+    "name": "Austin Butler",
+    "titles": [
+      "Dune: Part Two",
+      "Elvis",
+      "Masters of the Air",
+      "Once Upon a Time in Hollywood",
+      "The Shannara Chronicles",
+      "Switched at Birth"
+    ]
+  },
+  {
+    "id": "anya-taylor-joy",
+    "name": "Anya Taylor-Joy",
+    "titles": [
+      "Amsterdam",
+      "Emma",
+      "Furiosa: A Mad Max Saga",
+      "Last Night in Soho",
+      "The Menu", "Morgan",
+      "The Northman",
+      "Peaky Blinders",
+      "The Queen's Gambit",
+      "Split",
+      "Thoroughbreds", "The Witch"
+    ]
+  },
+  {
+    "id": "paul-mescal",
+    "name": "Paul Mescal",
+    "titles": [
+      "Aftersun", "All of Us Strangers",
+      "Carmen",
+      "Gladiator II",
+      "Normal People"
+    ]
+  },
+  {
+    "id": "pedro-pascal",
+    "name": "Pedro Pascal",
+    "titles": [
+      "Game of Thrones",
+      "Kingsman: The Golden Circle",
+      "The Last of Us",
+      "The Mandalorian",
+      "Narcos",
+      "Prospect",
+      "Strange Way of Life",
+      "The Unbearable Weight of Massive Talent",
+      "We Can Be Heroes",
+      "Wonder Woman 1984"
+    ]
+  },
+  {
+    "id": "oscar-isaac",
+    "name": "Oscar Isaac",
+    "titles": [
+      "A Most Violent Year", "Annihilation",
+      "The Card Counter",
+      "Dune", "Dune: Part Two",
+      "Ex Machina",
+      "Inside Llewyn Davis",
+      "Moon Knight",
+      "Scenes from a Marriage",
+      "Star Wars: The Force Awakens", "Star Wars: The Last Jedi", "Star Wars: The Rise of Skywalker",
+      "X-Men: Apocalypse"
+    ]
+  },
+  {
+    "id": "adam-driver",
+    "name": "Adam Driver",
+    "titles": [
+      "Annette",
+      "BlacKkKlansman",
+      "Ferrari",
+      "Girls",
+      "House of Gucci",
+      "Marriage Story",
+      "The Man Who Killed Don Quixote",
+      "Paterson",
+      "The Report",
+      "Silence",
+      "Star Wars: The Force Awakens", "Star Wars: The Last Jedi", "Star Wars: The Rise of Skywalker",
+      "White Noise"
+    ]
+  },
+  {
+    "id": "john-boyega",
+    "name": "John Boyega",
+    "titles": [
+      "Attack the Block",
+      "Breaking",
+      "Detroit",
+      "Pacific Rim: Uprising",
+      "Small Axe",
+      "Star Wars: The Force Awakens", "Star Wars: The Last Jedi", "Star Wars: The Rise of Skywalker",
+      "They Cloned Tyrone"
+    ]
+  },
+  {
+    "id": "lupita-nyongo",
+    "name": "Lupita Nyong'o",
+    "titles": [
+      "A Quiet Place: Day One",
+      "Black Panther", "Black Panther: Wakanda Forever",
+      "Little Monsters",
+      "Non-Stop",
+      "Star Wars: The Force Awakens", "Star Wars: The Last Jedi", "Star Wars: The Rise of Skywalker",
+      "12 Years a Slave",
+      "The Jungle Book",
+      "Us"
+    ]
+  },
+  {
+    "id": "michael-b-jordan",
+    "name": "Michael B. Jordan",
+    "titles": [
+      "Black Panther",
+      "Chronicle", "Creed", "Creed II", "Creed III",
+      "Friday Night Lights",
+      "Fruitvale Station",
+      "Just Mercy",
+      "Parenthood",
+      "The Wire",
+      "Without Remorse"
+    ]
+  },
+  {
+    "id": "daniel-kaluuya",
+    "name": "Daniel Kaluuya",
+    "titles": [
+      "Barbie", "Black Panther",
+      "Get Out",
+      "Johnny English Strikes Again", "Judas and the Black Messiah",
+      "Nope",
+      "Sicario",
+      "Widows"
+    ]
+  },
+  {
+    "id": "ana-de-armas",
+    "name": "Ana de Armas",
+    "titles": [
+      "Blonde",
+      "Deep Water",
+      "The Gray Man",
+      "Hands of Stone",
+      "Knives Out",
+      "No Time to Die",
+      "War Dogs"
+    ]
+  }
+]

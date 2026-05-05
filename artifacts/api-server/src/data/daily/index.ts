@@ -13,6 +13,8 @@ import crosswordJson from "./crossword.json" with { type: "json" };
 import popBoxJson from "./pop-box.json" with { type: "json" };
 import popBoxCategoriesJson from "./pop-box-categories.json" with { type: "json" };
 import popBoxCelebritiesJson from "./pop-box-celebrities.json" with { type: "json" };
+import artistSongsJson from "./artist-songs.json" with { type: "json" };
+import actorFilmographyJson from "./actor-filmography.json" with { type: "json" };
 
 export interface ThreeFlopsSeed {
   id: string;
@@ -41,10 +43,24 @@ export interface PopBoxSeed {
   id: string;
   date: string;
   difficulty: string;
-  /** JSON-encoded string[] */
+  /** "celebrity-categories" (default) | "artist-alphabet" | "actor-alphabet" */
+  mode?: string;
+  /** JSON-encoded string[] — letter groups for alphabet modes, category IDs otherwise */
   rowCategoryIds: string;
-  /** JSON-encoded string[] */
+  /** JSON-encoded string[] — artist/actor IDs for alphabet modes, category IDs otherwise */
   columnCategoryIds: string;
+}
+
+export interface ArtistSongs {
+  id: string;
+  name: string;
+  songs: string[];
+}
+
+export interface ActorFilmography {
+  id: string;
+  name: string;
+  titles: string[];
 }
 
 export interface PopBoxCategory {
@@ -65,3 +81,5 @@ export const CROSSWORD_SEED: CrosswordSeed[] = crosswordJson as CrosswordSeed[];
 export const POP_BOX_SEED: PopBoxSeed[] = popBoxJson as PopBoxSeed[];
 export const POP_BOX_CATEGORIES: PopBoxCategory[] = popBoxCategoriesJson as PopBoxCategory[];
 export const POP_BOX_CELEBRITIES: PopBoxCelebrity[] = popBoxCelebritiesJson as PopBoxCelebrity[];
+export const ARTIST_SONGS: ArtistSongs[] = artistSongsJson as ArtistSongs[];
+export const ACTOR_FILMOGRAPHY: ActorFilmography[] = actorFilmographyJson as ActorFilmography[];

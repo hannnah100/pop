@@ -317,10 +317,15 @@ export default function PopBox() {
         hapticWrong();
         setShakeKey((k) => k + 1);
         setShakeCellIdx(activeCell);
+        const isAlpha = grid?.mode === "artist-alphabet" || grid?.mode === "actor-alphabet";
         const reasonText =
           result.reason === "wrong_cell"
-            ? `${result.celebrityName ?? guess} doesn't fit this cell.`
-            : `Hmm, "${guess}" isn't a celeb we know.`;
+            ? isAlpha
+              ? `${result.celebrityName ?? guess} doesn't start with that letter.`
+              : `${result.celebrityName ?? guess} doesn't fit this cell.`
+            : isAlpha
+              ? `"${guess}" isn't in our database for this ${grid?.mode === "artist-alphabet" ? "artist" : "actor"}.`
+              : `Hmm, "${guess}" isn't a celeb we know.`;
         toast({
           title: "✗ Not a match",
           description: reasonText,
@@ -358,8 +363,14 @@ export default function PopBox() {
     for (let r = 0; r < 3; r++) {
       rows.push([0, 1, 2].map((c) => emoji(cells[r * 3 + c])).join(""));
     }
+    const modeName =
+      grid.mode === "artist-alphabet"
+        ? "Artist Alphabet"
+        : grid.mode === "actor-alphabet"
+          ? "Actor Alphabet"
+          : "Pop Box";
     const text = [
-      `Pop The Question – Pop Box (${grid.date})`,
+      `Pop The Question – ${modeName} (${grid.date})`,
       `Score: ${correctCount}/9${avgRarity != null ? ` • Rarity ${avgRarity}%` : ""}`,
       "",
       ...rows,
@@ -412,10 +423,18 @@ export default function PopBox() {
         <StarDoodle className="absolute top-2 right-4 w-7 h-7 text-[#FFD700] opacity-70" />
         <div>
           <h1 className="font-display text-3xl md:text-4xl font-black text-white uppercase tracking-tight">
-            Pop Box
+            {grid.mode === "artist-alphabet"
+              ? "Artist Alphabet"
+              : grid.mode === "actor-alphabet"
+                ? "Actor Alphabet"
+                : "Pop Box"}
           </h1>
           <p className="text-sm text-white/90 font-sans mt-1">
-            Name a celeb that fits BOTH the row and the column. 9 picks.
+            {grid.mode === "artist-alphabet"
+              ? "Name a song by the artist starting with a letter in that row. 9 picks."
+              : grid.mode === "actor-alphabet"
+                ? "Name a film or show starring the actor starting with a letter in that row. 9 picks."
+                : "Name a celeb that fits BOTH the row and the column. 9 picks."}
           </p>
         </div>
         <div className="flex items-center gap-2 bg-white border-[3px] border-black shadow-[3px_3px_0_#000] px-4 py-3 flex-shrink-0">
@@ -442,7 +461,11 @@ export default function PopBox() {
         {grid.columnCategories.map((cat) => (
           <div
             key={cat.id}
-            className="aspect-square bg-[#00E5FF] border-[3px] border-black shadow-[3px_3px_0_#000] p-1 flex items-center justify-center text-center"
+            className={`aspect-square border-[3px] border-black shadow-[3px_3px_0_#000] p-1 flex items-center justify-center text-center ${
+              grid.mode === "artist-alphabet" || grid.mode === "actor-alphabet"
+                ? "bg-[#FF6B35]"
+                : "bg-[#00E5FF]"
+            }`}
           >
             <span className="font-display font-black text-[10px] sm:text-xs leading-tight uppercase text-black">
               {cat.label}
@@ -487,15 +510,28 @@ export default function PopBox() {
               >
                 <div className="flex items-center justify-between">
                   <span className="font-display font-black uppercase text-xs text-black/70">
-                    Cell {Math.floor(activeCell / 3) + 1}-
-                    {(activeCell % 3) + 1}:{" "}
-                    <span className="text-black">
-                      {grid.rowCategories[Math.floor(activeCell / 3)].label}
-                    </span>{" "}
-                    ×{" "}
-                    <span className="text-black">
-                      {grid.columnCategories[activeCell % 3].label}
-                    </span>
+                    {grid.mode === "artist-alphabet" || grid.mode === "actor-alphabet" ? (
+                      <>
+                        <span className="text-black">
+                          {grid.columnCategories[activeCell % 3].label}
+                        </span>
+                        {" · starts with "}
+                        <span className="text-black">
+                          {grid.rowCategories[Math.floor(activeCell / 3)].label}
+                        </span>
+                      </>
+                    ) : (
+                      <>
+                        Cell {Math.floor(activeCell / 3) + 1}-{(activeCell % 3) + 1}:{" "}
+                        <span className="text-black">
+                          {grid.rowCategories[Math.floor(activeCell / 3)].label}
+                        </span>{" "}
+                        ×{" "}
+                        <span className="text-black">
+                          {grid.columnCategories[activeCell % 3].label}
+                        </span>
+                      </>
+                    )}
                   </span>
                   <button
                     type="button"
@@ -515,7 +551,13 @@ export default function PopBox() {
                     ref={inputRef}
                     value={currentGuess}
                     onChange={(e) => setCurrentGuess(e.target.value)}
-                    placeholder="Type a celebrity name…"
+                    placeholder={
+                      grid.mode === "artist-alphabet"
+                        ? "Type a song title…"
+                        : grid.mode === "actor-alphabet"
+                          ? "Type a film or show title…"
+                          : "Type a celebrity name…"
+                    }
                     className="text-base h-11 border-[3px] border-black bg-white focus-visible:ring-[#FF1493]"
                     autoFocus
                     data-testid="input-pop-box-guess"
@@ -633,7 +675,7 @@ export default function PopBox() {
         </motion.div>
       )}
 
-      {showAnswers && grid && <AnswersPanel gridId={grid.id} />}
+      {showAnswers && grid && <AnswersPanel gridId={grid.id} mode={grid.mode ?? "celebrity-categories"} />}
     </div>
   );
 }
@@ -739,7 +781,7 @@ function Row(props: {
   );
 }
 
-function AnswersPanel({ gridId }: { gridId: string }) {
+function AnswersPanel({ gridId, mode }: { gridId: string; mode: string }) {
   const { data, isLoading } = useGetPopBoxAnswers(gridId, {
     query: { queryKey: getGetPopBoxAnswersQueryKey(gridId) },
   });
@@ -757,7 +799,11 @@ function AnswersPanel({ gridId }: { gridId: string }) {
   return (
     <div className="mt-6 bg-[#FFF8E7] border-[3px] border-black shadow-[4px_4px_0_#000] p-4">
       <h3 className="font-display font-black text-xl uppercase text-black mb-3">
-        All Possible Answers
+        {mode === "artist-alphabet"
+          ? "All Valid Songs"
+          : mode === "actor-alphabet"
+            ? "All Valid Titles"
+            : "All Possible Answers"}
       </h3>
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
         {data.cells.map((cell) => (

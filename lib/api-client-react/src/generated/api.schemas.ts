@@ -98,6 +98,7 @@ export interface PopBoxGrid {
   id: string;
   date: string;
   difficulty: PopBoxGridDifficulty;
+  mode?: "celebrity-categories" | "artist-alphabet" | "actor-alphabet";
   rowCategories: PopBoxCategory[];
   columnCategories: PopBoxCategory[];
 }

@@ -11,6 +11,8 @@ import {
 import {
   POP_BOX_CATEGORIES,
   POP_BOX_CELEBRITIES,
+  ARTIST_SONGS,
+  ACTOR_FILMOGRAPHY,
   type PopBoxCelebrity,
 } from "../data/daily";
 
@@ -68,6 +70,72 @@ function normalize(s: string): string {
     .trim();
 }
 
+// ---------------------------------------------------------------------------
+// Alphabet-mode helpers
+// ---------------------------------------------------------------------------
+
+type GridMode = "celebrity-categories" | "artist-alphabet" | "actor-alphabet";
+
+function getGridMode(id: string): GridMode {
+  if (id.startsWith("artist-alpha-")) return "artist-alphabet";
+  if (id.startsWith("actor-alpha-")) return "actor-alphabet";
+  return "celebrity-categories";
+}
+
+// Artist lookup: artistId → songs[]
+const artistSongsMap = new Map(ARTIST_SONGS.map((a) => [a.id, a]));
+// Actor lookup: actorId → titles[]
+const actorFilmographyMap = new Map(ACTOR_FILMOGRAPHY.map((a) => [a.id, a]));
+
+function normalizeTitle(s: string): string {
+  return s
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "")
+    .replace(/[':.,\-!?&$]/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function titleFirstLetter(title: string): string | null {
+  let n = normalizeTitle(title);
+  if (n.startsWith("the ")) n = n.slice(4);
+  if (n.startsWith("a ")) n = n.slice(2);
+  const m = n.match(/[a-z]/);
+  return m ? m[0] : null;
+}
+
+function letterGroupMatches(group: string, title: string): boolean {
+  const letters = group.toLowerCase().split("-");
+  const fl = titleFirstLetter(title);
+  return fl != null && letters.includes(fl);
+}
+
+/** Find a canonical song/title match for a guess. Returns canonical name or null. */
+function findAlphabetAnswer(
+  items: string[],
+  guess: string,
+): string | null {
+  const gNorm = normalizeTitle(guess);
+  if (!gNorm) return null;
+  // Exact match
+  for (const item of items) {
+    if (normalizeTitle(item) === gNorm) return item;
+  }
+  // Substring match (guess is contained in title or vice versa, ≥4 chars)
+  if (gNorm.length >= 4) {
+    for (const item of items) {
+      const iNorm = normalizeTitle(item);
+      if (iNorm.includes(gNorm) || gNorm.includes(iNorm)) return item;
+    }
+  }
+  return null;
+}
+
+// ---------------------------------------------------------------------------
+// Celebrity-mode helpers (existing)
+// ---------------------------------------------------------------------------
+
 // Build lookup index once at module load.
 const lookupToCelebId = new Map<string, string>();
 for (const celeb of POP_BOX_CELEBRITIES) {
@@ -95,12 +163,52 @@ function celebMatchesCell(
 }
 
 function buildResponseFromRow(row: typeof popBoxGridsTable.$inferSelect) {
+  const mode = getGridMode(row.id);
   const rowIds = JSON.parse(row.rowCategoryIds) as string[];
   const colIds = JSON.parse(row.columnCategoryIds) as string[];
+
+  if (mode === "artist-alphabet") {
+    return GetTodayPopBoxResponse.parse({
+      id: row.id,
+      date: row.date,
+      difficulty: row.difficulty,
+      mode,
+      rowCategories: rowIds.map((group) => ({
+        id: group,
+        label: group.replace(/-/g, " · "),
+        group: "letter-group",
+      })),
+      columnCategories: colIds.map((id) => {
+        const artist = artistSongsMap.get(id);
+        return { id, label: artist?.name ?? id, group: "artist" };
+      }),
+    });
+  }
+
+  if (mode === "actor-alphabet") {
+    return GetTodayPopBoxResponse.parse({
+      id: row.id,
+      date: row.date,
+      difficulty: row.difficulty,
+      mode,
+      rowCategories: rowIds.map((group) => ({
+        id: group,
+        label: group.replace(/-/g, " · "),
+        group: "letter-group",
+      })),
+      columnCategories: colIds.map((id) => {
+        const actor = actorFilmographyMap.get(id);
+        return { id, label: actor?.name ?? id, group: "actor" };
+      }),
+    });
+  }
+
+  // celebrity-categories (default)
   return GetTodayPopBoxResponse.parse({
     id: row.id,
     date: row.date,
     difficulty: row.difficulty,
+    mode,
     rowCategories: rowIds.map((id) => {
       const cat = POP_BOX_CATEGORIES.find((c) => c.id === id);
       return { id, label: cat?.label ?? id, group: cat?.group ?? "unknown" };
@@ -181,10 +289,10 @@ router.get("/daily/pop-box/:id/answers", async (req, res): Promise<void> => {
     return;
   }
 
+  const mode = getGridMode(row.id);
   const rowIds = JSON.parse(row.rowCategoryIds) as string[];
   const colIds = JSON.parse(row.columnCategoryIds) as string[];
 
-  // For each cell, list valid celebrity ids + their global tally for the cell.
   const counts = await db
     .select()
     .from(popBoxAnswerCountsTable)
@@ -202,28 +310,42 @@ router.get("/daily/pop-box/:id/answers", async (req, res): Promise<void> => {
       const idx = r * 3 + c;
       const rowCat = rowIds[r];
       const colCat = colIds[c];
-      const valid = POP_BOX_CELEBRITIES.filter((celeb) =>
-        celebMatchesCell(celeb.id, rowCat, colCat),
-      );
-      const totalCellGuesses = valid.reduce(
-        (sum, celeb) => sum + (countMap.get(`${idx}:${celeb.id}`) ?? 0),
+
+      let validEntries: Array<{ id: string; name: string }>;
+      if (mode === "artist-alphabet") {
+        const artist = artistSongsMap.get(colCat);
+        validEntries = (artist?.songs ?? [])
+          .filter((s) => letterGroupMatches(rowCat, s))
+          .map((s) => ({ id: normalizeTitle(s).replace(/\s/g, "-"), name: s }));
+      } else if (mode === "actor-alphabet") {
+        const actor = actorFilmographyMap.get(colCat);
+        validEntries = (actor?.titles ?? [])
+          .filter((t) => letterGroupMatches(rowCat, t))
+          .map((t) => ({ id: normalizeTitle(t).replace(/\s/g, "-"), name: t }));
+      } else {
+        validEntries = POP_BOX_CELEBRITIES.filter((celeb) =>
+          celebMatchesCell(celeb.id, rowCat, colCat),
+        ).map((c) => ({ id: c.id, name: c.name }));
+      }
+
+      const totalCellGuesses = validEntries.reduce(
+        (sum, e) => sum + (countMap.get(`${idx}:${e.id}`) ?? 0),
         0,
       );
       cells.push({
         squareIndex: idx,
         rowCategoryId: rowCat,
         columnCategoryId: colCat,
-        validCelebrities: valid
-          .map((celeb) => {
-            const guesses = countMap.get(`${idx}:${celeb.id}`) ?? 0;
-            // Higher % = rarer pick. Neutral 50 when there is no data yet.
+        validCelebrities: validEntries
+          .map((e) => {
+            const guesses = countMap.get(`${idx}:${e.id}`) ?? 0;
             const rarityPercent =
               totalCellGuesses <= 0
                 ? 50
                 : ((totalCellGuesses - guesses) / totalCellGuesses) * 100;
             return {
-              id: celeb.id,
-              name: celeb.name,
+              id: e.id,
+              name: e.name,
               guessCount: guesses,
               rarityPercent: Math.round(rarityPercent * 10) / 10,
             };
@@ -267,6 +389,7 @@ router.post("/daily/pop-box/:id/guess", async (req, res): Promise<void> => {
     return;
   }
 
+  const mode = getGridMode(row.id);
   const rowIds = JSON.parse(row.rowCategoryIds) as string[];
   const colIds = JSON.parse(row.columnCategoryIds) as string[];
   const r = Math.floor(squareIndex / 3);
@@ -274,6 +397,86 @@ router.post("/daily/pop-box/:id/guess", async (req, res): Promise<void> => {
   const rowCat = rowIds[r];
   const colCat = colIds[c];
 
+  // ---- Alphabet mode validation ----
+  if (mode === "artist-alphabet" || mode === "actor-alphabet") {
+    const items =
+      mode === "artist-alphabet"
+        ? (artistSongsMap.get(colCat)?.songs ?? [])
+        : (actorFilmographyMap.get(colCat)?.titles ?? []);
+
+    const matched = findAlphabetAnswer(items, guess);
+    if (!matched) {
+      res.json(
+        PopBoxGuessResponse.parse({
+          correct: false,
+          reason: "unknown_celebrity",
+          celebrityId: null,
+          celebrityName: null,
+          rarityPercent: null,
+        }),
+      );
+      return;
+    }
+    if (!letterGroupMatches(rowCat, matched)) {
+      res.json(
+        PopBoxGuessResponse.parse({
+          correct: false,
+          reason: "wrong_cell",
+          celebrityId: null,
+          celebrityName: matched,
+          rarityPercent: null,
+        }),
+      );
+      return;
+    }
+
+    const answerId = normalizeTitle(matched).replace(/\s/g, "-");
+    let sessionId = req.cookies?.[POP_BOX_SESSION_COOKIE] as string | undefined;
+    if (!sessionId || typeof sessionId !== "string" || sessionId.length < 16) {
+      sessionId = randomBytes(16).toString("hex");
+      res.cookie(POP_BOX_SESSION_COOKIE, sessionId, {
+        httpOnly: true,
+        sameSite: "lax",
+        secure: req.secure,
+        maxAge: 1000 * 60 * 60 * 24 * 90,
+        path: "/",
+      });
+    }
+    const isTodayGrid = row.date === todayDate();
+    const shouldCount = isTodayGrid && recordCountedGuess(sessionId, row.id, squareIndex, answerId);
+    if (shouldCount) {
+      try {
+        await db
+          .insert(popBoxAnswerCountsTable)
+          .values({ gridId: row.id, squareIndex, celebrityId: answerId, count: 1 })
+          .onConflictDoUpdate({
+            target: [popBoxAnswerCountsTable.gridId, popBoxAnswerCountsTable.squareIndex, popBoxAnswerCountsTable.celebrityId],
+            set: { count: sql`${popBoxAnswerCountsTable.count} + 1`, updatedAt: new Date() },
+          });
+      } catch (err) {
+        req.log.warn({ err }, "Failed to increment pop box answer count");
+      }
+    }
+    const cellCounts = await db.select().from(popBoxAnswerCountsTable).where(
+      and(eq(popBoxAnswerCountsTable.gridId, row.id), eq(popBoxAnswerCountsTable.squareIndex, squareIndex)),
+    );
+    const total = cellCounts.reduce((s, c) => s + c.count, 0);
+    const myCount = cellCounts.find((c) => c.celebrityId === answerId)?.count ?? 1;
+    const rarityPercent = total <= 1 ? 50 : ((total - myCount) / total) * 100;
+
+    res.json(
+      PopBoxGuessResponse.parse({
+        correct: true,
+        reason: null,
+        celebrityId: answerId,
+        celebrityName: matched,
+        rarityPercent: Math.round(rarityPercent * 10) / 10,
+      }),
+    );
+    return;
+  }
+
+  // ---- Celebrity-categories mode (original logic) ----
   const key = normalize(guess);
   const celebId = key ? lookupToCelebId.get(key) : undefined;
 

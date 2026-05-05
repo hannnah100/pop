@@ -1,0 +1,394 @@
+[
+  {
+    "id": "taylor-swift",
+    "name": "Taylor Swift",
+    "songs": [
+      "A Place in This World", "All Too Well", "Anti-Hero", "august",
+      "Back to December", "Bad Blood", "Begin Again", "Bejeweled", "Betty", "Better Man", "Blank Space", "But Daddy I Love Him",
+      "Call It What You Want", "cardigan", "champagne problems", "Clean", "Cold As You", "coney island", "Cornelia Street", "Cruel Summer",
+      "Dear Reader", "Delicate", "Don't Blame Me", "Down Bad",
+      "enchanted", "End Game", "evermore", "exile",
+      "Fearless", "Fifteen", "Forever & Always",
+      "Getaway Car", "Gold Rush", "Gorgeous", "Guilty as Sin?",
+      "Holy Ground", "How You Get the Girl",
+      "I Can See You", "I Did Something Bad", "I Knew You Were Trouble", "I Think He Knows", "Is It Over Now?", "ivy",
+      "Jump Then Fall",
+      "King of My Heart",
+      "Last Kiss", "Lavender Haze", "loml", "London Boy", "Long Live", "Look What You Made Me Do", "Love Story", "Lover",
+      "marjorie", "Mean", "Midnight Rain", "Mine", "Miss Americana & the Heartbreak Prince", "Mr. Perfectly Fine", "My Tears Ricochet",
+      "New Romantics", "New Year's Day", "no body no crime",
+      "Only the Young", "Our Song", "Out of the Woods",
+      "Paper Rings", "Picture to Burn",
+      "Red", "right where you left me", "Ronan",
+      "Shake It Off", "Shoulda Said No", "Snow on the Beach", "So High School", "Sparks Fly", "Speak Now", "State of Grace", "Style", "suburban legends", "Superman", "Sweet Nothing",
+      "Teardrops on My Guitar", "The 1", "The Archer", "The Great War", "The Manuscript", "The Outside", "The Story of Us", "This Is Why We Can't Have Nice Things", "This Love", "Tim McGraw", "tolerate it", "Treacherous",
+      "We Are Never Getting Back Together", "Welcome to New York", "White Horse", "Who's Afraid of Little Old Me?", "willow", "Wildest Dreams", "Would've Could've Should've",
+      "You Belong With Me", "You Need to Calm Down", "You're on Your Own Kid"
+    ]
+  },
+  {
+    "id": "sabrina-carpenter",
+    "name": "Sabrina Carpenter",
+    "songs": [
+      "Already Over", "Almost Love", "Always Been You",
+      "Bad for Business", "because i liked a boy", "Bed Chem", "Bet U Wanna", "Broke in a Expensive City",
+      "Coincidence",
+      "Decode", "Don't Smile", "Dumb & Poetic",
+      "emails i can't send", "Espresso", "Exhale", "Eyes Wide Open",
+      "Fast Times", "Feather", "Five More Minutes", "Found My Friend",
+      "Good Graces",
+      "Hate You",
+      "I Can't Help It",
+      "Just to Get Me to Your Door",
+      "Lie to Girls", "Lonesome", "Looking at Me",
+      "Manchild",
+      "nonsense",
+      "Please Please Please", "Pushing 20",
+      "Read My Mind", "Ruined Christmas",
+      "Skin", "Skinny Dipping", "Slim Pickins", "Supernatural",
+      "Taste", "Tell Me You're Wrong", "the-one", "Tornado Warnings",
+      "Vicious",
+      "We're Ready", "We Hate Each Other"
+    ]
+  },
+  {
+    "id": "olivia-rodrigo",
+    "name": "Olivia Rodrigo",
+    "songs": [
+      "all-american bitch",
+      "bad idea right?", "ballad of a homeschooled girl", "brutal",
+      "deja vu", "drivers license",
+      "enough for you",
+      "favorite crime",
+      "get him back!", "girl i've always been", "good 4 u",
+      "happier", "hope ur ok",
+      "lacy", "logical", "love is embarrassing",
+      "making the bed",
+      "pretty isn't pretty",
+      "teenage dream", "the grudge", "traitor",
+      "vampire",
+      "1 step forward 3 steps back"
+    ]
+  },
+  {
+    "id": "ariana-grande",
+    "name": "Ariana Grande",
+    "songs": [
+      "Almost Is Never Enough", "Adore",
+      "Be Alright", "Bloodline", "Break Free", "Break Up with Your Girlfriend I'm Bored", "Breathin",
+      "Dangerous Woman",
+      "Eternal Sunshine",
+      "Fake Smile",
+      "ghostin", "God is a Woman", "Greedy",
+      "Imagine", "In My Head", "Into You",
+      "Jason's Song", "Just a Little Bit of Your Heart",
+      "Leave Me Lonely", "Love Me Harder",
+      "Monopoly", "Moonlight", "My Everything",
+      "NASA", "needy", "No Tears Left to Cry",
+      "Off the Table", "One Last Time", "Only 1",
+      "Positions", "Problem",
+      "Side to Side", "Stuck with U", "Sweetener",
+      "Thank U Next", "the boy is mine", "True Love",
+      "we can't be friends",
+      "Yes, And?"
+    ]
+  },
+  {
+    "id": "billie-eilish",
+    "name": "Billie Eilish",
+    "songs": [
+      "all the good girls go to hell",
+      "bad guy", "bellyache", "Bored", "bury a friend",
+      "come out and play",
+      "everything i wanted",
+      "Getting Older", "goldwing",
+      "Happier Than Ever", "hostage",
+      "idontwannabeyouanymore", "ilomilo", "i love you",
+      "Lovely",
+      "Male Fantasy", "my future", "my strange addiction",
+      "NDA", "no time to die",
+      "ocean eyes", "overheated",
+      "therefore i am",
+      "when the party's over", "What Was I Made For?", "wish you were gay",
+      "your power"
+    ]
+  },
+  {
+    "id": "dua-lipa",
+    "name": "Dua Lipa",
+    "songs": [
+      "Barbie World", "Be the One", "Blow Your Mind (Mwah)", "Boys Will Be Boys", "Break My Heart",
+      "Cold Heart", "Cool", "Crazy What Love Can Do",
+      "Dance the Night", "Don't Start Now",
+      "Electricity", "Fever", "Future Nostalgia",
+      "Good in Bed",
+      "Hallucinate", "Hotter Than Hell",
+      "IDGAF", "Illusion",
+      "Levitating",
+      "New Rules",
+      "One Kiss",
+      "Physical", "Pretty Please",
+      "Scared to Be Lonely", "Swan Song",
+      "Training Season",
+      "Un Dia",
+      "We're Good"
+    ]
+  },
+  {
+    "id": "harry-styles",
+    "name": "Harry Styles",
+    "songs": [
+      "Adore You", "As It Was",
+      "Carolina",
+      "Daydreaming",
+      "Falling", "Fine Line",
+      "Golden", "Grapejuice",
+      "Hammerhead", "Honey",
+      "Keep Driving", "Kiwi",
+      "Late Night Talking", "Lights Up",
+      "Matilda", "Medicine", "Meet Me in the Hallway",
+      "Only Angel",
+      "She", "Sign of the Times", "Satellite", "Sweet Creature",
+      "To Be So Lonely", "Treat People with Kindness", "Two Ghosts",
+      "Watermelon Sugar", "Woman"
+    ]
+  },
+  {
+    "id": "ed-sheeran",
+    "name": "Ed Sheeran",
+    "songs": [
+      "A-Team", "Afire Love",
+      "Bad Habits", "Beautiful People",
+      "Castle on the Hill", "Celestial", "Cross Me",
+      "Don't", "Drunk",
+      "Eyes Closed",
+      "Friends",
+      "Galway Girl", "Give Me Love", "Ghosts",
+      "How Would You Feel",
+      "I Don't Care",
+      "Lego House",
+      "Nancy Mulligan", "New Man",
+      "One", "Overpass Graffiti",
+      "Perfect", "Photograph",
+      "Shape of You", "Shivers", "Sing", "Supermarket Flowers",
+      "Thinking Out Loud", "Tenerife Sea",
+      "U.N.I.",
+      "Way to Break My Heart", "What Do I Know"
+    ]
+  },
+  {
+    "id": "the-weeknd",
+    "name": "The Weeknd",
+    "songs": [
+      "Blinding Lights",
+      "Call Out My Name", "Can't Feel My Face",
+      "Die for You", "Dark Times",
+      "Earned It",
+      "Gasoline",
+      "Heartless", "House of Balloons",
+      "I Feel It Coming",
+      "Often", "Out of Time",
+      "Party Monster",
+      "Save Your Tears", "Sacrifice", "Snowchild", "Starboy",
+      "Take My Breath", "The Hills", "The Morning"
+    ]
+  },
+  {
+    "id": "drake",
+    "name": "Drake",
+    "songs": [
+      "Back to Back", "Best I Ever Had",
+      "Champagne Poetry", "Chicago Freestyle", "Controlla", "Crew Love",
+      "Find Your Love", "Forever",
+      "God Did", "God's Plan",
+      "Headlines", "Hold On We're Going Home", "Hotline Bling",
+      "In My Feelings",
+      "Legend", "Life is Good",
+      "Marvins Room", "Money in the Grave",
+      "Nice for What", "Not Around",
+      "One Dance",
+      "Pound Cake", "Pop Style",
+      "Rich Flex",
+      "Started from the Bottom", "Sticky", "Successful",
+      "Take Care", "Too Good",
+      "With You"
+    ]
+  },
+  {
+    "id": "kendrick-lamar",
+    "name": "Kendrick Lamar",
+    "songs": [
+      "ADHD", "All the Stars", "Alright",
+      "Backstreet Freestyle", "Bitch Don't Kill My Vibe",
+      "Compton", "Count Me Out",
+      "DNA.",
+      "Element",
+      "HUMBLE.",
+      "i", "If This Tape Don't Sell",
+      "King Kunta",
+      "Love", "Loyalty", "LUST.",
+      "Money Trees",
+      "Not Like Us",
+      "Poetic Justice",
+      "Rigamortis", "Real",
+      "Section.80", "Swimming Pools (Drank)",
+      "The Blacker the Berry", "The Recipe",
+      "U",
+      "Wesley's Theory", "We Cry Together"
+    ]
+  },
+  {
+    "id": "sza",
+    "name": "SZA",
+    "songs": [
+      "All the Stars",
+      "Conceited", "Ctrl",
+      "Ghost in the Machine", "Good Days", "Good Looks",
+      "I Hate U",
+      "Kill Bill",
+      "Normal Girl",
+      "Open Arms",
+      "Pretty Little Birds",
+      "Snooze", "SOS",
+      "Tired",
+      "Used"
+    ]
+  },
+  {
+    "id": "bad-bunny",
+    "name": "Bad Bunny",
+    "songs": [
+      "Amorfoda",
+      "Bichiyal",
+      "Callaíta",
+      "Dakiti", "DtMF",
+      "El Apagón", "El Mundo Es Mío",
+      "La Canción", "La Corriente",
+      "Me Porto Bonito", "MIA", "Moscow Mule",
+      "Ojitos Lindos",
+      "Pereo Solo", "Problema",
+      "Sola",
+      "Tití Me Preguntó",
+      "Un Verano Sin Ti",
+      "Yonaguni", "Yo Perreo Sola"
+    ]
+  },
+  {
+    "id": "post-malone",
+    "name": "Post Malone",
+    "songs": [
+      "Alone",
+      "Better Now",
+      "Circles", "Congratulations", "Cooped Up",
+      "Die for Me",
+      "Fall Apart", "Feeling Whitney", "Flexin on My Ex",
+      "Go Flex", "Goodbyes",
+      "Hollywood's Bleeding",
+      "I Fall Apart", "I Like You",
+      "Leave", "Limbo",
+      "Psycho",
+      "Rockstar",
+      "Saint-Tropez", "Stay", "Sunflower",
+      "Take What You Want", "Too Young",
+      "White Iverson", "Wow."
+    ]
+  },
+  {
+    "id": "travis-scott",
+    "name": "Travis Scott",
+    "songs": [
+      "ANTIDOTE", "Astrothunder",
+      "BUTTERFLY EFFECT",
+      "CAROUSEL", "Cant Say",
+      "FEIN", "Franchise",
+      "GOOSEBUMPS",
+      "HIGHEST IN THE ROOM",
+      "Mafia", "MAMACITA",
+      "Pick Up the Phone",
+      "RODEO",
+      "SICKO MODE", "STARGAZING", "Skeletons",
+      "the plan", "Type Shit"
+    ]
+  },
+  {
+    "id": "21-savage",
+    "name": "21 Savage",
+    "songs": [
+      "a lot",
+      "ball w/o you",
+      "Dangerous",
+      "Famous",
+      "glock in my lap",
+      "Knife Talk",
+      "Monster",
+      "No Heart",
+      "Red Opps",
+      "Savage Mode",
+      "Spiral"
+    ]
+  },
+  {
+    "id": "doja-cat",
+    "name": "Doja Cat",
+    "songs": [
+      "Agora Hills", "ATTENTION",
+      "Boss Bitch", "Bottom Bitch",
+      "CYBER",
+      "Go To Town",
+      "Juicy", "JUDGE",
+      "Mooo!", "Mooo! (Remix)",
+      "Need to Know",
+      "Rules",
+      "Say So", "Streets",
+      "Tia Tamera",
+      "Vegas",
+      "Woman", "Won't Bite",
+      "You Right"
+    ]
+  },
+  {
+    "id": "megan-thee-stallion",
+    "name": "Megan Thee Stallion",
+    "songs": [
+      "Big Ole Freak", "Body",
+      "Cash Shit",
+      "Freaky Girls", "Fever",
+      "Girls in the Hood",
+      "Hot Girl Summer",
+      "Plan B", "Pressurelicious",
+      "Ride or Die",
+      "Savage", "Sweetest Pie",
+      "Thot Shit"
+    ]
+  },
+  {
+    "id": "lil-nas-x",
+    "name": "Lil Nas X",
+    "songs": [
+      "Dead Right Now",
+      "HOLIDAY",
+      "INDUSTRY BABY",
+      "Lost in the Citadel",
+      "MONTERO (Call Me By Your Name)",
+      "Old Town Road",
+      "PANINI",
+      "SCOOP", "SUN GOES DOWN", "STAR WALKIN'",
+      "THAT'S WHAT I WANT"
+    ]
+  },
+  {
+    "id": "lizzo",
+    "name": "Lizzo",
+    "songs": [
+      "About Damn Time",
+      "Cuz I Love You",
+      "Good as Hell", "Grrls",
+      "Jerome", "Juice",
+      "Phone",
+      "Rumors",
+      "Soulmate",
+      "Truth Hurts",
+      "Water Me"
+    ]
+  }
+]
