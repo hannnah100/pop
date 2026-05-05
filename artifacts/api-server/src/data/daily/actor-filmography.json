@@ -7,8 +7,9 @@
       "Captain America: Civil War", "Chaos Walking", "Cherry",
       "Edge of Winter",
       "In the Heart of the Sea",
+      "Onward",
       "Spider-Man: Far from Home", "Spider-Man: Homecoming", "Spider-Man: No Way Home",
-      "The Devil All the Time", "The Impossible",
+      "The Devil All the Time", "The Impossible", "The Lost City of Z",
       "Uncharted"
     ]
   },
@@ -37,6 +38,7 @@
       "Dune", "Dune: Part Two",
       "Hot Summer Nights",
       "Lady Bird", "Little Women",
+      "A Rainy Day in New York",
       "The French Dispatch",
       "Wonka"
     ]
@@ -49,9 +51,11 @@
       "Black Widow",
       "Don't Worry Darling", "Dune: Part Two",
       "Fighting with My Family",
+      "Hawkeye",
       "Lady Macbeth", "Little Women",
       "Midsommar",
       "Oppenheimer",
+      "Thunderbolts*",
       "The Wonder",
       "We Live in Time"
     ]
@@ -66,7 +70,8 @@
       "Mary Queen of Scots",
       "Once Upon a Time in Hollywood",
       "Suicide Squad", "The Suicide Squad",
-      "The Wolf of Wall Street"
+      "The Wolf of Wall Street",
+      "Z for Zachariah"
     ]
   },
   {
@@ -97,25 +102,29 @@
       "Easy A",
       "The Favourite",
       "The Help",
+      "Kinds of Kindness",
       "La La Land",
       "Maniac",
       "Poor Things",
-      "Zombieland"
+      "Superbad",
+      "Zombieland", "Zombieland: Double Tap"
     ]
   },
   {
     "id": "ryan-gosling",
     "name": "Ryan Gosling",
     "titles": [
-      "Barbie", "The Big Short", "Blade Runner 2049",
+      "Barbie", "The Big Short", "Blade Runner 2049", "Blue Valentine",
       "Crazy Stupid Love",
       "Drive",
       "The Fall Guy", "First Man",
       "Gangster Squad", "The Gray Man",
       "Half Nelson",
+      "The Ides of March",
       "La La Land", "Lars and the Real Girl",
       "The Notebook",
-      "The Place Beyond the Pines"
+      "The Place Beyond the Pines",
+      "Stay"
     ]
   },
   {
@@ -139,6 +148,7 @@
       "Carrie Diaries",
       "Dune: Part Two",
       "Elvis",
+      "Hannah Montana",
       "Masters of the Air",
       "Once Upon a Time in Hollywood",
       "The Bikeriders",
@@ -153,6 +163,7 @@
       "Amsterdam",
       "Emma",
       "Furiosa: A Mad Max Saga",
+      "Glass",
       "Last Night in Soho",
       "The Menu", "Morgan",
       "The Northman",
@@ -170,6 +181,7 @@
       "Carmen",
       "Foe",
       "Gladiator II", "God's Creatures",
+      "The History of Sound",
       "Normal People"
     ]
   },
@@ -179,11 +191,13 @@
     "titles": [
       "Game of Thrones",
       "Kingsman: The Golden Circle",
+      "The Bubble",
       "The Last of Us",
       "The Mandalorian",
       "Narcos",
       "Prospect",
       "Strange Way of Life",
+      "Triple Frontier",
       "The Unbearable Weight of Massive Talent",
       "We Can Be Heroes",
       "Wonder Woman 1984"
@@ -199,6 +213,7 @@
       "Ex Machina",
       "Inside Llewyn Davis",
       "Moon Knight",
+      "Operation Finale",
       "Scenes from a Marriage",
       "Star Wars: The Force Awakens", "Star Wars: The Last Jedi", "Star Wars: The Rise of Skywalker",
       "X-Men: Apocalypse"
@@ -229,6 +244,7 @@
       "Attack the Block",
       "Breaking",
       "Detroit",
+      "Imperial Dreams",
       "Pacific Rim: Uprising",
       "Small Axe",
       "Star Wars: The Force Awakens", "Star Wars: The Last Jedi", "Star Wars: The Rise of Skywalker",
@@ -290,6 +306,516 @@
       "No Time to Die",
       "Sergio",
       "War Dogs"
+    ]
+  },
+  {
+    "id": "sydney-sweeney",
+    "name": "Sydney Sweeney",
+    "titles": [
+      "Anyone But You",
+      "Euphoria",
+      "Immaculate",
+      "Madame Web",
+      "Reality",
+      "Sharp Objects",
+      "The Handmaid's Tale",
+      "The White Lotus"
+    ]
+  },
+  {
+    "id": "jacob-elordi",
+    "name": "Jacob Elordi",
+    "titles": [
+      "Euphoria",
+      "Priscilla",
+      "Saltburn",
+      "The Kissing Booth", "The Kissing Booth 2", "The Kissing Booth 3"
+    ]
+  },
+  {
+    "id": "chris-evans",
+    "name": "Chris Evans",
+    "titles": [
+      "Avengers: Age of Ultron", "Avengers: Endgame", "Avengers: Infinity War",
+      "Captain America: Civil War", "Captain America: The First Avenger", "Captain America: The Winter Soldier",
+      "Defending Jacob",
+      "Fantastic Four", "Fantastic Four: Rise of the Silver Surfer",
+      "Gifted",
+      "Knives Out",
+      "Not Another Teen Movie",
+      "Scott Pilgrim vs. the World",
+      "Snowpiercer",
+      "The Gray Man",
+      "What's Your Number"
+    ]
+  },
+  {
+    "id": "chris-pine",
+    "name": "Chris Pine",
+    "titles": [
+      "Don't Worry Darling",
+      "Dungeons & Dragons: Honor Among Thieves",
+      "Hell or High Water",
+      "Into the Woods",
+      "Jack Ryan: Shadow Recruit",
+      "Outlaw King",
+      "Star Trek", "Star Trek Into Darkness", "Star Trek Beyond",
+      "The Contractor",
+      "This Means War",
+      "Wonder Woman", "Wonder Woman 1984"
+    ]
+  },
+  {
+    "id": "tom-hardy",
+    "name": "Tom Hardy",
+    "titles": [
+      "Bronson",
+      "Capone",
+      "Child 44",
+      "Dunkirk",
+      "Inception",
+      "Lawless", "Legend", "Locke",
+      "Mad Max: Fury Road",
+      "Peaky Blinders",
+      "The Dark Knight Rises", "The Drop", "The Revenant",
+      "Taboo", "Tinker Tailor Soldier Spy",
+      "Venom", "Venom: Let There Be Carnage",
+      "Warrior"
+    ]
+  },
+  {
+    "id": "robert-downey-jr",
+    "name": "Robert Downey Jr.",
+    "titles": [
+      "Avengers: Age of Ultron", "Avengers: Endgame", "Avengers: Infinity War",
+      "Captain America: Civil War",
+      "Chaplin",
+      "Dolittle", "Due Date",
+      "Iron Man", "Iron Man 2", "Iron Man 3",
+      "Kiss Kiss Bang Bang",
+      "Oppenheimer",
+      "Sherlock Holmes", "Sherlock Holmes: A Game of Shadows",
+      "Spider-Man: Homecoming",
+      "The Judge",
+      "Tropic Thunder",
+      "Zodiac"
+    ]
+  },
+  {
+    "id": "scarlett-johansson",
+    "name": "Scarlett Johansson",
+    "titles": [
+      "Asteroid City",
+      "Avengers: Age of Ultron", "Avengers: Endgame", "Avengers: Infinity War",
+      "Black Widow",
+      "Captain America: Civil War", "Captain America: The Winter Soldier",
+      "Ghost in the Shell",
+      "Her",
+      "Iron Man 2",
+      "Jojo Rabbit",
+      "Lost in Translation",
+      "Lucy",
+      "Marriage Story",
+      "Match Point",
+      "The Prestige",
+      "Under the Skin",
+      "Vicky Cristina Barcelona"
+    ]
+  },
+  {
+    "id": "tom-hiddleston",
+    "name": "Tom Hiddleston",
+    "titles": [
+      "Avengers",
+      "Crimson Peak",
+      "High-Rise",
+      "Kong: Skull Island",
+      "Loki",
+      "Midnight in Paris",
+      "The Night Manager",
+      "Thor", "Thor: The Dark World", "Thor: Ragnarok",
+      "War Horse"
+    ]
+  },
+  {
+    "id": "anthony-mackie",
+    "name": "Anthony Mackie",
+    "titles": [
+      "8 Mile",
+      "Abraham Lincoln: Vampire Hunter",
+      "Avengers: Age of Ultron", "Avengers: Endgame", "Avengers: Infinity War",
+      "Captain America: Brave New World",
+      "Captain America: Civil War", "Captain America: The Winter Soldier",
+      "Outside the Wire",
+      "Pain & Gain",
+      "Synchronic",
+      "The Adjustment Bureau",
+      "The Falcon and the Winter Soldier",
+      "The Hurt Locker"
+    ]
+  },
+  {
+    "id": "andrew-garfield",
+    "name": "Andrew Garfield",
+    "titles": [
+      "99 Homes",
+      "Breathe",
+      "Hacksaw Ridge",
+      "Never Let Me Go",
+      "Silence",
+      "Spider-Man: No Way Home",
+      "The Amazing Spider-Man", "The Amazing Spider-Man 2",
+      "The Social Network",
+      "Tick, Tick... Boom!",
+      "Under the Silver Lake"
+    ]
+  },
+  {
+    "id": "anne-hathaway",
+    "name": "Anne Hathaway",
+    "titles": [
+      "Alice Through the Looking Glass",
+      "Bride Wars", "Brokeback Mountain",
+      "Colossal",
+      "Get Smart",
+      "Interstellar",
+      "Les Misérables", "Love & Other Drugs",
+      "Ocean's Eight", "One Day",
+      "Rachel Getting Married",
+      "The Dark Knight Rises", "The Devil Wears Prada", "The Intern",
+      "The Princess Diaries", "The Princess Diaries 2: Royal Engagement",
+      "The Witches",
+      "WeCrashed"
+    ]
+  },
+  {
+    "id": "meryl-streep",
+    "name": "Meryl Streep",
+    "titles": [
+      "Adaptation", "Angels in America", "August: Osage County",
+      "Big Little Lies",
+      "Doubt",
+      "Florence Foster Jenkins",
+      "Heartburn",
+      "Into the Woods",
+      "Kramer vs. Kramer",
+      "Mamma Mia!", "Mamma Mia! Here We Go Again",
+      "Only Murders in the Building",
+      "Out of Africa",
+      "Ricki and the Flash",
+      "Sophie's Choice",
+      "The Deer Hunter", "The Iron Lady", "The Laundromat", "The Post", "The Prom"
+    ]
+  },
+  {
+    "id": "jessie-buckley",
+    "name": "Jessie Buckley",
+    "titles": [
+      "Chernobyl",
+      "I'm Thinking of Ending Things",
+      "Men",
+      "The Lost Daughter",
+      "War & Peace",
+      "Wild Rose",
+      "Women Talking"
+    ]
+  },
+  {
+    "id": "michelle-yeoh",
+    "name": "Michelle Yeoh",
+    "titles": [
+      "Crazy Rich Asians",
+      "Crouching Tiger Hidden Dragon",
+      "Everything Everywhere All at Once",
+      "Gunpowder Milkshake",
+      "Heroic Trio",
+      "Memoirs of a Geisha",
+      "Star Wars: Skeleton Crew",
+      "The One",
+      "The Witcher: Blood Origin",
+      "Tomorrow Never Dies",
+      "Yes Madam"
+    ]
+  },
+  {
+    "id": "emma-watson",
+    "name": "Emma Watson",
+    "titles": [
+      "Beauty and the Beast",
+      "Colonia",
+      "Harry Potter and the Chamber of Secrets",
+      "Harry Potter and the Deathly Hallows: Part 1", "Harry Potter and the Deathly Hallows: Part 2",
+      "Harry Potter and the Goblet of Fire",
+      "Harry Potter and the Half-Blood Prince",
+      "Harry Potter and the Order of the Phoenix",
+      "Harry Potter and the Philosopher's Stone",
+      "Harry Potter and the Prisoner of Azkaban",
+      "Noah",
+      "Regression",
+      "The Bling Ring", "The Circle",
+      "The Perks of Being a Wallflower",
+      "This Is the End"
+    ]
+  },
+  {
+    "id": "jeremy-allen-white",
+    "name": "Jeremy Allen White",
+    "titles": [
+      "Bones and All",
+      "Fugitive Dreams",
+      "Shameless",
+      "The Bear", "The Bikeriders", "The Rental"
+    ]
+  },
+  {
+    "id": "jennifer-lawrence",
+    "name": "Jennifer Lawrence",
+    "titles": [
+      "American Hustle",
+      "Causeway",
+      "Don't Look Up",
+      "Joy",
+      "Mother!",
+      "No Hard Feelings",
+      "Passengers",
+      "Red Sparrow", "Serena", "Silver Linings Playbook",
+      "The Hunger Games", "The Hunger Games: Catching Fire",
+      "The Hunger Games: Mockingjay Part 1", "The Hunger Games: Mockingjay Part 2",
+      "X-Men: Apocalypse", "X-Men: Days of Future Past", "X-Men: First Class"
+    ]
+  },
+  {
+    "id": "jennifer-aniston",
+    "name": "Jennifer Aniston",
+    "titles": [
+      "Along Came Polly",
+      "Bruce Almighty",
+      "Cake",
+      "Dumplin'",
+      "Friends",
+      "Horrible Bosses", "Horrible Bosses 2",
+      "Just Go with It",
+      "Leprechaun",
+      "Management", "Marley & Me",
+      "Murder Mystery", "Murder Mystery 2",
+      "Office Space",
+      "The Break-Up", "The Morning Show",
+      "We're the Millers"
+    ]
+  },
+  {
+    "id": "adam-sandler",
+    "name": "Adam Sandler",
+    "titles": [
+      "Big Daddy", "Billy Madison",
+      "Click",
+      "Funny People",
+      "Happy Gilmore", "Hotel Transylvania", "Hubie Halloween", "Hustle",
+      "Just Go with It",
+      "Murder Mystery", "Murder Mystery 2",
+      "Punch-Drunk Love",
+      "The Do-Over", "The Waterboy", "The Wedding Singer",
+      "Uncut Gems",
+      "You Don't Mess with the Zohan"
+    ]
+  },
+  {
+    "id": "mark-wahlberg",
+    "name": "Mark Wahlberg",
+    "titles": [
+      "Boogie Nights",
+      "Contraband",
+      "Daddy's Home", "Daddy's Home 2",
+      "Father Stu",
+      "Lone Survivor",
+      "Pain & Gain",
+      "Spenser Confidential",
+      "Ted", "Ted 2", "The Departed", "The Fighter", "The Gambler", "The Italian Job", "The Lovely Bones",
+      "Three Kings",
+      "Transformers: Age of Extinction", "Transformers: The Last Knight",
+      "Uncharted"
+    ]
+  },
+  {
+    "id": "ryan-reynolds",
+    "name": "Ryan Reynolds",
+    "titles": [
+      "6 Underground",
+      "Blade: Trinity",
+      "Deadpool", "Deadpool 2", "Deadpool & Wolverine",
+      "Definitely Maybe", "Detective Pikachu",
+      "Free Guy", "Green Lantern",
+      "Just Friends",
+      "Red Notice", "R.I.P.D.",
+      "The Adam Project", "The Change-Up", "The Hitman's Bodyguard", "The Proposal",
+      "Hitman's Wife's Bodyguard",
+      "Welcome to Wrexham"
+    ]
+  },
+  {
+    "id": "cameron-diaz",
+    "name": "Cameron Diaz",
+    "titles": [
+      "Any Given Sunday",
+      "Back in Action", "Bad Teacher", "Being John Malkovich",
+      "Charlie's Angels", "Charlie's Angels: Full Throttle",
+      "Gangs of New York",
+      "In Her Shoes",
+      "Knight and Day",
+      "Shrek", "Shrek 2", "Shrek the Third", "Shrek Forever After",
+      "The Holiday", "The Mask", "The Other Woman", "There's Something About Mary",
+      "Vanilla Sky",
+      "What Happens in Vegas"
+    ]
+  },
+  {
+    "id": "megan-fox",
+    "name": "Megan Fox",
+    "titles": [
+      "Confessions of a Teenage Drama Queen",
+      "Good Mourning",
+      "Jennifer's Body",
+      "Midnight in the Switchgrass",
+      "Passion Play",
+      "Teenage Mutant Ninja Turtles", "Teenage Mutant Ninja Turtles: Out of the Shadows",
+      "The Expendables 4",
+      "Till Death",
+      "Transformers", "Transformers: Revenge of the Fallen"
+    ]
+  },
+  {
+    "id": "natalie-portman",
+    "name": "Natalie Portman",
+    "titles": [
+      "Annihilation",
+      "Black Swan",
+      "Closer",
+      "Garden State",
+      "Jackie",
+      "Leon: The Professional",
+      "May December",
+      "No Strings Attached",
+      "Star Wars: Episode I – The Phantom Menace",
+      "Star Wars: Episode II – Attack of the Clones",
+      "Star Wars: Episode III – Revenge of the Sith",
+      "Thor", "Thor: The Dark World", "Thor: Love and Thunder",
+      "V for Vendetta",
+      "Vox Lux",
+      "Your Highness"
+    ]
+  },
+  {
+    "id": "cate-blanchett",
+    "name": "Cate Blanchett",
+    "titles": [
+      "Babel", "Blue Jasmine",
+      "Carol", "Cinderella",
+      "Don't Look Up",
+      "Elizabeth", "Elizabeth: The Golden Age",
+      "Indiana Jones and the Kingdom of the Crystal Skull",
+      "Nightmare Alley", "Notes on a Scandal",
+      "Tár",
+      "The Aviator",
+      "The Hobbit: An Unexpected Journey", "The Hobbit: The Battle of Five Armies",
+      "The Lord of the Rings: The Fellowship of the Ring",
+      "The Lord of the Rings: The Return of the King",
+      "The Lord of the Rings: The Two Towers",
+      "Thor: Ragnarok",
+      "Where'd You Go Bernadette"
+    ]
+  },
+  {
+    "id": "nicole-kidman",
+    "name": "Nicole Kidman",
+    "titles": [
+      "Aquaman",
+      "Australia",
+      "Babygirl", "Batman Forever", "Being the Ricardos", "Big Little Lies", "Birth",
+      "Cold Mountain",
+      "Dogville",
+      "Eyes Wide Shut",
+      "Far and Away",
+      "Grace of Monaco",
+      "Lion", "Moulin Rouge!",
+      "Nine", "Nine Perfect Strangers",
+      "Rabbit Hole",
+      "The Hours", "The Paperboy", "The Undoing"
+    ]
+  },
+  {
+    "id": "keira-knightley",
+    "name": "Keira Knightley",
+    "titles": [
+      "Atonement",
+      "Begin Again", "Bend It Like Beckham", "Boston Strangler",
+      "Colette",
+      "Jack Ryan: Shadow Recruit",
+      "Love Actually",
+      "Misbehaviour",
+      "Never Let Me Go",
+      "Pirates of the Caribbean: At World's End",
+      "Pirates of the Caribbean: Dead Man's Chest",
+      "Pirates of the Caribbean: The Curse of the Black Pearl",
+      "Pride & Prejudice",
+      "Silk",
+      "The Imitation Game"
+    ]
+  },
+  {
+    "id": "kate-winslet",
+    "name": "Kate Winslet",
+    "titles": [
+      "Ammonite",
+      "Carnage", "Contagion",
+      "Divergent",
+      "Eternal Sunshine of the Spotless Mind",
+      "Finding Neverland",
+      "Heavenly Creatures",
+      "Lee", "Little Children",
+      "Mare of Easttown",
+      "Revolutionary Road",
+      "Steve Jobs",
+      "The Dressmaker", "The Holiday", "The Mountain Between Us", "The Reader",
+      "Titanic"
+    ]
+  },
+  {
+    "id": "cillian-murphy",
+    "name": "Cillian Murphy",
+    "titles": [
+      "28 Days Later",
+      "Anthropoid",
+      "Batman Begins", "Breakfast on Pluto",
+      "Dunkirk",
+      "Free Fire",
+      "Inception", "Intermission",
+      "Oppenheimer",
+      "Peaky Blinders",
+      "Red Eye",
+      "Small Things Like These", "Sunshine",
+      "The Dark Knight", "The Dark Knight Rises", "The Edge of Love", "The Wind That Shakes the Barley"
+    ]
+  },
+  {
+    "id": "dwayne-johnson",
+    "name": "Dwayne Johnson",
+    "titles": [
+      "Ballers", "Baywatch", "Be Cool", "Black Adam",
+      "Central Intelligence",
+      "DC League of Super-Pets",
+      "Fast & Furious 6", "Fast Five", "Fast X", "Faster", "Furious 7",
+      "G.I. Joe: Retaliation",
+      "Hercules", "Hobbs & Shaw",
+      "Journey 2: The Mysterious Island",
+      "Jumanji: Welcome to the Jungle", "Jumanji: The Next Level",
+      "Moana", "Moana 2",
+      "Pain & Gain",
+      "Race to Witch Mountain", "Rampage", "Red Notice",
+      "San Andreas", "Skyscraper",
+      "The Game Plan", "The Other Guys", "The Rundown", "The Scorpion King",
+      "Tooth Fairy",
+      "Walking Tall",
+      "Young Rock"
     ]
   }
 ]
