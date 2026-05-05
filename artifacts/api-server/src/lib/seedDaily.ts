@@ -23,7 +23,7 @@ const STALE_CROSSWORD_IDS = [
   "crossword-2025-05-02",
   "crossword-2026-05-02",
   "crossword-2026-05-03",
-  "crossword-2026-05-03-v2",
+  "crossword-2026-05-04",
 ];
 
 /**
