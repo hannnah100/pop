@@ -24,9 +24,9 @@ const STALE_CROSSWORD_IDS = [
   "crossword-2026-05-02",
   "crossword-2026-05-03",
   "crossword-2026-05-04",
-  "crossword-2026-05-05",
-  "crossword-2026-05-06",
-  "crossword-2026-05-15",
+  // crossword-2026-05-05 is the pinned "good" puzzle — intentionally kept
+  "crossword-2026-05-06",  // formatting issues — purge and do not re-seed
+  "crossword-2026-05-15",  // formatting issues — purge and do not re-seed
 ];
 
 /**
