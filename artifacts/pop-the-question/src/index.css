@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Anton&family=Caveat:wght@400;600;700&family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Caveat:wght@400;600;700&family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Oxanium:wght@400;600;700;800&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
 @plugin "@tailwindcss/typography";
@@ -52,19 +52,9 @@
   --font-display:     var(--app-font-display);
   --font-fun:         var(--app-font-fun);
   --font-handwriting: var(--app-font-handwriting);
-
-  --radius-sm: calc(var(--radius) - 2px);
-  --radius-md: var(--radius);
-  --radius-lg: calc(var(--radius) + 2px);
-  --radius-xl: calc(var(--radius) + 4px);
 }
 
 :root {
-  /* ======================================================
-   * Pop: The Question — Bold Y2K / Nickelodeon Design System
-   * Cream background, thick black borders, loud bright palette.
-   * ====================================================== */
-
   --y2k-pink:   #FF1493;
   --y2k-orange: #FF6B35;
   --y2k-yellow: #FFD700;
@@ -81,12 +71,10 @@
   --elevate-1: rgba(0,0,0,0.06);
   --elevate-2: rgba(0,0,0,0.10);
 
-  /* Cream background */
   --background: 43 100% 95%;
   --foreground: 0 0% 0%;
   --border: 0 0% 0%;
 
-  /* White cards with solid black borders */
   --card: 0 0% 100%;
   --card-foreground: 0 0% 0%;
   --card-border: 0 0% 0%;
@@ -95,27 +83,21 @@
   --popover-foreground: 0 0% 0%;
   --popover-border: 0 0% 0%;
 
-  /* Primary: hot pink */
   --primary: 328 100% 54%;
   --primary-foreground: 0 0% 0%;
 
-  /* Secondary: lime green */
   --secondary: 145 100% 39%;
   --secondary-foreground: 0 0% 0%;
 
-  /* Muted: light cream/tan */
   --muted: 43 50% 85%;
   --muted-foreground: 0 0% 30%;
 
-  /* Accent: electric orange */
   --accent: 15 100% 60%;
   --accent-foreground: 0 0% 0%;
 
-  /* Destructive: bright red */
   --destructive: 0 100% 50%;
   --destructive-foreground: 0 0% 100%;
 
-  /* Brand palette tokens */
   --success: 145 100% 39%;
   --warm:    0 100% 70%;
   --gold:    51 100% 50%;
@@ -125,29 +107,26 @@
   --input: 0 0% 100%;
   --ring:  328 100% 54%;
 
-  /* Y2K type stack — Anton (display), Inter (body) */
   --app-font-sans:        'Inter', system-ui, -apple-system, sans-serif;
   --app-font-display:     'Anton', 'Inter', system-ui, sans-serif;
   --app-font-fun:         'Anton', 'Inter', system-ui, sans-serif;
   --app-font-serif:       Georgia, serif;
   --app-font-mono:        'Anton', ui-monospace, Menlo, monospace;
   --app-font-handwriting: 'Caveat', cursive;
+  --app-font-question-pop: 'Space Mono', ui-monospace, Menlo, monospace;
+  --app-font-question-pq: 'Oxanium', 'Inter', system-ui, sans-serif;
 
-  /* Nearly-sharp corners */
   --radius: 0.25rem;
 
-  /* Bold offset drop shadows — no glow, no blur */
   --shadow-bold:    4px 4px 0 #000;
   --shadow-bold-lg: 6px 6px 0 #000;
   --shadow-soft:    4px 4px 0 #000;
 
-  /* Stub glow vars to prevent reference errors */
   --shadow-glow-primary:   none;
   --shadow-glow-accent:    none;
   --shadow-glow-secondary: none;
   --shadow-glow-gold:      none;
 
-  /* Rainbow gradient — kept for room-code letter coloring */
   --rainbow-gradient: linear-gradient(135deg, #FF1493 0%, #FF6B35 50%, #FFD700 100%);
   --rainbow-gradient-full: linear-gradient(135deg, #FF1493 0%, #FF6B35 25%, #FFD700 50%, #00C853 75%, #00E5FF 100%);
 }
@@ -182,12 +161,13 @@
 }
 
 @layer utilities {
-  .font-fun         { font-family: var(--app-font-fun); }
-  .font-display     { font-family: var(--app-font-display); }
-  .font-sans        { font-family: var(--app-font-sans); }
+  .font-fun { font-family: var(--app-font-fun); }
+  .font-display { font-family: var(--app-font-display); }
+  .font-sans { font-family: var(--app-font-sans); }
   .font-handwriting { font-family: var(--app-font-handwriting); }
+  .font-question-pop { font-family: var(--app-font-question-pop); }
+  .font-question-pq { font-family: var(--app-font-question-pq); }
 
-  /* Comic-book sticker headline — white fill + black stroke */
   .comic-headline {
     color: #fff;
     -webkit-text-stroke: 3px #000;
@@ -199,7 +179,6 @@
     text-stroke: inherit;
     paint-order: inherit;
   }
-  /* Balloon / bubble letter fill — overrides comic-headline span defaults */
   .comic-headline .bubble-letter {
     display: inline-block;
     background: linear-gradient(to bottom, #ffffff 0%, #f0eee8 100%);
@@ -211,17 +190,14 @@
     paint-order: stroke fill;
   }
 
-  /* Y2K bold border + shadow utilities */
-  .thick-border  { border: 3px solid #000; }
-  .bold-shadow   { box-shadow: var(--shadow-bold); }
+  .thick-border { border: 3px solid #000; }
+  .bold-shadow { box-shadow: var(--shadow-bold); }
   .bold-shadow-lg { box-shadow: var(--shadow-bold-lg); }
 
-  /* Halftone polka-dot texture */
   .halftone-bg {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20'%3E%3Ccircle cx='10' cy='10' r='1.5' fill='%23000' fill-opacity='0.1'/%3E%3C/svg%3E");
   }
 
-  /* Diagonal stripe texture */
   .stripe-bg {
     background-image: repeating-linear-gradient(
       -45deg,
@@ -232,7 +208,6 @@
     );
   }
 
-  /* Rainbow text — for room codes / logo moments */
   .gradient-text-warm {
     background-image: var(--rainbow-gradient-full);
     -webkit-background-clip: text;
@@ -240,11 +215,9 @@
     color: transparent;
   }
 
-  /* Rainbow backgrounds */
   .bg-rainbow-warm { background-image: var(--rainbow-gradient); }
   .bg-rainbow-full { background-image: var(--rainbow-gradient-full); }
 
-  /* Section heading underline dividers */
   .heading-divider {
     height: 4px;
     width: 64px;
@@ -252,28 +225,25 @@
     margin-top: 0.5rem;
     background: #000;
   }
-  .heading-divider--orange  { background: hsl(var(--accent)); }
-  .heading-divider--pink    { background: hsl(var(--pink)); }
-  .heading-divider--gold    { background: hsl(var(--gold)); }
-  .heading-divider--green   { background: hsl(var(--success)); }
+  .heading-divider--orange { background: hsl(var(--accent)); }
+  .heading-divider--pink { background: hsl(var(--pink)); }
+  .heading-divider--gold { background: hsl(var(--gold)); }
+  .heading-divider--green { background: hsl(var(--success)); }
   .heading-divider--magenta { background: hsl(var(--magenta)); }
 
-  /* Glow stubs — no-ops (kept for backwards compat with game/host.tsx refs) */
-  .glow-primary   { box-shadow: none; }
-  .glow-accent    { box-shadow: none; }
+  .glow-primary { box-shadow: none; }
+  .glow-accent { box-shadow: none; }
   .glow-secondary { box-shadow: none; }
-  .glow-gold      { box-shadow: none; }
+  .glow-gold { box-shadow: none; }
 
-  .text-glow-primary   { text-shadow: none; }
-  .text-glow-accent    { text-shadow: none; }
+  .text-glow-primary { text-shadow: none; }
+  .text-glow-accent { text-shadow: none; }
   .text-glow-secondary { text-shadow: none; }
-  .text-glow-gold      { text-shadow: none; }
+  .text-glow-gold { text-shadow: none; }
 
-  /* Elevation → bold offset shadow */
-  .surface-elevated  { box-shadow: var(--shadow-bold); }
+  .surface-elevated { box-shadow: var(--shadow-bold); }
   .surface-card-glow { box-shadow: var(--shadow-bold); }
 
-  /* Shimmer loading skeleton (updated for light theme) */
   .shimmer-bg {
     background: linear-gradient(
       90deg,
@@ -285,11 +255,9 @@
     animation: ptq-shimmer 1.6s ease-in-out infinite;
   }
 
-  /* Grid overlay (kept as no-op for compat) */
   .grid-overlay { background-image: none; }
   .grain-overlay { background-image: none; }
 
-  /* Ring rainbow → solid black border (no gradient) */
   .ring-rainbow {
     position: relative;
     isolation: isolate;
@@ -297,7 +265,6 @@
   }
   .ring-rainbow::before { display: none; }
 
-  /* hover-elevate utility */
   .hover-elevate {
     transition: transform 75ms;
   }
@@ -307,18 +274,18 @@
 }
 
 @keyframes ptq-shimmer {
-  0%   { background-position: 200% 0; }
+  0% { background-position: 200% 0; }
   100% { background-position: -200% 0; }
 }
 
 @keyframes ptq-blink-caret {
-  0%, 49%   { opacity: 1; }
+  0%, 49% { opacity: 1; }
   50%, 100% { opacity: 0; }
 }
 
 @keyframes ptq-shimmer-sweep {
-  0%   { transform: translateX(-120%) skewX(-20deg); }
-  100% { transform: translateX(220%)  skewX(-20deg); }
+  0% { transform: translateX(-120%) skewX(-20deg); }
+  100% { transform: translateX(220%) skewX(-20deg); }
 }
 
 .shimmer-sweep {
@@ -346,31 +313,17 @@
   animation: ptq-blink-caret 1s step-end infinite;
 }
 
-/* BubbleLogo entrance — elastic pop-in per letter */
 @keyframes ptq-bubble-pop-in {
-  0% {
-    opacity: 0;
-    transform: translateY(-18px) scale(0.4);
-  }
-  55% {
-    opacity: 1;
-    transform: translateY(2px) scale(1.18);
-  }
-  72% {
-    transform: translateY(0) scale(0.94);
-  }
-  86% {
-    transform: translateY(-1px) scale(1.04);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
+  0% { opacity: 0; transform: translateY(-18px) scale(0.4); }
+  55% { opacity: 1; transform: translateY(2px) scale(1.18); }
+  72% { transform: translateY(0) scale(0.94); }
+  86% { transform: translateY(-1px) scale(1.04); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 @keyframes ptq-bubble-shine-in {
   0%, 60% { opacity: 0; }
-  100%    { opacity: 1; }
+  100% { opacity: 1; }
 }
 
 .bubble-logo-letter {
@@ -394,11 +347,10 @@
   }
 }
 
-/* Stub blob animations (no-ops — kept for compat) */
 .animate-blob-a { animation: none; }
 .animate-blob-b { animation: none; }
 .animate-blob-c { animation: none; }
-.animate-pulse-glow   { animation: none; }
+.animate-pulse-glow { animation: none; }
 .animate-pulse-accent { animation: none; }
 .animate-fire { animation: none; }
 
@@ -413,10 +365,6 @@
     animation: none !important;
   }
 }
-
-/* ============================================================
- * Dual Host Mode (Task #5)
- * ============================================================ */
 
 .host-shell {
   --host-typo-scale: 1;
@@ -434,44 +382,33 @@
   padding-inline: clamp(24px, 3vw, 64px);
 }
 
-/* High-contrast palette (yellow-on-black) */
 .host-high-contrast {
   --background: 0 0% 0%;
   --foreground: 60 100% 96%;
   --border: 60 100% 70%;
-
   --card: 0 0% 4%;
   --card-foreground: 60 100% 96%;
   --card-border: 60 100% 70%;
-
   --popover: 0 0% 4%;
   --popover-foreground: 60 100% 96%;
-
   --muted: 0 0% 10%;
   --muted-foreground: 60 70% 88%;
-
   --primary: 60 100% 70%;
   --primary-foreground: 0 0% 0%;
-
   --secondary: 60 100% 70%;
   --secondary-foreground: 0 0% 0%;
-
   --accent: 30 100% 65%;
   --accent-foreground: 0 0% 0%;
-
   --destructive: 0 100% 65%;
   --destructive-foreground: 0 0% 0%;
-
   --success: 120 100% 60%;
   --warm: 60 100% 70%;
   --gold: 60 100% 70%;
   --magenta: 60 100% 70%;
   --pink: 60 100% 70%;
-
   --ring: 60 100% 70%;
 }
 
-/* Host controls bar — solid black, no blur */
 .host-controls-bar {
   position: fixed;
   inset-inline: 0;
@@ -496,7 +433,6 @@
   padding-bottom: 5rem;
 }
 
-/* Fullscreen hint */
 .host-fullscreen-hint {
   position: fixed;
   top: 1.5rem;
@@ -516,7 +452,6 @@
   text-transform: uppercase;
 }
 
-/* Player-side paused overlay — solid hot pink, no blur */
 body[data-game-paused="true"]::before {
   content: "";
   position: fixed;
