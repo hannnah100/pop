@@ -2103,7 +2103,7 @@ export default function GameHost() {
                           <span className="font-display font-black text-black uppercase text-sm">{a.playerName}</span>
                         </div>
                         <div className="flex items-center gap-3">
-                          <span className="font-sans text-sm text-black/70 italic">{a.answer}</span>
+                          <span className="font-handwriting font-bold text-sm text-black/70">{a.answer}</span>
                           {a.isDuplicate && <span className="text-xs font-sans text-black/50 border border-black/30 px-1">dup</span>}
                           <span className="font-display font-black text-sm" style={{ color: a.pointsEarned > 0 ? "#00C853" : "#FF1493" }}>
                             {a.pointsEarned > 0 ? "+1" : "0"}
@@ -2454,7 +2454,7 @@ export default function GameHost() {
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.95, y: -20 }}
                 transition={{ type: "spring", stiffness: 220, damping: 20 }}
-                className="font-handwriting text-5xl md:text-7xl lg:text-[6rem] mb-12 text-center text-black"
+                className="font-handwriting font-black text-5xl md:text-7xl lg:text-[6rem] mb-12 text-center text-black"
               >
                 {rrCurrentRevealName}
               </motion.h1>

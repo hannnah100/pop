@@ -2909,7 +2909,7 @@ export default function GamePlayer() {
               <div className="font-display font-black text-white text-5xl leading-none">{scatLetter}</div>
             </div>
             <div className="flex flex-col items-center">
-              <div className={`font-display font-black text-4xl ${secondsLeft <= 10 ? "text-[#FFD700] animate-pulse" : "text-white"}`} style={{ textShadow: "2px 2px 0 #000" }}>
+              <div className="font-display font-black text-4xl text-white" style={{ textShadow: "2px 2px 0 #000" }}>
                 {secondsLeft}s
               </div>
               <div className="w-24 h-2 bg-black/20 mt-1">
@@ -2924,7 +2924,7 @@ export default function GamePlayer() {
 
           {scatAlertActive && (
             <div className="bg-[#FFD700] border-b-[3px] border-black px-4 py-2 text-center">
-              <p className="font-display font-black text-black text-sm uppercase tracking-widest animate-pulse">⚡ 10 seconds left!</p>
+              <p className="font-display font-black text-black text-sm uppercase tracking-widest">⚡ 10 seconds left!</p>
             </div>
           )}
 
@@ -2964,7 +2964,7 @@ export default function GamePlayer() {
                           }
                         }}
                         placeholder={`Something starting with ${scatLetter}…`}
-                        className="flex-1 px-3 py-3 font-sans text-base bg-transparent border-none outline-none placeholder:text-black/30"
+                        className="flex-1 px-3 py-3 font-handwriting text-base bg-transparent border-none outline-none placeholder:text-black/30"
                         data-testid={`input-scat-${cat.id}`}
                         autoCapitalize="words"
                         inputMode="text"
@@ -2998,7 +2998,7 @@ export default function GamePlayer() {
                   {scatCategories.map((cat) => (
                     <div key={cat.id} className="flex items-center justify-between px-3 py-2 bg-white border-[2px] border-black">
                       <span className="font-display font-black text-black text-xs uppercase">{cat.name}</span>
-                      <span className="font-sans text-sm text-black/60 italic">{scatAnswers[cat.id] || "—"}</span>
+                      <span className="font-handwriting font-bold text-sm text-black/60">{scatAnswers[cat.id] || "—"}</span>
                     </div>
                   ))}
                 </div>
@@ -3049,7 +3049,7 @@ export default function GamePlayer() {
                         {a.isDuplicate && <span className="text-xs font-sans text-black/40 border border-black/20 px-1">dup</span>}
                       </div>
                       <div className="flex items-center gap-2">
-                        <span className="font-sans text-sm text-black/60 italic">{a.answer}</span>
+                        <span className="font-handwriting font-bold text-sm text-black/60">{a.answer}</span>
                         <span className="font-display font-black text-sm" style={{ color: a.pointsEarned > 0 ? "#00C853" : "#FF1493" }}>
                           {a.pointsEarned > 0 ? "+1" : "0"}
                         </span>
