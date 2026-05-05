@@ -1395,7 +1395,7 @@ export default function GamePlayer() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.2 }}
-              className="font-question-pop font-bold text-white text-xl leading-tight"
+              className="font-question-pq font-bold text-white text-xl leading-tight"
               style={{ textShadow: "2px 2px 0 #000" }}
             >
               {q?.prompt || "Loading…"}

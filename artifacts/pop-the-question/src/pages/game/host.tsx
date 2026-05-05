@@ -1492,7 +1492,7 @@ export default function GameHost() {
           return (
             <div
               key={p.id}
-              className={`w-5 h-5 border-[2px] border-black shadow-[2px_2px_0_#000] transition-colors duration-300 ${
+              className={`w-5 h-5 border-[2px] border-black shadow-[2px_2px_0_#000] ${
                 state === "answered"
                   ? "bg-[#00C853]"
                   : "bg-white"
@@ -2279,7 +2279,7 @@ export default function GameHost() {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -50, scale: 0.95 }}
               transition={{ type: "spring", stiffness: 180, damping: 22 }}
-              className="font-question-pop font-black text-5xl md:text-[4.5rem] leading-tight text-center mb-12 text-black"
+              className="font-question-pq font-black text-5xl md:text-[4.5rem] leading-tight text-center mb-12 text-black"
             >
               {currentQuestion || "Loading question..."}
             </motion.h2>
