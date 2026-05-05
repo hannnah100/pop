@@ -471,7 +471,7 @@ export default function PopBox() {
                 : "bg-[#00E5FF]"
             }`}
           >
-            <span className="font-display font-black text-xs sm:text-sm leading-tight uppercase tracking-wide text-black">
+            <span className="font-display font-black text-sm sm:text-base md:text-lg leading-none uppercase tracking-widest text-black">
               {cat.label}
             </span>
           </div>
@@ -513,7 +513,7 @@ export default function PopBox() {
                 className="flex flex-col gap-2 bg-[#FFF8E7] border-[3px] border-black shadow-[4px_4px_0_#000] p-3"
               >
                 <div className="flex items-center justify-between">
-                  <span className="font-display font-black uppercase text-base sm:text-xl tracking-wider text-black/70">
+                  <span className="font-display font-black uppercase text-sm sm:text-lg md:text-xl tracking-widest text-black/70">
                     {grid.mode === "artist-alphabet" || grid.mode === "actor-alphabet" ? (
                       <>
                         <span className="text-black">
