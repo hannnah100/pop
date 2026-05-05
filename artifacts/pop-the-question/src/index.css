@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Caveat:wght@400;600;700&family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
 @plugin "@tailwindcss/typography";
@@ -46,11 +46,12 @@
   --color-magenta: hsl(var(--magenta));
   --color-pink: hsl(var(--pink));
 
-  --font-sans: var(--app-font-sans);
-  --font-serif: var(--app-font-serif);
-  --font-mono: var(--app-font-mono);
-  --font-display: var(--app-font-display);
-  --font-fun: var(--app-font-fun);
+  --font-sans:        var(--app-font-sans);
+  --font-serif:       var(--app-font-serif);
+  --font-mono:        var(--app-font-mono);
+  --font-display:     var(--app-font-display);
+  --font-fun:         var(--app-font-fun);
+  --font-handwriting: var(--app-font-handwriting);
 
   --radius-sm: calc(var(--radius) - 2px);
   --radius-md: var(--radius);
@@ -125,11 +126,12 @@
   --ring:  328 100% 54%;
 
   /* Y2K type stack — Anton (display), Inter (body) */
-  --app-font-sans:    'Inter', system-ui, -apple-system, sans-serif;
-  --app-font-display: 'Anton', 'Inter', system-ui, sans-serif;
-  --app-font-fun:     'Anton', 'Inter', system-ui, sans-serif;
-  --app-font-serif:   Georgia, serif;
-  --app-font-mono:    'Anton', ui-monospace, Menlo, monospace;
+  --app-font-sans:        'Inter', system-ui, -apple-system, sans-serif;
+  --app-font-display:     'Anton', 'Inter', system-ui, sans-serif;
+  --app-font-fun:         'Anton', 'Inter', system-ui, sans-serif;
+  --app-font-serif:       Georgia, serif;
+  --app-font-mono:        'Anton', ui-monospace, Menlo, monospace;
+  --app-font-handwriting: 'Caveat', cursive;
 
   /* Nearly-sharp corners */
   --radius: 0.25rem;
@@ -180,9 +182,10 @@
 }
 
 @layer utilities {
-  .font-fun     { font-family: var(--app-font-fun); }
-  .font-display { font-family: var(--app-font-display); }
-  .font-sans    { font-family: var(--app-font-sans); }
+  .font-fun         { font-family: var(--app-font-fun); }
+  .font-display     { font-family: var(--app-font-display); }
+  .font-sans        { font-family: var(--app-font-sans); }
+  .font-handwriting { font-family: var(--app-font-handwriting); }
 
   /* Comic-book sticker headline — white fill + black stroke */
   .comic-headline {

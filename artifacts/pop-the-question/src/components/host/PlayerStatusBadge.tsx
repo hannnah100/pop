@@ -66,8 +66,8 @@ function TypingDots({ className }: { className?: string }) {
         <motion.span
           key={i}
           className="w-1 h-1 rounded-full bg-current"
-          animate={{ opacity: [0.3, 1, 0.3] }}
-          transition={{ duration: 1.2, repeat: Infinity, delay: i * 0.2, ease: "easeInOut" }}
+          animate={{ opacity: [0.55, 1, 0.55] }}
+          transition={{ duration: 1.6, repeat: Infinity, delay: i * 0.25, ease: "easeInOut" }}
         />
       ))}
     </span>

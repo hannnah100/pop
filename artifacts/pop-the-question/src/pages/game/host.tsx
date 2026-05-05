@@ -426,6 +426,7 @@ export default function GameHost() {
   const [wofIsFreePlay, setWofIsFreePlay] = useState(false);
   const [wofPendingSolve, setWofPendingSolve] = useState<{ solverId: string | null; solverName: string; answer: string; isVerbal?: boolean } | null>(null);
   const wofSpinTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [wofShowWheel, setWofShowWheel] = useState(false);
 
   // Scattergories state
   const [scatPhase, setScatPhase] = useState<"round" | "results" | "ended" | null>(null);
@@ -448,6 +449,8 @@ export default function GameHost() {
   const finishedRef = useRef(false);
   const notificationsRef = useRef<HostNotificationsHandle | null>(null);
   const knownPlayerIds = useRef<Set<string>>(new Set());
+  const playersRef = useRef<Player[]>([]);
+  playersRef.current = players;
 
   // Force-recompute Away status on a 5s tick (status derived from lastActivity).
   useEffect(() => {
@@ -678,6 +681,7 @@ export default function GameHost() {
       setJClueRevealedAnswer(null);
       setJLastResolved(null);
       setJTimerEndAt(0);
+      setSubmittedPlayers(new Set());
       playWhoosh();
     });
 
@@ -686,6 +690,7 @@ export default function GameHost() {
       setJBuzzedInId(null);
       setJBuzzedInName("");
       setJTimerEndAt(payload.timerEndAt);
+      setSubmittedPlayers(new Set());
     });
 
     newSocket.on("jeopardy-buzzed", (payload: {
@@ -697,6 +702,7 @@ export default function GameHost() {
       setJBuzzedInId(payload.playerId);
       setJBuzzedInName(payload.playerName);
       setJTimerEndAt(payload.timerEndAt);
+      setSubmittedPlayers(new Set([payload.playerId]));
       playWhoosh();
     });
 
@@ -717,6 +723,7 @@ export default function GameHost() {
         delta: payload.delta,
         isDailyDouble: payload.isDailyDouble,
       });
+      setSubmittedPlayers(new Set());
       if (payload.correct) {
         playCorrect();
         fireConfetti("gold", { particleCount: 60, spread: 80, origin: { y: 0.6 } });
@@ -1111,6 +1118,8 @@ export default function GameHost() {
         variant: "info",
         duration: 3000,
       });
+      const solver = playersRef.current.find((p) => p.name === payload.solverName);
+      if (solver) setSubmittedPlayers(new Set([solver.id]));
     });
 
     newSocket.on("wof-letter-result", (payload: {
@@ -1357,6 +1366,7 @@ export default function GameHost() {
 
   // Wheel of Fortune: handlers
   const handleWofSpin = () => {
+    setWofShowWheel(true);
     setWofSpinning(true);
     setWofSpinIndex(null);
     socket?.emit("wof-spin", { roomCode });
@@ -1374,6 +1384,15 @@ export default function GameHost() {
     setWofPendingSolve(null);
     socket?.emit("wof-judge", { roomCode, correct });
   };
+
+  // Auto-return to board view after wheel spin + overlay (2500ms overlay + 200ms buffer)
+  useEffect(() => {
+    if (!wofSpinning && wofShowWheel) {
+      const t = setTimeout(() => setWofShowWheel(false), 2700);
+      return () => clearTimeout(t);
+    }
+    return undefined;
+  }, [wofSpinning, wofShowWheel]);
 
   // Scattergories handlers
   const handleScatSetConfig = (roundCount: number, difficulty: ScatDifficulty) => {
@@ -1631,7 +1650,7 @@ export default function GameHost() {
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ type: "spring", stiffness: 180, damping: 26 }}
-          className="font-display font-black text-[8rem] sm:text-[10rem] md:text-[12rem] tracking-[0.18em] leading-none mb-4 comic-headline"
+          className="font-display font-black text-[8rem] sm:text-[10rem] md:text-[12rem] tracking-[0.18em] leading-none mb-4 text-black"
         >
           {roomCode}
         </motion.h1>
@@ -2155,7 +2174,7 @@ export default function GameHost() {
       <div className="flex-1 flex flex-col items-center justify-center relative overflow-hidden bg-[#FFF8E7]">
         {isDemo && (<div className="absolute top-6 right-6"><DemoBadge /></div>)}
         <Trophy className="w-24 h-24 text-[#FFD700] mb-4" style={{ filter: "drop-shadow(4px 4px 0 #000)" }} />
-        <h1 className="font-display font-black text-4xl md:text-6xl uppercase text-center mb-2 comic-headline">
+        <h1 className="font-display font-black text-4xl md:text-6xl uppercase text-center mb-2 text-black">
           FINAL STANDINGS
         </h1>
         <div className="h-1 w-24 bg-[#FFD700] border-y border-black mb-12" />
@@ -2266,7 +2285,7 @@ export default function GameHost() {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -50, scale: 0.95 }}
               transition={{ type: "spring", stiffness: 180, damping: 22 }}
-              className="font-display font-black text-5xl md:text-[4.5rem] leading-tight uppercase text-center mb-12 comic-headline"
+              className="font-display font-black text-5xl md:text-[4.5rem] leading-tight uppercase text-center mb-12 text-black"
             >
               {currentQuestion || "Loading question..."}
             </motion.h2>
@@ -2441,7 +2460,7 @@ export default function GameHost() {
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.95, y: -20 }}
                 transition={{ type: "spring", stiffness: 220, damping: 20 }}
-                className="font-display font-black text-5xl md:text-7xl lg:text-[6rem] uppercase mb-12 text-center comic-headline"
+                className="font-display font-black text-5xl md:text-7xl lg:text-[6rem] uppercase mb-12 text-center text-black"
               >
                 {rrCurrentRevealName}
               </motion.h1>
@@ -2469,7 +2488,7 @@ export default function GameHost() {
                           {question && (
                             <p className="text-black/50 mb-2 font-sans">{question.question}</p>
                           )}
-                          <p className="font-display font-black text-black text-3xl uppercase">{entry.answer}</p>
+                          <p className="font-handwriting text-black text-3xl leading-snug">{entry.answer}</p>
                         </div>
                       </div>
                     </motion.div>
@@ -2593,7 +2612,7 @@ export default function GameHost() {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -50, scale: 0.95 }}
               transition={{ type: "spring", stiffness: 180, damping: 22 }}
-              className="font-display font-black text-4xl md:text-6xl leading-tight uppercase text-center mb-10 comic-headline"
+              className="font-display font-black text-4xl md:text-6xl leading-tight uppercase text-center mb-10 text-black"
             >
               {pqQuestion.prompt}
             </motion.h2>
@@ -3072,6 +3091,7 @@ export default function GameHost() {
       return (
         <div className="flex-1 flex flex-col text-foreground relative overflow-hidden">
           <Header />
+          <PlayerStatusBar />
           <main className="flex-1 flex flex-col items-center justify-center max-w-5xl mx-auto w-full">
             <p className="text-lg md:text-xl uppercase font-bold text-muted-foreground tracking-widest mb-1">{jActive.category}</p>
             <p className={`text-4xl font-black font-display mb-6 ${valueColor(jActive.value)} drop-shadow-[0_0_12px_currentColor]`}>${jActive.value}</p>
@@ -3086,8 +3106,8 @@ export default function GameHost() {
             {jPhase === "buzzer-open" && (
               <div className="flex flex-col items-center gap-3">
                 <motion.div
-                  animate={{ scale: [1, 1.1, 1] }}
-                  transition={{ duration: 1, repeat: Infinity }}
+                  animate={{ scale: [1, 1.03, 1] }}
+                  transition={{ duration: 1.6, repeat: Infinity }}
                   className="flex items-center gap-3 px-8 py-4 rounded-full bg-success/20 border-2 border-success shadow-[0_0_30px_-6px_hsl(var(--success))]"
                 >
                   <Zap className="w-8 h-8 text-success" />
@@ -3487,7 +3507,6 @@ export default function GameHost() {
   const renderWof = () => {
     const controllerPlayer = players.find(p => p.id === wofControllerId);
     const controllerName = controllerPlayer?.name ?? "???";
-    const isMyTurn = false; // host always spectates — players act
 
     const VOWELS_SET = new Set(["A", "E", "I", "O", "U"]);
     const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
@@ -3499,6 +3518,52 @@ export default function GameHost() {
       if (v === "FREE_PLAY") return "FREE PLAY";
       return `$${(v as number).toLocaleString()}`;
     }
+
+    // ── WHEEL VIEW ─────────────────────────────────────────────────────────────
+    if (wofShowWheel) {
+      const wheelSize = Math.round(Math.min(
+        window.innerWidth * 0.72,
+        window.innerHeight - 220,
+        700,
+      ));
+      return (
+        <div className="flex-1 flex flex-col bg-black min-h-0">
+          <header className="flex justify-between items-center px-6 py-3 bg-[#B97AD7] border-b-[4px] border-black">
+            <div className="font-display font-black text-white text-xl uppercase tracking-widest">
+              ROOM: <span className="text-[#FFD700]">{roomCode}</span>
+            </div>
+            {isDemo && <DemoBadge />}
+            <motion.div
+              animate={{ opacity: [1, 0.5, 1] }}
+              transition={{ duration: 1.2, repeat: Infinity, ease: "easeInOut" }}
+              className="font-display font-black text-[#FFD700] text-xl uppercase tracking-widest"
+            >
+              🎡 SPINNING…
+            </motion.div>
+          </header>
+          <div className="flex-1 flex flex-col items-center justify-center gap-5 p-4">
+            <p className="font-display font-black text-white text-2xl uppercase tracking-widest drop-shadow-lg">
+              {controllerName} is spinning!
+            </p>
+            <WofWheel
+              spinning={wofSpinning}
+              spinIndex={wofSpinIndex}
+              value={wofSpinning ? null : wofLastSpin}
+              spinnerName={controllerName}
+              size={wheelSize}
+            />
+          </div>
+        </div>
+      );
+    }
+
+    // ── BOARD VIEW ─────────────────────────────────────────────────────────────
+    const spinBadgeLabel = spinValueLabel(wofLastSpin);
+    const spinBadgeColor =
+      wofLastSpin === "BANKRUPT" ? "bg-black text-white" :
+      wofLastSpin === "LOSE_A_TURN" ? "bg-[#FF6B6B] text-black" :
+      wofLastSpin === "FREE_PLAY" ? "bg-[#00C853] text-white" :
+      wofLastSpin !== null ? "bg-[#FFD700] text-black" : "";
 
     return (
       <div className="flex-1 flex flex-col bg-[#FFF8E7] min-h-0">
@@ -3515,31 +3580,83 @@ export default function GameHost() {
         </header>
 
         <div className="flex-1 flex flex-col lg:flex-row gap-6 p-6 overflow-auto">
-          {/* Main area — board + wheel result */}
-          <div className="flex-1 flex flex-col items-center gap-4">
+          {/* Main area */}
+          <div className="flex-1 flex flex-col gap-4">
+
+            {/* Whose turn + current spin badge */}
+            <div className="flex items-center justify-between flex-wrap gap-3">
+              <div className="flex items-center gap-3">
+                <span className="font-display font-black text-xl uppercase">
+                  🎡 {controllerName}'s Turn
+                </span>
+                {wofPhase === "guessing" && !wofPendingSolve && !wofPuzzleOver && (
+                  <span className="font-display font-black text-xs uppercase tracking-widest text-black/50 bg-white border-[2px] border-black px-2 py-1">
+                    GUESS A LETTER
+                  </span>
+                )}
+                {wofPhase === "spinning" && !wofSpinning && !wofPendingSolve && !wofPuzzleOver && (
+                  <span className="font-display font-black text-xs uppercase tracking-widest text-black/50 bg-white border-[2px] border-black px-2 py-1">
+                    NEEDS TO SPIN
+                  </span>
+                )}
+              </div>
+              {wofLastSpin !== null && !wofPuzzleOver && (
+                <motion.div
+                  key={String(wofLastSpin)}
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  className={`font-display font-black text-lg uppercase px-4 py-2 border-[3px] border-black shadow-[3px_3px_0_#000] ${spinBadgeColor}`}
+                >
+                  Current Spin: {spinBadgeLabel}
+                </motion.div>
+              )}
+            </div>
+
             {/* Board */}
-            <div className="w-full max-w-3xl bg-black/5 border-[3px] border-black p-4 shadow-[4px_4px_0_#000]">
+            <div className="w-full bg-black/5 border-[3px] border-black p-4 shadow-[4px_4px_0_#000]">
               <WofBoard board={wofBoard} category={wofCategory} hint={wofHint ?? undefined} />
             </div>
 
-            {/* Animated WofWheel */}
-            <WofWheel
-              spinning={wofSpinning}
-              spinIndex={wofSpinIndex}
-              value={wofSpinning ? null : wofLastSpin}
-              spinnerName={controllerName}
-              size={460}
-            />
-
-            {/* Host SPIN button — active when controller needs to spin */}
+            {/* SPIN button — large and prominent */}
             {wofPhase === "spinning" && !wofSpinning && !wofPendingSolve && !wofPuzzleOver && (
               <Button
                 onClick={handleWofSpin}
-                className="w-full max-w-xs py-6 text-2xl font-display font-black uppercase bg-[#FFD700] hover:bg-[#FFD700]/90 text-black border-[4px] border-black shadow-[6px_6px_0_#000]"
+                className="w-full py-8 text-3xl font-display font-black uppercase bg-[#FFD700] hover:bg-[#FFD700]/90 text-black border-[4px] border-black shadow-[6px_6px_0_#000]"
                 data-testid="btn-wof-spin"
               >
                 🎡 SPIN
               </Button>
+            )}
+
+            {/* Letter keyboard — guessing phase */}
+            {wofPhase === "guessing" && !wofPendingSolve && !wofPuzzleOver && (
+              <div className="w-full">
+                <p className="font-display font-black text-xs uppercase tracking-widest text-black/40 mb-2">
+                  {wofIsFreePlay ? "🎉 FREE PLAY — Click Any Letter" : "Click Letter When Called"}
+                </p>
+                <div className="grid grid-cols-9 gap-1">
+                  {alphabet.map(l => {
+                    const used = wofGuessedLetters.includes(l);
+                    const isVowel = VOWELS_SET.has(l);
+                    const isDisabled = used || (!wofIsFreePlay && isVowel);
+                    return (
+                      <button
+                        key={l}
+                        onClick={() => !isDisabled && socket?.emit("wof-guess-letter", { roomCode, letter: l })}
+                        disabled={isDisabled}
+                        data-testid={`btn-host-wof-letter-${l}`}
+                        className={`h-12 flex items-center justify-center border-[2px] border-black font-display font-black text-sm
+                          ${used ? "bg-black text-white/30 cursor-not-allowed"
+                            : isDisabled ? "bg-black/10 text-black/30 cursor-not-allowed"
+                            : isVowel && wofIsFreePlay ? "bg-[#00C853] hover:bg-[#00C853]/80 text-white shadow-[2px_2px_0_#000] cursor-pointer"
+                            : "bg-white hover:bg-[#FFD700] text-black shadow-[2px_2px_0_#000] cursor-pointer"}`}
+                      >
+                        {l}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
             )}
 
             {/* Pending solve — host judge controls */}
@@ -3550,7 +3667,7 @@ export default function GameHost() {
                   initial={{ scale: 0.8, opacity: 0, y: -10 }}
                   animate={{ scale: 1, opacity: 1, y: 0 }}
                   exit={{ scale: 0.8, opacity: 0 }}
-                  className={`w-full max-w-md border-[4px] border-black shadow-[6px_6px_0_#000] p-5 flex flex-col gap-3 ${wofPendingSolve.isVerbal ? "bg-[#B97AD7]" : "bg-[#FF1493]"}`}
+                  className={`w-full border-[4px] border-black shadow-[6px_6px_0_#000] p-5 flex flex-col gap-3 ${wofPendingSolve.isVerbal ? "bg-[#B97AD7]" : "bg-[#FF1493]"}`}
                 >
                   <p className="font-display font-black text-white uppercase text-xl tracking-widest text-center">
                     {wofPendingSolve.isVerbal ? "🎤 Verbal Solve!" : "Solve Attempt!"}
@@ -3626,39 +3743,8 @@ export default function GameHost() {
               ) : null}
             </AnimatePresence>
 
-            {/* Host A-Z keyboard — active when in guessing phase and no pending solve */}
-            {wofPhase === "guessing" && !wofPendingSolve && !wofPuzzleOver && (
-              <div className="w-full max-w-2xl">
-                <p className="font-display font-black text-xs uppercase tracking-widest text-black/40 mb-2">
-                  {wofIsFreePlay ? "🎉 FREE PLAY — Click Any Letter" : "Click Letter When Called"}
-                </p>
-                <div className="grid grid-cols-9 gap-1">
-                  {alphabet.map(l => {
-                    const used = wofGuessedLetters.includes(l);
-                    const isVowel = VOWELS_SET.has(l);
-                    const isDisabled = used || (!wofIsFreePlay && isVowel);
-                    return (
-                      <button
-                        key={l}
-                        onClick={() => !isDisabled && socket?.emit("wof-guess-letter", { roomCode, letter: l })}
-                        disabled={isDisabled}
-                        data-testid={`btn-host-wof-letter-${l}`}
-                        className={`h-10 flex items-center justify-center border-[2px] border-black font-display font-black text-sm
-                          ${used ? "bg-black text-white/30 cursor-not-allowed"
-                            : isDisabled ? "bg-black/10 text-black/30 cursor-not-allowed"
-                            : isVowel && wofIsFreePlay ? "bg-[#00C853] hover:bg-[#00C853]/80 text-white shadow-[2px_2px_0_#000] cursor-pointer"
-                            : "bg-white hover:bg-[#FFD700] text-black shadow-[2px_2px_0_#000] cursor-pointer"}`}
-                      >
-                        {l}
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-            )}
-
             {/* Used letters tracker */}
-            <div className="w-full max-w-2xl">
+            <div className="w-full">
               <p className="font-display font-black text-xs uppercase tracking-widest text-black/40 mb-2">Used Letters</p>
               <div className="flex flex-wrap gap-1.5">
                 {alphabet.map(l => {
@@ -3678,6 +3764,7 @@ export default function GameHost() {
 
           {/* Scoreboard sidebar */}
           <div className="w-full lg:w-72 flex flex-col gap-4">
+            <PlayerStatusBar />
             <div className="bg-white border-[3px] border-black shadow-[4px_4px_0_#000] p-4">
               <h3 className="font-display font-black text-xl uppercase mb-4 border-b-[3px] border-black pb-2">Scores</h3>
               <div className="space-y-3">

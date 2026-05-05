@@ -1,0 +1,55 @@
+Remove player name labels and "thinking" flashing animations from all  
+  games.                                                                 
+                                                                         
+  ALL GAMES:                                                             
+  - Remove individual player name displays that show during gameplay     
+  - Remove the flashing "thinking..." animation when players are         
+  submitting answers                                                     
+  - Instead: show players as white/neutral state, then turn green when   
+  they've answered/submitted                                             
+  - Keep the leaderboard/scoreboard visible - that's where player names  
+  should appear                                                          
+                                                                         
+  WHEEL OF FORTUNE specifically:                                         
+  - Remove any individual player name indicators on the main screen      
+  - Only show: the leaderboard (with names and scores) + a clear         
+  indication of whose turn it is currently                               
+  - The leaderboard is sufficient for tracking players - no need for     
+  redundant name displays                                                
+                                                                         
+  Keep the Y2K aesthetic. Update all party game components (Pop the      
+  Question, Roast Roulette, Jeopardy, Wheel of Fortune, Pub Quiz) to     
+  follow this pattern.                                                   
+                                                                         
+  Files are in the current Replit project structure.Fix multiple UI and  
+  configuration issues across games:                                     
+                                                                         
+  JEOPARDY:                                                              
+  - Increase font size for category titles at the top of the board. They 
+   need to be much larger and easier to read from a distance             
+  (projector/TV).                                                        
+                                                                         
+  POP BOX:                                                               
+  - Increase font size for all text - currently too small and hard to    
+  read                                                                   
+  - Increase letter spacing/tracking - letters are too tightly packed    
+  together                                                               
+  - Increase font size for category labels on the sidebar                
+  - Change the "Easy/Medium" difficulty tags to show the actual game     
+  type instead (e.g., "Artist Alphabet", "Song Titles", etc.)            
+                                                                         
+  WHEEL OF FORTUNE:                                                      
+  - Change minimum puzzle requirement from 10 puzzles to 3 puzzles per   
+  pack                                                                   
+                                                                         
+  ROAST ROULETTE:                                                        
+  - In the reveal phase, use the same bold handwriting font that's used  
+  for the roast answers for the player's name in the heading as well.    
+  Keep the handwriting font consistent throughout the reveal screen.     
+                                                                         
+  Keep the Y2K aesthetic with thick black borders and bright colors.     
+  Make sure all text changes work well for both in-person (projector)    
+  and remote (screen share) viewing.                                     
+                                                                         
+  Files are in the current Replit project structure. Update the relevant 
+   game components.  

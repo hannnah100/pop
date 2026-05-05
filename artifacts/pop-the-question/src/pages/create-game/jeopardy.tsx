@@ -412,6 +412,13 @@ export default function JeopardyCreator() {
               {saving ? <><Loader2 className="w-5 h-5 animate-spin" /> Saving…</> : <><Save className="w-5 h-5" /> Save Pack</>}
             </Button>
             <BackArrow href="/my-games" label="My Custom Games" />
+            <Button
+              variant="outline"
+              className="font-display font-black uppercase text-base px-6 py-5 border-[3px] border-black bg-white text-black/60 shadow-[3px_3px_0_#000] hover:bg-[#FFF8E7] hover:translate-x-0.5 hover:translate-y-0.5 transition-all"
+              onClick={() => setLocation("/")}
+            >
+              Cancel
+            </Button>
           </div>
         </div>
       </div>

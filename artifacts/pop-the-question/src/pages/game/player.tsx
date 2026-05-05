@@ -1641,7 +1641,7 @@ export default function GamePlayer() {
           >
             <Sparkles className="w-14 h-14 text-white" />
           </motion.div>
-          <h1 className="font-display font-black text-4xl uppercase comic-headline">
+          <h1 className="font-display font-black text-4xl uppercase text-black">
             All roasts in
           </h1>
           <p className="text-black/70 max-w-sm font-sans">
@@ -1787,7 +1787,7 @@ export default function GamePlayer() {
             <Eye className="w-12 h-12 text-black" />
           </motion.div>
           <p className="text-xs font-black uppercase tracking-widest text-black/60">Now roasting</p>
-          <h1 className="font-display font-black text-4xl uppercase comic-headline">
+          <h1 className="font-display font-black text-4xl uppercase text-black">
             {rrCurrentRevealName || "…"}
           </h1>
           <p className="text-black/60 max-w-sm font-sans">
@@ -1827,7 +1827,7 @@ export default function GamePlayer() {
             <Beer className="w-12 h-12 text-black" />
           </motion.div>
           <p className="text-xs font-black uppercase tracking-widest text-black/60">Round Complete</p>
-          <h1 className="font-display font-black text-3xl uppercase comic-headline">{pqRoundSummary.roundName}</h1>
+          <h1 className="font-display font-black text-3xl uppercase text-black">{pqRoundSummary.roundName}</h1>
           <p className="text-black/70 max-w-sm font-sans">
             {pqRoundSummary.isLastRound
               ? "Final standings on the big screen!"
@@ -2383,8 +2383,8 @@ export default function GamePlayer() {
         return (
           <div className="flex flex-col min-h-[100dvh] p-6 items-center justify-center text-center space-y-4">
             <motion.div
-              animate={{ scale: [1, 1.08, 1] }}
-              transition={{ duration: 0.9, repeat: Infinity }}
+              animate={{ scale: [1, 1.03, 1] }}
+              transition={{ duration: 1.4, repeat: Infinity }}
               className="w-32 h-32 rounded-full flex items-center justify-center bg-yellow-400/20 border-4 border-yellow-400 shadow-[0_0_60px_-4px_hsl(48_100%_60%/0.7)]"
             >
               <Mic className="w-16 h-16 text-yellow-400" />
@@ -3084,7 +3084,7 @@ export default function GamePlayer() {
 
     return (
       <div className="flex flex-col min-h-[100dvh] bg-[#FFD700] items-center justify-center text-center space-y-8 p-6">
-        <h1 className="font-display font-black text-5xl uppercase comic-headline">Game Over</h1>
+        <h1 className="font-display font-black text-5xl uppercase text-black">Game Over</h1>
         <motion.div
           initial={{ opacity: 0, scale: 0.85, y: 12 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}

@@ -29,7 +29,6 @@ const SLUG_RE = /^[a-z0-9-]+$/;
 const FACTUAL_DENYLIST = {
   "gabby-windey": ["strictly"],
   "jojo-fletcher": ["won-reality-show"],
-  "debra-messing": ["emmy-winner"],
   "betty-white": ["golden-globe-winner"]
 };
 
