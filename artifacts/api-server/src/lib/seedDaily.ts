@@ -226,6 +226,20 @@ async function seedThreeFlops(): Promise<void> {
 }
 
 async function seedCrossword(): Promise<void> {
+  const contentFixes = CROSSWORD_SEED.filter((r) => r.id === "crossword-2026-05-04");
+  for (const fix of contentFixes) {
+    await db
+      .update(crosswordPuzzlesTable)
+      .set({
+        date: fix.date,
+        grid: fix.grid,
+        blackSquares: fix.blackSquares,
+        cluesAcross: fix.cluesAcross,
+        cluesDown: fix.cluesDown,
+      })
+      .where(eq(crosswordPuzzlesTable.id, fix.id));
+  }
+
   // Purge any stale/broken puzzles that were previously shipped.
   if (STALE_CROSSWORD_IDS.length > 0) {
     const deleted = await db
