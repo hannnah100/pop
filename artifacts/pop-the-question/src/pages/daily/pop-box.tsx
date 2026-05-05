@@ -701,7 +701,7 @@ function Row(props: {
     <>
       {/* Row header */}
       <div className="aspect-square bg-[#00E5FF] border-[3px] border-black shadow-[3px_3px_0_#000] p-1 flex items-center justify-center text-center">
-        <span className="font-display font-black text-xs sm:text-sm leading-tight uppercase tracking-wide text-black">
+        <span className="font-display font-black text-2xl sm:text-3xl md:text-4xl leading-none uppercase tracking-widest text-black">
           {rowCat.label}
         </span>
       </div>
