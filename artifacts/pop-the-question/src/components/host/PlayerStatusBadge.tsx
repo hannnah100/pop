@@ -43,7 +43,6 @@ const META: Record<
     Icon: Hourglass,
     cls: "bg-white border-black text-black/60",
     iconCls: "text-black/60",
-    dots: true,
   },
   away: {
     label: "Away",

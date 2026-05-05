@@ -445,8 +445,12 @@ export default function PopBox() {
             <CountUp value={correctCount} duration={0.4} />
             /9
           </span>
-          <Badge variant="outline" className="ml-2 capitalize border-black">
-            {grid.difficulty}
+          <Badge variant="outline" className="ml-2 border-black">
+            {grid.mode === "artist-alphabet"
+              ? "Artist Alphabet"
+              : grid.mode === "actor-alphabet"
+                ? "Actor Alphabet"
+                : "Pop Box"}
           </Badge>
         </div>
       </div>
@@ -467,7 +471,7 @@ export default function PopBox() {
                 : "bg-[#00E5FF]"
             }`}
           >
-            <span className="font-display font-black text-[10px] sm:text-xs leading-tight uppercase text-black">
+            <span className="font-display font-black text-xs sm:text-sm leading-tight uppercase tracking-wide text-black">
               {cat.label}
             </span>
           </div>
@@ -697,7 +701,7 @@ function Row(props: {
     <>
       {/* Row header */}
       <div className="aspect-square bg-[#00E5FF] border-[3px] border-black shadow-[3px_3px_0_#000] p-1 flex items-center justify-center text-center">
-        <span className="font-display font-black text-[10px] sm:text-xs leading-tight uppercase text-black">
+        <span className="font-display font-black text-xs sm:text-sm leading-tight uppercase tracking-wide text-black">
           {rowCat.label}
         </span>
       </div>

@@ -44,7 +44,6 @@ import { useSfx } from "@/lib/sfx";
 import { staggerContainer, staggerItem } from "@/lib/motion";
 import { HostShell } from "@/components/host/HostShell";
 import {
-  PlayerStatusBadge,
   type PlayerStatusState,
 } from "@/components/host/PlayerStatusBadge";
 import type { HostNotificationsHandle } from "@/components/host/HostNotifications";
@@ -1493,18 +1492,15 @@ export default function GameHost() {
           return (
             <div
               key={p.id}
-              className={`inline-flex items-center gap-2 border-[2px] border-black px-3 py-1.5 font-display font-black uppercase shadow-[2px_2px_0_#000] transition-colors duration-300 ${
+              className={`w-5 h-5 border-[2px] border-black shadow-[2px_2px_0_#000] transition-colors duration-300 ${
                 state === "answered"
-                  ? "bg-[#00C853] border-[#00C853] text-white"
+                  ? "bg-[#00C853]"
                   : state === "typing"
-                  ? "bg-[#FFD700] border-[#FFD700] text-black"
-                  : "bg-white text-black"
-              } ${isRemote ? "text-sm" : "text-xs"}`}
-            >
-              {p.isBot && <Bot className="w-3.5 h-3.5 opacity-50" />}
-              <span className="truncate max-w-[140px]">{p.name}</span>
-              <PlayerStatusBadge state={state} compact={!isRemote} />
-            </div>
+                  ? "bg-[#FFD700]"
+                  : "bg-white"
+              }`}
+              title={p.name}
+            />
           );
         })}
       </motion.div>
@@ -2460,7 +2456,7 @@ export default function GameHost() {
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.95, y: -20 }}
                 transition={{ type: "spring", stiffness: 220, damping: 20 }}
-                className="font-display font-black text-5xl md:text-7xl lg:text-[6rem] uppercase mb-12 text-center text-black"
+                className="font-handwriting text-5xl md:text-7xl lg:text-[6rem] mb-12 text-center text-black"
               >
                 {rrCurrentRevealName}
               </motion.h1>
@@ -3186,7 +3182,7 @@ export default function GameHost() {
                   key={ci}
                   className="bg-gradient-to-b from-blue-700 to-blue-900 rounded-md px-2 py-3 md:py-4 text-center border-2 border-blue-400/40 shadow-[0_4px_18px_-2px_rgba(0,0,0,0.5)]"
                 >
-                  <p className="text-xs md:text-sm font-extrabold font-display uppercase tracking-tight text-yellow-200 leading-tight">
+                  <p className="text-sm md:text-base lg:text-xl font-extrabold font-display uppercase tracking-tight text-yellow-200 leading-tight">
                     {cat.name}
                   </p>
                 </div>

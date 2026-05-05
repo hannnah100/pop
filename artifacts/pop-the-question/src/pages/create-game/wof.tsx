@@ -43,7 +43,7 @@ function makeDefaultState(): WofFormState {
   return {
     title: "",
     description: "",
-    puzzles: Array.from({ length: 10 }, makeDefaultPuzzle),
+    puzzles: Array.from({ length: 3 }, makeDefaultPuzzle),
   };
 }
 
@@ -54,7 +54,7 @@ interface FieldError {
 function validateForm(form: WofFormState): FieldError {
   const errors: FieldError = {};
   if (!form.title.trim()) errors["title"] = "Pack name is required.";
-  if (form.puzzles.length < 10) errors["puzzles-count"] = "You need at least 10 puzzles.";
+  if (form.puzzles.length < 3) errors["puzzles-count"] = "You need at least 3 puzzles.";
   if (form.puzzles.length > 50) errors["puzzles-count"] = "Maximum 50 puzzles.";
   form.puzzles.forEach((p, i) => {
     if (!p.answer.trim()) errors[`puzzle-${i}-answer`] = "Puzzle phrase is required.";
@@ -188,7 +188,7 @@ export default function WofCreator() {
             {editId ? "Edit WoF Pack" : "Create WoF Pack"}
           </h1>
           <p className="mt-2 text-sm font-bold text-white/80 font-sans">
-            10–50 puzzles · auto-uppercased · live tile preview
+            3–50 puzzles · auto-uppercased · live tile preview
           </p>
         </div>
       </header>
@@ -218,8 +218,8 @@ export default function WofCreator() {
               <h2 className="font-display font-black text-white text-2xl uppercase">
                 🧩 Puzzles ({form.puzzles.length}/50)
               </h2>
-              <span className={`text-sm font-bold px-3 py-1 border-[2px] border-white/50 ${form.puzzles.length < 10 ? "bg-[#FF1493] text-white" : "bg-white/20 text-white"}`}>
-                Min 10 required
+              <span className={`text-sm font-bold px-3 py-1 border-[2px] border-white/50 ${form.puzzles.length < 3 ? "bg-[#FF1493] text-white" : "bg-white/20 text-white"}`}>
+                Min 3 required
               </span>
             </div>
             {errors["puzzles-count"] && (
