@@ -121,11 +121,11 @@
   },
   {
     "id": "eminem-albums",
-    "date": "2026-05-06",
-    "title": "Eminem Studio Albums",
-    "prompt": "Name all Eminem studio albums",
-    "totalCount": 11,
-    "answers": "[{\"display\":\"The Slim Shady LP\",\"hint\":\"1999\",\"correct\":[\"The Slim Shady LP\",\"Slim Shady LP\",\"slim shady\"]},{\"display\":\"The Marshall Mathers LP\",\"hint\":\"2000\",\"correct\":[\"The Marshall Mathers LP\",\"Marshall Mathers LP\",\"MMLP\"]},{\"display\":\"The Eminem Show\",\"hint\":\"2002\",\"correct\":[\"The Eminem Show\",\"Eminem Show\"]},{\"display\":\"Encore\",\"hint\":\"2004\",\"correct\":[\"Encore\"]},{\"display\":\"Relapse\",\"hint\":\"2009\",\"correct\":[\"Relapse\"]},{\"display\":\"Recovery\",\"hint\":\"2010\",\"correct\":[\"Recovery\"]},{\"display\":\"The Marshall Mathers LP 2\",\"hint\":\"2013\",\"correct\":[\"The Marshall Mathers LP 2\",\"Marshall Mathers LP 2\",\"MMLP2\"]},{\"display\":\"Revival\",\"hint\":\"2017\",\"correct\":[\"Revival\"]},{\"display\":\"Kamikaze\",\"hint\":\"2018\",\"correct\":[\"Kamikaze\"]},{\"display\":\"Music to Be Murdered By\",\"hint\":\"2020\",\"correct\":[\"Music to Be Murdered By\",\"Music to Be Murdered\"]},{\"display\":\"The Death of Slim Shady\",\"hint\":\"2024\",\"correct\":[\"The Death of Slim Shady\",\"Death of Slim Shady\"]}]"
+    "date": "2026-05-05",
+    "title": "The Big Bang Theory Main Characters",
+    "prompt": "Name the main characters from The Big Bang Theory",
+    "totalCount": 8,
+    "answers": "[{\"display\":\"Sheldon Cooper\",\"hint\":\"\",\"correct\":[\"Sheldon Cooper\",\"Sheldon\"]},{\"display\":\"Leonard Hofstadter\",\"hint\":\"\",\"correct\":[\"Leonard Hofstadter\",\"Leonard\"]},{\"display\":\"Penny\",\"hint\":\"\",\"correct\":[\"Penny\"]},{\"display\":\"Howard Wolowitz\",\"hint\":\"\",\"correct\":[\"Howard Wolowitz\",\"Howard\"]},{\"display\":\"Raj Koothrappali\",\"hint\":\"\",\"correct\":[\"Raj Koothrappali\",\"Raj\"]},{\"display\":\"Amy Farrah Fowler\",\"hint\":\"\",\"correct\":[\"Amy Farrah Fowler\",\"Amy\"]},{\"display\":\"Bernadette Rostenkowski\",\"hint\":\"\",\"correct\":[\"Bernadette Rostenkowski\",\"Bernadette\"]},{\"display\":\"Stuart Bloom\",\"hint\":\"\",\"correct\":[\"Stuart Bloom\",\"Stuart\"]}]"
   },
   {
     "id": "original-avengers-2012",
