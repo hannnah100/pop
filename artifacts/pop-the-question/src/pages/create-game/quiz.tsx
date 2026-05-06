@@ -343,7 +343,7 @@ export default function QuizCreator() {
             className="font-display font-black uppercase leading-none comic-headline"
             style={{ fontSize: "clamp(1.8rem, 6vw, 3.5rem)" }}
           >
-            {editId ? "Edit Pub Quiz" : "Create Pub Quiz"}
+            {editId ? "Edit Bar Trivia" : "Create Bar Trivia"}
           </h1>
           <p className="mt-2 text-sm font-bold text-black/70 font-sans">
             3–7 rounds · 5–20 questions each · multiple types

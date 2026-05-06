@@ -1081,6 +1081,7 @@ export default function GameHost() {
       scores: WofScoreRow[];
     }) => {
       // Start the wheel animation immediately (works for both host-spin and player/bot spins)
+      setWofShowWheel(true);
       setWofSpinning(true);
       // Set spin index so WofWheel knows the target segment to snap to after animation
       setWofSpinIndex(payload.spinIndex ?? null);
@@ -1105,9 +1106,10 @@ export default function GameHost() {
       }, 2600);
     });
 
-    newSocket.on("wof-solve-pending", (payload: { solverId: string | null; solverName: string; answer: string }) => {
+    newSocket.on("wof-solve-pending", (payload: { solverId: string | null; solverName: string; answer: string; isVerbal?: boolean }) => {
       if (wofSpinTimeoutRef.current) { clearTimeout(wofSpinTimeoutRef.current); wofSpinTimeoutRef.current = null; }
       setWofSpinning(false);
+      setWofShowWheel(false);
       setWofPendingSolve(payload);
     });
 
@@ -1715,7 +1717,7 @@ export default function GameHost() {
                     <Shuffle className="w-4 h-4 text-black mt-0.5 flex-shrink-0" />
                     <h3 className="font-display font-black text-black uppercase text-sm leading-tight">🎲 Random</h3>
                   </div>
-                  <p className="text-xs text-black/60 leading-relaxed font-sans">Let fate decide — a Jeopardy pack will be chosen at random.</p>
+                  <p className="text-xs text-black/60 leading-relaxed font-sans">Let fate decide — a Pop Quiz pack will be chosen at random.</p>
                 </motion.button>
                 {jeopardyAvailablePacks.map((pack) => (
                   <motion.button
@@ -2817,7 +2819,7 @@ export default function GameHost() {
         {isDemo && <DemoBadge />}
         <div className="text-xl font-bold uppercase tracking-widest text-yellow-400 bg-card/80 backdrop-blur px-6 py-3 rounded-full border border-yellow-400/40 surface-elevated">
           <Grid3x3 className="w-5 h-5 inline mr-2 -mt-1" />
-          {subtitle ?? jPack?.title ?? "JEOPARDY"}
+          {subtitle ?? jPack?.title ?? "POP QUIZ"}
         </div>
       </header>
     );
@@ -2829,7 +2831,7 @@ export default function GameHost() {
     if (jFinalScored) {
       return (
         <div className="flex-1 flex flex-col text-foreground relative overflow-hidden">
-          <Header subtitle="FINAL JEOPARDY" />
+          <Header subtitle="FINAL ROUND" />
           <main className="flex-1 flex flex-col items-center justify-center max-w-5xl mx-auto w-full">
             <Award className="w-16 h-16 text-yellow-400 mb-4 drop-shadow-[0_0_18px_hsl(48_100%_60%)]" />
             <h2 className="text-4xl md:text-5xl font-extrabold font-display tracking-tight text-center mb-3">
@@ -2871,7 +2873,7 @@ export default function GameHost() {
     if (jFinalReveal) {
       return (
         <div className="flex-1 flex flex-col text-foreground relative overflow-hidden">
-          <Header subtitle="FINAL JEOPARDY" />
+          <Header subtitle="FINAL ROUND" />
           <main className="flex-1 flex flex-col items-center justify-center max-w-5xl mx-auto w-full">
             <p className="text-xl text-muted-foreground uppercase tracking-widest font-bold mb-2">Correct Answer</p>
             <h2 className="text-5xl md:text-6xl font-extrabold font-display tracking-tight text-yellow-300 text-center mb-2 drop-shadow-[0_0_18px_hsl(48_100%_60%/0.5)]">
@@ -2934,7 +2936,7 @@ export default function GameHost() {
       const submitted = jFinalProgress?.submitted ?? 0;
       return (
         <div className="flex-1 flex flex-col text-foreground relative overflow-hidden">
-          <Header subtitle="FINAL JEOPARDY" />
+          <Header subtitle="FINAL ROUND" />
           <main className="flex-1 flex flex-col items-center justify-center max-w-5xl mx-auto w-full">
             <p className="text-xl uppercase tracking-widest font-bold text-yellow-400 mb-2">{jFinalCategory}</p>
             <h2 className="text-4xl md:text-6xl font-extrabold font-display tracking-tight text-center mb-10 leading-tight">
@@ -2967,7 +2969,7 @@ export default function GameHost() {
       const submitted = jFinalProgress?.submitted ?? 0;
       return (
         <div className="flex-1 flex flex-col text-foreground relative overflow-hidden">
-          <Header subtitle="FINAL JEOPARDY" />
+          <Header subtitle="FINAL ROUND" />
           <main className="flex-1 flex flex-col items-center justify-center max-w-5xl mx-auto w-full">
             <p className="text-2xl uppercase tracking-widest font-bold text-muted-foreground mb-2">Category</p>
             <h2 className="text-5xl md:text-7xl font-extrabold font-display tracking-tight text-yellow-300 text-center mb-8 drop-shadow-[0_0_24px_hsl(48_100%_60%/0.6)]">
@@ -3000,7 +3002,7 @@ export default function GameHost() {
     if (jPhase === "final-intro") {
       return (
         <div className="flex-1 flex flex-col text-foreground relative overflow-hidden">
-          <Header subtitle="FINAL JEOPARDY" />
+          <Header subtitle="FINAL ROUND" />
           <main className="flex-1 flex flex-col items-center justify-center max-w-5xl mx-auto w-full">
             <motion.div
               initial={{ scale: 0, rotate: -180 }}
@@ -3010,7 +3012,7 @@ export default function GameHost() {
               <Award className="w-24 h-24 text-yellow-400 mb-6 drop-shadow-[0_0_24px_hsl(48_100%_60%)]" />
             </motion.div>
             <h2 className="text-4xl md:text-5xl font-extrabold font-display tracking-tight text-muted-foreground uppercase mb-2">
-              Final Jeopardy
+              Final Round
             </h2>
             <p className="text-xl text-muted-foreground mb-2">Category</p>
             <h1 className="text-6xl md:text-8xl font-extrabold font-display tracking-tight text-center mb-4">
@@ -3219,7 +3221,7 @@ export default function GameHost() {
     return (
       <div className="flex-1 flex flex-col items-center justify-center">
         <Grid3x3 className="w-16 h-16 text-yellow-400 animate-pulse mb-4" />
-        <p className="text-2xl font-bold">Loading Jeopardy…</p>
+        <p className="text-2xl font-bold">Loading Pop Quiz…</p>
       </div>
     );
   };
@@ -3345,7 +3347,7 @@ export default function GameHost() {
             data-testid="btn-j-start-final-bar"
           >
             <Award className="w-5 h-5" />
-            Start Final Jeopardy
+            Start Final Round
           </Button>
         );
       }
@@ -3663,24 +3665,25 @@ export default function GameHost() {
                   exit={{ scale: 0.8, opacity: 0 }}
                   className={`w-full border-[4px] border-black shadow-[6px_6px_0_#000] p-5 flex flex-col gap-3 ${wofPendingSolve.isVerbal ? "bg-[#B97AD7]" : "bg-[#FF1493]"}`}
                 >
-                  <p className="font-display font-black text-white uppercase text-xl tracking-widest text-center">
-                    {wofPendingSolve.isVerbal ? "🎤 Verbal Solve!" : "Solve Attempt!"}
+                  <p className="font-display font-black text-white uppercase text-2xl tracking-widest text-center">
+                    {wofPendingSolve.isVerbal
+                      ? `🎤 ${wofPendingSolve.solverName} is solving`
+                      : "Solve Attempt!"}
                   </p>
-                  <p className="text-white/80 font-sans text-sm text-center">
-                    <span className="font-black text-white">{wofPendingSolve.solverName}</span>
-                    {wofPendingSolve.isVerbal ? " is saying it out loud — listen carefully!" : " typed:"}
-                  </p>
-                  {!wofPendingSolve.isVerbal && (
-                    <div className="bg-white border-[3px] border-black px-4 py-3 text-center">
-                      <p className="font-display font-black text-2xl uppercase text-black tracking-wider">
-                        {wofPendingSolve.answer}
-                      </p>
-                    </div>
-                  )}
                   {wofPendingSolve.isVerbal && (
-                    <div className="bg-white/20 border-[2px] border-white/50 px-4 py-3 text-center rounded">
-                      <p className="font-display font-black text-white text-lg">🎧 Listen to their answer…</p>
-                    </div>
+                    <p className="text-white/80 font-sans text-sm text-center">Listen to their answer, then judge below</p>
+                  )}
+                  {!wofPendingSolve.isVerbal && (
+                    <>
+                      <p className="text-white/80 font-sans text-sm text-center">
+                        <span className="font-black text-white">{wofPendingSolve.solverName}</span>{" typed:"}
+                      </p>
+                      <div className="bg-white border-[3px] border-black px-4 py-3 text-center">
+                        <p className="font-display font-black text-2xl uppercase text-black tracking-wider">
+                          {wofPendingSolve.answer}
+                        </p>
+                      </div>
+                    </>
                   )}
                   <div className="flex gap-3">
                     <Button

@@ -11,10 +11,10 @@ import {
 const GAME_TYPES = [
   {
     id: "jeopardy",
-    label: "Jeopardy",
-    tagline: "6 categories · 5 clues each · Final Jeopardy",
+    label: "Pop Quiz",
+    tagline: "6 categories · 5 clues each · Final Round",
     description:
-      "Build your own board with custom categories, clues, Daily Doubles, and a Final Jeopardy question.",
+      "Build your own board with custom categories, clues, Daily Doubles, and a Final Round question.",
     Icon: Grid3x3,
     bg: "#FFC107",
     accent: "#1565C0",
@@ -22,8 +22,8 @@ const GAME_TYPES = [
   },
   {
     id: "wof",
-    label: "Wheel of Fortune",
-    tagline: "10–50 puzzles · categories · live preview",
+    label: "Wheel of Fandom",
+    tagline: "3–50 puzzles · categories · live preview",
     description:
       "Create a puzzle pack with phrases, categories, and optional hints. Watch tiles reveal as you type.",
     Icon: CircleDot,
@@ -33,7 +33,7 @@ const GAME_TYPES = [
   },
   {
     id: "quiz",
-    label: "Pub Quiz",
+    label: "Bar Trivia",
     tagline: "3–7 rounds · multiple choice, open-ended, true/false",
     description:
       "Design trivia rounds with any mix of question types and optional double-point questions.",

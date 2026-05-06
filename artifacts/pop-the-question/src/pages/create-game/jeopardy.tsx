@@ -76,9 +76,9 @@ function validateForm(form: JFormState): FieldError {
   });
   const ddCount = countDailyDoubles(form);
   if (ddCount !== 2) errors["dd-count"] = `Exactly 2 Daily Doubles required (currently ${ddCount}).`;
-  if (!form.final.category.trim()) errors["final-cat"] = "Final Jeopardy category required.";
-  if (!form.final.question.trim()) errors["final-q"] = "Final Jeopardy question required.";
-  if (!form.final.answer.trim()) errors["final-a"] = "Final Jeopardy answer required.";
+  if (!form.final.category.trim()) errors["final-cat"] = "Final Round category required.";
+  if (!form.final.question.trim()) errors["final-q"] = "Final Round question required.";
+  if (!form.final.answer.trim()) errors["final-a"] = "Final Round answer required.";
   return errors;
 }
 
@@ -86,7 +86,7 @@ function formToPayload(form: JFormState, existingId?: string) {
   return {
     id: existingId ?? `custom-j-${Date.now()}`,
     title: form.title.trim(),
-    description: form.description.trim() || `Custom Jeopardy: ${form.title.trim()}`,
+    description: form.description.trim() || `Custom Pop Quiz: ${form.title.trim()}`,
     categories: form.categories.map((cat) => ({
       name: cat.name.trim(),
       clues: cat.clues.map((c) => ({
@@ -214,10 +214,10 @@ export default function JeopardyCreator() {
             className="font-display font-black uppercase leading-none comic-headline"
             style={{ fontSize: "clamp(1.8rem, 6vw, 3.5rem)" }}
           >
-            {editId ? "Edit Jeopardy Pack" : "Create Jeopardy Pack"}
+            {editId ? "Edit Pop Quiz Pack" : "Create Pop Quiz Pack"}
           </h1>
           <p className="mt-2 text-sm font-bold text-black/70 font-sans">
-            6 categories · 5 clues each · Final Jeopardy
+            6 categories · 5 clues each · Final Round
           </p>
         </div>
       </header>
@@ -356,10 +356,10 @@ export default function JeopardyCreator() {
             </div>
           </div>
 
-          {/* Final Jeopardy */}
+          {/* Final Round */}
           <div className="bg-[#FF1493] border-[4px] border-black shadow-[6px_6px_0_#000] p-5">
             <h2 className="font-display font-black text-white text-2xl uppercase mb-4">
-              ⭐ Final Jeopardy
+              ⭐ Final Round
             </h2>
             <div className="bg-white border-[3px] border-black p-4 space-y-3">
               <div>

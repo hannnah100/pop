@@ -74,7 +74,7 @@ const WofPackPayloadSchema = z.object({
   id: z.string(),
   title: z.string().min(1),
   description: z.string().default(""),
-  puzzles: z.array(WofPuzzleSchema).min(10).max(50),
+  puzzles: z.array(WofPuzzleSchema).min(3).max(50),
 });
 
 // ============================================================

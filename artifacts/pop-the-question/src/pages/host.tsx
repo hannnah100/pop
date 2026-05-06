@@ -39,7 +39,7 @@ const GAME_CARDS = [
   },
   {
     type: "pub-quiz" as CreateRoomRequestGameType,
-    label: "Pub Quiz",
+    label: "Bar Trivia",
     tagline: "5 packs. 3 round types. Pure trivia chaos.",
     description:
       "Classic bar trivia, run from your couch. Multiple choice, open-ended, and true/false rounds. First-correct gets a bonus.",
@@ -50,10 +50,10 @@ const GAME_CARDS = [
   },
   {
     type: "jeopardy" as CreateRoomRequestGameType,
-    label: "Jeopardy",
-    tagline: "Six categories. Daily Doubles. Final Jeopardy.",
+    label: "Pop Quiz",
+    tagline: "Six categories. Daily Doubles. Final Round.",
     description:
-      "Buzz in fast, judge bold wagers, and bet it all on Final Jeopardy. Five hand-authored category packs of pure pop trivia.",
+      "Buzz in fast, judge bold wagers, and bet it all on the Final Round. Five hand-authored category packs of pure pop trivia.",
     Icon: Grid3x3,
     bg: "#FFC107",
     accent: "#1565C0",
@@ -61,7 +61,7 @@ const GAME_CARDS = [
   },
   {
     type: "wheel-of-fortune" as CreateRoomRequestGameType,
-    label: "Wheel of Fortune",
+    label: "Wheel of Fandom",
     tagline: "Spin. Guess. Solve. Win.",
     description:
       "Spin the wheel to earn cash, guess letters, and race to solve the puzzle before anyone else. Three pop-culture puzzle packs.",
@@ -72,8 +72,8 @@ const GAME_CARDS = [
   },
   {
     type: "scattergories" as CreateRoomRequestGameType,
-    label: "Scattergories",
-    tagline: "Name something famous starting with S.",
+    label: "Popping List",
+    tagline: "One letter. Multiple categories. Race the clock.",
     description:
       "Race the clock to fill in pop-culture categories starting with the same letter. Unique answers score — duplicates don't.",
     Icon: LayoutList,

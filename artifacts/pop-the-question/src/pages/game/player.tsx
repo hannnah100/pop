@@ -2094,7 +2094,7 @@ export default function GamePlayer() {
       return (
         <div className="flex flex-col min-h-[100dvh] p-6 items-center justify-center text-center space-y-4">
           <Award className="w-16 h-16 text-yellow-400" />
-          <h1 className="text-3xl font-extrabold font-display">Final Jeopardy</h1>
+          <h1 className="text-3xl font-extrabold font-display">Final Round</h1>
           <p className="text-sm uppercase font-bold tracking-widest text-muted-foreground">Correct Answer</p>
           <p className="text-3xl font-black text-yellow-300">{jFinalReveal.correctAnswer}</p>
           {mine && (
@@ -2127,7 +2127,7 @@ export default function GamePlayer() {
         return (
           <div className="flex flex-col min-h-[100dvh] p-6 items-center justify-center text-center space-y-4">
             <Award className="w-12 h-12 text-yellow-400" />
-            <h1 className="text-2xl font-extrabold font-display">Final Jeopardy</h1>
+            <h1 className="text-2xl font-extrabold font-display">Final Round</h1>
             <p className="text-muted-foreground max-w-sm">You're not eligible for Final (score must be positive). Watch on the big screen.</p>
           </div>
         );
@@ -2137,7 +2137,7 @@ export default function GamePlayer() {
           <header className="mb-4 flex items-center justify-between">
             <div>
               <p className="text-xs uppercase font-bold tracking-widest text-yellow-400 flex items-center gap-1">
-                <Award className="w-3.5 h-3.5" />Final Jeopardy
+                <Award className="w-3.5 h-3.5" />Final Round
               </p>
               <p className="text-sm text-muted-foreground mt-0.5">{jFinalCategory}</p>
             </div>
@@ -2195,7 +2195,7 @@ export default function GamePlayer() {
         return (
           <div className="flex flex-col min-h-[100dvh] p-6 items-center justify-center text-center space-y-4">
             <Award className="w-12 h-12 text-yellow-400" />
-            <h1 className="text-2xl font-extrabold font-display">Final Jeopardy</h1>
+            <h1 className="text-2xl font-extrabold font-display">Final Round</h1>
             <p className="text-muted-foreground max-w-sm">You're not eligible for Final (score must be positive). Watch on the big screen.</p>
           </div>
         );
@@ -2205,7 +2205,7 @@ export default function GamePlayer() {
           <header className="mb-4 flex items-center justify-between">
             <div>
               <p className="text-xs uppercase font-bold tracking-widest text-yellow-400 flex items-center gap-1">
-                <Award className="w-3.5 h-3.5" />Final Jeopardy
+                <Award className="w-3.5 h-3.5" />Final Round
               </p>
               <p className="text-sm text-muted-foreground mt-0.5">Wager phase</p>
             </div>
@@ -2268,7 +2268,7 @@ export default function GamePlayer() {
       return (
         <div className="flex flex-col min-h-[100dvh] p-6 items-center justify-center text-center space-y-4">
           <Award className="w-16 h-16 text-yellow-400 drop-shadow-[0_0_24px_hsl(48_100%_60%)]" />
-          <h1 className="text-3xl font-extrabold font-display">Final Jeopardy</h1>
+          <h1 className="text-3xl font-extrabold font-display">Final Round</h1>
           <p className="text-xs uppercase font-bold tracking-widest text-muted-foreground">Category</p>
           <p className="text-2xl font-extrabold text-yellow-300">{jFinalCategory}</p>
           <Loader2 className="w-6 h-6 text-muted-foreground animate-spin" />
@@ -2477,7 +2477,7 @@ export default function GamePlayer() {
           <header className="mb-3 flex items-center justify-between">
             <div className="flex items-center gap-2">
               <Grid3x3 className="w-5 h-5 text-yellow-400" />
-              <p className="text-sm font-bold uppercase tracking-widest text-yellow-400">Jeopardy</p>
+              <p className="text-sm font-bold uppercase tracking-widest text-yellow-400">Pop Quiz</p>
             </div>
             <ScoreBadge />
           </header>
@@ -2537,7 +2537,7 @@ export default function GamePlayer() {
     return (
       <div className="flex flex-col min-h-[100dvh] p-6 items-center justify-center text-center space-y-3">
         <Loader2 className="w-12 h-12 text-yellow-400 animate-spin" />
-        <p className="text-lg text-muted-foreground">Loading Jeopardy…</p>
+        <p className="text-lg text-muted-foreground">Loading Pop Quiz…</p>
       </div>
     );
     }
@@ -2890,7 +2890,7 @@ export default function GamePlayer() {
           <div className="font-display font-black text-white text-[8rem] leading-none" style={{ textShadow: "4px 4px 0 rgba(0,0,0,0.3)" }}>
             S
           </div>
-          <h1 className="font-display font-black text-white text-3xl uppercase" style={{ textShadow: "2px 2px 0 #000" }}>Scattergories</h1>
+          <h1 className="font-display font-black text-white text-3xl uppercase" style={{ textShadow: "2px 2px 0 #000" }}>Popping List</h1>
           <p className="font-sans text-white/80">Get ready! The round is about to begin…</p>
           <LeaveGameDialog open={confirmLeave} onOpenChange={setConfirmLeave} onLeave={() => { setConfirmLeave(false); setLocation("/"); }} />
         </div>

@@ -272,7 +272,7 @@ export default function Home() {
             {/* Host */}
             <div className="bg-[#FFD700] border-[3px] border-black shadow-[4px_4px_0_#000] p-5 relative overflow-hidden">
               <h3 className="font-display text-2xl font-black text-black uppercase tracking-tight mb-2">Host a Game</h3>
-              <p className="text-sm text-black/70 font-sans mb-4">Choose Pop the Question, Roast Roulette, or Pub Quiz — then start the show.</p>
+              <p className="text-sm text-black/70 font-sans mb-4">Choose Pop the Question, Roast Roulette, or Bar Trivia — then start the show.</p>
               <Link href="/host">
                 <Button
                   size="lg"
