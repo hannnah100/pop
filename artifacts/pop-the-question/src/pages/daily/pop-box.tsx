@@ -471,7 +471,7 @@ export default function PopBox() {
                 : "bg-[#00E5FF]"
             }`}
           >
-            <span className="font-display font-black text-2xl sm:text-3xl md:text-4xl leading-none uppercase tracking-widest text-black">
+            <span className="font-display font-black text-base sm:text-3xl md:text-4xl leading-none uppercase tracking-widest text-black">
               {cat.label}
             </span>
           </div>
@@ -513,7 +513,7 @@ export default function PopBox() {
                 className="flex flex-col gap-2 bg-[#FFF8E7] border-[3px] border-black shadow-[4px_4px_0_#000] p-3"
               >
                 <div className="flex items-center justify-between">
-                  <span className="font-display font-black uppercase text-lg sm:text-2xl md:text-3xl tracking-widest text-black/70">
+                  <span className="font-display font-black uppercase text-sm sm:text-2xl md:text-3xl tracking-widest text-black/70">
                     {grid.mode === "artist-alphabet" || grid.mode === "actor-alphabet" ? (
                       <>
                         <span className="text-black">
@@ -701,7 +701,7 @@ function Row(props: {
     <>
       {/* Row header */}
       <div className="aspect-square overflow-hidden bg-[#00E5FF] border-[3px] border-black shadow-[3px_3px_0_#000] p-1 flex items-center justify-center text-center">
-        <span className="font-display font-black text-2xl sm:text-3xl md:text-4xl leading-none uppercase tracking-widest text-black">
+        <span className="font-display font-black text-base sm:text-3xl md:text-4xl leading-none uppercase tracking-widest text-black">
           {rowCat.label}
         </span>
       </div>
