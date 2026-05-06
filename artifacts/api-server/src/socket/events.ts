@@ -198,6 +198,7 @@ function generateRoomCode(): string {
 }
 
 const ROAST_COLORS = ["yellow", "blue", "red", "green", "purple", "orange", "gray"];
+const ROAST_WRITING_DURATION_MS = 150_000;
 
 const BOT_NAMES = ["Sarah", "Mike", "Alex", "Jordan", "Taylor"];
 
@@ -938,6 +939,7 @@ export function setupSocketIO(httpServer: HttpServer) {
               targetPlayerId: targetId,
               targetPlayerName: target?.name ?? "Unknown",
               round: 1,
+              timerEndAt: Date.now() + ROAST_WRITING_DURATION_MS,
             });
           }
         });
@@ -1974,6 +1976,7 @@ export function setupSocketIO(httpServer: HttpServer) {
                 targetPlayerId: tId,
                 targetPlayerName: tPlayer?.name ?? "Unknown",
                 round: room.currentRound,
+                timerEndAt: Date.now() + ROAST_WRITING_DURATION_MS,
               });
             }
           });

@@ -98,7 +98,6 @@ export interface PopBoxGrid {
   id: string;
   date: string;
   difficulty: PopBoxGridDifficulty;
-  mode?: "celebrity-categories" | "artist-alphabet" | "actor-alphabet";
   rowCategories: PopBoxCategory[];
   columnCategories: PopBoxCategory[];
 }
@@ -278,11 +277,110 @@ export interface PopOrDropScoreRequest {
   date: string;
 }
 
+export interface ThreeFlopsLeaderboardEntry {
+  rank: number;
+  playerToken: string;
+  score: number;
+}
+
+export interface ThreeFlopsLeaderboard {
+  date: string;
+  top10: ThreeFlopsLeaderboardEntry[];
+  totalPlayers: number;
+  avgScore: number;
+  medianScore: number;
+  playerRank?: number | null;
+}
+
+export interface ThreeFlopsScoreRequest {
+  playerToken: string;
+  /**
+   * @minimum 0
+   * @maximum 100
+   */
+  score: number;
+  date: string;
+}
+
+export interface PopBoxLeaderboardEntry {
+  rank: number;
+  playerToken: string;
+  score: number;
+}
+
+export interface PopBoxLeaderboard {
+  date: string;
+  top10: PopBoxLeaderboardEntry[];
+  totalPlayers: number;
+  avgScore: number;
+  medianScore: number;
+  playerRank?: number | null;
+}
+
+export interface PopBoxScoreRequest {
+  playerToken: string;
+  /**
+   * @minimum 0
+   * @maximum 9
+   */
+  score: number;
+  date: string;
+}
+
+export interface SkinnyLeaderboardEntry {
+  rank: number;
+  playerToken: string;
+  completionTimeSecs: number;
+}
+
+export interface SkinnyLeaderboard {
+  puzzleId: string;
+  top10: SkinnyLeaderboardEntry[];
+  totalPlayers: number;
+  avgTimeSecs: number;
+  medianTimeSecs: number;
+  playerRank?: number | null;
+}
+
+export interface SkinnyScoreRequest {
+  playerToken: string;
+  puzzleId: string;
+  /** @minimum 0 */
+  completionTimeSecs: number;
+}
+
+export type GetThreeFlopsLeaderboardParams = {
+  date?: string;
+  playerToken?: string;
+};
+
+export type SubmitThreeFlopsScore200 = {
+  ok: boolean;
+};
+
+export type GetPopBoxLeaderboardParams = {
+  date?: string;
+  playerToken?: string;
+};
+
+export type SubmitPopBoxScore200 = {
+  ok: boolean;
+};
+
 export type GetPopOrDropLeaderboardParams = {
   date?: string;
   playerToken?: string;
 };
 
 export type SubmitPopOrDropScore200 = {
+  ok: boolean;
+};
+
+export type GetSkinnyLeaderboardParams = {
+  puzzleId?: string;
+  playerToken?: string;
+};
+
+export type SubmitSkinnyScore200 = {
   ok: boolean;
 };

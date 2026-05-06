@@ -94,6 +94,7 @@ interface AssignCardPayload {
   targetPlayerId: string;
   targetPlayerName: string;
   round: number;
+  timerEndAt?: number;
 }
 
 interface RoundCompletePayload {
@@ -308,6 +309,9 @@ export default function GamePlayer() {
   const [rrQuestions, setRrQuestions] = useState<RoastQuestion[]>([]);
   const [rrCurrentAnswer, setRrCurrentAnswer] = useState("");
   const [rrSubmittedColors, setRrSubmittedColors] = useState<Set<string>>(new Set());
+  const [rrTimerEndAt, setRrTimerEndAt] = useState(0);
+  const [rrNow, setRrNow] = useState(Date.now());
+  const [rrAutoSubmitted, setRrAutoSubmitted] = useState(false);
 
   // Reveal phase
   const [rrCurrentRevealId, setRrCurrentRevealId] = useState("");
@@ -388,6 +392,7 @@ export default function GamePlayer() {
   const [scatNow, setScatNow] = useState(Date.now());
   const [scatAnswers, setScatAnswers] = useState<Record<string, string>>({});
   const [scatSubmitted, setScatSubmitted] = useState(false);
+  const [scatAutoSubmitted, setScatAutoSubmitted] = useState(false);
   const [scatResults, setScatResults] = useState<ScatCategoryResult[]>([]);
   const [scatLeaderboard, setScatLeaderboard] = useState<ScatLeaderboardRow[]>([]);
   const [scatIsLastRound, setScatIsLastRound] = useState(false);
@@ -930,13 +935,16 @@ export default function GamePlayer() {
     newSocket.on("results-revealed", () => setResultsRevealed(true));
 
     // Roast Roulette handlers
-    newSocket.on("assign-card", ({ targetPlayerId, targetPlayerName, round }: AssignCardPayload) => {
+    newSocket.on("assign-card", ({ targetPlayerId, targetPlayerName, round, timerEndAt }: AssignCardPayload) => {
       setRrTargetId(targetPlayerId);
       setRrTargetName(targetPlayerName);
       setRrRound(round);
       setRrPhase("writing");
       setRrCurrentAnswer("");
       setRrSubmittedColors(new Set());
+      setRrTimerEndAt(timerEndAt ?? 0);
+      setRrNow(Date.now());
+      setRrAutoSubmitted(false);
       window.scrollTo(0, 0);
     });
 
@@ -1203,11 +1211,31 @@ export default function GamePlayer() {
       setScatNow(now);
       if (now >= scatTimerEndAt && !scatSubmitted) {
         setScatSubmitted(true);
+        setScatAutoSubmitted(true);
         socket?.emit("scattergories-submit", { roomCode, answers: scatAnswers });
       }
     }, 250);
     return () => clearInterval(id);
   }, [gameType, scatPhase, scatTimerEndAt, scatSubmitted, scatAnswers, socket, roomCode]);
+
+  // Roast Roulette: timer tick + auto-submit when time runs out
+  useEffect(() => {
+    if (gameType !== "roast-roulette" || rrPhase !== "writing" || rrTimerEndAt === 0) return;
+    const id = setInterval(() => {
+      const now = Date.now();
+      setRrNow(now);
+      const q = rrQuestions[rrRound - 1];
+      if (now >= rrTimerEndAt && q && !rrSubmittedColors.has(q.color)) {
+        const answer = rrCurrentAnswer.trim() || "(no answer)";
+        setRrAutoSubmitted(true);
+        setRrSubmittedColors((prev) => { const next = new Set(prev); next.add(q.color); return next; });
+        if (typingTimerRef.current !== null) { window.clearTimeout(typingTimerRef.current); typingTimerRef.current = null; }
+        emitTyping(false);
+        socket?.emit("submit-roast", { roomCode, targetPlayerId: rrTargetId, color: q.color, answer });
+      }
+    }, 250);
+    return () => clearInterval(id);
+  }, [gameType, rrPhase, rrTimerEndAt, rrCurrentAnswer, rrTargetId, rrQuestions, rrRound, rrSubmittedColors, roomCode, socket]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Scattergories: submit answers
   const handleScatSubmit = () => {
@@ -1464,10 +1492,12 @@ export default function GamePlayer() {
     function renderContent() {
     // --- WRITING PHASE ---
     if (rrPhase === "writing") {
-      const roundsRemaining = Math.max(1, rrTotalRounds - rrRound + 1);
+      const rrSecondsLeft = rrTimerEndAt > 0 ? Math.max(0, Math.ceil((rrTimerEndAt - rrNow) / 1000)) : 0;
+      const rrTotalSecs = 90;
+      const showCountdown = rrTimerEndAt > 0;
       return (
         <div className="flex flex-col min-h-[100dvh]">
-          <header className="bg-[#FF6B35] border-b-[4px] border-black px-4 py-4 flex items-center justify-between gap-4">
+          <header className={`border-b-[4px] border-black px-4 py-4 flex items-center justify-between gap-4 ${showCountdown && rrSecondsLeft <= 10 ? "bg-[#FF1493]" : "bg-[#FF6B35]"}`}>
             <div>
               <p className="text-xs font-black uppercase tracking-widest text-black/60">
                 Round <span className="text-black"><CountUp value={rrRound} duration={0.3} /></span> of {rrTotalRounds}
@@ -1481,15 +1511,32 @@ export default function GamePlayer() {
                 )}
               </h1>
             </div>
-            <TimerRing
-              value={roundsRemaining}
-              total={Math.max(1, rrTotalRounds)}
-              size={64}
-              thickness={6}
-              label={`${rrRound}/${rrTotalRounds}`}
-              showLabel
-            />
+            {showCountdown ? (
+              <div className="flex flex-col items-center">
+                <div className="font-display font-black text-4xl text-white" style={{ textShadow: "2px 2px 0 #000" }}>
+                  {rrSecondsLeft}s
+                </div>
+                <div className="w-20 h-2 bg-black/20 mt-1">
+                  <div className="h-full bg-white transition-all duration-250" style={{ width: `${(rrSecondsLeft / rrTotalSecs) * 100}%` }} />
+                </div>
+              </div>
+            ) : (
+              <TimerRing
+                value={Math.max(1, rrTotalRounds - rrRound + 1)}
+                total={Math.max(1, rrTotalRounds)}
+                size={64}
+                thickness={6}
+                label={`${rrRound}/${rrTotalRounds}`}
+                showLabel
+              />
+            )}
           </header>
+
+          {showCountdown && rrSecondsLeft <= 10 && rrSecondsLeft > 0 && (
+            <div className="bg-[#FFD700] border-b-[3px] border-black px-4 py-2 text-center">
+              <p className="font-display font-black text-black text-sm uppercase tracking-widest">⚡ {rrSecondsLeft} second{rrSecondsLeft !== 1 ? "s" : ""} left!</p>
+            </div>
+          )}
 
           <main className="flex-1 flex flex-col p-4 bg-[#FFF8E7]">
             {!currentRoastQ ? (
@@ -1511,9 +1558,11 @@ export default function GamePlayer() {
                 >
                   <CheckCircle2 className="w-12 h-12 text-white" />
                 </motion.div>
-                <h2 className="font-display font-black text-black text-3xl uppercase">Roast sent!</h2>
+                <h2 className="font-display font-black text-black text-3xl uppercase">
+                  {rrAutoSubmitted ? "Time's up!" : "Roast sent!"}
+                </h2>
                 <p className="text-black/60 max-w-sm font-sans">
-                  Waiting for the others to finish writing…
+                  {rrAutoSubmitted ? "Your roast was submitted automatically." : "Waiting for the others to finish writing…"}
                 </p>
                 <Loader2 className="w-6 h-6 text-black/40 animate-spin" />
               </motion.div>
@@ -2992,8 +3041,12 @@ export default function GamePlayer() {
                 >
                   <span className="text-5xl">✓</span>
                 </motion.div>
-                <h2 className="font-display font-black text-black text-3xl uppercase">Submitted!</h2>
-                <p className="text-black/60 font-sans">Waiting for other players…</p>
+                <h2 className="font-display font-black text-black text-3xl uppercase">
+                  {scatAutoSubmitted ? "Time's up!" : "Submitted!"}
+                </h2>
+                <p className="text-black/60 font-sans">
+                  {scatAutoSubmitted ? "Your answers were submitted automatically." : "Waiting for other players…"}
+                </p>
                 <div className="space-y-2 w-full max-w-xs">
                   {scatCategories.map((cat) => (
                     <div key={cat.id} className="flex items-center justify-between px-3 py-2 bg-white border-[2px] border-black">

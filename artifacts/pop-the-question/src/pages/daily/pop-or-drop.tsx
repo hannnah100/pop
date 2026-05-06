@@ -16,6 +16,9 @@ import {
   Trophy,
   Flame,
   BarChart2,
+  Pencil,
+  Check,
+  X,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -83,6 +86,14 @@ function getPlayerToken(): string {
     localStorage.setItem("ptq-player-token", token);
   }
   return token;
+}
+
+function getStoredPlayerName(): string {
+  return localStorage.getItem("ptq-player-name") ?? "";
+}
+
+function savePlayerName(name: string): void {
+  localStorage.setItem("ptq-player-name", name.trim());
 }
 
 function formatValue(value: number): string {
@@ -171,6 +182,12 @@ export default function PopOrDrop() {
   const [shakeKey, setShakeKey] = useState(0);
   const [alreadyPlayed, setAlreadyPlayed] = useState<SavedState | null>(null);
   const recordedRef = useRef(false);
+
+  const [playerName, setPlayerName] = useState<string>(() =>
+    typeof window !== "undefined" ? getStoredPlayerName() : ""
+  );
+  const [isEditingName, setIsEditingName] = useState(false);
+  const [editNameValue, setEditNameValue] = useState("");
 
   // Restore from localStorage — check both "done" state and "started" state (mid-game lock)
   useEffect(() => {
@@ -556,9 +573,64 @@ export default function PopOrDrop() {
                           <span className="font-display font-black text-sm w-6 text-center">
                             {entry.rank === 1 ? "🥇" : entry.rank === 2 ? "🥈" : entry.rank === 3 ? "🥉" : `#${entry.rank}`}
                           </span>
-                          <span className="flex-1 font-bold text-sm">
-                            {isMe ? "You" : `Player ${entry.playerToken.slice(0, 4)}`}
-                          </span>
+                          {isMe ? (
+                            <span className="flex-1 flex items-center gap-1 min-w-0">
+                              {isEditingName ? (
+                                <>
+                                  <input
+                                    autoFocus
+                                    value={editNameValue}
+                                    onChange={(e) => setEditNameValue(e.target.value)}
+                                    onKeyDown={(e) => {
+                                      if (e.key === "Enter") {
+                                        const trimmed = editNameValue.trim();
+                                        if (trimmed) { savePlayerName(trimmed); setPlayerName(trimmed); }
+                                        setIsEditingName(false);
+                                      } else if (e.key === "Escape") {
+                                        setIsEditingName(false);
+                                      }
+                                    }}
+                                    maxLength={20}
+                                    placeholder="Your name"
+                                    className="font-bold text-sm bg-white border-b-2 border-black outline-none w-28 px-1"
+                                  />
+                                  <button
+                                    onClick={() => {
+                                      const trimmed = editNameValue.trim();
+                                      if (trimmed) { savePlayerName(trimmed); setPlayerName(trimmed); }
+                                      setIsEditingName(false);
+                                    }}
+                                    className="p-0.5 text-black hover:text-[#FF1493]"
+                                    aria-label="Save name"
+                                  >
+                                    <Check className="w-3.5 h-3.5" />
+                                  </button>
+                                  <button
+                                    onClick={() => setIsEditingName(false)}
+                                    className="p-0.5 text-black/50 hover:text-black"
+                                    aria-label="Cancel"
+                                  >
+                                    <X className="w-3.5 h-3.5" />
+                                  </button>
+                                </>
+                              ) : (
+                                <>
+                                  <span className="font-bold text-sm truncate">{playerName || "You"}</span>
+                                  <button
+                                    onClick={() => { setEditNameValue(playerName); setIsEditingName(true); }}
+                                    className="p-0.5 text-black/40 hover:text-black shrink-0"
+                                    aria-label="Edit name"
+                                  >
+                                    <Pencil className="w-3 h-3" />
+                                  </button>
+                                </>
+                              )}
+                            </span>
+                          ) : (
+                            <span className="flex-1 font-bold text-sm">
+                              {`Player ${entry.playerToken.slice(0, 4)}`}
+                            </span>
+                          )}
                           <div className="flex items-center gap-1">
                             <Flame className="w-3 h-3 text-[#FF1493]" />
                             <span className="font-display font-black text-sm">{entry.streak}</span>
@@ -570,7 +642,58 @@ export default function PopOrDrop() {
                     {myRank !== null && myRankInTop10 === 0 && (
                       <div className="flex items-center gap-3 px-4 py-2 bg-[#FFD700] border-l-4 border-[#FF1493]">
                         <span className="font-display font-black text-sm w-6 text-center">#{myRank}</span>
-                        <span className="flex-1 font-bold text-sm">You</span>
+                        <span className="flex-1 flex items-center gap-1 min-w-0">
+                          {isEditingName ? (
+                            <>
+                              <input
+                                autoFocus
+                                value={editNameValue}
+                                onChange={(e) => setEditNameValue(e.target.value)}
+                                onKeyDown={(e) => {
+                                  if (e.key === "Enter") {
+                                    const trimmed = editNameValue.trim();
+                                    if (trimmed) { savePlayerName(trimmed); setPlayerName(trimmed); }
+                                    setIsEditingName(false);
+                                  } else if (e.key === "Escape") {
+                                    setIsEditingName(false);
+                                  }
+                                }}
+                                maxLength={20}
+                                placeholder="Your name"
+                                className="font-bold text-sm bg-white border-b-2 border-black outline-none w-28 px-1"
+                              />
+                              <button
+                                onClick={() => {
+                                  const trimmed = editNameValue.trim();
+                                  if (trimmed) { savePlayerName(trimmed); setPlayerName(trimmed); }
+                                  setIsEditingName(false);
+                                }}
+                                className="p-0.5 text-black hover:text-[#FF1493]"
+                                aria-label="Save name"
+                              >
+                                <Check className="w-3.5 h-3.5" />
+                              </button>
+                              <button
+                                onClick={() => setIsEditingName(false)}
+                                className="p-0.5 text-black/50 hover:text-black"
+                                aria-label="Cancel"
+                              >
+                                <X className="w-3.5 h-3.5" />
+                              </button>
+                            </>
+                          ) : (
+                            <>
+                              <span className="font-bold text-sm truncate">{playerName || "You"}</span>
+                              <button
+                                onClick={() => { setEditNameValue(playerName); setIsEditingName(true); }}
+                                className="p-0.5 text-black/40 hover:text-black shrink-0"
+                                aria-label="Edit name"
+                              >
+                                <Pencil className="w-3 h-3" />
+                              </button>
+                            </>
+                          )}
+                        </span>
                         <div className="flex items-center gap-1">
                           <Flame className="w-3 h-3 text-[#FF1493]" />
                           <span className="font-display font-black text-sm">{streak}</span>

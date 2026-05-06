@@ -27,12 +27,17 @@ import type {
   CustomPackPayload,
   DailyStatus,
   ErrorResponse,
+  GetPopBoxLeaderboardParams,
   GetPopOrDropLeaderboardParams,
+  GetSkinnyLeaderboardParams,
+  GetThreeFlopsLeaderboardParams,
   HealthStatus,
   PopBoxAnswers,
   PopBoxGrid,
   PopBoxGuessRequest,
   PopBoxGuessResult,
+  PopBoxLeaderboard,
+  PopBoxScoreRequest,
   PopBoxSummary,
   PopOrDropLeaderboard,
   PopOrDropScoreRequest,
@@ -42,8 +47,15 @@ import type {
   RoastQuestion,
   Room,
   RoomCreated,
+  SkinnyLeaderboard,
+  SkinnyScoreRequest,
+  SubmitPopBoxScore200,
   SubmitPopOrDropScore200,
+  SubmitSkinnyScore200,
+  SubmitThreeFlopsScore200,
   ThreeFlopsChallenge,
+  ThreeFlopsLeaderboard,
+  ThreeFlopsScoreRequest,
   ThreeFlopsSummary,
 } from "./api.schemas";
 
@@ -367,6 +379,199 @@ export function useGetThreeFlopsById<
 
   return { ...query, queryKey: queryOptions.queryKey };
 }
+
+/**
+ * @summary Get Three Flops leaderboard
+ */
+export const getGetThreeFlopsLeaderboardUrl = (
+  params?: GetThreeFlopsLeaderboardParams,
+) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? "null" : value.toString());
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0
+    ? `/api/daily/three-flops/leaderboard?${stringifiedParams}`
+    : `/api/daily/three-flops/leaderboard`;
+};
+
+export const getThreeFlopsLeaderboard = async (
+  params?: GetThreeFlopsLeaderboardParams,
+  options?: RequestInit,
+): Promise<ThreeFlopsLeaderboard> => {
+  return customFetch<ThreeFlopsLeaderboard>(
+    getGetThreeFlopsLeaderboardUrl(params),
+    {
+      ...options,
+      method: "GET",
+    },
+  );
+};
+
+export const getGetThreeFlopsLeaderboardQueryKey = (
+  params?: GetThreeFlopsLeaderboardParams,
+) => {
+  return [
+    `/api/daily/three-flops/leaderboard`,
+    ...(params ? [params] : []),
+  ] as const;
+};
+
+export const getGetThreeFlopsLeaderboardQueryOptions = <
+  TData = Awaited<ReturnType<typeof getThreeFlopsLeaderboard>>,
+  TError = ErrorType<unknown>,
+>(
+  params?: GetThreeFlopsLeaderboardParams,
+  options?: {
+    query?: UseQueryOptions<
+      Awaited<ReturnType<typeof getThreeFlopsLeaderboard>>,
+      TError,
+      TData
+    >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
+
+  const queryKey =
+    queryOptions?.queryKey ?? getGetThreeFlopsLeaderboardQueryKey(params);
+
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof getThreeFlopsLeaderboard>>
+  > = ({ signal }) =>
+    getThreeFlopsLeaderboard(params, { signal, ...requestOptions });
+
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof getThreeFlopsLeaderboard>>,
+    TError,
+    TData
+  > & { queryKey: QueryKey };
+};
+
+export type GetThreeFlopsLeaderboardQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getThreeFlopsLeaderboard>>
+>;
+export type GetThreeFlopsLeaderboardQueryError = ErrorType<unknown>;
+
+/**
+ * @summary Get Three Flops leaderboard
+ */
+
+export function useGetThreeFlopsLeaderboard<
+  TData = Awaited<ReturnType<typeof getThreeFlopsLeaderboard>>,
+  TError = ErrorType<unknown>,
+>(
+  params?: GetThreeFlopsLeaderboardParams,
+  options?: {
+    query?: UseQueryOptions<
+      Awaited<ReturnType<typeof getThreeFlopsLeaderboard>>,
+      TError,
+      TData
+    >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+  const queryOptions = getGetThreeFlopsLeaderboardQueryOptions(params, options);
+
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: QueryKey;
+  };
+
+  return { ...query, queryKey: queryOptions.queryKey };
+}
+
+/**
+ * @summary Submit a Three Flops score
+ */
+export const getSubmitThreeFlopsScoreUrl = () => {
+  return `/api/daily/three-flops/score`;
+};
+
+export const submitThreeFlopsScore = async (
+  threeFlopsScoreRequest: ThreeFlopsScoreRequest,
+  options?: RequestInit,
+): Promise<SubmitThreeFlopsScore200> => {
+  return customFetch<SubmitThreeFlopsScore200>(getSubmitThreeFlopsScoreUrl(), {
+    ...options,
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...options?.headers },
+    body: JSON.stringify(threeFlopsScoreRequest),
+  });
+};
+
+export const getSubmitThreeFlopsScoreMutationOptions = <
+  TError = ErrorType<ErrorResponse>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof submitThreeFlopsScore>>,
+    TError,
+    { data: BodyType<ThreeFlopsScoreRequest> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof submitThreeFlopsScore>>,
+  TError,
+  { data: BodyType<ThreeFlopsScoreRequest> },
+  TContext
+> => {
+  const mutationKey = ["submitThreeFlopsScore"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof submitThreeFlopsScore>>,
+    { data: BodyType<ThreeFlopsScoreRequest> }
+  > = (props) => {
+    const { data } = props ?? {};
+
+    return submitThreeFlopsScore(data, requestOptions);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type SubmitThreeFlopsScoreMutationResult = NonNullable<
+  Awaited<ReturnType<typeof submitThreeFlopsScore>>
+>;
+export type SubmitThreeFlopsScoreMutationBody =
+  BodyType<ThreeFlopsScoreRequest>;
+export type SubmitThreeFlopsScoreMutationError = ErrorType<ErrorResponse>;
+
+/**
+ * @summary Submit a Three Flops score
+ */
+export const useSubmitThreeFlopsScore = <
+  TError = ErrorType<ErrorResponse>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof submitThreeFlopsScore>>,
+    TError,
+    { data: BodyType<ThreeFlopsScoreRequest> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof submitThreeFlopsScore>>,
+  TError,
+  { data: BodyType<ThreeFlopsScoreRequest> },
+  TContext
+> => {
+  return useMutation(getSubmitThreeFlopsScoreMutationOptions(options));
+};
 
 /**
  * @summary Get today's crossword puzzle
@@ -1017,6 +1222,195 @@ export const usePopBoxGuess = <
 };
 
 /**
+ * @summary Get Pop Box leaderboard
+ */
+export const getGetPopBoxLeaderboardUrl = (
+  params?: GetPopBoxLeaderboardParams,
+) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? "null" : value.toString());
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0
+    ? `/api/daily/pop-box/leaderboard?${stringifiedParams}`
+    : `/api/daily/pop-box/leaderboard`;
+};
+
+export const getPopBoxLeaderboard = async (
+  params?: GetPopBoxLeaderboardParams,
+  options?: RequestInit,
+): Promise<PopBoxLeaderboard> => {
+  return customFetch<PopBoxLeaderboard>(getGetPopBoxLeaderboardUrl(params), {
+    ...options,
+    method: "GET",
+  });
+};
+
+export const getGetPopBoxLeaderboardQueryKey = (
+  params?: GetPopBoxLeaderboardParams,
+) => {
+  return [
+    `/api/daily/pop-box/leaderboard`,
+    ...(params ? [params] : []),
+  ] as const;
+};
+
+export const getGetPopBoxLeaderboardQueryOptions = <
+  TData = Awaited<ReturnType<typeof getPopBoxLeaderboard>>,
+  TError = ErrorType<unknown>,
+>(
+  params?: GetPopBoxLeaderboardParams,
+  options?: {
+    query?: UseQueryOptions<
+      Awaited<ReturnType<typeof getPopBoxLeaderboard>>,
+      TError,
+      TData
+    >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
+
+  const queryKey =
+    queryOptions?.queryKey ?? getGetPopBoxLeaderboardQueryKey(params);
+
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof getPopBoxLeaderboard>>
+  > = ({ signal }) =>
+    getPopBoxLeaderboard(params, { signal, ...requestOptions });
+
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof getPopBoxLeaderboard>>,
+    TError,
+    TData
+  > & { queryKey: QueryKey };
+};
+
+export type GetPopBoxLeaderboardQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getPopBoxLeaderboard>>
+>;
+export type GetPopBoxLeaderboardQueryError = ErrorType<unknown>;
+
+/**
+ * @summary Get Pop Box leaderboard
+ */
+
+export function useGetPopBoxLeaderboard<
+  TData = Awaited<ReturnType<typeof getPopBoxLeaderboard>>,
+  TError = ErrorType<unknown>,
+>(
+  params?: GetPopBoxLeaderboardParams,
+  options?: {
+    query?: UseQueryOptions<
+      Awaited<ReturnType<typeof getPopBoxLeaderboard>>,
+      TError,
+      TData
+    >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+  const queryOptions = getGetPopBoxLeaderboardQueryOptions(params, options);
+
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: QueryKey;
+  };
+
+  return { ...query, queryKey: queryOptions.queryKey };
+}
+
+/**
+ * @summary Submit a Pop Box score
+ */
+export const getSubmitPopBoxScoreUrl = () => {
+  return `/api/daily/pop-box/score`;
+};
+
+export const submitPopBoxScore = async (
+  popBoxScoreRequest: PopBoxScoreRequest,
+  options?: RequestInit,
+): Promise<SubmitPopBoxScore200> => {
+  return customFetch<SubmitPopBoxScore200>(getSubmitPopBoxScoreUrl(), {
+    ...options,
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...options?.headers },
+    body: JSON.stringify(popBoxScoreRequest),
+  });
+};
+
+export const getSubmitPopBoxScoreMutationOptions = <
+  TError = ErrorType<ErrorResponse>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof submitPopBoxScore>>,
+    TError,
+    { data: BodyType<PopBoxScoreRequest> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof submitPopBoxScore>>,
+  TError,
+  { data: BodyType<PopBoxScoreRequest> },
+  TContext
+> => {
+  const mutationKey = ["submitPopBoxScore"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof submitPopBoxScore>>,
+    { data: BodyType<PopBoxScoreRequest> }
+  > = (props) => {
+    const { data } = props ?? {};
+
+    return submitPopBoxScore(data, requestOptions);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type SubmitPopBoxScoreMutationResult = NonNullable<
+  Awaited<ReturnType<typeof submitPopBoxScore>>
+>;
+export type SubmitPopBoxScoreMutationBody = BodyType<PopBoxScoreRequest>;
+export type SubmitPopBoxScoreMutationError = ErrorType<ErrorResponse>;
+
+/**
+ * @summary Submit a Pop Box score
+ */
+export const useSubmitPopBoxScore = <
+  TError = ErrorType<ErrorResponse>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof submitPopBoxScore>>,
+    TError,
+    { data: BodyType<PopBoxScoreRequest> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof submitPopBoxScore>>,
+  TError,
+  { data: BodyType<PopBoxScoreRequest> },
+  TContext
+> => {
+  return useMutation(getSubmitPopBoxScoreMutationOptions(options));
+};
+
+/**
  * @summary Get archive of past Pop or Drop daily challenges (excludes today)
  */
 export const getGetPopOrDropArchiveUrl = () => {
@@ -1604,6 +1998,192 @@ export const useCheckClockIt = <
   TContext
 > => {
   return useMutation(getCheckClockItMutationOptions(options));
+};
+
+/**
+ * @summary Get The Skinny crossword leaderboard
+ */
+export const getGetSkinnyLeaderboardUrl = (
+  params?: GetSkinnyLeaderboardParams,
+) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? "null" : value.toString());
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0
+    ? `/api/skinny/leaderboard?${stringifiedParams}`
+    : `/api/skinny/leaderboard`;
+};
+
+export const getSkinnyLeaderboard = async (
+  params?: GetSkinnyLeaderboardParams,
+  options?: RequestInit,
+): Promise<SkinnyLeaderboard> => {
+  return customFetch<SkinnyLeaderboard>(getGetSkinnyLeaderboardUrl(params), {
+    ...options,
+    method: "GET",
+  });
+};
+
+export const getGetSkinnyLeaderboardQueryKey = (
+  params?: GetSkinnyLeaderboardParams,
+) => {
+  return [`/api/skinny/leaderboard`, ...(params ? [params] : [])] as const;
+};
+
+export const getGetSkinnyLeaderboardQueryOptions = <
+  TData = Awaited<ReturnType<typeof getSkinnyLeaderboard>>,
+  TError = ErrorType<unknown>,
+>(
+  params?: GetSkinnyLeaderboardParams,
+  options?: {
+    query?: UseQueryOptions<
+      Awaited<ReturnType<typeof getSkinnyLeaderboard>>,
+      TError,
+      TData
+    >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
+
+  const queryKey =
+    queryOptions?.queryKey ?? getGetSkinnyLeaderboardQueryKey(params);
+
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof getSkinnyLeaderboard>>
+  > = ({ signal }) =>
+    getSkinnyLeaderboard(params, { signal, ...requestOptions });
+
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof getSkinnyLeaderboard>>,
+    TError,
+    TData
+  > & { queryKey: QueryKey };
+};
+
+export type GetSkinnyLeaderboardQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getSkinnyLeaderboard>>
+>;
+export type GetSkinnyLeaderboardQueryError = ErrorType<unknown>;
+
+/**
+ * @summary Get The Skinny crossword leaderboard
+ */
+
+export function useGetSkinnyLeaderboard<
+  TData = Awaited<ReturnType<typeof getSkinnyLeaderboard>>,
+  TError = ErrorType<unknown>,
+>(
+  params?: GetSkinnyLeaderboardParams,
+  options?: {
+    query?: UseQueryOptions<
+      Awaited<ReturnType<typeof getSkinnyLeaderboard>>,
+      TError,
+      TData
+    >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+  const queryOptions = getGetSkinnyLeaderboardQueryOptions(params, options);
+
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: QueryKey;
+  };
+
+  return { ...query, queryKey: queryOptions.queryKey };
+}
+
+/**
+ * @summary Submit a Skinny crossword completion time
+ */
+export const getSubmitSkinnyScoreUrl = () => {
+  return `/api/skinny/score`;
+};
+
+export const submitSkinnyScore = async (
+  skinnyScoreRequest: SkinnyScoreRequest,
+  options?: RequestInit,
+): Promise<SubmitSkinnyScore200> => {
+  return customFetch<SubmitSkinnyScore200>(getSubmitSkinnyScoreUrl(), {
+    ...options,
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...options?.headers },
+    body: JSON.stringify(skinnyScoreRequest),
+  });
+};
+
+export const getSubmitSkinnyScoreMutationOptions = <
+  TError = ErrorType<ErrorResponse>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof submitSkinnyScore>>,
+    TError,
+    { data: BodyType<SkinnyScoreRequest> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof submitSkinnyScore>>,
+  TError,
+  { data: BodyType<SkinnyScoreRequest> },
+  TContext
+> => {
+  const mutationKey = ["submitSkinnyScore"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof submitSkinnyScore>>,
+    { data: BodyType<SkinnyScoreRequest> }
+  > = (props) => {
+    const { data } = props ?? {};
+
+    return submitSkinnyScore(data, requestOptions);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type SubmitSkinnyScoreMutationResult = NonNullable<
+  Awaited<ReturnType<typeof submitSkinnyScore>>
+>;
+export type SubmitSkinnyScoreMutationBody = BodyType<SkinnyScoreRequest>;
+export type SubmitSkinnyScoreMutationError = ErrorType<ErrorResponse>;
+
+/**
+ * @summary Submit a Skinny crossword completion time
+ */
+export const useSubmitSkinnyScore = <
+  TError = ErrorType<ErrorResponse>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof submitSkinnyScore>>,
+    TError,
+    { data: BodyType<SkinnyScoreRequest> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof submitSkinnyScore>>,
+  TError,
+  { data: BodyType<SkinnyScoreRequest> },
+  TContext
+> => {
+  return useMutation(getSubmitSkinnyScoreMutationOptions(options));
 };
 
 /**

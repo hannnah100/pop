@@ -92,6 +92,60 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
 
+  /daily/three-flops/leaderboard:
+    get:
+      operationId: getThreeFlopsLeaderboard
+      tags: [daily]
+      summary: Get Three Flops leaderboard
+      parameters:
+        - name: date
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: playerToken
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Leaderboard data
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ThreeFlopsLeaderboard"
+
+  /daily/three-flops/score:
+    post:
+      operationId: submitThreeFlopsScore
+      tags: [daily]
+      summary: Submit a Three Flops score
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ThreeFlopsScoreRequest"
+      responses:
+        "200":
+          description: Score submitted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                required:
+                  - ok
+        "400":
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
   /daily/crossword:
     get:
       operationId: getTodayCrossword
@@ -266,6 +320,60 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
 
+  /daily/pop-box/leaderboard:
+    get:
+      operationId: getPopBoxLeaderboard
+      tags: [daily]
+      summary: Get Pop Box leaderboard
+      parameters:
+        - name: date
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: playerToken
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Leaderboard data
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PopBoxLeaderboard"
+
+  /daily/pop-box/score:
+    post:
+      operationId: submitPopBoxScore
+      tags: [daily]
+      summary: Submit a Pop Box score
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PopBoxScoreRequest"
+      responses:
+        "200":
+          description: Score submitted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                required:
+                  - ok
+        "400":
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
   /daily/pop-or-drop/archive:
     get:
       operationId: getPopOrDropArchive
@@ -412,6 +520,60 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "404":
           description: Puzzle not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /skinny/leaderboard:
+    get:
+      operationId: getSkinnyLeaderboard
+      tags: [daily]
+      summary: Get The Skinny crossword leaderboard
+      parameters:
+        - name: puzzleId
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: playerToken
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Leaderboard data
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SkinnyLeaderboard"
+
+  /skinny/score:
+    post:
+      operationId: submitSkinnyScore
+      tags: [daily]
+      summary: Submit a Skinny crossword completion time
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SkinnyScoreRequest"
+      responses:
+        "200":
+          description: Score submitted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                required:
+                  - ok
+        "400":
+          description: Invalid request
           content:
             application/json:
               schema:
@@ -1402,3 +1564,167 @@ components:
         - playerToken
         - streak
         - date
+
+    ThreeFlopsLeaderboardEntry:
+      type: object
+      properties:
+        rank:
+          type: integer
+        playerToken:
+          type: string
+        score:
+          type: integer
+      required:
+        - rank
+        - playerToken
+        - score
+
+    ThreeFlopsLeaderboard:
+      type: object
+      properties:
+        date:
+          type: string
+        top10:
+          type: array
+          items:
+            $ref: "#/components/schemas/ThreeFlopsLeaderboardEntry"
+        totalPlayers:
+          type: integer
+        avgScore:
+          type: integer
+        medianScore:
+          type: integer
+        playerRank:
+          type: integer
+          nullable: true
+      required:
+        - date
+        - top10
+        - totalPlayers
+        - avgScore
+        - medianScore
+
+    ThreeFlopsScoreRequest:
+      type: object
+      properties:
+        playerToken:
+          type: string
+        score:
+          type: integer
+          minimum: 0
+          maximum: 100
+        date:
+          type: string
+      required:
+        - playerToken
+        - score
+        - date
+
+    PopBoxLeaderboardEntry:
+      type: object
+      properties:
+        rank:
+          type: integer
+        playerToken:
+          type: string
+        score:
+          type: integer
+      required:
+        - rank
+        - playerToken
+        - score
+
+    PopBoxLeaderboard:
+      type: object
+      properties:
+        date:
+          type: string
+        top10:
+          type: array
+          items:
+            $ref: "#/components/schemas/PopBoxLeaderboardEntry"
+        totalPlayers:
+          type: integer
+        avgScore:
+          type: integer
+        medianScore:
+          type: integer
+        playerRank:
+          type: integer
+          nullable: true
+      required:
+        - date
+        - top10
+        - totalPlayers
+        - avgScore
+        - medianScore
+
+    PopBoxScoreRequest:
+      type: object
+      properties:
+        playerToken:
+          type: string
+        score:
+          type: integer
+          minimum: 0
+          maximum: 9
+        date:
+          type: string
+      required:
+        - playerToken
+        - score
+        - date
+
+    SkinnyLeaderboardEntry:
+      type: object
+      properties:
+        rank:
+          type: integer
+        playerToken:
+          type: string
+        completionTimeSecs:
+          type: integer
+      required:
+        - rank
+        - playerToken
+        - completionTimeSecs
+
+    SkinnyLeaderboard:
+      type: object
+      properties:
+        puzzleId:
+          type: string
+        top10:
+          type: array
+          items:
+            $ref: "#/components/schemas/SkinnyLeaderboardEntry"
+        totalPlayers:
+          type: integer
+        avgTimeSecs:
+          type: integer
+        medianTimeSecs:
+          type: integer
+        playerRank:
+          type: integer
+          nullable: true
+      required:
+        - puzzleId
+        - top10
+        - totalPlayers
+        - avgTimeSecs
+        - medianTimeSecs
+
+    SkinnyScoreRequest:
+      type: object
+      properties:
+        playerToken:
+          type: string
+        puzzleId:
+          type: string
+        completionTimeSecs:
+          type: integer
+          minimum: 0
+      required:
+        - playerToken
+        - puzzleId
+        - completionTimeSecs

@@ -11,7 +11,16 @@
       "Bash(awk '{print $NF}')",
       "Bash(awk '{print $1, $2, $11}')",
       "Bash(xargs cat)",
-      "Bash(printenv)"
+      "Bash(printenv)",
+      "Bash(pnpm run *)",
+      "Bash(xargs rm -f)",
+      "Bash(pnpm --filter @workspace/pop-the-question run typecheck)",
+      "Bash(tsc --build)",
+      "Bash(xargs ls -la)",
+      "Bash(pnpm --filter @workspace/pop-the-question --filter @workspace/api-server run typecheck)",
+      "Bash(git -C /home/runner/workspace diff --name-only HEAD lib/api-spec/openapi.yaml)",
+      "Bash(git -C /home/runner/workspace status lib/api-spec/openapi.yaml)",
+      "Bash(git -C /home/runner/workspace diff HEAD lib/api-client-react/src/generated/api.schemas.ts)"
     ]
   }
 }

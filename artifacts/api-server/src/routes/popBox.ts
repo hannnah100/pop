@@ -1,6 +1,6 @@
 import { randomBytes } from "crypto";
 import { Router, type IRouter } from "express";
-import { db, popBoxGridsTable, popBoxAnswerCountsTable } from "@workspace/db";
+import { db, popBoxGridsTable, popBoxAnswerCountsTable, popBoxScoresTable } from "@workspace/db";
 import { eq, desc, and, sql } from "drizzle-orm";
 import {
   GetTodayPopBoxResponse,
@@ -584,6 +584,106 @@ router.post("/daily/pop-box/:id/guess", async (req, res): Promise<void> => {
       rarityPercent: Math.round(rarityPercent * 10) / 10,
     }),
   );
+});
+
+router.get("/daily/pop-box/leaderboard", async (req, res): Promise<void> => {
+  const date = (req.query.date as string) || todayDate();
+  const playerToken = (req.query.playerToken as string) || "";
+
+  const top10Rows = await db
+    .select({
+      playerToken: popBoxScoresTable.playerToken,
+      score: popBoxScoresTable.score,
+    })
+    .from(popBoxScoresTable)
+    .where(eq(popBoxScoresTable.date, date))
+    .orderBy(desc(popBoxScoresTable.score))
+    .limit(10);
+
+  const top10 = top10Rows.map((r, i) => ({
+    rank: i + 1,
+    playerToken: r.playerToken,
+    score: r.score,
+  }));
+
+  const agg = await db
+    .select({
+      totalPlayers: sql<number>`count(*)::int`,
+      avgScore: sql<number>`coalesce(round(avg(score)), 0)::int`,
+    })
+    .from(popBoxScoresTable)
+    .where(eq(popBoxScoresTable.date, date))
+    .then((r) => r[0] ?? { totalPlayers: 0, avgScore: 0 });
+
+  const medianRow = await db
+    .select({
+      medianScore: sql<number>`coalesce(percentile_cont(0.5) within group (order by score), 0)::int`,
+    })
+    .from(popBoxScoresTable)
+    .where(eq(popBoxScoresTable.date, date))
+    .then((r) => r[0]);
+  const medianScore = medianRow?.medianScore ?? 0;
+
+  let playerRank: number | null = null;
+  if (playerToken) {
+    const playerRow = await db
+      .select({ score: popBoxScoresTable.score })
+      .from(popBoxScoresTable)
+      .where(
+        sql`${popBoxScoresTable.date} = ${date} AND ${popBoxScoresTable.playerToken} = ${playerToken}`,
+      )
+      .limit(1)
+      .then((rows) => rows[0]);
+
+    if (playerRow !== undefined) {
+      const above = await db
+        .select({ cnt: sql<number>`count(*)::int` })
+        .from(popBoxScoresTable)
+        .where(
+          sql`${popBoxScoresTable.date} = ${date} AND ${popBoxScoresTable.score} > ${playerRow.score}`,
+        )
+        .then((r) => r[0]?.cnt ?? 0);
+      playerRank = above + 1;
+    }
+  }
+
+  res.json({ date, top10, totalPlayers: agg.totalPlayers, avgScore: agg.avgScore, medianScore, playerRank });
+});
+
+router.post("/daily/pop-box/score", async (req, res): Promise<void> => {
+  const { playerToken, score, date } = req.body as {
+    playerToken?: unknown;
+    score?: unknown;
+    date?: unknown;
+  };
+
+  if (
+    typeof playerToken !== "string" ||
+    playerToken.length < 1 ||
+    playerToken.length > 64 ||
+    typeof score !== "number" ||
+    !Number.isInteger(score) ||
+    score < 0 ||
+    score > 9 ||
+    typeof date !== "string" ||
+    !/^\d{4}-\d{2}-\d{2}$/.test(date)
+  ) {
+    res.status(400).json({ error: "Invalid request body" });
+    return;
+  }
+
+  await db
+    .insert(popBoxScoresTable)
+    .values({ date, playerToken, score })
+    .onConflictDoUpdate({
+      target: [popBoxScoresTable.date, popBoxScoresTable.playerToken],
+      set: {
+        score: sql`greatest(${popBoxScoresTable.score}, excluded.score)`,
+        createdAt: sql`${popBoxScoresTable.createdAt}`,
+      },
+    });
+
+  res.json({ ok: true });
 });
 
 export default router;

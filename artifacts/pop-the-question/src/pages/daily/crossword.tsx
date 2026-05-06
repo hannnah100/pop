@@ -1,9 +1,15 @@
 import { useState, useEffect, useRef, useMemo, useCallback } from "react";
 import { useLocation, useSearch } from "wouter";
-import { useGetTodayCrossword, useGetCrosswordById } from "@workspace/api-client-react";
+import {
+  useGetTodayCrossword,
+  useGetCrosswordById,
+  useGetSkinnyLeaderboard,
+  useSubmitSkinnyScore,
+  getGetSkinnyLeaderboardQueryKey,
+} from "@workspace/api-client-react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Share2, Home as HomeIcon, CheckCircle2 } from "lucide-react";
+import { Share2, Home as HomeIcon, CheckCircle2, Trophy, BarChart2, Pencil, Check, X } from "lucide-react";
 import { BackArrow } from "@/components/ui/BackArrow";
 import { useToast } from "@/hooks/use-toast";
 import {
@@ -17,6 +23,22 @@ import { StarDoodle, LightningDoodle } from "@/components/fx/Doodles";
 import { useSfx } from "@/lib/sfx";
 import { hapticCorrect, hapticVictory, hapticWrong } from "@/lib/haptics";
 import { useStreaks, type Banner } from "@/lib/streaks";
+import { useQueryClient } from "@tanstack/react-query";
+
+function getPlayerToken(): string {
+  let token = localStorage.getItem("ptq-player-token");
+  if (!token) {
+    token = crypto.randomUUID();
+    localStorage.setItem("ptq-player-token", token);
+  }
+  return token;
+}
+function getStoredPlayerName(): string {
+  return localStorage.getItem("ptq-player-name") ?? "";
+}
+function savePlayerName(name: string): void {
+  localStorage.setItem("ptq-player-name", name.trim());
+}
 
 const TARGET_TIME = 240;
 
@@ -27,6 +49,7 @@ export default function Crossword() {
   const { toast } = useToast();
   const { playCorrect, playWrong, playTick, playVictory } = useSfx();
   const { recordGame } = useStreaks();
+  const queryClient = useQueryClient();
 
   const { data: todayPuzzle, isLoading: todayLoading } = useGetTodayCrossword({ query: { enabled: !archiveId } });
   const { data: archivePuzzle, isLoading: archiveLoading } = useGetCrosswordById(archiveId ?? "", { query: { enabled: !!archiveId } });
@@ -50,6 +73,23 @@ export default function Crossword() {
   const gridSectionRef = useRef<HTMLDivElement>(null);
   const hiddenInputRef = useRef<HTMLInputElement>(null);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  const [leaderboardEnabled, setLeaderboardEnabled] = useState(false);
+  const [playerToken] = useState(() => getPlayerToken());
+  const [playerName, setPlayerName] = useState(() => getStoredPlayerName());
+  const [isEditingName, setIsEditingName] = useState(false);
+  const [editNameValue, setEditNameValue] = useState("");
+
+  const skinnyLeaderboardQuery = useGetSkinnyLeaderboard(
+    { puzzleId: puzzle?.id, playerToken },
+    {
+      query: {
+        queryKey: getGetSkinnyLeaderboardQueryKey({ puzzleId: puzzle?.id, playerToken }),
+        enabled: leaderboardEnabled && !archiveId && !!puzzle?.id,
+      },
+    },
+  );
+  const scoresMutation = useSubmitSkinnyScore();
 
   const [isTouchDevice, setIsTouchDevice] = useState(false);
   useEffect(() => {
@@ -88,6 +128,7 @@ export default function Crossword() {
               setIsCompleted(true);
               setElapsedTime(parsed.time);
               recordedRef.current = true;
+              setLeaderboardEnabled(true);
               return;
             }
           }
@@ -278,6 +319,17 @@ export default function Crossword() {
       const newBanners = recordGame("crossword", Math.max(1, TARGET_TIME - elapsedTime));
       if (newBanners.length > 0) setBanners((b) => [...b, ...newBanners]);
     }
+    if (!archiveId && puzzle?.id) {
+      scoresMutation.mutate(
+        { data: { playerToken, puzzleId: puzzle.id, completionTimeSecs: elapsedTime } },
+        {
+          onSettled: () => {
+            setLeaderboardEnabled(true);
+            queryClient.invalidateQueries({ queryKey: getGetSkinnyLeaderboardQueryKey({ puzzleId: puzzle.id, playerToken }) });
+          },
+        },
+      );
+    }
   };
 
   const handleShare = () => {
@@ -345,6 +397,15 @@ export default function Crossword() {
     hiddenInputRef.current?.focus({ preventScroll: true });
     gridSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }, [isCompleted, clueNumToCell]);
+
+  const lbData = skinnyLeaderboardQuery.data;
+  const serverRank = lbData?.playerRank ?? null;
+  const myRankInTop10 = lbData?.top10.findIndex((e) => e.playerToken === playerToken) ?? -1;
+  const myRank = serverRank ?? (myRankInTop10 >= 0 ? myRankInTop10 + 1 : null);
+  const rankPercentile =
+    myRank !== null && lbData && lbData.totalPlayers > 0
+      ? Math.round(((lbData.totalPlayers - myRank) / lbData.totalPlayers) * 100)
+      : null;
 
   if (isLoading || !puzzle) {
     return (
@@ -480,34 +541,164 @@ export default function Crossword() {
               Check Grid
             </Button>
           ) : (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9, y: 12 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              transition={{ type: "spring", stiffness: 220, damping: 22 }}
-              className="mt-6 bg-[#00C853] border-[3px] border-black shadow-[4px_4px_0_#000] p-6 text-center w-full max-w-[340px]"
-            >
-              <CheckCircle2 className="w-12 h-12 text-black mx-auto mb-3" />
-              <h3 className="font-display text-2xl font-black text-black uppercase mb-1">Solved!</h3>
-              <p className="text-black/70 font-sans mb-4">
-                Time: <span className="font-black text-black">{formatTime(elapsedTime)}</span>
-              </p>
-              <div className="flex gap-2 justify-center">
-                <Button
-                  onClick={handleShare}
-                  className="bg-black text-[#FFD700] hover:bg-[#FF1493] hover:text-black border-[3px] border-black shadow-[3px_3px_0_rgba(0,0,0,0.3)]"
-                  data-testid="btn-share"
+            <>
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9, y: 12 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                transition={{ type: "spring", stiffness: 220, damping: 22 }}
+                className="mt-6 bg-[#00C853] border-[3px] border-black shadow-[4px_4px_0_#000] p-6 text-center w-full max-w-[340px]"
+              >
+                <CheckCircle2 className="w-12 h-12 text-black mx-auto mb-3" />
+                <h3 className="font-display text-2xl font-black text-black uppercase mb-1">Solved!</h3>
+                <p className="text-black/70 font-sans mb-2">
+                  Time: <span className="font-black text-black">{formatTime(elapsedTime)}</span>
+                </p>
+                {rankPercentile !== null && (
+                  <p className="text-sm font-bold text-black/80 font-sans mb-4">
+                    Faster than <span className="text-black font-black">{rankPercentile}%</span> of players
+                  </p>
+                )}
+                <div className="flex gap-2 justify-center">
+                  <Button
+                    onClick={handleShare}
+                    className="bg-black text-[#FFD700] hover:bg-[#FF1493] hover:text-black border-[3px] border-black shadow-[3px_3px_0_rgba(0,0,0,0.3)]"
+                    data-testid="btn-share"
+                  >
+                    <Share2 className="w-4 h-4 mr-2" /> Share
+                  </Button>
+                  <Button
+                    variant="outline"
+                    onClick={() => setLocation("/")}
+                    data-testid="btn-home"
+                  >
+                    <HomeIcon className="w-4 h-4 mr-2" /> Home
+                  </Button>
+                </div>
+              </motion.div>
+
+              {leaderboardEnabled && !archiveId && (
+                <motion.div
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3, type: "spring", stiffness: 180, damping: 20 }}
+                  className="mt-4 w-full max-w-[340px]"
                 >
-                  <Share2 className="w-4 h-4 mr-2" /> Share
-                </Button>
-                <Button
-                  variant="outline"
-                  onClick={() => setLocation("/")}
-                  data-testid="btn-home"
-                >
-                  <HomeIcon className="w-4 h-4 mr-2" /> Home
-                </Button>
-              </div>
-            </motion.div>
+                  <div className="bg-black border-[3px] border-black shadow-[4px_4px_0_#000] px-4 py-3 flex items-center justify-between mb-0">
+                    <div className="flex items-center gap-2">
+                      <Trophy className="w-5 h-5 text-[#FFD700]" />
+                      <span className="font-display font-black text-white uppercase tracking-wide text-sm">Leaderboard</span>
+                    </div>
+                    {lbData && lbData.totalPlayers > 0 && (
+                      <span className="bg-[#FFD700] text-black font-black font-display text-xs px-2 py-0.5 border border-black">
+                        {lbData.totalPlayers} {lbData.totalPlayers === 1 ? "player" : "players"}
+                      </span>
+                    )}
+                  </div>
+
+                  {skinnyLeaderboardQuery.isLoading ? (
+                    <div className="border-[3px] border-t-0 border-black p-4 text-center text-sm text-black/50">Loading...</div>
+                  ) : lbData && lbData.top10.length > 0 ? (
+                    <div className="border-[3px] border-t-0 border-black divide-y divide-black/10">
+                      {lbData.top10.map((entry) => {
+                        const isMe = entry.playerToken === playerToken;
+                        const rankEmoji = entry.rank === 1 ? "🥇" : entry.rank === 2 ? "🥈" : entry.rank === 3 ? "🥉" : `#${entry.rank}`;
+                        return (
+                          <div
+                            key={entry.playerToken}
+                            className={`flex items-center justify-between px-4 py-2 ${isMe ? "bg-[#00C853]/15 font-bold" : ""}`}
+                          >
+                            <div className="flex items-center gap-3">
+                              <span className="font-black font-display text-sm w-8">{rankEmoji}</span>
+                              {isMe ? (
+                                isEditingName ? (
+                                  <div className="flex items-center gap-1">
+                                    <input
+                                      className="border border-black px-1 py-0.5 text-sm font-sans w-28 focus:outline-none"
+                                      value={editNameValue}
+                                      onChange={(e) => setEditNameValue(e.target.value)}
+                                      onKeyDown={(e) => {
+                                        if (e.key === "Enter") {
+                                          savePlayerName(editNameValue);
+                                          setPlayerName(editNameValue.trim() || "You");
+                                          setIsEditingName(false);
+                                        } else if (e.key === "Escape") {
+                                          setIsEditingName(false);
+                                        }
+                                      }}
+                                      autoFocus
+                                      maxLength={20}
+                                    />
+                                    <button
+                                      onClick={() => {
+                                        savePlayerName(editNameValue);
+                                        setPlayerName(editNameValue.trim() || "You");
+                                        setIsEditingName(false);
+                                      }}
+                                      className="text-[#00C853] hover:text-black"
+                                    >
+                                      <Check className="w-4 h-4" />
+                                    </button>
+                                    <button onClick={() => setIsEditingName(false)} className="text-black/40 hover:text-black">
+                                      <X className="w-4 h-4" />
+                                    </button>
+                                  </div>
+                                ) : (
+                                  <button
+                                    className="flex items-center gap-1 text-sm font-bold font-sans hover:underline"
+                                    onClick={() => { setEditNameValue(playerName || ""); setIsEditingName(true); }}
+                                  >
+                                    {playerName || "You"}
+                                    <Pencil className="w-3 h-3 text-black/40" />
+                                  </button>
+                                )
+                              ) : (
+                                <span className="text-sm font-sans text-black/60">
+                                  {`Player ${entry.rank}`}
+                                </span>
+                              )}
+                            </div>
+                            <span className="font-black font-display text-sm">{formatTime(entry.completionTimeSecs)}</span>
+                          </div>
+                        );
+                      })}
+
+                      {myRank !== null && myRankInTop10 === -1 && (
+                        <>
+                          <div className="px-4 py-1 text-center text-xs text-black/30 font-sans">• • •</div>
+                          <div className="flex items-center justify-between px-4 py-2 bg-[#00C853]/15 font-bold">
+                            <div className="flex items-center gap-3">
+                              <span className="font-black font-display text-sm w-8">#{myRank}</span>
+                              <button
+                                className="flex items-center gap-1 text-sm font-bold font-sans hover:underline"
+                                onClick={() => { setEditNameValue(playerName || ""); setIsEditingName(true); }}
+                              >
+                                {playerName || "You"}
+                                <Pencil className="w-3 h-3 text-black/40" />
+                              </button>
+                            </div>
+                            <span className="font-black font-display text-sm">{formatTime(elapsedTime)}</span>
+                          </div>
+                        </>
+                      )}
+
+                      {lbData.totalPlayers > 0 && (
+                        <div className="flex items-center justify-between px-4 py-2 bg-black/5 text-xs text-black/50 font-sans">
+                          <div className="flex items-center gap-1">
+                            <BarChart2 className="w-3 h-3" />
+                            <span>Avg: {formatTime(lbData.avgTimeSecs)}</span>
+                          </div>
+                          <span>Median: {formatTime(lbData.medianTimeSecs)}</span>
+                        </div>
+                      )}
+                    </div>
+                  ) : (
+                    <div className="border-[3px] border-t-0 border-black p-4 text-center text-sm text-black/50 font-sans">
+                      Be the first to complete today's puzzle!
+                    </div>
+                  )}
+                </motion.div>
+              )}
+            </>
           )}
         </div>
 

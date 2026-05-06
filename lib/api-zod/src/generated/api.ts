@@ -69,6 +69,48 @@ export const GetThreeFlopsByIdResponse = zod.object({
 });
 
 /**
+ * @summary Get Three Flops leaderboard
+ */
+export const GetThreeFlopsLeaderboardQueryParams = zod.object({
+  date: zod.coerce.string().optional(),
+  playerToken: zod.coerce.string().optional(),
+});
+
+export const GetThreeFlopsLeaderboardResponse = zod.object({
+  date: zod.string(),
+  top10: zod.array(
+    zod.object({
+      rank: zod.number(),
+      playerToken: zod.string(),
+      score: zod.number(),
+    }),
+  ),
+  totalPlayers: zod.number(),
+  avgScore: zod.number(),
+  medianScore: zod.number(),
+  playerRank: zod.number().nullish(),
+});
+
+/**
+ * @summary Submit a Three Flops score
+ */
+export const submitThreeFlopsScoreBodyScoreMin = 0;
+export const submitThreeFlopsScoreBodyScoreMax = 100;
+
+export const SubmitThreeFlopsScoreBody = zod.object({
+  playerToken: zod.string(),
+  score: zod
+    .number()
+    .min(submitThreeFlopsScoreBodyScoreMin)
+    .max(submitThreeFlopsScoreBodyScoreMax),
+  date: zod.string(),
+});
+
+export const SubmitThreeFlopsScoreResponse = zod.object({
+  ok: zod.boolean(),
+});
+
+/**
  * @summary Get today's crossword puzzle
  */
 export const GetTodayCrosswordResponse = zod.object({
@@ -114,7 +156,6 @@ export const GetTodayPopBoxResponse = zod.object({
   id: zod.string(),
   date: zod.string(),
   difficulty: zod.enum(["easy", "medium", "hard"]),
-  mode: zod.enum(["celebrity-categories", "artist-alphabet", "actor-alphabet"]).optional().default("celebrity-categories"),
   rowCategories: zod.array(
     zod.object({
       id: zod.string(),
@@ -152,7 +193,6 @@ export const GetPopBoxByIdResponse = zod.object({
   id: zod.string(),
   date: zod.string(),
   difficulty: zod.enum(["easy", "medium", "hard"]),
-  mode: zod.enum(["celebrity-categories", "artist-alphabet", "actor-alphabet"]).optional().default("celebrity-categories"),
   rowCategories: zod.array(
     zod.object({
       id: zod.string(),
@@ -229,6 +269,48 @@ export const PopBoxGuessResponse = zod.object({
   celebrityId: zod.string().nullish(),
   celebrityName: zod.string().nullish(),
   rarityPercent: zod.number().nullish(),
+});
+
+/**
+ * @summary Get Pop Box leaderboard
+ */
+export const GetPopBoxLeaderboardQueryParams = zod.object({
+  date: zod.coerce.string().optional(),
+  playerToken: zod.coerce.string().optional(),
+});
+
+export const GetPopBoxLeaderboardResponse = zod.object({
+  date: zod.string(),
+  top10: zod.array(
+    zod.object({
+      rank: zod.number(),
+      playerToken: zod.string(),
+      score: zod.number(),
+    }),
+  ),
+  totalPlayers: zod.number(),
+  avgScore: zod.number(),
+  medianScore: zod.number(),
+  playerRank: zod.number().nullish(),
+});
+
+/**
+ * @summary Submit a Pop Box score
+ */
+export const submitPopBoxScoreBodyScoreMin = 0;
+export const submitPopBoxScoreBodyScoreMax = 9;
+
+export const SubmitPopBoxScoreBody = zod.object({
+  playerToken: zod.string(),
+  score: zod
+    .number()
+    .min(submitPopBoxScoreBodyScoreMin)
+    .max(submitPopBoxScoreBodyScoreMax),
+  date: zod.string(),
+});
+
+export const SubmitPopBoxScoreResponse = zod.object({
+  ok: zod.boolean(),
 });
 
 /**
@@ -354,6 +436,46 @@ export const CheckClockItBody = zod.object({
 export const CheckClockItResponse = zod.object({
   correct: zod.boolean(),
   year: zod.number().nullish(),
+});
+
+/**
+ * @summary Get The Skinny crossword leaderboard
+ */
+export const GetSkinnyLeaderboardQueryParams = zod.object({
+  puzzleId: zod.coerce.string().optional(),
+  playerToken: zod.coerce.string().optional(),
+});
+
+export const GetSkinnyLeaderboardResponse = zod.object({
+  puzzleId: zod.string(),
+  top10: zod.array(
+    zod.object({
+      rank: zod.number(),
+      playerToken: zod.string(),
+      completionTimeSecs: zod.number(),
+    }),
+  ),
+  totalPlayers: zod.number(),
+  avgTimeSecs: zod.number(),
+  medianTimeSecs: zod.number(),
+  playerRank: zod.number().nullish(),
+});
+
+/**
+ * @summary Submit a Skinny crossword completion time
+ */
+export const submitSkinnyScoreBodyCompletionTimeSecsMin = 0;
+
+export const SubmitSkinnyScoreBody = zod.object({
+  playerToken: zod.string(),
+  puzzleId: zod.string(),
+  completionTimeSecs: zod
+    .number()
+    .min(submitSkinnyScoreBodyCompletionTimeSecsMin),
+});
+
+export const SubmitSkinnyScoreResponse = zod.object({
+  ok: zod.boolean(),
 });
 
 /**

@@ -3,11 +3,14 @@ import { useLocation } from "wouter";
 import {
   useGetTodayThreeFlops,
   useGetThreeFlopsById,
+  useGetThreeFlopsLeaderboard,
+  useSubmitThreeFlopsScore,
   getGetTodayThreeFlopsQueryKey,
   getGetThreeFlopsByIdQueryKey,
+  getGetThreeFlopsLeaderboardQueryKey,
 } from "@workspace/api-client-react";
 import { motion } from "framer-motion";
-import { AlertCircle, ArrowRight, Share2, Home as HomeIcon } from "lucide-react";
+import { AlertCircle, ArrowRight, Share2, Home as HomeIcon, Trophy, BarChart2, Pencil, Check, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
@@ -32,6 +35,23 @@ import { useReducedMotion, easing } from "@/lib/motion";
 function useQueryParam(key: string): string | null {
   if (typeof window === "undefined") return null;
   return new URLSearchParams(window.location.search).get(key);
+}
+
+function getPlayerToken(): string {
+  let token = localStorage.getItem("ptq-player-token");
+  if (!token) {
+    token = crypto.randomUUID();
+    localStorage.setItem("ptq-player-token", token);
+  }
+  return token;
+}
+
+function getStoredPlayerName(): string {
+  return localStorage.getItem("ptq-player-name") ?? "";
+}
+
+function savePlayerName(name: string): void {
+  localStorage.setItem("ptq-player-name", name.trim());
 }
 
 export default function ThreeFlops() {
@@ -67,6 +87,25 @@ export default function ThreeFlops() {
   const cellRefs = useRef<Array<HTMLDivElement | null>>([]);
 
   const todayDate = new Date().toISOString().split("T")[0];
+
+  const [leaderboardEnabled, setLeaderboardEnabled] = useState(false);
+  const playerToken = typeof window !== "undefined" ? getPlayerToken() : "";
+  const [playerName, setPlayerName] = useState<string>(() =>
+    typeof window !== "undefined" ? getStoredPlayerName() : ""
+  );
+  const [isEditingName, setIsEditingName] = useState(false);
+  const [editNameValue, setEditNameValue] = useState("");
+
+  const leaderboardQuery = useGetThreeFlopsLeaderboard(
+    { date: challenge?.date ?? todayDate, playerToken },
+    {
+      query: {
+        queryKey: getGetThreeFlopsLeaderboardQueryKey({ date: challenge?.date ?? todayDate, playerToken }),
+        enabled: leaderboardEnabled,
+      },
+    },
+  );
+  const scoresMutation = useSubmitThreeFlopsScore();
   // Storage keys (`ptq-three-strikes-…`, `ptq-archive-ts-…`,
   // `ptq-streak-three-strikes`, `ptq-stats.threeStrikes*`) are intentionally
   // kept under their legacy names so player progress saved before the rename
@@ -90,6 +129,7 @@ export default function ThreeFlops() {
           setFlops(parsed.flops ?? parsed.strikes ?? 0);
           setGuesses(parsed.guesses ?? []);
           recordedRef.current = true;
+          setLeaderboardEnabled(true);
         }
       }
     } catch {/* ignore */}
@@ -135,6 +175,15 @@ export default function ThreeFlops() {
       const newBanners = recordGame("three-flops", guesses.length);
       if (hasWon) { playVictory(); hapticVictory(); fireBigCelebration(); }
       if (newBanners.length > 0) setBanners((b) => [...b, ...newBanners]);
+      if (!isArchive && challenge) {
+        scoresMutation.mutate(
+          { data: { playerToken, score: guesses.length, date: challenge.date } },
+          {
+            onSuccess: () => setLeaderboardEnabled(true),
+            onError: () => setLeaderboardEnabled(true),
+          },
+        );
+      }
     }
   }, [gameOver]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -197,6 +246,17 @@ export default function ThreeFlops() {
     ].join("\n");
     navigator.clipboard.writeText(shareText).then(() => toast({ title: "Copied!", description: "Share your score with friends." }));
   };
+
+  const leaderboard = leaderboardQuery.data;
+  const serverRank = leaderboard?.playerRank ?? null;
+  const myRankInTop10 = leaderboard
+    ? leaderboard.top10.findIndex((e) => e.playerToken === playerToken) + 1
+    : 0;
+  const myRank = serverRank ?? (myRankInTop10 > 0 ? myRankInTop10 : null);
+  const rankPercentile =
+    myRank !== null && leaderboard && leaderboard.totalPlayers > 0
+      ? Math.round((1 - (myRank - 1) / leaderboard.totalPlayers) * 100)
+      : null;
 
   if (isLoading) {
     return (
@@ -343,46 +403,212 @@ export default function ThreeFlops() {
           </form>
         </Shake>
       ) : (
-        <motion.div
-          initial={{ opacity: 0, y: 16, scale: 0.96 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ type: "spring", stiffness: 220, damping: 20 }}
-          className={`max-w-xl mx-auto w-full border-[3px] border-black shadow-[6px_6px_0_#000] p-6 md:p-8 text-center ${
-            hasWon ? "bg-[#00C853]" : "bg-[#FF6B6B]"
-          }`}
-        >
-          {hasWon
-            ? <StarDoodle className="w-14 h-14 text-[#FFD700] mx-auto mb-3" />
-            : <LightningDoodle className="w-10 h-14 text-black mx-auto mb-3 opacity-60" />
-          }
-          <h2 className="font-display text-4xl font-black text-black uppercase mb-2">
-            {hasWon ? "Perfect!" : "Game Over!"}
-          </h2>
-          <p className="text-lg text-black/70 font-sans mb-6">
-            Got <CountUp className="font-black text-black" value={guesses.length} /> of{" "}
-            <span className="font-black text-black">{challenge.totalCount}</span> with{" "}
-            <CountUp className="font-black text-black" value={flops} /> flop{flops !== 1 ? "s" : ""}
-          </p>
-          <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <Button
-              size="lg"
-              onClick={handleShare}
-              className="bg-black text-[#FFD700] hover:bg-[#FF1493] hover:text-black border-[3px] border-black shadow-[3px_3px_0_rgba(0,0,0,0.3)]"
-              data-testid="btn-share"
-            >
-              <Share2 className="w-5 h-5 mr-2" /> Share Result
-            </Button>
-            {isArchive ? (
-              <Button size="lg" variant="outline" onClick={() => setLocation("/archive")} data-testid="btn-archive">
-                <HomeIcon className="w-5 h-5 mr-2" /> Back to Archive
-              </Button>
-            ) : (
-              <Button size="lg" variant="outline" onClick={() => setLocation("/")} data-testid="btn-home">
-                <HomeIcon className="w-5 h-5 mr-2" /> Go Home
-              </Button>
+        <>
+          <motion.div
+            initial={{ opacity: 0, y: 16, scale: 0.96 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ type: "spring", stiffness: 220, damping: 20 }}
+            className={`max-w-xl mx-auto w-full border-[3px] border-black shadow-[6px_6px_0_#000] p-6 md:p-8 text-center ${
+              hasWon ? "bg-[#00C853]" : "bg-[#FF6B6B]"
+            }`}
+          >
+            {hasWon
+              ? <StarDoodle className="w-14 h-14 text-[#FFD700] mx-auto mb-3" />
+              : <LightningDoodle className="w-10 h-14 text-black mx-auto mb-3 opacity-60" />
+            }
+            <h2 className="font-display text-4xl font-black text-black uppercase mb-2">
+              {hasWon ? "Perfect!" : "Game Over!"}
+            </h2>
+            <p className="text-lg text-black/70 font-sans mb-2">
+              Got <CountUp className="font-black text-black" value={guesses.length} /> of{" "}
+              <span className="font-black text-black">{challenge.totalCount}</span> with{" "}
+              <CountUp className="font-black text-black" value={flops} /> flop{flops !== 1 ? "s" : ""}
+            </p>
+            {rankPercentile !== null && (
+              <div className="mb-4 inline-block bg-black text-white px-3 py-1 font-bold text-sm border-[2px] border-black">
+                Top {100 - rankPercentile + 1}% of players today
+              </div>
             )}
-          </div>
-        </motion.div>
+            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+              <Button
+                size="lg"
+                onClick={handleShare}
+                className="bg-black text-[#FFD700] hover:bg-[#FF1493] hover:text-black border-[3px] border-black shadow-[3px_3px_0_rgba(0,0,0,0.3)]"
+                data-testid="btn-share"
+              >
+                <Share2 className="w-5 h-5 mr-2" /> Share Result
+              </Button>
+              {isArchive ? (
+                <Button size="lg" variant="outline" onClick={() => setLocation("/archive")} data-testid="btn-archive">
+                  <HomeIcon className="w-5 h-5 mr-2" /> Back to Archive
+                </Button>
+              ) : (
+                <Button size="lg" variant="outline" onClick={() => setLocation("/")} data-testid="btn-home">
+                  <HomeIcon className="w-5 h-5 mr-2" /> Go Home
+                </Button>
+              )}
+            </div>
+          </motion.div>
+
+          {!isArchive && leaderboard && leaderboard.top10.length > 0 && (
+            <div className="max-w-xl mx-auto w-full mt-4 border-[3px] border-black bg-white shadow-[3px_3px_0_#000] overflow-hidden">
+              <div className="bg-black px-4 py-2 flex items-center gap-2">
+                <Trophy className="w-4 h-4 text-[#FFD700]" />
+                <span className="text-white font-display font-black text-sm uppercase">
+                  Today's Leaderboard
+                </span>
+                <Badge className="ml-auto bg-[#FFD700] text-black border-[#FFD700]">
+                  {leaderboard.totalPlayers} played
+                </Badge>
+              </div>
+              <div className="divide-y divide-black/10">
+                {leaderboard.top10.map((entry) => {
+                  const isMe = entry.playerToken === playerToken;
+                  return (
+                    <div
+                      key={entry.playerToken}
+                      className={`flex items-center gap-3 px-4 py-2 ${isMe ? "bg-[#FFD700] border-l-4 border-[#00C853]" : ""}`}
+                    >
+                      <span className="font-display font-black text-sm w-6 text-center">
+                        {entry.rank === 1 ? "🥇" : entry.rank === 2 ? "🥈" : entry.rank === 3 ? "🥉" : `#${entry.rank}`}
+                      </span>
+                      {isMe ? (
+                        <span className="flex-1 flex items-center gap-1 min-w-0">
+                          {isEditingName ? (
+                            <>
+                              <input
+                                autoFocus
+                                value={editNameValue}
+                                onChange={(e) => setEditNameValue(e.target.value)}
+                                onKeyDown={(e) => {
+                                  if (e.key === "Enter") {
+                                    const trimmed = editNameValue.trim();
+                                    if (trimmed) { savePlayerName(trimmed); setPlayerName(trimmed); }
+                                    setIsEditingName(false);
+                                  } else if (e.key === "Escape") {
+                                    setIsEditingName(false);
+                                  }
+                                }}
+                                maxLength={20}
+                                placeholder="Your name"
+                                className="font-bold text-sm bg-white border-b-2 border-black outline-none w-28 px-1"
+                              />
+                              <button
+                                onClick={() => {
+                                  const trimmed = editNameValue.trim();
+                                  if (trimmed) { savePlayerName(trimmed); setPlayerName(trimmed); }
+                                  setIsEditingName(false);
+                                }}
+                                className="p-0.5 text-black hover:text-[#00C853]"
+                                aria-label="Save name"
+                              >
+                                <Check className="w-3.5 h-3.5" />
+                              </button>
+                              <button
+                                onClick={() => setIsEditingName(false)}
+                                className="p-0.5 text-black/50 hover:text-black"
+                                aria-label="Cancel"
+                              >
+                                <X className="w-3.5 h-3.5" />
+                              </button>
+                            </>
+                          ) : (
+                            <>
+                              <span className="font-bold text-sm truncate">{playerName || "You"}</span>
+                              <button
+                                onClick={() => { setEditNameValue(playerName); setIsEditingName(true); }}
+                                className="p-0.5 text-black/40 hover:text-black shrink-0"
+                                aria-label="Edit name"
+                              >
+                                <Pencil className="w-3 h-3" />
+                              </button>
+                            </>
+                          )}
+                        </span>
+                      ) : (
+                        <span className="flex-1 font-bold text-sm">
+                          {`Player ${entry.playerToken.slice(0, 4)}`}
+                        </span>
+                      )}
+                      <span className="font-display font-black text-sm">
+                        {entry.score}/{challenge.totalCount}
+                      </span>
+                    </div>
+                  );
+                })}
+                {myRank !== null && myRankInTop10 === 0 && (
+                  <div className="flex items-center gap-3 px-4 py-2 bg-[#FFD700] border-l-4 border-[#00C853]">
+                    <span className="font-display font-black text-sm w-6 text-center">#{myRank}</span>
+                    <span className="flex-1 flex items-center gap-1 min-w-0">
+                      {isEditingName ? (
+                        <>
+                          <input
+                            autoFocus
+                            value={editNameValue}
+                            onChange={(e) => setEditNameValue(e.target.value)}
+                            onKeyDown={(e) => {
+                              if (e.key === "Enter") {
+                                const trimmed = editNameValue.trim();
+                                if (trimmed) { savePlayerName(trimmed); setPlayerName(trimmed); }
+                                setIsEditingName(false);
+                              } else if (e.key === "Escape") {
+                                setIsEditingName(false);
+                              }
+                            }}
+                            maxLength={20}
+                            placeholder="Your name"
+                            className="font-bold text-sm bg-white border-b-2 border-black outline-none w-28 px-1"
+                          />
+                          <button
+                            onClick={() => {
+                              const trimmed = editNameValue.trim();
+                              if (trimmed) { savePlayerName(trimmed); setPlayerName(trimmed); }
+                              setIsEditingName(false);
+                            }}
+                            className="p-0.5 text-black hover:text-[#00C853]"
+                            aria-label="Save name"
+                          >
+                            <Check className="w-3.5 h-3.5" />
+                          </button>
+                          <button
+                            onClick={() => setIsEditingName(false)}
+                            className="p-0.5 text-black/50 hover:text-black"
+                            aria-label="Cancel"
+                          >
+                            <X className="w-3.5 h-3.5" />
+                          </button>
+                        </>
+                      ) : (
+                        <>
+                          <span className="font-bold text-sm truncate">{playerName || "You"}</span>
+                          <button
+                            onClick={() => { setEditNameValue(playerName); setIsEditingName(true); }}
+                            className="p-0.5 text-black/40 hover:text-black shrink-0"
+                            aria-label="Edit name"
+                          >
+                            <Pencil className="w-3 h-3" />
+                          </button>
+                        </>
+                      )}
+                    </span>
+                    <span className="font-display font-black text-sm">
+                      {guesses.length}/{challenge.totalCount}
+                    </span>
+                  </div>
+                )}
+              </div>
+              {leaderboard.avgScore > 0 && (
+                <div className="bg-black/5 px-4 py-2 flex gap-4 text-xs font-bold text-black/60">
+                  <span className="flex items-center gap-1">
+                    <BarChart2 className="w-3 h-3" />
+                    Avg: {leaderboard.avgScore}/{challenge.totalCount}
+                  </span>
+                  <span>Median: {leaderboard.medianScore}/{challenge.totalCount}</span>
+                </div>
+              )}
+            </div>
+          )}
+        </>
       )}
 
       <div className="mt-10 flex justify-center">
