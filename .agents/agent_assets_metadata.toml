@@ -1,0 +1,8 @@
+uploads = []
+outputs = []
+
+[[generated]]
+id = "07kxzjfeFsh_UhfrTWHK0"
+uri = "file://artifacts/pop-the-question/public/logo-cutout.png"
+type = "image"
+title = "Transparent Pop logo cutout"
