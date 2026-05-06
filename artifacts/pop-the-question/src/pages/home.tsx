@@ -11,7 +11,6 @@ import {
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { RainbowText, BubbleLogo } from "@/components/fx";
-import heroLogo from "@assets/logo-cutout.png";
 import {
   StarDoodle,
   LightningDoodle,
@@ -70,13 +69,21 @@ export default function Home() {
       <header className="relative bg-[#FFF8E7] border-b-[4px] border-black px-4 pt-10 pb-8 text-center overflow-hidden">
         <StarDoodle className="absolute top-3 left-4 w-10 h-10 text-[#FF1493] opacity-90" />
         <StarDoodle className="absolute top-6 right-6 w-7 h-7 text-[#00E5FF] opacity-90" />
+        <ConfettiDoodle className="absolute bottom-2 left-8 w-14 h-14 opacity-80" />
+        <FlowerDoodle className="absolute bottom-4 right-4 w-12 h-12 text-[#FF1493] opacity-80" />
 
         <div className="relative z-10">
-          <img
-            src={heroLogo}
-            alt="Pop The Question"
-            className="mx-auto w-full max-w-3xl h-auto select-none"
-          />
+          <h1
+            className="font-display font-black leading-none tracking-tight comic-headline"
+            style={{ fontSize: "clamp(2.8rem, 10vw, 6rem)" }}
+          >
+            <RainbowText
+              text="POP"
+              palette={["#FF0054", "#FF6B35", "#00E5FF", "#00F5A0", "#FF006E", "#FF1493"]}
+            />
+            <br />
+            <BubbleLogo />
+          </h1>
           <div className="mt-5 flex flex-col items-center gap-4">
             {/* Primary tagline */}
             <div className="flex items-center gap-3">
