@@ -108,7 +108,7 @@ export default function Home() {
               <div className="flex justify-between items-start mb-3">
                 <div>
                   <h3 className="font-display text-2xl font-black text-black uppercase tracking-tight">Three Flops</h3>
-                  <p className="text-sm text-black/60 font-sans mt-1">3 flops and you're out</p>
+                  <p className="text-sm text-black/60 font-sans mt-1">Name all the answers before 3 wrong guesses</p>
                 </div>
                 {tsCompleted ? (
                   <Badge variant="secondary" className="ml-2 flex-shrink-0">Done ✓</Badge>
@@ -158,7 +158,7 @@ export default function Home() {
               <div className="flex justify-between items-start mb-3">
                 <div>
                   <h3 className="font-display text-2xl font-black text-black uppercase tracking-tight">Pop Box</h3>
-                  <p className="text-sm text-black/60 font-sans mt-1">Match a celeb to each row × column</p>
+                  <p className="text-sm text-black/60 font-sans mt-1">Find an answer for each intersection of the grid</p>
                 </div>
                 {pbCompleted ? (
                   <Badge variant="secondary" className="ml-2 flex-shrink-0">Done ✓</Badge>
@@ -265,7 +265,7 @@ export default function Home() {
             </div>
           </div>
           <p className="text-white/90 font-medium mb-6 font-sans">
-            Put this screen on a TV. Everyone joins on their phones. Maximum chaos guaranteed.
+            Project this screen on a TV or screen share remotely. Everyone joins on their phone. One host. Up to 10 players.
           </p>
 
           <div className="grid md:grid-cols-2 gap-5">
