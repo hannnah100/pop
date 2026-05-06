@@ -72,9 +72,15 @@ export default function Home() {
         <StarDoodle className="absolute top-16 left-10 w-5 h-5 text-[#FFD700] opacity-80" />
         <LightningDoodle className="absolute top-14 right-16 w-5 h-8 text-[#FF6B35] opacity-70" />
         <ConfettiDoodle className="absolute top-20 right-1/3 w-8 h-8 opacity-60" />
+        <StarDoodle className="absolute top-24 left-1/3 w-4 h-4 text-[#00E5FF] opacity-70" />
+        <LightningDoodle className="absolute top-28 right-1/3 w-4 h-7 text-[#FFD700] opacity-65" />
+        <ConfettiDoodle className="absolute top-32 left-14 w-6 h-6 opacity-50" />
         <StarDoodle className="absolute bottom-10 left-8 w-4 h-4 text-[#FF1493] opacity-70" />
         <LightningDoodle className="absolute bottom-12 right-10 w-4 h-7 text-[#FFD700] opacity-70" />
         <ConfettiDoodle className="absolute bottom-6 right-1/3 w-7 h-7 opacity-55" />
+        <StarDoodle className="absolute bottom-16 right-1/3 w-4 h-4 text-[#00C853] opacity-70" />
+        <LightningDoodle className="absolute bottom-20 left-1/3 w-4 h-7 text-[#FF1493] opacity-65" />
+        <ConfettiDoodle className="absolute bottom-24 left-1/2 w-6 h-6 opacity-50" />
         <ConfettiDoodle className="absolute bottom-2 left-8 w-14 h-14 opacity-80" />
         <FlowerDoodle className="absolute bottom-4 right-4 w-12 h-12 text-[#FF1493] opacity-80" />
 
