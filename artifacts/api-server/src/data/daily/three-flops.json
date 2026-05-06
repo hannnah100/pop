@@ -120,7 +120,7 @@
     "answers": "[{\"display\":\"Sydney\",\"hint\":\"2000\",\"correct\":[\"Sydney\"]},{\"display\":\"Athens\",\"hint\":\"2004\",\"correct\":[\"Athens\"]},{\"display\":\"Beijing\",\"hint\":\"2008\",\"correct\":[\"Beijing\",\"Peking\"]},{\"display\":\"London\",\"hint\":\"2012\",\"correct\":[\"London\"]},{\"display\":\"Rio de Janeiro\",\"hint\":\"2016\",\"correct\":[\"Rio de Janeiro\",\"Rio\"]},{\"display\":\"Tokyo\",\"hint\":\"2020\",\"correct\":[\"Tokyo\"]},{\"display\":\"Paris\",\"hint\":\"2024\",\"correct\":[\"Paris\"]}]"
   },
   {
-    "id": "eminem-albums",
+    "id": "big-bang-theory-characters",
     "date": "2026-05-05",
     "title": "The Big Bang Theory Main Characters",
     "prompt": "Name the main characters from The Big Bang Theory",

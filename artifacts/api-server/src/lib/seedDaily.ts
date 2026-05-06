@@ -78,6 +78,24 @@ async function seedPopBox(): Promise<void> {
 const THREE_FLOPS_DATE_FIXES: Array<{ id: string; date: string }> = [
   { id: "ryan-gosling-movies", date: "2026-05-04" },
   { id: "lady-gaga-albums",    date: "2026-09-05" },
+  { id: "eminem-albums", date: "2026-05-05" },
+];
+
+const THREE_FLOPS_CONTENT_FIXES: Array<{
+  id: string;
+  title: string;
+  prompt: string;
+  totalCount: number;
+  answers: string;
+}> = [
+  {
+    id: "eminem-albums",
+    title: "The Big Bang Theory Main Characters",
+    prompt: "Name the main characters from The Big Bang Theory",
+    totalCount: 8,
+    answers:
+      "[{\"display\":\"Sheldon Cooper\",\"hint\":\"\",\"correct\":[\"Sheldon Cooper\",\"Sheldon\"]},{\"display\":\"Leonard Hofstadter\",\"hint\":\"\",\"correct\":[\"Leonard Hofstadter\",\"Leonard\"]},{\"display\":\"Penny\",\"hint\":\"\",\"correct\":[\"Penny\"]},{\"display\":\"Howard Wolowitz\",\"hint\":\"\",\"correct\":[\"Howard Wolowitz\",\"Howard\"]},{\"display\":\"Raj Koothrappali\",\"hint\":\"\",\"correct\":[\"Raj Koothrappali\",\"Raj\"]},{\"display\":\"Amy Farrah Fowler\",\"hint\":\"\",\"correct\":[\"Amy Farrah Fowler\",\"Amy\"]},{\"display\":\"Bernadette Rostenkowski\",\"hint\":\"\",\"correct\":[\"Bernadette Rostenkowski\",\"Bernadette\"]},{\"display\":\"Stuart Bloom\",\"hint\":\"\",\"correct\":[\"Stuart Bloom\",\"Stuart\"]}]",
+  },
 ];
 
 /**
@@ -188,6 +206,18 @@ async function seedThreeFlops(): Promise<void> {
     await db
       .update(threeFlopsChallengesTable)
       .set({ date: fix.date })
+      .where(eq(threeFlopsChallengesTable.id, fix.id));
+  }
+
+  for (const fix of THREE_FLOPS_CONTENT_FIXES) {
+    await db
+      .update(threeFlopsChallengesTable)
+      .set({
+        title: fix.title,
+        prompt: fix.prompt,
+        totalCount: fix.totalCount,
+        answers: fix.answers,
+      })
       .where(eq(threeFlopsChallengesTable.id, fix.id));
   }
 
