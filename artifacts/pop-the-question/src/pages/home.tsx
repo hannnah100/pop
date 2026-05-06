@@ -11,6 +11,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { RainbowText, BubbleLogo } from "@/components/fx";
+import heroLogo from "@assets/logo1_1778055491321.png";
 import {
   StarDoodle,
   LightningDoodle,
@@ -73,17 +74,11 @@ export default function Home() {
         <FlowerDoodle className="absolute bottom-4 right-4 w-12 h-12 text-[#FF1493] opacity-80" />
 
         <div className="relative z-10">
-          <h1
-            className="font-display font-black leading-none tracking-tight comic-headline"
-            style={{ fontSize: "clamp(2.8rem, 10vw, 6rem)" }}
-          >
-            <RainbowText
-              text="POP"
-              palette={["#FF0054", "#FF6B35", "#00E5FF", "#00F5A0", "#FF006E", "#FF1493"]}
-            />
-            <br />
-            <BubbleLogo />
-          </h1>
+          <img
+            src={heroLogo}
+            alt="Pop The Question"
+            className="mx-auto w-full max-w-3xl h-auto select-none"
+          />
           <div className="mt-5 flex flex-col items-center gap-4">
             {/* Primary tagline */}
             <div className="flex items-center gap-3">

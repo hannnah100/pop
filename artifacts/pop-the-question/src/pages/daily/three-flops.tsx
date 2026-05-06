@@ -384,6 +384,15 @@ export default function ThreeFlops() {
           </div>
         </motion.div>
       )}
+
+      <div className="mt-10 flex justify-center">
+        <button
+          onClick={() => setLocation("/archive")}
+          className="py-3 px-6 bg-[#FF4040] border-[4px] border-black shadow-[4px_4px_0_#000] font-display font-black text-base text-black uppercase rounded-[12px] hover:shadow-[2px_2px_0_#000] hover:translate-x-[2px] hover:translate-y-[2px] active:shadow-none active:translate-x-[4px] active:translate-y-[4px] transition-all duration-75 cursor-pointer"
+        >
+          Not your jam? Check out the archives
+        </button>
+      </div>
     </div>
   );
 }

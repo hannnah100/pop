@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from "react";
+import { useLocation } from "wouter";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Calendar,
@@ -139,6 +140,7 @@ function HintCard({ index, text, revealed, onReveal, reduced }: HintCardProps) {
 }
 
 export default function ClockIt() {
+  const [, setLocation] = useLocation();
   const { toast } = useToast();
   const { playCorrect, playWrong, playVictory } = useSfx();
   const reduced = useReducedMotion();
@@ -716,6 +718,15 @@ export default function ClockIt() {
             </motion.div>)
           )}
         </AnimatePresence>
+      </div>
+
+      <div className="mt-10 flex justify-center">
+        <button
+          onClick={() => setLocation("/archive")}
+          className="py-3 px-6 bg-[#00CED1] border-[4px] border-black shadow-[4px_4px_0_#000] font-display font-black text-base text-black uppercase rounded-[12px] hover:shadow-[2px_2px_0_#000] hover:translate-x-[2px] hover:translate-y-[2px] active:shadow-none active:translate-x-[4px] active:translate-y-[4px] transition-all duration-75 cursor-pointer"
+        >
+          Not your jam? Check out the archives
+        </button>
       </div>
     </div>
   );
