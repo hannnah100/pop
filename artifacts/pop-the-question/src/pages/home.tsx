@@ -10,7 +10,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { RainbowText, BubbleLogo } from "@/components/fx";
+import heroLogo from "@assets/logo_transparent_1778057092563.png";
 import {
   StarDoodle,
   LightningDoodle,
@@ -73,36 +73,11 @@ export default function Home() {
         <FlowerDoodle className="absolute bottom-4 right-4 w-12 h-12 text-[#FF1493] opacity-80" />
 
         <div className="relative z-10">
-          <h1
-            className="font-display font-black leading-none tracking-tight comic-headline"
-            style={{ fontSize: "clamp(2.8rem, 10vw, 6rem)" }}
-          >
-            <RainbowText
-              text="POP"
-              palette={["#FF0054", "#FF6B35", "#00E5FF", "#00F5A0", "#FF006E", "#FF1493"]}
-            />
-            <br />
-            <BubbleLogo />
-          </h1>
-          <div className="mt-5 flex flex-col items-center gap-4">
-            {/* Primary tagline */}
-            <div className="flex items-center gap-3">
-              <StarDoodle aria-hidden="true" className="w-6 h-6 md:w-8 md:h-8 text-[#FFD700] shrink-0" />
-              <div className="inline-block bg-white border-[4px] border-black shadow-[4px_4px_0_#000] px-5 py-3">
-                <p
-                  className="font-display font-black tracking-tight comic-headline flex flex-wrap items-center justify-center gap-x-2 gap-y-1"
-                  style={{ fontSize: "clamp(1.1rem, 3vw, 2rem)", lineHeight: 1.1 }}
-                >
-                  <span style={{ color: "#FF1493" }}>Your</span>
-                  <span style={{ color: "#FF6B35" }}>group</span>
-                  <span style={{ color: "#00E5FF" }}>chat's</span>
-                  <span style={{ color: "#00F5A0" }}>new</span>
-                  <span style={{ color: "#FFD700" }}>obsession</span>
-                </p>
-              </div>
-              <StarDoodle aria-hidden="true" className="w-6 h-6 md:w-8 md:h-8 text-[#FF1493] shrink-0" />
-            </div>
-          </div>
+          <img
+            src={heroLogo}
+            alt="Pop The Question"
+            className="mx-auto w-full max-w-3xl h-auto select-none"
+          />
         </div>
       </header>
 
