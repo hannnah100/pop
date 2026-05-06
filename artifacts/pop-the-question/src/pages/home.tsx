@@ -67,6 +67,12 @@ export default function Home() {
 
       {/* ===== HERO ===== */}
       <header className="relative bg-[#FFF8E7] border-b-[4px] border-black px-4 pt-6 pb-4 text-center overflow-hidden">
+        <StarDoodle className="absolute top-10 left-6 w-6 h-6 text-[#FF1493] opacity-85" />
+        <LightningDoodle className="absolute top-16 left-12 w-5 h-8 text-[#FFD700] opacity-75" />
+        <ConfettiDoodle className="absolute top-12 left-20 w-7 h-7 opacity-60" />
+        <StarDoodle className="absolute top-10 right-6 w-6 h-6 text-[#00E5FF] opacity-85" />
+        <LightningDoodle className="absolute top-16 right-12 w-5 h-8 text-[#FF6B35] opacity-75" />
+        <ConfettiDoodle className="absolute top-12 right-20 w-7 h-7 opacity-60" />
         <div className="relative z-10">
           <img
             src={heroLogo}
