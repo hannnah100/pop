@@ -83,6 +83,7 @@ export const GetThreeFlopsLeaderboardResponse = zod.object({
       rank: zod.number(),
       playerToken: zod.string(),
       score: zod.number(),
+      playerName: zod.string().nullish(),
     }),
   ),
   totalPlayers: zod.number(),
@@ -286,6 +287,7 @@ export const GetPopBoxLeaderboardResponse = zod.object({
       rank: zod.number(),
       playerToken: zod.string(),
       score: zod.number(),
+      playerName: zod.string().nullish(),
     }),
   ),
   totalPlayers: zod.number(),
@@ -453,12 +455,25 @@ export const GetSkinnyLeaderboardResponse = zod.object({
       rank: zod.number(),
       playerToken: zod.string(),
       completionTimeSecs: zod.number(),
+      playerName: zod.string().nullish(),
     }),
   ),
   totalPlayers: zod.number(),
   avgTimeSecs: zod.number(),
   medianTimeSecs: zod.number(),
   playerRank: zod.number().nullish(),
+});
+
+/**
+ * @summary Update a player's display name (shared across all leaderboards)
+ */
+export const UpdatePlayerNameBody = zod.object({
+  playerToken: zod.string().min(1).max(64),
+  playerName: zod.string().min(1).max(20),
+});
+
+export const UpdatePlayerNameResponse = zod.object({
+  ok: zod.boolean(),
 });
 
 /**

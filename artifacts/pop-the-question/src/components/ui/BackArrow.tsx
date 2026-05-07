@@ -12,9 +12,17 @@ interface BackArrowProps {
 export function BackArrow({ href = "/", label = "Back to home", displayText = "Back", className, onClick }: BackArrowProps) {
   const [, setLocation] = useLocation();
 
+  function handleBack() {
+    if (window.history.length > 1) {
+      window.history.back();
+    } else {
+      setLocation(href);
+    }
+  }
+
   return (
     <button
-      onClick={onClick ?? (() => setLocation(href))}
+      onClick={onClick ?? handleBack}
       aria-label={label}
       data-testid="btn-back-arrow"
       className={cn(

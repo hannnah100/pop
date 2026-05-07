@@ -9,6 +9,7 @@ import roomsRouter from "./rooms";
 import questionsRouter from "./questions";
 import customGamesRouter from "./customGames";
 import skinnyRouter from "./skinny";
+import playerRouter from "./player";
 
 const router: IRouter = Router();
 
@@ -22,5 +23,6 @@ router.use(roomsRouter);
 router.use(questionsRouter);
 router.use(customGamesRouter);
 router.use(skinnyRouter);
+router.use(playerRouter);
 
 export default router;

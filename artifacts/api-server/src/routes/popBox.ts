@@ -1,6 +1,6 @@
 import { randomBytes } from "crypto";
 import { Router, type IRouter } from "express";
-import { db, popBoxGridsTable, popBoxAnswerCountsTable, popBoxScoresTable } from "@workspace/db";
+import { db, popBoxGridsTable, popBoxAnswerCountsTable, popBoxScoresTable, playerNamesTable } from "@workspace/db";
 import { eq, desc, and, sql } from "drizzle-orm";
 import {
   GetTodayPopBoxResponse,
@@ -137,13 +137,19 @@ function findAlphabetAnswer(
 // ---------------------------------------------------------------------------
 
 // Build lookup index once at module load.
+// Two-pass build: alternates first, then canonical names, so a canonical name
+// always beats an alternate name collision (e.g. "Cher" → cher, not cher-lloyd).
 const lookupToCelebId = new Map<string, string>();
 for (const celeb of POP_BOX_CELEBRITIES) {
-  const variants = [celeb.name, ...celeb.alternateNames, celeb.id.replace(/-/g, " ")];
+  const variants = [...celeb.alternateNames, celeb.id.replace(/-/g, " ")];
   for (const v of variants) {
     const key = normalize(v);
     if (key) lookupToCelebId.set(key, celeb.id);
   }
+}
+for (const celeb of POP_BOX_CELEBRITIES) {
+  const key = normalize(celeb.name);
+  if (key) lookupToCelebId.set(key, celeb.id);
 }
 
 const celebById = new Map<string, PopBoxCelebrity>(
@@ -594,8 +600,10 @@ router.get("/daily/pop-box/leaderboard", async (req, res): Promise<void> => {
     .select({
       playerToken: popBoxScoresTable.playerToken,
       score: popBoxScoresTable.score,
+      playerName: playerNamesTable.playerName,
     })
     .from(popBoxScoresTable)
+    .leftJoin(playerNamesTable, eq(popBoxScoresTable.playerToken, playerNamesTable.playerToken))
     .where(eq(popBoxScoresTable.date, date))
     .orderBy(desc(popBoxScoresTable.score))
     .limit(10);
@@ -604,6 +612,7 @@ router.get("/daily/pop-box/leaderboard", async (req, res): Promise<void> => {
     rank: i + 1,
     playerToken: r.playerToken,
     score: r.score,
+    playerName: r.playerName ?? null,
   }));
 
   const agg = await db

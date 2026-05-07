@@ -5,6 +5,7 @@ import {
   useGetThreeFlopsById,
   useGetThreeFlopsLeaderboard,
   useSubmitThreeFlopsScore,
+  useUpdatePlayerName,
   getGetTodayThreeFlopsQueryKey,
   getGetThreeFlopsByIdQueryKey,
   getGetThreeFlopsLeaderboardQueryKey,
@@ -106,6 +107,15 @@ export default function ThreeFlops() {
     },
   );
   const scoresMutation = useSubmitThreeFlopsScore();
+  const updateNameMutation = useUpdatePlayerName();
+
+  function commitName(name: string) {
+    const trimmed = name.trim();
+    if (!trimmed) return;
+    savePlayerName(trimmed);
+    setPlayerName(trimmed);
+    updateNameMutation.mutate({ data: { playerToken, playerName: trimmed } });
+  }
   // Storage keys (`ptq-three-strikes-…`, `ptq-archive-ts-…`,
   // `ptq-streak-three-strikes`, `ptq-stats.threeStrikes*`) are intentionally
   // kept under their legacy names so player progress saved before the rename
@@ -482,8 +492,7 @@ export default function ThreeFlops() {
                                 onChange={(e) => setEditNameValue(e.target.value)}
                                 onKeyDown={(e) => {
                                   if (e.key === "Enter") {
-                                    const trimmed = editNameValue.trim();
-                                    if (trimmed) { savePlayerName(trimmed); setPlayerName(trimmed); }
+                                    commitName(editNameValue);
                                     setIsEditingName(false);
                                   } else if (e.key === "Escape") {
                                     setIsEditingName(false);
@@ -495,8 +504,7 @@ export default function ThreeFlops() {
                               />
                               <button
                                 onClick={() => {
-                                  const trimmed = editNameValue.trim();
-                                  if (trimmed) { savePlayerName(trimmed); setPlayerName(trimmed); }
+                                  commitName(editNameValue);
                                   setIsEditingName(false);
                                 }}
                                 className="p-0.5 text-black hover:text-[#00C853]"
@@ -527,7 +535,7 @@ export default function ThreeFlops() {
                         </span>
                       ) : (
                         <span className="flex-1 font-bold text-sm">
-                          {`Player ${entry.playerToken.slice(0, 4)}`}
+                          {entry.playerName ?? `Player ${entry.playerToken.slice(0, 4)}`}
                         </span>
                       )}
                       <span className="font-display font-black text-sm">

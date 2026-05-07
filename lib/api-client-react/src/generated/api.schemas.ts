@@ -281,6 +281,7 @@ export interface ThreeFlopsLeaderboardEntry {
   rank: number;
   playerToken: string;
   score: number;
+  playerName?: string | null;
 }
 
 export interface ThreeFlopsLeaderboard {
@@ -306,6 +307,7 @@ export interface PopBoxLeaderboardEntry {
   rank: number;
   playerToken: string;
   score: number;
+  playerName?: string | null;
 }
 
 export interface PopBoxLeaderboard {
@@ -331,6 +333,7 @@ export interface SkinnyLeaderboardEntry {
   rank: number;
   playerToken: string;
   completionTimeSecs: number;
+  playerName?: string | null;
 }
 
 export interface SkinnyLeaderboard {
@@ -382,5 +385,15 @@ export type GetSkinnyLeaderboardParams = {
 };
 
 export type SubmitSkinnyScore200 = {
+  ok: boolean;
+};
+
+export interface UpdatePlayerNameRequest {
+  playerToken: string;
+  /** @minLength 1 @maxLength 20 */
+  playerName: string;
+}
+
+export type UpdatePlayerName200 = {
   ok: boolean;
 };

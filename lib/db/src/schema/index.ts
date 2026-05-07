@@ -7,3 +7,4 @@ export * from "./popBoxScores";
 export * from "./popOrDrop";
 export * from "./customGames";
 export * from "./skinnyScores";
+export * from "./playerNames";

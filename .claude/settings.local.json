@@ -20,7 +20,8 @@
       "Bash(pnpm --filter @workspace/pop-the-question --filter @workspace/api-server run typecheck)",
       "Bash(git -C /home/runner/workspace diff --name-only HEAD lib/api-spec/openapi.yaml)",
       "Bash(git -C /home/runner/workspace status lib/api-spec/openapi.yaml)",
-      "Bash(git -C /home/runner/workspace diff HEAD lib/api-client-react/src/generated/api.schemas.ts)"
+      "Bash(git -C /home/runner/workspace diff HEAD lib/api-client-react/src/generated/api.schemas.ts)",
+      "Bash(grep *)"
     ]
   }
 }

@@ -5,6 +5,7 @@ import {
   useGetCrosswordById,
   useGetSkinnyLeaderboard,
   useSubmitSkinnyScore,
+  useUpdatePlayerName,
   getGetSkinnyLeaderboardQueryKey,
 } from "@workspace/api-client-react";
 import { motion } from "framer-motion";
@@ -90,6 +91,15 @@ export default function Crossword() {
     },
   );
   const scoresMutation = useSubmitSkinnyScore();
+  const updateNameMutation = useUpdatePlayerName();
+
+  function commitName(name: string) {
+    const trimmed = name.trim();
+    if (!trimmed) return;
+    savePlayerName(trimmed);
+    setPlayerName(trimmed);
+    updateNameMutation.mutate({ data: { playerToken, playerName: trimmed } });
+  }
 
   const [isTouchDevice, setIsTouchDevice] = useState(false);
   useEffect(() => {
@@ -618,8 +628,7 @@ export default function Crossword() {
                                       onChange={(e) => setEditNameValue(e.target.value)}
                                       onKeyDown={(e) => {
                                         if (e.key === "Enter") {
-                                          savePlayerName(editNameValue);
-                                          setPlayerName(editNameValue.trim() || "You");
+                                          commitName(editNameValue);
                                           setIsEditingName(false);
                                         } else if (e.key === "Escape") {
                                           setIsEditingName(false);
@@ -630,8 +639,7 @@ export default function Crossword() {
                                     />
                                     <button
                                       onClick={() => {
-                                        savePlayerName(editNameValue);
-                                        setPlayerName(editNameValue.trim() || "You");
+                                        commitName(editNameValue);
                                         setIsEditingName(false);
                                       }}
                                       className="text-[#00C853] hover:text-black"
@@ -653,7 +661,7 @@ export default function Crossword() {
                                 )
                               ) : (
                                 <span className="text-sm font-sans text-black/60">
-                                  {`Player ${entry.rank}`}
+                                  {entry.playerName ?? `Player ${entry.playerToken.slice(0, 4)}`}
                                 </span>
                               )}
                             </div>

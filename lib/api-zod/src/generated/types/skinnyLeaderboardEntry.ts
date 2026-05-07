@@ -10,4 +10,5 @@ export interface SkinnyLeaderboardEntry {
   rank: number;
   playerToken: string;
   completionTimeSecs: number;
+  playerName?: string | null;
 }

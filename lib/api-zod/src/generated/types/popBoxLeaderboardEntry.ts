@@ -10,4 +10,5 @@ export interface PopBoxLeaderboardEntry {
   rank: number;
   playerToken: string;
   score: number;
+  playerName?: string | null;
 }

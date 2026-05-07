@@ -2187,6 +2187,78 @@ export const useSubmitSkinnyScore = <
 };
 
 /**
+ * @summary Update a player's display name (shared across all leaderboards)
+ */
+export const getUpdatePlayerNameUrl = () => {
+  return `/api/player/name`;
+};
+
+export const updatePlayerName = async (
+  updatePlayerNameRequest: BodyType<UpdatePlayerNameRequest>,
+  options?: RequestInit,
+): Promise<UpdatePlayerName200> => {
+  return customFetch<UpdatePlayerName200>(getUpdatePlayerNameUrl(), {
+    ...options,
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...options?.headers },
+    body: JSON.stringify(updatePlayerNameRequest),
+  });
+};
+
+export const getUpdatePlayerNameMutationOptions = <
+  TError = ErrorType<ErrorResponse>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof updatePlayerName>>,
+    TError,
+    { data: BodyType<UpdatePlayerNameRequest> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof updatePlayerName>>,
+  TError,
+  { data: BodyType<UpdatePlayerNameRequest> },
+  TContext
+> => {
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof updatePlayerName>>,
+    { data: BodyType<UpdatePlayerNameRequest> }
+  > = (props) => {
+    const { data } = props ?? {};
+    return updatePlayerName(data);
+  };
+  return { mutationFn, ...options?.mutation };
+};
+
+export type UpdatePlayerNameMutationResult = NonNullable<
+  Awaited<ReturnType<typeof updatePlayerName>>
+>;
+export type UpdatePlayerNameMutationBody = BodyType<UpdatePlayerNameRequest>;
+export type UpdatePlayerNameMutationError = ErrorType<ErrorResponse>;
+
+export const useUpdatePlayerName = <
+  TError = ErrorType<ErrorResponse>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof updatePlayerName>>,
+    TError,
+    { data: BodyType<UpdatePlayerNameRequest> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof updatePlayerName>>,
+  TError,
+  { data: BodyType<UpdatePlayerNameRequest> },
+  TContext
+> => {
+  return useMutation(getUpdatePlayerNameMutationOptions(options));
+};
+
+/**
  * @summary Get today's completion status summary (wow endpoint)
  */
 export const getGetDailyStatusUrl = () => {

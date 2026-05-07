@@ -60,13 +60,14 @@ describe("POST /api/daily/clock-it/check — give-up flow", () => {
     expect(body.year).toBe(puzzle.year);
   });
 
-  it("returns the exact known year for a deterministic historical date (2026-01-15 → 2007)", async () => {
-    // The puzzle selection counts days since 2024-01-01 and cycles through the
-    // puzzle list. 2026-01-15 is day 745 since epoch; 745 % 104 = 17, which is
-    // the gty-2007 puzzle (year 2007). This assertion pins the contract so any
-    // future change to selectPuzzle that breaks determinism is caught immediately.
+  it("returns the exact known year for a deterministic historical date (2026-01-15 → 1995)", async () => {
+    // selectPuzzle cycles through the 37 sorted years first, then rotates hint
+    // sets. 2026-01-15 is day 745 since 2024-01-01; 745 % 37 = 5, so yearIdx=5
+    // → year 1995 (6th in the sorted list 1990…2026). cycle = floor(745/37) = 20,
+    // setIdx = 20 % 3 = 2 → gty-1995c. This pins the contract so any future
+    // change to selectPuzzle that breaks determinism is caught immediately.
     const testDate = "2026-01-15";
-    const expectedYear = 2007;
+    const expectedYear = 1995;
 
     const checkRes = await fetch(`${baseUrl}/daily/clock-it/check`, {
       method: "POST",
@@ -99,9 +100,9 @@ describe("POST /api/daily/clock-it/check — success guess flow", () => {
     expect(body.year).toBe(puzzle.year);
   });
 
-  it("returns correct:true and exact known year for historical date (2026-01-15 → 2007)", async () => {
+  it("returns correct:true and exact known year for historical date (2026-01-15 → 1995)", async () => {
     const testDate = "2026-01-15";
-    const expectedYear = 2007;
+    const expectedYear = 1995;
 
     const checkRes = await fetch(`${baseUrl}/daily/clock-it/check`, {
       method: "POST",

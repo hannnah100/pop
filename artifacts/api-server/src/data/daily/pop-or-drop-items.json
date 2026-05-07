@@ -2222,5 +2222,1037 @@
     "unit": "",
     "metricLabel": "Tennis career prize money (USD)",
     "category": "sports"
+  },
+  {
+    "id": "metlife-stadium-capacity",
+    "name": "MetLife Stadium",
+    "value": 82500,
+    "unit": "",
+    "metricLabel": "Stadium seating capacity",
+    "category": "sports"
+  },
+  {
+    "id": "att-stadium-capacity",
+    "name": "AT&T Stadium (Dallas Cowboys)",
+    "value": 80000,
+    "unit": "",
+    "metricLabel": "Stadium seating capacity",
+    "category": "sports"
+  },
+  {
+    "id": "camp-nou-capacity",
+    "name": "Camp Nou (FC Barcelona)",
+    "value": 99354,
+    "unit": "",
+    "metricLabel": "Stadium seating capacity",
+    "category": "sports"
+  },
+  {
+    "id": "michigan-stadium-capacity",
+    "name": "Michigan Stadium (\"The Big House\")",
+    "value": 107601,
+    "unit": "",
+    "metricLabel": "Stadium seating capacity",
+    "category": "sports"
+  },
+  {
+    "id": "wembley-capacity",
+    "name": "Wembley Stadium",
+    "value": 90000,
+    "unit": "",
+    "metricLabel": "Stadium seating capacity",
+    "category": "sports"
+  },
+  {
+    "id": "rose-bowl-capacity",
+    "name": "Rose Bowl",
+    "value": 92542,
+    "unit": "",
+    "metricLabel": "Stadium seating capacity",
+    "category": "sports"
+  },
+  {
+    "id": "mcg-capacity",
+    "name": "Melbourne Cricket Ground",
+    "value": 100024,
+    "unit": "",
+    "metricLabel": "Stadium seating capacity",
+    "category": "sports"
+  },
+  {
+    "id": "wrestlemania-32-attendance",
+    "name": "WrestleMania 32 (2016)",
+    "value": 101763,
+    "unit": "",
+    "metricLabel": "Event attendance (WWE record)",
+    "category": "sports"
+  },
+  {
+    "id": "champions-league-final-global-viewers",
+    "name": "UEFA Champions League Final",
+    "value": 350000000,
+    "unit": "",
+    "metricLabel": "Global TV viewers (average)",
+    "category": "sports"
+  },
+  {
+    "id": "world-cup-final-viewers-2022",
+    "name": "FIFA World Cup Final 2022",
+    "value": 1000000000,
+    "unit": "",
+    "metricLabel": "Global TV viewers",
+    "category": "sports"
+  },
+  {
+    "id": "olympics-global-viewers-2024",
+    "name": "Paris 2024 Olympics Opening Ceremony",
+    "value": 500000000,
+    "unit": "",
+    "metricLabel": "Global TV viewers",
+    "category": "sports"
+  },
+  {
+    "id": "super-bowl-lvii-viewers",
+    "name": "Super Bowl LVII (2023)",
+    "value": 113000000,
+    "unit": "",
+    "metricLabel": "US TV viewers",
+    "category": "sports"
+  },
+  {
+    "id": "nfl-chiefs-avg-attendance",
+    "name": "Kansas City Chiefs",
+    "value": 76416,
+    "unit": "",
+    "metricLabel": "Average home game attendance (2023)",
+    "category": "sports"
+  },
+  {
+    "id": "man-utd-avg-attendance",
+    "name": "Manchester United",
+    "value": 73788,
+    "unit": "",
+    "metricLabel": "Average home match attendance",
+    "category": "sports"
+  },
+  {
+    "id": "super-bowl-lviii-attendance",
+    "name": "Super Bowl LVIII (2024)",
+    "value": 67827,
+    "unit": "",
+    "metricLabel": "Game attendance",
+    "category": "sports"
+  },
+  {
+    "id": "mahomes-nfl-salary",
+    "name": "Patrick Mahomes",
+    "value": 45000000,
+    "unit": "",
+    "metricLabel": "Annual NFL salary (USD)",
+    "category": "sports"
+  },
+  {
+    "id": "josh-allen-nfl-salary",
+    "name": "Josh Allen",
+    "value": 43000000,
+    "unit": "",
+    "metricLabel": "Annual NFL salary (USD)",
+    "category": "sports"
+  },
+  {
+    "id": "joe-burrow-nfl-salary",
+    "name": "Joe Burrow",
+    "value": 55000000,
+    "unit": "",
+    "metricLabel": "Annual NFL salary (USD)",
+    "category": "sports"
+  },
+  {
+    "id": "giannis-nba-salary",
+    "name": "Giannis Antetokounmpo",
+    "value": 45000000,
+    "unit": "",
+    "metricLabel": "Annual NBA salary (USD)",
+    "category": "sports"
+  },
+  {
+    "id": "neymar-annual-salary",
+    "name": "Neymar Jr.",
+    "value": 56000000,
+    "unit": "",
+    "metricLabel": "Annual salary (USD)",
+    "category": "sports"
+  },
+  {
+    "id": "mbappe-annual-salary",
+    "name": "Kylian Mbappé",
+    "value": 70000000,
+    "unit": "",
+    "metricLabel": "Annual salary (USD)",
+    "category": "sports"
+  },
+  {
+    "id": "degrom-mlb-salary",
+    "name": "Jacob deGrom",
+    "value": 37000000,
+    "unit": "",
+    "metricLabel": "Annual MLB salary (USD)",
+    "category": "sports"
+  },
+  {
+    "id": "verlander-mlb-salary",
+    "name": "Justin Verlander",
+    "value": 43000000,
+    "unit": "",
+    "metricLabel": "Annual MLB salary (USD)",
+    "category": "sports"
+  },
+  {
+    "id": "leclerc-f1-salary",
+    "name": "Charles Leclerc",
+    "value": 34000000,
+    "unit": "",
+    "metricLabel": "Annual F1 salary (USD)",
+    "category": "sports"
+  },
+  {
+    "id": "burj-khalifa-height-mm",
+    "name": "Burj Khalifa",
+    "value": 828000,
+    "unit": "mm",
+    "metricLabel": "Height in millimeters",
+    "category": "landmarks"
+  },
+  {
+    "id": "eiffel-tower-height-mm",
+    "name": "Eiffel Tower",
+    "value": 330000,
+    "unit": "mm",
+    "metricLabel": "Height in millimeters",
+    "category": "landmarks"
+  },
+  {
+    "id": "statue-of-liberty-height-mm",
+    "name": "Statue of Liberty",
+    "value": 93000,
+    "unit": "mm",
+    "metricLabel": "Height (base to torch) in millimeters",
+    "category": "landmarks"
+  },
+  {
+    "id": "golden-gate-bridge-length-mm",
+    "name": "Golden Gate Bridge",
+    "value": 2737000,
+    "unit": "mm",
+    "metricLabel": "Total length in millimeters",
+    "category": "landmarks"
+  },
+  {
+    "id": "everest-height-mm",
+    "name": "Mount Everest",
+    "value": 8849000,
+    "unit": "mm",
+    "metricLabel": "Height above sea level in millimeters",
+    "category": "landmarks"
+  },
+  {
+    "id": "empire-state-building-mm",
+    "name": "Empire State Building",
+    "value": 443000,
+    "unit": "mm",
+    "metricLabel": "Height to roof in millimeters",
+    "category": "landmarks"
+  },
+  {
+    "id": "cn-tower-height-mm",
+    "name": "CN Tower (Toronto)",
+    "value": 553000,
+    "unit": "mm",
+    "metricLabel": "Height in millimeters",
+    "category": "landmarks"
+  },
+  {
+    "id": "big-ben-height-mm",
+    "name": "Big Ben (Elizabeth Tower)",
+    "value": 96000,
+    "unit": "mm",
+    "metricLabel": "Height in millimeters",
+    "category": "landmarks"
+  },
+  {
+    "id": "mount-fuji-height-mm",
+    "name": "Mount Fuji",
+    "value": 3776000,
+    "unit": "mm",
+    "metricLabel": "Height above sea level in millimeters",
+    "category": "landmarks"
+  },
+  {
+    "id": "colosseum-ancient-capacity",
+    "name": "Colosseum (Ancient Rome)",
+    "value": 50000,
+    "unit": "",
+    "metricLabel": "Original spectator capacity",
+    "category": "landmarks"
+  },
+  {
+    "id": "sydney-opera-house-visitors",
+    "name": "Sydney Opera House",
+    "value": 10500000,
+    "unit": "",
+    "metricLabel": "Annual visitors",
+    "category": "landmarks"
+  },
+  {
+    "id": "british-museum-visitors",
+    "name": "British Museum",
+    "value": 5800000,
+    "unit": "",
+    "metricLabel": "Annual visitors",
+    "category": "landmarks"
+  },
+  {
+    "id": "vatican-museums-visitors",
+    "name": "Vatican Museums",
+    "value": 6800000,
+    "unit": "",
+    "metricLabel": "Annual visitors",
+    "category": "landmarks"
+  },
+  {
+    "id": "sagrada-familia-visitors",
+    "name": "Sagrada Família",
+    "value": 4500000,
+    "unit": "",
+    "metricLabel": "Annual visitors",
+    "category": "landmarks"
+  },
+  {
+    "id": "taj-mahal-visitors",
+    "name": "Taj Mahal",
+    "value": 8000000,
+    "unit": "",
+    "metricLabel": "Annual visitors",
+    "category": "landmarks"
+  },
+  {
+    "id": "nile-river-length-m",
+    "name": "Nile River",
+    "value": 6650000,
+    "unit": "m",
+    "metricLabel": "Length in meters",
+    "category": "geography"
+  },
+  {
+    "id": "amazon-river-length-m",
+    "name": "Amazon River",
+    "value": 6400000,
+    "unit": "m",
+    "metricLabel": "Length in meters",
+    "category": "geography"
+  },
+  {
+    "id": "mariana-trench-depth-mm",
+    "name": "Mariana Trench",
+    "value": 10994000,
+    "unit": "mm",
+    "metricLabel": "Greatest depth in millimeters",
+    "category": "geography"
+  },
+  {
+    "id": "paris-city-proper-pop",
+    "name": "Paris (city proper)",
+    "value": 2200000,
+    "unit": "",
+    "metricLabel": "City population",
+    "category": "geography"
+  },
+  {
+    "id": "rome-city-population",
+    "name": "Rome",
+    "value": 2800000,
+    "unit": "",
+    "metricLabel": "City population",
+    "category": "geography"
+  },
+  {
+    "id": "barcelona-city-population",
+    "name": "Barcelona",
+    "value": 1600000,
+    "unit": "",
+    "metricLabel": "City population",
+    "category": "geography"
+  },
+  {
+    "id": "chicago-city-population",
+    "name": "Chicago",
+    "value": 2700000,
+    "unit": "",
+    "metricLabel": "City population",
+    "category": "geography"
+  },
+  {
+    "id": "toronto-city-population",
+    "name": "Toronto",
+    "value": 2900000,
+    "unit": "",
+    "metricLabel": "City population",
+    "category": "geography"
+  },
+  {
+    "id": "madrid-city-population",
+    "name": "Madrid",
+    "value": 3300000,
+    "unit": "",
+    "metricLabel": "City population",
+    "category": "geography"
+  },
+  {
+    "id": "berlin-city-population",
+    "name": "Berlin",
+    "value": 3600000,
+    "unit": "",
+    "metricLabel": "City population",
+    "category": "geography"
+  },
+  {
+    "id": "dubai-city-population",
+    "name": "Dubai",
+    "value": 3400000,
+    "unit": "",
+    "metricLabel": "City population",
+    "category": "geography"
+  },
+  {
+    "id": "lake-superior-area",
+    "name": "Lake Superior",
+    "value": 82100,
+    "unit": "km²",
+    "metricLabel": "Surface area",
+    "category": "geography"
+  },
+  {
+    "id": "mediterranean-sea-area",
+    "name": "Mediterranean Sea",
+    "value": 2510000,
+    "unit": "km²",
+    "metricLabel": "Surface area",
+    "category": "geography"
+  },
+  {
+    "id": "caspian-sea-area",
+    "name": "Caspian Sea",
+    "value": 371000,
+    "unit": "km²",
+    "metricLabel": "Surface area",
+    "category": "geography"
+  },
+  {
+    "id": "k2-height-feet",
+    "name": "K2",
+    "value": 28251,
+    "unit": "ft",
+    "metricLabel": "Height above sea level (feet)",
+    "category": "geography"
+  },
+  {
+    "id": "kilimanjaro-height-feet",
+    "name": "Mount Kilimanjaro",
+    "value": 19341,
+    "unit": "ft",
+    "metricLabel": "Height above sea level (feet)",
+    "category": "geography"
+  },
+  {
+    "id": "mont-blanc-height-feet",
+    "name": "Mont Blanc",
+    "value": 15774,
+    "unit": "ft",
+    "metricLabel": "Height above sea level (feet)",
+    "category": "geography"
+  },
+  {
+    "id": "denali-height-feet",
+    "name": "Denali",
+    "value": 20310,
+    "unit": "ft",
+    "metricLabel": "Height above sea level (feet)",
+    "category": "geography"
+  },
+  {
+    "id": "avengers-endgame-opening-wknd",
+    "name": "Avengers: Endgame",
+    "value": 357000000,
+    "unit": "",
+    "metricLabel": "Opening weekend box office (USD)",
+    "category": "film_tv"
+  },
+  {
+    "id": "spiderman-nwh-opening-wknd",
+    "name": "Spider-Man: No Way Home",
+    "value": 260000000,
+    "unit": "",
+    "metricLabel": "Opening weekend box office (USD)",
+    "category": "film_tv"
+  },
+  {
+    "id": "barbie-opening-weekend",
+    "name": "Barbie (2023)",
+    "value": 162000000,
+    "unit": "",
+    "metricLabel": "Opening weekend domestic box office (USD)",
+    "category": "film_tv"
+  },
+  {
+    "id": "top-gun-maverick-domestic-box",
+    "name": "Top Gun: Maverick",
+    "value": 718000000,
+    "unit": "",
+    "metricLabel": "Domestic box office gross (USD)",
+    "category": "film_tv"
+  },
+  {
+    "id": "inception-worldwide-box",
+    "name": "Inception",
+    "value": 836000000,
+    "unit": "",
+    "metricLabel": "Worldwide box office gross (USD)",
+    "category": "film_tv"
+  },
+  {
+    "id": "interstellar-worldwide-box",
+    "name": "Interstellar",
+    "value": 701000000,
+    "unit": "",
+    "metricLabel": "Worldwide box office gross (USD)",
+    "category": "film_tv"
+  },
+  {
+    "id": "the-batman-2022-worldwide",
+    "name": "The Batman (2022)",
+    "value": 770000000,
+    "unit": "",
+    "metricLabel": "Worldwide box office gross (USD)",
+    "category": "film_tv"
+  },
+  {
+    "id": "bohemian-rhapsody-boxoffice",
+    "name": "Bohemian Rhapsody (2018)",
+    "value": 910000000,
+    "unit": "",
+    "metricLabel": "Worldwide box office gross (USD)",
+    "category": "film_tv"
+  },
+  {
+    "id": "john-wick-4-boxoffice",
+    "name": "John Wick: Chapter 4",
+    "value": 441000000,
+    "unit": "",
+    "metricLabel": "Worldwide box office gross (USD)",
+    "category": "film_tv"
+  },
+  {
+    "id": "black-panther-domestic",
+    "name": "Black Panther (2018)",
+    "value": 700000000,
+    "unit": "",
+    "metricLabel": "Domestic box office gross (USD)",
+    "category": "film_tv"
+  },
+  {
+    "id": "guardians-3-boxoffice",
+    "name": "Guardians of the Galaxy Vol. 3",
+    "value": 845000000,
+    "unit": "",
+    "metricLabel": "Worldwide box office gross (USD)",
+    "category": "film_tv"
+  },
+  {
+    "id": "doctor-strange-mom-boxoffice",
+    "name": "Doctor Strange in the Multiverse of Madness",
+    "value": 955000000,
+    "unit": "",
+    "metricLabel": "Worldwide box office gross (USD)",
+    "category": "film_tv"
+  },
+  {
+    "id": "hunger-games-catching-fire-box",
+    "name": "The Hunger Games: Catching Fire",
+    "value": 865000000,
+    "unit": "",
+    "metricLabel": "Worldwide box office gross (USD)",
+    "category": "film_tv"
+  },
+  {
+    "id": "squid-game-netflix-accts",
+    "name": "Squid Game (Season 1)",
+    "value": 111000000,
+    "unit": "",
+    "metricLabel": "Netflix accounts that watched in first 28 days",
+    "category": "film_tv"
+  },
+  {
+    "id": "wednesday-netflix-accts",
+    "name": "Wednesday (Season 1)",
+    "value": 150000000,
+    "unit": "",
+    "metricLabel": "Netflix accounts that watched in first month",
+    "category": "film_tv"
+  },
+  {
+    "id": "stranger-things-s4-netflix",
+    "name": "Stranger Things Season 4",
+    "value": 140000000,
+    "unit": "",
+    "metricLabel": "Netflix accounts that watched in 28 days",
+    "category": "film_tv"
+  },
+  {
+    "id": "taylor-midnights-first-week",
+    "name": "Midnights — Taylor Swift",
+    "value": 1578000,
+    "unit": "",
+    "metricLabel": "First-week album sales (US)",
+    "category": "pop_records"
+  },
+  {
+    "id": "adele-30-first-week",
+    "name": "30 — Adele",
+    "value": 839000,
+    "unit": "",
+    "metricLabel": "First-week album sales (US)",
+    "category": "pop_records"
+  },
+  {
+    "id": "drake-clb-first-week",
+    "name": "Certified Lover Boy — Drake",
+    "value": 613000,
+    "unit": "",
+    "metricLabel": "First-week album sales (US)",
+    "category": "pop_records"
+  },
+  {
+    "id": "beyonce-renaissance-first-week",
+    "name": "Renaissance — Beyoncé",
+    "value": 332000,
+    "unit": "",
+    "metricLabel": "First-week album sales (US)",
+    "category": "pop_records"
+  },
+  {
+    "id": "elvis-albums-worldwide",
+    "name": "Elvis Presley",
+    "value": 600000000,
+    "unit": "",
+    "metricLabel": "Records sold worldwide (all time)",
+    "category": "pop_records"
+  },
+  {
+    "id": "beatles-albums-worldwide",
+    "name": "The Beatles",
+    "value": 600000000,
+    "unit": "",
+    "metricLabel": "Records sold worldwide (all time)",
+    "category": "pop_records"
+  },
+  {
+    "id": "led-zeppelin-albums-worldwide",
+    "name": "Led Zeppelin",
+    "value": 300000000,
+    "unit": "",
+    "metricLabel": "Albums sold worldwide",
+    "category": "pop_records"
+  },
+  {
+    "id": "abba-albums-worldwide",
+    "name": "ABBA",
+    "value": 385000000,
+    "unit": "",
+    "metricLabel": "Albums sold worldwide",
+    "category": "pop_records"
+  },
+  {
+    "id": "queen-albums-worldwide",
+    "name": "Queen",
+    "value": 300000000,
+    "unit": "",
+    "metricLabel": "Albums sold worldwide",
+    "category": "pop_records"
+  },
+  {
+    "id": "elton-john-albums-worldwide",
+    "name": "Elton John",
+    "value": 300000000,
+    "unit": "",
+    "metricLabel": "Albums sold worldwide",
+    "category": "pop_records"
+  },
+  {
+    "id": "eminem-albums-worldwide",
+    "name": "Eminem",
+    "value": 220000000,
+    "unit": "",
+    "metricLabel": "Albums sold worldwide",
+    "category": "pop_records"
+  },
+  {
+    "id": "madonna-albums-worldwide",
+    "name": "Madonna",
+    "value": 300000000,
+    "unit": "",
+    "metricLabel": "Albums sold worldwide",
+    "category": "pop_records"
+  },
+  {
+    "id": "celine-dion-albums-worldwide",
+    "name": "Céline Dion",
+    "value": 220000000,
+    "unit": "",
+    "metricLabel": "Albums sold worldwide",
+    "category": "pop_records"
+  },
+  {
+    "id": "whitney-houston-albums-worldwide",
+    "name": "Whitney Houston",
+    "value": 200000000,
+    "unit": "",
+    "metricLabel": "Albums sold worldwide",
+    "category": "pop_records"
+  },
+  {
+    "id": "prince-albums-worldwide",
+    "name": "Prince",
+    "value": 100000000,
+    "unit": "",
+    "metricLabel": "Albums sold worldwide",
+    "category": "pop_records"
+  },
+  {
+    "id": "frank-sinatra-albums-worldwide",
+    "name": "Frank Sinatra",
+    "value": 150000000,
+    "unit": "",
+    "metricLabel": "Albums sold worldwide",
+    "category": "pop_records"
+  },
+  {
+    "id": "katy-perry-spotify",
+    "name": "Katy Perry",
+    "value": 35000000,
+    "unit": "",
+    "metricLabel": "Spotify monthly listeners",
+    "category": "music"
+  },
+  {
+    "id": "shakira-spotify",
+    "name": "Shakira",
+    "value": 42000000,
+    "unit": "",
+    "metricLabel": "Spotify monthly listeners",
+    "category": "music"
+  },
+  {
+    "id": "twenty-one-pilots-spotify",
+    "name": "Twenty One Pilots",
+    "value": 25000000,
+    "unit": "",
+    "metricLabel": "Spotify monthly listeners",
+    "category": "music"
+  },
+  {
+    "id": "imagine-dragons-spotify",
+    "name": "Imagine Dragons",
+    "value": 40000000,
+    "unit": "",
+    "metricLabel": "Spotify monthly listeners",
+    "category": "music"
+  },
+  {
+    "id": "tiktok-global-dau",
+    "name": "TikTok",
+    "value": 1000000000,
+    "unit": "",
+    "metricLabel": "Daily active users",
+    "category": "technology"
+  },
+  {
+    "id": "twitter-x-dau",
+    "name": "X (Twitter)",
+    "value": 250000000,
+    "unit": "",
+    "metricLabel": "Daily active users",
+    "category": "technology"
+  },
+  {
+    "id": "tesla-vehicles-delivered-2023",
+    "name": "Tesla (2023)",
+    "value": 1808000,
+    "unit": "",
+    "metricLabel": "Vehicles delivered in a year",
+    "category": "technology"
+  },
+  {
+    "id": "xbox-series-lifetime-sales",
+    "name": "Xbox Series X/S",
+    "value": 21000000,
+    "unit": "",
+    "metricLabel": "Units sold (lifetime)",
+    "category": "technology"
+  },
+  {
+    "id": "youtube-hours-per-day",
+    "name": "YouTube",
+    "value": 1000000000,
+    "unit": "",
+    "metricLabel": "Hours of video watched per day",
+    "category": "technology"
+  },
+  {
+    "id": "reddit-dau",
+    "name": "Reddit",
+    "value": 97000000,
+    "unit": "",
+    "metricLabel": "Daily active users",
+    "category": "technology"
+  },
+  {
+    "id": "twitch-mau",
+    "name": "Twitch",
+    "value": 140000000,
+    "unit": "",
+    "metricLabel": "Monthly active users",
+    "category": "technology"
+  },
+  {
+    "id": "discord-registered-users",
+    "name": "Discord",
+    "value": 550000000,
+    "unit": "",
+    "metricLabel": "Registered users",
+    "category": "technology"
+  },
+  {
+    "id": "pinterest-mau",
+    "name": "Pinterest",
+    "value": 465000000,
+    "unit": "",
+    "metricLabel": "Monthly active users",
+    "category": "technology"
+  },
+  {
+    "id": "uber-daily-trips",
+    "name": "Uber",
+    "value": 28000000,
+    "unit": "",
+    "metricLabel": "Trips completed per day",
+    "category": "technology"
+  },
+  {
+    "id": "airbnb-active-listings",
+    "name": "Airbnb",
+    "value": 7000000,
+    "unit": "",
+    "metricLabel": "Active listings worldwide",
+    "category": "technology"
+  },
+  {
+    "id": "fortnite-world-cup-prize",
+    "name": "Fortnite World Cup 2019",
+    "value": 30000000,
+    "unit": "",
+    "metricLabel": "Total prize pool (USD)",
+    "category": "sports"
+  },
+  {
+    "id": "the-international-2021-prize",
+    "name": "The International 2021 (Dota 2)",
+    "value": 40000000,
+    "unit": "",
+    "metricLabel": "Total prize pool (USD)",
+    "category": "sports"
+  },
+  {
+    "id": "lol-worlds-2022-prize",
+    "name": "League of Legends Worlds 2022",
+    "value": 22500000,
+    "unit": "",
+    "metricLabel": "Total prize pool (USD)",
+    "category": "sports"
+  },
+  {
+    "id": "masters-golf-prize-2024",
+    "name": "The Masters 2024",
+    "value": 20000000,
+    "unit": "",
+    "metricLabel": "Total prize money (USD)",
+    "category": "sports"
+  },
+  {
+    "id": "us-open-golf-prize-2024",
+    "name": "US Open Golf 2024",
+    "value": 21500000,
+    "unit": "",
+    "metricLabel": "Total prize money (USD)",
+    "category": "sports"
+  },
+  {
+    "id": "world-series-2016-viewers",
+    "name": "World Series Game 7 2016",
+    "value": 40000000,
+    "unit": "",
+    "metricLabel": "US TV viewers (Cubs vs. Indians)",
+    "category": "sports"
+  },
+  {
+    "id": "nba-finals-g7-2016-viewers",
+    "name": "NBA Finals Game 7 2016",
+    "value": 31000000,
+    "unit": "",
+    "metricLabel": "US TV viewers (Cavaliers vs. Warriors)",
+    "category": "sports"
+  },
+  {
+    "id": "ncaa-championship-2023-viewers",
+    "name": "NCAA Basketball Championship 2023",
+    "value": 14500000,
+    "unit": "",
+    "metricLabel": "US TV viewers",
+    "category": "sports"
+  },
+  {
+    "id": "kentucky-derby-2024-viewers",
+    "name": "Kentucky Derby 2024",
+    "value": 16000000,
+    "unit": "",
+    "metricLabel": "US TV viewers",
+    "category": "sports"
+  },
+  {
+    "id": "nfl-playoff-avg-viewers",
+    "name": "NFL Divisional Playoffs (2024 avg)",
+    "value": 35000000,
+    "unit": "",
+    "metricLabel": "US TV viewers",
+    "category": "sports"
+  },
+  {
+    "id": "indy-500-attendance",
+    "name": "Indianapolis 500",
+    "value": 250000,
+    "unit": "",
+    "metricLabel": "Race attendance (approx.)",
+    "category": "sports"
+  },
+  {
+    "id": "us-open-tennis-attendance",
+    "name": "US Open Tennis",
+    "value": 700000,
+    "unit": "",
+    "metricLabel": "Annual tournament attendance",
+    "category": "sports"
+  },
+  {
+    "id": "wimbledon-tournament-attendance",
+    "name": "Wimbledon",
+    "value": 500000,
+    "unit": "",
+    "metricLabel": "Annual tournament attendance",
+    "category": "sports"
+  },
+  {
+    "id": "f1-monaco-gp-viewers",
+    "name": "F1 Monaco Grand Prix",
+    "value": 50000000,
+    "unit": "",
+    "metricLabel": "Global TV viewers",
+    "category": "sports"
+  },
+  {
+    "id": "tiger-woods-pga-earnings",
+    "name": "Tiger Woods",
+    "value": 120000000,
+    "unit": "",
+    "metricLabel": "PGA Tour career prize money (USD)",
+    "category": "sports"
+  },
+  {
+    "id": "phil-mickelson-pga-earnings",
+    "name": "Phil Mickelson",
+    "value": 94000000,
+    "unit": "",
+    "metricLabel": "PGA Tour career prize money (USD)",
+    "category": "sports"
+  },
+  {
+    "id": "rory-mcilroy-pga-earnings",
+    "name": "Rory McIlroy",
+    "value": 75000000,
+    "unit": "",
+    "metricLabel": "PGA Tour career prize money (USD)",
+    "category": "sports"
+  },
+  {
+    "id": "us-open-tennis-prize-2024",
+    "name": "US Open Tennis 2024",
+    "value": 75000000,
+    "unit": "",
+    "metricLabel": "Total prize money (USD)",
+    "category": "sports"
+  },
+  {
+    "id": "lebron-james-insta",
+    "name": "LeBron James",
+    "value": 160000000,
+    "unit": "",
+    "metricLabel": "Instagram followers",
+    "category": "social"
+  },
+  {
+    "id": "virat-kohli-insta",
+    "name": "Virat Kohli",
+    "value": 265000000,
+    "unit": "",
+    "metricLabel": "Instagram followers",
+    "category": "social"
+  },
+  {
+    "id": "neymar-insta",
+    "name": "Neymar Jr.",
+    "value": 220000000,
+    "unit": "",
+    "metricLabel": "Instagram followers",
+    "category": "social"
+  },
+  {
+    "id": "mbappe-insta",
+    "name": "Kylian Mbappé",
+    "value": 110000000,
+    "unit": "",
+    "metricLabel": "Instagram followers",
+    "category": "social"
+  },
+  {
+    "id": "therock-twitter",
+    "name": "Dwayne Johnson",
+    "value": 36000000,
+    "unit": "",
+    "metricLabel": "X (Twitter) followers",
+    "category": "social"
+  },
+  {
+    "id": "kevin-hart-insta",
+    "name": "Kevin Hart",
+    "value": 62000000,
+    "unit": "",
+    "metricLabel": "Instagram followers",
+    "category": "social"
+  },
+  {
+    "id": "khaby-lame-insta",
+    "name": "Khaby Lame",
+    "value": 82000000,
+    "unit": "",
+    "metricLabel": "Instagram followers",
+    "category": "social"
   }
 ]

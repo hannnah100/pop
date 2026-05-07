@@ -7,6 +7,7 @@ import {
   useGetPopBoxAnswers,
   useGetPopBoxLeaderboard,
   useSubmitPopBoxScore,
+  useUpdatePlayerName,
   getGetTodayPopBoxQueryKey,
   getGetPopBoxByIdQueryKey,
   getGetPopBoxAnswersQueryKey,
@@ -153,6 +154,16 @@ export default function PopBox() {
     },
   );
   const scoresMutation = useSubmitPopBoxScore();
+  const updateNameMutation = useUpdatePlayerName();
+
+  function commitName(name: string) {
+    const trimmed = name.trim();
+    if (!trimmed) return;
+    savePlayerName(trimmed);
+    setPlayerName(trimmed);
+    updateNameMutation.mutate({ data: { playerToken, playerName: trimmed } });
+  }
+
   const storageKey = isArchive
     ? `ptq-archive-pb-${archiveId}`
     : `ptq-pop-box-${todayDateStr}`;
@@ -753,8 +764,7 @@ export default function PopBox() {
                             onChange={(e) => setEditNameValue(e.target.value)}
                             onKeyDown={(e) => {
                               if (e.key === "Enter") {
-                                const trimmed = editNameValue.trim();
-                                if (trimmed) { savePlayerName(trimmed); setPlayerName(trimmed); }
+                                commitName(editNameValue);
                                 setIsEditingName(false);
                               } else if (e.key === "Escape") {
                                 setIsEditingName(false);
@@ -766,8 +776,7 @@ export default function PopBox() {
                           />
                           <button
                             onClick={() => {
-                              const trimmed = editNameValue.trim();
-                              if (trimmed) { savePlayerName(trimmed); setPlayerName(trimmed); }
+                              commitName(editNameValue);
                               setIsEditingName(false);
                             }}
                             className="p-0.5 text-black hover:text-[#FF1493]"
@@ -798,7 +807,7 @@ export default function PopBox() {
                     </span>
                   ) : (
                     <span className="flex-1 font-bold text-sm">
-                      {`Player ${entry.playerToken.slice(0, 4)}`}
+                      {entry.playerName ?? `Player ${entry.playerToken.slice(0, 4)}`}
                     </span>
                   )}
                   <span className="font-display font-black text-sm">{entry.score}/9</span>

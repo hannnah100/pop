@@ -14,10 +14,12 @@ function todayDate(): string {
 }
 
 router.get("/daily/three-flops", async (req, res): Promise<void> => {
+  const today = todayDate();
+
   let row = await db
     .select()
     .from(threeFlopsChallengesTable)
-    .where(eq(threeFlopsChallengesTable.id, "big-bang-theory-characters"))
+    .where(eq(threeFlopsChallengesTable.date, today))
     .limit(1)
     .then((r) => r[0]);
 

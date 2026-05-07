@@ -1,5 +1,5 @@
 import { Router, type IRouter } from "express";
-import { db, threeFlopsScoresTable } from "@workspace/db";
+import { db, threeFlopsScoresTable, playerNamesTable } from "@workspace/db";
 import { eq, desc, sql } from "drizzle-orm";
 
 const router: IRouter = Router();
@@ -18,8 +18,10 @@ router.get("/daily/three-flops/leaderboard", async (req, res): Promise<void> => 
     .select({
       playerToken: threeFlopsScoresTable.playerToken,
       score: threeFlopsScoresTable.score,
+      playerName: playerNamesTable.playerName,
     })
     .from(threeFlopsScoresTable)
+    .leftJoin(playerNamesTable, eq(threeFlopsScoresTable.playerToken, playerNamesTable.playerToken))
     .where(eq(threeFlopsScoresTable.date, date))
     .orderBy(desc(threeFlopsScoresTable.score))
     .limit(10);
@@ -28,6 +30,7 @@ router.get("/daily/three-flops/leaderboard", async (req, res): Promise<void> => 
     rank: i + 1,
     playerToken: r.playerToken,
     score: r.score,
+    playerName: r.playerName ?? null,
   }));
 
   const agg = await db
