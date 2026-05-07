@@ -263,7 +263,7 @@ router.get("/daily/pop-box/archive", async (_req, res): Promise<void> => {
     .from(popBoxGridsTable)
     .orderBy(desc(popBoxGridsTable.date));
 
-  res.json(rows);
+  res.json(rows.map((r) => ({ ...r, mode: getGridMode(r.id) })));
 });
 
 router.get("/daily/pop-box/:id", async (req, res): Promise<void> => {

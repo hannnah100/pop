@@ -57,6 +57,8 @@ import type {
   ThreeFlopsLeaderboard,
   ThreeFlopsScoreRequest,
   ThreeFlopsSummary,
+  UpdatePlayerName200,
+  UpdatePlayerNameRequest,
 } from "./api.schemas";
 
 import { customFetch } from "../custom-fetch";

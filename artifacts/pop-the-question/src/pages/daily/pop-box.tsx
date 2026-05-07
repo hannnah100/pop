@@ -481,18 +481,19 @@ export default function PopBox() {
         <StarDoodle className="absolute top-2 right-4 w-7 h-7 text-[#FFD700] opacity-70" />
         <div>
           <h1 className="font-display text-3xl md:text-4xl font-black text-white uppercase tracking-tight">
-            {grid.mode === "artist-alphabet"
-              ? "Artist Alphabet"
-              : grid.mode === "actor-alphabet"
-                ? "Actor Alphabet"
-                : "Pop Box"}
+            Pop Box
           </h1>
+          {(grid.mode === "artist-alphabet" || grid.mode === "actor-alphabet") && (
+            <span className="inline-block mt-1 bg-black/30 text-white text-xs font-bold uppercase tracking-widest px-2 py-0.5 border border-white/30">
+              {grid.mode === "artist-alphabet" ? "Artist Alphabet" : "Actor Alphabet"}
+            </span>
+          )}
           <p className="text-sm text-white/90 font-sans mt-1">
             {grid.mode === "artist-alphabet"
-              ? "Name a song by the artist starting with a letter in that row. 9 picks."
+              ? "Name a song that fits the intersection. 9 picks."
               : grid.mode === "actor-alphabet"
-                ? "Name a film or show starring the actor starting with a letter in that row. 9 picks."
-                : "Name a celeb that fits BOTH the row and the column. 9 picks."}
+                ? "Name a movie that fits the intersection. 9 picks."
+                : "Find an answer for each intersection of the grid. 9 picks."}
           </p>
         </div>
         <div className="flex items-center gap-2 bg-white border-[3px] border-black shadow-[3px_3px_0_#000] px-4 py-3 flex-shrink-0">

@@ -7,6 +7,8 @@ import {
   useSubmitSkinnyScore,
   useUpdatePlayerName,
   getGetSkinnyLeaderboardQueryKey,
+  getGetTodayCrosswordQueryKey,
+  getGetCrosswordByIdQueryKey,
 } from "@workspace/api-client-react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -50,8 +52,8 @@ export default function Crossword() {
   const { playCorrect, playWrong, playTick, playVictory } = useSfx();
   const { recordGame } = useStreaks();
 
-  const { data: todayPuzzle, isLoading: todayLoading } = useGetTodayCrossword({ query: { enabled: !archiveId } });
-  const { data: archivePuzzle, isLoading: archiveLoading } = useGetCrosswordById(archiveId ?? "", { query: { enabled: !!archiveId } });
+  const { data: todayPuzzle, isLoading: todayLoading } = useGetTodayCrossword({ query: { queryKey: getGetTodayCrosswordQueryKey(), enabled: !archiveId } });
+  const { data: archivePuzzle, isLoading: archiveLoading } = useGetCrosswordById(archiveId ?? "", { query: { queryKey: getGetCrosswordByIdQueryKey(archiveId ?? ""), enabled: !!archiveId } });
   const puzzle = archiveId ? archivePuzzle : todayPuzzle;
   const isLoading = archiveId ? archiveLoading : todayLoading;
 
@@ -673,13 +675,31 @@ export default function Crossword() {
                           <div className="flex items-center justify-between px-4 py-2 bg-[#00C853]/15 font-bold">
                             <div className="flex items-center gap-3">
                               <span className="font-black font-display text-sm w-8">#{myRank}</span>
-                              <button
-                                className="flex items-center gap-1 text-sm font-bold font-sans hover:underline"
-                                onClick={() => { setEditNameValue(playerName || ""); setIsEditingName(true); }}
-                              >
-                                {playerName || "You"}
-                                <Pencil className="w-3 h-3 text-black/40" />
-                              </button>
+                              {isEditingName ? (
+                                <div className="flex items-center gap-1">
+                                  <input
+                                    className="border border-black px-1 py-0.5 text-sm font-sans w-28 focus:outline-none"
+                                    value={editNameValue}
+                                    onChange={(e) => setEditNameValue(e.target.value)}
+                                    onKeyDown={(e) => {
+                                      if (e.key === "Enter") { commitName(editNameValue); setIsEditingName(false); }
+                                      else if (e.key === "Escape") { setIsEditingName(false); }
+                                    }}
+                                    autoFocus
+                                    maxLength={20}
+                                  />
+                                  <button onClick={() => { commitName(editNameValue); setIsEditingName(false); }} className="text-[#00C853] hover:text-black"><Check className="w-4 h-4" /></button>
+                                  <button onClick={() => setIsEditingName(false)} className="text-black/40 hover:text-black"><X className="w-4 h-4" /></button>
+                                </div>
+                              ) : (
+                                <button
+                                  className="flex items-center gap-1 text-sm font-bold font-sans hover:underline"
+                                  onClick={() => { setEditNameValue(playerName || ""); setIsEditingName(true); }}
+                                >
+                                  {playerName || "You"}
+                                  <Pencil className="w-3 h-3 text-black/40" />
+                                </button>
+                              )}
                             </div>
                             <span className="font-black font-display text-sm">{formatTime(elapsedTime)}</span>
                           </div>

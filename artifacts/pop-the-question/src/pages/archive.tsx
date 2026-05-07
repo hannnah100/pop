@@ -70,14 +70,31 @@ export default function Archive() {
     stats: getArchiveStats(item.id, "crossword"),
   }));
 
-  const pbItems = (pbArchive ?? []).map((item) => ({
-    ...item,
-    type: "pop-box" as const,
-    title: `Pop Box · ${item.difficulty}`,
-    prompt: "9-cell celebrity-grid game. One pick per cell.",
-    totalCount: 9,
-    stats: getArchiveStats(item.id, "pop-box"),
-  }));
+  const pbItems = (pbArchive ?? []).map((item) => {
+    const mode = item.mode ?? (
+      item.id.startsWith("artist-alpha-") ? "artist-alphabet" :
+      item.id.startsWith("actor-alpha-") ? "actor-alphabet" :
+      "celebrity-categories"
+    );
+    const modeLabel =
+      mode === "artist-alphabet" ? "Artist Alphabet" :
+      mode === "actor-alphabet" ? "Actor Alphabet" :
+      "Celebrity Categories";
+    const prompt =
+      mode === "artist-alphabet" ? "Name a song that fits the intersection" :
+      mode === "actor-alphabet" ? "Name a movie that fits the intersection" :
+      "Find an answer for each intersection of the grid";
+    return {
+      ...item,
+      type: "pop-box" as const,
+      mode,
+      modeLabel,
+      title: `Pop Box · ${item.difficulty}`,
+      prompt,
+      totalCount: 9,
+      stats: getArchiveStats(item.id, "pop-box"),
+    };
+  });
 
   const podItems = (podArchive ?? []).map((item) => ({
     ...item,
@@ -311,6 +328,11 @@ export default function Archive() {
                   <h3 className={`text-lg font-bold mb-1 transition-colors ${accentClasses.heading}`}>
                     {item.title}
                   </h3>
+                  {"modeLabel" in item && item.modeLabel && (
+                    <p className="text-xs font-bold text-muted-foreground mb-1">
+                      [{item.modeLabel}]
+                    </p>
+                  )}
                   <p className="text-muted-foreground text-sm line-clamp-2 mb-4 flex-1">
                     {"prompt" in item ? item.prompt : ""}
                   </p>

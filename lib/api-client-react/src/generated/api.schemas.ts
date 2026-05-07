@@ -100,12 +100,14 @@ export interface PopBoxGrid {
   difficulty: PopBoxGridDifficulty;
   rowCategories: PopBoxCategory[];
   columnCategories: PopBoxCategory[];
+  mode?: string;
 }
 
 export interface PopBoxSummary {
   id: string;
   date: string;
   difficulty: string;
+  mode?: string;
 }
 
 export interface PopBoxValidCelebrity {
