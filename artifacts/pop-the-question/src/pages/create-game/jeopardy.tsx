@@ -7,7 +7,7 @@ import { useToast } from "@/hooks/use-toast";
 import { customGamesFetch } from "@/lib/ownerId";
 import { BackArrow } from "@/components/ui/BackArrow";
 
-const JEOPARDY_VALUES = [200, 400, 600, 800, 1000] as const;
+const JEOPARDY_VALUES = [200, 400, 800, 1000] as const;
 
 interface JClue {
   value: number;
@@ -51,7 +51,7 @@ function makeDefaultState(): JFormState {
   return {
     title: "",
     description: "",
-    categories: Array.from({ length: 6 }, makeDefaultCategory),
+    categories: Array.from({ length: 5 }, makeDefaultCategory),
     final: { category: "", question: "", answer: "" },
   };
 }
@@ -114,7 +114,7 @@ export default function JeopardyCreator() {
   const [errors, setErrors] = useState<FieldError>({});
   const [saving, setSaving] = useState(false);
   const [loading, setLoading] = useState(!!editId);
-  const [collapsed, setCollapsed] = useState<boolean[]>(Array(6).fill(true));
+  const [collapsed, setCollapsed] = useState<boolean[]>(Array(5).fill(true));
 
   useEffect(() => {
     if (!editId) return;
@@ -173,7 +173,7 @@ export default function JeopardyCreator() {
     const errs = validateForm(form);
     if (Object.keys(errs).length > 0) {
       setErrors(errs);
-      setCollapsed(Array(6).fill(false));
+      setCollapsed(Array(form.categories.length).fill(false));
       toast({ title: "Please fix the errors below", variant: "destructive" });
       return;
     }
@@ -217,7 +217,7 @@ export default function JeopardyCreator() {
             {editId ? "Edit Pop Quiz Pack" : "Create Pop Quiz Pack"}
           </h1>
           <p className="mt-2 text-sm font-bold text-black/70 font-sans">
-            6 categories · 5 clues each · Final Round
+            5 categories · 5 clues each · Final Round
           </p>
         </div>
       </header>

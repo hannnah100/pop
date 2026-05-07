@@ -1930,7 +1930,7 @@ export default function GameHost() {
                     onClick={() => handleScatSetConfig(n, scatDifficulty)}
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.96 }}
-                    className={`w-16 h-16 font-display font-black text-2xl border-[3px] border-black focus-visible:outline-none ${scatRoundCount === n ? "bg-[#38BDF8] text-white shadow-[5px_5px_0_#000]" : "bg-white shadow-[4px_4px_0_#000] hover:bg-[#FFF8E7]"}`}
+                    className={`w-16 h-16 font-display font-black text-2xl border-[3px] border-black focus-visible:outline-none ${scatRoundCount === n ? "bg-[#FFC107] text-black shadow-[5px_5px_0_#000]" : "bg-white shadow-[4px_4px_0_#000] hover:bg-[#FFF8E7]"}`}
                     data-testid={`btn-scat-rounds-${n}`}
                   >
                     {n}
@@ -1953,7 +1953,7 @@ export default function GameHost() {
                     onClick={() => handleScatSetConfig(scatRoundCount, d)}
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
-                    className={`px-8 py-4 font-display font-black text-xl uppercase border-[3px] border-black focus-visible:outline-none ${scatDifficulty === d ? "bg-[#38BDF8] text-white shadow-[5px_5px_0_#000]" : "bg-white shadow-[4px_4px_0_#000] hover:bg-[#FFF8E7]"}`}
+                    className={`px-8 py-4 font-display font-black text-xl uppercase border-[3px] border-black focus-visible:outline-none ${scatDifficulty === d ? "bg-[#FFC107] text-black shadow-[5px_5px_0_#000]" : "bg-white shadow-[4px_4px_0_#000] hover:bg-[#FFF8E7]"}`}
                     data-testid={`btn-scat-diff-${d}`}
                   >
                     {d}
@@ -1976,11 +1976,11 @@ export default function GameHost() {
         <div className="flex-1 flex flex-col bg-[#FFF8E7] p-6 gap-6">
           <header className="flex justify-between items-center flex-wrap gap-3">
             <div className="font-display font-black text-black text-xl bg-white border-[3px] border-black shadow-[3px_3px_0_#000] px-6 py-3 uppercase tracking-widest">
-              ROOM: <span style={{ color: "#38BDF8" }}>{roomCode}</span>
+              ROOM: <span style={{ color: "#FFC107" }}>{roomCode}</span>
             </div>
             {isDemo && <DemoBadge />}
             <div className="font-display font-black text-black text-xl bg-white border-[3px] border-black shadow-[3px_3px_0_#000] px-6 py-3 uppercase">
-              Round <span style={{ color: "#38BDF8" }}>{scatRound}</span> / {scatTotalRounds}
+              Round <span style={{ color: "#FFC107" }}>{scatRound}</span> / {scatTotalRounds}
             </div>
           </header>
 
@@ -1988,10 +1988,10 @@ export default function GameHost() {
             {/* Main panel */}
             <div className="flex-1 flex flex-col gap-6">
               {/* Letter + timer */}
-              <div className={`flex items-center justify-between p-6 border-[4px] border-black shadow-[6px_6px_0_#000] ${scatAlertActive ? "bg-[#FF1493]" : "bg-[#38BDF8]"}`}>
+              <div className={`flex items-center justify-between p-6 border-[4px] border-black shadow-[6px_6px_0_#000] ${scatAlertActive ? "bg-[#FF1493]" : "bg-[#FFC107]"}`}>
                 <div>
-                  <p className="font-display font-black text-white/70 text-sm uppercase tracking-widest mb-1">This round&apos;s letter</p>
-                  <div className="font-display font-black text-white text-[8rem] leading-none" style={{ textShadow: "4px 4px 0 rgba(0,0,0,0.3)" }}>
+                  <p className={`font-display font-black text-sm uppercase tracking-widest mb-1 ${scatAlertActive ? "text-white/70" : "text-black/70"}`}>This round&apos;s letter</p>
+                  <div className={`font-display font-black text-[8rem] leading-none ${scatAlertActive ? "text-white" : "text-black"}`} style={{ textShadow: "4px 4px 0 rgba(0,0,0,0.3)" }}>
                     {scatLetter}
                   </div>
                 </div>
@@ -2007,12 +2007,12 @@ export default function GameHost() {
               <div className="bg-white border-[3px] border-black shadow-[4px_4px_0_#000] p-4">
                 <div className="flex items-center justify-between mb-3">
                   <span className="font-display font-black text-black uppercase text-sm">Answers submitted</span>
-                  <span className="font-display font-black" style={{ color: "#38BDF8" }}>{scatSubmitted} / {scatTotal}</span>
+                  <span className="font-display font-black" style={{ color: "#FFC107" }}>{scatSubmitted} / {scatTotal}</span>
                 </div>
                 <div className="w-full bg-black/10 border-[2px] border-black h-4">
                   <motion.div
                     className="h-full"
-                    style={{ backgroundColor: "#38BDF8" }}
+                    style={{ backgroundColor: "#FFC107" }}
                     animate={{ width: `${(scatSubmitted / Math.max(1, scatTotal)) * 100}%` }}
                     transition={{ duration: 0.5 }}
                   />
@@ -2023,11 +2023,11 @@ export default function GameHost() {
 
               {/* Categories list */}
               <div className="bg-white border-[3px] border-black shadow-[4px_4px_0_#000] p-4">
-                <h3 className="font-display font-black text-black uppercase text-lg mb-4 border-b-[3px] border-black pb-2">Categories — must start with <span style={{ color: "#38BDF8" }}>{scatLetter}</span></h3>
+                <h3 className="font-display font-black text-black uppercase text-lg mb-4 border-b-[3px] border-black pb-2">Categories — must start with <span style={{ color: "#FFC107" }}>{scatLetter}</span></h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                   {scatCategories.map((cat) => (
                     <div key={cat.id} className="flex items-center gap-3 p-3 border-[2px] border-black bg-[#FFF8E7]">
-                      <div className="w-8 h-8 flex items-center justify-center font-display font-black text-white text-sm flex-shrink-0" style={{ backgroundColor: "#38BDF8" }}>
+                      <div className="w-8 h-8 flex items-center justify-center font-display font-black text-black text-sm flex-shrink-0" style={{ backgroundColor: "#FFC107" }}>
                         {scatLetter}
                       </div>
                       <span className="font-display font-black text-black text-sm uppercase">{cat.name}</span>
@@ -2057,7 +2057,7 @@ export default function GameHost() {
                         {p.isBot && <Bot className="w-3 h-3 text-black/40" />}
                         <span className="font-display font-black text-black text-sm uppercase truncate max-w-[100px]">{p.name}</span>
                       </div>
-                      <span className="font-display font-black text-sm" style={{ color: "#38BDF8" }}>{p.score ?? 0}pt</span>
+                      <span className="font-display font-black text-sm" style={{ color: "#FFC107" }}>{p.score ?? 0}pt</span>
                     </div>
                   ))}
                 </div>
@@ -2073,7 +2073,7 @@ export default function GameHost() {
         <div className="flex-1 flex flex-col bg-[#FFF8E7] p-6 gap-6">
           <header className="flex justify-between items-center flex-wrap gap-3">
             <div className="font-display font-black text-black text-xl bg-white border-[3px] border-black shadow-[3px_3px_0_#000] px-6 py-3 uppercase tracking-widest">
-              Round {scatRound} Results — <span style={{ color: "#38BDF8" }}>Letter {scatLetter}</span>
+              Round {scatRound} Results — <span style={{ color: "#FFC107" }}>Letter {scatLetter}</span>
             </div>
             {isDemo && <DemoBadge />}
             <div className="flex gap-3">
@@ -2093,9 +2093,9 @@ export default function GameHost() {
             <div className="flex-1 space-y-4 overflow-auto">
               {scatResults.map((cat) => (
                 <div key={cat.categoryId} className="bg-white border-[3px] border-black shadow-[4px_4px_0_#000]">
-                  <div className="p-3 border-b-[3px] border-black flex items-center gap-3" style={{ backgroundColor: "#38BDF8" }}>
-                    <span className="w-8 h-8 flex items-center justify-center font-display font-black text-white text-sm bg-black/20">{scatLetter}</span>
-                    <span className="font-display font-black text-white uppercase text-sm">{cat.categoryName}</span>
+                  <div className="p-3 border-b-[3px] border-black flex items-center gap-3" style={{ backgroundColor: "#FFC107" }}>
+                    <span className="w-8 h-8 flex items-center justify-center font-display font-black text-black text-sm bg-black/20">{scatLetter}</span>
+                    <span className="font-display font-black text-black uppercase text-sm">{cat.categoryName}</span>
                   </div>
                   <div className="divide-y-[2px] divide-black">
                     {cat.answers.filter(a => a.answer).map((a) => (
@@ -2786,7 +2786,7 @@ export default function GameHost() {
           return (
             <div
               key={s.id}
-              className={`rounded-xl border-2 px-3 py-2 surface-elevated text-center ${
+              className={`rounded-xl border-2 px-3 py-2 surface-elevated text-center min-w-0 overflow-hidden ${
                 isBuzz
                   ? "border-yellow-400 bg-yellow-400/15 shadow-[0_0_24px_-4px_hsl(48_100%_60%/0.7)]"
                   : isCtrl
@@ -2800,10 +2800,10 @@ export default function GameHost() {
                 {isCtrl && <Crown className="w-3.5 h-3.5 text-primary flex-shrink-0" />}
                 <span className="truncate">{s.name}</span>
               </div>
-              <div className={`text-2xl md:text-3xl font-black font-display ${
+              <div className={`text-base md:text-lg lg:text-xl font-black font-display tabular-nums overflow-hidden text-ellipsis whitespace-nowrap ${
                 s.score < 0 ? "text-destructive" : "text-foreground"
               }`}>
-                {s.score < 0 ? "-" : ""}${Math.abs(s.score)}
+                {s.score < 0 ? "-" : ""}${Math.abs(s.score).toLocaleString()}
               </div>
             </div>
           );
@@ -3069,7 +3069,7 @@ export default function GameHost() {
               <p className="text-xl uppercase tracking-widest font-bold text-yellow-400">Daily Double · Wager ${jDdWager}</p>
             </div>
             <p className="text-lg uppercase font-bold text-muted-foreground tracking-widest mb-2">{jActive.category}</p>
-            <h2 className="text-3xl md:text-5xl font-extrabold font-display tracking-tight text-center mb-10 leading-tight max-w-4xl">
+            <h2 className="font-question-pq font-black text-3xl md:text-5xl text-center mb-10 leading-tight max-w-4xl" style={{ color: "#38BDF8" }}>
               {jActive.question}
             </h2>
             <p className="text-lg text-muted-foreground mb-4">
@@ -3086,67 +3086,91 @@ export default function GameHost() {
     if (jActive && (jPhase === "clue-reveal" || jPhase === "buzzer-open" || jPhase === "answering" || jPhase === "between-clues")) {
       return (
         <div className="flex-1 flex flex-col text-foreground relative overflow-hidden">
-          <Header />
-          <PlayerStatusBar />
-          <main className="flex-1 flex flex-col items-center justify-center max-w-5xl mx-auto w-full">
-            <p className="text-lg md:text-xl uppercase font-bold text-muted-foreground tracking-widest mb-1">{jActive.category}</p>
-            <p className={`text-4xl font-black font-display mb-6 ${valueColor(jActive.value)} drop-shadow-[0_0_12px_currentColor]`}>${jActive.value}</p>
-            <h2 className="text-3xl md:text-5xl font-extrabold font-display tracking-tight text-center mb-8 leading-tight max-w-4xl">
+
+          {/* Top bar: room code · demo badge · category */}
+          <header className="flex justify-between items-center px-6 py-4 relative z-10 shrink-0">
+            <div className="text-lg font-bold text-muted-foreground bg-card/80 backdrop-blur px-5 py-2 rounded-full border border-border surface-elevated">
+              ROOM: <span className="text-foreground font-black">{roomCode}</span>
+            </div>
+            {isDemo && <DemoBadge />}
+            <div className="text-lg font-bold uppercase tracking-widest text-[#38BDF8] bg-card/80 backdrop-blur px-5 py-2 rounded-full border border-[#38BDF8]/30 surface-elevated">
+              {jActive.category}
+            </div>
+          </header>
+
+          {/* CENTER: question — the star */}
+          <main className="flex-1 flex flex-col items-center justify-center px-8 md:px-16 max-w-6xl mx-auto w-full">
+            <motion.h2
+              key={jActive.question}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.35 }}
+              className="font-question-pq font-black text-5xl md:text-6xl lg:text-7xl text-center leading-tight"
+              style={{ color: "#38BDF8" }}
+            >
               {jActive.question}
-            </h2>
-
-            {jPhase === "clue-reveal" && (
-              <p className="text-xl text-muted-foreground italic">Buzzer arming…</p>
-            )}
-
-            {jPhase === "buzzer-open" && (
-              <div className="flex flex-col items-center gap-3">
-                <motion.div
-                  animate={{ scale: [1, 1.03, 1] }}
-                  transition={{ duration: 1.6, repeat: Infinity }}
-                  className="flex items-center gap-3 px-8 py-4 rounded-full bg-success/20 border-2 border-success shadow-[0_0_30px_-6px_hsl(var(--success))]"
-                >
-                  <Zap className="w-8 h-8 text-success" />
-                  <span className="text-3xl font-black uppercase tracking-widest text-success">Buzzers Open</span>
-                </motion.div>
-                <TimerRing value={remainingMs / 1000} total={12} size={100} thickness={8} label={`${secsLeft}s`} />
-              </div>
-            )}
-
-            {jPhase === "answering" && jBuzzedInName && (
-              <motion.div
-                initial={{ scale: 0.7, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ type: "spring", stiffness: 210, damping: 28 }}
-                className="flex flex-col items-center gap-3"
-              >
-                <div className="flex items-center gap-3 px-10 py-5 rounded-2xl bg-yellow-400/20 border-2 border-yellow-400 shadow-[0_0_40px_-6px_hsl(48_100%_60%/0.7)]">
-                  <Zap className="w-10 h-10 text-yellow-400 fill-yellow-400" />
-                  <span className="text-4xl font-black font-display text-yellow-300">
-                    {jBuzzedInName}
-                  </span>
-                  <span className="text-2xl font-bold text-yellow-200/80 ml-2">buzzed in!</span>
-                </div>
-                <TimerRing value={remainingMs / 1000} total={12} size={100} thickness={8} label={`${secsLeft}s`} />
-              </motion.div>
-            )}
+            </motion.h2>
 
             {jPhase === "between-clues" && jClueRevealedAnswer && (
               <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className="bg-yellow-400/15 border-2 border-yellow-400/50 rounded-2xl px-8 py-5 text-center"
+                className="mt-10 bg-yellow-400/15 border-2 border-yellow-400/50 rounded-2xl px-8 py-5 text-center"
               >
                 <p className="text-sm uppercase font-bold tracking-widest text-yellow-400 mb-2">Correct Answer</p>
                 <p className="text-3xl md:text-4xl font-extrabold text-yellow-300">{jClueRevealedAnswer}</p>
               </motion.div>
             )}
+          </main>
+
+          {/* BOTTOM: status + scoreboard */}
+          <div className="shrink-0 flex flex-col items-center gap-3 px-6 pb-5">
+
+            {jPhase === "clue-reveal" && (
+              <p className="text-sm uppercase tracking-widest font-bold text-muted-foreground">
+                Buzzer arming…
+              </p>
+            )}
+
+            {jPhase === "buzzer-open" && (
+              <div className="flex items-center gap-4">
+                <motion.div
+                  animate={{ scale: [1, 1.04, 1] }}
+                  transition={{ duration: 1.4, repeat: Infinity }}
+                  className="flex items-center gap-2 px-6 py-2.5 rounded-full bg-success/20 border-2 border-success"
+                >
+                  <Zap className="w-5 h-5 text-success" />
+                  <span className="text-lg font-black uppercase tracking-widest text-success">Buzzers Open</span>
+                </motion.div>
+                {secsLeft > 0 && (
+                  <span className="text-2xl font-black tabular-nums text-muted-foreground">{secsLeft}s</span>
+                )}
+              </div>
+            )}
+
+            {jPhase === "answering" && jBuzzedInName && (
+              <motion.div
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ type: "spring", stiffness: 220, damping: 26 }}
+                className="flex items-center gap-3 px-8 py-3 rounded-2xl bg-yellow-400/20 border-2 border-yellow-400 shadow-[0_0_40px_-6px_hsl(48_100%_60%/0.6)]"
+              >
+                <Zap className="w-6 h-6 text-yellow-400 fill-yellow-400 shrink-0" />
+                <span className="text-2xl md:text-3xl font-black font-display text-yellow-300">
+                  {jBuzzedInName}
+                </span>
+                <span className="text-xl font-bold text-yellow-200/70">— ${jActive.value}</span>
+                {secsLeft > 0 && (
+                  <span className="ml-1 text-lg font-black tabular-nums text-yellow-200/50">{secsLeft}s</span>
+                )}
+              </motion.div>
+            )}
 
             {jLastResolved && jPhase !== "between-clues" && (
               <motion.div
-                initial={{ y: 12, opacity: 0 }}
+                initial={{ y: 10, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
-                className={`mt-4 px-5 py-2 rounded-full font-bold text-lg border ${
+                className={`px-5 py-1.5 rounded-full font-bold text-base border ${
                   jLastResolved.correct
                     ? "bg-success/15 border-success/50 text-success"
                     : "bg-destructive/15 border-destructive/50 text-destructive"
@@ -3157,7 +3181,7 @@ export default function GameHost() {
             )}
 
             <Scoreboard />
-          </main>
+          </div>
         </div>
       );
     }
@@ -3176,33 +3200,42 @@ export default function GameHost() {
               </p>
             )}
 
-            <div className="grid grid-cols-6 gap-1.5 md:gap-2 w-full mb-4">
+            <div
+              className="grid gap-2 md:gap-3 w-full mb-4"
+              style={{ gridTemplateColumns: `repeat(${jBoard.categories.length}, minmax(0, 1fr))` }}
+            >
               {jBoard.categories.map((cat, ci) => (
                 <div
                   key={ci}
-                  className="bg-gradient-to-b from-blue-700 to-blue-900 rounded-md px-2 py-3 md:py-4 text-center border-2 border-blue-400/40 shadow-[0_4px_18px_-2px_rgba(0,0,0,0.5)]"
+                  className="px-3 py-4 md:py-5 text-center border-[5px] border-black shadow-[4px_4px_0_#000]"
+                  style={{ backgroundColor: "#38BDF8" }}
                 >
-                  <p className="text-base md:text-xl lg:text-2xl font-extrabold font-display uppercase tracking-tight text-yellow-200 leading-tight">
+                  <p className="text-sm md:text-base lg:text-lg font-question-pq font-black uppercase tracking-wide text-black leading-tight">
                     {cat.name}
                   </p>
                 </div>
               ))}
-              {[0, 1, 2, 3, 4].map((row) =>
+              {[0, 1, 2, 3].map((row) =>
                 jBoard.categories.map((cat, ci) => {
-                  const clue = cat.clues[row];
-                  if (!clue) return null;
+                  // Sort by value so rows are consistent across all categories.
+                  // For 5-clue packs [200,400,600,800,1000] skip index 2 ($600)
+                  // so we always display exactly [200, 400, 800, 1000].
+                  const sorted = [...cat.clues].sort((a, b) => a.value - b.value);
+                  const pickIdx = sorted.length === 5 ? [0, 1, 3, 4][row] : row;
+                  const clue = sorted[pickIdx];
                   return (
                     <div
                       key={`${ci}-${row}`}
-                      className={`aspect-[3/2] rounded-md flex items-center justify-center font-black font-display border-2 transition-all ${
-                        clue.revealed
-                          ? "bg-blue-950/40 border-blue-900/40 text-transparent"
-                          : "bg-gradient-to-b from-blue-700 to-blue-900 border-blue-400/40 shadow-[0_4px_18px_-2px_rgba(0,0,0,0.5)]"
+                      className={`aspect-[4/3] flex items-center justify-center font-black font-display border-[5px] border-black transition-all ${
+                        !clue || clue.revealed
+                          ? "bg-[#FFF8E7] border-black/25"
+                          : "shadow-[4px_4px_0_#000]"
                       }`}
+                      style={clue && !clue.revealed ? { backgroundColor: "#38BDF8" } : undefined}
                       data-testid={`j-square-${ci}-${row}`}
                     >
-                      {!clue.revealed && (
-                        <span className={`text-3xl md:text-5xl ${valueColor(clue.value)} drop-shadow-[0_0_12px_currentColor]`}>
+                      {clue && !clue.revealed && (
+                        <span className="text-2xl md:text-3xl text-black font-black">
                           ${clue.value}
                         </span>
                       )}

@@ -24,7 +24,6 @@ import { StarDoodle, LightningDoodle } from "@/components/fx/Doodles";
 import { useSfx } from "@/lib/sfx";
 import { hapticCorrect, hapticVictory, hapticWrong } from "@/lib/haptics";
 import { useStreaks, type Banner } from "@/lib/streaks";
-import { useQueryClient } from "@tanstack/react-query";
 
 function getPlayerToken(): string {
   let token = localStorage.getItem("ptq-player-token");
@@ -50,7 +49,6 @@ export default function Crossword() {
   const { toast } = useToast();
   const { playCorrect, playWrong, playTick, playVictory } = useSfx();
   const { recordGame } = useStreaks();
-  const queryClient = useQueryClient();
 
   const { data: todayPuzzle, isLoading: todayLoading } = useGetTodayCrossword({ query: { enabled: !archiveId } });
   const { data: archivePuzzle, isLoading: archiveLoading } = useGetCrosswordById(archiveId ?? "", { query: { enabled: !!archiveId } });
@@ -335,7 +333,6 @@ export default function Crossword() {
         {
           onSettled: () => {
             setLeaderboardEnabled(true);
-            queryClient.invalidateQueries({ queryKey: getGetSkinnyLeaderboardQueryKey({ puzzleId: puzzle.id, playerToken }) });
           },
         },
       );
@@ -605,7 +602,7 @@ export default function Crossword() {
                     )}
                   </div>
 
-                  {skinnyLeaderboardQuery.isLoading ? (
+                  {skinnyLeaderboardQuery.isPending ? (
                     <div className="border-[3px] border-t-0 border-black p-4 text-center text-sm text-black/50">Loading...</div>
                   ) : lbData && lbData.top10.length > 0 ? (
                     <div className="border-[3px] border-t-0 border-black divide-y divide-black/10">

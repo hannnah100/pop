@@ -55,7 +55,7 @@ const GAME_CARDS = [
     description:
       "Buzz in fast, judge bold wagers, and bet it all on the Final Round. Five hand-authored category packs of pure pop trivia.",
     Icon: Grid3x3,
-    bg: "#FFC107",
+    bg: "#38BDF8",
     accent: "#1565C0",
     testId: "btn-host-jp",
   },
@@ -77,7 +77,7 @@ const GAME_CARDS = [
     description:
       "Race the clock to fill in pop-culture categories starting with the same letter. Unique answers score — duplicates don't.",
     Icon: LayoutList,
-    bg: "#38BDF8",
+    bg: "#FFC107",
     accent: "#FFD700",
     testId: "btn-host-scattergories",
   },
