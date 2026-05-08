@@ -8,7 +8,10 @@
 
 export * from "./clockItCheckRequest";
 export * from "./clockItCheckResponse";
+export * from "./clockItLeaderboard";
+export * from "./clockItLeaderboardEntry";
 export * from "./clockItPuzzle";
+export * from "./clockItScoreRequest";
 export * from "./createRoomRequest";
 export * from "./createRoomRequestGameType";
 export * from "./crosswordPuzzle";
@@ -19,6 +22,7 @@ export * from "./customGameSummary";
 export * from "./customPackPayload";
 export * from "./dailyStatus";
 export * from "./errorResponse";
+export * from "./getClockItLeaderboardParams";
 export * from "./getPopBoxLeaderboardParams";
 export * from "./getPopOrDropLeaderboardParams";
 export * from "./getSkinnyLeaderboardParams";
@@ -51,6 +55,7 @@ export * from "./roomStatus";
 export * from "./skinnyLeaderboard";
 export * from "./skinnyLeaderboardEntry";
 export * from "./skinnyScoreRequest";
+export * from "./submitClockItScore200";
 export * from "./submitPopBoxScore200";
 export * from "./submitPopOrDropScore200";
 export * from "./submitSkinnyScore200";

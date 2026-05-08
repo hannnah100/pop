@@ -28,7 +28,8 @@
       "Bash(NODE_ENV=production PORT=23247 BASE_PATH=/ pnpm --filter @workspace/pop-the-question run build)",
       "Bash(curl *)",
       "Bash(git -C /home/runner/workspace show HEAD~3:.replit-artifact/artifact.toml)",
-      "Bash(git -C /home/runner/workspace show 444a009 -- artifacts/api-server/.replit-artifact/artifact.toml)"
+      "Bash(git -C /home/runner/workspace show 444a009 -- artifacts/api-server/.replit-artifact/artifact.toml)",
+      "Bash(npx drizzle-kit *)"
     ]
   }
 }

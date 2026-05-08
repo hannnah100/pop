@@ -6,8 +6,6 @@
  * OpenAPI spec version: 0.1.0
  */
 
-export interface PopBoxLeaderboardEntry {
-  rank: number;
-  playerToken: string;
-  score: number;
-}
+export type SubmitClockItScore200 = {
+  ok: boolean;
+};

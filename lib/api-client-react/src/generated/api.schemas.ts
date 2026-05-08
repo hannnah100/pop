@@ -100,14 +100,12 @@ export interface PopBoxGrid {
   difficulty: PopBoxGridDifficulty;
   rowCategories: PopBoxCategory[];
   columnCategories: PopBoxCategory[];
-  mode?: string;
 }
 
 export interface PopBoxSummary {
   id: string;
   date: string;
   difficulty: string;
-  mode?: string;
 }
 
 export interface PopBoxValidCelebrity {
@@ -236,6 +234,7 @@ export interface PopOrDropLeaderboardEntry {
   rank: number;
   playerToken: string;
   streak: number;
+  playerName?: string | null;
 }
 
 export interface PopOrDropLeaderboard {
@@ -245,6 +244,37 @@ export interface PopOrDropLeaderboard {
   avgStreak: number;
   medianStreak: number;
   playerRank?: number | null;
+}
+
+export interface ClockItLeaderboardEntry {
+  rank: number;
+  playerToken: string;
+  score: number;
+  hintsUsed: number;
+  playerName?: string | null;
+}
+
+export interface ClockItLeaderboard {
+  date: string;
+  top10: ClockItLeaderboardEntry[];
+  totalPlayers: number;
+  avgScore: number;
+  playerRank?: number | null;
+}
+
+export interface ClockItScoreRequest {
+  playerToken: string;
+  /**
+   * @minimum 0
+   * @maximum 3
+   */
+  score: number;
+  /**
+   * @minimum 1
+   * @maximum 3
+   */
+  hintsUsed: number;
+  date: string;
 }
 
 export interface ClockItPuzzle {
@@ -283,7 +313,6 @@ export interface ThreeFlopsLeaderboardEntry {
   rank: number;
   playerToken: string;
   score: number;
-  playerName?: string | null;
 }
 
 export interface ThreeFlopsLeaderboard {
@@ -309,7 +338,6 @@ export interface PopBoxLeaderboardEntry {
   rank: number;
   playerToken: string;
   score: number;
-  playerName?: string | null;
 }
 
 export interface PopBoxLeaderboard {
@@ -335,7 +363,6 @@ export interface SkinnyLeaderboardEntry {
   rank: number;
   playerToken: string;
   completionTimeSecs: number;
-  playerName?: string | null;
 }
 
 export interface SkinnyLeaderboard {
@@ -381,6 +408,15 @@ export type SubmitPopOrDropScore200 = {
   ok: boolean;
 };
 
+export type GetClockItLeaderboardParams = {
+  date?: string;
+  playerToken?: string;
+};
+
+export type SubmitClockItScore200 = {
+  ok: boolean;
+};
+
 export type GetSkinnyLeaderboardParams = {
   puzzleId?: string;
   playerToken?: string;
@@ -390,11 +426,10 @@ export type SubmitSkinnyScore200 = {
   ok: boolean;
 };
 
-export interface UpdatePlayerNameRequest {
+export type UpdatePlayerNameRequest = {
   playerToken: string;
-  /** @minLength 1 @maxLength 20 */
   playerName: string;
-}
+};
 
 export type UpdatePlayerName200 = {
   ok: boolean;

@@ -1,7 +1,7 @@
 import { randomBytes } from "crypto";
 import { Router, type IRouter } from "express";
 import { db, popBoxGridsTable, popBoxAnswerCountsTable, popBoxScoresTable, playerNamesTable } from "@workspace/db";
-import { eq, desc, and, sql } from "drizzle-orm";
+import { eq, desc, asc, and, sql } from "drizzle-orm";
 import {
   GetTodayPopBoxResponse,
   GetPopBoxAnswersResponse,
@@ -229,10 +229,13 @@ function buildResponseFromRow(row: typeof popBoxGridsTable.$inferSelect) {
 router.get("/daily/pop-box", async (_req, res): Promise<void> => {
   const today = todayDate();
 
+  // Order by id ASC so that on days with multiple grids the priority is:
+  // actor-alpha-* → artist-alpha-* → pop-box-* (alphabetical ascending).
   let row = await db
     .select()
     .from(popBoxGridsTable)
     .where(eq(popBoxGridsTable.date, today))
+    .orderBy(asc(popBoxGridsTable.id))
     .limit(1)
     .then((r) => r[0]);
 
@@ -240,7 +243,7 @@ router.get("/daily/pop-box", async (_req, res): Promise<void> => {
     row = await db
       .select()
       .from(popBoxGridsTable)
-      .orderBy(desc(popBoxGridsTable.date))
+      .orderBy(desc(popBoxGridsTable.date), asc(popBoxGridsTable.id))
       .limit(1)
       .then((r) => r[0]);
   }

@@ -6,8 +6,10 @@
  * OpenAPI spec version: 0.1.0
  */
 
-export interface PopBoxLeaderboardEntry {
+export interface ClockItLeaderboardEntry {
   rank: number;
   playerToken: string;
   score: number;
+  hintsUsed: number;
+  playerName?: string | null;
 }

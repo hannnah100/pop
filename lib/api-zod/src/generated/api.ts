@@ -83,7 +83,6 @@ export const GetThreeFlopsLeaderboardResponse = zod.object({
       rank: zod.number(),
       playerToken: zod.string(),
       score: zod.number(),
-      playerName: zod.string().nullish(),
     }),
   ),
   totalPlayers: zod.number(),
@@ -287,7 +286,6 @@ export const GetPopBoxLeaderboardResponse = zod.object({
       rank: zod.number(),
       playerToken: zod.string(),
       score: zod.number(),
-      playerName: zod.string().nullish(),
     }),
   ),
   totalPlayers: zod.number(),
@@ -381,6 +379,7 @@ export const GetPopOrDropLeaderboardResponse = zod.object({
       rank: zod.number(),
       playerToken: zod.string(),
       streak: zod.number(),
+      playerName: zod.string().nullish(),
     }),
   ),
   totalPlayers: zod.number(),
@@ -401,6 +400,52 @@ export const SubmitPopOrDropScoreBody = zod.object({
 });
 
 export const SubmitPopOrDropScoreResponse = zod.object({
+  ok: zod.boolean(),
+});
+
+/**
+ * @summary Get today's Clock It leaderboard
+ */
+export const GetClockItLeaderboardQueryParams = zod.object({
+  date: zod.coerce.string().optional(),
+  playerToken: zod.coerce.string().optional(),
+});
+
+export const GetClockItLeaderboardResponse = zod.object({
+  date: zod.string(),
+  top10: zod.array(
+    zod.object({
+      rank: zod.number(),
+      playerToken: zod.string(),
+      score: zod.number(),
+      hintsUsed: zod.number(),
+      playerName: zod.string().nullish(),
+    }),
+  ),
+  totalPlayers: zod.number(),
+  avgScore: zod.number(),
+  playerRank: zod.number().nullish(),
+});
+
+/**
+ * @summary Submit a Clock It score
+ */
+export const submitClockItScoreBodyScoreMin = 0;
+export const submitClockItScoreBodyScoreMax = 3;
+
+export const submitClockItScoreBodyHintsUsedMax = 3;
+
+export const SubmitClockItScoreBody = zod.object({
+  playerToken: zod.string(),
+  score: zod
+    .number()
+    .min(submitClockItScoreBodyScoreMin)
+    .max(submitClockItScoreBodyScoreMax),
+  hintsUsed: zod.number().min(1).max(submitClockItScoreBodyHintsUsedMax),
+  date: zod.string(),
+});
+
+export const SubmitClockItScoreResponse = zod.object({
   ok: zod.boolean(),
 });
 
@@ -455,25 +500,12 @@ export const GetSkinnyLeaderboardResponse = zod.object({
       rank: zod.number(),
       playerToken: zod.string(),
       completionTimeSecs: zod.number(),
-      playerName: zod.string().nullish(),
     }),
   ),
   totalPlayers: zod.number(),
   avgTimeSecs: zod.number(),
   medianTimeSecs: zod.number(),
   playerRank: zod.number().nullish(),
-});
-
-/**
- * @summary Update a player's display name (shared across all leaderboards)
- */
-export const UpdatePlayerNameBody = zod.object({
-  playerToken: zod.string().min(1).max(64),
-  playerName: zod.string().min(1).max(20),
-});
-
-export const UpdatePlayerNameResponse = zod.object({
-  ok: zod.boolean(),
 });
 
 /**

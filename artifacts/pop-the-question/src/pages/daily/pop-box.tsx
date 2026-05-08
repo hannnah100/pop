@@ -480,20 +480,26 @@ export default function PopBox() {
       <div className="relative bg-[#FF1493] border-[3px] border-black shadow-[4px_4px_0_#000] px-5 py-4 mb-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 overflow-hidden">
         <StarDoodle className="absolute top-2 right-4 w-7 h-7 text-[#FFD700] opacity-70" />
         <div>
-          <h1 className="font-display text-3xl md:text-4xl font-black text-white uppercase tracking-tight">
-            Pop Box
-          </h1>
-          {(grid.mode === "artist-alphabet" || grid.mode === "actor-alphabet") && (
-            <span className="inline-block mt-1 bg-black/30 text-white text-xs font-bold uppercase tracking-widest px-2 py-0.5 border border-white/30">
-              {grid.mode === "artist-alphabet" ? "Artist Alphabet" : "Actor Alphabet"}
-            </span>
-          )}
+          <div className="flex items-center gap-2 flex-wrap">
+            <h1 className="font-display text-3xl md:text-4xl font-black text-white uppercase tracking-tight">
+              Pop Box
+            </h1>
+            {grid.mode === "artist-alphabet" ? (
+              <span className="inline-block bg-[#FFD700] text-black text-xs font-black uppercase tracking-widest px-2 py-0.5 border-[3px] border-black shadow-[2px_2px_0_#000]">
+                Artist Alphabet
+              </span>
+            ) : grid.mode === "actor-alphabet" ? (
+              <span className="inline-block bg-[#00E5FF] text-black text-xs font-black uppercase tracking-widest px-2 py-0.5 border-[3px] border-black shadow-[2px_2px_0_#000]">
+                Actor Alphabet
+              </span>
+            ) : null}
+          </div>
           <p className="text-sm text-white/90 font-sans mt-1">
             {grid.mode === "artist-alphabet"
               ? "Name a song that fits the intersection. 9 picks."
               : grid.mode === "actor-alphabet"
-                ? "Name a movie that fits the intersection. 9 picks."
-                : "Find an answer for each intersection of the grid. 9 picks."}
+                ? "Name a movie or TV show starring [Actor] that starts with [Letter Group]"
+                : "Name a movie or TV show starring [Actor] that starts with [Letter Group]. 9 picks."}
           </p>
         </div>
         <div className="flex items-center gap-2 bg-white border-[3px] border-black shadow-[3px_3px_0_#000] px-4 py-3 flex-shrink-0">
@@ -504,13 +510,6 @@ export default function PopBox() {
             <CountUp value={correctCount} duration={0.4} />
             /9
           </span>
-          <Badge variant="outline" className="ml-2 border-black">
-            {grid.mode === "artist-alphabet"
-              ? "Artist Alphabet"
-              : grid.mode === "actor-alphabet"
-                ? "Actor Alphabet"
-                : "Pop Box"}
-          </Badge>
         </div>
       </div>
 
@@ -573,8 +572,19 @@ export default function PopBox() {
               >
                 <div className="flex items-center justify-between">
                   <span className="font-display font-black uppercase text-sm sm:text-2xl md:text-3xl tracking-widest text-black/70">
-                    {grid.mode === "artist-alphabet" || grid.mode === "actor-alphabet" ? (
+                    {grid.mode === "artist-alphabet" ? (
                       <>
+                        <span className="text-black">
+                          {grid.columnCategories[activeCell % 3].label}
+                        </span>
+                        {" · starts with "}
+                        <span className="text-black">
+                          {grid.rowCategories[Math.floor(activeCell / 3)].label}
+                        </span>
+                      </>
+                    ) : grid.mode === "actor-alphabet" ? (
+                      <>
+                        {"Movie or TV show starring "}
                         <span className="text-black">
                           {grid.columnCategories[activeCell % 3].label}
                         </span>
@@ -826,47 +836,20 @@ export default function PopBox() {
                         value={editNameValue}
                         onChange={(e) => setEditNameValue(e.target.value)}
                         onKeyDown={(e) => {
-                          if (e.key === "Enter") {
-                            const trimmed = editNameValue.trim();
-                            if (trimmed) { savePlayerName(trimmed); setPlayerName(trimmed); }
-                            setIsEditingName(false);
-                          } else if (e.key === "Escape") {
-                            setIsEditingName(false);
-                          }
+                          if (e.key === "Enter") { commitName(editNameValue); setIsEditingName(false); }
+                          else if (e.key === "Escape") { setIsEditingName(false); }
                         }}
                         maxLength={20}
                         placeholder="Your name"
                         className="font-bold text-sm bg-white border-b-2 border-black outline-none w-28 px-1"
                       />
-                      <button
-                        onClick={() => {
-                          const trimmed = editNameValue.trim();
-                          if (trimmed) { savePlayerName(trimmed); setPlayerName(trimmed); }
-                          setIsEditingName(false);
-                        }}
-                        className="p-0.5 text-black hover:text-[#FF1493]"
-                        aria-label="Save name"
-                      >
-                        <Check className="w-3.5 h-3.5" />
-                      </button>
-                      <button
-                        onClick={() => setIsEditingName(false)}
-                        className="p-0.5 text-black/50 hover:text-black"
-                        aria-label="Cancel"
-                      >
-                        <X className="w-3.5 h-3.5" />
-                      </button>
+                      <button onClick={() => { commitName(editNameValue); setIsEditingName(false); }} className="p-0.5 text-black hover:text-[#FF1493]" aria-label="Save name"><Check className="w-3.5 h-3.5" /></button>
+                      <button onClick={() => setIsEditingName(false)} className="p-0.5 text-black/50 hover:text-black" aria-label="Cancel"><X className="w-3.5 h-3.5" /></button>
                     </>
                   ) : (
                     <>
                       <span className="font-bold text-sm truncate">{playerName || "You"}</span>
-                      <button
-                        onClick={() => { setEditNameValue(playerName); setIsEditingName(true); }}
-                        className="p-0.5 text-black/40 hover:text-black shrink-0"
-                        aria-label="Edit name"
-                      >
-                        <Pencil className="w-3 h-3" />
-                      </button>
+                      <button onClick={() => { setEditNameValue(playerName); setIsEditingName(true); }} className="p-0.5 text-black/40 hover:text-black shrink-0" aria-label="Edit name"><Pencil className="w-3 h-3" /></button>
                     </>
                   )}
                 </span>

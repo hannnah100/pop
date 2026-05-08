@@ -82,7 +82,7 @@ export default function Archive() {
       "Celebrity Categories";
     const prompt =
       mode === "artist-alphabet" ? "Name a song that fits the intersection" :
-      mode === "actor-alphabet" ? "Name a movie that fits the intersection" :
+      mode === "actor-alphabet" ? "Name a movie or TV show starring the actor that starts with the letter shown" :
       "Find an answer for each intersection of the grid";
     return {
       ...item,

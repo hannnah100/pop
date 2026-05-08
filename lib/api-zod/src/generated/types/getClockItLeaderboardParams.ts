@@ -6,8 +6,7 @@
  * OpenAPI spec version: 0.1.0
  */
 
-export interface PopBoxLeaderboardEntry {
-  rank: number;
-  playerToken: string;
-  score: number;
-}
+export type GetClockItLeaderboardParams = {
+  date?: string;
+  playerToken?: string;
+};

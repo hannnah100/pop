@@ -481,6 +481,60 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
 
+  /daily/clock-it/leaderboard:
+    get:
+      operationId: getClockItLeaderboard
+      tags: [daily]
+      summary: Get today's Clock It leaderboard
+      parameters:
+        - name: date
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: playerToken
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Leaderboard data
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ClockItLeaderboard"
+
+  /daily/clock-it/score:
+    post:
+      operationId: submitClockItScore
+      tags: [daily]
+      summary: Submit a Clock It score
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ClockItScoreRequest"
+      responses:
+        "200":
+          description: Score submitted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                required:
+                  - ok
+        "400":
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
   /daily/clock-it:
     get:
       operationId: getTodayClockIt
@@ -563,6 +617,36 @@ paths:
       responses:
         "200":
           description: Score submitted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                required:
+                  - ok
+        "400":
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /player/name:
+    post:
+      operationId: updatePlayerName
+      tags: [player]
+      summary: Set or update a player's display name
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdatePlayerNameRequest"
+      responses:
+        "200":
+          description: Name updated
           content:
             application/json:
               schema:
@@ -1473,6 +1557,9 @@ components:
           type: string
         streak:
           type: integer
+        playerName:
+          type: string
+          nullable: true
       required:
         - rank
         - playerToken
@@ -1502,6 +1589,69 @@ components:
         - totalPlayers
         - avgStreak
         - medianStreak
+
+    ClockItLeaderboardEntry:
+      type: object
+      properties:
+        rank:
+          type: integer
+        playerToken:
+          type: string
+        score:
+          type: integer
+        hintsUsed:
+          type: integer
+        playerName:
+          type: string
+          nullable: true
+      required:
+        - rank
+        - playerToken
+        - score
+        - hintsUsed
+
+    ClockItLeaderboard:
+      type: object
+      properties:
+        date:
+          type: string
+        top10:
+          type: array
+          items:
+            $ref: "#/components/schemas/ClockItLeaderboardEntry"
+        totalPlayers:
+          type: integer
+        avgScore:
+          type: integer
+        playerRank:
+          type: integer
+          nullable: true
+      required:
+        - date
+        - top10
+        - totalPlayers
+        - avgScore
+
+    ClockItScoreRequest:
+      type: object
+      properties:
+        playerToken:
+          type: string
+        score:
+          type: integer
+          minimum: 0
+          maximum: 3
+        hintsUsed:
+          type: integer
+          minimum: 1
+          maximum: 3
+        date:
+          type: string
+      required:
+        - playerToken
+        - score
+        - hintsUsed
+        - date
 
     ClockItPuzzle:
       type: object
@@ -1574,6 +1724,9 @@ components:
           type: string
         score:
           type: integer
+        playerName:
+          type: string
+          nullable: true
       required:
         - rank
         - playerToken
@@ -1629,6 +1782,9 @@ components:
           type: string
         score:
           type: integer
+        playerName:
+          type: string
+          nullable: true
       required:
         - rank
         - playerToken
@@ -1684,6 +1840,9 @@ components:
           type: string
         completionTimeSecs:
           type: integer
+        playerName:
+          type: string
+          nullable: true
       required:
         - rank
         - playerToken
@@ -1713,6 +1872,19 @@ components:
         - totalPlayers
         - avgTimeSecs
         - medianTimeSecs
+
+    UpdatePlayerNameRequest:
+      type: object
+      properties:
+        playerToken:
+          type: string
+        playerName:
+          type: string
+          minLength: 1
+          maxLength: 20
+      required:
+        - playerToken
+        - playerName
 
     SkinnyScoreRequest:
       type: object

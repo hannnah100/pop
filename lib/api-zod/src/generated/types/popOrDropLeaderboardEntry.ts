@@ -10,4 +10,5 @@ export interface PopOrDropLeaderboardEntry {
   rank: number;
   playerToken: string;
   streak: number;
+  playerName?: string | null;
 }

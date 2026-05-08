@@ -10,10 +10,20 @@ import {
   RotateCcw,
   Lock,
   Unlock,
+  BarChart2,
+  Pencil,
+  Check,
+  X,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { BackArrow } from "@/components/ui/BackArrow";
+import {
+  useGetClockItLeaderboard,
+  useSubmitClockItScore,
+  useUpdatePlayerName,
+  getGetClockItLeaderboardQueryKey,
+} from "@workspace/api-client-react";
 import { useToast } from "@/hooks/use-toast";
 import { fireConfetti, fireBigCelebration } from "@/components/fx";
 import { StarDoodle, LightningDoodle } from "@/components/fx/Doodles";
@@ -60,6 +70,23 @@ function useCountdown() {
   const m = Math.floor((seconds % 3600) / 60);
   const s = seconds % 60;
   return `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
+}
+
+function getPlayerToken(): string {
+  let token = localStorage.getItem("ptq-player-token");
+  if (!token) {
+    token = crypto.randomUUID();
+    localStorage.setItem("ptq-player-token", token);
+  }
+  return token;
+}
+
+function getStoredPlayerName(): string {
+  return localStorage.getItem("ptq-player-name") ?? "";
+}
+
+function savePlayerName(name: string): void {
+  localStorage.setItem("ptq-player-name", name.trim());
 }
 
 function scoreFromHints(hintsUsed: number): number {
@@ -159,6 +186,34 @@ export default function ClockIt() {
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
 
+  const [leaderboardEnabled, setLeaderboardEnabled] = useState(false);
+  const playerToken = typeof window !== "undefined" ? getPlayerToken() : "";
+  const [playerName, setPlayerName] = useState<string>(() =>
+    typeof window !== "undefined" ? getStoredPlayerName() : ""
+  );
+  const [isEditingName, setIsEditingName] = useState(false);
+  const [editNameValue, setEditNameValue] = useState("");
+
+  const leaderboardQuery = useGetClockItLeaderboard(
+    { date: todayDate, playerToken },
+    {
+      query: {
+        queryKey: getGetClockItLeaderboardQueryKey({ date: todayDate, playerToken }),
+        enabled: leaderboardEnabled,
+      },
+    },
+  );
+  const scoresMutation = useSubmitClockItScore();
+  const updateNameMutation = useUpdatePlayerName();
+
+  function commitName(name: string) {
+    const trimmed = name.trim();
+    if (!trimmed) return;
+    savePlayerName(trimmed);
+    setPlayerName(trimmed);
+    updateNameMutation.mutate({ data: { playerToken, playerName: trimmed } });
+  }
+
   const [hintsRevealed, setHintsRevealed] = useState(1);
   const [yearInput, setYearInput] = useState("");
   const [wrongMessage, setWrongMessage] = useState<string | null>(null);
@@ -206,6 +261,8 @@ export default function ClockIt() {
           setFinalYear(parsed.year ?? null);
           setHintsRevealed(parsed.hintsUsed);
           setPhase(parsed.gaveUp ? "failed" : "success");
+          recordedRef.current = true;
+          setLeaderboardEnabled(true);
         } else if (parsed.inProgress && parsed.hintsUsed > 1) {
           setHintsRevealed(parsed.hintsUsed);
         }
@@ -243,6 +300,17 @@ export default function ClockIt() {
         localStorage.setItem(storageKey, JSON.stringify(state));
       } catch {
         /* ignore */
+      }
+
+      if (!gaveUp && score > 0) {
+        scoresMutation.mutate(
+          { data: { playerToken, score, hintsUsed, date: todayDate } },
+          {
+            onSettled: () => setLeaderboardEnabled(true),
+          },
+        );
+      } else {
+        setLeaderboardEnabled(true);
       }
 
       try {
@@ -446,6 +514,15 @@ export default function ClockIt() {
       return 0;
     }
   })();
+
+  const lbData = leaderboardQuery.data;
+  const serverRank = lbData?.playerRank ?? null;
+  const myRankInTop10 = lbData ? lbData.top10.findIndex((e) => e.playerToken === playerToken) + 1 : 0;
+  const myRank = serverRank ?? (myRankInTop10 > 0 ? myRankInTop10 : null);
+  const rankPercentile =
+    myRank !== null && lbData && lbData.totalPlayers > 0
+      ? Math.round((1 - (myRank - 1) / lbData.totalPlayers) * 100)
+      : null;
 
   if (isLoading) {
     return (
@@ -655,6 +732,11 @@ export default function ClockIt() {
                     {finalScore} point{finalScore !== 1 ? "s" : ""} — hint {hintsRevealed} of 3
                   </div>
                 )}
+                {rankPercentile !== null && (
+                  <div className="mt-2 inline-block bg-black text-white px-3 py-1 font-bold text-sm border-[2px] border-black">
+                    Top {100 - rankPercentile + 1}% of players today
+                  </div>
+                )}
               </div>
               {/* All hints revealed */}
               <div className="border-[3px] border-black bg-white shadow-[3px_3px_0_#000] overflow-hidden">
@@ -699,6 +781,103 @@ export default function ClockIt() {
                   </div>
                 </div>
               )}
+              {/* Leaderboard */}
+              {leaderboardEnabled && (
+                <div className="border-[3px] border-black bg-white shadow-[3px_3px_0_#000] overflow-hidden">
+                  <div className="bg-black px-4 py-2 flex items-center gap-2">
+                    <Trophy className="w-4 h-4 text-[#FFD700]" />
+                    <span className="text-white font-display font-black text-sm uppercase">Today's Leaderboard</span>
+                    {lbData && (
+                      <Badge className="ml-auto bg-[#FFD700] text-black border-[#FFD700]">
+                        {lbData.totalPlayers} played
+                      </Badge>
+                    )}
+                  </div>
+                  {leaderboardQuery.isPending ? (
+                    <div className="px-4 py-3 text-center text-sm text-black/50">Loading…</div>
+                  ) : lbData && lbData.top10.length > 0 ? (
+                    <>
+                      <div className="divide-y divide-black/10">
+                        {lbData.top10.map((entry) => {
+                          const isMe = entry.playerToken === playerToken;
+                          const rankEmoji = entry.rank === 1 ? "🥇" : entry.rank === 2 ? "🥈" : entry.rank === 3 ? "🥉" : `#${entry.rank}`;
+                          return (
+                            <div
+                              key={entry.playerToken}
+                              className={`flex items-center gap-3 px-4 py-2 ${isMe ? "bg-[#FFD700] border-l-4 border-[#FF1493]" : ""}`}
+                            >
+                              <span className="font-display font-black text-sm w-6 text-center">{rankEmoji}</span>
+                              {isMe ? (
+                                <span className="flex-1 flex items-center gap-1 min-w-0">
+                                  {isEditingName ? (
+                                    <>
+                                      <input
+                                        autoFocus
+                                        value={editNameValue}
+                                        onChange={(e) => setEditNameValue(e.target.value)}
+                                        onKeyDown={(e) => {
+                                          if (e.key === "Enter") { commitName(editNameValue); setIsEditingName(false); }
+                                          else if (e.key === "Escape") { setIsEditingName(false); }
+                                        }}
+                                        maxLength={20}
+                                        placeholder="Your name"
+                                        className="font-bold text-sm bg-white border-b-2 border-black outline-none w-28 px-1"
+                                      />
+                                      <button onClick={() => { commitName(editNameValue); setIsEditingName(false); }} className="p-0.5 text-black hover:text-[#FF1493]" aria-label="Save name"><Check className="w-3.5 h-3.5" /></button>
+                                      <button onClick={() => setIsEditingName(false)} className="p-0.5 text-black/50 hover:text-black" aria-label="Cancel"><X className="w-3.5 h-3.5" /></button>
+                                    </>
+                                  ) : (
+                                    <>
+                                      <span className="font-bold text-sm truncate">{playerName || "You"}</span>
+                                      <button onClick={() => { setEditNameValue(playerName); setIsEditingName(true); }} className="p-0.5 text-black/40 hover:text-black shrink-0" aria-label="Edit name"><Pencil className="w-3 h-3" /></button>
+                                    </>
+                                  )}
+                                </span>
+                              ) : (
+                                <span className="flex-1 font-bold text-sm">
+                                  {entry.playerName ?? `Player ${entry.playerToken.slice(0, 4)}`}
+                                </span>
+                              )}
+                              <span className="font-display font-black text-sm">{entry.score}pt</span>
+                            </div>
+                          );
+                        })}
+                        {myRank !== null && myRankInTop10 === 0 && (
+                          <div className="flex items-center gap-3 px-4 py-2 bg-[#FFD700] border-l-4 border-[#FF1493]">
+                            <span className="font-display font-black text-sm w-6 text-center">#{myRank}</span>
+                            <span className="flex-1 flex items-center gap-1 min-w-0">
+                              {isEditingName ? (
+                                <>
+                                  <input autoFocus value={editNameValue} onChange={(e) => setEditNameValue(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter") { commitName(editNameValue); setIsEditingName(false); } else if (e.key === "Escape") { setIsEditingName(false); } }} maxLength={20} placeholder="Your name" className="font-bold text-sm bg-white border-b-2 border-black outline-none w-28 px-1" />
+                                  <button onClick={() => { commitName(editNameValue); setIsEditingName(false); }} className="p-0.5 text-black hover:text-[#FF1493]" aria-label="Save name"><Check className="w-3.5 h-3.5" /></button>
+                                  <button onClick={() => setIsEditingName(false)} className="p-0.5 text-black/50 hover:text-black" aria-label="Cancel"><X className="w-3.5 h-3.5" /></button>
+                                </>
+                              ) : (
+                                <>
+                                  <span className="font-bold text-sm truncate">{playerName || "You"}</span>
+                                  <button onClick={() => { setEditNameValue(playerName); setIsEditingName(true); }} className="p-0.5 text-black/40 hover:text-black shrink-0" aria-label="Edit name"><Pencil className="w-3 h-3" /></button>
+                                </>
+                              )}
+                            </span>
+                            <span className="font-display font-black text-sm">{finalScore}pt</span>
+                          </div>
+                        )}
+                      </div>
+                      {lbData.avgScore > 0 && (
+                        <div className="bg-black/5 px-4 py-2 flex gap-4 text-xs font-bold text-black/60">
+                          <span className="flex items-center gap-1">
+                            <BarChart2 className="w-3 h-3" />
+                            Avg: {lbData.avgScore}pt
+                          </span>
+                        </div>
+                      )}
+                    </>
+                  ) : (
+                    <div className="px-4 py-3 text-center text-sm text-black/50">Be the first to complete today's puzzle!</div>
+                  )}
+                </div>
+              )}
+
               {/* Countdown */}
               <div className="border-[3px] border-black bg-white shadow-[3px_3px_0_#000] p-4 flex items-center justify-between">
                 <div className="flex items-center gap-2">

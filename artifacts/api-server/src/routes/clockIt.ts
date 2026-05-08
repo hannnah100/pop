@@ -3,6 +3,8 @@ import { Router, type IRouter } from "express";
 // generic year-puzzle data and renaming the file would just churn git history
 // for no functional gain.
 import CLOCK_IT_JSON from "../data/daily/guess-the-year.json" with { type: "json" };
+import { db, clockItScoresTable, playerNamesTable } from "@workspace/db";
+import { eq, desc, sql } from "drizzle-orm";
 
 const router: IRouter = Router();
 
@@ -88,6 +90,112 @@ router.post("/daily/clock-it/check", (req, res): void => {
     correct,
     year: correct ? puzzle.year : undefined,
   });
+});
+
+router.get("/daily/clock-it/leaderboard", async (req, res): Promise<void> => {
+  const date = (req.query.date as string) || todayDate();
+  const playerToken = (req.query.playerToken as string) || "";
+
+  const top10Rows = await db
+    .select({
+      playerToken: clockItScoresTable.playerToken,
+      score: clockItScoresTable.score,
+      hintsUsed: clockItScoresTable.hintsUsed,
+      playerName: playerNamesTable.playerName,
+    })
+    .from(clockItScoresTable)
+    .leftJoin(playerNamesTable, eq(clockItScoresTable.playerToken, playerNamesTable.playerToken))
+    .where(eq(clockItScoresTable.date, date))
+    .orderBy(desc(clockItScoresTable.score), clockItScoresTable.hintsUsed)
+    .limit(10);
+
+  const top10 = top10Rows.map((r, i) => ({
+    rank: i + 1,
+    playerToken: r.playerToken,
+    score: r.score,
+    hintsUsed: r.hintsUsed,
+    playerName: r.playerName ?? null,
+  }));
+
+  const agg = await db
+    .select({
+      totalPlayers: sql<number>`count(*)::int`,
+      avgScore: sql<number>`coalesce(round(avg(score)), 0)::int`,
+    })
+    .from(clockItScoresTable)
+    .where(eq(clockItScoresTable.date, date))
+    .then((r) => r[0] ?? { totalPlayers: 0, avgScore: 0 });
+
+  let playerRank: number | null = null;
+  if (playerToken) {
+    const playerRow = await db
+      .select({ score: clockItScoresTable.score, hintsUsed: clockItScoresTable.hintsUsed })
+      .from(clockItScoresTable)
+      .where(sql`${clockItScoresTable.date} = ${date} AND ${clockItScoresTable.playerToken} = ${playerToken}`)
+      .limit(1)
+      .then((rows) => rows[0]);
+
+    if (playerRow !== undefined) {
+      const above = await db
+        .select({ cnt: sql<number>`count(*)::int` })
+        .from(clockItScoresTable)
+        .where(
+          sql`${clockItScoresTable.date} = ${date} AND (${clockItScoresTable.score} > ${playerRow.score} OR (${clockItScoresTable.score} = ${playerRow.score} AND ${clockItScoresTable.hintsUsed} < ${playerRow.hintsUsed}))`,
+        )
+        .then((r) => r[0]?.cnt ?? 0);
+      playerRank = above + 1;
+    }
+  }
+
+  res.json({
+    date,
+    top10,
+    totalPlayers: agg.totalPlayers,
+    avgScore: agg.avgScore,
+    playerRank,
+  });
+});
+
+router.post("/daily/clock-it/score", async (req, res): Promise<void> => {
+  const { playerToken, score, hintsUsed, date } = req.body as {
+    playerToken?: unknown;
+    score?: unknown;
+    hintsUsed?: unknown;
+    date?: unknown;
+  };
+
+  if (
+    typeof playerToken !== "string" ||
+    playerToken.length < 1 ||
+    playerToken.length > 64 ||
+    typeof score !== "number" ||
+    !Number.isInteger(score) ||
+    score < 0 ||
+    score > 3 ||
+    typeof hintsUsed !== "number" ||
+    !Number.isInteger(hintsUsed) ||
+    hintsUsed < 1 ||
+    hintsUsed > 3 ||
+    typeof date !== "string" ||
+    !/^\d{4}-\d{2}-\d{2}$/.test(date)
+  ) {
+    res.status(400).json({ error: "Invalid request body" });
+    return;
+  }
+
+  await db
+    .insert(clockItScoresTable)
+    .values({ date, playerToken, score, hintsUsed })
+    .onConflictDoUpdate({
+      target: [clockItScoresTable.date, clockItScoresTable.playerToken],
+      set: {
+        score: sql`greatest(${clockItScoresTable.score}, excluded.score)`,
+        hintsUsed: sql`least(${clockItScoresTable.hintsUsed}, excluded.hints_used)`,
+        createdAt: sql`${clockItScoresTable.createdAt}`,
+      },
+    });
+
+  res.json({ ok: true });
 });
 
 export default router;

@@ -1,5 +1,5 @@
 import { Router, type IRouter } from "express";
-import { db, popOrDropScoresTable } from "@workspace/db";
+import { db, popOrDropScoresTable, playerNamesTable } from "@workspace/db";
 import { eq, desc, sql } from "drizzle-orm";
 import POP_OR_DROP_ITEMS_JSON from "../data/daily/pop-or-drop-items.json" with { type: "json" };
 
@@ -61,8 +61,10 @@ router.get("/daily/pop-or-drop/leaderboard", async (req, res): Promise<void> => 
     .select({
       playerToken: popOrDropScoresTable.playerToken,
       streak: popOrDropScoresTable.streak,
+      playerName: playerNamesTable.playerName,
     })
     .from(popOrDropScoresTable)
+    .leftJoin(playerNamesTable, eq(popOrDropScoresTable.playerToken, playerNamesTable.playerToken))
     .where(eq(popOrDropScoresTable.date, date))
     .orderBy(desc(popOrDropScoresTable.streak))
     .limit(10);
@@ -71,6 +73,7 @@ router.get("/daily/pop-or-drop/leaderboard", async (req, res): Promise<void> => 
     rank: i + 1,
     playerToken: r.playerToken,
     streak: r.streak,
+    playerName: r.playerName ?? null,
   }));
 
   // Aggregate stats from DB (avoids loading all rows into memory)

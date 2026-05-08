@@ -19,7 +19,9 @@ import type {
 import type {
   ClockItCheckRequest,
   ClockItCheckResponse,
+  ClockItLeaderboard,
   ClockItPuzzle,
+  ClockItScoreRequest,
   CreateRoomRequest,
   CrosswordPuzzle,
   CrosswordSummary,
@@ -27,6 +29,7 @@ import type {
   CustomPackPayload,
   DailyStatus,
   ErrorResponse,
+  GetClockItLeaderboardParams,
   GetPopBoxLeaderboardParams,
   GetPopOrDropLeaderboardParams,
   GetSkinnyLeaderboardParams,
@@ -49,6 +52,7 @@ import type {
   RoomCreated,
   SkinnyLeaderboard,
   SkinnyScoreRequest,
+  SubmitClockItScore200,
   SubmitPopBoxScore200,
   SubmitPopOrDropScore200,
   SubmitSkinnyScore200,
@@ -1842,6 +1846,195 @@ export const useSubmitPopOrDropScore = <
 };
 
 /**
+ * @summary Get today's Clock It leaderboard
+ */
+export const getGetClockItLeaderboardUrl = (
+  params?: GetClockItLeaderboardParams,
+) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? "null" : value.toString());
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0
+    ? `/api/daily/clock-it/leaderboard?${stringifiedParams}`
+    : `/api/daily/clock-it/leaderboard`;
+};
+
+export const getClockItLeaderboard = async (
+  params?: GetClockItLeaderboardParams,
+  options?: RequestInit,
+): Promise<ClockItLeaderboard> => {
+  return customFetch<ClockItLeaderboard>(getGetClockItLeaderboardUrl(params), {
+    ...options,
+    method: "GET",
+  });
+};
+
+export const getGetClockItLeaderboardQueryKey = (
+  params?: GetClockItLeaderboardParams,
+) => {
+  return [
+    `/api/daily/clock-it/leaderboard`,
+    ...(params ? [params] : []),
+  ] as const;
+};
+
+export const getGetClockItLeaderboardQueryOptions = <
+  TData = Awaited<ReturnType<typeof getClockItLeaderboard>>,
+  TError = ErrorType<unknown>,
+>(
+  params?: GetClockItLeaderboardParams,
+  options?: {
+    query?: UseQueryOptions<
+      Awaited<ReturnType<typeof getClockItLeaderboard>>,
+      TError,
+      TData
+    >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
+
+  const queryKey =
+    queryOptions?.queryKey ?? getGetClockItLeaderboardQueryKey(params);
+
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof getClockItLeaderboard>>
+  > = ({ signal }) =>
+    getClockItLeaderboard(params, { signal, ...requestOptions });
+
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof getClockItLeaderboard>>,
+    TError,
+    TData
+  > & { queryKey: QueryKey };
+};
+
+export type GetClockItLeaderboardQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getClockItLeaderboard>>
+>;
+export type GetClockItLeaderboardQueryError = ErrorType<unknown>;
+
+/**
+ * @summary Get today's Clock It leaderboard
+ */
+
+export function useGetClockItLeaderboard<
+  TData = Awaited<ReturnType<typeof getClockItLeaderboard>>,
+  TError = ErrorType<unknown>,
+>(
+  params?: GetClockItLeaderboardParams,
+  options?: {
+    query?: UseQueryOptions<
+      Awaited<ReturnType<typeof getClockItLeaderboard>>,
+      TError,
+      TData
+    >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+  const queryOptions = getGetClockItLeaderboardQueryOptions(params, options);
+
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: QueryKey;
+  };
+
+  return { ...query, queryKey: queryOptions.queryKey };
+}
+
+/**
+ * @summary Submit a Clock It score
+ */
+export const getSubmitClockItScoreUrl = () => {
+  return `/api/daily/clock-it/score`;
+};
+
+export const submitClockItScore = async (
+  clockItScoreRequest: ClockItScoreRequest,
+  options?: RequestInit,
+): Promise<SubmitClockItScore200> => {
+  return customFetch<SubmitClockItScore200>(getSubmitClockItScoreUrl(), {
+    ...options,
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...options?.headers },
+    body: JSON.stringify(clockItScoreRequest),
+  });
+};
+
+export const getSubmitClockItScoreMutationOptions = <
+  TError = ErrorType<ErrorResponse>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof submitClockItScore>>,
+    TError,
+    { data: BodyType<ClockItScoreRequest> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof submitClockItScore>>,
+  TError,
+  { data: BodyType<ClockItScoreRequest> },
+  TContext
+> => {
+  const mutationKey = ["submitClockItScore"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof submitClockItScore>>,
+    { data: BodyType<ClockItScoreRequest> }
+  > = (props) => {
+    const { data } = props ?? {};
+
+    return submitClockItScore(data, requestOptions);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type SubmitClockItScoreMutationResult = NonNullable<
+  Awaited<ReturnType<typeof submitClockItScore>>
+>;
+export type SubmitClockItScoreMutationBody = BodyType<ClockItScoreRequest>;
+export type SubmitClockItScoreMutationError = ErrorType<ErrorResponse>;
+
+/**
+ * @summary Submit a Clock It score
+ */
+export const useSubmitClockItScore = <
+  TError = ErrorType<ErrorResponse>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof submitClockItScore>>,
+    TError,
+    { data: BodyType<ClockItScoreRequest> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof submitClockItScore>>,
+  TError,
+  { data: BodyType<ClockItScoreRequest> },
+  TContext
+> => {
+  return useMutation(getSubmitClockItScoreMutationOptions(options));
+};
+
+/**
  * @summary Get today's Clock It puzzle
  */
 export const getGetTodayClockItUrl = () => {
@@ -2186,78 +2379,6 @@ export const useSubmitSkinnyScore = <
   TContext
 > => {
   return useMutation(getSubmitSkinnyScoreMutationOptions(options));
-};
-
-/**
- * @summary Update a player's display name (shared across all leaderboards)
- */
-export const getUpdatePlayerNameUrl = () => {
-  return `/api/player/name`;
-};
-
-export const updatePlayerName = async (
-  updatePlayerNameRequest: BodyType<UpdatePlayerNameRequest>,
-  options?: RequestInit,
-): Promise<UpdatePlayerName200> => {
-  return customFetch<UpdatePlayerName200>(getUpdatePlayerNameUrl(), {
-    ...options,
-    method: "POST",
-    headers: { "Content-Type": "application/json", ...options?.headers },
-    body: JSON.stringify(updatePlayerNameRequest),
-  });
-};
-
-export const getUpdatePlayerNameMutationOptions = <
-  TError = ErrorType<ErrorResponse>,
-  TContext = unknown,
->(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof updatePlayerName>>,
-    TError,
-    { data: BodyType<UpdatePlayerNameRequest> },
-    TContext
-  >;
-  request?: SecondParameter<typeof customFetch>;
-}): UseMutationOptions<
-  Awaited<ReturnType<typeof updatePlayerName>>,
-  TError,
-  { data: BodyType<UpdatePlayerNameRequest> },
-  TContext
-> => {
-  const mutationFn: MutationFunction<
-    Awaited<ReturnType<typeof updatePlayerName>>,
-    { data: BodyType<UpdatePlayerNameRequest> }
-  > = (props) => {
-    const { data } = props ?? {};
-    return updatePlayerName(data);
-  };
-  return { mutationFn, ...options?.mutation };
-};
-
-export type UpdatePlayerNameMutationResult = NonNullable<
-  Awaited<ReturnType<typeof updatePlayerName>>
->;
-export type UpdatePlayerNameMutationBody = BodyType<UpdatePlayerNameRequest>;
-export type UpdatePlayerNameMutationError = ErrorType<ErrorResponse>;
-
-export const useUpdatePlayerName = <
-  TError = ErrorType<ErrorResponse>,
-  TContext = unknown,
->(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof updatePlayerName>>,
-    TError,
-    { data: BodyType<UpdatePlayerNameRequest> },
-    TContext
-  >;
-  request?: SecondParameter<typeof customFetch>;
-}): UseMutationResult<
-  Awaited<ReturnType<typeof updatePlayerName>>,
-  TError,
-  { data: BodyType<UpdatePlayerNameRequest> },
-  TContext
-> => {
-  return useMutation(getUpdatePlayerNameMutationOptions(options));
 };
 
 /**
@@ -3908,3 +4029,86 @@ export function useGetRoastRouletteQuestions<
 
   return { ...query, queryKey: queryOptions.queryKey };
 }
+
+/**
+ * @summary Set or update a player's display name
+ */
+export const getUpdatePlayerNameUrl = () => {
+  return `/api/player/name`;
+};
+
+export const updatePlayerName = async (
+  updatePlayerNameRequest: UpdatePlayerNameRequest,
+  options?: RequestInit,
+): Promise<UpdatePlayerName200> => {
+  return customFetch<UpdatePlayerName200>(getUpdatePlayerNameUrl(), {
+    ...options,
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...options?.headers },
+    body: JSON.stringify(updatePlayerNameRequest),
+  });
+};
+
+export const getUpdatePlayerNameMutationOptions = <
+  TError = ErrorType<ErrorResponse>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof updatePlayerName>>,
+    TError,
+    { data: BodyType<UpdatePlayerNameRequest> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof updatePlayerName>>,
+  TError,
+  { data: BodyType<UpdatePlayerNameRequest> },
+  TContext
+> => {
+  const mutationKey = ["updatePlayerName"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof updatePlayerName>>,
+    { data: BodyType<UpdatePlayerNameRequest> }
+  > = (props) => {
+    const { data } = props ?? {};
+
+    return updatePlayerName(data, requestOptions);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type UpdatePlayerNameMutationResult = NonNullable<
+  Awaited<ReturnType<typeof updatePlayerName>>
+>;
+export type UpdatePlayerNameMutationBody = BodyType<UpdatePlayerNameRequest>;
+export type UpdatePlayerNameMutationError = ErrorType<ErrorResponse>;
+
+export const useUpdatePlayerName = <
+  TError = ErrorType<ErrorResponse>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof updatePlayerName>>,
+    TError,
+    { data: BodyType<UpdatePlayerNameRequest> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof updatePlayerName>>,
+  TError,
+  { data: BodyType<UpdatePlayerNameRequest> },
+  TContext
+> => {
+  return useMutation(getUpdatePlayerNameMutationOptions(options));
+};
