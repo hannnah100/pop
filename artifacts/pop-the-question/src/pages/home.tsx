@@ -227,7 +227,7 @@ export default function Home() {
                   variant={podCompleted ? "outline" : "default"}
                   data-testid="link-pop-or-drop"
                 >
-                  {podCompleted ? "View Results" : "Play Today's Challenge"}
+                  {podCompleted ? "View Results" : "Play Now"}
                 </Button>
               </Link>
             </div>
