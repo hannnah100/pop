@@ -23,7 +23,10 @@
       "Bash(git -C /home/runner/workspace diff HEAD lib/api-client-react/src/generated/api.schemas.ts)",
       "Bash(grep *)",
       "Bash(pnpm --filter pop-the-question exec tsc --noEmit)",
-      "Bash(pnpm --filter @workspace/api-client-react exec tsc --build)"
+      "Bash(pnpm --filter @workspace/api-client-react exec tsc --build)",
+      "Bash(NODE_ENV=production pnpm --filter @workspace/api-server run build)",
+      "Bash(NODE_ENV=production PORT=23247 BASE_PATH=/ pnpm --filter @workspace/pop-the-question run build)",
+      "Bash(curl *)"
     ]
   }
 }
