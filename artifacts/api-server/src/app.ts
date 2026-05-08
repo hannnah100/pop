@@ -42,7 +42,7 @@ app.use("/api", router);
 // precedence.
 if (process.env.NODE_ENV === "production") {
   const __dirname = path.dirname(fileURLToPath(import.meta.url));
-  const frontendDist = path.resolve(__dirname, "../../pop-the-question/dist");
+  const frontendDist = path.resolve(__dirname, "../../pop-the-question/dist/public");
 
   if (existsSync(frontendDist)) {
     app.use(express.static(frontendDist));

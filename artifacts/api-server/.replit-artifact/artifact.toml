@@ -1,5 +1,5 @@
 kind = "api"
-previewPath = "/api" # TODO - should be excluded from preview in the first place
+previewPath = "/api"
 title = "API Server"
 version = "1.0.0"
 id = "3B4_FFSkEVBkAeYMFRJ2e"
@@ -7,10 +7,7 @@ id = "3B4_FFSkEVBkAeYMFRJ2e"
 [[services]]
 localPort = 8080
 name = "API Server"
-# Claims "/" so it is the single entry point in production. Replit will route
-# all traffic here; the server internally handles /api, /socket.io, and then
-# falls through to serving the pre-built frontend static files.
-paths = ["/"]
+paths = ["/api", "/socket.io"]
 
 [services.development]
 run = "pnpm --filter @workspace/api-server run dev"
@@ -18,7 +15,6 @@ run = "pnpm --filter @workspace/api-server run dev"
 [services.production]
 
 [services.production.build]
-# Build the frontend first so its dist/ exists when the API server starts.
 args = ["sh", "-c", "pnpm --filter @workspace/pop-the-question run build && pnpm --filter @workspace/api-server run build"]
 
 [services.production.build.env]
@@ -27,7 +23,6 @@ PORT = "23247"
 BASE_PATH = "/"
 
 [services.production.run]
-# we don't run through pnpm to make startup faster in production
 args = ["node", "--enable-source-maps", "artifacts/api-server/dist/index.mjs"]
 
 [services.production.run.env]
