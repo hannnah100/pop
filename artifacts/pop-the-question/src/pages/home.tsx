@@ -22,7 +22,7 @@ import {
 import { useAuth } from "@/contexts/AuthContext";
 
 export default function Home() {
-  const { user, authEnabled, openAuthModal } = useAuth();
+  const { user, firebaseUser, authEnabled, openAuthModal } = useAuth();
   const todayDate = new Date().toISOString().split('T')[0];
 
   const [tsCompleted, setTsCompleted] = useState(false);
@@ -106,13 +106,15 @@ export default function Home() {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
             {/* Sign In / Profile Card */}
             {authEnabled && (
-              user ? (
+              firebaseUser ? (
                 <div className="bg-white border-[3px] border-black shadow-[4px_4px_0_#000] p-5 relative overflow-hidden flex flex-col">
                   <StarDoodle className="absolute top-2 right-3 w-7 h-7 text-[#FFD700] opacity-40" />
                   <div className="flex justify-between items-start mb-3">
                     <div>
                       <h3 className="font-display text-2xl font-black text-black uppercase tracking-tight">MY PROFILE</h3>
-                      <p className="text-sm text-black/60 font-sans mt-1">@{user.username} · Manage your account</p>
+                      <p className="text-sm text-black/60 font-sans mt-1">
+                        {user ? `@${user.username} · Manage your account` : (firebaseUser.displayName ?? firebaseUser.email ?? "Signed in")}
+                      </p>
                     </div>
                     <Badge variant="secondary" className="ml-2 flex-shrink-0">Signed In ✓</Badge>
                   </div>

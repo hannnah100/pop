@@ -10,7 +10,6 @@ import { useUnlockOnFirstInteraction } from "@/lib/sfx";
 import { pageTransition } from "@/lib/motion";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { AuthModal } from "@/components/auth/AuthModal";
-import { UsernameSetupModal } from "@/components/auth/UsernameSetupModal";
 
 import Home from "@/pages/home";
 import ThreeFlops from "@/pages/daily/three-flops";
@@ -93,7 +92,6 @@ function Router() {
       <AnimatedRoutes />
       <MuteToggle />
       <AuthModal />
-      <UsernameSetupModal />
     </div>
   );
 }
