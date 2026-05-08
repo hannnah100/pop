@@ -66,3 +66,5 @@ export * from "./threeFlopsLeaderboard";
 export * from "./threeFlopsLeaderboardEntry";
 export * from "./threeFlopsScoreRequest";
 export * from "./threeFlopsSummary";
+export * from "./updatePlayerName200";
+export * from "./updatePlayerNameRequest";

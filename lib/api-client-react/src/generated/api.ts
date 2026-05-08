@@ -2382,6 +2382,92 @@ export const useSubmitSkinnyScore = <
 };
 
 /**
+ * @summary Set or update a player's display name
+ */
+export const getUpdatePlayerNameUrl = () => {
+  return `/api/player/name`;
+};
+
+export const updatePlayerName = async (
+  updatePlayerNameRequest: UpdatePlayerNameRequest,
+  options?: RequestInit,
+): Promise<UpdatePlayerName200> => {
+  return customFetch<UpdatePlayerName200>(getUpdatePlayerNameUrl(), {
+    ...options,
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...options?.headers },
+    body: JSON.stringify(updatePlayerNameRequest),
+  });
+};
+
+export const getUpdatePlayerNameMutationOptions = <
+  TError = ErrorType<ErrorResponse>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof updatePlayerName>>,
+    TError,
+    { data: BodyType<UpdatePlayerNameRequest> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof updatePlayerName>>,
+  TError,
+  { data: BodyType<UpdatePlayerNameRequest> },
+  TContext
+> => {
+  const mutationKey = ["updatePlayerName"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof updatePlayerName>>,
+    { data: BodyType<UpdatePlayerNameRequest> }
+  > = (props) => {
+    const { data } = props ?? {};
+
+    return updatePlayerName(data, requestOptions);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type UpdatePlayerNameMutationResult = NonNullable<
+  Awaited<ReturnType<typeof updatePlayerName>>
+>;
+export type UpdatePlayerNameMutationBody = BodyType<UpdatePlayerNameRequest>;
+export type UpdatePlayerNameMutationError = ErrorType<ErrorResponse>;
+
+/**
+ * @summary Set or update a player's display name
+ */
+export const useUpdatePlayerName = <
+  TError = ErrorType<ErrorResponse>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof updatePlayerName>>,
+    TError,
+    { data: BodyType<UpdatePlayerNameRequest> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof updatePlayerName>>,
+  TError,
+  { data: BodyType<UpdatePlayerNameRequest> },
+  TContext
+> => {
+  return useMutation(getUpdatePlayerNameMutationOptions(options));
+};
+
+/**
  * @summary Get today's completion status summary (wow endpoint)
  */
 export const getGetDailyStatusUrl = () => {
@@ -4029,86 +4115,3 @@ export function useGetRoastRouletteQuestions<
 
   return { ...query, queryKey: queryOptions.queryKey };
 }
-
-/**
- * @summary Set or update a player's display name
- */
-export const getUpdatePlayerNameUrl = () => {
-  return `/api/player/name`;
-};
-
-export const updatePlayerName = async (
-  updatePlayerNameRequest: UpdatePlayerNameRequest,
-  options?: RequestInit,
-): Promise<UpdatePlayerName200> => {
-  return customFetch<UpdatePlayerName200>(getUpdatePlayerNameUrl(), {
-    ...options,
-    method: "POST",
-    headers: { "Content-Type": "application/json", ...options?.headers },
-    body: JSON.stringify(updatePlayerNameRequest),
-  });
-};
-
-export const getUpdatePlayerNameMutationOptions = <
-  TError = ErrorType<ErrorResponse>,
-  TContext = unknown,
->(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof updatePlayerName>>,
-    TError,
-    { data: BodyType<UpdatePlayerNameRequest> },
-    TContext
-  >;
-  request?: SecondParameter<typeof customFetch>;
-}): UseMutationOptions<
-  Awaited<ReturnType<typeof updatePlayerName>>,
-  TError,
-  { data: BodyType<UpdatePlayerNameRequest> },
-  TContext
-> => {
-  const mutationKey = ["updatePlayerName"];
-  const { mutation: mutationOptions, request: requestOptions } = options
-    ? options.mutation &&
-      "mutationKey" in options.mutation &&
-      options.mutation.mutationKey
-      ? options
-      : { ...options, mutation: { ...options.mutation, mutationKey } }
-    : { mutation: { mutationKey }, request: undefined };
-
-  const mutationFn: MutationFunction<
-    Awaited<ReturnType<typeof updatePlayerName>>,
-    { data: BodyType<UpdatePlayerNameRequest> }
-  > = (props) => {
-    const { data } = props ?? {};
-
-    return updatePlayerName(data, requestOptions);
-  };
-
-  return { mutationFn, ...mutationOptions };
-};
-
-export type UpdatePlayerNameMutationResult = NonNullable<
-  Awaited<ReturnType<typeof updatePlayerName>>
->;
-export type UpdatePlayerNameMutationBody = BodyType<UpdatePlayerNameRequest>;
-export type UpdatePlayerNameMutationError = ErrorType<ErrorResponse>;
-
-export const useUpdatePlayerName = <
-  TError = ErrorType<ErrorResponse>,
-  TContext = unknown,
->(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof updatePlayerName>>,
-    TError,
-    { data: BodyType<UpdatePlayerNameRequest> },
-    TContext
-  >;
-  request?: SecondParameter<typeof customFetch>;
-}): UseMutationResult<
-  Awaited<ReturnType<typeof updatePlayerName>>,
-  TError,
-  { data: BodyType<UpdatePlayerNameRequest> },
-  TContext
-> => {
-  return useMutation(getUpdatePlayerNameMutationOptions(options));
-};

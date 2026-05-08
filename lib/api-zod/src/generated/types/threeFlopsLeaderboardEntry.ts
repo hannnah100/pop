@@ -10,4 +10,5 @@ export interface ThreeFlopsLeaderboardEntry {
   rank: number;
   playerToken: string;
   score: number;
+  playerName?: string | null;
 }

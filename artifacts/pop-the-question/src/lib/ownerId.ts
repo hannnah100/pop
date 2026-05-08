@@ -1,8 +1,19 @@
 const OWNER_ID_KEY = "ptq-owner-id-v1";
+const PLAYER_TOKEN_KEY = "ptq-player-token";
 
 let _cachedId: string | null = null;
 
 export function getOwnerId(): string {
+  // If user is authenticated, their playerToken IS their Firebase UID — use it as ownerId
+  // so custom games sync across devices.
+  const playerToken = typeof window !== "undefined"
+    ? window.localStorage.getItem(PLAYER_TOKEN_KEY)
+    : null;
+  // Firebase UIDs are 28 chars; anonymous UUIDs are 36. Use playerToken only if it looks like a UID.
+  if (playerToken && playerToken.length >= 20 && playerToken.length <= 128 && !playerToken.includes("-")) {
+    return playerToken;
+  }
+
   if (_cachedId) return _cachedId;
   if (typeof window === "undefined") return "server";
   try {

@@ -6,9 +6,11 @@
  * OpenAPI spec version: 0.1.0
  */
 
-export interface PopBoxLeaderboardEntry {
-  rank: number;
+export interface UpdatePlayerNameRequest {
   playerToken: string;
-  score: number;
-  playerName?: string | null;
+  /**
+   * @minLength 1
+   * @maxLength 20
+   */
+  playerName: string;
 }

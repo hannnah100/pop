@@ -9,3 +9,4 @@ export * from "./customGames";
 export * from "./skinnyScores";
 export * from "./playerNames";
 export * from "./clockItScores";
+export * from "./users";

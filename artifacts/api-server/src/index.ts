@@ -3,6 +3,9 @@ import app from "./app";
 import { logger } from "./lib/logger";
 import { setupSocketIO } from "./socket/events";
 import { seedDailyContent } from "./lib/seedDaily";
+import { initFirebaseAdmin } from "./lib/firebaseAdmin";
+
+initFirebaseAdmin();
 
 const rawPort = process.env["PORT"];
 

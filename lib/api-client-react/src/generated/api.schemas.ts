@@ -98,6 +98,7 @@ export interface PopBoxGrid {
   id: string;
   date: string;
   difficulty: PopBoxGridDifficulty;
+  mode?: string | null;
   rowCategories: PopBoxCategory[];
   columnCategories: PopBoxCategory[];
 }
@@ -106,6 +107,7 @@ export interface PopBoxSummary {
   id: string;
   date: string;
   difficulty: string;
+  mode?: string | null;
 }
 
 export interface PopBoxValidCelebrity {
@@ -313,6 +315,7 @@ export interface ThreeFlopsLeaderboardEntry {
   rank: number;
   playerToken: string;
   score: number;
+  playerName?: string | null;
 }
 
 export interface ThreeFlopsLeaderboard {
@@ -338,6 +341,7 @@ export interface PopBoxLeaderboardEntry {
   rank: number;
   playerToken: string;
   score: number;
+  playerName?: string | null;
 }
 
 export interface PopBoxLeaderboard {
@@ -363,6 +367,7 @@ export interface SkinnyLeaderboardEntry {
   rank: number;
   playerToken: string;
   completionTimeSecs: number;
+  playerName?: string | null;
 }
 
 export interface SkinnyLeaderboard {
@@ -372,6 +377,15 @@ export interface SkinnyLeaderboard {
   avgTimeSecs: number;
   medianTimeSecs: number;
   playerRank?: number | null;
+}
+
+export interface UpdatePlayerNameRequest {
+  playerToken: string;
+  /**
+   * @minLength 1
+   * @maxLength 20
+   */
+  playerName: string;
 }
 
 export interface SkinnyScoreRequest {
@@ -424,11 +438,6 @@ export type GetSkinnyLeaderboardParams = {
 
 export type SubmitSkinnyScore200 = {
   ok: boolean;
-};
-
-export type UpdatePlayerNameRequest = {
-  playerToken: string;
-  playerName: string;
 };
 
 export type UpdatePlayerName200 = {

@@ -8,6 +8,9 @@ import { AnimatedBackground } from "@/components/fx/AnimatedBackground";
 import { MuteToggle } from "@/components/fx/MuteToggle";
 import { useUnlockOnFirstInteraction } from "@/lib/sfx";
 import { pageTransition } from "@/lib/motion";
+import { AuthProvider } from "@/contexts/AuthContext";
+import { AuthModal } from "@/components/auth/AuthModal";
+import { UsernameSetupModal } from "@/components/auth/UsernameSetupModal";
 
 import Home from "@/pages/home";
 import ThreeFlops from "@/pages/daily/three-flops";
@@ -28,6 +31,7 @@ import WofCreator from "@/pages/create-game/wof";
 import QuizCreator from "@/pages/create-game/quiz";
 import MyGames from "@/pages/my-games";
 import HowToPlay from "@/pages/how-to-play";
+import Account from "@/pages/account";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -73,6 +77,7 @@ function AnimatedRoutes() {
           <Route path="/create-game/quiz" component={QuizCreator} />
           <Route path="/my-games" component={MyGames} />
           <Route path="/how-to-play" component={HowToPlay} />
+          <Route path="/account" component={Account} />
           <Route component={NotFound} />
         </Switch>
       </motion.div>
@@ -87,6 +92,8 @@ function Router() {
       <AnimatedBackground />
       <AnimatedRoutes />
       <MuteToggle />
+      <AuthModal />
+      <UsernameSetupModal />
     </div>
   );
 }
@@ -96,7 +103,9 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
-          <Router />
+          <AuthProvider>
+            <Router />
+          </AuthProvider>
         </WouterRouter>
         <Toaster />
       </TooltipProvider>

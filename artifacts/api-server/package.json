@@ -17,6 +17,7 @@
     "cors": "^2",
     "drizzle-orm": "catalog:",
     "express": "^5",
+    "firebase-admin": "^13.9.0",
     "pino": "^9",
     "pino-http": "^10",
     "socket.io": "^4.8.3",

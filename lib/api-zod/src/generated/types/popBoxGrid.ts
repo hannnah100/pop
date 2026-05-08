@@ -12,6 +12,7 @@ export interface PopBoxGrid {
   id: string;
   date: string;
   difficulty: PopBoxGridDifficulty;
+  mode?: string | null;
   rowCategories: PopBoxCategory[];
   columnCategories: PopBoxCategory[];
 }

@@ -83,6 +83,7 @@ export const GetThreeFlopsLeaderboardResponse = zod.object({
       rank: zod.number(),
       playerToken: zod.string(),
       score: zod.number(),
+      playerName: zod.string().nullish(),
     }),
   ),
   totalPlayers: zod.number(),
@@ -156,6 +157,7 @@ export const GetTodayPopBoxResponse = zod.object({
   id: zod.string(),
   date: zod.string(),
   difficulty: zod.enum(["easy", "medium", "hard"]),
+  mode: zod.string().nullish(),
   rowCategories: zod.array(
     zod.object({
       id: zod.string(),
@@ -179,6 +181,7 @@ export const GetPopBoxArchiveResponseItem = zod.object({
   id: zod.string(),
   date: zod.string(),
   difficulty: zod.string(),
+  mode: zod.string().nullish(),
 });
 export const GetPopBoxArchiveResponse = zod.array(GetPopBoxArchiveResponseItem);
 
@@ -193,6 +196,7 @@ export const GetPopBoxByIdResponse = zod.object({
   id: zod.string(),
   date: zod.string(),
   difficulty: zod.enum(["easy", "medium", "hard"]),
+  mode: zod.string().nullish(),
   rowCategories: zod.array(
     zod.object({
       id: zod.string(),
@@ -286,6 +290,7 @@ export const GetPopBoxLeaderboardResponse = zod.object({
       rank: zod.number(),
       playerToken: zod.string(),
       score: zod.number(),
+      playerName: zod.string().nullish(),
     }),
   ),
   totalPlayers: zod.number(),
@@ -500,6 +505,7 @@ export const GetSkinnyLeaderboardResponse = zod.object({
       rank: zod.number(),
       playerToken: zod.string(),
       completionTimeSecs: zod.number(),
+      playerName: zod.string().nullish(),
     }),
   ),
   totalPlayers: zod.number(),
@@ -522,6 +528,20 @@ export const SubmitSkinnyScoreBody = zod.object({
 });
 
 export const SubmitSkinnyScoreResponse = zod.object({
+  ok: zod.boolean(),
+});
+
+/**
+ * @summary Set or update a player's display name
+ */
+export const updatePlayerNameBodyPlayerNameMax = 20;
+
+export const UpdatePlayerNameBody = zod.object({
+  playerToken: zod.string(),
+  playerName: zod.string().min(1).max(updatePlayerNameBodyPlayerNameMax),
+});
+
+export const UpdatePlayerNameResponse = zod.object({
   ok: zod.boolean(),
 });
 

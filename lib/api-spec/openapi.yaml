@@ -1307,6 +1307,9 @@ components:
         difficulty:
           type: string
           enum: [easy, medium, hard]
+        mode:
+          type: string
+          nullable: true
         rowCategories:
           type: array
           items:
@@ -1331,6 +1334,9 @@ components:
           type: string
         difficulty:
           type: string
+        mode:
+          type: string
+          nullable: true
       required:
         - id
         - date

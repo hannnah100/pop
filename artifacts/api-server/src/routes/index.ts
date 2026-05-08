@@ -10,6 +10,7 @@ import questionsRouter from "./questions";
 import customGamesRouter from "./customGames";
 import skinnyRouter from "./skinny";
 import playerRouter from "./player";
+import authRouter from "./auth";
 
 const router: IRouter = Router();
 
@@ -24,5 +25,6 @@ router.use(questionsRouter);
 router.use(customGamesRouter);
 router.use(skinnyRouter);
 router.use(playerRouter);
+router.use(authRouter);
 
 export default router;

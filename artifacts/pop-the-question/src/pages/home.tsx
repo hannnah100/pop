@@ -7,6 +7,8 @@ import {
   Zap,
   Users,
   Calendar,
+  UserCircle2,
+  LogIn,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -19,8 +21,10 @@ import {
   ConfettiDoodle,
   FlowerDoodle,
 } from "@/components/fx/Doodles";
+import { useAuth } from "@/contexts/AuthContext";
 
 export default function Home() {
+  const { user, authEnabled, openAuthModal } = useAuth();
   const todayDate = new Date().toISOString().split('T')[0];
 
   const [tsCompleted, setTsCompleted] = useState(false);
@@ -85,6 +89,30 @@ export default function Home() {
             alt="Pop The Question"
             className="mx-auto w-full max-w-[88vw] md:max-w-xl h-auto select-none"
           />
+          {authEnabled && (
+            <div className="mt-3 flex justify-center">
+              {user ? (
+                <Link href="/account">
+                  <button
+                    className="flex items-center gap-2 px-4 py-2 border-[2px] border-black bg-white hover:bg-[#FFF0F5] shadow-[3px_3px_0_#000] hover:shadow-[1px_1px_0_#000] hover:translate-x-[2px] hover:translate-y-[2px] transition-all font-display font-black text-sm uppercase tracking-wide"
+                    data-testid="account-btn"
+                  >
+                    <UserCircle2 className="w-4 h-4 text-[#FF1493]" />
+                    @{user.username}
+                  </button>
+                </Link>
+              ) : (
+                <button
+                  onClick={openAuthModal}
+                  className="flex items-center gap-2 px-4 py-2 border-[2px] border-black bg-[#FF1493] hover:bg-[#e0117f] shadow-[3px_3px_0_#000] hover:shadow-[1px_1px_0_#000] hover:translate-x-[2px] hover:translate-y-[2px] transition-all font-display font-black text-sm uppercase tracking-wide text-white"
+                  data-testid="signin-btn"
+                >
+                  <LogIn className="w-4 h-4" />
+                  Sign Up / Log In
+                </button>
+              )}
+            </div>
+          )}
         </div>
       </header>
 

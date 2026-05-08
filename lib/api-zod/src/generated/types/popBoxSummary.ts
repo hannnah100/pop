@@ -10,4 +10,5 @@ export interface PopBoxSummary {
   id: string;
   date: string;
   difficulty: string;
+  mode?: string | null;
 }
