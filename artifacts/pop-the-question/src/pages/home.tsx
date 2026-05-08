@@ -313,20 +313,20 @@ export default function Home() {
       </section>
 
       {/* ===== FOOTER ===== */}
-      <footer className="bg-[#FFF8E7] px-4 py-8 border-t-[4px] border-black">
-        <div className="max-w-4xl mx-auto flex flex-col md:flex-row justify-center items-center gap-5 md:gap-8">
+      <footer className="bg-[#FFF8E7] px-4 py-16 border-t-[4px] border-black">
+        <div className="max-w-4xl mx-auto flex flex-col md:flex-row justify-center items-center gap-8 md:gap-12">
           {/* Personal Stats — hot-pink pill */}
           <Link href="/stats" data-testid="link-stats">
             <span
-              className="group relative flex items-center gap-2 px-5 py-2.5 border-[3px] border-black shadow-[4px_4px_0_#000] hover:shadow-[2px_2px_0_#000] hover:translate-x-[2px] hover:translate-y-[2px] active:shadow-none active:translate-x-[4px] active:translate-y-[4px] transition-all cursor-pointer select-none"
+              className="group relative flex items-center gap-3 px-8 py-4 border-[3px] border-black shadow-[6px_6px_0_#000] hover:shadow-[3px_3px_0_#000] hover:translate-x-[3px] hover:translate-y-[3px] active:shadow-none active:translate-x-[6px] active:translate-y-[6px] transition-all cursor-pointer select-none"
               style={{
                 background: "#FF1493",
                 borderRadius: "999px",
               }}
             >
-              <StarDoodle className="w-4 h-4 text-white shrink-0" />
+              <StarDoodle className="w-6 h-6 text-white shrink-0" />
               <span
-                className="font-display font-black text-sm uppercase tracking-wide"
+                className="font-display font-black text-lg uppercase tracking-wide"
                 style={{
                   color: "#fff",
                   WebkitTextFillColor: "#fff",
@@ -342,19 +342,19 @@ export default function Home() {
           {/* Past Puzzles — electric cyan rounded rectangle, slightly skewed */}
           <Link href="/archive" data-testid="link-archive">
             {/* Outer wrapper handles translate press animation; inner wrapper handles the skew */}
-            <span className="block hover:translate-x-[2px] hover:translate-y-[2px] active:translate-x-[4px] active:translate-y-[4px] transition-transform cursor-pointer select-none">
+            <span className="block hover:translate-x-[3px] hover:translate-y-[3px] active:translate-x-[6px] active:translate-y-[6px] transition-transform cursor-pointer select-none">
               <span
-                className="relative flex items-center gap-2 px-5 py-2.5 border-[3px] border-black shadow-[4px_4px_0_#000] hover:shadow-[2px_2px_0_#000] active:shadow-none transition-shadow"
+                className="relative flex items-center gap-3 px-8 py-4 border-[3px] border-black shadow-[6px_6px_0_#000] hover:shadow-[3px_3px_0_#000] active:shadow-none transition-shadow"
                 style={{
                   background: "#00E5FF",
-                  borderRadius: "8px",
+                  borderRadius: "10px",
                   transform: "skewX(-3deg)",
                   display: "flex",
                 }}
               >
-                <ArchiveIcon className="w-4 h-4 text-black shrink-0" style={{ transform: "skewX(3deg)" }} />
+                <ArchiveIcon className="w-6 h-6 text-black shrink-0" style={{ transform: "skewX(3deg)" }} />
                 <span
-                  className="font-display font-black text-sm uppercase tracking-wide"
+                  className="font-display font-black text-lg uppercase tracking-wide"
                   style={{
                     color: "#fff",
                     WebkitTextFillColor: "#fff",
@@ -373,12 +373,12 @@ export default function Home() {
           {/* How to Play — lime green square badge */}
           <Link href="/how-to-play" data-testid="link-how-to-play">
             <span
-              className="relative flex items-center gap-2 px-5 py-2.5 border-[3px] border-black shadow-[4px_4px_0_#000] hover:shadow-[2px_2px_0_#000] hover:translate-x-[2px] hover:translate-y-[2px] active:shadow-none active:translate-x-[4px] active:translate-y-[4px] transition-all cursor-pointer select-none"
-              style={{ background: "#00C853", borderRadius: "6px" }}
+              className="relative flex items-center gap-3 px-8 py-4 border-[3px] border-black shadow-[6px_6px_0_#000] hover:shadow-[3px_3px_0_#000] hover:translate-x-[3px] hover:translate-y-[3px] active:shadow-none active:translate-x-[6px] active:translate-y-[6px] transition-all cursor-pointer select-none"
+              style={{ background: "#00C853", borderRadius: "8px" }}
             >
-              <HelpCircle className="w-4 h-4 text-white shrink-0" />
+              <HelpCircle className="w-6 h-6 text-white shrink-0" />
               <span
-                className="font-display font-black text-sm uppercase tracking-wide"
+                className="font-display font-black text-lg uppercase tracking-wide"
                 style={{
                   color: "#fff",
                   WebkitTextFillColor: "#fff",
@@ -388,7 +388,7 @@ export default function Home() {
               >
                 How to Play
               </span>
-              <StarDoodle className="w-3 h-3 text-[#FFD700] ml-0.5 shrink-0" />
+              <StarDoodle className="w-4 h-4 text-[#FFD700] ml-0.5 shrink-0" />
             </span>
           </Link>
         </div>
