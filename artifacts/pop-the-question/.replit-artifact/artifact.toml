@@ -30,3 +30,11 @@ args = ["pnpm", "--filter", "@workspace/pop-the-question", "run", "build"]
 PORT = "23247"
 BASE_PATH = "/"
 NODE_ENV = "production"
+
+[services.production.run]
+args = ["pnpm", "--filter", "@workspace/pop-the-question", "run", "serve"]
+
+[services.production.run.env]
+PORT = "23247"
+BASE_PATH = "/"
+NODE_ENV = "production"
