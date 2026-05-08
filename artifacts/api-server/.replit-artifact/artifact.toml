@@ -15,12 +15,10 @@ run = "pnpm --filter @workspace/api-server run dev"
 [services.production]
 
 [services.production.build]
-args = ["sh", "-c", "pnpm --filter @workspace/pop-the-question run build && pnpm --filter @workspace/api-server run build"]
+args = ["pnpm", "--filter", "@workspace/api-server", "run", "build"]
 
 [services.production.build.env]
 NODE_ENV = "production"
-PORT = "23247"
-BASE_PATH = "/"
 
 [services.production.run]
 args = ["node", "--enable-source-maps", "artifacts/api-server/dist/index.mjs"]

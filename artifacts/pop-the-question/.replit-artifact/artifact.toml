@@ -9,12 +9,9 @@ router = "path"
 name = "react-vite"
 version = "1.0.0"
 
-# In development the Vite dev server runs and Replit routes "/" here.
-# In production the API server (artifacts/api-server) is the single entry
-# point — it builds and serves the frontend static files itself.
 [[services]]
 name = "web"
-paths = [ "/" ]
+paths = ["/"]
 localPort = 23247
 
 [services.development]
@@ -23,3 +20,13 @@ run = "pnpm --filter @workspace/pop-the-question run dev"
 [services.env]
 PORT = "23247"
 BASE_PATH = "/"
+
+[services.production]
+
+[services.production.build]
+args = ["pnpm", "--filter", "@workspace/pop-the-question", "run", "build"]
+
+[services.production.build.env]
+PORT = "23247"
+BASE_PATH = "/"
+NODE_ENV = "production"
