@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useLocation } from "wouter";
-import { LogOut, Edit2, User, Loader2, CheckCircle2 } from "lucide-react";
+import { LogOut, Edit2, User, Loader2, CheckCircle2, Trash2, CalendarDays } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -10,7 +10,7 @@ import { useToast } from "@/hooks/use-toast";
 import { StarDoodle, LightningDoodle } from "@/components/fx/Doodles";
 
 export default function AccountPage() {
-  const { user, firebaseUser, loading, signOut, updateUsername, openAuthModal } = useAuth();
+  const { user, firebaseUser, loading, signOut, updateUsername, deleteAccount, openAuthModal } = useAuth();
   const [, setLocation] = useLocation();
   const { toast } = useToast();
 
@@ -18,6 +18,8 @@ export default function AccountPage() {
   const [newUsername, setNewUsername] = useState("");
   const [saving, setSaving] = useState(false);
   const [signingOut, setSigningOut] = useState(false);
+  const [confirmDelete, setConfirmDelete] = useState(false);
+  const [deleting, setDeleting] = useState(false);
 
   const isValid = /^[a-zA-Z0-9_-]{3,20}$/.test(newUsername.trim());
 
@@ -40,6 +42,19 @@ export default function AccountPage() {
     setSigningOut(true);
     await signOut();
     setLocation("/");
+  }
+
+  async function handleDeleteAccount() {
+    setDeleting(true);
+    try {
+      await deleteAccount();
+      setLocation("/");
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : "Something went wrong";
+      toast({ title: "Couldn't delete account", description: msg, variant: "destructive" });
+      setDeleting(false);
+      setConfirmDelete(false);
+    }
   }
 
   if (loading) {
@@ -67,6 +82,9 @@ export default function AccountPage() {
   }
 
   const providerLabel = user.authProvider === "google" ? "Google" : user.authProvider === "apple" ? "Apple" : "Email";
+  const creationDate = firebaseUser.metadata.creationTime
+    ? new Date(firebaseUser.metadata.creationTime).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })
+    : null;
 
   return (
     <div className="flex-1 max-w-2xl mx-auto w-full px-4 py-12">
@@ -168,16 +186,66 @@ export default function AccountPage() {
         </p>
       </div>
 
+      {/* Account created date */}
+      {creationDate && (
+        <div className="bg-white border-[3px] border-black shadow-[4px_4px_0_#000] p-4 mb-4 flex items-center gap-3">
+          <CalendarDays className="w-5 h-5 text-black/40 shrink-0" />
+          <div>
+            <p className="font-display text-sm font-black uppercase text-black/50">Member since</p>
+            <p className="font-sans text-base font-bold text-black">{creationDate}</p>
+          </div>
+        </div>
+      )}
+
       {/* Sign out */}
       <Button
         variant="outline"
         onClick={handleSignOut}
         disabled={signingOut}
-        className="w-full border-[3px] border-black font-display text-base uppercase tracking-wide hover:bg-red-50 hover:border-red-500 hover:text-red-600"
+        className="w-full border-[3px] border-black font-display text-base uppercase tracking-wide hover:bg-red-50 hover:border-red-500 hover:text-red-600 mb-4"
       >
         {signingOut ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <LogOut className="w-4 h-4 mr-2" />}
         Sign Out
       </Button>
+
+      {/* Danger zone */}
+      <div className="border-[3px] border-red-500 shadow-[4px_4px_0_#ef4444] p-4">
+        <h2 className="font-display text-base font-black uppercase text-red-600 mb-1">Danger Zone</h2>
+        <p className="font-sans text-sm text-black/60 mb-3">Permanently deletes your account and all saved data. This cannot be undone.</p>
+        {confirmDelete ? (
+          <div className="space-y-2">
+            <p className="font-sans text-sm font-bold text-red-600">Are you absolutely sure? This will delete everything.</p>
+            <div className="flex gap-2">
+              <Button
+                onClick={handleDeleteAccount}
+                disabled={deleting}
+                className="bg-red-600 text-white border-[2px] border-red-800 font-display text-sm uppercase hover:bg-red-700"
+              >
+                {deleting && <Loader2 className="w-3.5 h-3.5 animate-spin mr-1" />}
+                Yes, Delete Everything
+              </Button>
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => setConfirmDelete(false)}
+                disabled={deleting}
+                className="font-display text-sm uppercase border-[2px] border-black"
+              >
+                Cancel
+              </Button>
+            </div>
+          </div>
+        ) : (
+          <Button
+            variant="outline"
+            onClick={() => setConfirmDelete(true)}
+            className="border-[2px] border-red-500 text-red-600 font-display text-sm uppercase hover:bg-red-50"
+          >
+            <Trash2 className="w-4 h-4 mr-2" />
+            Delete Account
+          </Button>
+        )}
+      </div>
     </div>
   );
 }

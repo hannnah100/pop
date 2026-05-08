@@ -111,8 +111,8 @@ export default function Home() {
                   <StarDoodle className="absolute top-2 right-3 w-7 h-7 text-[#FFD700] opacity-40" />
                   <div className="flex justify-between items-start mb-3">
                     <div>
-                      <h3 className="font-display text-2xl font-black text-black uppercase tracking-tight">@{user.username}</h3>
-                      <p className="text-sm text-black/60 font-sans mt-1">View your profile &amp; scores</p>
+                      <h3 className="font-display text-2xl font-black text-black uppercase tracking-tight">MY PROFILE</h3>
+                      <p className="text-sm text-black/60 font-sans mt-1">@{user.username} · Manage your account</p>
                     </div>
                     <Badge variant="secondary" className="ml-2 flex-shrink-0">Signed In ✓</Badge>
                   </div>
@@ -122,7 +122,7 @@ export default function Home() {
                       className="w-full font-display text-base uppercase tracking-wide"
                       data-testid="account-btn"
                     >
-                      My Account
+                      View Profile
                     </Button>
                   </Link>
                 </div>

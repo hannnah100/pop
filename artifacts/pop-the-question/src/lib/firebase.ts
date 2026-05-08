@@ -2,11 +2,11 @@ import { initializeApp, type FirebaseApp } from "firebase/app";
 import {
   getAuth,
   GoogleAuthProvider,
-  OAuthProvider,
   signInWithPopup,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   signOut as firebaseSignOut,
+  deleteUser as firebaseDeleteUser,
   onAuthStateChanged,
   type Auth,
   type User as FirebaseUser,
@@ -44,14 +44,6 @@ export async function signInWithGoogle(): Promise<FirebaseUser> {
   return result.user;
 }
 
-export async function signInWithApple(): Promise<FirebaseUser> {
-  const provider = new OAuthProvider("apple.com");
-  provider.addScope("email");
-  provider.addScope("name");
-  const result = await signInWithPopup(getFirebaseAuth(), provider);
-  return result.user;
-}
-
 export async function signInWithEmail(email: string, password: string): Promise<FirebaseUser> {
   const result = await signInWithEmailAndPassword(getFirebaseAuth(), email, password);
   return result.user;
@@ -64,6 +56,12 @@ export async function createEmailAccount(email: string, password: string): Promi
 
 export async function signOut(): Promise<void> {
   await firebaseSignOut(getFirebaseAuth());
+}
+
+export async function deleteCurrentUser(): Promise<void> {
+  const auth = getFirebaseAuth();
+  if (!auth.currentUser) throw new Error("Not signed in");
+  await firebaseDeleteUser(auth.currentUser);
 }
 
 export function onAuthChange(callback: (user: FirebaseUser | null) => void): () => void {

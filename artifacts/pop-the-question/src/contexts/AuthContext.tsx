@@ -10,10 +10,10 @@ import {
 import {
   isAuthEnabled,
   signInWithGoogle as fbSignInWithGoogle,
-  signInWithApple as fbSignInWithApple,
   signInWithEmail as fbSignInWithEmail,
   createEmailAccount as fbCreateEmailAccount,
   signOut as fbSignOut,
+  deleteCurrentUser as fbDeleteCurrentUser,
   onAuthChange,
   type FirebaseUser,
 } from "@/lib/firebase";
@@ -38,12 +38,12 @@ interface AuthContextValue {
   openAuthModal: () => void;
   closeAuthModal: () => void;
   signInWithGoogle: () => Promise<void>;
-  signInWithApple: () => Promise<void>;
   signInWithEmail: (email: string, password: string) => Promise<void>;
   createEmailAccount: (email: string, password: string) => Promise<void>;
   signOut: () => Promise<void>;
   registerUsername: (username: string, authProvider: string) => Promise<void>;
   updateUsername: (username: string) => Promise<void>;
+  deleteAccount: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextValue | null>(null);
@@ -133,11 +133,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setShowAuthModal(false);
   }, []);
 
-  const signInWithApple = useCallback(async () => {
-    await fbSignInWithApple();
-    setShowAuthModal(false);
-  }, []);
-
   const signInWithEmail = useCallback(async (email: string, password: string) => {
     await fbSignInWithEmail(email, password);
     setShowAuthModal(false);
@@ -183,6 +178,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setUser(data.user);
   }, [firebaseUser]);
 
+  const deleteAccount = useCallback(async () => {
+    if (!firebaseUser) throw new Error("Not signed in");
+    const token = await firebaseUser.getIdToken();
+    await fetchWithAuth("/auth/account", token, { method: "DELETE" }).catch(() => {
+      // Best-effort: delete Firebase user even if server cleanup fails
+    });
+    await fbDeleteCurrentUser();
+    setUser(null);
+    setFirebaseUser(null);
+    setNeedsUsername(false);
+    localStorage.removeItem("ptq-player-token");
+  }, [firebaseUser]);
+
   return (
     <AuthContext.Provider value={{
       user,
@@ -194,12 +202,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       openAuthModal: () => setShowAuthModal(true),
       closeAuthModal: () => setShowAuthModal(false),
       signInWithGoogle,
-      signInWithApple,
       signInWithEmail,
       createEmailAccount,
       signOut,
       registerUsername,
       updateUsername,
+      deleteAccount,
     }}>
       {children}
     </AuthContext.Provider>

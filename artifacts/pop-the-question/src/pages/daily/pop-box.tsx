@@ -743,17 +743,25 @@ export default function PopBox() {
         </motion.div>
       )}
 
-      {!isArchive && gameOver && leaderboard && leaderboard.top10.length > 0 && (
+      {leaderboardEnabled && (
         <div className="max-w-xl mx-auto w-full mt-4 border-[3px] border-black bg-white shadow-[3px_3px_0_#000] overflow-hidden">
           <div className="bg-black px-4 py-2 flex items-center gap-2">
             <Trophy className="w-4 h-4 text-[#FFD700]" />
             <span className="text-white font-display font-black text-sm uppercase">
               Today's Leaderboard
             </span>
-            <Badge className="ml-auto bg-[#FF1493] text-white border-[#FF1493]">
-              {leaderboard.totalPlayers} played
-            </Badge>
+            {leaderboard && (
+              <Badge className="ml-auto bg-[#FF1493] text-white border-[#FF1493]">
+                {leaderboard.totalPlayers} played
+              </Badge>
+            )}
           </div>
+          {leaderboardQuery.isPending ? (
+            <div className="px-4 py-6 text-center text-sm text-black/50 font-sans">Loading leaderboard…</div>
+          ) : !leaderboard || leaderboard.top10.length === 0 ? (
+            <div className="px-4 py-6 text-center text-sm text-black/50 font-sans">Be the first to complete today's Pop Box!</div>
+          ) : (
+          <>
           <div className="divide-y divide-black/10">
             {leaderboard.top10.map((entry) => {
               const isMe = entry.playerToken === playerToken;
@@ -865,6 +873,8 @@ export default function PopBox() {
               </span>
               <span>Median: {leaderboard.medianScore}/9</span>
             </div>
+          )}
+          </>
           )}
         </div>
       )}
