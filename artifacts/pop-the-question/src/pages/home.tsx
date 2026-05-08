@@ -7,8 +7,6 @@ import {
   Zap,
   Users,
   Calendar,
-  UserCircle2,
-  LogIn,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -89,30 +87,6 @@ export default function Home() {
             alt="Pop The Question"
             className="mx-auto w-full max-w-[88vw] md:max-w-xl h-auto select-none"
           />
-          {authEnabled && (
-            <div className="mt-3 flex justify-center">
-              {user ? (
-                <Link href="/account">
-                  <button
-                    className="flex items-center gap-2 px-4 py-2 border-[2px] border-black bg-white hover:bg-[#FFF0F5] shadow-[3px_3px_0_#000] hover:shadow-[1px_1px_0_#000] hover:translate-x-[2px] hover:translate-y-[2px] transition-all font-display font-black text-sm uppercase tracking-wide"
-                    data-testid="account-btn"
-                  >
-                    <UserCircle2 className="w-4 h-4 text-[#FF1493]" />
-                    @{user.username}
-                  </button>
-                </Link>
-              ) : (
-                <button
-                  onClick={openAuthModal}
-                  className="flex items-center gap-2 px-4 py-2 border-[2px] border-black bg-[#FF1493] hover:bg-[#e0117f] shadow-[3px_3px_0_#000] hover:shadow-[1px_1px_0_#000] hover:translate-x-[2px] hover:translate-y-[2px] transition-all font-display font-black text-sm uppercase tracking-wide text-white"
-                  data-testid="signin-btn"
-                >
-                  <LogIn className="w-4 h-4" />
-                  Sign Up / Log In
-                </button>
-              )}
-            </div>
-          )}
         </div>
       </header>
 
@@ -130,8 +104,52 @@ export default function Home() {
           <p className="text-black font-medium mb-6 font-sans">Fresh pop culture puzzles every day. Come back tomorrow for more!</p>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+            {/* Sign In / Profile Card */}
+            {authEnabled && (
+              user ? (
+                <div className="bg-white border-[3px] border-black shadow-[4px_4px_0_#000] p-5 relative overflow-hidden flex flex-col">
+                  <StarDoodle className="absolute top-2 right-3 w-7 h-7 text-[#FFD700] opacity-40" />
+                  <div className="flex justify-between items-start mb-3">
+                    <div>
+                      <h3 className="font-display text-2xl font-black text-black uppercase tracking-tight">@{user.username}</h3>
+                      <p className="text-sm text-black/60 font-sans mt-1">View your profile &amp; scores</p>
+                    </div>
+                    <Badge variant="secondary" className="ml-2 flex-shrink-0">Signed In ✓</Badge>
+                  </div>
+                  <Link href="/account" className="block mt-auto">
+                    <Button
+                      variant="secondary"
+                      className="w-full font-display text-base uppercase tracking-wide"
+                      data-testid="account-btn"
+                    >
+                      My Account
+                    </Button>
+                  </Link>
+                </div>
+              ) : (
+                <div className="bg-white border-[3px] border-black shadow-[4px_4px_0_#000] p-5 relative overflow-hidden flex flex-col">
+                  <LightningDoodle className="absolute top-2 right-3 w-6 h-8 text-[#FF6B35] opacity-40" />
+                  <div className="flex justify-between items-start mb-3">
+                    <div>
+                      <h3 className="font-display text-2xl font-black text-black uppercase tracking-tight">LOG IN</h3>
+                      <p className="text-sm text-black/60 font-sans mt-1">Create an account to save your scores</p>
+                    </div>
+                    <Badge variant="outline" className="ml-2 flex-shrink-0">Free</Badge>
+                  </div>
+                  <Button
+                    onClick={openAuthModal}
+                    variant="secondary"
+                    className="w-full font-display text-base uppercase tracking-wide mt-auto"
+                    data-testid="signin-btn"
+                  >
+                    Sign Up / Log In
+                  </Button>
+                </div>
+              )
+            )}
+
             {/* Three Flops */}
-            <div className="bg-white border-[3px] border-black shadow-[4px_4px_0_#000] p-5 relative overflow-hidden">
+            <div className="bg-white border-[3px] border-black shadow-[4px_4px_0_#000] p-5 relative overflow-hidden flex flex-col">
               <LightningDoodle className="absolute top-2 right-3 w-6 h-8 text-[#FF6B35] opacity-40" />
               <div className="flex justify-between items-start mb-3">
                 <div>
@@ -144,7 +162,7 @@ export default function Home() {
                   <Badge variant="outline" className="ml-2 flex-shrink-0">Available</Badge>
                 )}
               </div>
-              <Link href="/daily/three-flops">
+              <Link href="/daily/three-flops" className="block mt-auto">
                 <Button
                   className="w-full font-display text-base uppercase tracking-wide"
                   variant={tsCompleted ? "outline" : "default"}
@@ -156,7 +174,7 @@ export default function Home() {
             </div>
 
             {/* The Skinny */}
-            <div className="bg-white border-[3px] border-black shadow-[4px_4px_0_#000] p-5 relative overflow-hidden">
+            <div className="bg-white border-[3px] border-black shadow-[4px_4px_0_#000] p-5 relative overflow-hidden flex flex-col">
               <StarDoodle className="absolute top-2 right-3 w-7 h-7 text-[#00E5FF] opacity-40" />
               <div className="flex justify-between items-start mb-3">
                 <div>
@@ -169,7 +187,7 @@ export default function Home() {
                   <Badge variant="outline" className="ml-2 flex-shrink-0">Available</Badge>
                 )}
               </div>
-              <Link href="/daily/crossword">
+              <Link href="/daily/crossword" className="block mt-auto">
                 <Button
                   className="w-full font-display text-base uppercase tracking-wide"
                   variant={cwCompleted ? "outline" : "default"}
@@ -181,7 +199,7 @@ export default function Home() {
             </div>
 
             {/* Pop Box */}
-            <div className="bg-white border-[3px] border-black shadow-[4px_4px_0_#000] p-5 relative overflow-hidden">
+            <div className="bg-white border-[3px] border-black shadow-[4px_4px_0_#000] p-5 relative overflow-hidden flex flex-col">
               <StarDoodle className="absolute top-2 right-3 w-7 h-7 text-[#FF1493] opacity-50" />
               <div className="flex justify-between items-start mb-3">
                 <div>
@@ -194,7 +212,7 @@ export default function Home() {
                   <Badge variant="outline" className="ml-2 flex-shrink-0">New</Badge>
                 )}
               </div>
-              <Link href="/daily/pop-box">
+              <Link href="/daily/pop-box" className="block mt-auto">
                 <Button
                   className="w-full font-display text-base uppercase tracking-wide"
                   variant={pbCompleted ? "outline" : "default"}
@@ -206,7 +224,7 @@ export default function Home() {
             </div>
 
             {/* Pop or Drop */}
-            <div className="bg-white border-[3px] border-black shadow-[4px_4px_0_#000] p-5 relative overflow-hidden">
+            <div className="bg-white border-[3px] border-black shadow-[4px_4px_0_#000] p-5 relative overflow-hidden flex flex-col">
               <LightningDoodle className="absolute top-2 right-3 w-5 h-7 text-[#FF6B35] opacity-50" />
               <div className="flex justify-between items-start mb-3">
                 <div>
@@ -221,7 +239,7 @@ export default function Home() {
                   <Badge className="ml-2 flex-shrink-0 bg-[#FF1493] text-white border-[#FF1493]">HOT 🔥</Badge>
                 )}
               </div>
-              <Link href="/daily/pop-or-drop">
+              <Link href="/daily/pop-or-drop" className="block mt-auto">
                 <Button
                   className="w-full font-display text-base uppercase tracking-wide"
                   variant={podCompleted ? "outline" : "default"}
@@ -233,7 +251,7 @@ export default function Home() {
             </div>
 
             {/* Clock It */}
-            <div className="bg-white border-[3px] border-black shadow-[4px_4px_0_#000] p-5 relative overflow-hidden">
+            <div className="bg-white border-[3px] border-black shadow-[4px_4px_0_#000] p-5 relative overflow-hidden flex flex-col">
               <StarDoodle className="absolute top-2 right-3 w-7 h-7 text-[#FFD700] opacity-50" />
               <div className="flex justify-between items-start mb-3">
                 <div>
@@ -251,7 +269,7 @@ export default function Home() {
                   <Badge variant="outline" className="ml-2 flex-shrink-0">Available</Badge>
                 )}
               </div>
-              <Link href="/daily/clock-it">
+              <Link href="/daily/clock-it" className="block mt-auto">
                 <Button
                   className="w-full font-display text-base uppercase tracking-wide"
                   variant={gtyCompleted ? "outline" : "default"}

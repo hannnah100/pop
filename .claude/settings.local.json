@@ -29,7 +29,12 @@
       "Bash(curl *)",
       "Bash(git -C /home/runner/workspace show HEAD~3:.replit-artifact/artifact.toml)",
       "Bash(git -C /home/runner/workspace show 444a009 -- artifacts/api-server/.replit-artifact/artifact.toml)",
-      "Bash(npx drizzle-kit *)"
+      "Bash(npx drizzle-kit *)",
+      "Bash(pnpm add *)",
+      "Bash(git *)",
+      "Bash(pnpm --filter @artifacts/pop-the-question exec tsc --noEmit)",
+      "Bash(pnpm exec *)",
+      "Bash(pnpm --filter @workspace/api-spec run codegen)"
     ]
   }
 }
