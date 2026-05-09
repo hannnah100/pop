@@ -604,9 +604,7 @@ export default function Crossword() {
                     )}
                   </div>
 
-                  {skinnyLeaderboardQuery.isPending ? (
-                    <div className="border-[3px] border-t-0 border-black p-4 text-center text-sm text-black/50">Loading...</div>
-                  ) : lbData && lbData.top10.length > 0 ? (
+                  {lbData && lbData.top10.length > 0 ? (
                     <div className="border-[3px] border-t-0 border-black divide-y divide-black/10">
                       {lbData.top10.map((entry) => {
                         const isMe = entry.playerToken === playerToken;
@@ -716,6 +714,42 @@ export default function Crossword() {
                         </div>
                       )}
                     </div>
+                  ) : isCompleted ? (
+                    <div className="border-[3px] border-t-0 border-black divide-y divide-black/10">
+                      <div className="flex items-center justify-between px-4 py-2 bg-[#00C853]/15 font-bold">
+                        <div className="flex items-center gap-3">
+                          <span className="font-black font-display text-sm w-8">🥇</span>
+                          {isEditingName ? (
+                            <div className="flex items-center gap-1">
+                              <input
+                                className="border border-black px-1 py-0.5 text-sm font-sans w-28 focus:outline-none"
+                                value={editNameValue}
+                                onChange={(e) => setEditNameValue(e.target.value)}
+                                onKeyDown={(e) => {
+                                  if (e.key === "Enter") { commitName(editNameValue); setIsEditingName(false); }
+                                  else if (e.key === "Escape") { setIsEditingName(false); }
+                                }}
+                                autoFocus
+                                maxLength={20}
+                              />
+                              <button onClick={() => { commitName(editNameValue); setIsEditingName(false); }} className="text-[#00C853] hover:text-black"><Check className="w-4 h-4" /></button>
+                              <button onClick={() => setIsEditingName(false)} className="text-black/40 hover:text-black"><X className="w-4 h-4" /></button>
+                            </div>
+                          ) : (
+                            <button
+                              className="flex items-center gap-1 text-sm font-bold font-sans hover:underline"
+                              onClick={() => { setEditNameValue(playerName || ""); setIsEditingName(true); }}
+                            >
+                              {playerName || "You"}
+                              <Pencil className="w-3 h-3 text-black/40" />
+                            </button>
+                          )}
+                        </div>
+                        <span className="font-black font-display text-sm">{formatTime(elapsedTime)}</span>
+                      </div>
+                    </div>
+                  ) : skinnyLeaderboardQuery.isPending ? (
+                    <div className="border-[3px] border-t-0 border-black p-4 text-center text-sm text-black/50">Loading...</div>
                   ) : (
                     <div className="border-[3px] border-t-0 border-black p-4 text-center text-sm text-black/50 font-sans">
                       Be the first to complete today's puzzle!

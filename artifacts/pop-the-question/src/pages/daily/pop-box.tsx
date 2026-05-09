@@ -365,14 +365,19 @@ export default function PopBox() {
         setShakeKey((k) => k + 1);
         setShakeCellIdx(activeCell);
         const isAlpha = grid?.mode === "artist-alphabet" || grid?.mode === "actor-alphabet";
+        const isStarCrossed = grid?.mode === "star-crossed";
         const reasonText =
           result.reason === "wrong_cell"
             ? isAlpha
               ? `${result.celebrityName ?? guess} doesn't start with that letter.`
-              : `${result.celebrityName ?? guess} doesn't fit this cell.`
+              : isStarCrossed
+                ? `${result.celebrityName ?? guess} isn't in this pair's shared filmography.`
+                : `${result.celebrityName ?? guess} doesn't fit this cell.`
             : isAlpha
               ? `"${guess}" isn't in our database for this ${grid?.mode === "artist-alphabet" ? "artist" : "actor"}.`
-              : `Hmm, "${guess}" isn't a celeb we know.`;
+              : isStarCrossed
+                ? `These two actors don't appear together in "${guess}".`
+                : `Hmm, "${guess}" isn't a celeb we know.`;
         toast({
           title: "✗ Not a match",
           description: reasonText,
@@ -415,7 +420,11 @@ export default function PopBox() {
         ? "Artist Alphabet"
         : grid.mode === "actor-alphabet"
           ? "Actor Alphabet"
-          : "Pop Box";
+          : grid.mode === "star-crossed"
+            ? "Star-Crossed"
+            : grid.mode === "ball-knowers"
+              ? "Ball Knowers"
+              : "Pop Box";
     const text = [
       `Pop The Question – ${modeName} (${grid.date})`,
       `Score: ${correctCount}/9${avgRarity != null ? ` • Rarity ${avgRarity}%` : ""}`,
@@ -492,6 +501,14 @@ export default function PopBox() {
               <span className="inline-block bg-[#00E5FF] text-black text-xs font-black uppercase tracking-widest px-2 py-0.5 border-[3px] border-black shadow-[2px_2px_0_#000]">
                 Actor Alphabet
               </span>
+            ) : grid.mode === "star-crossed" ? (
+              <span className="inline-block bg-[#A855F7] text-white text-xs font-black uppercase tracking-widest px-2 py-0.5 border-[3px] border-black shadow-[2px_2px_0_#000]">
+                Star-Crossed
+              </span>
+            ) : grid.mode === "ball-knowers" ? (
+              <span className="inline-block bg-[#00C853] text-black text-xs font-black uppercase tracking-widest px-2 py-0.5 border-[3px] border-black shadow-[2px_2px_0_#000]">
+                Ball Knowers
+              </span>
             ) : null}
           </div>
           <p className="text-sm text-white/90 font-sans mt-1">
@@ -499,7 +516,11 @@ export default function PopBox() {
               ? "Name a song that fits the intersection. 9 picks."
               : grid.mode === "actor-alphabet"
                 ? "Name a movie or TV show starring [Actor] that starts with [Letter Group]"
-                : "Name a movie or TV show starring [Actor] that starts with [Letter Group]. 9 picks."}
+                : grid.mode === "star-crossed"
+                  ? "Name a movie or TV show starring both actors. 9 picks."
+                  : grid.mode === "ball-knowers"
+                    ? "Name an athlete that fits both criteria. 9 picks."
+                    : "Find an answer for each intersection of the grid. 9 picks."}
           </p>
         </div>
         <div className="flex items-center gap-2 bg-white border-[3px] border-black shadow-[3px_3px_0_#000] px-4 py-3 flex-shrink-0">
@@ -526,10 +547,16 @@ export default function PopBox() {
             className={`aspect-square overflow-hidden border-[3px] border-black shadow-[3px_3px_0_#000] p-1 flex items-center justify-center text-center ${
               grid.mode === "artist-alphabet" || grid.mode === "actor-alphabet"
                 ? "bg-[#FF6B35]"
-                : "bg-[#00E5FF]"
+                : grid.mode === "star-crossed"
+                  ? "bg-[#A855F7] text-white"
+                  : "bg-[#00E5FF]"
             }`}
           >
-            <span className="font-display font-black text-base sm:text-3xl md:text-4xl leading-none uppercase tracking-widest text-black">
+            <span
+              className={`font-display font-black text-base sm:text-3xl md:text-4xl leading-none uppercase tracking-widest ${
+                grid.mode === "star-crossed" ? "text-white" : "text-black"
+              }`}
+            >
               {cat.label}
             </span>
           </div>
@@ -593,6 +620,17 @@ export default function PopBox() {
                           {grid.rowCategories[Math.floor(activeCell / 3)].label}
                         </span>
                       </>
+                    ) : grid.mode === "star-crossed" ? (
+                      <>
+                        {"Movie or TV show starring "}
+                        <span className="text-black">
+                          {grid.rowCategories[Math.floor(activeCell / 3)].label}
+                        </span>
+                        {" × "}
+                        <span className="text-black">
+                          {grid.columnCategories[activeCell % 3].label}
+                        </span>
+                      </>
                     ) : (
                       <>
                         Cell {Math.floor(activeCell / 3) + 1}-{(activeCell % 3) + 1}:{" "}
@@ -627,7 +665,7 @@ export default function PopBox() {
                     placeholder={
                       grid.mode === "artist-alphabet"
                         ? "Type a song title…"
-                        : grid.mode === "actor-alphabet"
+                        : grid.mode === "actor-alphabet" || grid.mode === "star-crossed"
                           ? "Type a film or show title…"
                           : "Type a celebrity name…"
                     }
@@ -756,11 +794,7 @@ export default function PopBox() {
               </Badge>
             )}
           </div>
-          {leaderboardQuery.isPending ? (
-            <div className="px-4 py-6 text-center text-sm text-black/50 font-sans">Loading leaderboard…</div>
-          ) : !leaderboard || leaderboard.top10.length === 0 ? (
-            <div className="px-4 py-6 text-center text-sm text-black/50 font-sans">Be the first to complete today's Pop Box!</div>
-          ) : (
+          {leaderboard && leaderboard.top10.length > 0 ? (
           <>
           <div className="divide-y divide-black/10">
             {leaderboard.top10.map((entry) => {
@@ -875,6 +909,42 @@ export default function PopBox() {
             </div>
           )}
           </>
+          ) : gameOver ? (
+            <div className="divide-y divide-black/10">
+              <div className="flex items-center gap-3 px-4 py-2 bg-[#FFD700] border-l-4 border-[#FF1493]">
+                <span className="font-display font-black text-sm w-6 text-center">🥇</span>
+                <span className="flex-1 flex items-center gap-1 min-w-0">
+                  {isEditingName ? (
+                    <>
+                      <input
+                        autoFocus
+                        value={editNameValue}
+                        onChange={(e) => setEditNameValue(e.target.value)}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") { commitName(editNameValue); setIsEditingName(false); }
+                          else if (e.key === "Escape") { setIsEditingName(false); }
+                        }}
+                        maxLength={20}
+                        placeholder="Your name"
+                        className="font-bold text-sm bg-white border-b-2 border-black outline-none w-28 px-1"
+                      />
+                      <button onClick={() => { commitName(editNameValue); setIsEditingName(false); }} className="p-0.5 text-black hover:text-[#FF1493]" aria-label="Save name"><Check className="w-3.5 h-3.5" /></button>
+                      <button onClick={() => setIsEditingName(false)} className="p-0.5 text-black/50 hover:text-black" aria-label="Cancel"><X className="w-3.5 h-3.5" /></button>
+                    </>
+                  ) : (
+                    <>
+                      <span className="font-bold text-sm truncate">{playerName || "You"}</span>
+                      <button onClick={() => { setEditNameValue(playerName); setIsEditingName(true); }} className="p-0.5 text-black/40 hover:text-black shrink-0" aria-label="Edit name"><Pencil className="w-3 h-3" /></button>
+                    </>
+                  )}
+                </span>
+                <span className="font-display font-black text-sm">{correctCount}/9</span>
+              </div>
+            </div>
+          ) : leaderboardQuery.isPending ? (
+            <div className="px-4 py-6 text-center text-sm text-black/50 font-sans">Loading leaderboard…</div>
+          ) : (
+            <div className="px-4 py-6 text-center text-sm text-black/50 font-sans">Be the first to complete today's Pop Box!</div>
           )}
         </div>
       )}

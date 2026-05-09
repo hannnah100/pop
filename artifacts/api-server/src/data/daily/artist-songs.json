@@ -90,7 +90,7 @@
       "Off the Table", "One Last Time", "Only 1", "ordinary things",
       "Positions", "Problem",
       "Side to Side", "Stuck with U", "supernatural", "Sweetener",
-      "Thank U Next", "the boy is mine", "True Love",
+      "Thank U Next", "the boy is mine", "True Love", "True Story",
       "we can't be friends",
       "Yes, And?"
     ]
@@ -169,7 +169,7 @@
       "Friends",
       "Galway Girl", "Give Me Love", "Ghosts",
       "How Would You Feel",
-      "I Don't Care",
+      ["I Don't Care", "I Don't Care (with Justin Bieber)"],
       "Lego House", "Life Goes On",
       "Nancy Mulligan", "New Man",
       "One", "Overpass Graffiti",

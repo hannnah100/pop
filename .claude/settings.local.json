@@ -34,7 +34,10 @@
       "Bash(git *)",
       "Bash(pnpm --filter @artifacts/pop-the-question exec tsc --noEmit)",
       "Bash(pnpm exec *)",
-      "Bash(pnpm --filter @workspace/api-spec run codegen)"
+      "Bash(pnpm --filter @workspace/api-spec run codegen)",
+      "Bash(pnpm test *)",
+      "Bash(pnpm typecheck *)",
+      "Bash(echo \"exit=$?\")"
     ]
   }
 }

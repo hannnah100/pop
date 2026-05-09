@@ -1468,7 +1468,13 @@
       "billionaire",
       "born-1980s",
       "american",
-      "ig-100m"
+      "ig-100m",
+      "athlete",
+      "nba",
+      "nba-champion",
+      "nba-mvp",
+      "finals-mvp",
+      "olympic-gold"
     ]
   },
   {
@@ -1481,7 +1487,14 @@
       "athlete-entertainer",
       "born-1980s",
       "american",
-      "married-another-celeb"
+      "married-another-celeb",
+      "athlete",
+      "tennis",
+      "wimbledon-winner",
+      "us-open-winner",
+      "french-open-winner",
+      "australian-open-winner",
+      "olympic-gold"
     ]
   },
   {
@@ -1495,7 +1508,14 @@
       "athlete-entertainer",
       "born-1980s",
       "ig-100m",
-      "billionaire"
+      "billionaire",
+      "athlete",
+      "soccer",
+      "european",
+      "champions-league-winner",
+      "la-liga-winner",
+      "premier-league-champion",
+      "ballon-dor"
     ]
   },
   {
@@ -1508,7 +1528,15 @@
     "categories": [
       "athlete-entertainer",
       "born-1980s",
-      "ig-100m"
+      "ig-100m",
+      "athlete",
+      "soccer",
+      "latino",
+      "world-cup-winner",
+      "champions-league-winner",
+      "la-liga-winner",
+      "ballon-dor",
+      "olympic-gold"
     ]
   },
   {
@@ -3791,7 +3819,12 @@
       "born-1970s",
       "american",
       "ig-100m",
-      "publicly-divorced"
+      "publicly-divorced",
+      "athlete",
+      "nfl",
+      "super-bowl-winner",
+      "super-bowl-mvp",
+      "nfl-mvp"
     ]
   },
   {
@@ -3845,7 +3878,12 @@
       "athlete-entertainer",
       "born-1990s",
       "american",
-      "married-another-celeb"
+      "married-another-celeb",
+      "athlete",
+      "nfl",
+      "super-bowl-winner",
+      "super-bowl-mvp",
+      "nfl-mvp"
     ]
   },
   {
@@ -3859,7 +3897,13 @@
       "athlete-entertainer",
       "born-1980s",
       "american",
-      "ig-100m"
+      "ig-100m",
+      "athlete",
+      "nba",
+      "nba-champion",
+      "nba-mvp",
+      "finals-mvp",
+      "olympic-gold"
     ]
   },
   {
@@ -3871,7 +3915,12 @@
     "categories": [
       "athlete-entertainer",
       "born-1990s",
-      "ig-100m"
+      "ig-100m",
+      "athlete",
+      "tennis",
+      "from-asia",
+      "us-open-winner",
+      "australian-open-winner"
     ]
   },
   {
@@ -3884,7 +3933,10 @@
       "athlete-entertainer",
       "born-1980s",
       "american",
-      "married-another-celeb"
+      "married-another-celeb",
+      "athlete",
+      "nfl",
+      "super-bowl-winner"
     ]
   },
   {
@@ -3896,7 +3948,12 @@
     "categories": [
       "athlete-entertainer",
       "born-1980s",
-      "american"
+      "american",
+      "athlete",
+      "nfl",
+      "super-bowl-winner",
+      "super-bowl-mvp",
+      "nfl-mvp"
     ]
   },
   {
@@ -3909,7 +3966,10 @@
       "athlete-entertainer",
       "born-1990s",
       "american",
-      "married-another-celeb"
+      "married-another-celeb",
+      "athlete",
+      "olympian",
+      "olympic-gold"
     ]
   },
   {
@@ -3921,7 +3981,12 @@
     "categories": [
       "athlete-entertainer",
       "born-1980s",
-      "american"
+      "american",
+      "athlete",
+      "tennis",
+      "wimbledon-winner",
+      "us-open-winner",
+      "olympic-gold"
     ]
   },
   {
@@ -6198,7 +6263,13 @@
     "categories": [
       "athlete-entertainer",
       "born-1970s",
-      "american"
+      "american",
+      "athlete",
+      "nba",
+      "nba-champion",
+      "nba-mvp",
+      "finals-mvp",
+      "olympic-gold"
     ]
   },
   {
@@ -6210,7 +6281,12 @@
     "categories": [
       "athlete-entertainer",
       "born-1970s",
-      "american"
+      "american",
+      "athlete",
+      "nfl",
+      "super-bowl-winner",
+      "super-bowl-mvp",
+      "nfl-mvp"
     ]
   },
   {
@@ -6222,7 +6298,14 @@
     ],
     "categories": [
       "athlete-entertainer",
-      "born-1980s"
+      "born-1980s",
+      "athlete",
+      "tennis",
+      "european",
+      "wimbledon-winner",
+      "us-open-winner",
+      "french-open-winner",
+      "australian-open-winner"
     ]
   },
   {
@@ -6234,7 +6317,15 @@
     ],
     "categories": [
       "athlete-entertainer",
-      "born-1980s"
+      "born-1980s",
+      "athlete",
+      "tennis",
+      "european",
+      "wimbledon-winner",
+      "us-open-winner",
+      "french-open-winner",
+      "australian-open-winner",
+      "olympic-gold"
     ]
   },
   {
@@ -6259,7 +6350,9 @@
     "categories": [
       "athlete-entertainer",
       "born-1980s",
-      "british"
+      "british",
+      "athlete",
+      "f1"
     ]
   },
   {
@@ -6271,7 +6364,10 @@
     ],
     "categories": [
       "athlete-entertainer",
-      "born-1990s"
+      "born-1990s",
+      "nba-champion",
+      "nba-mvp",
+      "finals-mvp"
     ]
   },
   {
@@ -6284,7 +6380,13 @@
     "categories": [
       "athlete-entertainer",
       "born-1980s",
-      "american"
+      "american",
+      "athlete",
+      "nba",
+      "nba-champion",
+      "nba-mvp",
+      "finals-mvp",
+      "olympic-gold"
     ]
   },
   {
@@ -6311,7 +6413,15 @@
     ],
     "categories": [
       "athlete-entertainer",
-      "born-1980s"
+      "born-1980s",
+      "athlete",
+      "tennis",
+      "european",
+      "wimbledon-winner",
+      "us-open-winner",
+      "french-open-winner",
+      "australian-open-winner",
+      "olympic-gold"
     ]
   },
   {
@@ -9498,7 +9608,8 @@
       "athlete",
       "nfl",
       "american",
-      "born-1990s"
+      "born-1990s",
+      "nfl-mvp"
     ]
   },
   {
@@ -9512,7 +9623,8 @@
       "nfl",
       "american",
       "born-1990s",
-      "married-another-celeb"
+      "married-another-celeb",
+      "nfl-mvp"
     ]
   },
   {
@@ -9554,7 +9666,8 @@
       "athlete",
       "nfl",
       "american",
-      "born-1990s"
+      "born-1990s",
+      "super-bowl-winner"
     ]
   },
   {
@@ -9620,7 +9733,9 @@
       "athlete",
       "nfl",
       "american",
-      "born-1970s"
+      "born-1970s",
+      "super-bowl-winner",
+      "super-bowl-mvp"
     ]
   },
   {
@@ -9634,7 +9749,8 @@
       "athlete",
       "nfl",
       "american",
-      "born-1980s"
+      "born-1980s",
+      "nfl-mvp"
     ]
   },
   {
@@ -9664,7 +9780,8 @@
       "nfl",
       "american",
       "born-1980s",
-      "married-another-celeb"
+      "married-another-celeb",
+      "super-bowl-winner"
     ]
   },
   {
@@ -9818,7 +9935,9 @@
       "athlete",
       "nfl",
       "american",
-      "born-1980s"
+      "born-1980s",
+      "super-bowl-winner",
+      "super-bowl-mvp"
     ]
   },
   {
@@ -9848,7 +9967,10 @@
       "athlete",
       "nba",
       "european",
-      "born-1990s"
+      "born-1990s",
+      "nba-champion",
+      "nba-mvp",
+      "finals-mvp"
     ]
   },
   {
@@ -9863,7 +9985,8 @@
       "nba",
       "european",
       "born-1990s",
-      "married-another-celeb"
+      "married-another-celeb",
+      "nba-mvp"
     ]
   },
   {
@@ -9877,7 +10000,9 @@
       "athlete",
       "nba",
       "american",
-      "born-1990s"
+      "born-1990s",
+      "nba-champion",
+      "olympic-gold"
     ]
   },
   {
@@ -9891,7 +10016,9 @@
       "athlete",
       "nba",
       "american",
-      "born-1990s"
+      "born-1990s",
+      "nba-champion",
+      "olympic-gold"
     ]
   },
   {
@@ -9905,7 +10032,9 @@
       "athlete",
       "nba",
       "american",
-      "born-1990s"
+      "born-1990s",
+      "nba-champion",
+      "olympic-gold"
     ]
   },
   {
@@ -9919,7 +10048,9 @@
       "nba",
       "american",
       "born-1990s",
-      "has-podcast"
+      "has-podcast",
+      "nba-champion",
+      "olympic-gold"
     ]
   },
   {
@@ -9933,7 +10064,9 @@
       "athlete",
       "nba",
       "american",
-      "born-1980s"
+      "born-1980s",
+      "nba-mvp",
+      "olympic-gold"
     ]
   },
   {
@@ -9948,7 +10081,9 @@
       "athlete",
       "nba",
       "american",
-      "born-1990s"
+      "born-1990s",
+      "nba-champion",
+      "olympic-gold"
     ]
   },
   {
@@ -9989,7 +10124,8 @@
       "nba",
       "american",
       "born-1990s",
-      "married-another-celeb"
+      "married-another-celeb",
+      "olympic-gold"
     ]
   },
   {
@@ -10004,7 +10140,8 @@
       "athlete",
       "nba",
       "american",
-      "born-1990s"
+      "born-1990s",
+      "olympic-gold"
     ]
   },
   {
@@ -10018,7 +10155,9 @@
       "athlete",
       "nba",
       "american",
-      "born-1980s"
+      "born-1980s",
+      "nba-mvp",
+      "olympic-gold"
     ]
   },
   {
@@ -10075,7 +10214,8 @@
       "nba",
       "american",
       "born-1990s",
-      "olympian"
+      "olympian",
+      "nba-mvp"
     ]
   },
   {
@@ -10089,7 +10229,8 @@
       "athlete",
       "american",
       "born-1990s",
-      "olympian"
+      "olympian",
+      "nba"
     ]
   },
   {
@@ -10103,7 +10244,12 @@
       "athlete",
       "nba",
       "american",
-      "billionaire"
+      "billionaire",
+      "born-1950s",
+      "nba-champion",
+      "nba-mvp",
+      "finals-mvp",
+      "olympic-gold"
     ]
   },
   {
@@ -10116,7 +10262,12 @@
     "categories": [
       "athlete",
       "nba",
-      "american"
+      "american",
+      "born-1950s",
+      "nba-champion",
+      "nba-mvp",
+      "finals-mvp",
+      "olympic-gold"
     ]
   },
   {
@@ -10130,7 +10281,10 @@
       "athlete",
       "nba",
       "american",
-      "athlete-entertainer"
+      "athlete-entertainer",
+      "born-1960s",
+      "nba-mvp",
+      "olympic-gold"
     ]
   },
   {
@@ -10142,7 +10296,10 @@
     "categories": [
       "athlete",
       "nba",
-      "american"
+      "american",
+      "born-1960s",
+      "nba-champion",
+      "olympic-gold"
     ]
   },
   {
@@ -10156,7 +10313,9 @@
       "athlete",
       "nba",
       "american",
-      "athlete-entertainer"
+      "athlete-entertainer",
+      "born-1960s",
+      "nba-champion"
     ]
   },
   {
@@ -10171,7 +10330,11 @@
       "athlete",
       "nba",
       "american",
-      "written-book"
+      "written-book",
+      "born-1940s",
+      "nba-champion",
+      "nba-mvp",
+      "finals-mvp"
     ]
   },
   {
@@ -10184,7 +10347,10 @@
       "athlete",
       "nba",
       "american",
-      "olympian"
+      "olympian",
+      "born-1930s",
+      "nba-champion",
+      "nba-mvp"
     ]
   },
   {
@@ -10199,7 +10365,10 @@
       "athlete",
       "born-1990s",
       "european",
-      "soccer"
+      "soccer",
+      "world-cup-winner",
+      "champions-league-winner",
+      "la-liga-winner"
     ]
   },
   {
@@ -10214,7 +10383,9 @@
       "soccer",
       "premier-league",
       "european",
-      "born-2000s"
+      "born-2000s",
+      "champions-league-winner",
+      "premier-league-champion"
     ]
   },
   {
@@ -10229,7 +10400,9 @@
       "athlete",
       "soccer",
       "born-2000s",
-      "latino"
+      "latino",
+      "champions-league-winner",
+      "la-liga-winner"
     ]
   },
   {
@@ -10243,7 +10416,9 @@
       "soccer",
       "british",
       "born-2000s",
-      "premier-league"
+      "premier-league",
+      "champions-league-winner",
+      "la-liga-winner"
     ]
   },
   {
@@ -10287,7 +10462,8 @@
       "soccer",
       "british",
       "born-2000s",
-      "premier-league"
+      "premier-league",
+      "premier-league-champion"
     ]
   },
   {
@@ -10315,7 +10491,8 @@
       "soccer",
       "british",
       "born-1990s",
-      "premier-league"
+      "premier-league",
+      "premier-league-champion"
     ]
   },
   {
@@ -10345,7 +10522,9 @@
       "soccer",
       "premier-league",
       "european",
-      "born-1990s"
+      "born-1990s",
+      "premier-league-champion",
+      "champions-league-winner"
     ]
   },
   {
@@ -10360,7 +10539,9 @@
       "soccer",
       "premier-league",
       "european",
-      "born-1990s"
+      "born-1990s",
+      "premier-league-champion",
+      "champions-league-winner"
     ]
   },
   {
@@ -10375,7 +10556,9 @@
       "athlete",
       "soccer",
       "premier-league",
-      "born-1990s"
+      "born-1990s",
+      "premier-league-champion",
+      "champions-league-winner"
     ]
   },
   {
@@ -10388,7 +10571,9 @@
       "athlete",
       "soccer",
       "premier-league",
-      "born-1990s"
+      "born-1990s",
+      "premier-league-champion",
+      "champions-league-winner"
     ]
   },
   {
@@ -10402,7 +10587,9 @@
       "athlete",
       "soccer",
       "european",
-      "born-1980s"
+      "born-1980s",
+      "champions-league-winner",
+      "la-liga-winner"
     ]
   },
   {
@@ -10418,7 +10605,9 @@
       "british",
       "born-1980s",
       "premier-league",
-      "married-another-celeb"
+      "married-another-celeb",
+      "premier-league-champion",
+      "champions-league-winner"
     ]
   },
   {
@@ -10433,7 +10622,8 @@
       "soccer",
       "british",
       "born-1980s",
-      "premier-league"
+      "premier-league",
+      "champions-league-winner"
     ]
   },
   {
@@ -10447,7 +10637,9 @@
       "soccer",
       "british",
       "born-1970s",
-      "premier-league"
+      "premier-league",
+      "premier-league-champion",
+      "champions-league-winner"
     ]
   },
   {
@@ -10461,7 +10653,10 @@
       "soccer",
       "european",
       "born-1970s",
-      "premier-league"
+      "premier-league",
+      "world-cup-winner",
+      "premier-league-champion",
+      "champions-league-winner"
     ]
   },
   {
@@ -10475,7 +10670,11 @@
       "athlete",
       "soccer",
       "born-1980s",
-      "latino"
+      "latino",
+      "world-cup-winner",
+      "champions-league-winner",
+      "la-liga-winner",
+      "ballon-dor"
     ]
   },
   {
@@ -10488,7 +10687,10 @@
       "athlete",
       "soccer",
       "european",
-      "born-1970s"
+      "born-1970s",
+      "world-cup-winner",
+      "champions-league-winner",
+      "la-liga-winner"
     ]
   },
   {
@@ -10502,7 +10704,10 @@
       "athlete",
       "soccer",
       "european",
-      "born-1980s"
+      "born-1980s",
+      "world-cup-winner",
+      "champions-league-winner",
+      "la-liga-winner"
     ]
   },
   {
@@ -10517,7 +10722,11 @@
       "athlete",
       "soccer",
       "european",
-      "born-1970s"
+      "born-1970s",
+      "world-cup-winner",
+      "champions-league-winner",
+      "la-liga-winner",
+      "ballon-dor"
     ]
   },
   {
@@ -10531,7 +10740,8 @@
       "athlete",
       "soccer",
       "european",
-      "born-1980s"
+      "born-1980s",
+      "la-liga-winner"
     ]
   },
   {
@@ -10544,7 +10754,8 @@
       "athlete",
       "soccer",
       "european",
-      "born-2000s"
+      "born-2000s",
+      "la-liga-winner"
     ]
   },
   {
@@ -10558,7 +10769,10 @@
       "born-1990s",
       "european",
       "premier-league",
-      "soccer"
+      "soccer",
+      "champions-league-winner",
+      "premier-league-champion",
+      "ballon-dor"
     ]
   },
   {
@@ -10573,7 +10787,9 @@
       "born-1990s",
       "british",
       "premier-league",
-      "soccer"
+      "soccer",
+      "premier-league-champion",
+      "champions-league-winner"
     ]
   },
   {
@@ -10587,7 +10803,8 @@
       "soccer",
       "american",
       "born-1980s",
-      "olympian"
+      "olympian",
+      "world-cup-winner"
     ]
   },
   {
@@ -10603,7 +10820,8 @@
       "american",
       "born-1980s",
       "olympian",
-      "redhead"
+      "redhead",
+      "world-cup-winner"
     ]
   },
   {
@@ -10645,7 +10863,10 @@
       "athlete",
       "tennis",
       "european",
-      "born-2000s"
+      "born-2000s",
+      "wimbledon-winner",
+      "us-open-winner",
+      "french-open-winner"
     ]
   },
   {
@@ -10659,7 +10880,10 @@
       "athlete",
       "tennis",
       "european",
-      "born-2000s"
+      "born-2000s",
+      "australian-open-winner",
+      "us-open-winner",
+      "wimbledon-winner"
     ]
   },
   {
@@ -10673,7 +10897,9 @@
       "athlete",
       "tennis",
       "european",
-      "born-1990s"
+      "born-1990s",
+      "australian-open-winner",
+      "us-open-winner"
     ]
   },
   {
@@ -10687,7 +10913,9 @@
       "american",
       "athlete",
       "born-2000s",
-      "tennis"
+      "tennis",
+      "us-open-winner",
+      "french-open-winner"
     ]
   },
   {
@@ -10701,7 +10929,9 @@
       "athlete",
       "tennis",
       "european",
-      "born-2000s"
+      "born-2000s",
+      "french-open-winner",
+      "us-open-winner"
     ]
   },
   {
@@ -10729,7 +10959,10 @@
       "tennis",
       "british",
       "born-1980s",
-      "olympian"
+      "olympian",
+      "wimbledon-winner",
+      "us-open-winner",
+      "olympic-gold"
     ]
   },
   {
@@ -10743,7 +10976,11 @@
       "tennis",
       "european",
       "born-1980s",
-      "blonde"
+      "blonde",
+      "wimbledon-winner",
+      "us-open-winner",
+      "french-open-winner",
+      "australian-open-winner"
     ]
   },
   {
@@ -10759,7 +10996,12 @@
       "european",
       "born-1960s",
       "married-another-celeb",
-      "olympian"
+      "olympian",
+      "wimbledon-winner",
+      "us-open-winner",
+      "french-open-winner",
+      "australian-open-winner",
+      "olympic-gold"
     ]
   },
   {
@@ -10773,7 +11015,11 @@
       "tennis",
       "american",
       "european",
-      "born-1950s"
+      "born-1950s",
+      "wimbledon-winner",
+      "us-open-winner",
+      "french-open-winner",
+      "australian-open-winner"
     ]
   },
   {
@@ -10787,7 +11033,10 @@
       "athlete",
       "tennis",
       "american",
-      "born-1970s"
+      "born-1970s",
+      "wimbledon-winner",
+      "us-open-winner",
+      "australian-open-winner"
     ]
   },
   {
@@ -10803,7 +11052,12 @@
       "american",
       "born-1970s",
       "married-another-celeb",
-      "written-book"
+      "written-book",
+      "wimbledon-winner",
+      "us-open-winner",
+      "french-open-winner",
+      "australian-open-winner",
+      "olympic-gold"
     ]
   },
   {
@@ -10831,7 +11085,11 @@
     "categories": [
       "athlete",
       "tennis",
-      "american"
+      "american",
+      "wimbledon-winner",
+      "us-open-winner",
+      "french-open-winner",
+      "australian-open-winner"
     ]
   },
   {
@@ -10845,7 +11103,10 @@
       "athlete",
       "tennis",
       "australian",
-      "born-1990s"
+      "born-1990s",
+      "wimbledon-winner",
+      "french-open-winner",
+      "australian-open-winner"
     ]
   },
   {
@@ -11042,7 +11303,8 @@
       "american",
       "born-1980s",
       "athlete-entertainer",
-      "olympian"
+      "olympian",
+      "olympic-gold"
     ]
   },
   {
@@ -11072,7 +11334,9 @@
     "categories": [
       "athlete",
       "american",
-      "olympian"
+      "olympian",
+      "olympic-gold",
+      "born-1940s"
     ]
   },
   {
@@ -11086,7 +11350,8 @@
       "athlete",
       "british",
       "born-1980s",
-      "olympian"
+      "olympian",
+      "olympic-gold"
     ]
   },
   {
@@ -11128,7 +11393,8 @@
       "american",
       "born-1970s",
       "latino",
-      "olympian"
+      "olympian",
+      "olympic-gold"
     ]
   },
   {
@@ -11154,7 +11420,8 @@
       "athlete",
       "american",
       "born-1980s",
-      "olympian"
+      "olympian",
+      "olympic-gold"
     ]
   },
   {
@@ -11167,7 +11434,8 @@
       "american",
       "athlete",
       "born-1990s",
-      "olympian"
+      "olympian",
+      "olympic-gold"
     ]
   },
   {
@@ -11182,7 +11450,8 @@
       "american",
       "born-2000s",
       "olympian",
-      "redhead"
+      "redhead",
+      "olympic-gold"
     ]
   },
   {
@@ -11194,7 +11463,8 @@
     "categories": [
       "athlete",
       "olympian",
-      "born-1980s"
+      "born-1980s",
+      "olympic-gold"
     ]
   },
   {
@@ -11207,7 +11477,8 @@
       "athlete",
       "american",
       "born-1990s",
-      "olympian"
+      "olympian",
+      "olympic-gold"
     ]
   },
   {
@@ -11220,7 +11491,8 @@
       "athlete",
       "american",
       "born-1990s",
-      "olympian"
+      "olympian",
+      "olympic-gold"
     ]
   },
   {
@@ -11232,7 +11504,9 @@
     "categories": [
       "athlete",
       "american",
-      "olympian"
+      "olympian",
+      "olympic-gold",
+      "born-1960s"
     ]
   },
   {
@@ -11247,7 +11521,8 @@
       "american",
       "born-2000s",
       "olympian",
-      "from-asia"
+      "from-asia",
+      "olympic-gold"
     ]
   },
   {
@@ -15369,7 +15644,9 @@
       "soccer",
       "born-1990s",
       "ig-100m",
-      "latino"
+      "latino",
+      "champions-league-winner",
+      "la-liga-winner"
     ]
   },
   {
@@ -17852,7 +18129,9 @@
       "soccer",
       "european",
       "born-1980s",
-      "premier-league"
+      "premier-league",
+      "champions-league-winner",
+      "la-liga-winner"
     ]
   },
   {
@@ -17911,7 +18190,10 @@
       "athlete",
       "soccer",
       "latino",
-      "born-1970s"
+      "born-1970s",
+      "world-cup-winner",
+      "champions-league-winner",
+      "la-liga-winner"
     ]
   },
   {
@@ -17953,7 +18235,10 @@
       "athlete",
       "soccer",
       "latino",
-      "born-1970s"
+      "born-1970s",
+      "world-cup-winner",
+      "la-liga-winner",
+      "ballon-dor"
     ]
   },
   {
@@ -17968,7 +18253,10 @@
       "athlete",
       "nba",
       "american",
-      "born-1970s"
+      "born-1970s",
+      "nba-champion",
+      "nba-mvp",
+      "finals-mvp"
     ]
   },
   {
@@ -18012,7 +18300,10 @@
       "nba",
       "american",
       "born-1980s",
-      "married-another-celeb"
+      "married-another-celeb",
+      "nba-champion",
+      "finals-mvp",
+      "olympic-gold"
     ]
   },
   {
@@ -18025,7 +18316,9 @@
       "athlete",
       "nba",
       "american",
-      "born-1980s"
+      "born-1980s",
+      "nba-champion",
+      "olympic-gold"
     ]
   },
   {
@@ -18329,7 +18622,8 @@
       "athlete",
       "nfl",
       "american",
-      "born-1990s"
+      "born-1990s",
+      "super-bowl-winner"
     ]
   },
   {
@@ -18368,7 +18662,9 @@
       "athlete",
       "nfl",
       "american",
-      "born-1990s"
+      "born-1990s",
+      "super-bowl-winner",
+      "super-bowl-mvp"
     ]
   },
   {
@@ -22142,6 +22438,399 @@
       "rock",
       "born-1940s",
       "american"
+    ]
+  },
+  {
+    "id": "justin-herbert",
+    "name": "Justin Herbert",
+    "alternateNames": [],
+    "categories": [
+      "athlete",
+      "nfl",
+      "american",
+      "born-1990s"
+    ]
+  },
+  {
+    "id": "bryce-young",
+    "name": "Bryce Young",
+    "alternateNames": [],
+    "categories": [
+      "athlete",
+      "nfl",
+      "american",
+      "born-2000s"
+    ]
+  },
+  {
+    "id": "cj-stroud",
+    "name": "C.J. Stroud",
+    "alternateNames": [
+      "CJ Stroud"
+    ],
+    "categories": [
+      "athlete",
+      "nfl",
+      "american",
+      "born-2000s"
+    ]
+  },
+  {
+    "id": "caleb-williams",
+    "name": "Caleb Williams",
+    "alternateNames": [],
+    "categories": [
+      "athlete",
+      "nfl",
+      "american",
+      "born-2000s"
+    ]
+  },
+  {
+    "id": "christian-mccaffrey",
+    "name": "Christian McCaffrey",
+    "alternateNames": [
+      "CMC"
+    ],
+    "categories": [
+      "athlete",
+      "nfl",
+      "american",
+      "born-1990s"
+    ]
+  },
+  {
+    "id": "jalen-hurts",
+    "name": "Jalen Hurts",
+    "alternateNames": [],
+    "categories": [
+      "athlete",
+      "nfl",
+      "american",
+      "born-1990s",
+      "super-bowl-winner",
+      "super-bowl-mvp"
+    ]
+  },
+  {
+    "id": "jamarr-chase",
+    "name": "Ja'Marr Chase",
+    "alternateNames": [
+      "JaMarr Chase"
+    ],
+    "categories": [
+      "athlete",
+      "nfl",
+      "american",
+      "born-2000s"
+    ]
+  },
+  {
+    "id": "joe-flacco",
+    "name": "Joe Flacco",
+    "alternateNames": [],
+    "categories": [
+      "athlete",
+      "nfl",
+      "american",
+      "born-1980s",
+      "super-bowl-winner",
+      "super-bowl-mvp"
+    ]
+  },
+  {
+    "id": "anthony-edwards",
+    "name": "Anthony Edwards",
+    "alternateNames": [
+      "Ant Edwards"
+    ],
+    "categories": [
+      "athlete",
+      "nba",
+      "american",
+      "born-2000s"
+    ]
+  },
+  {
+    "id": "tim-duncan",
+    "name": "Tim Duncan",
+    "alternateNames": [],
+    "categories": [
+      "athlete",
+      "nba",
+      "american",
+      "born-1970s",
+      "nba-champion",
+      "nba-mvp",
+      "finals-mvp"
+    ]
+  },
+  {
+    "id": "kawhi-leonard",
+    "name": "Kawhi Leonard",
+    "alternateNames": [
+      "The Klaw"
+    ],
+    "categories": [
+      "athlete",
+      "nba",
+      "american",
+      "born-1990s",
+      "nba-champion",
+      "finals-mvp"
+    ]
+  },
+  {
+    "id": "sue-bird",
+    "name": "Sue Bird",
+    "alternateNames": [],
+    "categories": [
+      "athlete",
+      "nba",
+      "american",
+      "born-1980s",
+      "olympic-gold"
+    ]
+  },
+  {
+    "id": "diana-taurasi",
+    "name": "Diana Taurasi",
+    "alternateNames": [],
+    "categories": [
+      "athlete",
+      "nba",
+      "american",
+      "born-1980s",
+      "olympic-gold"
+    ]
+  },
+  {
+    "id": "sabrina-ionescu",
+    "name": "Sabrina Ionescu",
+    "alternateNames": [],
+    "categories": [
+      "athlete",
+      "nba",
+      "american",
+      "born-1990s"
+    ]
+  },
+  {
+    "id": "karim-benzema",
+    "name": "Karim Benzema",
+    "alternateNames": [],
+    "categories": [
+      "athlete",
+      "soccer",
+      "european",
+      "born-1980s",
+      "champions-league-winner",
+      "la-liga-winner",
+      "ballon-dor"
+    ]
+  },
+  {
+    "id": "luka-modric",
+    "name": "Luka Modrić",
+    "alternateNames": [
+      "Luka Modric"
+    ],
+    "categories": [
+      "athlete",
+      "soccer",
+      "european",
+      "born-1980s",
+      "champions-league-winner",
+      "la-liga-winner",
+      "ballon-dor"
+    ]
+  },
+  {
+    "id": "sergio-ramos",
+    "name": "Sergio Ramos",
+    "alternateNames": [],
+    "categories": [
+      "athlete",
+      "soccer",
+      "european",
+      "born-1980s",
+      "champions-league-winner",
+      "la-liga-winner",
+      "world-cup-winner"
+    ]
+  },
+  {
+    "id": "iker-casillas",
+    "name": "Iker Casillas",
+    "alternateNames": [],
+    "categories": [
+      "athlete",
+      "soccer",
+      "european",
+      "born-1980s",
+      "champions-league-winner",
+      "la-liga-winner",
+      "world-cup-winner"
+    ]
+  },
+  {
+    "id": "toni-kroos",
+    "name": "Toni Kroos",
+    "alternateNames": [],
+    "categories": [
+      "athlete",
+      "soccer",
+      "european",
+      "born-1990s",
+      "champions-league-winner",
+      "la-liga-winner",
+      "world-cup-winner"
+    ]
+  },
+  {
+    "id": "antoine-griezmann",
+    "name": "Antoine Griezmann",
+    "alternateNames": [],
+    "categories": [
+      "athlete",
+      "soccer",
+      "european",
+      "born-1990s",
+      "world-cup-winner",
+      "la-liga-winner"
+    ]
+  },
+  {
+    "id": "ngolo-kante",
+    "name": "N'Golo Kanté",
+    "alternateNames": [
+      "NGolo Kante",
+      "Kante"
+    ],
+    "categories": [
+      "athlete",
+      "soccer",
+      "european",
+      "born-1990s",
+      "world-cup-winner",
+      "premier-league-champion",
+      "champions-league-winner"
+    ]
+  },
+  {
+    "id": "christian-pulisic",
+    "name": "Christian Pulisic",
+    "alternateNames": [
+      "Captain America"
+    ],
+    "categories": [
+      "athlete",
+      "soccer",
+      "american",
+      "born-1990s",
+      "champions-league-winner"
+    ]
+  },
+  {
+    "id": "sophia-smith",
+    "name": "Sophia Smith",
+    "alternateNames": [],
+    "categories": [
+      "athlete",
+      "soccer",
+      "american",
+      "born-2000s"
+    ]
+  },
+  {
+    "id": "trinity-rodman",
+    "name": "Trinity Rodman",
+    "alternateNames": [],
+    "categories": [
+      "athlete",
+      "soccer",
+      "american",
+      "born-2000s"
+    ]
+  },
+  {
+    "id": "mary-earps",
+    "name": "Mary Earps",
+    "alternateNames": [],
+    "categories": [
+      "athlete",
+      "soccer",
+      "british",
+      "european",
+      "born-1990s"
+    ]
+  },
+  {
+    "id": "daniil-medvedev",
+    "name": "Daniil Medvedev",
+    "alternateNames": [],
+    "categories": [
+      "athlete",
+      "tennis",
+      "european",
+      "born-1990s",
+      "us-open-winner"
+    ]
+  },
+  {
+    "id": "andy-roddick",
+    "name": "Andy Roddick",
+    "alternateNames": [],
+    "categories": [
+      "athlete",
+      "tennis",
+      "american",
+      "born-1980s",
+      "us-open-winner"
+    ]
+  },
+  {
+    "id": "madison-keys",
+    "name": "Madison Keys",
+    "alternateNames": [],
+    "categories": [
+      "athlete",
+      "tennis",
+      "american",
+      "born-1990s",
+      "australian-open-winner"
+    ]
+  },
+  {
+    "id": "sloane-stephens",
+    "name": "Sloane Stephens",
+    "alternateNames": [],
+    "categories": [
+      "athlete",
+      "tennis",
+      "american",
+      "born-1990s",
+      "us-open-winner"
+    ]
+  },
+  {
+    "id": "mookie-betts",
+    "name": "Mookie Betts",
+    "alternateNames": [],
+    "categories": [
+      "athlete",
+      "american",
+      "born-1990s"
+    ]
+  },
+  {
+    "id": "aaron-judge",
+    "name": "Aaron Judge",
+    "alternateNames": [],
+    "categories": [
+      "athlete",
+      "american",
+      "born-1990s"
     ]
   }
 ]

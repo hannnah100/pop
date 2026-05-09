@@ -1,5 +1,173 @@
 [
   {
+    "id": "ball-knowers-nba-greats",
+    "date": "2026-04-28",
+    "difficulty": "medium",
+    "rowCategoryIds": "[\"nba-champion\",\"nba-mvp\",\"finals-mvp\"]",
+    "columnCategoryIds": "[\"born-1980s\",\"born-1990s\",\"olympic-gold\"]"
+  },
+  {
+    "id": "ball-knowers-hardwood-hall",
+    "date": "2026-04-04",
+    "difficulty": "medium",
+    "rowCategoryIds": "[\"nba-champion\",\"nba-mvp\",\"finals-mvp\"]",
+    "columnCategoryIds": "[\"born-1970s\",\"born-1990s\",\"european\"]"
+  },
+  {
+    "id": "ball-knowers-pitch-royalty",
+    "date": "2026-04-05",
+    "difficulty": "medium",
+    "rowCategoryIds": "[\"world-cup-winner\",\"ballon-dor\",\"premier-league-champion\"]",
+    "columnCategoryIds": "[\"champions-league-winner\",\"la-liga-winner\",\"european\"]"
+  },
+  {
+    "id": "ball-knowers-court-conquest",
+    "date": "2026-04-06",
+    "difficulty": "medium",
+    "rowCategoryIds": "[\"wimbledon-winner\",\"us-open-winner\",\"australian-open-winner\"]",
+    "columnCategoryIds": "[\"american\",\"european\",\"born-1980s\"]"
+  },
+  {
+    "id": "ball-knowers-globe-soccer",
+    "date": "2026-04-07",
+    "difficulty": "medium",
+    "rowCategoryIds": "[\"champions-league-winner\",\"premier-league-champion\",\"la-liga-winner\"]",
+    "columnCategoryIds": "[\"world-cup-winner\",\"european\",\"born-2000s\"]"
+  },
+  {
+    "id": "ball-knowers-nba-olympic",
+    "date": "2026-04-08",
+    "difficulty": "medium",
+    "rowCategoryIds": "[\"nba-mvp\",\"nba-champion\",\"olympic-gold\"]",
+    "columnCategoryIds": "[\"born-1960s\",\"american\",\"born-1990s\"]"
+  },
+  {
+    "id": "ball-knowers-gridiron-greats",
+    "date": "2026-04-09",
+    "difficulty": "medium",
+    "rowCategoryIds": "[\"super-bowl-winner\",\"super-bowl-mvp\",\"nfl\"]",
+    "columnCategoryIds": "[\"nfl-mvp\",\"born-1980s\",\"born-1990s\"]"
+  },
+  {
+    "id": "ball-knowers-tennis-now",
+    "date": "2026-04-10",
+    "difficulty": "medium",
+    "rowCategoryIds": "[\"us-open-winner\",\"australian-open-winner\",\"wimbledon-winner\"]",
+    "columnCategoryIds": "[\"born-2000s\",\"american\",\"european\"]"
+  },
+  {
+    "id": "ball-knowers-sport-era-mix",
+    "date": "2026-04-11",
+    "difficulty": "easy",
+    "rowCategoryIds": "[\"athlete\",\"nba\",\"soccer\"]",
+    "columnCategoryIds": "[\"born-1980s\",\"born-1990s\",\"born-2000s\"]"
+  },
+  {
+    "id": "star-crossed-the-bear",
+    "date": "2026-04-19",
+    "difficulty": "easy",
+    "rowCategoryIds": "[\"jeremy-allen-white\",\"ayo-edebiri\",\"pedro-pascal\"]",
+    "columnCategoryIds": "[\"ebon-moss-bachrach\",\"lionel-boyce\",\"matty-matheson\"]"
+  },
+  {
+    "id": "star-crossed-barbie",
+    "date": "2026-04-20",
+    "difficulty": "easy",
+    "rowCategoryIds": "[\"margot-robbie\",\"ryan-gosling\",\"issa-rae\"]",
+    "columnCategoryIds": "[\"america-ferrera\",\"will-ferrell\",\"simu-liu\"]"
+  },
+  {
+    "id": "star-crossed-crazy-stupid-love",
+    "date": "2026-04-21",
+    "difficulty": "easy",
+    "rowCategoryIds": "[\"ryan-gosling\",\"emma-stone\",\"steve-carell\"]",
+    "columnCategoryIds": "[\"marisa-tomei\",\"kevin-bacon\",\"julianne-moore\"]"
+  },
+  {
+    "id": "star-crossed-thunderbolts",
+    "date": "2026-04-22",
+    "difficulty": "medium",
+    "rowCategoryIds": "[\"florence-pugh\",\"sebastian-stan\",\"david-harbour\"]",
+    "columnCategoryIds": "[\"wyatt-russell\",\"hannah-john-kamen\",\"olga-kurylenko\"]"
+  },
+  {
+    "id": "star-crossed-inception",
+    "date": "2026-04-23",
+    "difficulty": "medium",
+    "rowCategoryIds": "[\"leonardo-dicaprio\",\"joseph-gordon-levitt\",\"tom-hardy\"]",
+    "columnCategoryIds": "[\"marion-cotillard\",\"cillian-murphy\",\"michael-caine\"]"
+  },
+  {
+    "id": "star-crossed-creed-trilogy",
+    "date": "2026-04-24",
+    "difficulty": "medium",
+    "rowCategoryIds": "[\"michael-b-jordan\",\"tessa-thompson\",\"sylvester-stallone\"]",
+    "columnCategoryIds": "[\"phylicia-rashad\",\"wood-harris\",\"florian-munteanu\"]"
+  },
+  {
+    "id": "star-crossed-deadpool-universe",
+    "date": "2026-04-25",
+    "difficulty": "medium",
+    "rowCategoryIds": "[\"ryan-reynolds\",\"hugh-jackman\",\"morena-baccarin\"]",
+    "columnCategoryIds": "[\"brianna-hildebrand\",\"karan-soni\",\"stefan-kapicic\"]"
+  },
+  {
+    "id": "star-crossed-oceans-8",
+    "date": "2026-04-26",
+    "difficulty": "easy",
+    "rowCategoryIds": "[\"sandra-bullock\",\"anne-hathaway\",\"cate-blanchett\"]",
+    "columnCategoryIds": "[\"mindy-kaling\",\"sarah-paulson\",\"helena-bonham-carter\"]"
+  },
+  {
+    "id": "ball-knowers-soccer-trophies",
+    "date": "2026-04-29",
+    "difficulty": "medium",
+    "rowCategoryIds": "[\"champions-league-winner\",\"la-liga-winner\",\"premier-league-champion\"]",
+    "columnCategoryIds": "[\"ballon-dor\",\"born-1990s\",\"european\"]"
+  },
+  {
+    "id": "ball-knowers-nfl-legends",
+    "date": "2026-04-30",
+    "difficulty": "medium",
+    "rowCategoryIds": "[\"super-bowl-mvp\",\"super-bowl-winner\",\"nfl-mvp\"]",
+    "columnCategoryIds": "[\"born-1970s\",\"born-1980s\",\"born-1990s\"]"
+  },
+  {
+    "id": "ball-knowers-tennis-slams",
+    "date": "2026-05-01",
+    "difficulty": "medium",
+    "rowCategoryIds": "[\"wimbledon-winner\",\"us-open-winner\",\"french-open-winner\"]",
+    "columnCategoryIds": "[\"australian-open-winner\",\"american\",\"european\"]"
+  },
+  {
+    "id": "star-crossed-mcu-avengers",
+    "date": "2026-05-04",
+    "difficulty": "medium",
+    "rowCategoryIds": "[\"robert-downey-jr\",\"chris-evans\",\"scarlett-johansson\"]",
+    "columnCategoryIds": "[\"mark-ruffalo\",\"chris-hemsworth\",\"jeremy-renner\"]"
+  },
+  {
+    "id": "star-crossed-harry-potter",
+    "date": "2026-05-05",
+    "difficulty": "easy",
+    "rowCategoryIds": "[\"daniel-radcliffe\",\"emma-watson\",\"rupert-grint\"]",
+    "columnCategoryIds": "[\"ralph-fiennes\",\"helena-bonham-carter\",\"maggie-smith\"]"
+  },
+  {
+    "id": "star-crossed-fast-furious",
+    "date": "2026-05-06",
+    "difficulty": "medium",
+    "rowCategoryIds": "[\"vin-diesel\",\"michelle-rodriguez\",\"tyrese-gibson\"]",
+    "columnCategoryIds": "[\"paul-walker\",\"jordana-brewster\",\"ludacris\"]"
+  },
+  {
+    "id": "star-crossed-spider-verse",
+    "date": "2026-05-07",
+    "difficulty": "medium",
+    "rowCategoryIds": "[\"tom-holland\",\"jacob-batalon\",\"marisa-tomei\"]",
+    "columnCategoryIds": "[\"zendaya\",\"jon-favreau\",\"tony-revolori\"]"
+  },
+  {
     "id": "pop-box-2026-04-02",
     "date": "2026-04-02",
     "difficulty": "easy",

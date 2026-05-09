@@ -1,83 +1,487 @@
 [
-  { "id": "pop", "label": "Pop Music", "group": "music-genre" },
-  { "id": "rap", "label": "Rap / Hip-Hop", "group": "music-genre" },
-  { "id": "rnb", "label": "R&B / Soul", "group": "music-genre" },
-  { "id": "country", "label": "Country", "group": "music-genre" },
-  { "id": "kpop", "label": "K-Pop", "group": "music-genre" },
-  { "id": "rock", "label": "Rock", "group": "music-genre" },
-  { "id": "latin", "label": "Latin Music", "group": "music-genre" },
-  { "id": "dj-producer", "label": "DJ / Producer", "group": "music-genre" },
-  { "id": "band-member", "label": "Band Member", "group": "music-genre" },
-  { "id": "grammy-winner", "label": "Grammy Winner", "group": "music-awards" },
-  { "id": "billboard-1", "label": "Billboard #1 Hit", "group": "music-career" },
-  { "id": "world-tour", "label": "Headlined World Tour", "group": "music-career" },
-  { "id": "oscar-winner", "label": "Oscar Winner", "group": "film-awards" },
-  { "id": "emmy-winner", "label": "Emmy Winner", "group": "film-awards" },
-  { "id": "tony-winner", "label": "Tony Award Winner", "group": "film-awards" },
-  { "id": "golden-globe-winner", "label": "Golden Globe Winner", "group": "film-awards" },
-  { "id": "sag-winner", "label": "SAG Award Winner", "group": "film-awards" },
-  { "id": "snl-cast", "label": "SNL Cast Member", "group": "film-tv" },
-  { "id": "been-on-snl", "label": "Appeared on SNL", "group": "film-tv" },
-  { "id": "snl-host", "label": "Frequent SNL Host", "group": "film-tv" },
-  { "id": "disney-channel-alum", "label": "Disney Channel Alum", "group": "film-tv" },
-  { "id": "reality-tv-star", "label": "Reality TV Star", "group": "film-tv" },
-  { "id": "comedian", "label": "Comedian", "group": "film-tv" },
-  { "id": "stand-up", "label": "Stand-Up Comedian", "group": "film-tv" },
-  { "id": "panel-show", "label": "Panel Show Regular", "group": "film-tv" },
-  { "id": "taskmaster", "label": "Taskmaster Contestant", "group": "film-tv" },
-  { "id": "presenter", "label": "TV Presenter", "group": "film-tv" },
-  { "id": "mcu-actor", "label": "Marvel Cinematic Universe", "group": "film-franchise" },
-  { "id": "dc-actor", "label": "DC Film Actor", "group": "film-franchise" },
-  { "id": "star-wars", "label": "Star Wars Actor", "group": "film-franchise" },
-  { "id": "harry-potter", "label": "Harry Potter Actor", "group": "film-franchise" },
-  { "id": "fast-furious", "label": "Fast & Furious Actor", "group": "film-franchise" },
-  { "id": "hunger-games", "label": "Hunger Games Actor", "group": "film-franchise" },
-  { "id": "love-island", "label": "Love Island", "group": "reality" },
-  { "id": "drag-race", "label": "RuPaul's Drag Race", "group": "reality" },
-  { "id": "strictly", "label": "Strictly Come Dancing", "group": "reality" },
-  { "id": "big-brother", "label": "Big Brother", "group": "reality" },
-  { "id": "im-a-celebrity", "label": "I'm A Celebrity...", "group": "reality" },
-  { "id": "bachelor-nation", "label": "The Bachelor / Bachelorette", "group": "reality" },
-  { "id": "real-housewives", "label": "Real Housewives", "group": "reality" },
-  { "id": "bravo", "label": "Bravo Star", "group": "reality" },
-  { "id": "won-reality-show", "label": "Won a Reality Show", "group": "reality" },
-  { "id": "athlete", "label": "Pro Athlete", "group": "sport" },
-  { "id": "nba", "label": "NBA Player", "group": "sport" },
-  { "id": "nfl", "label": "NFL Player", "group": "sport" },
-  { "id": "soccer", "label": "Soccer / Football Player", "group": "sport" },
-  { "id": "premier-league", "label": "Premier League Player", "group": "sport" },
-  { "id": "tennis", "label": "Tennis Player", "group": "sport" },
-  { "id": "f1", "label": "F1 Driver", "group": "sport" },
-  { "id": "ufc", "label": "UFC Fighter", "group": "sport" },
-  { "id": "olympian", "label": "Olympic Medalist", "group": "sport" },
-  { "id": "born-1920s", "label": "Born in the 1920s", "group": "age" },
-  { "id": "born-1930s", "label": "Born in the 1930s", "group": "age" },
-  { "id": "born-1940s", "label": "Born in the 1940s", "group": "age" },
-  { "id": "born-1950s", "label": "Born in the 1950s", "group": "age" },
-  { "id": "born-1960s", "label": "Born in the 1960s", "group": "age" },
-  { "id": "born-1970s", "label": "Born in the 1970s", "group": "age" },
-  { "id": "born-1980s", "label": "Born in the 1980s", "group": "age" },
-  { "id": "born-1990s", "label": "Born in the 1990s", "group": "age" },
-  { "id": "born-2000s", "label": "Born in the 2000s", "group": "age" },
-  { "id": "british", "label": "British / UK", "group": "nationality" },
-  { "id": "canadian", "label": "Canadian", "group": "nationality" },
-  { "id": "american", "label": "American", "group": "nationality" },
-  { "id": "australian", "label": "Australian", "group": "nationality" },
-  { "id": "irish", "label": "Irish", "group": "nationality" },
-  { "id": "european", "label": "European", "group": "nationality" },
-  { "id": "latino", "label": "Latino / Latina Heritage", "group": "nationality" },
-  { "id": "from-asia", "label": "Asian Heritage", "group": "nationality" },
-  { "id": "redhead", "label": "Natural Redhead", "group": "hair" },
-  { "id": "blonde", "label": "Blonde Hair", "group": "hair" },
-  { "id": "ig-100m", "label": "100M+ Instagram Followers", "group": "followers" },
-  { "id": "married-another-celeb", "label": "Married Another Celebrity", "group": "personal" },
-  { "id": "publicly-divorced", "label": "Has Been Publicly Divorced", "group": "personal" },
-  { "id": "has-podcast", "label": "Has a Podcast", "group": "personal" },
-  { "id": "written-book", "label": "Written a Book", "group": "personal" },
-  { "id": "billionaire", "label": "Billionaire", "group": "business" },
-  { "id": "beauty-brand-owner", "label": "Owns a Beauty/Fashion Brand", "group": "business" },
-  { "id": "has-fashion-line", "label": "Owns a Fashion Line", "group": "business" },
-  { "id": "music-to-acting", "label": "Music Star Turned Actor", "group": "crossover" },
-  { "id": "athlete-entertainer", "label": "Pro Athlete or Athlete-Adjacent", "group": "crossover" },
-  { "id": "social-to-mainstream", "label": "Started on Social Media", "group": "crossover" }
+  {
+    "id": "pop",
+    "label": "Pop Music",
+    "group": "music-genre"
+  },
+  {
+    "id": "rap",
+    "label": "Rap / Hip-Hop",
+    "group": "music-genre"
+  },
+  {
+    "id": "rnb",
+    "label": "R&B / Soul",
+    "group": "music-genre"
+  },
+  {
+    "id": "country",
+    "label": "Country",
+    "group": "music-genre"
+  },
+  {
+    "id": "kpop",
+    "label": "K-Pop",
+    "group": "music-genre"
+  },
+  {
+    "id": "rock",
+    "label": "Rock",
+    "group": "music-genre"
+  },
+  {
+    "id": "latin",
+    "label": "Latin Music",
+    "group": "music-genre"
+  },
+  {
+    "id": "dj-producer",
+    "label": "DJ / Producer",
+    "group": "music-genre"
+  },
+  {
+    "id": "band-member",
+    "label": "Band Member",
+    "group": "music-genre"
+  },
+  {
+    "id": "grammy-winner",
+    "label": "Grammy Winner",
+    "group": "music-awards"
+  },
+  {
+    "id": "billboard-1",
+    "label": "Billboard #1 Hit",
+    "group": "music-career"
+  },
+  {
+    "id": "world-tour",
+    "label": "Headlined World Tour",
+    "group": "music-career"
+  },
+  {
+    "id": "oscar-winner",
+    "label": "Oscar Winner",
+    "group": "film-awards"
+  },
+  {
+    "id": "emmy-winner",
+    "label": "Emmy Winner",
+    "group": "film-awards"
+  },
+  {
+    "id": "tony-winner",
+    "label": "Tony Award Winner",
+    "group": "film-awards"
+  },
+  {
+    "id": "golden-globe-winner",
+    "label": "Golden Globe Winner",
+    "group": "film-awards"
+  },
+  {
+    "id": "sag-winner",
+    "label": "SAG Award Winner",
+    "group": "film-awards"
+  },
+  {
+    "id": "snl-cast",
+    "label": "SNL Cast Member",
+    "group": "film-tv"
+  },
+  {
+    "id": "been-on-snl",
+    "label": "Appeared on SNL",
+    "group": "film-tv"
+  },
+  {
+    "id": "snl-host",
+    "label": "Frequent SNL Host",
+    "group": "film-tv"
+  },
+  {
+    "id": "disney-channel-alum",
+    "label": "Disney Channel Alum",
+    "group": "film-tv"
+  },
+  {
+    "id": "reality-tv-star",
+    "label": "Reality TV Star",
+    "group": "film-tv"
+  },
+  {
+    "id": "comedian",
+    "label": "Comedian",
+    "group": "film-tv"
+  },
+  {
+    "id": "stand-up",
+    "label": "Stand-Up Comedian",
+    "group": "film-tv"
+  },
+  {
+    "id": "panel-show",
+    "label": "Panel Show Regular",
+    "group": "film-tv"
+  },
+  {
+    "id": "taskmaster",
+    "label": "Taskmaster Contestant",
+    "group": "film-tv"
+  },
+  {
+    "id": "presenter",
+    "label": "TV Presenter",
+    "group": "film-tv"
+  },
+  {
+    "id": "mcu-actor",
+    "label": "Marvel Cinematic Universe",
+    "group": "film-franchise"
+  },
+  {
+    "id": "dc-actor",
+    "label": "DC Film Actor",
+    "group": "film-franchise"
+  },
+  {
+    "id": "star-wars",
+    "label": "Star Wars Actor",
+    "group": "film-franchise"
+  },
+  {
+    "id": "harry-potter",
+    "label": "Harry Potter Actor",
+    "group": "film-franchise"
+  },
+  {
+    "id": "fast-furious",
+    "label": "Fast & Furious Actor",
+    "group": "film-franchise"
+  },
+  {
+    "id": "hunger-games",
+    "label": "Hunger Games Actor",
+    "group": "film-franchise"
+  },
+  {
+    "id": "love-island",
+    "label": "Love Island",
+    "group": "reality"
+  },
+  {
+    "id": "drag-race",
+    "label": "RuPaul's Drag Race",
+    "group": "reality"
+  },
+  {
+    "id": "strictly",
+    "label": "Strictly Come Dancing",
+    "group": "reality"
+  },
+  {
+    "id": "big-brother",
+    "label": "Big Brother",
+    "group": "reality"
+  },
+  {
+    "id": "im-a-celebrity",
+    "label": "I'm A Celebrity...",
+    "group": "reality"
+  },
+  {
+    "id": "bachelor-nation",
+    "label": "The Bachelor / Bachelorette",
+    "group": "reality"
+  },
+  {
+    "id": "real-housewives",
+    "label": "Real Housewives",
+    "group": "reality"
+  },
+  {
+    "id": "bravo",
+    "label": "Bravo Star",
+    "group": "reality"
+  },
+  {
+    "id": "won-reality-show",
+    "label": "Won a Reality Show",
+    "group": "reality"
+  },
+  {
+    "id": "athlete",
+    "label": "Pro Athlete",
+    "group": "sport"
+  },
+  {
+    "id": "nba",
+    "label": "NBA Player",
+    "group": "sport"
+  },
+  {
+    "id": "nfl",
+    "label": "NFL Player",
+    "group": "sport"
+  },
+  {
+    "id": "soccer",
+    "label": "Soccer / Football Player",
+    "group": "sport"
+  },
+  {
+    "id": "premier-league",
+    "label": "Premier League Player",
+    "group": "sport"
+  },
+  {
+    "id": "tennis",
+    "label": "Tennis Player",
+    "group": "sport"
+  },
+  {
+    "id": "f1",
+    "label": "F1 Driver",
+    "group": "sport"
+  },
+  {
+    "id": "ufc",
+    "label": "UFC Fighter",
+    "group": "sport"
+  },
+  {
+    "id": "olympian",
+    "label": "Olympic Medalist",
+    "group": "sport"
+  },
+  {
+    "id": "born-1920s",
+    "label": "Born in the 1920s",
+    "group": "age"
+  },
+  {
+    "id": "born-1930s",
+    "label": "Born in the 1930s",
+    "group": "age"
+  },
+  {
+    "id": "born-1940s",
+    "label": "Born in the 1940s",
+    "group": "age"
+  },
+  {
+    "id": "born-1950s",
+    "label": "Born in the 1950s",
+    "group": "age"
+  },
+  {
+    "id": "born-1960s",
+    "label": "Born in the 1960s",
+    "group": "age"
+  },
+  {
+    "id": "born-1970s",
+    "label": "Born in the 1970s",
+    "group": "age"
+  },
+  {
+    "id": "born-1980s",
+    "label": "Born in the 1980s",
+    "group": "age"
+  },
+  {
+    "id": "born-1990s",
+    "label": "Born in the 1990s",
+    "group": "age"
+  },
+  {
+    "id": "born-2000s",
+    "label": "Born in the 2000s",
+    "group": "age"
+  },
+  {
+    "id": "british",
+    "label": "British / UK",
+    "group": "nationality"
+  },
+  {
+    "id": "canadian",
+    "label": "Canadian",
+    "group": "nationality"
+  },
+  {
+    "id": "american",
+    "label": "American",
+    "group": "nationality"
+  },
+  {
+    "id": "australian",
+    "label": "Australian",
+    "group": "nationality"
+  },
+  {
+    "id": "irish",
+    "label": "Irish",
+    "group": "nationality"
+  },
+  {
+    "id": "european",
+    "label": "European",
+    "group": "nationality"
+  },
+  {
+    "id": "latino",
+    "label": "Latino / Latina Heritage",
+    "group": "nationality"
+  },
+  {
+    "id": "from-asia",
+    "label": "Asian Heritage",
+    "group": "nationality"
+  },
+  {
+    "id": "redhead",
+    "label": "Natural Redhead",
+    "group": "hair"
+  },
+  {
+    "id": "blonde",
+    "label": "Blonde Hair",
+    "group": "hair"
+  },
+  {
+    "id": "ig-100m",
+    "label": "100M+ Instagram Followers",
+    "group": "followers"
+  },
+  {
+    "id": "married-another-celeb",
+    "label": "Married Another Celebrity",
+    "group": "personal"
+  },
+  {
+    "id": "publicly-divorced",
+    "label": "Has Been Publicly Divorced",
+    "group": "personal"
+  },
+  {
+    "id": "has-podcast",
+    "label": "Has a Podcast",
+    "group": "personal"
+  },
+  {
+    "id": "written-book",
+    "label": "Written a Book",
+    "group": "personal"
+  },
+  {
+    "id": "billionaire",
+    "label": "Billionaire",
+    "group": "business"
+  },
+  {
+    "id": "beauty-brand-owner",
+    "label": "Owns a Beauty/Fashion Brand",
+    "group": "business"
+  },
+  {
+    "id": "has-fashion-line",
+    "label": "Owns a Fashion Line",
+    "group": "business"
+  },
+  {
+    "id": "music-to-acting",
+    "label": "Music Star Turned Actor",
+    "group": "crossover"
+  },
+  {
+    "id": "athlete-entertainer",
+    "label": "Pro Athlete or Athlete-Adjacent",
+    "group": "crossover"
+  },
+  {
+    "id": "social-to-mainstream",
+    "label": "Started on Social Media",
+    "group": "crossover"
+  },
+  {
+    "id": "nba-champion",
+    "label": "NBA Champion",
+    "group": "sport-achievement"
+  },
+  {
+    "id": "nba-mvp",
+    "label": "NBA MVP",
+    "group": "sport-achievement"
+  },
+  {
+    "id": "finals-mvp",
+    "label": "NBA Finals MVP",
+    "group": "sport-achievement"
+  },
+  {
+    "id": "super-bowl-winner",
+    "label": "Super Bowl Winner",
+    "group": "sport-achievement"
+  },
+  {
+    "id": "super-bowl-mvp",
+    "label": "Super Bowl MVP",
+    "group": "sport-achievement"
+  },
+  {
+    "id": "nfl-mvp",
+    "label": "NFL MVP",
+    "group": "sport-achievement"
+  },
+  {
+    "id": "world-cup-winner",
+    "label": "World Cup Winner",
+    "group": "sport-achievement"
+  },
+  {
+    "id": "champions-league-winner",
+    "label": "Champions League Winner",
+    "group": "sport-achievement"
+  },
+  {
+    "id": "premier-league-champion",
+    "label": "Premier League Champion",
+    "group": "sport-achievement"
+  },
+  {
+    "id": "la-liga-winner",
+    "label": "La Liga Winner",
+    "group": "sport-achievement"
+  },
+  {
+    "id": "ballon-dor",
+    "label": "Ballon d'Or Winner",
+    "group": "sport-achievement"
+  },
+  {
+    "id": "wimbledon-winner",
+    "label": "Wimbledon Winner",
+    "group": "sport-achievement"
+  },
+  {
+    "id": "us-open-winner",
+    "label": "US Open Winner (Tennis)",
+    "group": "sport-achievement"
+  },
+  {
+    "id": "french-open-winner",
+    "label": "French Open Winner",
+    "group": "sport-achievement"
+  },
+  {
+    "id": "australian-open-winner",
+    "label": "Australian Open Winner",
+    "group": "sport-achievement"
+  },
+  {
+    "id": "olympic-gold",
+    "label": "Olympic Gold Medalist",
+    "group": "sport-achievement"
+  }
 ]

@@ -74,15 +74,21 @@ export default function Archive() {
     const mode = item.mode ?? (
       item.id.startsWith("artist-alpha-") ? "artist-alphabet" :
       item.id.startsWith("actor-alpha-") ? "actor-alphabet" :
+      item.id.startsWith("star-crossed-") ? "star-crossed" :
+      item.id.startsWith("ball-knowers-") ? "ball-knowers" :
       "celebrity-categories"
     );
     const modeLabel =
       mode === "artist-alphabet" ? "Artist Alphabet" :
       mode === "actor-alphabet" ? "Actor Alphabet" :
+      mode === "star-crossed" ? "Star-Crossed" :
+      mode === "ball-knowers" ? "Ball Knowers" :
       "Celebrity Categories";
     const prompt =
       mode === "artist-alphabet" ? "Name a song that fits the intersection" :
       mode === "actor-alphabet" ? "Name a movie or TV show starring the actor that starts with the letter shown" :
+      mode === "star-crossed" ? "Name a movie or TV show starring both actors. 9 picks." :
+      mode === "ball-knowers" ? "Name an athlete that fits both criteria. 9 picks." :
       "Find an answer for each intersection of the grid";
     return {
       ...item,
