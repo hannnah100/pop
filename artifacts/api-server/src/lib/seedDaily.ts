@@ -5,7 +5,7 @@ import {
   popBoxGridsTable,
   reelConnectionsChallengesTable,
 } from "@workspace/db";
-import { eq, inArray } from "drizzle-orm";
+import { eq, inArray, sql } from "drizzle-orm";
 import { logger } from "./logger";
 import {
   THREE_FLOPS_SEED,
@@ -302,25 +302,22 @@ async function seedCrossword(): Promise<void> {
 async function seedReelConnections(): Promise<void> {
   if (REEL_CONNECTIONS_SEED.length === 0) return;
 
-  const ids = REEL_CONNECTIONS_SEED.map((r) => r.id);
-  const existing = await db
-    .select({ id: reelConnectionsChallengesTable.id })
-    .from(reelConnectionsChallengesTable)
-    .where(inArray(reelConnectionsChallengesTable.id, ids));
-  const have = new Set(existing.map((r) => r.id));
+  // Upsert every row so JSON edits (new actors, new validAnswers) propagate to
+  // existing puzzles. Insert-only seeding meant content fixes silently no-op'd.
+  await db
+    .insert(reelConnectionsChallengesTable)
+    .values(REEL_CONNECTIONS_SEED)
+    .onConflictDoUpdate({
+      target: reelConnectionsChallengesTable.id,
+      set: {
+        date: sql`excluded.date`,
+        actors: sql`excluded.actors`,
+        validAnswers: sql`excluded.valid_answers`,
+      },
+    });
 
-  const missing = REEL_CONNECTIONS_SEED.filter((r) => !have.has(r.id));
-  if (missing.length === 0) {
-    logger.info(
-      { total: REEL_CONNECTIONS_SEED.length },
-      "Reel Connections archive already up to date",
-    );
-    return;
-  }
-
-  await db.insert(reelConnectionsChallengesTable).values(missing);
   logger.info(
-    { inserted: missing.length, total: REEL_CONNECTIONS_SEED.length },
-    "Seeded Reel Connections archive",
+    { total: REEL_CONNECTIONS_SEED.length },
+    "Upserted Reel Connections archive",
   );
 }

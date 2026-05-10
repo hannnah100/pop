@@ -4,7 +4,7 @@ import { eq, desc, sql } from "drizzle-orm";
 
 const router: IRouter = Router();
 
-const MAX_SCORE = 5;
+const MAX_SCORE = 6;
 
 function todayDate(): string {
   return new Date().toISOString().split("T")[0];

@@ -10,8 +10,8 @@ import {
   getGetReelConnectionsByIdQueryKey,
   getGetReelConnectionsLeaderboardQueryKey,
 } from "@workspace/api-client-react";
-import { motion, AnimatePresence } from "framer-motion";
-import { ArrowDown, Heart, Share2, Home as HomeIcon, Trophy, Pencil, Check, X } from "lucide-react";
+import { motion } from "framer-motion";
+import { Share2, Home as HomeIcon, Trophy, Pencil, Check, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
@@ -22,8 +22,6 @@ import { StarDoodle, LightningDoodle } from "@/components/fx/Doodles";
 import { useSfx } from "@/lib/sfx";
 import { hapticCorrect, hapticVictory, hapticWrong } from "@/lib/haptics";
 import { useStreaks, type Banner } from "@/lib/streaks";
-
-const TOTAL_CONNECTIONS = 5;
 
 function useQueryParam(key: string): string | null {
   if (typeof window === "undefined") return null;
@@ -62,13 +60,16 @@ function isCorrect(guess: string, validAnswers: string[]): boolean {
   return validAnswers.some((a) => normalize(a) === g);
 }
 
+const TOTAL_LIVES = 5;
+
 interface PersistedState {
   completed: boolean;
   hasWon: boolean;
   score: number;
   total: number;
-  finalAnswers: (string | null)[]; // length 5 — null if failed at this step
+  finalAnswers: (string | null)[]; // one entry per connection — null if failed at this step
   failedAt: number | null;
+  livesRemaining?: number;
 }
 
 export default function ReelConnections() {
@@ -94,7 +95,7 @@ export default function ReelConnections() {
     : `ptq-reel-connections-${puzzle?.date ?? todayDate}`;
 
   const [currentIdx, setCurrentIdx] = useState(0);
-  const [livesAtCurrent, setLivesAtCurrent] = useState(1); // 1 = full heart, 0 = strike-pending
+  const [lives, setLives] = useState(TOTAL_LIVES);
   const [guess, setGuess] = useState("");
   const [revealedAnswers, setRevealedAnswers] = useState<(string | null)[]>([]); // canonical answer revealed for that step (null until correct or failed)
   const [gameOver, setGameOver] = useState(false);
@@ -136,6 +137,7 @@ export default function ReelConnections() {
         setRevealedAnswers(parsed.finalAnswers);
         setScore(parsed.score);
         setHasWon(parsed.hasWon);
+        setLives(parsed.livesRemaining ?? 0);
         setGameOver(true);
         recordedRef.current = true;
         if (!isArchive) setLeaderboardEnabled(true);
@@ -148,7 +150,7 @@ export default function ReelConnections() {
   // Initialize revealed answers array when puzzle loads (and no saved state)
   useEffect(() => {
     if (puzzle && revealedAnswers.length === 0 && !gameOver) {
-      setRevealedAnswers(Array(TOTAL_CONNECTIONS).fill(null));
+      setRevealedAnswers(Array(puzzle.validAnswers.length).fill(null));
     }
   }, [puzzle, revealedAnswers.length, gameOver]);
 
@@ -165,18 +167,27 @@ export default function ReelConnections() {
     }
   }
 
-  function endGame(won: boolean, finalScore: number, finalAnswers: (string | null)[], failedAt: number | null) {
+  function endGame(
+    won: boolean,
+    finalScore: number,
+    finalAnswers: (string | null)[],
+    failedAt: number | null,
+    livesRemaining: number,
+  ) {
+    if (!puzzle) return;
     setHasWon(won);
     setScore(finalScore);
     setGameOver(true);
     setRevealedAnswers(finalAnswers);
+    setLives(livesRemaining);
     persist({
       completed: true,
       hasWon: won,
       score: finalScore,
-      total: TOTAL_CONNECTIONS,
+      total: puzzle.validAnswers.length,
       finalAnswers,
       failedAt,
+      livesRemaining,
     });
     if (!isArchive && !recordedRef.current) {
       recordedRef.current = true;
@@ -214,30 +225,32 @@ export default function ReelConnections() {
       setScore(newScore);
       setGuess("");
 
-      if (currentIdx + 1 >= TOTAL_CONNECTIONS) {
-        endGame(true, newScore, updated, null);
+      if (currentIdx + 1 >= puzzle.validAnswers.length) {
+        endGame(true, newScore, updated, null, lives);
       } else {
         setCurrentIdx(currentIdx + 1);
-        setLivesAtCurrent(1);
       }
     } else {
       void playWrong();
       hapticWrong();
       setShakeKey((k) => k + 1);
-      if (livesAtCurrent === 1) {
-        setLivesAtCurrent(0);
-        toast({ title: "Try again", description: "One more wrong and the game ends." });
-        setGuess("");
-      } else {
-        // Second wrong → game over
+      const newLives = lives - 1;
+      setLives(newLives);
+      if (newLives <= 0) {
+        // Out of lives → reveal remaining and end the game
         const updated = [...revealedAnswers];
-        // Reveal correct answers for ALL remaining connections
-        for (let i = currentIdx; i < TOTAL_CONNECTIONS; i++) {
+        for (let i = currentIdx; i < puzzle.validAnswers.length; i++) {
           if (updated[i] === null) {
             updated[i] = puzzle.validAnswers[i]?.[0] ?? null;
           }
         }
-        endGame(false, score, updated, currentIdx);
+        endGame(false, score, updated, currentIdx, 0);
+      } else {
+        toast({
+          title: "Wrong!",
+          description: `${newLives} ${newLives === 1 ? "life" : "lives"} left`,
+        });
+        setGuess("");
       }
     }
   }
@@ -252,10 +265,11 @@ export default function ReelConnections() {
 
   function handleShare() {
     if (!puzzle) return;
+    const total = puzzle.validAnswers.length;
     const lines = revealedAnswers
       .map((a, i) => (a !== null && i < score ? "✅" : i < currentIdx || gameOver ? "❌" : "⬜"))
       .join("");
-    const text = `Reel Connections ${puzzle.date}\n${score}/${TOTAL_CONNECTIONS}\n${lines}\nptq.app/daily/reel-connections`;
+    const text = `Reel Connections ${puzzle.date}\n${score}/${total}\n${lines}\nptq.app/daily/reel-connections`;
     if (navigator.share) {
       void navigator.share({ text }).catch(() => void navigator.clipboard.writeText(text));
     } else {
@@ -273,6 +287,84 @@ export default function ReelConnections() {
   }
 
   const actors = puzzle.actors;
+  const totalConnections = puzzle.validAnswers.length;
+  const isCircular = totalConnections === actors.length;
+
+  // Rectangle layout: 3 actors on top row (i=0,1,2 left→right),
+  // 3 on bottom row (i=3,4,5 right→left visually), clockwise flow.
+  // Slot indices: 0,1 = top arrows (→), 2 = right side (↓),
+  // 3,4 = bottom arrows (←), 5 = left side (↑).
+  const ARROW_GLYPH = { right: "→", down: "↓", left: "←", up: "↑" } as const;
+  type FlowDir = keyof typeof ARROW_GLYPH;
+
+  function ArrowSlot({ index, dir, size }: { index: number; dir: FlowDir; size: "h" | "v" }) {
+    const succeeded = index < score;
+    const isCurrent = !gameOver && index === currentIdx;
+    const failed = gameOver && !succeeded;
+    // Smooth viewport scaling so arrows grow with the puzzle.
+    const fontSize =
+      size === "v" ? "clamp(2.75rem, 9vw, 4.5rem)" : "clamp(1.75rem, 5.5vw, 3rem)";
+    const baseCls = "font-display font-black leading-none";
+    if (succeeded) {
+      return (
+        <span
+          className={`${baseCls} text-[#00C853]`}
+          style={{ fontSize }}
+          data-testid={`slot-${index}`}
+        >
+          ✓
+        </span>
+      );
+    }
+    if (failed) {
+      return (
+        <span
+          className={`${baseCls} text-[#FF1493]`}
+          style={{ fontSize }}
+          data-testid={`slot-${index}`}
+        >
+          ✗
+        </span>
+      );
+    }
+    return (
+      <span
+        className={`${baseCls} ${isCurrent ? "text-[#38BDF8] animate-pulse" : "text-black/30"}`}
+        style={
+          isCurrent
+            ? {
+                fontSize,
+                textShadow:
+                  "1px 0 0 #000, -1px 0 0 #000, 0 1px 0 #000, 0 -1px 0 #000, 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000",
+              }
+            : { fontSize }
+        }
+        data-testid={`slot-${index}`}
+      >
+        {ARROW_GLYPH[dir]}
+      </span>
+    );
+  }
+
+  function ActorCard({ index }: { index: number }) {
+    const involvedInCurrent =
+      !gameOver && (index === currentIdx || index === (currentIdx + 1) % actors.length);
+    return (
+      <div
+        className={`w-[28%] min-w-0 max-w-[200px] border-[3px] md:border-[4px] border-black shadow-[3px_3px_0_#000] md:shadow-[5px_5px_0_#000] px-2 py-2.5 md:px-3 md:py-3 text-center transition-colors ${
+          involvedInCurrent ? "bg-[#FFD700]" : "bg-white"
+        }`}
+        data-testid={`actor-${index}`}
+      >
+        <p
+          className="font-display font-black text-black uppercase tracking-tight leading-tight"
+          style={{ fontSize: "clamp(0.8rem, 2.6vw, 1.25rem)" }}
+        >
+          {actors[index]}
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div className="flex-1 bg-[#FFF8E7] min-h-screen relative overflow-hidden">
@@ -282,70 +374,126 @@ export default function ReelConnections() {
 
       <BannerStack banners={banners} onDone={(id) => setBanners((prev) => prev.filter((b) => b.id !== id))} />
 
-      <div className="max-w-md mx-auto px-4 py-6 relative">
+      <div className="max-w-2xl mx-auto px-3 md:px-6 py-6 relative">
         <div className="flex items-center justify-between mb-4">
           <BackArrow onClick={() => setLocation("/")} />
           {!gameOver && (
-            <div className="flex items-center gap-2" data-testid="lives-indicator">
-              <span className="font-display text-sm uppercase">Life:</span>
-              <span className="text-2xl">{livesAtCurrent === 1 ? "❤️" : "🖤"}</span>
+            <div className="flex items-center gap-1.5" data-testid="lives-indicator">
+              <span className="font-display text-xs uppercase mr-1">Lives:</span>
+              <div className="flex gap-0.5">
+                {Array.from({ length: TOTAL_LIVES }).map((_, i) => (
+                  <span
+                    key={i}
+                    className="text-lg leading-none"
+                    aria-label={i < lives ? "life remaining" : "life lost"}
+                  >
+                    {i < lives ? "❤️" : "🖤"}
+                  </span>
+                ))}
+              </div>
             </div>
           )}
           {gameOver && (
             <Badge variant="secondary" className="font-display">
-              {score}/{TOTAL_CONNECTIONS}
+              {score}/{totalConnections}
             </Badge>
           )}
         </div>
 
-        <div className="text-center mb-6">
+        <div className="text-center mb-4">
           <h1 className="font-display text-3xl md:text-4xl font-black text-black uppercase tracking-tight">
             Reel Connections
           </h1>
-          <p className="text-sm text-black/60 font-sans mt-1">Name a movie or show that connects each pair</p>
+          <p className="text-sm text-black/60 font-sans mt-1">
+            Name a movie or show that connects each pair around the loop
+          </p>
         </div>
 
-        {/* Vertical chain */}
+        {/* Rectangle loop — clockwise flow, generous breathing room between rows */}
         <Shake trigger={shakeKey}>
-          <div className="space-y-2">
-            {actors.map((actor, i) => (
-              <div key={i}>
-                {/* Actor row */}
-                <div className="bg-white border-[3px] border-black shadow-[4px_4px_0_#000] px-4 py-3 text-center">
-                  <p className="font-display text-lg md:text-xl font-black text-black uppercase tracking-tight">
-                    {actor}
-                  </p>
-                </div>
+          <div className="w-full my-4">
+            {/* Top row: actor 0 → actor 1 → actor 2 */}
+            <div className="flex items-center justify-between gap-1">
+              <ActorCard index={0} />
+              <ArrowSlot index={0} dir="right" size="h" />
+              <ActorCard index={1} />
+              <ArrowSlot index={1} dir="right" size="h" />
+              <ActorCard index={2} />
+            </div>
 
-                {/* Connection slot (between this actor and next) */}
-                {i < actors.length - 1 && (
-                  <div className="flex items-center justify-center my-1">
-                    <ArrowDown className="w-5 h-5 text-black/60" />
-                  </div>
+            {/* Side arrows — generous vertical gap between rows */}
+            <div className="flex items-center justify-between py-8 md:py-10">
+              <div className="w-[28%] flex justify-center">
+                {isCircular ? (
+                  <ArrowSlot index={5} dir="up" size="v" />
+                ) : (
+                  <span aria-hidden />
                 )}
+              </div>
+              <div className="flex-1" />
+              <div className="w-[28%] flex justify-center">
+                <ArrowSlot index={2} dir="down" size="v" />
+              </div>
+            </div>
 
-                {i < actors.length - 1 && (
-                  <ConnectionSlot
-                    index={i}
-                    currentIdx={currentIdx}
-                    revealed={revealedAnswers[i] ?? null}
-                    gameOver={gameOver}
-                    onSubmit={handleSubmit}
-                    guess={guess}
-                    setGuess={setGuess}
-                    inputRef={inputRef}
-                  />
-                )}
+            {/* Bottom row (visual order is reversed from index order): actor 5 ← actor 4 ← actor 3 */}
+            <div className="flex items-center justify-between gap-1">
+              <ActorCard index={5} />
+              <ArrowSlot index={4} dir="left" size="h" />
+              <ActorCard index={4} />
+              <ArrowSlot index={3} dir="left" size="h" />
+              <ActorCard index={3} />
+            </div>
+          </div>
+        </Shake>
 
-                {i < actors.length - 1 && (
-                  <div className="flex items-center justify-center my-1">
-                    <ArrowDown className="w-5 h-5 text-black/60" />
-                  </div>
-                )}
+        {/* Active connection input panel */}
+        {!gameOver && currentIdx < totalConnections && (
+          <Shake trigger={shakeKey}>
+            <div
+              className="mt-4 bg-[#FFD700] border-[3px] border-black shadow-[4px_4px_0_#000] p-3"
+              data-testid="active-panel"
+            >
+              <p className="font-display text-xs md:text-sm font-black text-black uppercase tracking-tight text-center mb-2">
+                <span className="text-black/60">Connection {currentIdx + 1} of {totalConnections}:</span>{" "}
+                {actors[currentIdx]} <span className="text-black/60">×</span>{" "}
+                {actors[(currentIdx + 1) % actors.length]}
+              </p>
+              <form onSubmit={handleSubmit} className="bg-white border-2 border-black p-1.5">
+                <Input
+                  ref={inputRef}
+                  value={guess}
+                  onChange={(e) => setGuess(e.target.value)}
+                  placeholder="movie or TV show…"
+                  className="bg-white border-0 font-display uppercase text-center text-base focus-visible:ring-0"
+                  data-testid={`slot-input-${currentIdx}`}
+                />
+              </form>
+            </div>
+          </Shake>
+        )}
+
+        {/* Revealed answers list (after game over) */}
+        {gameOver && (
+          <div className="mt-4 space-y-2" data-testid="revealed-list">
+            {revealedAnswers.map((ans, i) => (
+              <div
+                key={`reveal-${i}`}
+                className={`border-[3px] border-black shadow-[3px_3px_0_#000] px-3 py-2 ${
+                  ans !== null && i < score ? "bg-[#00C853] text-white" : "bg-[#FF1493] text-white"
+                }`}
+                data-testid={`reveal-${i}`}
+              >
+                <p className="font-sans text-[10px] uppercase tracking-wide opacity-80">
+                  {actors[i]} × {actors[(i + 1) % actors.length]}
+                </p>
+                <p className="font-display text-sm md:text-base font-black uppercase tracking-tight">
+                  {ans ?? "—"}
+                </p>
               </div>
             ))}
           </div>
-        </Shake>
+        )}
 
         {/* Game over panel */}
         {gameOver && (
@@ -359,7 +507,7 @@ export default function ReelConnections() {
               {hasWon ? "You Won!" : "Game Over!"}
             </h2>
             <p className="font-sans text-black/80 mb-4">
-              You got <span className="font-black">{score}/{TOTAL_CONNECTIONS}</span> connections correct
+              You got <span className="font-black">{score}/{totalConnections}</span> connections correct
             </p>
             <div className="flex gap-2 justify-center flex-wrap">
               <Button onClick={handleShare} className="font-display uppercase" data-testid="share-btn">
@@ -429,7 +577,7 @@ export default function ReelConnections() {
                   <span>
                     #{entry.rank} {entry.playerName ?? "Anonymous"}
                   </span>
-                  <span>{entry.score}/5</span>
+                  <span>{entry.score}/{totalConnections}</span>
                 </div>
               ))}
               {leaderboardQuery.data.top10.length === 0 && (
@@ -446,58 +594,3 @@ export default function ReelConnections() {
   );
 }
 
-interface ConnectionSlotProps {
-  index: number;
-  currentIdx: number;
-  revealed: string | null;
-  gameOver: boolean;
-  onSubmit: (e: React.FormEvent) => void;
-  guess: string;
-  setGuess: (v: string) => void;
-  inputRef: React.RefObject<HTMLInputElement | null>;
-}
-
-function ConnectionSlot({ index, currentIdx, revealed, gameOver, onSubmit, guess, setGuess, inputRef }: ConnectionSlotProps) {
-  const isPast = index < currentIdx || (gameOver && revealed !== null);
-  const isCurrent = !gameOver && index === currentIdx;
-
-  if (isPast) {
-    return (
-      <div
-        className={`border-[3px] border-black shadow-[4px_4px_0_#000] px-4 py-3 text-center ${
-          revealed !== null ? "bg-[#00C853] text-white" : "bg-[#FF1493] text-white"
-        }`}
-        data-testid={`slot-past-${index}`}
-      >
-        <p className="font-display text-sm md:text-base font-black uppercase tracking-tight">
-          {revealed ?? "—"}
-        </p>
-      </div>
-    );
-  }
-
-  if (isCurrent) {
-    return (
-      <form onSubmit={onSubmit} className="bg-[#FFD700] border-[3px] border-black shadow-[4px_4px_0_#000] p-2">
-        <Input
-          ref={inputRef}
-          value={guess}
-          onChange={(e) => setGuess(e.target.value)}
-          placeholder="movie or TV show…"
-          className="bg-white border-2 border-black font-display uppercase text-center text-base"
-          data-testid={`slot-input-${index}`}
-        />
-      </form>
-    );
-  }
-
-  // Future (locked) slot
-  return (
-    <div
-      className="bg-black/10 border-[3px] border-dashed border-black/40 px-4 py-3 text-center"
-      data-testid={`slot-locked-${index}`}
-    >
-      <p className="font-display text-sm font-black uppercase tracking-tight text-black/30">???</p>
-    </div>
-  );
-}
