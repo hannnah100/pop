@@ -16,6 +16,7 @@ import popBoxCelebritiesJson from "./pop-box-celebrities.json" with { type: "jso
 import artistSongsJson from "./artist-songs.json" with { type: "json" };
 import actorFilmographyJson from "./actor-filmography.json" with { type: "json" };
 import starCrossedJson from "./star-crossed.json" with { type: "json" };
+import reelConnectionsJson from "./reel-connections.json" with { type: "json" };
 
 export interface ThreeFlopsSeed {
   id: string;
@@ -122,3 +123,14 @@ export interface StarCrossedGrid {
 }
 
 export const STAR_CROSSED_GRIDS: StarCrossedGrid[] = starCrossedJson as StarCrossedGrid[];
+
+export interface ReelConnectionsSeed {
+  id: string;
+  date: string;
+  /** JSON-encoded string[] (length 6) */
+  actors: string;
+  /** JSON-encoded string[][] (length 5) — each inner array is the accepted titles for that connection */
+  validAnswers: string;
+}
+
+export const REEL_CONNECTIONS_SEED: ReelConnectionsSeed[] = reelConnectionsJson as ReelConnectionsSeed[];

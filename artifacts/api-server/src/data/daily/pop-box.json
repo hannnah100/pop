@@ -63,62 +63,6 @@
     "columnCategoryIds": "[\"born-1980s\",\"born-1990s\",\"born-2000s\"]"
   },
   {
-    "id": "star-crossed-greta-gerwig-drama",
-    "date": "2026-04-19",
-    "difficulty": "medium",
-    "rowCategoryIds": "[\"saoirse-ronan\",\"florence-pugh\",\"timothee-chalamet\"]",
-    "columnCategoryIds": "[\"eliza-scanlen\",\"tracy-letts\",\"meryl-streep\"]"
-  },
-  {
-    "id": "star-crossed-oppenheimer-era",
-    "date": "2026-04-20",
-    "difficulty": "medium",
-    "rowCategoryIds": "[\"cillian-murphy\",\"matt-damon\",\"florence-pugh\"]",
-    "columnCategoryIds": "[\"emily-blunt\",\"robert-downey-jr\",\"kenneth-branagh\"]"
-  },
-  {
-    "id": "star-crossed-movie-star-power",
-    "date": "2026-04-21",
-    "difficulty": "medium",
-    "rowCategoryIds": "[\"margot-robbie\",\"brad-pitt\",\"tobey-maguire\"]",
-    "columnCategoryIds": "[\"leonardo-dicaprio\",\"diego-calva\",\"olivia-wilde\"]"
-  },
-  {
-    "id": "star-crossed-dont-look-up",
-    "date": "2026-04-22",
-    "difficulty": "easy",
-    "rowCategoryIds": "[\"leonardo-dicaprio\",\"jennifer-lawrence\",\"jonah-hill\"]",
-    "columnCategoryIds": "[\"meryl-streep\",\"cate-blanchett\",\"timothee-chalamet\"]"
-  },
-  {
-    "id": "star-crossed-spider-verse",
-    "date": "2026-04-23",
-    "difficulty": "medium",
-    "rowCategoryIds": "[\"hailee-steinfeld\",\"shameik-moore\",\"brian-tyree-henry\"]",
-    "columnCategoryIds": "[\"jake-johnson\",\"mahershala-ali\",\"oscar-isaac\"]"
-  },
-  {
-    "id": "star-crossed-babylon",
-    "date": "2026-04-24",
-    "difficulty": "medium",
-    "rowCategoryIds": "[\"margot-robbie\",\"brad-pitt\",\"tobey-maguire\"]",
-    "columnCategoryIds": "[\"diego-calva\",\"jovan-adepo\",\"olivia-wilde\"]"
-  },
-  {
-    "id": "star-crossed-deadpool-universe",
-    "date": "2026-04-25",
-    "difficulty": "medium",
-    "rowCategoryIds": "[\"ryan-reynolds\",\"hugh-jackman\",\"morena-baccarin\"]",
-    "columnCategoryIds": "[\"brianna-hildebrand\",\"karan-soni\",\"stefan-kapicic\"]"
-  },
-  {
-    "id": "star-crossed-pitch-perfect",
-    "date": "2026-04-26",
-    "difficulty": "easy",
-    "rowCategoryIds": "[\"anna-kendrick\",\"rebel-wilson\",\"brittany-snow\"]",
-    "columnCategoryIds": "[\"hailee-steinfeld\",\"adam-devine\",\"skylar-astin\"]"
-  },
-  {
     "id": "ball-knowers-soccer-trophies",
     "date": "2026-04-29",
     "difficulty": "medium",
@@ -138,13 +82,6 @@
     "difficulty": "medium",
     "rowCategoryIds": "[\"wimbledon-winner\",\"us-open-winner\",\"french-open-winner\"]",
     "columnCategoryIds": "[\"australian-open-winner\",\"american\",\"european\"]"
-  },
-  {
-    "id": "star-crossed-drama-heavyweights",
-    "date": "2026-05-04",
-    "difficulty": "medium",
-    "rowCategoryIds": "[\"jennifer-lawrence\",\"bradley-cooper\",\"christian-bale\"]",
-    "columnCategoryIds": "[\"robert-de-niro\",\"amy-adams\",\"jeremy-renner\"]"
   },
   {
     "id": "star-crossed-hollywood-royalty",
@@ -1206,32 +1143,11 @@
     "columnCategoryIds": "[\"billie-eilish\", \"harry-styles\", \"megan-thee-stallion\"]"
   },
   {
-    "id": "star-crossed-mcu-avengers",
-    "date": "2026-07-02",
-    "difficulty": "medium",
-    "rowCategoryIds": "[\"chris-evans\",\"robert-downey-jr\",\"scarlett-johansson\"]",
-    "columnCategoryIds": "[\"chris-hemsworth\",\"mark-ruffalo\",\"jeremy-renner\"]"
-  },
-  {
     "id": "star-crossed-nolan-films",
     "date": "2026-07-05",
     "difficulty": "medium",
     "rowCategoryIds": "[\"christian-bale\",\"tom-hardy\",\"cillian-murphy\"]",
     "columnCategoryIds": "[\"michael-caine\",\"marion-cotillard\",\"anne-hathaway\"]"
-  },
-  {
-    "id": "star-crossed-recent-ensembles",
-    "date": "2026-07-06",
-    "difficulty": "medium",
-    "rowCategoryIds": "[\"ryan-gosling\",\"emma-stone\",\"steve-carell\"]",
-    "columnCategoryIds": "[\"margot-robbie\",\"bradley-cooper\",\"christian-bale\"]"
-  },
-  {
-    "id": "star-crossed-drama-heavyweights",
-    "date": "2026-07-09",
-    "difficulty": "medium",
-    "rowCategoryIds": "[\"jennifer-lawrence\",\"bradley-cooper\",\"christian-bale\"]",
-    "columnCategoryIds": "[\"robert-de-niro\",\"amy-adams\",\"jeremy-renner\"]"
   },
   {
     "id": "star-crossed-hollywood-royalty",

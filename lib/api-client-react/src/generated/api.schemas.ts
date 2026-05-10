@@ -334,6 +334,44 @@ export interface ThreeFlopsScoreRequest {
    * @maximum 100
    */
   score: number;
+  date?: string;
+}
+
+export interface ReelConnectionsChallenge {
+  id: string;
+  date: string;
+  actors: string[];
+  validAnswers: string[][];
+}
+
+export interface ReelConnectionsSummary {
+  id: string;
+  date: string;
+}
+
+export interface ReelConnectionsLeaderboardEntry {
+  rank: number;
+  playerToken: string;
+  score: number;
+  playerName?: string | null;
+}
+
+export interface ReelConnectionsLeaderboard {
+  date: string;
+  top10: ReelConnectionsLeaderboardEntry[];
+  totalPlayers: number;
+  avgScore: number;
+  medianScore: number;
+  playerRank?: number | null;
+}
+
+export interface ReelConnectionsScoreRequest {
+  playerToken: string;
+  /**
+   * @minimum 0
+   * @maximum 5
+   */
+  score: number;
   date: string;
 }
 
@@ -401,6 +439,15 @@ export type GetThreeFlopsLeaderboardParams = {
 };
 
 export type SubmitThreeFlopsScore200 = {
+  ok: boolean;
+};
+
+export type GetReelConnectionsLeaderboardParams = {
+  date?: string;
+  playerToken?: string;
+};
+
+export type SubmitReelConnectionsScore200 = {
   ok: boolean;
 };
 

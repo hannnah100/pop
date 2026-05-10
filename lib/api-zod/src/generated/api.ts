@@ -104,10 +104,88 @@ export const SubmitThreeFlopsScoreBody = zod.object({
     .number()
     .min(submitThreeFlopsScoreBodyScoreMin)
     .max(submitThreeFlopsScoreBodyScoreMax),
-  date: zod.string(),
+  date: zod.string().optional(),
 });
 
 export const SubmitThreeFlopsScoreResponse = zod.object({
+  ok: zod.boolean(),
+});
+
+/**
+ * @summary Get today's Reel Connections challenge
+ */
+export const GetTodayReelConnectionsResponse = zod.object({
+  id: zod.string(),
+  date: zod.string(),
+  actors: zod.array(zod.string()),
+  validAnswers: zod.array(zod.array(zod.string())),
+});
+
+/**
+ * @summary Get archive of Reel Connections challenges
+ */
+export const GetReelConnectionsArchiveResponseItem = zod.object({
+  id: zod.string(),
+  date: zod.string(),
+});
+export const GetReelConnectionsArchiveResponse = zod.array(
+  GetReelConnectionsArchiveResponseItem,
+);
+
+/**
+ * @summary Get a specific Reel Connections challenge by ID (for archive replay)
+ */
+export const GetReelConnectionsByIdParams = zod.object({
+  id: zod.coerce.string(),
+});
+
+export const GetReelConnectionsByIdResponse = zod.object({
+  id: zod.string(),
+  date: zod.string(),
+  actors: zod.array(zod.string()),
+  validAnswers: zod.array(zod.array(zod.string())),
+});
+
+/**
+ * @summary Get Reel Connections leaderboard
+ */
+export const GetReelConnectionsLeaderboardQueryParams = zod.object({
+  date: zod.coerce.string().optional(),
+  playerToken: zod.coerce.string().optional(),
+});
+
+export const GetReelConnectionsLeaderboardResponse = zod.object({
+  date: zod.string(),
+  top10: zod.array(
+    zod.object({
+      rank: zod.number(),
+      playerToken: zod.string(),
+      score: zod.number(),
+      playerName: zod.string().nullish(),
+    }),
+  ),
+  totalPlayers: zod.number(),
+  avgScore: zod.number(),
+  medianScore: zod.number(),
+  playerRank: zod.number().nullish(),
+});
+
+/**
+ * @summary Submit a Reel Connections score
+ */
+export const submitReelConnectionsScoreBodyScoreMin = 0;
+export const submitReelConnectionsScoreBodyScoreMax = 5;
+
+export const SubmitReelConnectionsScoreBody = zod.object({
+  playerToken: zod.string(),
+  score: zod
+    .number()
+    .min(submitReelConnectionsScoreBodyScoreMin)
+    .max(submitReelConnectionsScoreBodyScoreMax),
+  date: zod.string(),
+});
+
+export const SubmitReelConnectionsScoreResponse = zod.object({
   ok: zod.boolean(),
 });
 

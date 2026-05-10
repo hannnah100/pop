@@ -39,7 +39,11 @@
       "Bash(pnpm typecheck *)",
       "Bash(echo \"exit=$?\")",
       "Bash(pnpm --filter @workspace/db build)",
-      "Bash(pnpm --filter @workspace/db run push)"
+      "Bash(pnpm --filter @workspace/db run push)",
+      "Bash(pnpm -r --filter @workspace/pop-the-question build)",
+      "Bash(pnpm -r --filter @workspace/pop-the-question typecheck)",
+      "Bash(netstat -lnp)",
+      "Bash(ps -eo pid,etime,start,cmd)"
     ]
   }
 }

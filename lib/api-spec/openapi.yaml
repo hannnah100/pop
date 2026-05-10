@@ -146,6 +146,119 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
 
+  /daily/reel-connections:
+    get:
+      operationId: getTodayReelConnections
+      tags: [daily]
+      summary: Get today's Reel Connections challenge
+      responses:
+        "200":
+          description: Today's challenge
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ReelConnectionsChallenge"
+        "404":
+          description: No challenge for today
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /daily/reel-connections/archive:
+    get:
+      operationId: getReelConnectionsArchive
+      tags: [daily]
+      summary: Get archive of Reel Connections challenges
+      responses:
+        "200":
+          description: List of past challenges
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ReelConnectionsSummary"
+
+  /daily/reel-connections/{id}:
+    get:
+      operationId: getReelConnectionsById
+      tags: [daily]
+      summary: Get a specific Reel Connections challenge by ID (for archive replay)
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: The challenge
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ReelConnectionsChallenge"
+        "404":
+          description: Challenge not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /daily/reel-connections/leaderboard:
+    get:
+      operationId: getReelConnectionsLeaderboard
+      tags: [daily]
+      summary: Get Reel Connections leaderboard
+      parameters:
+        - name: date
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: playerToken
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Leaderboard data
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ReelConnectionsLeaderboard"
+
+  /daily/reel-connections/score:
+    post:
+      operationId: submitReelConnectionsScore
+      tags: [daily]
+      summary: Submit a Reel Connections score
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ReelConnectionsScoreRequest"
+      responses:
+        "200":
+          description: Score submitted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                required:
+                  - ok
+        "400":
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
   /daily/crossword:
     get:
       operationId: getTodayCrossword
@@ -1777,6 +1890,98 @@ components:
       required:
         - playerToken
         - score
+
+    ReelConnectionsChallenge:
+      type: object
+      properties:
+        id:
+          type: string
+        date:
+          type: string
+        actors:
+          type: array
+          items:
+            type: string
+        validAnswers:
+          type: array
+          items:
+            type: array
+            items:
+              type: string
+      required:
+        - id
+        - date
+        - actors
+        - validAnswers
+
+    ReelConnectionsSummary:
+      type: object
+      properties:
+        id:
+          type: string
+        date:
+          type: string
+      required:
+        - id
+        - date
+
+    ReelConnectionsLeaderboardEntry:
+      type: object
+      properties:
+        rank:
+          type: integer
+        playerToken:
+          type: string
+        score:
+          type: integer
+        playerName:
+          type: string
+          nullable: true
+      required:
+        - rank
+        - playerToken
+        - score
+
+    ReelConnectionsLeaderboard:
+      type: object
+      properties:
+        date:
+          type: string
+        top10:
+          type: array
+          items:
+            $ref: "#/components/schemas/ReelConnectionsLeaderboardEntry"
+        totalPlayers:
+          type: integer
+        avgScore:
+          type: number
+        medianScore:
+          type: number
+        playerRank:
+          type: integer
+          nullable: true
+      required:
+        - date
+        - top10
+        - totalPlayers
+        - avgScore
+        - medianScore
+
+    ReelConnectionsScoreRequest:
+      type: object
+      properties:
+        playerToken:
+          type: string
+        score:
+          type: integer
+          minimum: 0
+          maximum: 5
+        date:
+          type: string
+      required:
+        - playerToken
+        - score
+        - date
         - date
 
     PopBoxLeaderboardEntry:

@@ -1,296 +1,222 @@
 [
   {
-    "id": "star-crossed-drama-heavyweights",
-    "label": "Drama Heavyweights",
-    "rowActors": [
-      { "id": "jennifer-lawrence", "name": "Jennifer Lawrence" },
-      { "id": "bradley-cooper", "name": "Bradley Cooper" },
-      { "id": "christian-bale", "name": "Christian Bale" }
-    ],
-    "colActors": [
-      { "id": "robert-de-niro", "name": "Robert De Niro" },
-      { "id": "amy-adams", "name": "Amy Adams" },
-      { "id": "jeremy-renner", "name": "Jeremy Renner" }
-    ],
-    "cells": [
-      [["Silver Linings Playbook", "Joy"], ["American Hustle"], ["American Hustle"]],
-      [["Silver Linings Playbook", "Joy"], ["American Hustle"], ["American Hustle"]],
-      [["Amsterdam"], ["American Hustle", "Vice"], ["American Hustle"]]
-    ]
-  },
-  {
     "id": "star-crossed-hollywood-royalty",
     "label": "Hollywood Royalty",
     "rowActors": [
-      { "id": "margot-robbie", "name": "Margot Robbie" },
-      { "id": "brad-pitt", "name": "Brad Pitt" },
-      { "id": "leonardo-dicaprio", "name": "Leonardo DiCaprio" }
+      {
+        "id": "margot-robbie",
+        "name": "Margot Robbie"
+      },
+      {
+        "id": "brad-pitt",
+        "name": "Brad Pitt"
+      },
+      {
+        "id": "leonardo-dicaprio",
+        "name": "Leonardo DiCaprio"
+      }
     ],
     "colActors": [
-      { "id": "tobey-maguire", "name": "Tobey Maguire" },
-      { "id": "jonah-hill", "name": "Jonah Hill" },
-      { "id": "al-pacino", "name": "Al Pacino" }
+      {
+        "id": "tobey-maguire",
+        "name": "Tobey Maguire"
+      },
+      {
+        "id": "jonah-hill",
+        "name": "Jonah Hill"
+      },
+      {
+        "id": "al-pacino",
+        "name": "Al Pacino"
+      }
     ],
     "cells": [
-      [["Babylon"], ["The Wolf of Wall Street"], ["Once Upon a Time in Hollywood"]],
-      [["Babylon"], ["Moneyball"], ["Once Upon a Time in Hollywood"]],
-      [["The Great Gatsby"], ["The Wolf of Wall Street", "Don't Look Up"], ["Once Upon a Time in Hollywood"]]
+      [
+        [
+          "Babylon"
+        ],
+        [
+          "The Wolf of Wall Street"
+        ],
+        [
+          "Once Upon a Time in Hollywood"
+        ]
+      ],
+      [
+        [
+          "Babylon"
+        ],
+        [
+          "Moneyball"
+        ],
+        [
+          "Once Upon a Time in Hollywood"
+        ]
+      ],
+      [
+        [
+          "The Great Gatsby"
+        ],
+        [
+          "The Wolf of Wall Street",
+          "Don't Look Up"
+        ],
+        [
+          "Once Upon a Time in Hollywood"
+        ]
+      ]
     ]
   },
   {
     "id": "star-crossed-nolan-verse",
     "label": "Nolan Verse",
     "rowActors": [
-      { "id": "christian-bale", "name": "Christian Bale" },
-      { "id": "tom-hardy", "name": "Tom Hardy" },
-      { "id": "marion-cotillard", "name": "Marion Cotillard" }
+      {
+        "id": "christian-bale",
+        "name": "Christian Bale"
+      },
+      {
+        "id": "tom-hardy",
+        "name": "Tom Hardy"
+      },
+      {
+        "id": "marion-cotillard",
+        "name": "Marion Cotillard"
+      }
     ],
     "colActors": [
-      { "id": "michael-caine", "name": "Michael Caine" },
-      { "id": "cillian-murphy", "name": "Cillian Murphy" },
-      { "id": "joseph-gordon-levitt", "name": "Joseph Gordon-Levitt" }
+      {
+        "id": "michael-caine",
+        "name": "Michael Caine"
+      },
+      {
+        "id": "cillian-murphy",
+        "name": "Cillian Murphy"
+      },
+      {
+        "id": "joseph-gordon-levitt",
+        "name": "Joseph Gordon-Levitt"
+      }
     ],
     "cells": [
-      [["The Dark Knight Rises"], ["The Dark Knight Rises"], ["The Dark Knight Rises"]],
-      [["Inception"], ["Inception", "Dunkirk"], ["Inception", "The Dark Knight Rises"]],
-      [["Inception"], ["Inception"], ["Inception"]]
+      [
+        [
+          "The Dark Knight Rises"
+        ],
+        [
+          "The Dark Knight Rises"
+        ],
+        [
+          "The Dark Knight Rises"
+        ]
+      ],
+      [
+        [
+          "Inception"
+        ],
+        [
+          "Inception",
+          "Dunkirk"
+        ],
+        [
+          "Inception",
+          "The Dark Knight Rises"
+        ]
+      ],
+      [
+        [
+          "Inception"
+        ],
+        [
+          "Inception"
+        ],
+        [
+          "Inception"
+        ]
+      ]
     ]
   },
   {
     "id": "star-crossed-wes-anderson",
     "label": "Wes Anderson Regulars",
     "rowActors": [
-      { "id": "tilda-swinton", "name": "Tilda Swinton" },
-      { "id": "edward-norton", "name": "Edward Norton" },
-      { "id": "jason-schwartzman", "name": "Jason Schwartzman" }
+      {
+        "id": "tilda-swinton",
+        "name": "Tilda Swinton"
+      },
+      {
+        "id": "edward-norton",
+        "name": "Edward Norton"
+      },
+      {
+        "id": "jason-schwartzman",
+        "name": "Jason Schwartzman"
+      }
     ],
     "colActors": [
-      { "id": "bill-murray", "name": "Bill Murray" },
-      { "id": "adrien-brody", "name": "Adrien Brody" },
-      { "id": "owen-wilson", "name": "Owen Wilson" }
+      {
+        "id": "bill-murray",
+        "name": "Bill Murray"
+      },
+      {
+        "id": "adrien-brody",
+        "name": "Adrien Brody"
+      },
+      {
+        "id": "owen-wilson",
+        "name": "Owen Wilson"
+      }
     ],
     "cells": [
       [
-        ["Moonrise Kingdom", "The Grand Budapest Hotel", "Isle of Dogs", "The French Dispatch", "Asteroid City"],
-        ["The Grand Budapest Hotel", "The French Dispatch", "Asteroid City"],
-        ["The Grand Budapest Hotel", "The French Dispatch"]
+        [
+          "Moonrise Kingdom",
+          "The Grand Budapest Hotel",
+          "Isle of Dogs",
+          "The French Dispatch",
+          "Asteroid City"
+        ],
+        [
+          "The Grand Budapest Hotel",
+          "The French Dispatch",
+          "Asteroid City"
+        ],
+        [
+          "The Grand Budapest Hotel",
+          "The French Dispatch"
+        ]
       ],
       [
-        ["Moonrise Kingdom", "The Grand Budapest Hotel", "Isle of Dogs", "Asteroid City"],
-        ["The Grand Budapest Hotel", "Asteroid City"],
-        ["The Grand Budapest Hotel"]
+        [
+          "Moonrise Kingdom",
+          "The Grand Budapest Hotel",
+          "Isle of Dogs",
+          "Asteroid City"
+        ],
+        [
+          "The Grand Budapest Hotel",
+          "Asteroid City"
+        ],
+        [
+          "The Grand Budapest Hotel"
+        ]
       ],
       [
-        ["Moonrise Kingdom", "The Grand Budapest Hotel", "Isle of Dogs", "The French Dispatch", "Asteroid City"],
-        ["Asteroid City"],
-        ["The Grand Budapest Hotel", "The French Dispatch", "Asteroid City"]
-      ]
-    ]
-  },
-  {
-    "id": "star-crossed-greta-gerwig-drama",
-    "label": "Greta Gerwig Drama Era",
-    "rowActors": [
-      { "id": "saoirse-ronan", "name": "Saoirse Ronan" },
-      { "id": "florence-pugh", "name": "Florence Pugh" },
-      { "id": "timothee-chalamet", "name": "Timothée Chalamet" }
-    ],
-    "colActors": [
-      { "id": "eliza-scanlen", "name": "Eliza Scanlen" },
-      { "id": "tracy-letts", "name": "Tracy Letts" },
-      { "id": "meryl-streep", "name": "Meryl Streep" }
-    ],
-    "cells": [
-      [["Little Women"], ["Lady Bird", "Little Women"], ["Little Women"]],
-      [["Little Women"], ["Little Women"], ["Little Women"]],
-      [["Little Women"], ["Lady Bird", "Little Women"], ["Little Women", "Don't Look Up"]]
-    ]
-  },
-  {
-    "id": "star-crossed-oppenheimer-era",
-    "label": "Oppenheimer Era",
-    "rowActors": [
-      { "id": "cillian-murphy", "name": "Cillian Murphy" },
-      { "id": "matt-damon", "name": "Matt Damon" },
-      { "id": "florence-pugh", "name": "Florence Pugh" }
-    ],
-    "colActors": [
-      { "id": "emily-blunt", "name": "Emily Blunt" },
-      { "id": "robert-downey-jr", "name": "Robert Downey Jr." },
-      { "id": "kenneth-branagh", "name": "Kenneth Branagh" }
-    ],
-    "cells": [
-      [["A Quiet Place Part II", "Oppenheimer"], ["Oppenheimer"], ["Oppenheimer", "Dunkirk"]],
-      [["The Adjustment Bureau", "Oppenheimer"], ["Oppenheimer"], ["Oppenheimer"]],
-      [["Oppenheimer"], ["Oppenheimer"], ["Oppenheimer"]]
-    ]
-  },
-  {
-    "id": "star-crossed-movie-star-power",
-    "label": "Movie Star Power",
-    "rowActors": [
-      { "id": "margot-robbie", "name": "Margot Robbie" },
-      { "id": "brad-pitt", "name": "Brad Pitt" },
-      { "id": "tobey-maguire", "name": "Tobey Maguire" }
-    ],
-    "colActors": [
-      { "id": "leonardo-dicaprio", "name": "Leonardo DiCaprio" },
-      { "id": "diego-calva", "name": "Diego Calva" },
-      { "id": "olivia-wilde", "name": "Olivia Wilde" }
-    ],
-    "cells": [
-      [["The Wolf of Wall Street", "Once Upon a Time in Hollywood"], ["Babylon"], ["Babylon"]],
-      [["Once Upon a Time in Hollywood"], ["Babylon"], ["Babylon"]],
-      [["The Great Gatsby"], ["Babylon"], ["Babylon"]]
-    ]
-  },
-  {
-    "id": "star-crossed-dont-look-up",
-    "label": "Don't Look Up Apocalypse",
-    "rowActors": [
-      { "id": "leonardo-dicaprio", "name": "Leonardo DiCaprio" },
-      { "id": "jennifer-lawrence", "name": "Jennifer Lawrence" },
-      { "id": "jonah-hill", "name": "Jonah Hill" }
-    ],
-    "colActors": [
-      { "id": "meryl-streep", "name": "Meryl Streep" },
-      { "id": "cate-blanchett", "name": "Cate Blanchett" },
-      { "id": "timothee-chalamet", "name": "Timothée Chalamet" }
-    ],
-    "cells": [
-      [["Don't Look Up"], ["Don't Look Up"], ["Don't Look Up"]],
-      [["Don't Look Up"], ["Don't Look Up"], ["Don't Look Up"]],
-      [["Don't Look Up"], ["Don't Look Up"], ["Don't Look Up"]]
-    ]
-  },
-  {
-    "id": "star-crossed-spider-verse",
-    "label": "Spider-Verse Multi-Film",
-    "rowActors": [
-      { "id": "hailee-steinfeld", "name": "Hailee Steinfeld" },
-      { "id": "shameik-moore", "name": "Shameik Moore" },
-      { "id": "brian-tyree-henry", "name": "Brian Tyree Henry" }
-    ],
-    "colActors": [
-      { "id": "jake-johnson", "name": "Jake Johnson" },
-      { "id": "mahershala-ali", "name": "Mahershala Ali" },
-      { "id": "oscar-isaac", "name": "Oscar Isaac" }
-    ],
-    "cells": [
-      [
-        ["Spider-Man: Into the Spider-Verse", "Spider-Man: Across the Spider-Verse"],
-        ["Spider-Man: Into the Spider-Verse"],
-        ["Spider-Man: Across the Spider-Verse"]
-      ],
-      [
-        ["Spider-Man: Into the Spider-Verse", "Spider-Man: Across the Spider-Verse"],
-        ["Spider-Man: Into the Spider-Verse"],
-        ["Spider-Man: Into the Spider-Verse", "Spider-Man: Across the Spider-Verse"]
-      ],
-      [
-        ["Spider-Man: Into the Spider-Verse", "Spider-Man: Across the Spider-Verse"],
-        ["Spider-Man: Into the Spider-Verse"],
-        ["Spider-Man: Across the Spider-Verse"]
-      ]
-    ]
-  },
-  {
-    "id": "star-crossed-babylon",
-    "label": "Babylon Ensemble",
-    "rowActors": [
-      { "id": "margot-robbie", "name": "Margot Robbie" },
-      { "id": "brad-pitt", "name": "Brad Pitt" },
-      { "id": "tobey-maguire", "name": "Tobey Maguire" }
-    ],
-    "colActors": [
-      { "id": "diego-calva", "name": "Diego Calva" },
-      { "id": "jovan-adepo", "name": "Jovan Adepo" },
-      { "id": "olivia-wilde", "name": "Olivia Wilde" }
-    ],
-    "cells": [
-      [["Babylon"], ["Babylon"], ["Babylon"]],
-      [["Babylon"], ["Babylon"], ["Babylon"]],
-      [["Babylon"], ["Babylon"], ["Babylon"]]
-    ]
-  },
-  {
-    "id": "star-crossed-pitch-perfect",
-    "label": "Pitch Perfect Ensemble",
-    "rowActors": [
-      { "id": "anna-kendrick", "name": "Anna Kendrick" },
-      { "id": "rebel-wilson", "name": "Rebel Wilson" },
-      { "id": "brittany-snow", "name": "Brittany Snow" }
-    ],
-    "colActors": [
-      { "id": "hailee-steinfeld", "name": "Hailee Steinfeld" },
-      { "id": "adam-devine", "name": "Adam DeVine" },
-      { "id": "skylar-astin", "name": "Skylar Astin" }
-    ],
-    "cells": [
-      [["Pitch Perfect 2", "Pitch Perfect 3"], ["Pitch Perfect", "Pitch Perfect 2", "Pitch Perfect 3"], ["Pitch Perfect", "Pitch Perfect 2", "Pitch Perfect 3"]],
-      [["Pitch Perfect 2", "Pitch Perfect 3"], ["Pitch Perfect", "Pitch Perfect 2", "Pitch Perfect 3"], ["Pitch Perfect", "Pitch Perfect 2", "Pitch Perfect 3"]],
-      [["Pitch Perfect 2", "Pitch Perfect 3"], ["Pitch Perfect", "Pitch Perfect 2", "Pitch Perfect 3"], ["Pitch Perfect", "Pitch Perfect 2", "Pitch Perfect 3"]]
-    ]
-  },
-  {
-    "id": "star-crossed-deadpool-universe",
-    "label": "Deadpool Universe",
-    "rowActors": [
-      { "id": "ryan-reynolds", "name": "Ryan Reynolds" },
-      { "id": "hugh-jackman", "name": "Hugh Jackman" },
-      { "id": "morena-baccarin", "name": "Morena Baccarin" }
-    ],
-    "colActors": [
-      { "id": "brianna-hildebrand", "name": "Brianna Hildebrand" },
-      { "id": "karan-soni", "name": "Karan Soni" },
-      { "id": "stefan-kapicic", "name": "Stefan Kapičić" }
-    ],
-    "cells": [
-      [
-        ["Deadpool", "Deadpool 2", "Deadpool & Wolverine"],
-        ["Deadpool", "Deadpool 2", "Deadpool & Wolverine"],
-        ["Deadpool", "Deadpool 2", "Deadpool & Wolverine"]
-      ],
-      [
-        ["Deadpool & Wolverine"],
-        ["Deadpool & Wolverine"],
-        ["Deadpool & Wolverine"]
-      ],
-      [
-        ["Deadpool", "Deadpool 2"],
-        ["Deadpool", "Deadpool 2"],
-        ["Deadpool", "Deadpool 2"]
-      ]
-    ]
-  },
-  {
-    "id": "star-crossed-mcu-avengers",
-    "label": "MCU Avengers",
-    "rowActors": [
-      { "id": "chris-evans", "name": "Chris Evans" },
-      { "id": "robert-downey-jr", "name": "Robert Downey Jr." },
-      { "id": "scarlett-johansson", "name": "Scarlett Johansson" }
-    ],
-    "colActors": [
-      { "id": "chris-hemsworth", "name": "Chris Hemsworth" },
-      { "id": "mark-ruffalo", "name": "Mark Ruffalo" },
-      { "id": "jeremy-renner", "name": "Jeremy Renner" }
-    ],
-    "cells": [
-      [
-        ["The Avengers", "Avengers: Age of Ultron", "Avengers: Infinity War", "Avengers: Endgame"],
-        ["The Avengers", "Avengers: Age of Ultron", "Avengers: Infinity War", "Avengers: Endgame"],
-        ["The Avengers", "Avengers: Age of Ultron", "Avengers: Endgame"]
-      ],
-      [
-        ["The Avengers", "Avengers: Age of Ultron", "Avengers: Infinity War", "Avengers: Endgame"],
-        ["The Avengers", "Avengers: Age of Ultron", "Avengers: Infinity War", "Avengers: Endgame"],
-        ["The Avengers", "Avengers: Age of Ultron", "Avengers: Endgame"]
-      ],
-      [
-        ["The Avengers", "Avengers: Age of Ultron", "Avengers: Infinity War", "Avengers: Endgame"],
-        ["The Avengers", "Avengers: Age of Ultron", "Avengers: Infinity War", "Avengers: Endgame"],
-        ["The Avengers", "Avengers: Age of Ultron", "Avengers: Endgame"]
+        [
+          "Moonrise Kingdom",
+          "The Grand Budapest Hotel",
+          "Isle of Dogs",
+          "The French Dispatch",
+          "Asteroid City"
+        ],
+        [
+          "Asteroid City"
+        ],
+        [
+          "The Grand Budapest Hotel",
+          "The French Dispatch",
+          "Asteroid City"
+        ]
       ]
     ]
   },
@@ -298,61 +224,74 @@
     "id": "star-crossed-nolan-films",
     "label": "Nolan Films",
     "rowActors": [
-      { "id": "christian-bale", "name": "Christian Bale" },
-      { "id": "tom-hardy", "name": "Tom Hardy" },
-      { "id": "cillian-murphy", "name": "Cillian Murphy" }
+      {
+        "id": "christian-bale",
+        "name": "Christian Bale"
+      },
+      {
+        "id": "tom-hardy",
+        "name": "Tom Hardy"
+      },
+      {
+        "id": "cillian-murphy",
+        "name": "Cillian Murphy"
+      }
     ],
     "colActors": [
-      { "id": "michael-caine", "name": "Michael Caine" },
-      { "id": "marion-cotillard", "name": "Marion Cotillard" },
-      { "id": "anne-hathaway", "name": "Anne Hathaway" }
+      {
+        "id": "michael-caine",
+        "name": "Michael Caine"
+      },
+      {
+        "id": "marion-cotillard",
+        "name": "Marion Cotillard"
+      },
+      {
+        "id": "anne-hathaway",
+        "name": "Anne Hathaway"
+      }
     ],
     "cells": [
       [
-        ["Batman Begins", "The Dark Knight", "The Dark Knight Rises"],
-        ["The Dark Knight Rises"],
-        ["The Dark Knight Rises"]
+        [
+          "Batman Begins",
+          "The Dark Knight",
+          "The Dark Knight Rises"
+        ],
+        [
+          "The Dark Knight Rises"
+        ],
+        [
+          "The Dark Knight Rises"
+        ]
       ],
       [
-        ["The Dark Knight Rises", "Inception"],
-        ["The Dark Knight Rises", "Inception"],
-        ["The Dark Knight Rises"]
+        [
+          "The Dark Knight Rises",
+          "Inception"
+        ],
+        [
+          "The Dark Knight Rises",
+          "Inception"
+        ],
+        [
+          "The Dark Knight Rises"
+        ]
       ],
       [
-        ["Batman Begins", "The Dark Knight", "The Dark Knight Rises", "Inception", "Dunkirk"],
-        ["Inception"],
-        ["The Dark Knight Rises"]
-      ]
-    ]
-  },
-  {
-    "id": "star-crossed-recent-ensembles",
-    "label": "Recent Ensembles",
-    "rowActors": [
-      { "id": "ryan-gosling", "name": "Ryan Gosling" },
-      { "id": "emma-stone", "name": "Emma Stone" },
-      { "id": "steve-carell", "name": "Steve Carell" }
-    ],
-    "colActors": [
-      { "id": "margot-robbie", "name": "Margot Robbie" },
-      { "id": "bradley-cooper", "name": "Bradley Cooper" },
-      { "id": "christian-bale", "name": "Christian Bale" }
-    ],
-    "cells": [
-      [
-        ["Barbie", "The Big Short"],
-        [],
-        ["The Big Short"]
-      ],
-      [
-        [],
-        [],
-        []
-      ],
-      [
-        ["The Big Short"],
-        [],
-        ["The Big Short"]
+        [
+          "Batman Begins",
+          "The Dark Knight",
+          "The Dark Knight Rises",
+          "Inception",
+          "Dunkirk"
+        ],
+        [
+          "Inception"
+        ],
+        [
+          "The Dark Knight Rises"
+        ]
       ]
     ]
   }

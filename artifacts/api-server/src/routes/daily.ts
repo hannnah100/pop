@@ -1,10 +1,11 @@
 import { Router, type IRouter } from "express";
-import { db, threeFlopsChallengesTable, crosswordPuzzlesTable, popBoxGridsTable } from "@workspace/db";
+import { db, threeFlopsChallengesTable, crosswordPuzzlesTable, popBoxGridsTable, reelConnectionsChallengesTable } from "@workspace/db";
 import { eq, desc } from "drizzle-orm";
 import {
   GetTodayThreeFlopsResponse,
   GetTodayCrosswordResponse,
   GetDailyStatusResponse,
+  GetTodayReelConnectionsResponse,
 } from "@workspace/api-zod";
 
 const router: IRouter = Router();
@@ -157,6 +158,75 @@ router.get("/daily/crossword/:id", async (req, res): Promise<void> => {
     blackSquares: JSON.parse(row.blackSquares),
     cluesAcross: JSON.parse(row.cluesAcross),
     cluesDown: JSON.parse(row.cluesDown),
+  });
+
+  res.json(data);
+});
+
+router.get("/daily/reel-connections", async (_req, res): Promise<void> => {
+  const today = todayDate();
+
+  let row = await db
+    .select()
+    .from(reelConnectionsChallengesTable)
+    .where(eq(reelConnectionsChallengesTable.date, today))
+    .limit(1)
+    .then((r) => r[0]);
+
+  if (!row) {
+    row = await db
+      .select()
+      .from(reelConnectionsChallengesTable)
+      .orderBy(desc(reelConnectionsChallengesTable.date))
+      .limit(1)
+      .then((r) => r[0]);
+  }
+
+  if (!row) {
+    res.status(404).json({ error: "No challenge available" });
+    return;
+  }
+
+  const data = GetTodayReelConnectionsResponse.parse({
+    id: row.id,
+    date: row.date,
+    actors: JSON.parse(row.actors),
+    validAnswers: JSON.parse(row.validAnswers),
+  });
+
+  res.json(data);
+});
+
+router.get("/daily/reel-connections/archive", async (_req, res): Promise<void> => {
+  const rows = await db
+    .select({
+      id: reelConnectionsChallengesTable.id,
+      date: reelConnectionsChallengesTable.date,
+    })
+    .from(reelConnectionsChallengesTable)
+    .orderBy(desc(reelConnectionsChallengesTable.date));
+
+  res.json(rows);
+});
+
+router.get("/daily/reel-connections/:id", async (req, res): Promise<void> => {
+  const row = await db
+    .select()
+    .from(reelConnectionsChallengesTable)
+    .where(eq(reelConnectionsChallengesTable.id, req.params.id))
+    .limit(1)
+    .then((r) => r[0]);
+
+  if (!row) {
+    res.status(404).json({ error: "Challenge not found" });
+    return;
+  }
+
+  const data = GetTodayReelConnectionsResponse.parse({
+    id: row.id,
+    date: row.date,
+    actors: JSON.parse(row.actors),
+    validAnswers: JSON.parse(row.validAnswers),
   });
 
   res.json(data);

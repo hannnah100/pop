@@ -6,12 +6,9 @@
  * OpenAPI spec version: 0.1.0
  */
 
-export interface ThreeFlopsScoreRequest {
+export interface ReelConnectionsLeaderboardEntry {
+  rank: number;
   playerToken: string;
-  /**
-   * @minimum 0
-   * @maximum 100
-   */
   score: number;
-  date?: string;
+  playerName?: string | null;
 }

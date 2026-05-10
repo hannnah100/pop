@@ -3,6 +3,7 @@ import {
   threeFlopsChallengesTable,
   crosswordPuzzlesTable,
   popBoxGridsTable,
+  reelConnectionsChallengesTable,
 } from "@workspace/db";
 import { eq, inArray } from "drizzle-orm";
 import { logger } from "./logger";
@@ -10,6 +11,7 @@ import {
   THREE_FLOPS_SEED,
   CROSSWORD_SEED,
   POP_BOX_SEED,
+  REEL_CONNECTIONS_SEED,
 } from "../data/daily";
 
 /**
@@ -37,7 +39,7 @@ const STALE_CROSSWORD_IDS = [
  */
 export async function seedDailyContent(): Promise<void> {
   try {
-    await Promise.all([seedThreeFlops(), seedCrossword(), seedPopBox()]);
+    await Promise.all([seedThreeFlops(), seedCrossword(), seedPopBox(), seedReelConnections()]);
   } catch (err) {
     // Don't crash the server if seeding fails — just log it. The API still
     // works; the Archive page will show whatever rows are present.
@@ -294,5 +296,31 @@ async function seedCrossword(): Promise<void> {
   logger.info(
     { inserted: missing.length, total: CROSSWORD_SEED.length },
     "Seeded Crossword archive",
+  );
+}
+
+async function seedReelConnections(): Promise<void> {
+  if (REEL_CONNECTIONS_SEED.length === 0) return;
+
+  const ids = REEL_CONNECTIONS_SEED.map((r) => r.id);
+  const existing = await db
+    .select({ id: reelConnectionsChallengesTable.id })
+    .from(reelConnectionsChallengesTable)
+    .where(inArray(reelConnectionsChallengesTable.id, ids));
+  const have = new Set(existing.map((r) => r.id));
+
+  const missing = REEL_CONNECTIONS_SEED.filter((r) => !have.has(r.id));
+  if (missing.length === 0) {
+    logger.info(
+      { total: REEL_CONNECTIONS_SEED.length },
+      "Reel Connections archive already up to date",
+    );
+    return;
+  }
+
+  await db.insert(reelConnectionsChallengesTable).values(missing);
+  logger.info(
+    { inserted: missing.length, total: REEL_CONNECTIONS_SEED.length },
+    "Seeded Reel Connections archive",
   );
 }

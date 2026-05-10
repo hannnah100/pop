@@ -32,6 +32,7 @@ import type {
   GetClockItLeaderboardParams,
   GetPopBoxLeaderboardParams,
   GetPopOrDropLeaderboardParams,
+  GetReelConnectionsLeaderboardParams,
   GetSkinnyLeaderboardParams,
   GetThreeFlopsLeaderboardParams,
   HealthStatus,
@@ -47,6 +48,10 @@ import type {
   PopOrDropSequence,
   PopOrDropSummary,
   QuestionPrompt,
+  ReelConnectionsChallenge,
+  ReelConnectionsLeaderboard,
+  ReelConnectionsScoreRequest,
+  ReelConnectionsSummary,
   RoastQuestion,
   Room,
   RoomCreated,
@@ -55,6 +60,7 @@ import type {
   SubmitClockItScore200,
   SubmitPopBoxScore200,
   SubmitPopOrDropScore200,
+  SubmitReelConnectionsScore200,
   SubmitSkinnyScore200,
   SubmitThreeFlopsScore200,
   ThreeFlopsChallenge,
@@ -577,6 +583,454 @@ export const useSubmitThreeFlopsScore = <
   TContext
 > => {
   return useMutation(getSubmitThreeFlopsScoreMutationOptions(options));
+};
+
+/**
+ * @summary Get today's Reel Connections challenge
+ */
+export const getGetTodayReelConnectionsUrl = () => {
+  return `/api/daily/reel-connections`;
+};
+
+export const getTodayReelConnections = async (
+  options?: RequestInit,
+): Promise<ReelConnectionsChallenge> => {
+  return customFetch<ReelConnectionsChallenge>(
+    getGetTodayReelConnectionsUrl(),
+    {
+      ...options,
+      method: "GET",
+    },
+  );
+};
+
+export const getGetTodayReelConnectionsQueryKey = () => {
+  return [`/api/daily/reel-connections`] as const;
+};
+
+export const getGetTodayReelConnectionsQueryOptions = <
+  TData = Awaited<ReturnType<typeof getTodayReelConnections>>,
+  TError = ErrorType<ErrorResponse>,
+>(options?: {
+  query?: UseQueryOptions<
+    Awaited<ReturnType<typeof getTodayReelConnections>>,
+    TError,
+    TData
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
+
+  const queryKey =
+    queryOptions?.queryKey ?? getGetTodayReelConnectionsQueryKey();
+
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof getTodayReelConnections>>
+  > = ({ signal }) => getTodayReelConnections({ signal, ...requestOptions });
+
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof getTodayReelConnections>>,
+    TError,
+    TData
+  > & { queryKey: QueryKey };
+};
+
+export type GetTodayReelConnectionsQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getTodayReelConnections>>
+>;
+export type GetTodayReelConnectionsQueryError = ErrorType<ErrorResponse>;
+
+/**
+ * @summary Get today's Reel Connections challenge
+ */
+
+export function useGetTodayReelConnections<
+  TData = Awaited<ReturnType<typeof getTodayReelConnections>>,
+  TError = ErrorType<ErrorResponse>,
+>(options?: {
+  query?: UseQueryOptions<
+    Awaited<ReturnType<typeof getTodayReelConnections>>,
+    TError,
+    TData
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+  const queryOptions = getGetTodayReelConnectionsQueryOptions(options);
+
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: QueryKey;
+  };
+
+  return { ...query, queryKey: queryOptions.queryKey };
+}
+
+/**
+ * @summary Get archive of Reel Connections challenges
+ */
+export const getGetReelConnectionsArchiveUrl = () => {
+  return `/api/daily/reel-connections/archive`;
+};
+
+export const getReelConnectionsArchive = async (
+  options?: RequestInit,
+): Promise<ReelConnectionsSummary[]> => {
+  return customFetch<ReelConnectionsSummary[]>(
+    getGetReelConnectionsArchiveUrl(),
+    {
+      ...options,
+      method: "GET",
+    },
+  );
+};
+
+export const getGetReelConnectionsArchiveQueryKey = () => {
+  return [`/api/daily/reel-connections/archive`] as const;
+};
+
+export const getGetReelConnectionsArchiveQueryOptions = <
+  TData = Awaited<ReturnType<typeof getReelConnectionsArchive>>,
+  TError = ErrorType<unknown>,
+>(options?: {
+  query?: UseQueryOptions<
+    Awaited<ReturnType<typeof getReelConnectionsArchive>>,
+    TError,
+    TData
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
+
+  const queryKey =
+    queryOptions?.queryKey ?? getGetReelConnectionsArchiveQueryKey();
+
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof getReelConnectionsArchive>>
+  > = ({ signal }) => getReelConnectionsArchive({ signal, ...requestOptions });
+
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof getReelConnectionsArchive>>,
+    TError,
+    TData
+  > & { queryKey: QueryKey };
+};
+
+export type GetReelConnectionsArchiveQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getReelConnectionsArchive>>
+>;
+export type GetReelConnectionsArchiveQueryError = ErrorType<unknown>;
+
+/**
+ * @summary Get archive of Reel Connections challenges
+ */
+
+export function useGetReelConnectionsArchive<
+  TData = Awaited<ReturnType<typeof getReelConnectionsArchive>>,
+  TError = ErrorType<unknown>,
+>(options?: {
+  query?: UseQueryOptions<
+    Awaited<ReturnType<typeof getReelConnectionsArchive>>,
+    TError,
+    TData
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+  const queryOptions = getGetReelConnectionsArchiveQueryOptions(options);
+
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: QueryKey;
+  };
+
+  return { ...query, queryKey: queryOptions.queryKey };
+}
+
+/**
+ * @summary Get a specific Reel Connections challenge by ID (for archive replay)
+ */
+export const getGetReelConnectionsByIdUrl = (id: string) => {
+  return `/api/daily/reel-connections/${id}`;
+};
+
+export const getReelConnectionsById = async (
+  id: string,
+  options?: RequestInit,
+): Promise<ReelConnectionsChallenge> => {
+  return customFetch<ReelConnectionsChallenge>(
+    getGetReelConnectionsByIdUrl(id),
+    {
+      ...options,
+      method: "GET",
+    },
+  );
+};
+
+export const getGetReelConnectionsByIdQueryKey = (id: string) => {
+  return [`/api/daily/reel-connections/${id}`] as const;
+};
+
+export const getGetReelConnectionsByIdQueryOptions = <
+  TData = Awaited<ReturnType<typeof getReelConnectionsById>>,
+  TError = ErrorType<ErrorResponse>,
+>(
+  id: string,
+  options?: {
+    query?: UseQueryOptions<
+      Awaited<ReturnType<typeof getReelConnectionsById>>,
+      TError,
+      TData
+    >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
+
+  const queryKey =
+    queryOptions?.queryKey ?? getGetReelConnectionsByIdQueryKey(id);
+
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof getReelConnectionsById>>
+  > = ({ signal }) => getReelConnectionsById(id, { signal, ...requestOptions });
+
+  return {
+    queryKey,
+    queryFn,
+    enabled: !!id,
+    ...queryOptions,
+  } as UseQueryOptions<
+    Awaited<ReturnType<typeof getReelConnectionsById>>,
+    TError,
+    TData
+  > & { queryKey: QueryKey };
+};
+
+export type GetReelConnectionsByIdQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getReelConnectionsById>>
+>;
+export type GetReelConnectionsByIdQueryError = ErrorType<ErrorResponse>;
+
+/**
+ * @summary Get a specific Reel Connections challenge by ID (for archive replay)
+ */
+
+export function useGetReelConnectionsById<
+  TData = Awaited<ReturnType<typeof getReelConnectionsById>>,
+  TError = ErrorType<ErrorResponse>,
+>(
+  id: string,
+  options?: {
+    query?: UseQueryOptions<
+      Awaited<ReturnType<typeof getReelConnectionsById>>,
+      TError,
+      TData
+    >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+  const queryOptions = getGetReelConnectionsByIdQueryOptions(id, options);
+
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: QueryKey;
+  };
+
+  return { ...query, queryKey: queryOptions.queryKey };
+}
+
+/**
+ * @summary Get Reel Connections leaderboard
+ */
+export const getGetReelConnectionsLeaderboardUrl = (
+  params?: GetReelConnectionsLeaderboardParams,
+) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? "null" : value.toString());
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0
+    ? `/api/daily/reel-connections/leaderboard?${stringifiedParams}`
+    : `/api/daily/reel-connections/leaderboard`;
+};
+
+export const getReelConnectionsLeaderboard = async (
+  params?: GetReelConnectionsLeaderboardParams,
+  options?: RequestInit,
+): Promise<ReelConnectionsLeaderboard> => {
+  return customFetch<ReelConnectionsLeaderboard>(
+    getGetReelConnectionsLeaderboardUrl(params),
+    {
+      ...options,
+      method: "GET",
+    },
+  );
+};
+
+export const getGetReelConnectionsLeaderboardQueryKey = (
+  params?: GetReelConnectionsLeaderboardParams,
+) => {
+  return [
+    `/api/daily/reel-connections/leaderboard`,
+    ...(params ? [params] : []),
+  ] as const;
+};
+
+export const getGetReelConnectionsLeaderboardQueryOptions = <
+  TData = Awaited<ReturnType<typeof getReelConnectionsLeaderboard>>,
+  TError = ErrorType<unknown>,
+>(
+  params?: GetReelConnectionsLeaderboardParams,
+  options?: {
+    query?: UseQueryOptions<
+      Awaited<ReturnType<typeof getReelConnectionsLeaderboard>>,
+      TError,
+      TData
+    >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
+
+  const queryKey =
+    queryOptions?.queryKey ?? getGetReelConnectionsLeaderboardQueryKey(params);
+
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof getReelConnectionsLeaderboard>>
+  > = ({ signal }) =>
+    getReelConnectionsLeaderboard(params, { signal, ...requestOptions });
+
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof getReelConnectionsLeaderboard>>,
+    TError,
+    TData
+  > & { queryKey: QueryKey };
+};
+
+export type GetReelConnectionsLeaderboardQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getReelConnectionsLeaderboard>>
+>;
+export type GetReelConnectionsLeaderboardQueryError = ErrorType<unknown>;
+
+/**
+ * @summary Get Reel Connections leaderboard
+ */
+
+export function useGetReelConnectionsLeaderboard<
+  TData = Awaited<ReturnType<typeof getReelConnectionsLeaderboard>>,
+  TError = ErrorType<unknown>,
+>(
+  params?: GetReelConnectionsLeaderboardParams,
+  options?: {
+    query?: UseQueryOptions<
+      Awaited<ReturnType<typeof getReelConnectionsLeaderboard>>,
+      TError,
+      TData
+    >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+  const queryOptions = getGetReelConnectionsLeaderboardQueryOptions(
+    params,
+    options,
+  );
+
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: QueryKey;
+  };
+
+  return { ...query, queryKey: queryOptions.queryKey };
+}
+
+/**
+ * @summary Submit a Reel Connections score
+ */
+export const getSubmitReelConnectionsScoreUrl = () => {
+  return `/api/daily/reel-connections/score`;
+};
+
+export const submitReelConnectionsScore = async (
+  reelConnectionsScoreRequest: ReelConnectionsScoreRequest,
+  options?: RequestInit,
+): Promise<SubmitReelConnectionsScore200> => {
+  return customFetch<SubmitReelConnectionsScore200>(
+    getSubmitReelConnectionsScoreUrl(),
+    {
+      ...options,
+      method: "POST",
+      headers: { "Content-Type": "application/json", ...options?.headers },
+      body: JSON.stringify(reelConnectionsScoreRequest),
+    },
+  );
+};
+
+export const getSubmitReelConnectionsScoreMutationOptions = <
+  TError = ErrorType<ErrorResponse>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof submitReelConnectionsScore>>,
+    TError,
+    { data: BodyType<ReelConnectionsScoreRequest> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof submitReelConnectionsScore>>,
+  TError,
+  { data: BodyType<ReelConnectionsScoreRequest> },
+  TContext
+> => {
+  const mutationKey = ["submitReelConnectionsScore"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof submitReelConnectionsScore>>,
+    { data: BodyType<ReelConnectionsScoreRequest> }
+  > = (props) => {
+    const { data } = props ?? {};
+
+    return submitReelConnectionsScore(data, requestOptions);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type SubmitReelConnectionsScoreMutationResult = NonNullable<
+  Awaited<ReturnType<typeof submitReelConnectionsScore>>
+>;
+export type SubmitReelConnectionsScoreMutationBody =
+  BodyType<ReelConnectionsScoreRequest>;
+export type SubmitReelConnectionsScoreMutationError = ErrorType<ErrorResponse>;
+
+/**
+ * @summary Submit a Reel Connections score
+ */
+export const useSubmitReelConnectionsScore = <
+  TError = ErrorType<ErrorResponse>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof submitReelConnectionsScore>>,
+    TError,
+    { data: BodyType<ReelConnectionsScoreRequest> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof submitReelConnectionsScore>>,
+  TError,
+  { data: BodyType<ReelConnectionsScoreRequest> },
+  TContext
+> => {
+  return useMutation(getSubmitReelConnectionsScoreMutationOptions(options));
 };
 
 /**

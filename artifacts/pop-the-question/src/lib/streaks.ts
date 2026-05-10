@@ -7,7 +7,7 @@ const SEEN_BANNERS_KEY = "ptq-seen-banners-v1";
 // before the rename to "three-flops") can be migrated forward on read. New
 // code MUST use "three-flops" / "clock-it" — the legacy keys are silently
 // folded into the new ones inside `read()` below.
-export type GameKey = "three-strikes" | "three-flops" | "clock-it" | "crossword" | "pop-box" | "pop-the-question" | "roast-roulette";
+export type GameKey = "three-strikes" | "three-flops" | "clock-it" | "crossword" | "pop-box" | "pop-the-question" | "roast-roulette" | "reel-connections";
 
 export interface StreakState {
   totalGames: number;

@@ -18,6 +18,7 @@ import PopBox from "@/pages/daily/pop-box";
 import PopOrDrop from "@/pages/daily/pop-or-drop";
 import PopOrDropArchive from "@/pages/daily/pop-or-drop-archive";
 import ClockIt from "@/pages/daily/ClockIt";
+import ReelConnections from "@/pages/daily/reel-connections";
 import Host from "@/pages/host";
 import Join from "@/pages/join";
 import GameHost from "@/pages/game/host";
@@ -64,6 +65,7 @@ function AnimatedRoutes() {
           <Route path="/daily/pop-or-drop" component={PopOrDrop} />
           <Route path="/daily/pop-or-drop/archive/:id" component={PopOrDropArchive} />
           <Route path="/daily/clock-it" component={ClockIt} />
+          <Route path="/daily/reel-connections" component={ReelConnections} />
           <Route path="/host" component={Host} />
           <Route path="/join" component={Join} />
           <Route path="/game/:roomCode/host" component={GameHost} />

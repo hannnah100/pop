@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import {
-  Archive as ArchiveIcon,
-  HelpCircle,
   Bot,
   Zap,
   Users,
@@ -22,7 +20,7 @@ import {
 import { useAuth } from "@/contexts/AuthContext";
 
 export default function Home() {
-  const { user, firebaseUser, authEnabled, openAuthModal } = useAuth();
+  const { firebaseUser, authEnabled, openAuthModal } = useAuth();
   const todayDate = new Date().toISOString().split('T')[0];
 
   const [tsCompleted, setTsCompleted] = useState(false);
@@ -33,6 +31,8 @@ export default function Home() {
   const [gtyCompleted, setGtyCompleted] = useState(false);
   const [gtyScore, setGtyScore] = useState<number | null>(null);
   const [gtyGaveUp, setGtyGaveUp] = useState(false);
+  const [rcCompleted, setRcCompleted] = useState(false);
+  const [rcScore, setRcScore] = useState<number | null>(null);
 
   useEffect(() => {
     try {
@@ -59,13 +59,166 @@ export default function Home() {
           setGtyGaveUp(parsed.gaveUp ?? false);
         }
       }
+      const rcState = localStorage.getItem(`ptq-reel-connections-${todayDate}`);
+      if (rcState) {
+        const parsed = JSON.parse(rcState);
+        if (parsed.completed) {
+          setRcCompleted(true);
+          setRcScore(parsed.score ?? null);
+        }
+      }
     } catch {
       /* ignore */
     }
   }, [todayDate]);
 
+  const scrollToSection = (id: string) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
   return (
     <div className="flex-1 flex flex-col w-full overflow-x-hidden">
+
+      {/* ===== TOP NAV ===== */}
+      <nav className="bg-[#FFF8E7] px-3 py-3 md:py-4">
+        <div className="max-w-4xl mx-auto flex flex-wrap items-center justify-center gap-2 md:gap-3">
+          {/* PROFILE */}
+          {authEnabled && (
+            firebaseUser ? (
+              <Link href="/account" data-testid="nav-profile">
+                <span
+                  className="block px-3 py-2 md:px-4 md:py-2.5 border-[3px] border-black shadow-[4px_4px_0_#000] hover:shadow-[2px_2px_0_#000] hover:translate-x-[2px] hover:translate-y-[2px] active:shadow-none active:translate-x-[4px] active:translate-y-[4px] transition-all cursor-pointer select-none"
+                  style={{ background: "#FF1493", borderRadius: "10px" }}
+                >
+                  <span
+                    className="font-display font-black text-xs md:text-sm uppercase tracking-wide whitespace-nowrap"
+                    style={{
+                      color: "#fff",
+                      WebkitTextFillColor: "#fff",
+                      WebkitTextStroke: "1px #000",
+                      paintOrder: "stroke fill",
+                    }}
+                  >
+                    Profile
+                  </span>
+                </span>
+              </Link>
+            ) : (
+              <button
+                type="button"
+                onClick={openAuthModal}
+                data-testid="nav-profile"
+                className="px-3 py-2 md:px-4 md:py-2.5 border-[3px] border-black shadow-[4px_4px_0_#000] hover:shadow-[2px_2px_0_#000] hover:translate-x-[2px] hover:translate-y-[2px] active:shadow-none active:translate-x-[4px] active:translate-y-[4px] transition-all cursor-pointer select-none"
+                style={{ background: "#FF1493", borderRadius: "10px" }}
+              >
+                <span
+                  className="font-display font-black text-xs md:text-sm uppercase tracking-wide whitespace-nowrap"
+                  style={{
+                    color: "#fff",
+                    WebkitTextFillColor: "#fff",
+                    WebkitTextStroke: "1px #000",
+                    paintOrder: "stroke fill",
+                  }}
+                >
+                  Profile
+                </span>
+              </button>
+            )
+          )}
+
+          {/* DAILY TRIVIA */}
+          <button
+            type="button"
+            onClick={() => scrollToSection("daily-games")}
+            data-testid="nav-daily-trivia"
+            className="px-3 py-2 md:px-4 md:py-2.5 border-[3px] border-black shadow-[4px_4px_0_#000] hover:shadow-[2px_2px_0_#000] hover:translate-x-[2px] hover:translate-y-[2px] active:shadow-none active:translate-x-[4px] active:translate-y-[4px] transition-all cursor-pointer select-none"
+            style={{ background: "#FFD700", borderRadius: "10px" }}
+          >
+            <span
+              className="font-display font-black text-xs md:text-sm uppercase tracking-wide whitespace-nowrap"
+              style={{
+                color: "#fff",
+                WebkitTextFillColor: "#fff",
+                WebkitTextStroke: "1px #000",
+                paintOrder: "stroke fill",
+              }}
+            >
+              Daily Trivia
+            </span>
+          </button>
+
+          {/* PARTY GAMES */}
+          <button
+            type="button"
+            onClick={() => scrollToSection("party-games")}
+            data-testid="nav-party-games"
+            className="px-3 py-2 md:px-4 md:py-2.5 border-[3px] border-black shadow-[4px_4px_0_#000] hover:shadow-[2px_2px_0_#000] hover:translate-x-[2px] hover:translate-y-[2px] active:shadow-none active:translate-x-[4px] active:translate-y-[4px] transition-all cursor-pointer select-none"
+            style={{ background: "#00E5FF", borderRadius: "10px" }}
+          >
+            <span
+              className="font-display font-black text-xs md:text-sm uppercase tracking-wide whitespace-nowrap"
+              style={{
+                color: "#fff",
+                WebkitTextFillColor: "#fff",
+                WebkitTextStroke: "1px #000",
+                paintOrder: "stroke fill",
+              }}
+            >
+              Party Games
+            </span>
+          </button>
+
+          {/* HOW TO PLAY */}
+          <Link href="/how-to-play" data-testid="nav-how-to-play">
+            <span
+              className="block px-3 py-2 md:px-4 md:py-2.5 border-[3px] border-black shadow-[4px_4px_0_#000] hover:shadow-[2px_2px_0_#000] hover:translate-x-[2px] hover:translate-y-[2px] active:shadow-none active:translate-x-[4px] active:translate-y-[4px] transition-all cursor-pointer select-none"
+              style={{ background: "#00C853", borderRadius: "10px" }}
+            >
+              <span
+                className="font-display font-black text-xs md:text-sm uppercase tracking-wide whitespace-nowrap"
+                style={{
+                  color: "#fff",
+                  WebkitTextFillColor: "#fff",
+                  WebkitTextStroke: "1px #000",
+                  paintOrder: "stroke fill",
+                }}
+              >
+                How to Play
+              </span>
+            </span>
+          </Link>
+
+          {/* ARCHIVE */}
+          <Link href="/archive" data-testid="nav-archive">
+            <span
+              className="block px-3 py-2 md:px-4 md:py-2.5 border-[3px] border-black shadow-[4px_4px_0_#000] hover:shadow-[2px_2px_0_#000] hover:translate-x-[2px] hover:translate-y-[2px] active:shadow-none active:translate-x-[4px] active:translate-y-[4px] transition-all cursor-pointer select-none"
+              style={{ background: "#FF1493", borderRadius: "10px" }}
+            >
+              <span
+                className="font-display font-black text-xs md:text-sm uppercase tracking-wide whitespace-nowrap"
+                style={{
+                  color: "#fff",
+                  WebkitTextFillColor: "#fff",
+                  WebkitTextStroke: "1px #000",
+                  paintOrder: "stroke fill",
+                }}
+              >
+                Archive
+              </span>
+            </span>
+          </Link>
+        </div>
+      </nav>
+
+      {/* Rainbow strip — Y2K palette (pink → orange → yellow → cyan → green) */}
+      <div
+        aria-hidden
+        className="h-[5px]"
+        style={{
+          backgroundImage:
+            "linear-gradient(to right, #FF1493 0%, #FF1493 20%, #FF6B35 20%, #FF6B35 40%, #FFD700 40%, #FFD700 60%, #00E5FF 60%, #00E5FF 80%, #00C853 80%, #00C853 100%)",
+        }}
+      />
 
       {/* ===== HERO ===== */}
       <header className="relative bg-[#FFF8E7] border-b-[4px] border-black px-4 pt-6 pb-4 text-center overflow-hidden">
@@ -91,7 +244,7 @@ export default function Home() {
       </header>
 
       {/* ===== DAILY GAMES SECTION ===== */}
-      <section className="relative bg-[#FFD700] border-b-[4px] border-black px-4 py-8 overflow-hidden">
+      <section id="daily-games" className="relative bg-[#FFD700] border-b-[4px] border-black px-4 py-8 overflow-hidden scroll-mt-4">
         <LightningDoodle className="absolute top-4 right-6 w-8 h-12 text-[#FF6B35] opacity-70" />
         <SmileyDoodle className="absolute bottom-4 right-10 w-10 h-10 text-[#FF1493] opacity-60" />
 
@@ -104,52 +257,6 @@ export default function Home() {
           <p className="text-black font-medium mb-6 font-sans">Fresh pop culture puzzles every day. Come back tomorrow for more!</p>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {/* Sign In / Profile Card */}
-            {authEnabled && (
-              firebaseUser ? (
-                <div className="bg-white border-[3px] border-black shadow-[4px_4px_0_#000] p-5 relative overflow-hidden flex flex-col">
-                  <StarDoodle className="absolute top-2 right-3 w-7 h-7 text-[#FFD700] opacity-40" />
-                  <div className="flex justify-between items-start mb-3">
-                    <div>
-                      <h3 className="font-display text-2xl font-black text-black uppercase tracking-tight">MY PROFILE</h3>
-                      <p className="text-sm text-black/60 font-sans mt-1">
-                        {user ? `@${user.username} · Manage your account` : (firebaseUser.displayName ?? firebaseUser.email ?? "Signed in")}
-                      </p>
-                    </div>
-                    <Badge variant="secondary" className="ml-2 flex-shrink-0">Signed In ✓</Badge>
-                  </div>
-                  <Link href="/account" className="block mt-auto">
-                    <Button
-                      variant="secondary"
-                      className="w-full font-display text-base uppercase tracking-wide"
-                      data-testid="account-btn"
-                    >
-                      View Profile
-                    </Button>
-                  </Link>
-                </div>
-              ) : (
-                <div className="bg-white border-[3px] border-black shadow-[4px_4px_0_#000] p-5 relative overflow-hidden flex flex-col">
-                  <LightningDoodle className="absolute top-2 right-3 w-6 h-8 text-[#FF6B35] opacity-40" />
-                  <div className="flex justify-between items-start mb-3">
-                    <div>
-                      <h3 className="font-display text-2xl font-black text-black uppercase tracking-tight">LOG IN</h3>
-                      <p className="text-sm text-black/60 font-sans mt-1">Create an account to save your scores</p>
-                    </div>
-                    <Badge variant="outline" className="ml-2 flex-shrink-0">Free</Badge>
-                  </div>
-                  <Button
-                    onClick={openAuthModal}
-                    variant="secondary"
-                    className="w-full font-display text-base uppercase tracking-wide mt-auto"
-                    data-testid="signin-btn"
-                  >
-                    Sign Up / Log In
-                  </Button>
-                </div>
-              )
-            )}
-
             {/* Three Flops */}
             <div className="bg-white border-[3px] border-black shadow-[4px_4px_0_#000] p-5 relative overflow-hidden flex flex-col">
               <LightningDoodle className="absolute top-2 right-3 w-6 h-8 text-[#FF6B35] opacity-40" />
@@ -281,12 +388,39 @@ export default function Home() {
                 </Button>
               </Link>
             </div>
+
+            {/* Reel Connections */}
+            <div className="bg-white border-[3px] border-black shadow-[4px_4px_0_#000] p-5 relative overflow-hidden flex flex-col">
+              <StarDoodle className="absolute top-2 right-3 w-7 h-7 text-[#FF1493] opacity-50" />
+              <div className="flex justify-between items-start mb-3">
+                <div>
+                  <h3 className="font-display text-2xl font-black text-black uppercase tracking-tight">Reel Connections</h3>
+                  <p className="text-sm text-black/60 font-sans mt-1">Connect the actors through their movies</p>
+                </div>
+                {rcCompleted ? (
+                  <Badge variant="secondary" className="ml-2 flex-shrink-0">
+                    {rcScore !== null ? `${rcScore}/5` : "Done ✓"}
+                  </Badge>
+                ) : (
+                  <Badge className="ml-2 flex-shrink-0 bg-[#FF1493] text-white border-[#FF1493]">NEW</Badge>
+                )}
+              </div>
+              <Link href="/daily/reel-connections" className="block mt-auto">
+                <Button
+                  className="w-full font-display text-base uppercase tracking-wide"
+                  variant={rcCompleted ? "outline" : "default"}
+                  data-testid="link-reel-connections"
+                >
+                  {rcCompleted ? "View Results" : "Play Now"}
+                </Button>
+              </Link>
+            </div>
           </div>
         </div>
       </section>
 
       {/* ===== PARTY GAMES SECTION ===== */}
-      <section className="relative bg-[#FF1493] border-b-[4px] border-black px-4 py-8 overflow-hidden">
+      <section id="party-games" className="relative bg-[#FF1493] border-b-[4px] border-black px-4 py-8 overflow-hidden scroll-mt-4">
         <GameControllerDoodle className="absolute top-4 left-4 w-16 h-10 text-white opacity-30" />
         <StarDoodle className="absolute top-6 right-8 w-10 h-10 text-[#FFD700] opacity-50" />
         <SmileyDoodle className="absolute bottom-4 left-6 w-10 h-10 text-[#00E5FF] opacity-40" />
@@ -360,87 +494,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ===== FOOTER ===== */}
-      <footer className="bg-[#FFF8E7] px-4 py-16 border-t-[4px] border-black">
-        <div className="max-w-4xl mx-auto flex flex-col md:flex-row justify-center items-center gap-8 md:gap-12">
-          {/* Personal Stats — hot-pink pill */}
-          <Link href="/stats" data-testid="link-stats">
-            <span
-              className="group relative flex items-center gap-3 px-8 py-4 border-[3px] border-black shadow-[6px_6px_0_#000] hover:shadow-[3px_3px_0_#000] hover:translate-x-[3px] hover:translate-y-[3px] active:shadow-none active:translate-x-[6px] active:translate-y-[6px] transition-all cursor-pointer select-none"
-              style={{
-                background: "#FF1493",
-                borderRadius: "999px",
-              }}
-            >
-              <StarDoodle className="w-6 h-6 text-white shrink-0" />
-              <span
-                className="font-display font-black text-lg uppercase tracking-wide"
-                style={{
-                  color: "#fff",
-                  WebkitTextFillColor: "#fff",
-                  WebkitTextStroke: "1px #000",
-                  paintOrder: "stroke fill",
-                }}
-              >
-                Personal Stats
-              </span>
-            </span>
-          </Link>
-
-          {/* Past Puzzles — electric cyan rounded rectangle, slightly skewed */}
-          <Link href="/archive" data-testid="link-archive">
-            {/* Outer wrapper handles translate press animation; inner wrapper handles the skew */}
-            <span className="block hover:translate-x-[3px] hover:translate-y-[3px] active:translate-x-[6px] active:translate-y-[6px] transition-transform cursor-pointer select-none">
-              <span
-                className="relative flex items-center gap-3 px-8 py-4 border-[3px] border-black shadow-[6px_6px_0_#000] hover:shadow-[3px_3px_0_#000] active:shadow-none transition-shadow"
-                style={{
-                  background: "#00E5FF",
-                  borderRadius: "10px",
-                  transform: "skewX(-3deg)",
-                  display: "flex",
-                }}
-              >
-                <ArchiveIcon className="w-6 h-6 text-black shrink-0" style={{ transform: "skewX(3deg)" }} />
-                <span
-                  className="font-display font-black text-lg uppercase tracking-wide"
-                  style={{
-                    color: "#fff",
-                    WebkitTextFillColor: "#fff",
-                    WebkitTextStroke: "1px #000",
-                    paintOrder: "stroke fill",
-                    transform: "skewX(3deg)",
-                    display: "inline-block",
-                  }}
-                >
-                  Past Puzzles
-                </span>
-              </span>
-            </span>
-          </Link>
-
-          {/* How to Play — lime green square badge */}
-          <Link href="/how-to-play" data-testid="link-how-to-play">
-            <span
-              className="relative flex items-center gap-3 px-8 py-4 border-[3px] border-black shadow-[6px_6px_0_#000] hover:shadow-[3px_3px_0_#000] hover:translate-x-[3px] hover:translate-y-[3px] active:shadow-none active:translate-x-[6px] active:translate-y-[6px] transition-all cursor-pointer select-none"
-              style={{ background: "#00C853", borderRadius: "8px" }}
-            >
-              <HelpCircle className="w-6 h-6 text-white shrink-0" />
-              <span
-                className="font-display font-black text-lg uppercase tracking-wide"
-                style={{
-                  color: "#fff",
-                  WebkitTextFillColor: "#fff",
-                  WebkitTextStroke: "1px #000",
-                  paintOrder: "stroke fill",
-                }}
-              >
-                How to Play
-              </span>
-              <StarDoodle className="w-4 h-4 text-[#FFD700] ml-0.5 shrink-0" />
-            </span>
-          </Link>
-        </div>
-      </footer>
     </div>
   );
 }

@@ -1,5 +1,7 @@
 export * from "./threeFlops";
 export * from "./threeFlopsScores";
+export * from "./reelConnections";
+export * from "./reelConnectionsScores";
 export * from "./crossword";
 export * from "./questions";
 export * from "./popBox";
