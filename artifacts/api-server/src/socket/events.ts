@@ -6,6 +6,9 @@ import {
   customJeopardyPacksTable,
   customWofPacksTable,
   customQuizPacksTable,
+  customPollPacksTable,
+  customScattergoriesPacksTable,
+  customRoastPacksTable,
 } from "@workspace/db/schema";
 import { eq } from "drizzle-orm";
 import type { JeopardyPack } from "../data/jeopardy/types";
@@ -171,6 +174,18 @@ interface Room {
   scattergoriesRoundCount?: number;
   /** For scattergories host UI: difficulty config. */
   scattergoriesDifficulty?: ScattergoriesDifficulty;
+  /** For pop-the-question host: chosen custom pack id (if any). */
+  pollPackId?: string;
+  /** Custom payload when a custom Poll pack is selected. */
+  customPollPackPayload?: { id: string; title: string; description: string; questions: Array<{ question: string }> };
+  /** For roast-roulette host: chosen custom pack id (if any). */
+  roastPackId?: string;
+  /** Custom payload when a custom Roast pack is selected. */
+  customRoastPackPayload?: { id: string; title: string; description: string; prompts: Array<{ prompt: string }> };
+  /** For scattergories host: chosen custom pack id (if any). */
+  scattergoriesPackId?: string;
+  /** Custom payload when a custom Scattergories pack is selected (per-round letter+categories). */
+  customScattergoriesPackPayload?: { id: string; title: string; description: string; rounds: Array<{ letter: string; categories: string[] }> };
   createdAt: number;
   lastActivity: number;
   hostSettings: HostSettingsBroadcast;
@@ -285,6 +300,9 @@ export function createRoom(gameType: GameType, isDemo = false, packId?: string):
     quizPackId: gameType === "pub-quiz" ? packId : undefined,
     jeopardyPackId: gameType === "jeopardy" ? packId : undefined,
     wofPackId: gameType === "wheel-of-fortune" ? packId : undefined,
+    pollPackId: gameType === "pop-the-question" ? packId : undefined,
+    roastPackId: gameType === "roast-roulette" ? packId : undefined,
+    scattergoriesPackId: gameType === "scattergories" ? packId : undefined,
     createdAt: Date.now(),
     lastActivity: Date.now(),
     hostSettings: { answerMethod: "both" },
@@ -891,7 +909,25 @@ export function setupSocketIO(httpServer: HttpServer) {
       room.currentVotes = {};
 
       if (room.gameType === "pop-the-question") {
-        const shuffled = [...POP_QUESTIONS].sort(() => Math.random() - 0.5);
+        if (!room.customPollPackPayload && room.pollPackId?.startsWith("custom-poll-")) {
+          const customId = Number(room.pollPackId.replace("custom-poll-", ""));
+          if (!Number.isFinite(customId)) {
+            socket.emit("error", { message: "Cannot start game: invalid custom pack id" });
+            room.status = "lobby";
+            return;
+          }
+          const [row] = await db.select().from(customPollPacksTable).where(eq(customPollPacksTable.id, customId));
+          if (!row || !ownerId || row.ownerId !== ownerId) {
+            socket.emit("error", { message: "Cannot start game: custom pack not found or permission denied" });
+            room.status = "lobby";
+            return;
+          }
+          room.customPollPackPayload = row.payload as Room["customPollPackPayload"];
+        }
+        const sourceQuestions = room.customPollPackPayload
+          ? room.customPollPackPayload.questions.map((q) => q.question)
+          : POP_QUESTIONS;
+        const shuffled = [...sourceQuestions].sort(() => Math.random() - 0.5);
         room.questions = shuffled.map((q) => ({ text: q }));
 
         io.to(roomCode).emit("game-started", {
@@ -906,10 +942,28 @@ export function setupSocketIO(httpServer: HttpServer) {
         scheduleBotVotes(io, room);
 
       } else if (room.gameType === "roast-roulette") {
+        if (!room.customRoastPackPayload && room.roastPackId?.startsWith("custom-roast-")) {
+          const customId = Number(room.roastPackId.replace("custom-roast-", ""));
+          if (!Number.isFinite(customId)) {
+            socket.emit("error", { message: "Cannot start game: invalid custom pack id" });
+            room.status = "lobby";
+            return;
+          }
+          const [row] = await db.select().from(customRoastPacksTable).where(eq(customRoastPacksTable.id, customId));
+          if (!row || !ownerId || row.ownerId !== ownerId) {
+            socket.emit("error", { message: "Cannot start game: custom pack not found or permission denied" });
+            room.status = "lobby";
+            return;
+          }
+          room.customRoastPackPayload = row.payload as Room["customRoastPackPayload"];
+        }
         const nonHostPlayers = room.players.filter((p) => !p.isHost);
         const numQuestions = Math.max(1, nonHostPlayers.length - 1);
         const colors = ROAST_COLORS.slice(0, numQuestions);
-        const shuffledQ = [...ROAST_QUESTIONS_BANK].sort(() => Math.random() - 0.5);
+        const sourcePrompts = room.customRoastPackPayload
+          ? room.customRoastPackPayload.prompts.map((p) => p.prompt)
+          : ROAST_QUESTIONS_BANK;
+        const shuffledQ = [...sourcePrompts].sort(() => Math.random() - 0.5);
         room.questions = colors.map((color, i) => ({
           color,
           question: shuffledQ[i] ?? `Question ${i + 1}`,
@@ -1066,7 +1120,24 @@ export function setupSocketIO(httpServer: HttpServer) {
         if (firstController?.isBot) scheduleBotWofTurn(io, room);
 
       } else if (room.gameType === "scattergories") {
-        const roundCount = room.scattergoriesRoundCount ?? 3;
+        if (!room.customScattergoriesPackPayload && room.scattergoriesPackId?.startsWith("custom-scat-")) {
+          const customId = Number(room.scattergoriesPackId.replace("custom-scat-", ""));
+          if (!Number.isFinite(customId)) {
+            socket.emit("error", { message: "Cannot start game: invalid custom pack id" });
+            room.status = "lobby";
+            return;
+          }
+          const [row] = await db.select().from(customScattergoriesPacksTable).where(eq(customScattergoriesPacksTable.id, customId));
+          if (!row || !ownerId || row.ownerId !== ownerId) {
+            socket.emit("error", { message: "Cannot start game: custom pack not found or permission denied" });
+            room.status = "lobby";
+            return;
+          }
+          room.customScattergoriesPackPayload = row.payload as Room["customScattergoriesPackPayload"];
+        }
+        const customPack = room.customScattergoriesPackPayload;
+        // Custom packs lock the round count to the pack's length; difficulty stays from host config.
+        const roundCount = customPack ? customPack.rounds.length : (room.scattergoriesRoundCount ?? 3);
         const difficulty = room.scattergoriesDifficulty ?? "medium";
         room.scattergories = makeScattergoriesState(roundCount, difficulty);
         room.players.forEach((p) => { p.score = 0; });
@@ -2958,11 +3029,20 @@ function startScattergoriesRound(io: SocketIOServer, room: Room) {
   sc.submissions = new Map();
   sc.submittedPlayerIds = new Set();
 
-  const letter = pickScatLetter(sc.usedLetters);
+  const customPack = room.customScattergoriesPackPayload;
+  const customRound = customPack?.rounds[sc.currentRound - 1];
+
+  const letter = customRound ? customRound.letter.toUpperCase() : pickScatLetter(sc.usedLetters);
   sc.currentLetter = letter;
   sc.usedLetters.push(letter);
 
-  const categories = pickCategories(CATEGORIES_PER_ROUND, sc.usedCategoryIds);
+  const categories = customRound
+    ? customRound.categories.map((name, i) => ({
+        id: `custom-${sc.currentRound}-${i}`,
+        name,
+        group: "things" as const,
+      }))
+    : pickCategories(CATEGORIES_PER_ROUND, sc.usedCategoryIds);
   sc.currentCategories = categories;
   sc.usedCategoryIds.push(...categories.map((c) => c.id));
 

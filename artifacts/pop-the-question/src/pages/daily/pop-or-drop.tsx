@@ -411,7 +411,7 @@ export default function PopOrDrop() {
     <div className="flex-1 flex flex-col min-h-0 overflow-x-hidden">
       {/* Header */}
       <header className="bg-[#FF1493] border-b-[4px] border-black px-4 py-3 flex items-center justify-between sticky top-0 z-20">
-        <BackArrow className="text-white [&_svg]:stroke-white" />
+        <BackArrow />
         <div className="text-center">
           <h1 className="font-display font-black text-white text-xl uppercase tracking-tight comic-headline">
             Pop or Drop

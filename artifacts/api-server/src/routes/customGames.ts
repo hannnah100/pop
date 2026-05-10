@@ -5,6 +5,9 @@ import {
   customJeopardyPacksTable,
   customWofPacksTable,
   customQuizPacksTable,
+  customPollPacksTable,
+  customScattergoriesPacksTable,
+  customRoastPacksTable,
 } from "@workspace/db/schema";
 import { eq, and } from "drizzle-orm";
 
@@ -120,6 +123,52 @@ const QuizPackPayloadSchema = z.object({
   title: z.string().min(1),
   description: z.string().default(""),
   rounds: z.array(QuizRoundSchema).min(3).max(7),
+});
+
+// ============================================================
+// Poll the Question pack — voting prompts ("Most likely to…")
+// ============================================================
+
+const PollQuestionSchema = z.object({
+  question: z.string().min(1),
+});
+
+const PollPackPayloadSchema = z.object({
+  id: z.string(),
+  title: z.string().min(1),
+  description: z.string().default(""),
+  questions: z.array(PollQuestionSchema).min(3).max(60),
+});
+
+// ============================================================
+// Popping List (Scattergories) pack — per-round category list + letter
+// ============================================================
+
+const ScattergoriesRoundSchema = z.object({
+  letter: z.string().regex(/^[A-Z]$/, "Letter must be a single uppercase A–Z"),
+  categories: z.array(z.string().min(1)).length(10),
+});
+
+const ScattergoriesPackPayloadSchema = z.object({
+  id: z.string(),
+  title: z.string().min(1),
+  description: z.string().default(""),
+  rounds: z.array(ScattergoriesRoundSchema).min(3).max(5),
+});
+
+// ============================================================
+// Roast Roulette pack — round prompts ("What would their drunk tattoo be?")
+// ============================================================
+
+const RoastPromptSchema = z.object({
+  prompt: z.string().min(1),
+});
+
+const RoastPackPayloadSchema = z.object({
+  id: z.string(),
+  title: z.string().min(1),
+  description: z.string().default(""),
+  prompts: z.array(RoastPromptSchema).min(3).max(30),
 });
 
 // ============================================================
@@ -294,6 +343,168 @@ router.delete("/custom-games/quiz/:id", async (req: Request, res: Response): Pro
   const existing = await db.select().from(customQuizPacksTable).where(and(eq(customQuizPacksTable.id, id), eq(customQuizPacksTable.ownerId, ownerId)));
   if (!existing[0]) { notFound(res); return; }
   await db.delete(customQuizPacksTable).where(eq(customQuizPacksTable.id, id));
+  res.status(204).send();
+});
+
+// ============================================================
+// Poll the Question CRUD
+// ============================================================
+
+router.get("/custom-games/poll/:id", async (req: Request, res: Response): Promise<void> => {
+  const ownerId = getOwnerId(req);
+  if (!ownerId) { badOwner(res); return; }
+  const id = Number(req.params.id);
+  if (!Number.isFinite(id)) { notFound(res); return; }
+  const [row] = await db.select().from(customPollPacksTable).where(and(eq(customPollPacksTable.id, id), eq(customPollPacksTable.ownerId, ownerId)));
+  if (!row) { notFound(res); return; }
+  res.json({ id: row.id, title: row.title, payload: row.payload, createdAt: row.createdAt, updatedAt: row.updatedAt });
+});
+
+router.get("/custom-games/poll", async (req: Request, res: Response): Promise<void> => {
+  const ownerId = getOwnerId(req);
+  if (!ownerId) { badOwner(res); return; }
+  const rows = await db.select().from(customPollPacksTable).where(eq(customPollPacksTable.ownerId, ownerId));
+  res.json(rows.map((r) => ({ id: r.id, title: r.title, payload: r.payload, createdAt: r.createdAt, updatedAt: r.updatedAt })));
+});
+
+router.post("/custom-games/poll", async (req: Request, res: Response): Promise<void> => {
+  const ownerId = getOwnerId(req);
+  if (!ownerId) { badOwner(res); return; }
+  const parsed = PollPackPayloadSchema.safeParse(req.body);
+  if (!parsed.success) { res.status(400).json({ error: parsed.error.message }); return; }
+  const [row] = await db.insert(customPollPacksTable).values({ ownerId, title: parsed.data.title, payload: parsed.data }).returning();
+  res.status(201).json(row);
+});
+
+router.put("/custom-games/poll/:id", async (req: Request, res: Response): Promise<void> => {
+  const ownerId = getOwnerId(req);
+  if (!ownerId) { badOwner(res); return; }
+  const id = Number(req.params.id);
+  if (!Number.isFinite(id)) { notFound(res); return; }
+  const existing = await db.select().from(customPollPacksTable).where(and(eq(customPollPacksTable.id, id), eq(customPollPacksTable.ownerId, ownerId)));
+  if (!existing[0]) { notFound(res); return; }
+  const parsed = PollPackPayloadSchema.safeParse(req.body);
+  if (!parsed.success) { res.status(400).json({ error: parsed.error.message }); return; }
+  const [row] = await db.update(customPollPacksTable).set({ title: parsed.data.title, payload: parsed.data, updatedAt: new Date() }).where(eq(customPollPacksTable.id, id)).returning();
+  res.json(row);
+});
+
+router.delete("/custom-games/poll/:id", async (req: Request, res: Response): Promise<void> => {
+  const ownerId = getOwnerId(req);
+  if (!ownerId) { badOwner(res); return; }
+  const id = Number(req.params.id);
+  if (!Number.isFinite(id)) { notFound(res); return; }
+  const existing = await db.select().from(customPollPacksTable).where(and(eq(customPollPacksTable.id, id), eq(customPollPacksTable.ownerId, ownerId)));
+  if (!existing[0]) { notFound(res); return; }
+  await db.delete(customPollPacksTable).where(eq(customPollPacksTable.id, id));
+  res.status(204).send();
+});
+
+// ============================================================
+// Popping List (Scattergories) CRUD
+// ============================================================
+
+router.get("/custom-games/scattergories/:id", async (req: Request, res: Response): Promise<void> => {
+  const ownerId = getOwnerId(req);
+  if (!ownerId) { badOwner(res); return; }
+  const id = Number(req.params.id);
+  if (!Number.isFinite(id)) { notFound(res); return; }
+  const [row] = await db.select().from(customScattergoriesPacksTable).where(and(eq(customScattergoriesPacksTable.id, id), eq(customScattergoriesPacksTable.ownerId, ownerId)));
+  if (!row) { notFound(res); return; }
+  res.json({ id: row.id, title: row.title, payload: row.payload, createdAt: row.createdAt, updatedAt: row.updatedAt });
+});
+
+router.get("/custom-games/scattergories", async (req: Request, res: Response): Promise<void> => {
+  const ownerId = getOwnerId(req);
+  if (!ownerId) { badOwner(res); return; }
+  const rows = await db.select().from(customScattergoriesPacksTable).where(eq(customScattergoriesPacksTable.ownerId, ownerId));
+  res.json(rows.map((r) => ({ id: r.id, title: r.title, payload: r.payload, createdAt: r.createdAt, updatedAt: r.updatedAt })));
+});
+
+router.post("/custom-games/scattergories", async (req: Request, res: Response): Promise<void> => {
+  const ownerId = getOwnerId(req);
+  if (!ownerId) { badOwner(res); return; }
+  const parsed = ScattergoriesPackPayloadSchema.safeParse(req.body);
+  if (!parsed.success) { res.status(400).json({ error: parsed.error.message }); return; }
+  const [row] = await db.insert(customScattergoriesPacksTable).values({ ownerId, title: parsed.data.title, payload: parsed.data }).returning();
+  res.status(201).json(row);
+});
+
+router.put("/custom-games/scattergories/:id", async (req: Request, res: Response): Promise<void> => {
+  const ownerId = getOwnerId(req);
+  if (!ownerId) { badOwner(res); return; }
+  const id = Number(req.params.id);
+  if (!Number.isFinite(id)) { notFound(res); return; }
+  const existing = await db.select().from(customScattergoriesPacksTable).where(and(eq(customScattergoriesPacksTable.id, id), eq(customScattergoriesPacksTable.ownerId, ownerId)));
+  if (!existing[0]) { notFound(res); return; }
+  const parsed = ScattergoriesPackPayloadSchema.safeParse(req.body);
+  if (!parsed.success) { res.status(400).json({ error: parsed.error.message }); return; }
+  const [row] = await db.update(customScattergoriesPacksTable).set({ title: parsed.data.title, payload: parsed.data, updatedAt: new Date() }).where(eq(customScattergoriesPacksTable.id, id)).returning();
+  res.json(row);
+});
+
+router.delete("/custom-games/scattergories/:id", async (req: Request, res: Response): Promise<void> => {
+  const ownerId = getOwnerId(req);
+  if (!ownerId) { badOwner(res); return; }
+  const id = Number(req.params.id);
+  if (!Number.isFinite(id)) { notFound(res); return; }
+  const existing = await db.select().from(customScattergoriesPacksTable).where(and(eq(customScattergoriesPacksTable.id, id), eq(customScattergoriesPacksTable.ownerId, ownerId)));
+  if (!existing[0]) { notFound(res); return; }
+  await db.delete(customScattergoriesPacksTable).where(eq(customScattergoriesPacksTable.id, id));
+  res.status(204).send();
+});
+
+// ============================================================
+// Roast Roulette CRUD
+// ============================================================
+
+router.get("/custom-games/roast/:id", async (req: Request, res: Response): Promise<void> => {
+  const ownerId = getOwnerId(req);
+  if (!ownerId) { badOwner(res); return; }
+  const id = Number(req.params.id);
+  if (!Number.isFinite(id)) { notFound(res); return; }
+  const [row] = await db.select().from(customRoastPacksTable).where(and(eq(customRoastPacksTable.id, id), eq(customRoastPacksTable.ownerId, ownerId)));
+  if (!row) { notFound(res); return; }
+  res.json({ id: row.id, title: row.title, payload: row.payload, createdAt: row.createdAt, updatedAt: row.updatedAt });
+});
+
+router.get("/custom-games/roast", async (req: Request, res: Response): Promise<void> => {
+  const ownerId = getOwnerId(req);
+  if (!ownerId) { badOwner(res); return; }
+  const rows = await db.select().from(customRoastPacksTable).where(eq(customRoastPacksTable.ownerId, ownerId));
+  res.json(rows.map((r) => ({ id: r.id, title: r.title, payload: r.payload, createdAt: r.createdAt, updatedAt: r.updatedAt })));
+});
+
+router.post("/custom-games/roast", async (req: Request, res: Response): Promise<void> => {
+  const ownerId = getOwnerId(req);
+  if (!ownerId) { badOwner(res); return; }
+  const parsed = RoastPackPayloadSchema.safeParse(req.body);
+  if (!parsed.success) { res.status(400).json({ error: parsed.error.message }); return; }
+  const [row] = await db.insert(customRoastPacksTable).values({ ownerId, title: parsed.data.title, payload: parsed.data }).returning();
+  res.status(201).json(row);
+});
+
+router.put("/custom-games/roast/:id", async (req: Request, res: Response): Promise<void> => {
+  const ownerId = getOwnerId(req);
+  if (!ownerId) { badOwner(res); return; }
+  const id = Number(req.params.id);
+  if (!Number.isFinite(id)) { notFound(res); return; }
+  const existing = await db.select().from(customRoastPacksTable).where(and(eq(customRoastPacksTable.id, id), eq(customRoastPacksTable.ownerId, ownerId)));
+  if (!existing[0]) { notFound(res); return; }
+  const parsed = RoastPackPayloadSchema.safeParse(req.body);
+  if (!parsed.success) { res.status(400).json({ error: parsed.error.message }); return; }
+  const [row] = await db.update(customRoastPacksTable).set({ title: parsed.data.title, payload: parsed.data, updatedAt: new Date() }).where(eq(customRoastPacksTable.id, id)).returning();
+  res.json(row);
+});
+
+router.delete("/custom-games/roast/:id", async (req: Request, res: Response): Promise<void> => {
+  const ownerId = getOwnerId(req);
+  if (!ownerId) { badOwner(res); return; }
+  const id = Number(req.params.id);
+  if (!Number.isFinite(id)) { notFound(res); return; }
+  const existing = await db.select().from(customRoastPacksTable).where(and(eq(customRoastPacksTable.id, id), eq(customRoastPacksTable.ownerId, ownerId)));
+  if (!existing[0]) { notFound(res); return; }
+  await db.delete(customRoastPacksTable).where(eq(customRoastPacksTable.id, id));
   res.status(204).send();
 });
 

@@ -37,7 +37,9 @@
       "Bash(pnpm --filter @workspace/api-spec run codegen)",
       "Bash(pnpm test *)",
       "Bash(pnpm typecheck *)",
-      "Bash(echo \"exit=$?\")"
+      "Bash(echo \"exit=$?\")",
+      "Bash(pnpm --filter @workspace/db build)",
+      "Bash(pnpm --filter @workspace/db run push)"
     ]
   }
 }

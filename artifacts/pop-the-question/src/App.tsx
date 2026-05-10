@@ -28,6 +28,9 @@ import CreateGamePicker from "@/pages/create-game/index";
 import JeopardyCreator from "@/pages/create-game/jeopardy";
 import WofCreator from "@/pages/create-game/wof";
 import QuizCreator from "@/pages/create-game/quiz";
+import PollCreator from "@/pages/create-game/poll";
+import PoppingListCreator from "@/pages/create-game/popping-list";
+import RoastCreator from "@/pages/create-game/roast";
 import MyGames from "@/pages/my-games";
 import HowToPlay from "@/pages/how-to-play";
 import Account from "@/pages/account";
@@ -74,6 +77,12 @@ function AnimatedRoutes() {
           <Route path="/create-game/wof" component={WofCreator} />
           <Route path="/create-game/quiz/:id" component={QuizCreator} />
           <Route path="/create-game/quiz" component={QuizCreator} />
+          <Route path="/create-game/poll/:id" component={PollCreator} />
+          <Route path="/create-game/poll" component={PollCreator} />
+          <Route path="/create-game/popping-list/:id" component={PoppingListCreator} />
+          <Route path="/create-game/popping-list" component={PoppingListCreator} />
+          <Route path="/create-game/roast/:id" component={RoastCreator} />
+          <Route path="/create-game/roast" component={RoastCreator} />
           <Route path="/my-games" component={MyGames} />
           <Route path="/how-to-play" component={HowToPlay} />
           <Route path="/account" component={Account} />

@@ -1204,5 +1204,47 @@
     "mode": "artist-alphabet",
     "rowCategoryIds": "[\"A-B-C\", \"G-H\", \"S-T\"]",
     "columnCategoryIds": "[\"billie-eilish\", \"harry-styles\", \"megan-thee-stallion\"]"
+  },
+  {
+    "id": "star-crossed-mcu-avengers",
+    "date": "2026-07-02",
+    "difficulty": "medium",
+    "rowCategoryIds": "[\"chris-evans\",\"robert-downey-jr\",\"scarlett-johansson\"]",
+    "columnCategoryIds": "[\"chris-hemsworth\",\"mark-ruffalo\",\"jeremy-renner\"]"
+  },
+  {
+    "id": "star-crossed-nolan-films",
+    "date": "2026-07-05",
+    "difficulty": "medium",
+    "rowCategoryIds": "[\"christian-bale\",\"tom-hardy\",\"cillian-murphy\"]",
+    "columnCategoryIds": "[\"michael-caine\",\"marion-cotillard\",\"anne-hathaway\"]"
+  },
+  {
+    "id": "star-crossed-recent-ensembles",
+    "date": "2026-07-06",
+    "difficulty": "medium",
+    "rowCategoryIds": "[\"ryan-gosling\",\"emma-stone\",\"steve-carell\"]",
+    "columnCategoryIds": "[\"margot-robbie\",\"bradley-cooper\",\"christian-bale\"]"
+  },
+  {
+    "id": "star-crossed-drama-heavyweights",
+    "date": "2026-07-09",
+    "difficulty": "medium",
+    "rowCategoryIds": "[\"jennifer-lawrence\",\"bradley-cooper\",\"christian-bale\"]",
+    "columnCategoryIds": "[\"robert-de-niro\",\"amy-adams\",\"jeremy-renner\"]"
+  },
+  {
+    "id": "star-crossed-hollywood-royalty",
+    "date": "2026-07-12",
+    "difficulty": "medium",
+    "rowCategoryIds": "[\"margot-robbie\",\"brad-pitt\",\"leonardo-dicaprio\"]",
+    "columnCategoryIds": "[\"tobey-maguire\",\"jonah-hill\",\"al-pacino\"]"
+  },
+  {
+    "id": "star-crossed-nolan-verse",
+    "date": "2026-07-14",
+    "difficulty": "medium",
+    "rowCategoryIds": "[\"christian-bale\",\"tom-hardy\",\"marion-cotillard\"]",
+    "columnCategoryIds": "[\"michael-caine\",\"cillian-murphy\",\"joseph-gordon-levitt\"]"
   }
 ]

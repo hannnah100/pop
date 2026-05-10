@@ -1,6 +1,6 @@
 import { useLocation } from "wouter";
 import { motion } from "framer-motion";
-import { Grid3x3, CircleDot, Beer, ArrowLeft } from "lucide-react";
+import { Grid3x3, CircleDot, Beer, ArrowLeft, Vote, ListChecks, Flame } from "lucide-react";
 import { BackArrow } from "@/components/ui/BackArrow";
 import {
   StarDoodle,
@@ -41,6 +41,39 @@ const GAME_TYPES = [
     bg: "#00C853",
     accent: "#FFD700",
     path: "/create-game/quiz",
+  },
+  {
+    id: "poll",
+    label: "Poll the Question",
+    tagline: "3–60 voting questions · Most-likely-to prompts",
+    description:
+      "Build a deck of voting questions for the group to vote on. Perfect for friends, parties, and team building.",
+    Icon: Vote,
+    bg: "#FF1493",
+    accent: "#FFD700",
+    path: "/create-game/poll",
+  },
+  {
+    id: "popping-list",
+    label: "Popping List",
+    tagline: "3–5 rounds · 10 categories per round · pick a letter",
+    description:
+      "Custom Scattergories rounds: lock in the letter and the 10 categories players have to fill in.",
+    Icon: ListChecks,
+    bg: "#1565C0",
+    accent: "#FFD700",
+    path: "/create-game/popping-list",
+  },
+  {
+    id: "roast",
+    label: "Roast Roulette",
+    tagline: "3–30 round prompts · drives every roast card",
+    description:
+      "Write the prompts that send each player into the hot seat. Spicy in-jokes, group lore, anything goes.",
+    Icon: Flame,
+    bg: "#FF6B35",
+    accent: "#FFD700",
+    path: "/create-game/roast",
   },
 ];
 

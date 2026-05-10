@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { useLocation } from "wouter";
 import { motion, AnimatePresence } from "framer-motion";
-import { Grid3x3, CircleDot, Beer, Edit2, Copy, Trash2, Play, Loader2, Star } from "lucide-react";
+import { Grid3x3, CircleDot, Beer, Vote, ListChecks, Flame, Edit2, Copy, Trash2, Play, Loader2, Star } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { customGamesFetch, getOwnerId } from "@/lib/ownerId";
 import { useCreateRoom } from "@workspace/api-client-react";
@@ -11,7 +11,7 @@ import {
   ConfettiDoodle,
 } from "@/components/fx/Doodles";
 
-type GameKind = "jeopardy" | "wof" | "quiz";
+type GameKind = "jeopardy" | "wof" | "quiz" | "poll" | "scattergories" | "roast";
 
 interface CustomPack {
   id: number;
@@ -28,16 +28,24 @@ interface ConfirmState {
   title: string;
 }
 
-const KIND_META: Record<GameKind, { label: string; icon: typeof Grid3x3; bg: string; editPath: string; gameType: string }> = {
-  jeopardy: { label: "Pop Quiz", icon: Grid3x3, bg: "#FFC107", editPath: "/create-game/jeopardy", gameType: "jeopardy" },
-  wof: { label: "Wheel of Fandom", icon: CircleDot, bg: "#B97AD7", editPath: "/create-game/wof", gameType: "wheel-of-fortune" },
-  quiz: { label: "Bar Trivia", icon: Beer, bg: "#00C853", editPath: "/create-game/quiz", gameType: "pub-quiz" },
+type KindGameType = "jeopardy" | "pub-quiz" | "wheel-of-fortune" | "pop-the-question" | "scattergories" | "roast-roulette";
+
+const KIND_META: Record<GameKind, { label: string; icon: typeof Grid3x3; bg: string; editPath: string; gameType: KindGameType; packPrefix: string }> = {
+  jeopardy: { label: "Pop Quiz", icon: Grid3x3, bg: "#FFC107", editPath: "/create-game/jeopardy", gameType: "jeopardy", packPrefix: "custom-j-" },
+  wof: { label: "Wheel of Fandom", icon: CircleDot, bg: "#B97AD7", editPath: "/create-game/wof", gameType: "wheel-of-fortune", packPrefix: "custom-w-" },
+  quiz: { label: "Bar Trivia", icon: Beer, bg: "#00C853", editPath: "/create-game/quiz", gameType: "pub-quiz", packPrefix: "custom-q-" },
+  poll: { label: "Poll the Question", icon: Vote, bg: "#FF1493", editPath: "/create-game/poll", gameType: "pop-the-question", packPrefix: "custom-poll-" },
+  scattergories: { label: "Popping List", icon: ListChecks, bg: "#1565C0", editPath: "/create-game/popping-list", gameType: "scattergories", packPrefix: "custom-scat-" },
+  roast: { label: "Roast Roulette", icon: Flame, bg: "#FF6B35", editPath: "/create-game/roast", gameType: "roast-roulette", packPrefix: "custom-roast-" },
 };
 
 const TABS: { id: GameKind; label: string }[] = [
   { id: "jeopardy", label: "Pop Quiz" },
   { id: "wof", label: "Wheel of Fandom" },
   { id: "quiz", label: "Bar Trivia" },
+  { id: "poll", label: "Poll the Question" },
+  { id: "scattergories", label: "Popping List" },
+  { id: "roast", label: "Roast Roulette" },
 ];
 
 function packSummaryLine(pack: CustomPack): string {
@@ -54,6 +62,18 @@ function packSummaryLine(pack: CustomPack): string {
     const rounds = (p.rounds as unknown[])?.length ?? 0;
     const questions = (p.rounds as Array<{ questions: unknown[] }>)?.reduce((acc, r) => acc + (r.questions?.length ?? 0), 0) ?? 0;
     return `${rounds} rounds · ${questions} questions`;
+  }
+  if (pack.kind === "poll") {
+    const questions = (p.questions as unknown[])?.length ?? 0;
+    return `${questions} voting questions`;
+  }
+  if (pack.kind === "scattergories") {
+    const rounds = (p.rounds as unknown[])?.length ?? 0;
+    return `${rounds} rounds`;
+  }
+  if (pack.kind === "roast") {
+    const prompts = (p.prompts as unknown[])?.length ?? 0;
+    return `${prompts} prompts`;
   }
   return "";
 }
@@ -74,15 +94,21 @@ export default function MyGames() {
   const fetchAll = useCallback(async () => {
     setLoading(true);
     try {
-      const [jPacks, wPacks, qPacks] = await Promise.all([
+      const [jPacks, wPacks, qPacks, pollPacks, scatPacks, roastPacks] = await Promise.all([
         customGamesFetch<Array<Omit<CustomPack, "kind">>>("/custom-games/jeopardy"),
         customGamesFetch<Array<Omit<CustomPack, "kind">>>("/custom-games/wof"),
         customGamesFetch<Array<Omit<CustomPack, "kind">>>("/custom-games/quiz"),
+        customGamesFetch<Array<Omit<CustomPack, "kind">>>("/custom-games/poll"),
+        customGamesFetch<Array<Omit<CustomPack, "kind">>>("/custom-games/scattergories"),
+        customGamesFetch<Array<Omit<CustomPack, "kind">>>("/custom-games/roast"),
       ]);
       setPacks([
         ...jPacks.map((p) => ({ ...p, kind: "jeopardy" as GameKind })),
         ...wPacks.map((p) => ({ ...p, kind: "wof" as GameKind })),
         ...qPacks.map((p) => ({ ...p, kind: "quiz" as GameKind })),
+        ...pollPacks.map((p) => ({ ...p, kind: "poll" as GameKind })),
+        ...scatPacks.map((p) => ({ ...p, kind: "scattergories" as GameKind })),
+        ...roastPacks.map((p) => ({ ...p, kind: "roast" as GameKind })),
       ]);
     } catch {
       toast({ title: "Failed to load games", variant: "destructive" });
@@ -111,9 +137,10 @@ export default function MyGames() {
   const handleDuplicate = async (pack: CustomPack) => {
     setDuplicating(pack.id);
     try {
+      const meta = KIND_META[pack.kind];
       const newPayload = {
         ...pack.payload,
-        id: `custom-${pack.kind}-${Date.now()}`,
+        id: `${meta.packPrefix}${Date.now()}`,
         title: `${pack.title} (Copy)`,
       };
       await customGamesFetch(`/custom-games/${pack.kind}`, {
@@ -132,9 +159,9 @@ export default function MyGames() {
   const handlePlay = (pack: CustomPack) => {
     setLaunching(pack.id);
     const meta = KIND_META[pack.kind];
-    const customPackId = `custom-${pack.kind[0]}-${pack.id}`;
+    const customPackId = `${meta.packPrefix}${pack.id}`;
     createRoom.mutate(
-      { data: { gameType: meta.gameType as "jeopardy" | "pub-quiz" | "wheel-of-fortune", demo: false, packId: customPackId } },
+      { data: { gameType: meta.gameType, demo: false, packId: customPackId } },
       {
         onSuccess: (room) => {
           setLocation(`/game/${room.roomCode}/host`);
