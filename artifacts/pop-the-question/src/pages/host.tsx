@@ -17,7 +17,7 @@ import { BackArrow } from "@/components/ui/BackArrow";
 const GAME_CARDS = [
   {
     type: "pop-the-question" as CreateRoomRequestGameType,
-    label: "Pop the Question",
+    label: "Poll the Question",
     tagline: "Who is most likely to survive a horror movie?",
     description:
       "A voting game where you answer provocative pop culture questions about your friends. Vote to find out who your crew really is.",

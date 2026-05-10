@@ -63,46 +63,46 @@
     "columnCategoryIds": "[\"born-1980s\",\"born-1990s\",\"born-2000s\"]"
   },
   {
-    "id": "star-crossed-the-bear",
+    "id": "star-crossed-greta-gerwig-drama",
     "date": "2026-04-19",
-    "difficulty": "easy",
-    "rowCategoryIds": "[\"jeremy-allen-white\",\"ayo-edebiri\",\"pedro-pascal\"]",
-    "columnCategoryIds": "[\"ebon-moss-bachrach\",\"lionel-boyce\",\"matty-matheson\"]"
-  },
-  {
-    "id": "star-crossed-barbie",
-    "date": "2026-04-20",
-    "difficulty": "easy",
-    "rowCategoryIds": "[\"margot-robbie\",\"ryan-gosling\",\"issa-rae\"]",
-    "columnCategoryIds": "[\"america-ferrera\",\"will-ferrell\",\"simu-liu\"]"
-  },
-  {
-    "id": "star-crossed-crazy-stupid-love",
-    "date": "2026-04-21",
-    "difficulty": "easy",
-    "rowCategoryIds": "[\"ryan-gosling\",\"emma-stone\",\"steve-carell\"]",
-    "columnCategoryIds": "[\"marisa-tomei\",\"kevin-bacon\",\"julianne-moore\"]"
-  },
-  {
-    "id": "star-crossed-thunderbolts",
-    "date": "2026-04-22",
     "difficulty": "medium",
-    "rowCategoryIds": "[\"florence-pugh\",\"sebastian-stan\",\"david-harbour\"]",
-    "columnCategoryIds": "[\"wyatt-russell\",\"hannah-john-kamen\",\"olga-kurylenko\"]"
+    "rowCategoryIds": "[\"saoirse-ronan\",\"florence-pugh\",\"timothee-chalamet\"]",
+    "columnCategoryIds": "[\"eliza-scanlen\",\"tracy-letts\",\"meryl-streep\"]"
   },
   {
-    "id": "star-crossed-inception",
+    "id": "star-crossed-oppenheimer-era",
+    "date": "2026-04-20",
+    "difficulty": "medium",
+    "rowCategoryIds": "[\"cillian-murphy\",\"matt-damon\",\"florence-pugh\"]",
+    "columnCategoryIds": "[\"emily-blunt\",\"robert-downey-jr\",\"kenneth-branagh\"]"
+  },
+  {
+    "id": "star-crossed-movie-star-power",
+    "date": "2026-04-21",
+    "difficulty": "medium",
+    "rowCategoryIds": "[\"margot-robbie\",\"brad-pitt\",\"tobey-maguire\"]",
+    "columnCategoryIds": "[\"leonardo-dicaprio\",\"diego-calva\",\"olivia-wilde\"]"
+  },
+  {
+    "id": "star-crossed-dont-look-up",
+    "date": "2026-04-22",
+    "difficulty": "easy",
+    "rowCategoryIds": "[\"leonardo-dicaprio\",\"jennifer-lawrence\",\"jonah-hill\"]",
+    "columnCategoryIds": "[\"meryl-streep\",\"cate-blanchett\",\"timothee-chalamet\"]"
+  },
+  {
+    "id": "star-crossed-spider-verse",
     "date": "2026-04-23",
     "difficulty": "medium",
-    "rowCategoryIds": "[\"leonardo-dicaprio\",\"joseph-gordon-levitt\",\"tom-hardy\"]",
-    "columnCategoryIds": "[\"marion-cotillard\",\"cillian-murphy\",\"michael-caine\"]"
+    "rowCategoryIds": "[\"hailee-steinfeld\",\"shameik-moore\",\"brian-tyree-henry\"]",
+    "columnCategoryIds": "[\"jake-johnson\",\"mahershala-ali\",\"oscar-isaac\"]"
   },
   {
-    "id": "star-crossed-creed-trilogy",
+    "id": "star-crossed-babylon",
     "date": "2026-04-24",
     "difficulty": "medium",
-    "rowCategoryIds": "[\"michael-b-jordan\",\"tessa-thompson\",\"sylvester-stallone\"]",
-    "columnCategoryIds": "[\"phylicia-rashad\",\"wood-harris\",\"florian-munteanu\"]"
+    "rowCategoryIds": "[\"margot-robbie\",\"brad-pitt\",\"tobey-maguire\"]",
+    "columnCategoryIds": "[\"diego-calva\",\"jovan-adepo\",\"olivia-wilde\"]"
   },
   {
     "id": "star-crossed-deadpool-universe",
@@ -112,11 +112,11 @@
     "columnCategoryIds": "[\"brianna-hildebrand\",\"karan-soni\",\"stefan-kapicic\"]"
   },
   {
-    "id": "star-crossed-oceans-8",
+    "id": "star-crossed-pitch-perfect",
     "date": "2026-04-26",
     "difficulty": "easy",
-    "rowCategoryIds": "[\"sandra-bullock\",\"anne-hathaway\",\"cate-blanchett\"]",
-    "columnCategoryIds": "[\"mindy-kaling\",\"sarah-paulson\",\"helena-bonham-carter\"]"
+    "rowCategoryIds": "[\"anna-kendrick\",\"rebel-wilson\",\"brittany-snow\"]",
+    "columnCategoryIds": "[\"hailee-steinfeld\",\"adam-devine\",\"skylar-astin\"]"
   },
   {
     "id": "ball-knowers-soccer-trophies",
@@ -140,32 +140,32 @@
     "columnCategoryIds": "[\"australian-open-winner\",\"american\",\"european\"]"
   },
   {
-    "id": "star-crossed-mcu-avengers",
+    "id": "star-crossed-drama-heavyweights",
     "date": "2026-05-04",
     "difficulty": "medium",
-    "rowCategoryIds": "[\"robert-downey-jr\",\"chris-evans\",\"scarlett-johansson\"]",
-    "columnCategoryIds": "[\"mark-ruffalo\",\"chris-hemsworth\",\"jeremy-renner\"]"
+    "rowCategoryIds": "[\"jennifer-lawrence\",\"bradley-cooper\",\"christian-bale\"]",
+    "columnCategoryIds": "[\"robert-de-niro\",\"amy-adams\",\"jeremy-renner\"]"
   },
   {
-    "id": "star-crossed-harry-potter",
+    "id": "star-crossed-hollywood-royalty",
     "date": "2026-05-05",
-    "difficulty": "easy",
-    "rowCategoryIds": "[\"daniel-radcliffe\",\"emma-watson\",\"rupert-grint\"]",
-    "columnCategoryIds": "[\"ralph-fiennes\",\"helena-bonham-carter\",\"maggie-smith\"]"
+    "difficulty": "medium",
+    "rowCategoryIds": "[\"margot-robbie\",\"brad-pitt\",\"leonardo-dicaprio\"]",
+    "columnCategoryIds": "[\"tobey-maguire\",\"jonah-hill\",\"al-pacino\"]"
   },
   {
-    "id": "star-crossed-fast-furious",
+    "id": "star-crossed-nolan-verse",
     "date": "2026-05-06",
     "difficulty": "medium",
-    "rowCategoryIds": "[\"vin-diesel\",\"michelle-rodriguez\",\"tyrese-gibson\"]",
-    "columnCategoryIds": "[\"paul-walker\",\"jordana-brewster\",\"ludacris\"]"
+    "rowCategoryIds": "[\"christian-bale\",\"tom-hardy\",\"marion-cotillard\"]",
+    "columnCategoryIds": "[\"michael-caine\",\"cillian-murphy\",\"joseph-gordon-levitt\"]"
   },
   {
-    "id": "star-crossed-spider-verse",
+    "id": "star-crossed-wes-anderson",
     "date": "2026-05-07",
     "difficulty": "medium",
-    "rowCategoryIds": "[\"tom-holland\",\"jacob-batalon\",\"marisa-tomei\"]",
-    "columnCategoryIds": "[\"zendaya\",\"jon-favreau\",\"tony-revolori\"]"
+    "rowCategoryIds": "[\"tilda-swinton\",\"edward-norton\",\"jason-schwartzman\"]",
+    "columnCategoryIds": "[\"bill-murray\",\"adrien-brody\",\"owen-wilson\"]"
   },
   {
     "id": "pop-box-2026-04-02",
