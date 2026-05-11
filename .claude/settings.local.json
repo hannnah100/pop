@@ -44,7 +44,9 @@
       "Bash(pnpm -r --filter @workspace/pop-the-question typecheck)",
       "Bash(netstat -lnp)",
       "Bash(ps -eo pid,etime,start,cmd)",
-      "Bash(pnpm --filter @workspace/api-server run build)"
+      "Bash(pnpm --filter @workspace/api-server run build)",
+      "Bash(npx vite *)",
+      "Bash(BASE_PATH=/ npx vite build --config vite.config.ts)"
     ]
   }
 }

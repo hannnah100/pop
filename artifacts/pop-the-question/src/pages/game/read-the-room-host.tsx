@@ -3,7 +3,7 @@ import { useRoute, useLocation } from "wouter";
 import { io, Socket } from "socket.io-client";
 import type { Player } from "@/types/game";
 
-type Phase = "lobby" | "answering" | "solving" | "reveal" | "round-end" | "finished";
+type Phase = "lobby" | "picking-question" | "answering" | "solving" | "reveal" | "round-end" | "finished";
 
 interface AnswerCard { id: string; text: string }
 interface LeaderboardRow { id: string; name: string; score: number; rank: number; color: string }
@@ -39,9 +39,6 @@ export default function ReadTheRoomHost() {
   const [totalRounds, setTotalRounds] = useState(5);
   const [currentRound, setCurrentRound] = useState(0);
   const [playerColors, setPlayerColors] = useState<Record<string, string>>({});
-  const [presetQuestions, setPresetQuestions] = useState<string[]>([]);
-  const [customQuestion, setCustomQuestion] = useState("");
-  const [selectedPreset, setSelectedPreset] = useState<string | null>(null);
   const [currentQuestion, setCurrentQuestion] = useState("");
   const [solverId, setSolverId] = useState<string | null>(null);
   const [timerEndAt, setTimerEndAt] = useState(0);
@@ -55,7 +52,7 @@ export default function ReadTheRoomHost() {
   const [finalLeaderboard, setFinalLeaderboard] = useState<LeaderboardRow[]>([]);
   const [roundDelta, setRoundDelta] = useState<Record<string, number>>({});
   const [dartsThrownInfo, setDartsThrownInfo] = useState<Array<{ playerName: string; round: number }>>([]);
-  const [showPresetPicker, setShowPresetPicker] = useState(true);
+  const [nextRound, setNextRound] = useState(0);
 
   useEffect(() => {
     if (!roomCode) return;
@@ -94,14 +91,11 @@ export default function ReadTheRoomHost() {
     s.on("game-started", (payload: {
       totalRounds: number;
       playerColors: Record<string, string>;
-      presetQuestions: string[];
     }) => {
       setGameState("playing");
-      setPhase("lobby");
+      setPhase("picking-question");
       setTotalRounds(payload.totalRounds);
       setPlayerColors(payload.playerColors);
-      setPresetQuestions(payload.presetQuestions);
-      setShowPresetPicker(true);
     });
     s.on("rtr-total-rounds-changed", ({ totalRounds: t }: { totalRounds: number }) => {
       setTotalRounds(t);
@@ -125,7 +119,6 @@ export default function ReadTheRoomHost() {
       setLastReveal(null);
       setRevealIndex(0);
       setRoundDelta({});
-      setShowPresetPicker(false);
     });
     s.on("rtr-answer-progress", ({ submitted, submittedIds }: { submitted: number; submittedIds: string[] }) => {
       setSubmittedCount(submitted);
@@ -164,12 +157,10 @@ export default function ReadTheRoomHost() {
       setRoundDelta(payload.delta);
       setLeaderboard(payload.leaderboard);
     });
-    s.on("rtr-awaiting-question", ({ nextSolverId }: { nextSolverId: string | null }) => {
-      setPhase("lobby");
+    s.on("rtr-awaiting-question", ({ nextRound: nr, nextSolverId }: { nextRound: number; nextSolverId: string | null }) => {
+      setPhase("picking-question");
       setSolverId(nextSolverId);
-      setSelectedPreset(null);
-      setCustomQuestion("");
-      setShowPresetPicker(true);
+      setNextRound(nr);
     });
     s.on("game-ended", (payload: { finalScores: LeaderboardRow[] }) => {
       setGameState("finished");
@@ -189,11 +180,6 @@ export default function ReadTheRoomHost() {
   const secondsLeft = Math.max(0, Math.ceil((timerEndAt - now) / 1000));
 
   const handleStartGame = () => socket?.emit("start-game", { roomCode });
-  const handleStartRound = () => {
-    const q = selectedPreset ?? customQuestion.trim();
-    if (!q) return;
-    socket?.emit("rtr-start-round", { roomCode, question: q });
-  };
   const handleSetTotalRounds = (t: number) => {
     socket?.emit("rtr-set-total-rounds", { roomCode, totalRounds: t });
   };
@@ -359,7 +345,7 @@ export default function ReadTheRoomHost() {
             className="bg-[#FF006E] text-white px-6 py-3 font-mono font-black text-2xl uppercase"
             style={{ border: BORDER, boxShadow: "6px 6px 0 #000" }}
           >
-            Round {currentRound}/{totalRounds}
+            Round {phase === "picking-question" ? nextRound || 1 : currentRound}/{totalRounds}
           </div>
           <div
             className="bg-cyan-300 px-6 py-3 font-mono font-black text-2xl uppercase"
@@ -369,7 +355,7 @@ export default function ReadTheRoomHost() {
             {phase === "solving" && "🧩 Solving"}
             {phase === "reveal" && "🎯 Reveals"}
             {phase === "round-end" && "🏁 Round End"}
-            {phase === "lobby" && "📋 Pick Question"}
+            {phase === "picking-question" && "📋 Solver Picking Question"}
           </div>
           {phase === "answering" && timerEndAt > 0 && (
             <div
@@ -396,42 +382,31 @@ export default function ReadTheRoomHost() {
           </button>
         </div>
 
-        {/* Phase: pick question */}
-        {phase === "lobby" && showPresetPicker && (
-          <div className="bg-white p-8 mb-6" style={{ border: BORDER, boxShadow: SHADOW }}>
-            <h2 className="font-mono font-black text-3xl uppercase mb-4">Pick a question</h2>
-            <div className="grid md:grid-cols-2 gap-3 mb-6 max-h-96 overflow-y-auto">
-              {presetQuestions.map((q) => (
-                <button
-                  key={q}
-                  onClick={() => setSelectedPreset(q)}
-                  className={`text-left px-4 py-3 font-mono font-bold text-base ${selectedPreset === q ? "bg-[#FF006E] text-white" : "bg-white"}`}
+        {/* Phase: solver is picking a question */}
+        {phase === "picking-question" && (
+          <div className="bg-white p-10 text-center" style={{ border: BORDER, boxShadow: SHADOW }}>
+            <p className="font-mono font-black text-2xl uppercase mb-4 text-black/60">
+              📋 Picking question
+            </p>
+            {solverPlayer ? (
+              <>
+                <div
+                  className="inline-block px-8 py-5 font-mono font-black text-4xl uppercase text-black mb-4"
                   style={{
-                    border: "3px solid #000",
-                    boxShadow: selectedPreset === q ? "6px 6px 0 #000" : "3px 3px 0 #000",
+                    background: playerColors[solverPlayer.id] ?? "#fff",
+                    border: BORDER,
+                    boxShadow: "8px 8px 0 #000",
                   }}
                 >
-                  {q}
-                </button>
-              ))}
-            </div>
-            <h3 className="font-mono font-black text-xl uppercase mb-3">Or write your own</h3>
-            <input
-              value={customQuestion}
-              onChange={(e) => { setCustomQuestion(e.target.value); setSelectedPreset(null); }}
-              placeholder="Type a juicy question..."
-              maxLength={280}
-              className="w-full px-4 py-4 font-mono font-bold text-xl mb-4 bg-yellow-50"
-              style={{ border: BORDER, boxShadow: "4px 4px 0 #000", borderRadius: 0 }}
-            />
-            <button
-              onClick={handleStartRound}
-              disabled={!selectedPreset && !customQuestion.trim()}
-              className="w-full bg-lime-400 px-6 py-5 font-mono font-black text-2xl uppercase disabled:bg-gray-300"
-              style={{ border: BORDER, boxShadow: "8px 8px 0 #000" }}
-            >
-              Start Answer Phase →
-            </button>
+                  {solverPlayer.name}
+                </div>
+                <h2 className="font-mono font-black text-3xl uppercase">
+                  is choosing from 3 questions…
+                </h2>
+              </>
+            ) : (
+              <h2 className="font-mono font-black text-3xl uppercase">Waiting for solver…</h2>
+            )}
           </div>
         )}
 

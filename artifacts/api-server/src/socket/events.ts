@@ -111,6 +111,8 @@ import {
   PRESET_QUESTIONS,
   SCORE_SOLVER_CORRECT,
   clearRtrTimer,
+  consumeQuestionChoice,
+  drawQuestionOptions,
   makeReadTheRoomState,
   scoreReadTheRoomRound,
   shuffle,
@@ -677,7 +679,19 @@ export function setupSocketIO(httpServer: HttpServer) {
         rtrPhase: room.readTheRoom?.phase ?? null,
         rtrRound: room.readTheRoom?.currentRound ?? 0,
         rtrQuestion: room.readTheRoom?.currentQuestion ?? "",
-        rtrSolverId: room.readTheRoom ? solverIdForRound(room.readTheRoom, room.readTheRoom.currentRound) : null,
+        rtrSolverId: room.readTheRoom
+          ? solverIdForRound(
+              room.readTheRoom,
+              room.readTheRoom.phase === "picking-question"
+                ? room.readTheRoom.currentRound + 1
+                : room.readTheRoom.currentRound,
+            )
+          : null,
+        rtrQuestionOptions:
+          room.readTheRoom?.phase === "picking-question" &&
+          solverIdForRound(room.readTheRoom, room.readTheRoom.currentRound + 1) === socket.id
+            ? room.readTheRoom.questionOptions
+            : [],
         rtrPlayerColors: room.rtrPlayerColors ?? {},
         rtrTimerEndAt: room.readTheRoom?.timerEndAt ?? 0,
       });
@@ -1202,6 +1216,7 @@ export function setupSocketIO(httpServer: HttpServer) {
 
         const state = makeReadTheRoomState(totalRounds);
         state.rotationOrder = shuffle(nonHostPlayers.map((p) => p.id));
+        state.questionDeck = shuffle([...PRESET_QUESTIONS]);
         room.readTheRoom = state;
 
         io.to(roomCode).emit("game-started", {
@@ -1213,6 +1228,8 @@ export function setupSocketIO(httpServer: HttpServer) {
           rotationOrder: state.rotationOrder,
           presetQuestions: PRESET_QUESTIONS,
         });
+
+        startRtrQuestionPick(io, room, 1);
       }
     });
 
@@ -2204,19 +2221,23 @@ export function setupSocketIO(httpServer: HttpServer) {
     });
 
     // ===========================================
-    // Read the Room: host picks a question and starts the answer phase
+    // Read the Room: the round's solver picks one of the 3 offered questions
     // ===========================================
-    socket.on("rtr-start-round", ({ roomCode, question }: { roomCode: string; question: string }) => {
+    socket.on("rtr-pick-question", ({ roomCode, question }: { roomCode: string; question: string }) => {
       const room = rooms.get(roomCode);
       if (!room || !room.readTheRoom) return;
-      if (room.hostId !== socket.id) return;
       const rtr = room.readTheRoom;
-      if (rtr.phase !== "lobby" && rtr.phase !== "round-end") return;
-      if (typeof question !== "string" || question.trim().length === 0) return;
+      if (rtr.phase !== "picking-question") return;
+      const nextRound = rtr.currentRound + 1;
+      const solverId = solverIdForRound(rtr, nextRound);
+      if (socket.id !== solverId) return;
+      if (typeof question !== "string" || !rtr.questionOptions.includes(question)) return;
+
+      consumeQuestionChoice(rtr, question);
 
       clearRtrTimer(rtr);
-      rtr.currentRound += 1;
-      rtr.currentQuestion = question.trim().slice(0, 280);
+      rtr.currentRound = nextRound;
+      rtr.currentQuestion = question;
       rtr.currentAnswers = new Map();
       rtr.submittedAnswerIds = new Set();
       rtr.shuffledAnswerOrder = [];
@@ -2225,8 +2246,6 @@ export function setupSocketIO(httpServer: HttpServer) {
       rtr.revealIndex = 0;
       rtr.phase = "answering";
       rtr.timerEndAt = Date.now() + ANSWER_PHASE_MS;
-
-      const solverId = solverIdForRound(rtr, rtr.currentRound);
 
       io.to(roomCode).emit("rtr-round-started", {
         round: rtr.currentRound,
@@ -2412,14 +2431,7 @@ export function setupSocketIO(httpServer: HttpServer) {
         endRtrGame(io, room);
         return;
       }
-      // Reset to a state ready for host to pick the next question.
-      rtr.phase = "lobby";
-      const solverId = solverIdForRound(rtr, rtr.currentRound + 1);
-      io.to(roomCode).emit("rtr-awaiting-question", {
-        nextRound: rtr.currentRound + 1,
-        totalRounds: rtr.totalRounds,
-        nextSolverId: solverId,
-      });
+      startRtrQuestionPick(io, room, rtr.currentRound + 1);
     });
 
     socket.on("rtr-end-game", ({ roomCode }: { roomCode: string }) => {
@@ -3536,6 +3548,34 @@ function scheduleBotWofGuess(io: SocketIOServer, room: Room) {
 
 function rtrAnswerCardWire(a: RtrAnswer) {
   return { id: a.id, text: a.text };
+}
+
+/**
+ * Transition to the "picking-question" phase for an upcoming round.
+ * Draws 3 options from the deck, sends them privately to that round's solver,
+ * and broadcasts a public notice so everyone else can wait.
+ */
+function startRtrQuestionPick(io: SocketIOServer, room: Room, nextRound: number): void {
+  const rtr = room.readTheRoom;
+  if (!rtr) return;
+  clearRtrTimer(rtr);
+  rtr.phase = "picking-question";
+
+  const options = drawQuestionOptions(rtr);
+  const solverId = solverIdForRound(rtr, nextRound);
+
+  io.to(room.code).emit("rtr-awaiting-question", {
+    nextRound,
+    totalRounds: rtr.totalRounds,
+    nextSolverId: solverId,
+  });
+
+  if (solverId) {
+    io.to(solverId).emit("rtr-question-options", {
+      nextRound,
+      options,
+    });
+  }
 }
 
 function finalizeRtrAnswerPhase(io: SocketIOServer, room: Room): void {

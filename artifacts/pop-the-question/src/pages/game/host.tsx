@@ -309,6 +309,20 @@ interface ErrorPayload {
 
 const AWAY_THRESHOLD_MS = 30_000;
 
+/** 10-color neon palette used to tag players in Poll the Question results. */
+const PTQ_NEON_PALETTE = [
+  "#FF006E",
+  "#8AFF00",
+  "#00F5FF",
+  "#FFD60A",
+  "#FF6B00",
+  "#B537F2",
+  "#FF0054",
+  "#0066FF",
+  "#FF00FF",
+  "#00FF7F",
+] as const;
+
 export default function GameHost() {
   const [, params] = useRoute("/game/:roomCode/host");
   const roomCode = params?.roomCode || "";
@@ -2245,16 +2259,27 @@ export default function GameHost() {
     const total = totalVoters || players.length;
     const showRemoteWaiting =
       settings.mode === "remote" && !resultsRevealed && total > 0;
+    const playerColor = (playerId: string) => {
+      const idx = players.findIndex((p) => p.id === playerId);
+      return PTQ_NEON_PALETTE[(idx >= 0 ? idx : 0) % PTQ_NEON_PALETTE.length]!;
+    };
 
     return (
-      <div className="flex-1 flex flex-col relative overflow-hidden bg-[#FFF8E7]">
-        <header className="flex justify-between items-center mb-8 relative z-10">
-          <div className="font-display font-black text-black text-xl bg-white border-[3px] border-black shadow-[3px_3px_0_#000] px-6 py-3 uppercase tracking-widest">
-            ROOM: <span className="text-[#FF1493]">{roomCode}</span>
+      <div className="flex-1 flex flex-col relative overflow-hidden bg-[#FFF5E7] p-6 md:p-10">
+        <header className="flex justify-between items-center mb-8 gap-4 flex-wrap relative z-10">
+          <div
+            className="font-display font-black text-black text-xl bg-white border-[5px] border-black px-6 py-3 uppercase"
+            style={{ letterSpacing: "0.03em", boxShadow: "8px 8px 0 #000" }}
+          >
+            ROOM: <span className="text-[#FF006E]">{roomCode}</span>
           </div>
           {isDemo && <DemoBadge />}
-          <div className="font-display font-black text-black text-xl bg-white border-[3px] border-black shadow-[3px_3px_0_#000] px-6 py-3 uppercase">
-            Q <span className="text-[#FF1493]"><CountUp value={questionIndex + 1} duration={0.4} /></span>
+          <div
+            className="font-display font-black text-white text-xl bg-[#FF006E] border-[5px] border-black px-6 py-3 uppercase"
+            style={{ letterSpacing: "0.03em", boxShadow: "8px 8px 0 #000" }}
+          >
+            {resultsRevealed ? "🎯 Results" : "🗳️ Voting"}
+            <span className="ml-3"><CountUp value={questionIndex + 1} duration={0.4} /></span>
           </div>
         </header>
 
@@ -2262,10 +2287,11 @@ export default function GameHost() {
         {showRemoteWaiting && (
           <div className="flex justify-center mb-4">
             <div
-              className="inline-flex items-center gap-2 bg-[#FFD700] border-[3px] border-black shadow-[3px_3px_0_#000] px-4 py-2 font-display font-black text-black uppercase text-sm"
+              className="inline-flex items-center gap-3 bg-[#FFD60A] border-[5px] border-black px-5 py-3 font-display font-black text-black uppercase text-base"
+              style={{ letterSpacing: "0.03em", boxShadow: "6px 6px 0 #000" }}
               data-testid="remote-waiting-indicator"
             >
-              <span className="inline-block w-2 h-2 bg-black animate-pulse" />
+              <span className="inline-block w-3 h-3 bg-black animate-pulse" />
               Waiting for votes {votesIn}/{total}
             </div>
           </div>
@@ -2274,49 +2300,70 @@ export default function GameHost() {
         <PlayerStatusBar />
 
         {settings.answerMethod === "voice" && !resultsRevealed && (
-          <div className="flex justify-center mb-3">
-            <div className="inline-flex items-center gap-2 bg-[#00E5FF] border-[2px] border-black shadow-[2px_2px_0_#000] px-4 py-2 font-display font-black text-black uppercase text-sm">
-              <Mic className="w-4 h-4" /> Voice mode — players shout
+          <div className="flex justify-center mb-4">
+            <div
+              className="inline-flex items-center gap-2 bg-[#00F5FF] border-[5px] border-black px-5 py-3 font-display font-black text-black uppercase text-base"
+              style={{ letterSpacing: "0.03em", boxShadow: "6px 6px 0 #000" }}
+            >
+              <Mic className="w-5 h-5" /> Voice mode — players shout
             </div>
           </div>
         )}
 
         <main className="flex-1 flex flex-col items-center justify-center relative z-10 max-w-6xl mx-auto w-full">
           <AnimatePresence mode="wait">
-            <motion.h2
+            <motion.div
               key={`q-${questionIndex}`}
               initial={{ opacity: 0, y: 50, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -50, scale: 0.95 }}
               transition={{ type: "spring", stiffness: 180, damping: 22 }}
-              className="font-question-pq font-black text-5xl md:text-[4.5rem] leading-tight text-center mb-12 text-black"
+              className="w-full bg-white border-[6px] border-black px-8 md:px-12 py-10 md:py-14 mb-10 text-center"
+              style={{ boxShadow: "10px 10px 0 #000" }}
             >
-              {currentQuestion || "Loading question..."}
-            </motion.h2>
+              <p
+                className="font-display font-black text-black/50 uppercase text-base md:text-lg mb-3"
+                style={{ letterSpacing: "0.03em" }}
+              >
+                The Question
+              </p>
+              <h2
+                className="font-question-pq font-black text-4xl md:text-6xl leading-tight text-black uppercase"
+                style={{ letterSpacing: "0.03em" }}
+              >
+                {currentQuestion || "Loading question..."}
+              </h2>
+            </motion.div>
           </AnimatePresence>
 
           {!resultsRevealed ? (
             <div className="flex flex-col items-center w-full">
-              <div className="font-display font-black text-black text-4xl mb-8 uppercase">
-                <span className="text-[#FF1493]"><CountUp value={votesIn} duration={0.5} /></span>
+              <div
+                className="font-display font-black text-black text-3xl md:text-4xl mb-6 uppercase"
+                style={{ letterSpacing: "0.03em" }}
+              >
+                <span className="text-[#FF006E]"><CountUp value={votesIn} duration={0.5} /></span>
                 <span className="text-black/40"> / {total} Votes In</span>
               </div>
-              <div className="w-full max-w-3xl bg-white border-[3px] border-black h-10 overflow-hidden mb-12">
+              <div
+                className="w-full max-w-3xl bg-white border-[5px] border-black h-12 overflow-hidden mb-10"
+                style={{ boxShadow: "8px 8px 0 #000" }}
+              >
                 <motion.div
-                  className="bg-[#FF1493] h-full"
+                  className="bg-[#FF006E] h-full"
                   animate={{ width: `${(votesIn / Math.max(1, total)) * 100}%` }}
                   transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
                 />
               </div>
-              <Button
-                size="lg"
+              <button
                 onClick={handleRevealResults}
                 disabled={votesIn === 0}
-                className="text-3xl px-12 py-8"
+                className="bg-[#8AFF00] hover:bg-[#FF006E] hover:text-white disabled:bg-gray-300 disabled:cursor-not-allowed text-black px-12 py-6 font-display font-black text-3xl uppercase border-[6px] border-black transition-colors duration-150"
+                style={{ letterSpacing: "0.03em", boxShadow: "10px 10px 0 #000" }}
                 data-testid="btn-reveal"
               >
-                Reveal Results
-              </Button>
+                Reveal Results →
+              </button>
             </div>
           ) : (
             <motion.div
@@ -2325,24 +2372,45 @@ export default function GameHost() {
               transition={{ type: "spring", stiffness: 220, damping: 22 }}
               className="w-full max-w-4xl"
             >
-              <div className="space-y-4 mb-12">
+              <div className="space-y-5 mb-12">
                 {sortedVotes.map(([playerId, count], i) => {
                   const player = players.find((p) => p.id === playerId);
                   if (!player) return null;
                   const percentage = (count / Math.max(1, total)) * 100;
                   const isBurned = playerId === burnedPlayerId;
+                  const color = playerColor(playerId);
                   return (
                     <div key={playerId} className="relative">
-                      <div className="flex justify-between font-display font-black text-black text-3xl uppercase mb-2 relative z-10">
-                        <span className="flex items-center gap-2">
-                          {i === 0 && <Crown className="w-8 h-8 text-[#FFD700]" style={{ filter: "drop-shadow(2px 2px 0 #000)" }} />}
-                          {player.isBot && <Bot className="w-6 h-6 text-black/40" />}
-                          <span className={isBurned ? "text-[#FF6B35]" : ""}>{player.name}</span>
-                          {isBurned && <Flame className="w-7 h-7 text-[#FF6B35]" />}
-                        </span>
-                        <span><CountUp value={count} duration={1} /> {count === 1 ? "vote" : "votes"}</span>
+                      <div className="flex flex-wrap justify-between items-center gap-3 mb-2 relative z-10">
+                        <div
+                          className="flex items-center gap-3 px-5 py-3 border-[5px] border-black font-display font-black uppercase text-2xl md:text-3xl text-black"
+                          style={{
+                            background: color,
+                            letterSpacing: "0.03em",
+                            boxShadow: "6px 6px 0 #000",
+                          }}
+                        >
+                          {i === 0 && (
+                            <Crown
+                              className="w-7 h-7 text-[#FFD60A]"
+                              style={{ filter: "drop-shadow(2px 2px 0 #000)" }}
+                            />
+                          )}
+                          {player.isBot && <Bot className="w-6 h-6 text-black/60" />}
+                          <span>{player.name}</span>
+                          {isBurned && <Flame className="w-7 h-7 text-[#FF6B00]" />}
+                        </div>
+                        <div
+                          className="bg-white border-[5px] border-black px-5 py-3 font-display font-black text-2xl md:text-3xl text-black uppercase"
+                          style={{ letterSpacing: "0.03em", boxShadow: "6px 6px 0 #000" }}
+                        >
+                          <CountUp value={count} duration={1} /> {count === 1 ? "vote" : "votes"}
+                        </div>
                       </div>
-                      <div className="relative h-16 bg-white border-[3px] border-black overflow-hidden">
+                      <div
+                        className="relative h-16 bg-white border-[5px] border-black overflow-hidden"
+                        style={{ boxShadow: "8px 8px 0 #000" }}
+                      >
                         {isBurned && (
                           <ParticleRain emoji="🔥" variant="fire" density={1} />
                         )}
@@ -2350,7 +2418,8 @@ export default function GameHost() {
                           initial={{ width: 0 }}
                           animate={{ width: `${percentage}%` }}
                           transition={{ duration: 1, delay: i * 0.18, ease: [0.16, 1, 0.3, 1] }}
-                          className={`relative h-full ${i === 0 ? "bg-[#FF1493]" : "bg-[#FFD700]"}`}
+                          className="relative h-full"
+                          style={{ background: color }}
                         />
                       </div>
                     </div>
@@ -3295,28 +3364,28 @@ export default function GameHost() {
     if (gameType === "pop-the-question") {
       if (!resultsRevealed) {
         return (
-          <Button
-            size="lg"
+          <button
             onClick={handleRevealResults}
             disabled={votesIn === 0}
-            className="text-lg px-6 py-5 font-bold gap-2 bg-accent hover:bg-accent/90 text-accent-foreground"
+            className="bg-[#8AFF00] hover:bg-[#FF006E] hover:text-white disabled:bg-gray-300 disabled:cursor-not-allowed text-black px-7 py-4 font-display font-black text-lg uppercase border-[5px] border-black inline-flex items-center gap-2 transition-colors duration-150"
+            style={{ letterSpacing: "0.03em", boxShadow: "6px 6px 0 #000" }}
             data-testid="btn-reveal-bar"
           >
             Reveal Results
             <ChevronRight className="w-5 h-5" />
-          </Button>
+          </button>
         );
       }
       return (
-        <Button
-          size="lg"
+        <button
           onClick={handleNextQuestion}
-          className="text-lg px-6 py-5 font-bold gap-2"
+          className="bg-[#FF006E] hover:bg-black text-white px-7 py-4 font-display font-black text-lg uppercase border-[5px] border-black inline-flex items-center gap-2 transition-colors duration-150"
+          style={{ letterSpacing: "0.03em", boxShadow: "6px 6px 0 #000" }}
           data-testid="btn-next-bar"
         >
           Next Question
           <ChevronRight className="w-5 h-5" />
-        </Button>
+        </button>
       );
     }
 

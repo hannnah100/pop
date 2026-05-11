@@ -3,7 +3,7 @@ import { useRoute, useLocation } from "wouter";
 import { io, Socket } from "socket.io-client";
 import type { Player } from "@/types/game";
 
-type Phase = "lobby" | "answering" | "solving" | "reveal" | "round-end" | "finished";
+type Phase = "lobby" | "picking-question" | "answering" | "solving" | "reveal" | "round-end" | "finished";
 
 interface AnswerCard { id: string; text: string }
 interface LeaderboardRow { id: string; name: string; score: number; rank: number; color: string }
@@ -51,6 +51,10 @@ export default function ReadTheRoomPlayer() {
   const [timerEndAt, setTimerEndAt] = useState(0);
   const [now, setNow] = useState(Date.now());
 
+  // Question picking phase
+  const [questionOptions, setQuestionOptions] = useState<string[]>([]);
+  const [nextRound, setNextRound] = useState(0);
+
   // Answer phase
   const [answerInput, setAnswerInput] = useState("");
   const [answerSubmitted, setAnswerSubmitted] = useState(false);
@@ -97,6 +101,7 @@ export default function ReadTheRoomPlayer() {
       rtrRound?: number;
       rtrQuestion?: string;
       rtrSolverId?: string | null;
+      rtrQuestionOptions?: string[];
       rtrPlayerColors?: Record<string, string>;
       rtrTimerEndAt?: number;
       rtrTotalRounds?: number;
@@ -108,6 +113,7 @@ export default function ReadTheRoomPlayer() {
       if (data.rtrRound) setCurrentRound(data.rtrRound);
       if (data.rtrQuestion) setCurrentQuestion(data.rtrQuestion);
       if (data.rtrSolverId !== undefined) setSolverId(data.rtrSolverId);
+      if (data.rtrQuestionOptions) setQuestionOptions(data.rtrQuestionOptions);
       if (data.rtrPlayerColors) setPlayerColors(data.rtrPlayerColors);
       if (data.rtrTimerEndAt) setTimerEndAt(data.rtrTimerEndAt);
       if (data.status === "playing") setGameState("playing");
@@ -142,6 +148,7 @@ export default function ReadTheRoomPlayer() {
       setDartAnswerId(null);
       setDartPlayerId(null);
       setActiveAnswer(null);
+      setQuestionOptions([]);
     });
     s.on("rtr-solving-phase-start", (payload: {
       solverId: string | null;
@@ -174,8 +181,14 @@ export default function ReadTheRoomPlayer() {
       setLeaderboard(payload.leaderboard);
       setRoundDelta(payload.delta);
     });
-    s.on("rtr-awaiting-question", () => {
-      setPhase("lobby");
+    s.on("rtr-awaiting-question", ({ nextRound: nr, nextSolverId }: { nextRound: number; nextSolverId: string | null }) => {
+      setPhase("picking-question");
+      setSolverId(nextSolverId);
+      setNextRound(nr);
+      setQuestionOptions([]);
+    });
+    s.on("rtr-question-options", ({ options }: { nextRound: number; options: string[] }) => {
+      setQuestionOptions(options);
     });
     s.on("game-ended", (payload: { finalScores: LeaderboardRow[] }) => {
       setGameState("finished");
@@ -238,6 +251,10 @@ export default function ReadTheRoomPlayer() {
       answerId: dartAnswerId,
       targetPlayerId: dartPlayerId,
     });
+  };
+
+  const handlePickQuestion = (question: string) => {
+    socket?.emit("rtr-pick-question", { roomCode, question });
   };
 
   // ============ Render branches ============
@@ -304,6 +321,67 @@ export default function ReadTheRoomPlayer() {
           >
             ← Home
           </button>
+        </div>
+      </div>
+    );
+  }
+
+  // ============ PICKING QUESTION PHASE ============
+  if (phase === "picking-question") {
+    const displayRound = nextRound || currentRound + 1 || 1;
+    if (iAmSolver) {
+      return (
+        <div className="min-h-screen w-full px-4 py-6" style={{ background: "#FFF5E7" }}>
+          <div className="max-w-md mx-auto">
+            <div className="flex items-center justify-between mb-4">
+              <div className="px-3 py-2 bg-[#FF006E] text-white font-mono font-black uppercase text-sm"
+                style={{ border: BORDER_SM, boxShadow: SHADOW_SM }}>
+                R{displayRound}/{totalRounds}
+              </div>
+            </div>
+
+            <div className="bg-[#FF006E] text-white p-4 mb-4"
+              style={{ border: BORDER, boxShadow: SHADOW_LG }}>
+              <h2 className="font-mono font-black text-2xl uppercase">🧩 You're the Solver</h2>
+              <p className="font-mono font-bold mt-1">Pick the question for this round.</p>
+            </div>
+
+            {questionOptions.length === 0 ? (
+              <div className="bg-white p-6 text-center"
+                style={{ border: BORDER, boxShadow: SHADOW_LG }}>
+                <p className="font-mono font-bold">Loading questions…</p>
+              </div>
+            ) : (
+              <div className="space-y-3">
+                {questionOptions.map((q) => (
+                  <button
+                    key={q}
+                    onClick={() => handlePickQuestion(q)}
+                    className="w-full text-left bg-white px-5 py-5 font-mono font-bold text-lg hover:bg-yellow-50"
+                    style={{ border: BORDER, boxShadow: SHADOW_LG }}
+                  >
+                    {q}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      );
+    }
+
+    return (
+      <div className="min-h-screen w-full px-4 py-6 flex items-center justify-center"
+        style={{ background: "#FFF5E7" }}>
+        <div className="bg-white p-8 text-center max-w-md"
+          style={{ border: BORDER, boxShadow: SHADOW_LG }}>
+          <p className="font-mono font-black uppercase text-sm mb-2 text-black/60">
+            Round {displayRound}
+          </p>
+          <h2 className="font-mono font-black text-2xl uppercase mb-2">Hang Tight</h2>
+          <p className="font-mono font-bold">
+            {solverPlayerName(playersById, solverId) ?? "The solver"} is picking a question…
+          </p>
         </div>
       </div>
     );

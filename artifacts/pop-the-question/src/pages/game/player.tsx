@@ -218,6 +218,20 @@ interface JDailyDoublePayload {
   maxWager: number;
 }
 
+/** 10-color neon palette used to tag vote options in Poll the Question. */
+const PTQ_NEON_PALETTE = [
+  "#FF006E",
+  "#8AFF00",
+  "#00F5FF",
+  "#FFD60A",
+  "#FF6B00",
+  "#B537F2",
+  "#FF0054",
+  "#0066FF",
+  "#FF00FF",
+  "#00FF7F",
+] as const;
+
 const colorHex = (color: string): string => {
   switch (color) {
     case "yellow": return "#FFD700";
@@ -1428,11 +1442,22 @@ export default function GamePlayer() {
   // ============ PLAYING — Pop the Question ============
   if (gameState === "playing" && (gameType === "pop-the-question" || gameType === "")) {
     const q = currentQuestion as { prompt?: string } | null;
+    const voteOptions = players.filter((p) => p.id !== me?.id);
+    const colorForOption = (playerId: string) => {
+      const idx = voteOptions.findIndex((p) => p.id === playerId);
+      return PTQ_NEON_PALETTE[(idx >= 0 ? idx : 0) % PTQ_NEON_PALETTE.length]!;
+    };
     return (
       <>
         <LeaveGameBtn onClick={() => setConfirmLeave(true)} />
-        <div className="flex flex-col min-h-[100dvh]">
-        <header className="sticky top-0 z-10 bg-[#FF1493] border-b-[4px] border-black px-4 py-4">
+        <div className="flex flex-col min-h-[100dvh] bg-[#FFF5E7]">
+        <header className="sticky top-0 z-10 bg-[#FF006E] border-b-[6px] border-black px-5 py-6">
+          <p
+            className="font-display font-black text-white/90 uppercase text-xs mb-2"
+            style={{ letterSpacing: "0.03em", textShadow: "2px 2px 0 #000" }}
+          >
+            The Question
+          </p>
           <AnimatePresence mode="wait">
             <motion.h2
               key={q?.prompt ?? "loading"}
@@ -1440,57 +1465,105 @@ export default function GamePlayer() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.2 }}
-              className="font-question-pq font-bold text-white text-xl leading-tight"
-              style={{ textShadow: "2px 2px 0 #000" }}
+              className="font-question-pq font-black text-white text-2xl leading-tight uppercase"
+              style={{ letterSpacing: "0.03em", textShadow: "3px 3px 0 #000" }}
             >
               {q?.prompt || "Loading…"}
             </motion.h2>
           </AnimatePresence>
         </header>
 
-        <main className="flex-1 flex flex-col p-4 bg-[#FFF8E7]">
+        <main className="flex-1 flex flex-col p-5 bg-[#FFF5E7]">
           {!votedFor && !resultsRevealed ? (
-            <motion.div
-              className="space-y-3 pb-8"
-              initial="hidden"
-              animate="show"
-              variants={{ show: { transition: { staggerChildren: 0.06 } } }}
-            >
-              {players.filter((p) => p.id !== me?.id).map((p) => (
-                <motion.div
-                  key={p.id}
-                  variants={{ hidden: { opacity: 0, y: 12 }, show: { opacity: 1, y: 0 } }}
-                  whileTap={{ scale: 0.96 }}
-                >
-                  <Card
-                    onClick={() => handleVote(p.id)}
-                    className="p-6 cursor-pointer bg-white border-[3px] border-black shadow-[4px_4px_0_#000] hover:bg-[#FFD700] min-h-16 active:shadow-[2px_2px_0_#000] active:translate-y-[2px]"
-                    data-testid={`btn-vote-${p.id}`}
-                  >
-                    <span className="font-display font-black text-black text-2xl uppercase">{p.name}</span>
-                  </Card>
-                </motion.div>
-              ))}
-            </motion.div>
+            <>
+              <p
+                className="font-display font-black text-black/70 uppercase text-sm mb-4 text-center"
+                style={{ letterSpacing: "0.03em" }}
+              >
+                Tap your pick
+              </p>
+              <motion.div
+                className="space-y-4 pb-8"
+                initial="hidden"
+                animate="show"
+                variants={{ show: { transition: { staggerChildren: 0.06 } } }}
+              >
+                {voteOptions.map((p) => {
+                  const color = colorForOption(p.id);
+                  return (
+                    <motion.button
+                      key={p.id}
+                      type="button"
+                      variants={{ hidden: { opacity: 0, y: 12 }, show: { opacity: 1, y: 0 } }}
+                      whileTap={{ scale: 0.96, boxShadow: "3px 3px 0 #000" }}
+                      onClick={() => handleVote(p.id)}
+                      className="w-full text-left bg-white border-[5px] border-black px-6 py-6 flex items-center gap-4 min-h-16 hover:bg-[#FF006E] hover:text-white transition-colors duration-150"
+                      style={{ boxShadow: "8px 8px 0 #000" }}
+                      data-testid={`btn-vote-${p.id}`}
+                    >
+                      <span
+                        className="w-8 h-8 border-[3px] border-black flex-shrink-0"
+                        style={{ background: color, boxShadow: "3px 3px 0 #000" }}
+                      />
+                      <span
+                        className="font-display font-black text-2xl uppercase"
+                        style={{ letterSpacing: "0.03em" }}
+                      >
+                        {p.name}
+                      </span>
+                    </motion.button>
+                  );
+                })}
+              </motion.div>
+            </>
           ) : !resultsRevealed ? (
             <div className="flex-1 flex flex-col items-center justify-center text-center space-y-6 p-4">
               <motion.div
                 initial={{ scale: 0, rotate: -90 }}
                 animate={{ scale: 1, rotate: 0 }}
                 transition={{ type: "spring", stiffness: 220, damping: 28 }}
-                className="w-24 h-24 bg-[#00C853] border-[3px] border-black shadow-[4px_4px_0_#000] flex items-center justify-center"
+                className="w-28 h-28 bg-[#8AFF00] border-[6px] border-black flex items-center justify-center"
+                style={{ boxShadow: "10px 10px 0 #000" }}
               >
-                <span className="text-4xl">👍</span>
+                <span className="text-5xl">👍</span>
               </motion.div>
-              <h2 className="font-display font-black text-black text-3xl uppercase">Vote received!</h2>
-              <p className="text-black/60 font-sans">Look at the big screen to see what everyone else thought.</p>
+              <div
+                className="bg-white border-[6px] border-black px-8 py-6"
+                style={{ boxShadow: "10px 10px 0 #000" }}
+              >
+                <h2
+                  className="font-display font-black text-black text-3xl uppercase"
+                  style={{ letterSpacing: "0.03em" }}
+                >
+                  Vote Received!
+                </h2>
+                <p
+                  className="font-display font-bold text-black/60 mt-2 uppercase text-sm"
+                  style={{ letterSpacing: "0.03em" }}
+                >
+                  Look at the big screen
+                </p>
+              </div>
             </div>
           ) : (
             <div className="flex-1 flex flex-col items-center justify-center text-center space-y-6 p-4">
-              <div className="bg-[#FF1493] border-[3px] border-black shadow-[4px_4px_0_#000] p-6">
-                <h2 className="font-display font-black text-white text-3xl uppercase" style={{ textShadow: "2px 2px 0 #000" }}>Results are up!</h2>
+              <div
+                className="bg-[#FF006E] border-[6px] border-black px-8 py-6"
+                style={{ boxShadow: "10px 10px 0 #000" }}
+              >
+                <h2
+                  className="font-display font-black text-white text-3xl uppercase"
+                  style={{ letterSpacing: "0.03em", textShadow: "3px 3px 0 #000" }}
+                >
+                  Results Are Up!
+                </h2>
               </div>
-              <p className="text-black/60 font-sans">Look at the big screen.</p>
+              <p
+                className="font-display font-bold text-black/60 uppercase text-sm"
+                style={{ letterSpacing: "0.03em" }}
+              >
+                Look at the big screen
+              </p>
             </div>
           )}
         </main>

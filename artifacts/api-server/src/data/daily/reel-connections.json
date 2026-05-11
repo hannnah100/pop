@@ -46,5 +46,29 @@
     "date": "2026-05-17",
     "actors": "[\"Florence Pugh\",\"Andrew Garfield\",\"Jesse Eisenberg\",\"Kristen Stewart\",\"Robert Pattinson\",\"Zendaya\"]",
     "validAnswers": "[[\"We Live in Time\"],[\"The Social Network\"],[\"Adventureland\",\"American Ultra\"],[\"Twilight\",\"The Twilight Saga\",\"New Moon\",\"Eclipse\",\"Breaking Dawn\"],[\"The Drama\"],[\"Dune: Part Two\",\"Dune Part Two\",\"Dune Part 2\",\"Dune 2\"]]"
+  },
+  {
+    "id": "reel-connections-2026-05-19",
+    "date": "2026-05-19",
+    "actors": "[\"Steve Carell\",\"Paul Rudd\",\"Jason Segel\",\"Mila Kunis\",\"Mark Wahlberg\",\"Will Ferrell\"]",
+    "validAnswers": "[[\"The 40-Year-Old Virgin\",\"40-Year-Old Virgin\",\"The 40 Year Old Virgin\",\"40 Year Old Virgin\"],[\"I Love You, Man\",\"I Love You Man\",\"Knocked Up\"],[\"Forgetting Sarah Marshall\"],[\"Ted\",\"Ted 2\",\"Max Payne\"],[\"The Other Guys\",\"Daddy's Home\",\"Daddys Home\",\"Daddy's Home 2\",\"Daddys Home 2\"],[\"Anchorman\",\"Anchorman: The Legend of Ron Burgundy\",\"Anchorman 2\",\"Anchorman 2: The Legend Continues\"]]"
+  },
+  {
+    "id": "reel-connections-2026-05-20",
+    "date": "2026-05-20",
+    "actors": "[\"Cillian Murphy\",\"Christian Bale\",\"Anne Hathaway\",\"Matthew McConaughey\",\"Robert Downey Jr.\",\"Chris Evans\"]",
+    "validAnswers": "[[\"Batman Begins\",\"The Dark Knight\"],[\"The Dark Knight Rises\"],[\"Interstellar\"],[\"Tropic Thunder\"],[\"The Avengers\",\"Avengers\",\"Avengers: Age of Ultron\",\"Avengers Age of Ultron\",\"Captain America: Civil War\",\"Captain America Civil War\",\"Avengers: Infinity War\",\"Avengers Infinity War\",\"Avengers: Endgame\",\"Avengers Endgame\"],[\"Sunshine\"]]"
+  },
+  {
+    "id": "reel-connections-2026-05-21",
+    "date": "2026-05-21",
+    "actors": "[\"Adam Driver\",\"Greta Gerwig\",\"Ben Stiller\",\"Owen Wilson\",\"Bill Murray\",\"Scarlett Johansson\"]",
+    "validAnswers": "[[\"Frances Ha\",\"White Noise\"],[\"Greenberg\"],[\"Zoolander\",\"Zoolander 2\",\"Starsky & Hutch\",\"Starsky and Hutch\",\"Night at the Museum: Battle of the Smithsonian\",\"Night at the Museum 2\"],[\"The Royal Tenenbaums\",\"Royal Tenenbaums\",\"The Life Aquatic with Steve Zissou\",\"The Life Aquatic\",\"Life Aquatic\",\"The Darjeeling Limited\",\"Darjeeling Limited\"],[\"Lost in Translation\",\"The Jungle Book\",\"Isle of Dogs\"],[\"Marriage Story\"]]"
+  },
+  {
+    "id": "reel-connections-2026-05-22",
+    "date": "2026-05-22",
+    "actors": "[\"Tom Cruise\",\"Henry Cavill\",\"Ben Affleck\",\"Matt Damon\",\"George Clooney\",\"Brad Pitt\"]",
+    "validAnswers": "[[\"Mission: Impossible – Fallout\",\"Mission: Impossible Fallout\",\"Mission Impossible Fallout\",\"Mission Impossible: Fallout\"],[\"Batman v Superman: Dawn of Justice\",\"Batman v Superman\",\"Batman vs Superman\",\"Batman vs. Superman\",\"Justice League\",\"Zack Snyder's Justice League\"],[\"Good Will Hunting\",\"Dogma\",\"The Last Duel\",\"Air\",\"Jay and Silent Bob Strike Back\"],[\"Ocean's Eleven\",\"Oceans Eleven\",\"Ocean's 11\",\"Oceans 11\",\"Ocean's Twelve\",\"Oceans Twelve\",\"Ocean's 12\",\"Oceans 12\",\"Ocean's Thirteen\",\"Oceans Thirteen\",\"Ocean's 13\",\"Oceans 13\",\"Syriana\",\"The Monuments Men\",\"Monuments Men\",\"Suburbicon\"],[\"Ocean's Eleven\",\"Oceans Eleven\",\"Ocean's 11\",\"Oceans 11\",\"Ocean's Twelve\",\"Oceans Twelve\",\"Ocean's 12\",\"Oceans 12\",\"Ocean's Thirteen\",\"Oceans Thirteen\",\"Ocean's 13\",\"Oceans 13\",\"Burn After Reading\",\"Wolfs\"],[\"Interview with the Vampire\",\"Interview with the Vampire: The Vampire Chronicles\",\"Interview with a Vampire\"]]"
   }
 ]

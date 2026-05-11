@@ -56,11 +56,15 @@ export const PRESET_QUESTIONS: ReadonlyArray<string> = [
 
 export type ReadTheRoomPhase =
   | "lobby"
+  | "picking-question"
   | "answering"
   | "solving"
   | "reveal"
   | "round-end"
   | "finished";
+
+/** Number of question options shown to the solver each round. */
+export const QUESTION_OPTIONS_COUNT = 3;
 
 export interface RtrAnswer {
   /** Stable id for this answer (used by darts/matches). */
@@ -109,6 +113,10 @@ export interface ReadTheRoomState {
   solverIndex: number;
   /** Currently selected question for this round. */
   currentQuestion: string;
+  /** Remaining preset questions available to draw from this game. */
+  questionDeck: string[];
+  /** The 3 options currently offered to the solver to pick from. Empty when not in picking phase. */
+  questionOptions: string[];
   /** Ordered list of non-host player ids for solver rotation. */
   rotationOrder: string[];
   /** Answers indexed by player id for the CURRENT round. */
@@ -137,6 +145,8 @@ export function makeReadTheRoomState(totalRounds: number): ReadTheRoomState {
     totalRounds,
     solverIndex: 0,
     currentQuestion: "",
+    questionDeck: [],
+    questionOptions: [],
     rotationOrder: [],
     currentAnswers: new Map(),
     submittedAnswerIds: new Set(),
@@ -219,4 +229,29 @@ export function solverIdForRound(state: ReadTheRoomState, round: number): string
   if (state.rotationOrder.length === 0) return null;
   const idx = (round - 1) % state.rotationOrder.length;
   return state.rotationOrder[idx] ?? null;
+}
+
+/**
+ * Draw QUESTION_OPTIONS_COUNT questions from the deck for the solver to choose from.
+ * Refills the deck from PRESET_QUESTIONS if it ever runs low.
+ */
+export function drawQuestionOptions(state: ReadTheRoomState): string[] {
+  if (state.questionDeck.length < QUESTION_OPTIONS_COUNT) {
+    const refill = shuffle(PRESET_QUESTIONS.filter((q) => !state.questionDeck.includes(q)));
+    state.questionDeck = [...state.questionDeck, ...refill];
+  }
+  const options = state.questionDeck.slice(0, QUESTION_OPTIONS_COUNT);
+  state.questionDeck = state.questionDeck.slice(QUESTION_OPTIONS_COUNT);
+  state.questionOptions = options;
+  return options;
+}
+
+/**
+ * Consume the solver's chosen question — the picked one is removed,
+ * the other two are shuffled back into the deck so they can resurface.
+ */
+export function consumeQuestionChoice(state: ReadTheRoomState, chosen: string): void {
+  const returned = state.questionOptions.filter((q) => q !== chosen);
+  state.questionOptions = [];
+  state.questionDeck = shuffle([...state.questionDeck, ...returned]);
 }
