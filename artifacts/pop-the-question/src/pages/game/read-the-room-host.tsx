@@ -213,7 +213,7 @@ export default function ReadTheRoomHost() {
 
   if (gameState === "lobby") {
     return (
-      <div className="min-h-screen w-full" style={{ background: "#F5F0E6" }}>
+      <div className="min-h-screen w-full" style={{ background: "#FFF5E7" }}>
         <div className="max-w-6xl mx-auto px-6 py-12">
           <div
             className="bg-white p-8 mb-8"
@@ -310,7 +310,7 @@ export default function ReadTheRoomHost() {
 
   if (gameState === "finished") {
     return (
-      <div className="min-h-screen w-full" style={{ background: "#F5F0E6" }}>
+      <div className="min-h-screen w-full" style={{ background: "#FFF5E7" }}>
         <div className="max-w-4xl mx-auto px-6 py-12">
           <div
             className="bg-yellow-300 p-8 mb-8 text-center"
@@ -351,7 +351,7 @@ export default function ReadTheRoomHost() {
   }
 
   return (
-    <div className="min-h-screen w-full" style={{ background: "#F5F0E6" }}>
+    <div className="min-h-screen w-full" style={{ background: "#FFF5E7" }}>
       <div className="max-w-7xl mx-auto px-6 py-6">
         {/* Header bar: round / phase */}
         <div className="flex items-center justify-between mb-6 gap-4 flex-wrap">

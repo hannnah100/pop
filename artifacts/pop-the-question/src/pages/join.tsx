@@ -65,7 +65,7 @@ export default function Join() {
   };
 
   return (
-    <div className="flex-1 flex flex-col min-h-[100dvh] relative overflow-hidden" style={{ background: "#F5F0E6" }}>
+    <div className="flex-1 flex flex-col min-h-[100dvh] relative overflow-hidden" style={{ background: "#FFF5E7" }}>
       {/* Back arrow — top left */}
       <div className="absolute top-3 left-3 sm:top-4 sm:left-4 z-10">
         <BackArrow />

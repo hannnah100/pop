@@ -120,7 +120,7 @@ export default function Host() {
   };
 
   return (
-    <div className="flex-1 flex flex-col w-full overflow-x-hidden relative" style={{ background: "#F5F0E6" }}>
+    <div className="flex-1 flex flex-col w-full overflow-x-hidden relative" style={{ background: "#FFF5E7" }}>
       <NeoDoodles />
 
       {/* Header */}

@@ -244,7 +244,7 @@ export default function ReadTheRoomPlayer() {
 
   if (gameState === "lobby") {
     return (
-      <div className="min-h-screen w-full px-4 py-8" style={{ background: "#F5F0E6" }}>
+      <div className="min-h-screen w-full px-4 py-8" style={{ background: "#FFF5E7" }}>
         <div className="max-w-md mx-auto">
           <div className="bg-white p-6 mb-6" style={{ border: BORDER, boxShadow: SHADOW_LG }}>
             <h1 className="font-mono font-black text-4xl uppercase mb-2">Read the Room</h1>
@@ -270,7 +270,7 @@ export default function ReadTheRoomPlayer() {
     const myRow = finalLeaderboard.find((p) => p.id === me?.id);
     const winner = finalLeaderboard[0];
     return (
-      <div className="min-h-screen w-full px-4 py-8" style={{ background: "#F5F0E6" }}>
+      <div className="min-h-screen w-full px-4 py-8" style={{ background: "#FFF5E7" }}>
         <div className="max-w-md mx-auto">
           <div className="bg-yellow-300 p-6 mb-6 text-center" style={{ border: BORDER, boxShadow: SHADOW_LG }}>
             <h1 className="font-mono font-black text-4xl uppercase mb-2">Game Over</h1>
@@ -312,7 +312,7 @@ export default function ReadTheRoomPlayer() {
   // ============ ANSWERING PHASE ============
   if (phase === "answering") {
     return (
-      <div className="min-h-screen w-full px-4 py-6" style={{ background: "#F5F0E6" }}>
+      <div className="min-h-screen w-full px-4 py-6" style={{ background: "#FFF5E7" }}>
         <div className="max-w-md mx-auto">
           <div className="flex items-center justify-between mb-4">
             <div className="px-3 py-2 bg-[#FF006E] text-white font-mono font-black uppercase text-sm"
@@ -371,7 +371,7 @@ export default function ReadTheRoomPlayer() {
     if (iAmSolver) {
       const allMatched = Object.keys(matches).length === answerCards.length;
       return (
-        <div className="min-h-screen w-full px-4 py-6" style={{ background: "#F5F0E6" }}>
+        <div className="min-h-screen w-full px-4 py-6" style={{ background: "#FFF5E7" }}>
           <div className="max-w-2xl mx-auto">
             <div className="bg-[#FF006E] text-white p-4 mb-4"
               style={{ border: BORDER, boxShadow: SHADOW_LG }}>
@@ -448,7 +448,7 @@ export default function ReadTheRoomPlayer() {
 
     // Spectator solving view (dart-throwing)
     return (
-      <div className="min-h-screen w-full px-4 py-6" style={{ background: "#F5F0E6" }}>
+      <div className="min-h-screen w-full px-4 py-6" style={{ background: "#FFF5E7" }}>
         <div className="max-w-2xl mx-auto">
           <div className="bg-cyan-300 p-4 mb-4"
             style={{ border: BORDER, boxShadow: SHADOW_LG }}>
@@ -592,7 +592,7 @@ export default function ReadTheRoomPlayer() {
   // ============ REVEAL PHASE ============
   if (phase === "reveal") {
     return (
-      <div className="min-h-screen w-full px-4 py-6" style={{ background: "#F5F0E6" }}>
+      <div className="min-h-screen w-full px-4 py-6" style={{ background: "#FFF5E7" }}>
         <div className="max-w-md mx-auto">
           <div className="bg-cyan-300 p-4 mb-4"
             style={{ border: BORDER, boxShadow: SHADOW_LG }}>
@@ -623,7 +623,7 @@ export default function ReadTheRoomPlayer() {
     const myDelta = me ? roundDelta[me.id] ?? 0 : 0;
     const myRow = me ? leaderboard.find((p) => p.id === me.id) : null;
     return (
-      <div className="min-h-screen w-full px-4 py-6" style={{ background: "#F5F0E6" }}>
+      <div className="min-h-screen w-full px-4 py-6" style={{ background: "#FFF5E7" }}>
         <div className="max-w-md mx-auto">
           <div className="bg-yellow-300 p-6 text-center mb-4"
             style={{ border: BORDER, boxShadow: SHADOW_LG }}>
@@ -658,7 +658,7 @@ export default function ReadTheRoomPlayer() {
   // ============ Default (between rounds, pick-question phase on host) ============
   return (
     <div className="min-h-screen w-full px-4 py-6 flex items-center justify-center"
-      style={{ background: "#F5F0E6" }}>
+      style={{ background: "#FFF5E7" }}>
       <div className="bg-white p-8 text-center max-w-md"
         style={{ border: BORDER, boxShadow: SHADOW_LG }}>
         <h2 className="font-mono font-black text-2xl uppercase mb-2">Get Ready</h2>

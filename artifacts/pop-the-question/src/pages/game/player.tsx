@@ -1354,7 +1354,7 @@ export default function GamePlayer() {
   if (gameState === "lobby") {
     return (
       <>
-        <div className="flex flex-col min-h-[100dvh] px-4 py-6" style={{ background: "#F5F0E6" }}>
+        <div className="flex flex-col min-h-[100dvh] px-4 py-6" style={{ background: "#FFF5E7" }}>
           <div className="max-w-md w-full mx-auto">
             <div className="flex items-center justify-between mb-6">
               <div

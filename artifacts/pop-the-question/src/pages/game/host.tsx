@@ -1620,7 +1620,7 @@ export default function GameHost() {
     const joinUrl = "popthequestion.replit.app/join";
 
     return (
-      <div className="flex-1 flex flex-col items-center px-4 py-10" style={{ background: "#F5F0E6" }}>
+      <div className="flex-1 flex flex-col items-center px-4 py-10" style={{ background: "#FFF5E7" }}>
         {isDemo && (
           <div className="mb-6">
             <DemoBadge />
@@ -3846,7 +3846,7 @@ export default function GameHost() {
       onAnswerMethodChange={handleAnswerMethodChange}
       notificationsRef={notificationsRef}
       hideEndGame={gameState === "lobby" || gameState === "finished"}
-      safeZoneStyle={gameState === "lobby" ? { background: "#F5F0E6" } : undefined}
+      safeZoneStyle={gameState === "lobby" ? { background: "#FFF5E7" } : undefined}
     >
       {content}
     </HostShell>

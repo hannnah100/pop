@@ -22,6 +22,7 @@ function DailyCard({
   defaultBadge,
   icon,
   color,
+  theme,
 }: {
   title: string;
   blurb: string;
@@ -32,13 +33,27 @@ function DailyCard({
   defaultBadge: DailyBadge;
   icon?: React.ReactNode;
   color: string;
+  theme: "light" | "dark";
 }) {
+  // theme="light" → light-colored card, BLACK text; badges flip to bg-black/text-white
+  // theme="dark"  → bold-colored card, WHITE text; badges flip to bg-white/text-black
+  const textColor = theme === "light" ? "text-black" : "text-white";
+  const badgeBg = theme === "light" ? "bg-black text-white" : "bg-white text-black";
   const badgeStyle = { border: "3px solid #000", boxShadow: "3px 3px 0 #000", letterSpacing: "0.03em" };
-  const badge = completed
-    ? <span className="ml-2 flex-shrink-0 px-2 py-1 font-mono font-black text-xs uppercase bg-white text-black" style={badgeStyle}>{completedLabel}</span>
+
+  const badgeLabel = completed
+    ? completedLabel
     : typeof defaultBadge === "string"
-      ? <span className="ml-2 flex-shrink-0 px-2 py-1 font-mono font-black text-xs uppercase bg-white text-black" style={badgeStyle}>{defaultBadge}</span>
-      : <span className="ml-2 flex-shrink-0 px-2 py-1 font-mono font-black text-xs uppercase bg-black text-white" style={badgeStyle}>{defaultBadge.label}</span>;
+      ? defaultBadge
+      : defaultBadge.label;
+  const badge = (
+    <span
+      className={`ml-2 flex-shrink-0 px-2 py-1 font-mono font-black text-xs uppercase ${badgeBg}`}
+      style={badgeStyle}
+    >
+      {badgeLabel}
+    </span>
+  );
 
   return (
     <div
@@ -47,7 +62,7 @@ function DailyCard({
     >
       <div className="flex justify-between items-start gap-2 mb-4">
         <h3
-          className="font-mono text-2xl font-black text-black uppercase leading-tight flex items-center gap-2 flex-1 min-w-0"
+          className={`font-mono text-2xl font-black uppercase leading-tight flex items-center gap-2 flex-1 min-w-0 ${textColor}`}
           style={{ letterSpacing: "0.03em" }}
         >
           {icon}
@@ -57,7 +72,7 @@ function DailyCard({
       </div>
 
       <p
-        className="font-mono font-bold text-sm text-black mb-6 flex-1"
+        className={`font-mono font-bold text-sm mb-6 flex-1 ${textColor}`}
         style={{ letterSpacing: "0.03em" }}
       >
         {blurb}
@@ -65,7 +80,7 @@ function DailyCard({
 
       <Link href={href} className="block mt-auto">
         <button
-          className="w-full bg-white text-black hover:bg-black hover:text-white font-mono font-black text-base uppercase px-5 py-3 transition-colors duration-150"
+          className="w-full bg-white text-black hover:bg-[#FFD60A] font-mono font-black text-base uppercase px-5 py-3 transition-colors duration-150"
           style={{ border: "4px solid #000", boxShadow: "5px 5px 0 #000", letterSpacing: "0.03em" }}
           data-testid={testId}
         >
@@ -130,15 +145,15 @@ export default function Home() {
   }, [todayDate]);
 
   return (
-    <div className="flex-1 flex flex-col w-full overflow-x-hidden" style={{ background: "#F5F0E6" }}>
+    <div className="flex-1 flex flex-col w-full overflow-x-hidden" style={{ background: "#FFF5E7" }}>
 
       {/* ===== STICKY NAV ===== */}
       <nav
         className="sticky top-0 z-30 px-4 md:px-6 flex items-center justify-between"
         style={{
-          background: "#F5F0E6",
+          background: "#FFD60A",
           borderBottom: "5px solid #000",
-          height: "72px",
+          height: "107px",
         }}
       >
         {/* Logo — top-left, keeps Y2K comic style */}
@@ -146,7 +161,7 @@ export default function Home() {
           <img
             src={navLogo}
             alt="Pop The Question"
-            className="h-14 md:h-16 w-auto select-none cursor-pointer"
+            className="h-[106px] md:h-[121px] w-auto select-none cursor-pointer"
           />
         </Link>
 
@@ -199,7 +214,7 @@ export default function Home() {
       <section
         id="daily-games"
         className="relative px-4 py-16 md:py-20 scroll-mt-20 overflow-hidden"
-        style={{ background: "#F5F0E6", borderBottom: "5px solid #000" }}
+        style={{ background: "#FFF5E7", borderBottom: "5px solid #000" }}
       >
         <NeoDoodles />
         <div className="max-w-4xl mx-auto relative z-10">
@@ -232,7 +247,9 @@ export default function Home() {
           </p>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-fr">
-            {/* Three Flops — yellow */}
+            {/* ===== TOP ROW — light backgrounds, BLACK text ===== */}
+
+            {/* 1. Three Flops — yellow */}
             <DailyCard
               title="Three Flops"
               blurb="Name all the answers before 3 wrong guesses"
@@ -241,20 +258,10 @@ export default function Home() {
               completed={tsCompleted}
               defaultBadge="Available"
               color="#FFD60A"
+              theme="light"
             />
 
-            {/* The Skinny — hot pink */}
-            <DailyCard
-              title="The Skinny"
-              blurb="Pop culture crossword"
-              href="/daily/crossword"
-              testId="link-crossword"
-              completed={cwCompleted}
-              defaultBadge="Available"
-              color="#FF006E"
-            />
-
-            {/* Pop Box — sky blue */}
+            {/* 2. Pop Box — sky blue */}
             <DailyCard
               title="Pop Box"
               blurb="Find an answer for each intersection of the grid"
@@ -263,9 +270,10 @@ export default function Home() {
               completed={pbCompleted}
               defaultBadge={{ label: "New", variant: "accent" }}
               color="#38BDF8"
+              theme="light"
             />
 
-            {/* Pop or Drop — lime */}
+            {/* 3. Pop or Drop — green */}
             <DailyCard
               title="Pop or Drop"
               blurb="Higher or Lower — pop culture edition"
@@ -275,9 +283,24 @@ export default function Home() {
               completedLabel={podStreak > 0 ? `🔥 ${podStreak}` : "Done ✓"}
               defaultBadge={{ label: "Hot 🔥", variant: "accent" }}
               color="#50C878"
+              theme="light"
             />
 
-            {/* Clock It — purple */}
+            {/* ===== BOTTOM ROW — bold backgrounds, WHITE text ===== */}
+
+            {/* 4. The Skinny — hot pink */}
+            <DailyCard
+              title="The Skinny"
+              blurb="Pop culture crossword"
+              href="/daily/crossword"
+              testId="link-crossword"
+              completed={cwCompleted}
+              defaultBadge="Available"
+              color="#FF006E"
+              theme="dark"
+            />
+
+            {/* 5. Clock It — purple */}
             <DailyCard
               title="Clock It"
               icon={<Calendar className="w-5 h-5" />}
@@ -288,9 +311,10 @@ export default function Home() {
               completedLabel={gtyGaveUp ? "💀 Gave Up" : gtyScore === 3 ? "🏆 Perfect" : gtyScore === 2 ? "⭐ Nice" : "Done ✓"}
               defaultBadge="Available"
               color="#9370DB"
+              theme="dark"
             />
 
-            {/* Reel Connections — orange */}
+            {/* 6. Reel Connections — orange */}
             <DailyCard
               title="Reel Connections"
               blurb="Connect the actors through their movies"
@@ -300,6 +324,7 @@ export default function Home() {
               completedLabel={rcScore !== null ? `${rcScore}/5` : "Done ✓"}
               defaultBadge={{ label: "New", variant: "accent" }}
               color="#FF6B35"
+              theme="dark"
             />
           </div>
         </div>
@@ -309,7 +334,7 @@ export default function Home() {
       <section
         id="party-games"
         className="relative px-4 py-16 md:py-20 scroll-mt-20 overflow-hidden"
-        style={{ background: "#F5F0E6", borderBottom: "5px solid #000" }}
+        style={{ background: "#FFF5E7", borderBottom: "5px solid #000" }}
       >
         <NeoDoodles />
         <div className="max-w-4xl mx-auto relative z-10">
