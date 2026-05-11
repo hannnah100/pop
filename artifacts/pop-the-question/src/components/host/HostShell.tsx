@@ -54,6 +54,7 @@ interface HostShellProps {
   onAnswerMethodChange?: (method: HostAnswerMethod) => void;
   notificationsRef?: React.RefObject<HostNotificationsHandle | null>;
   hideEndGame?: boolean;
+  safeZoneStyle?: React.CSSProperties;
 }
 
 export function HostShell({
@@ -65,6 +66,7 @@ export function HostShell({
   onAnswerMethodChange,
   notificationsRef,
   hideEndGame = false,
+  safeZoneStyle,
 }: HostShellProps) {
   const settings = useHostSettings();
   const isFs = useFullscreenState();
@@ -162,7 +164,7 @@ export function HostShell({
 
       {/* Game content */}
       <div className="host-shell-content flex flex-col flex-1 min-h-0">
-        <div className="host-safe-zone flex flex-col flex-1 min-h-0">{children}</div>
+        <div className="host-safe-zone flex flex-col flex-1 min-h-0" style={safeZoneStyle}>{children}</div>
       </div>
 
       {/* Controls bar — solid black */}

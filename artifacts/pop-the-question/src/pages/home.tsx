@@ -6,11 +6,7 @@ import {
   Calendar,
 } from "lucide-react";
 import heroLogo from "@assets/logo_transparent_1778057092563.png";
-import {
-  StarDoodle,
-  LightningDoodle,
-  ConfettiDoodle,
-} from "@/components/fx/Doodles";
+import navLogo from "@assets/67042e28-f0c8-47a2-b851-a1cbd0dbaa92-2_1778529103351.png";
 import { NeoDoodles } from "@/components/fx/NeoDoodles";
 import { useAuth } from "@/contexts/AuthContext";
 
@@ -25,6 +21,7 @@ function DailyCard({
   completedLabel = "Done ✓",
   defaultBadge,
   icon,
+  color,
 }: {
   title: string;
   blurb: string;
@@ -34,40 +31,41 @@ function DailyCard({
   completedLabel?: string;
   defaultBadge: DailyBadge;
   icon?: React.ReactNode;
+  color: string;
 }) {
   const badgeStyle = { border: "3px solid #000", boxShadow: "3px 3px 0 #000", letterSpacing: "0.03em" };
   const badge = completed
     ? <span className="ml-2 flex-shrink-0 px-2 py-1 font-mono font-black text-xs uppercase bg-white text-black" style={badgeStyle}>{completedLabel}</span>
     : typeof defaultBadge === "string"
       ? <span className="ml-2 flex-shrink-0 px-2 py-1 font-mono font-black text-xs uppercase bg-white text-black" style={badgeStyle}>{defaultBadge}</span>
-      : <span className="ml-2 flex-shrink-0 px-2 py-1 font-mono font-black text-xs uppercase bg-[#FF1493] text-white" style={badgeStyle}>{defaultBadge.label}</span>;
+      : <span className="ml-2 flex-shrink-0 px-2 py-1 font-mono font-black text-xs uppercase bg-black text-white" style={badgeStyle}>{defaultBadge.label}</span>;
 
   return (
     <div
-      className="bg-white p-5 flex flex-col"
-      style={{ border: "5px solid #000", boxShadow: "8px 8px 0 #000" }}
+      className="p-5 flex flex-col h-full min-h-[240px]"
+      style={{ background: color, border: "5px solid #000", boxShadow: "8px 8px 0 #000" }}
     >
-      <div className="flex justify-between items-start mb-3">
-        <div className="flex-1 min-w-0">
-          <h3
-            className="font-mono text-2xl font-black text-black uppercase flex items-center gap-2"
-            style={{ letterSpacing: "0.03em" }}
-          >
-            {icon}
-            {title}
-          </h3>
-          <p
-            className="font-mono font-bold text-sm text-black/70 mt-1"
-            style={{ letterSpacing: "0.03em" }}
-          >
-            {blurb}
-          </p>
-        </div>
+      <div className="flex justify-between items-start gap-2 mb-4">
+        <h3
+          className="font-mono text-2xl font-black text-black uppercase leading-tight flex items-center gap-2 flex-1 min-w-0"
+          style={{ letterSpacing: "0.03em" }}
+        >
+          {icon}
+          {title}
+        </h3>
         {badge}
       </div>
+
+      <p
+        className="font-mono font-bold text-sm text-black mb-6 flex-1"
+        style={{ letterSpacing: "0.03em" }}
+      >
+        {blurb}
+      </p>
+
       <Link href={href} className="block mt-auto">
         <button
-          className="w-full bg-[#FF1493] hover:bg-[#38BDF8] text-white hover:text-black font-mono font-black text-base uppercase px-5 py-3 transition-colors duration-150"
+          className="w-full bg-white text-black hover:bg-black hover:text-white font-mono font-black text-base uppercase px-5 py-3 transition-colors duration-150"
           style={{ border: "4px solid #000", boxShadow: "5px 5px 0 #000", letterSpacing: "0.03em" }}
           data-testid={testId}
         >
@@ -131,35 +129,55 @@ export default function Home() {
     }
   }, [todayDate]);
 
-  const scrollToSection = (id: string) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
-  };
-
   return (
-    <div className="flex-1 flex flex-col w-full overflow-x-hidden">
+    <div className="flex-1 flex flex-col w-full overflow-x-hidden" style={{ background: "#F5F0E6" }}>
 
-      {/* ===== TOP NAV ===== */}
-      <nav className="bg-[#FFF8E7] px-3 py-3 md:py-4">
-        <div className="max-w-4xl mx-auto flex flex-wrap items-center justify-center gap-2 md:gap-3">
-          {/* PROFILE */}
+      {/* ===== STICKY NAV ===== */}
+      <nav
+        className="sticky top-0 z-30 px-4 md:px-6 flex items-center justify-between"
+        style={{
+          background: "#F5F0E6",
+          borderBottom: "5px solid #000",
+          height: "72px",
+        }}
+      >
+        {/* Logo — top-left, keeps Y2K comic style */}
+        <Link href="/" data-testid="nav-logo">
+          <img
+            src={navLogo}
+            alt="Pop The Question"
+            className="h-14 md:h-16 w-auto select-none cursor-pointer"
+          />
+        </Link>
+
+        {/* Right-side actions */}
+        <div className="flex items-center gap-2 md:gap-3">
+          <Link href="/how-to-play" data-testid="nav-how-to-play">
+            <span
+              className="block bg-white px-3 py-2 md:px-4 md:py-2.5 font-mono font-black text-xs md:text-sm text-black uppercase whitespace-nowrap cursor-pointer hover:bg-[#38BDF8] transition-colors duration-150"
+              style={{ border: "3px solid #000", boxShadow: "4px 4px 0 #000", letterSpacing: "0.03em" }}
+            >
+              How to Play
+            </span>
+          </Link>
+
+          <Link href="/archive" data-testid="nav-archive">
+            <span
+              className="block bg-white px-3 py-2 md:px-4 md:py-2.5 font-mono font-black text-xs md:text-sm text-black uppercase whitespace-nowrap cursor-pointer hover:bg-[#38BDF8] transition-colors duration-150"
+              style={{ border: "3px solid #000", boxShadow: "4px 4px 0 #000", letterSpacing: "0.03em" }}
+            >
+              Archive
+            </span>
+          </Link>
+
           {authEnabled && (
             firebaseUser ? (
               <Link href="/account" data-testid="nav-profile">
                 <span
-                  className="block px-3 py-2 md:px-4 md:py-2.5 border-[3px] border-black shadow-[4px_4px_0_#000] hover:shadow-[2px_2px_0_#000] hover:translate-x-[2px] hover:translate-y-[2px] active:shadow-none active:translate-x-[4px] active:translate-y-[4px] transition-all cursor-pointer select-none"
-                  style={{ background: "#FF1493", borderRadius: "10px" }}
+                  className="block bg-black text-white px-3 py-2 md:px-4 md:py-2.5 font-mono font-black text-xs md:text-sm uppercase whitespace-nowrap cursor-pointer hover:bg-[#38BDF8] hover:text-black transition-colors duration-150"
+                  style={{ border: "3px solid #000", boxShadow: "4px 4px 0 #000", letterSpacing: "0.03em" }}
                 >
-                  <span
-                    className="font-display font-black text-xs md:text-sm uppercase tracking-wide whitespace-nowrap"
-                    style={{
-                      color: "#fff",
-                      WebkitTextFillColor: "#fff",
-                      WebkitTextStroke: "1px #000",
-                      paintOrder: "stroke fill",
-                    }}
-                  >
-                    Profile
-                  </span>
+                  Profile
                 </span>
               </Link>
             ) : (
@@ -167,148 +185,24 @@ export default function Home() {
                 type="button"
                 onClick={openAuthModal}
                 data-testid="nav-profile"
-                className="px-3 py-2 md:px-4 md:py-2.5 border-[3px] border-black shadow-[4px_4px_0_#000] hover:shadow-[2px_2px_0_#000] hover:translate-x-[2px] hover:translate-y-[2px] active:shadow-none active:translate-x-[4px] active:translate-y-[4px] transition-all cursor-pointer select-none"
-                style={{ background: "#FF1493", borderRadius: "10px" }}
+                className="bg-black text-white px-3 py-2 md:px-4 md:py-2.5 font-mono font-black text-xs md:text-sm uppercase whitespace-nowrap hover:bg-[#38BDF8] hover:text-black transition-colors duration-150"
+                style={{ border: "3px solid #000", boxShadow: "4px 4px 0 #000", letterSpacing: "0.03em" }}
               >
-                <span
-                  className="font-display font-black text-xs md:text-sm uppercase tracking-wide whitespace-nowrap"
-                  style={{
-                    color: "#fff",
-                    WebkitTextFillColor: "#fff",
-                    WebkitTextStroke: "1px #000",
-                    paintOrder: "stroke fill",
-                  }}
-                >
-                  Profile
-                </span>
+                Profile
               </button>
             )
           )}
-
-          {/* DAILY TRIVIA */}
-          <button
-            type="button"
-            onClick={() => scrollToSection("daily-games")}
-            data-testid="nav-daily-trivia"
-            className="px-3 py-2 md:px-4 md:py-2.5 border-[3px] border-black shadow-[4px_4px_0_#000] hover:shadow-[2px_2px_0_#000] hover:translate-x-[2px] hover:translate-y-[2px] active:shadow-none active:translate-x-[4px] active:translate-y-[4px] transition-all cursor-pointer select-none"
-            style={{ background: "#FFD700", borderRadius: "10px" }}
-          >
-            <span
-              className="font-display font-black text-xs md:text-sm uppercase tracking-wide whitespace-nowrap"
-              style={{
-                color: "#fff",
-                WebkitTextFillColor: "#fff",
-                WebkitTextStroke: "1px #000",
-                paintOrder: "stroke fill",
-              }}
-            >
-              Daily Trivia
-            </span>
-          </button>
-
-          {/* PARTY GAMES */}
-          <button
-            type="button"
-            onClick={() => scrollToSection("party-games")}
-            data-testid="nav-party-games"
-            className="px-3 py-2 md:px-4 md:py-2.5 border-[3px] border-black shadow-[4px_4px_0_#000] hover:shadow-[2px_2px_0_#000] hover:translate-x-[2px] hover:translate-y-[2px] active:shadow-none active:translate-x-[4px] active:translate-y-[4px] transition-all cursor-pointer select-none"
-            style={{ background: "#00E5FF", borderRadius: "10px" }}
-          >
-            <span
-              className="font-display font-black text-xs md:text-sm uppercase tracking-wide whitespace-nowrap"
-              style={{
-                color: "#fff",
-                WebkitTextFillColor: "#fff",
-                WebkitTextStroke: "1px #000",
-                paintOrder: "stroke fill",
-              }}
-            >
-              Party Games
-            </span>
-          </button>
-
-          {/* HOW TO PLAY */}
-          <Link href="/how-to-play" data-testid="nav-how-to-play">
-            <span
-              className="block px-3 py-2 md:px-4 md:py-2.5 border-[3px] border-black shadow-[4px_4px_0_#000] hover:shadow-[2px_2px_0_#000] hover:translate-x-[2px] hover:translate-y-[2px] active:shadow-none active:translate-x-[4px] active:translate-y-[4px] transition-all cursor-pointer select-none"
-              style={{ background: "#00C853", borderRadius: "10px" }}
-            >
-              <span
-                className="font-display font-black text-xs md:text-sm uppercase tracking-wide whitespace-nowrap"
-                style={{
-                  color: "#fff",
-                  WebkitTextFillColor: "#fff",
-                  WebkitTextStroke: "1px #000",
-                  paintOrder: "stroke fill",
-                }}
-              >
-                How to Play
-              </span>
-            </span>
-          </Link>
-
-          {/* ARCHIVE */}
-          <Link href="/archive" data-testid="nav-archive">
-            <span
-              className="block px-3 py-2 md:px-4 md:py-2.5 border-[3px] border-black shadow-[4px_4px_0_#000] hover:shadow-[2px_2px_0_#000] hover:translate-x-[2px] hover:translate-y-[2px] active:shadow-none active:translate-x-[4px] active:translate-y-[4px] transition-all cursor-pointer select-none"
-              style={{ background: "#FF1493", borderRadius: "10px" }}
-            >
-              <span
-                className="font-display font-black text-xs md:text-sm uppercase tracking-wide whitespace-nowrap"
-                style={{
-                  color: "#fff",
-                  WebkitTextFillColor: "#fff",
-                  WebkitTextStroke: "1px #000",
-                  paintOrder: "stroke fill",
-                }}
-              >
-                Archive
-              </span>
-            </span>
-          </Link>
         </div>
       </nav>
-
-      {/* Rainbow strip — Y2K palette (pink → orange → yellow → cyan → green) */}
-      <div
-        aria-hidden
-        className="h-[5px]"
-        style={{
-          backgroundImage:
-            "linear-gradient(to right, #FF1493 0%, #FF1493 20%, #FF6B35 20%, #FF6B35 40%, #FFD700 40%, #FFD700 60%, #00E5FF 60%, #00E5FF 80%, #00C853 80%, #00C853 100%)",
-        }}
-      />
-
-      {/* ===== HERO ===== */}
-      <header className="relative bg-[#FFF8E7] border-b-[4px] border-black px-4 pt-6 pb-4 text-center overflow-hidden">
-        <StarDoodle className="absolute top-10 left-6 w-6 h-6 text-[#FF1493] opacity-85" />
-        <LightningDoodle className="absolute top-16 left-12 w-5 h-8 text-[#FFD700] opacity-75" />
-        <ConfettiDoodle className="absolute top-12 left-20 w-7 h-7 opacity-60" />
-        <StarDoodle className="absolute top-10 right-6 w-6 h-6 text-[#00E5FF] opacity-85" />
-        <LightningDoodle className="absolute top-16 right-12 w-5 h-8 text-[#FF6B35] opacity-75" />
-        <ConfettiDoodle className="absolute top-12 right-20 w-7 h-7 opacity-60" />
-        <StarDoodle className="absolute bottom-8 left-6 w-5 h-5 text-[#FFD700] opacity-80" />
-        <LightningDoodle className="absolute bottom-10 left-14 w-4 h-7 text-[#FF1493] opacity-70" />
-        <ConfettiDoodle className="absolute bottom-8 left-24 w-6 h-6 opacity-55" />
-        <StarDoodle className="absolute bottom-8 right-6 w-5 h-5 text-[#FF1493] opacity-80" />
-        <LightningDoodle className="absolute bottom-10 right-14 w-4 h-7 text-[#00E5FF] opacity-70" />
-        <ConfettiDoodle className="absolute bottom-8 right-24 w-6 h-6 opacity-55" />
-        <div className="relative z-10">
-          <img
-            src={heroLogo}
-            alt="Pop The Question"
-            className="mx-auto w-full max-w-[88vw] md:max-w-xl h-auto select-none"
-          />
-        </div>
-      </header>
 
       {/* ===== DAILY GAMES SECTION ===== */}
       <section
         id="daily-games"
-        className="relative px-4 py-10 scroll-mt-4"
-        style={{ background: "#FFD700", borderBottom: "5px solid #000" }}
+        className="relative px-4 py-16 md:py-20 scroll-mt-20 overflow-hidden"
+        style={{ background: "#F5F0E6", borderBottom: "5px solid #000" }}
       >
-        <div className="max-w-4xl mx-auto">
+        <NeoDoodles />
+        <div className="max-w-4xl mx-auto relative z-10">
           <div className="flex items-center gap-3 mb-3">
             <span
               className="inline-flex items-center justify-center w-10 h-10 bg-white"
@@ -337,8 +231,8 @@ export default function Home() {
             Fresh pop culture puzzles every day. Come back tomorrow for more!
           </p>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {/* Three Flops */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-fr">
+            {/* Three Flops — yellow */}
             <DailyCard
               title="Three Flops"
               blurb="Name all the answers before 3 wrong guesses"
@@ -346,9 +240,10 @@ export default function Home() {
               testId="link-three-flops"
               completed={tsCompleted}
               defaultBadge="Available"
+              color="#FFD60A"
             />
 
-            {/* The Skinny */}
+            {/* The Skinny — hot pink */}
             <DailyCard
               title="The Skinny"
               blurb="Pop culture crossword"
@@ -356,9 +251,10 @@ export default function Home() {
               testId="link-crossword"
               completed={cwCompleted}
               defaultBadge="Available"
+              color="#FF006E"
             />
 
-            {/* Pop Box */}
+            {/* Pop Box — sky blue */}
             <DailyCard
               title="Pop Box"
               blurb="Find an answer for each intersection of the grid"
@@ -366,9 +262,10 @@ export default function Home() {
               testId="link-pop-box"
               completed={pbCompleted}
               defaultBadge={{ label: "New", variant: "accent" }}
+              color="#38BDF8"
             />
 
-            {/* Pop or Drop */}
+            {/* Pop or Drop — lime */}
             <DailyCard
               title="Pop or Drop"
               blurb="Higher or Lower — pop culture edition"
@@ -377,9 +274,10 @@ export default function Home() {
               completed={podCompleted}
               completedLabel={podStreak > 0 ? `🔥 ${podStreak}` : "Done ✓"}
               defaultBadge={{ label: "Hot 🔥", variant: "accent" }}
+              color="#50C878"
             />
 
-            {/* Clock It */}
+            {/* Clock It — purple */}
             <DailyCard
               title="Clock It"
               icon={<Calendar className="w-5 h-5" />}
@@ -389,9 +287,10 @@ export default function Home() {
               completed={gtyCompleted}
               completedLabel={gtyGaveUp ? "💀 Gave Up" : gtyScore === 3 ? "🏆 Perfect" : gtyScore === 2 ? "⭐ Nice" : "Done ✓"}
               defaultBadge="Available"
+              color="#9370DB"
             />
 
-            {/* Reel Connections */}
+            {/* Reel Connections — orange */}
             <DailyCard
               title="Reel Connections"
               blurb="Connect the actors through their movies"
@@ -400,6 +299,7 @@ export default function Home() {
               completed={rcCompleted}
               completedLabel={rcScore !== null ? `${rcScore}/5` : "Done ✓"}
               defaultBadge={{ label: "New", variant: "accent" }}
+              color="#FF6B35"
             />
           </div>
         </div>
@@ -408,8 +308,8 @@ export default function Home() {
       {/* ===== PARTY GAMES SECTION ===== */}
       <section
         id="party-games"
-        className="relative px-4 py-10 scroll-mt-4 overflow-hidden"
-        style={{ background: "#F5F0E6", borderTop: "5px solid #000", borderBottom: "5px solid #000" }}
+        className="relative px-4 py-16 md:py-20 scroll-mt-20 overflow-hidden"
+        style={{ background: "#F5F0E6", borderBottom: "5px solid #000" }}
       >
         <NeoDoodles />
         <div className="max-w-4xl mx-auto relative z-10">
@@ -461,7 +361,7 @@ export default function Home() {
               </p>
               <Link href="/host">
                 <button
-                  className="w-full bg-white hover:bg-[#38BDF8] text-black font-mono font-black text-lg uppercase px-5 py-4 transition-colors duration-150"
+                  className="w-full bg-white hover:bg-[#FF006E] text-black font-mono font-black text-lg uppercase px-5 py-4 transition-colors duration-150"
                   style={{ border: "4px solid #000", boxShadow: "5px 5px 0 #000", letterSpacing: "0.03em" }}
                   data-testid="link-host-game"
                 >
@@ -470,7 +370,7 @@ export default function Home() {
               </Link>
               <Link href="/host?demo=true">
                 <button
-                  className="w-full mt-3 bg-black hover:bg-[#38BDF8] text-white hover:text-black font-mono font-black text-sm uppercase px-4 py-2 flex items-center justify-center gap-1 transition-colors duration-150"
+                  className="w-full mt-3 bg-black hover:bg-[#FF006E] text-white hover:text-black font-mono font-black text-sm uppercase px-4 py-2 flex items-center justify-center gap-1 transition-colors duration-150"
                   style={{ border: "3px solid #000", boxShadow: "3px 3px 0 #000", letterSpacing: "0.03em" }}
                   data-testid="link-demo-mode"
                 >
@@ -482,7 +382,7 @@ export default function Home() {
             {/* Join */}
             <div
               className="p-6 relative"
-              style={{ background: "#FF006E", border: "5px solid #000", boxShadow: "8px 8px 0 #000" }}
+              style={{ background: "#38BDF8", border: "5px solid #000", boxShadow: "8px 8px 0 #000" }}
             >
               <h3
                 className="font-mono text-3xl font-black text-black uppercase mb-2"
@@ -498,7 +398,7 @@ export default function Home() {
               </p>
               <Link href="/join">
                 <button
-                  className="w-full bg-white hover:bg-[#38BDF8] text-black font-mono font-black text-lg uppercase px-5 py-4 transition-colors duration-150"
+                  className="w-full bg-white hover:bg-[#FF006E] text-black font-mono font-black text-lg uppercase px-5 py-4 transition-colors duration-150"
                   style={{ border: "4px solid #000", boxShadow: "5px 5px 0 #000", letterSpacing: "0.03em" }}
                   data-testid="link-join-game"
                 >

@@ -3846,6 +3846,7 @@ export default function GameHost() {
       onAnswerMethodChange={handleAnswerMethodChange}
       notificationsRef={notificationsRef}
       hideEndGame={gameState === "lobby" || gameState === "finished"}
+      safeZoneStyle={gameState === "lobby" ? { background: "#F5F0E6" } : undefined}
     >
       {content}
     </HostShell>
