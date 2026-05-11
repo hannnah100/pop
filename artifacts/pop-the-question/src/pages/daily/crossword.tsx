@@ -351,7 +351,7 @@ export default function Crossword() {
       for (let c = 0; c < cols; c++) gridEmoji += isBlackSquare(r, c) ? '⬛' : '🟩';
       gridEmoji += '\n';
     }
-    const shareText = `Pop The Question - The Skinny\n${dateStr}\n\n${gridEmoji}\nTime: ${mm}:${ss}\n\npopthequestion.replit.app`;
+    const shareText = `Pop The Question - The Skinny\n${dateStr}\n\n${gridEmoji}\nTime: ${mm}:${ss}\n\npoptq.com`;
     navigator.clipboard.writeText(shareText).then(() => toast({ title: "Copied!", description: "Share your time with friends." }));
   };
 

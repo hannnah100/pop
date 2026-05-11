@@ -431,7 +431,7 @@ export default function PopBox() {
       "",
       ...rows,
       "",
-      "popthequestion.replit.app",
+      "poptq.com",
     ].join("\n");
     navigator.clipboard.writeText(text).then(() =>
       toast({ title: "Copied!", description: "Share your grid with friends." }),

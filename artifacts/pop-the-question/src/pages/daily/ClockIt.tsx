@@ -484,7 +484,7 @@ export default function ClockIt() {
         ? `Gave up (the year was ${finalYear}) ${resultEmoji}`
         : `Clocked it in ${hintsUsed} ${hintLabel}! ${resultEmoji}`,
       ``,
-      `popthequestion.replit.app`,
+      `poptq.com`,
     ].join("\n");
 
     navigator.clipboard

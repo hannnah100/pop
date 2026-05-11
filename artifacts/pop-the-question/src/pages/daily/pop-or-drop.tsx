@@ -358,7 +358,7 @@ export default function PopOrDrop() {
       `Streak: ${streak} / ${maxPossible}`,
       streak >= maxPossible ? "🏆 PERFECT GAME!" : streak >= 10 ? "🔥 On fire!" : "",
       "#PopOrDrop #PopTheQuestion",
-      "popthequestion.replit.app",
+      "poptq.com",
     ].filter(Boolean).join("\n");
 
     navigator.clipboard.writeText(text).then(() => {

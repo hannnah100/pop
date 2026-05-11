@@ -1631,7 +1631,7 @@ export default function GameHost() {
   // ============================================================
 
   const renderLobby = () => {
-    const joinUrl = "popthequestion.replit.app/join";
+    const joinUrl = "poptq.com/join";
 
     return (
       <div className="flex-1 flex flex-col items-center px-4 py-10" style={{ background: "#FFF5E7" }}>

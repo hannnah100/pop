@@ -251,7 +251,7 @@ export default function ThreeFlops() {
       `Completed: ${guesses.length}/${challenge.totalCount} ${resultEmoji}`,
       `Used ${flops}/3 flops`,
       ``,
-      `popthequestion.replit.app`,
+      `poptq.com`,
     ].join("\n");
     navigator.clipboard.writeText(shareText).then(() => toast({ title: "Copied!", description: "Share your score with friends." }));
   };

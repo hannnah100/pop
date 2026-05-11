@@ -267,7 +267,7 @@ export default function ReelConnections() {
     if (!puzzle) return;
     const total = puzzle.validAnswers.length;
     const livesLabel = lives === 1 ? "1 life remaining" : `${lives} lives remaining`;
-    const text = `I completed today's REEL CONNECTIONS! 🎬\n${score}/${total} connections - ${livesLabel}\nPlay at popthequestion.replit.app`;
+    const text = `I completed today's REEL CONNECTIONS! 🎬\n${score}/${total} connections - ${livesLabel}\nPlay at poptq.com`;
     void navigator.clipboard.writeText(text);
     toast({ title: "Copied!" });
   }
