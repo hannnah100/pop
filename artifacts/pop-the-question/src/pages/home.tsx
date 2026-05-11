@@ -218,33 +218,67 @@ export default function Home() {
       >
         <NeoDoodles />
         <div className="max-w-4xl mx-auto relative z-10">
-          <div className="flex items-center gap-3 mb-3">
-            <span
-              className="inline-flex items-center justify-center w-10 h-10 bg-white"
-              style={{ border: "5px solid #000", boxShadow: "4px 4px 0 #000" }}
+          {/* Speech bubble — heading + description */}
+          <div className="relative w-fit max-w-full mx-auto mb-16">
+            <div
+              className="bg-white px-6 py-5 md:px-8 md:py-6"
+              style={{ border: "5px solid #000", boxShadow: "8px 8px 0 #000" }}
+            >
+              <div className="flex flex-wrap items-center gap-3 mb-2">
+                <span
+                  className="inline-flex items-center justify-center w-10 h-10 bg-white"
+                  style={{ border: "4px solid #000", boxShadow: "3px 3px 0 #000" }}
+                  aria-hidden
+                >
+                  <Zap className="w-5 h-5 text-[#FFD700] fill-[#FFD700]" />
+                </span>
+                <h2
+                  className="font-mono text-3xl md:text-5xl font-black text-black uppercase"
+                  style={{ letterSpacing: "0.03em" }}
+                >
+                  Daily Games
+                </h2>
+                <span
+                  className="px-3 py-1 font-mono font-black text-xs uppercase bg-white text-black"
+                  style={{ border: "3px solid #000", boxShadow: "3px 3px 0 #000", letterSpacing: "0.03em" }}
+                >
+                  Today
+                </span>
+              </div>
+              <p
+                className="font-mono font-bold text-black"
+                style={{ letterSpacing: "0.03em" }}
+              >
+                Fresh pop culture puzzles every day. Come back tomorrow for more!
+              </p>
+            </div>
+
+            {/* Speech bubble tail — black outline + white fill */}
+            <div
               aria-hidden
-            >
-              <Zap className="w-5 h-5 text-[#FFD700] fill-[#FFD700]" />
-            </span>
-            <h2
-              className="font-mono text-3xl md:text-5xl font-black text-black uppercase"
-              style={{ letterSpacing: "0.03em" }}
-            >
-              Daily Games
-            </h2>
-            <span
-              className="px-3 py-1 font-mono font-black text-xs uppercase bg-white text-black"
-              style={{ border: "3px solid #000", boxShadow: "3px 3px 0 #000", letterSpacing: "0.03em" }}
-            >
-              Today
-            </span>
+              className="absolute left-12 md:left-16"
+              style={{
+                bottom: "-22px",
+                width: 0,
+                height: 0,
+                borderLeft: "22px solid transparent",
+                borderRight: "22px solid transparent",
+                borderTop: "22px solid #000",
+              }}
+            />
+            <div
+              aria-hidden
+              className="absolute left-[58px] md:left-[74px]"
+              style={{
+                bottom: "-12px",
+                width: 0,
+                height: 0,
+                borderLeft: "14px solid transparent",
+                borderRight: "14px solid transparent",
+                borderTop: "14px solid #fff",
+              }}
+            />
           </div>
-          <p
-            className="font-mono font-bold text-black mb-8 max-w-2xl"
-            style={{ letterSpacing: "0.03em" }}
-          >
-            Fresh pop culture puzzles every day. Come back tomorrow for more!
-          </p>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-fr">
             {/* ===== TOP ROW — light backgrounds, BLACK text ===== */}
@@ -338,33 +372,67 @@ export default function Home() {
       >
         <NeoDoodles />
         <div className="max-w-4xl mx-auto relative z-10">
-          <div className="flex flex-wrap items-center gap-3 mb-3">
-            <span
-              className="px-3 py-1 font-mono font-black text-xs text-black uppercase"
-              style={{ background: "#38BDF8", border: "3px solid #000", boxShadow: "3px 3px 0 #000", letterSpacing: "0.03em" }}
+          {/* Speech bubble — heading + description */}
+          <div className="relative w-fit max-w-full mx-auto mb-16">
+            <div
+              className="bg-white px-6 py-5 md:px-8 md:py-6"
+              style={{ border: "5px solid #000", boxShadow: "8px 8px 0 #000" }}
             >
-              LIVE
-            </span>
-            <h2
-              className="font-mono text-3xl md:text-5xl font-black text-black uppercase"
-              style={{ letterSpacing: "0.03em" }}
-            >
-              Party Games
-            </h2>
-            <span
-              className="px-3 py-1 font-mono font-black text-xs text-black uppercase"
-              style={{ background: "#38BDF8", border: "3px solid #000", boxShadow: "3px 3px 0 #000", letterSpacing: "0.03em" }}
-            >
-              LIVE
-            </span>
+              <div className="flex flex-wrap items-center gap-3 mb-2">
+                <span
+                  className="px-3 py-1 font-mono font-black text-xs text-black uppercase"
+                  style={{ background: "#38BDF8", border: "3px solid #000", boxShadow: "3px 3px 0 #000", letterSpacing: "0.03em" }}
+                >
+                  LIVE
+                </span>
+                <h2
+                  className="font-mono text-3xl md:text-5xl font-black text-black uppercase"
+                  style={{ letterSpacing: "0.03em" }}
+                >
+                  Party Games
+                </h2>
+                <span
+                  className="px-3 py-1 font-mono font-black text-xs text-black uppercase"
+                  style={{ background: "#38BDF8", border: "3px solid #000", boxShadow: "3px 3px 0 #000", letterSpacing: "0.03em" }}
+                >
+                  LIVE
+                </span>
+              </div>
+              <p
+                className="font-mono font-bold text-black/80"
+                style={{ letterSpacing: "0.03em" }}
+              >
+                Project this screen on a TV or screen share remotely. Everyone joins on their phone.
+                One host. Up to 10 players.
+              </p>
+            </div>
+
+            {/* Speech bubble tail — black outline + white fill */}
+            <div
+              aria-hidden
+              className="absolute left-12 md:left-16"
+              style={{
+                bottom: "-22px",
+                width: 0,
+                height: 0,
+                borderLeft: "22px solid transparent",
+                borderRight: "22px solid transparent",
+                borderTop: "22px solid #000",
+              }}
+            />
+            <div
+              aria-hidden
+              className="absolute left-[58px] md:left-[74px]"
+              style={{
+                bottom: "-12px",
+                width: 0,
+                height: 0,
+                borderLeft: "14px solid transparent",
+                borderRight: "14px solid transparent",
+                borderTop: "14px solid #fff",
+              }}
+            />
           </div>
-          <p
-            className="font-mono font-bold text-black/80 mb-8 max-w-2xl"
-            style={{ letterSpacing: "0.03em" }}
-          >
-            Project this screen on a TV or screen share remotely. Everyone joins on their phone.
-            One host. Up to 10 players.
-          </p>
 
           <div className="grid md:grid-cols-2 gap-6">
             {/* Host */}
