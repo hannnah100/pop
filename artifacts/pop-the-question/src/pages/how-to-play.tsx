@@ -172,6 +172,21 @@ const GAMES: GameRulesCardProps[] = [
       "Your score depends on how many hints had been revealed when you nailed the year: 3 points with only hint 1 showing, 2 with hint 2 revealed, 1 with hint 3. The year has to be exact — close doesn't count.",
     share: "Share your score and see who in your group has the best memory.",
   },
+  {
+    title: "Reel Connections",
+    tagline: "Link 6 actors around the loop",
+    emoji: "🎬",
+    bg: "#8A2BE2",
+    steps: [
+      "You'll see 6 actors arranged in a loop. Name a movie or TV show that connects each adjacent pair.",
+      "There are 6 connections total — the last actor connects back to the first to close the loop.",
+      "Type your answer and submit. Multiple valid titles are accepted for each pair, and close spellings count.",
+      "You get 5 lives for the entire puzzle. Each wrong answer costs 1 life. Complete all 6 connections to win.",
+    ],
+    scoring:
+      "Your score is how many of the 6 connections you nailed before running out of lives. Lose all 5 lives and the round ends — the remaining answers are revealed.",
+    share: "Brag about your run — share your lives remaining and connections found.",
+  },
 ];
 
 export default function HowToPlay() {
@@ -200,7 +215,7 @@ export default function HowToPlay() {
             />
           </h1>
           <p className="mt-4 text-center font-sans font-bold text-black/80 text-base md:text-lg max-w-xl mx-auto">
-            Five fresh pop culture puzzles every day. Here's how each one works.
+            Six fresh pop culture puzzles every day. Here's how each one works.
           </p>
         </div>
       </header>

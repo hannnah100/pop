@@ -8,43 +8,43 @@
   {
     "id": "reel-connections-2026-05-11",
     "date": "2026-05-11",
-    "actors": "[\"Christian Bale\",\"Heath Ledger\",\"Anne Hathaway\",\"Hugh Jackman\",\"Ryan Reynolds\",\"Sandra Bullock\"]",
-    "validAnswers": "[[\"The Dark Knight\"],[\"Brokeback Mountain\"],[\"Les Misérables\",\"Les Miserables\"],[\"Deadpool & Wolverine\",\"Deadpool and Wolverine\",\"X-Men Origins: Wolverine\",\"X-Men Origins Wolverine\"],[\"The Proposal\"]]"
+    "actors": "[\"Christian Bale\",\"Heath Ledger\",\"Anne Hathaway\",\"Hugh Jackman\",\"Ryan Reynolds\",\"Zoe Saldana\"]",
+    "validAnswers": "[[\"The Dark Knight\"],[\"Brokeback Mountain\"],[\"Les Misérables\",\"Les Miserables\"],[\"Deadpool & Wolverine\",\"Deadpool and Wolverine\",\"X-Men Origins: Wolverine\",\"X-Men Origins Wolverine\"],[\"The Adam Project\"],[\"Out of the Furnace\"]]"
   },
   {
     "id": "reel-connections-2026-05-12",
     "date": "2026-05-12",
-    "actors": "[\"Emily Blunt\",\"John Krasinski\",\"Steve Carell\",\"Tina Fey\",\"Amy Poehler\",\"Will Arnett\"]",
-    "validAnswers": "[[\"A Quiet Place\",\"A Quiet Place Part II\",\"A Quiet Place 2\"],[\"The Office\"],[\"Date Night\",\"The Four Seasons\"],[\"Sisters\",\"Mean Girls\",\"Baby Mama\",\"Wine Country\"],[\"Blades of Glory\",\"Horton Hears a Who\",\"Horton Hears a Who!\"]]"
+    "actors": "[\"Emily Blunt\",\"John Krasinski\",\"Steve Carell\",\"Tina Fey\",\"Amy Poehler\",\"Chris Pratt\"]",
+    "validAnswers": "[[\"A Quiet Place\",\"A Quiet Place Part II\",\"A Quiet Place 2\"],[\"The Office\"],[\"Date Night\",\"The Four Seasons\"],[\"Sisters\",\"Mean Girls\",\"Baby Mama\",\"Wine Country\"],[\"Parks and Recreation\",\"Parks and Rec\"],[\"The Five-Year Engagement\",\"The Five Year Engagement\"]]"
   },
   {
     "id": "reel-connections-2026-05-13",
     "date": "2026-05-13",
-    "actors": "[\"Saoirse Ronan\",\"Florence Pugh\",\"Timothée Chalamet\",\"Zendaya\",\"Tom Holland\",\"Andrew Garfield\"]",
-    "validAnswers": "[[\"Little Women\"],[\"Little Women\",\"Dune: Part Two\",\"Dune Part Two\",\"Dune Part 2\",\"Dune 2\"],[\"Dune\",\"Dune: Part Two\",\"Dune Part Two\",\"Dune Part 2\",\"Dune 2\"],[\"Spider-Man: Homecoming\",\"Spider-Man Homecoming\",\"Spider-Man: Far From Home\",\"Spider-Man Far From Home\",\"Spider-Man: No Way Home\",\"Spider-Man No Way Home\",\"Spiderman\",\"Spider-Man\"],[\"Spider-Man: No Way Home\",\"Spider-Man No Way Home\",\"Spiderman\",\"Spider-Man\"]]"
+    "actors": "[\"Saoirse Ronan\",\"Florence Pugh\",\"Timothée Chalamet\",\"Zendaya\",\"Tom Holland\",\"Mark Wahlberg\"]",
+    "validAnswers": "[[\"Little Women\"],[\"Little Women\",\"Dune: Part Two\",\"Dune Part Two\",\"Dune Part 2\",\"Dune 2\"],[\"Dune\",\"Dune: Part Two\",\"Dune Part Two\",\"Dune Part 2\",\"Dune 2\"],[\"Spider-Man: Homecoming\",\"Spider-Man Homecoming\",\"Spider-Man: Far From Home\",\"Spider-Man Far From Home\",\"Spider-Man: No Way Home\",\"Spider-Man No Way Home\",\"Spiderman\",\"Spider-Man\"],[\"Uncharted\"],[\"The Lovely Bones\"]]"
   },
   {
     "id": "reel-connections-2026-05-14",
     "date": "2026-05-14",
     "actors": "[\"Brad Pitt\",\"Edward Norton\",\"Helena Bonham Carter\",\"Johnny Depp\",\"Geoffrey Rush\",\"Cate Blanchett\"]",
-    "validAnswers": "[[\"Fight Club\"],[\"Fight Club\"],[\"Sweeney Todd\",\"Charlie and the Chocolate Factory\",\"Alice in Wonderland\",\"Dark Shadows\",\"Corpse Bride\"],[\"Pirates of the Caribbean\",\"Pirates of the Caribbean: The Curse of the Black Pearl\",\"Pirates of the Caribbean: Dead Man's Chest\",\"Pirates of the Caribbean: At World's End\",\"Pirates of the Caribbean: On Stranger Tides\"],[\"Elizabeth\",\"Elizabeth: The Golden Age\",\"Elizabeth The Golden Age\"]]"
+    "validAnswers": "[[\"Fight Club\"],[\"Fight Club\"],[\"Sweeney Todd\",\"Charlie and the Chocolate Factory\",\"Alice in Wonderland\",\"Dark Shadows\",\"Corpse Bride\"],[\"Pirates of the Caribbean\",\"Pirates of the Caribbean: The Curse of the Black Pearl\",\"Pirates of the Caribbean: Dead Man's Chest\",\"Pirates of the Caribbean: At World's End\",\"Pirates of the Caribbean: On Stranger Tides\"],[\"Elizabeth\",\"Elizabeth: The Golden Age\",\"Elizabeth The Golden Age\"],[\"The Curious Case of Benjamin Button\",\"Benjamin Button\",\"Babel\"]]"
   },
   {
     "id": "reel-connections-2026-05-15",
     "date": "2026-05-15",
-    "actors": "[\"Adam Sandler\",\"Drew Barrymore\",\"Hugh Grant\",\"Colin Firth\",\"Emma Stone\",\"Steve Carell\"]",
-    "validAnswers": "[[\"50 First Dates\",\"The Wedding Singer\",\"Blended\"],[\"Music and Lyrics\"],[\"Bridget Jones's Diary\",\"Bridget Jones Diary\",\"Bridget Jones: The Edge of Reason\",\"Bridget Jones The Edge of Reason\"],[\"Magic in the Moonlight\"],[\"Crazy, Stupid, Love\",\"Crazy Stupid Love\"]]"
+    "actors": "[\"Adam Sandler\",\"Drew Barrymore\",\"Hugh Grant\",\"Colin Firth\",\"Emma Stone\",\"Seth Rogen\"]",
+    "validAnswers": "[[\"50 First Dates\",\"The Wedding Singer\",\"Blended\"],[\"Music and Lyrics\"],[\"Bridget Jones's Diary\",\"Bridget Jones Diary\",\"Bridget Jones: The Edge of Reason\",\"Bridget Jones The Edge of Reason\"],[\"Magic in the Moonlight\"],[\"Superbad\"],[\"Funny People\"]]"
   },
   {
     "id": "reel-connections-2026-05-16",
     "date": "2026-05-16",
-    "actors": "[\"Jennifer Lawrence\",\"Bradley Cooper\",\"Christian Bale\",\"Amy Adams\",\"Joaquin Phoenix\",\"Rooney Mara\"]",
-    "validAnswers": "[[\"Silver Linings Playbook\",\"American Hustle\",\"Joy\",\"Serena\"],[\"American Hustle\"],[\"American Hustle\",\"The Big Short\",\"Vice\"],[\"Her\",\"The Master\"],[\"Her\",\"Mary Magdalene\"]]"
+    "actors": "[\"Jennifer Lawrence\",\"Bradley Cooper\",\"Christian Bale\",\"Amy Adams\",\"Joaquin Phoenix\",\"Robert De Niro\"]",
+    "validAnswers": "[[\"Silver Linings Playbook\",\"American Hustle\",\"Joy\",\"Serena\"],[\"American Hustle\"],[\"American Hustle\",\"The Big Short\",\"Vice\"],[\"Her\",\"The Master\"],[\"Joker\"],[\"Silver Linings Playbook\",\"Joy\",\"American Hustle\"]]"
   },
   {
     "id": "reel-connections-2026-05-17",
     "date": "2026-05-17",
     "actors": "[\"Florence Pugh\",\"Andrew Garfield\",\"Jesse Eisenberg\",\"Kristen Stewart\",\"Robert Pattinson\",\"Zendaya\"]",
-    "validAnswers": "[[\"We Live in Time\"],[\"The Social Network\"],[\"Adventureland\",\"American Ultra\"],[\"Twilight\",\"The Twilight Saga\",\"New Moon\",\"Eclipse\",\"Breaking Dawn\"],[\"The Drama\"]]"
+    "validAnswers": "[[\"We Live in Time\"],[\"The Social Network\"],[\"Adventureland\",\"American Ultra\"],[\"Twilight\",\"The Twilight Saga\",\"New Moon\",\"Eclipse\",\"Breaking Dawn\"],[\"The Drama\"],[\"Dune: Part Two\",\"Dune Part Two\",\"Dune Part 2\",\"Dune 2\"]]"
   }
 ]

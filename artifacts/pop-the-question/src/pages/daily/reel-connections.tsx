@@ -266,16 +266,10 @@ export default function ReelConnections() {
   function handleShare() {
     if (!puzzle) return;
     const total = puzzle.validAnswers.length;
-    const lines = revealedAnswers
-      .map((a, i) => (a !== null && i < score ? "✅" : i < currentIdx || gameOver ? "❌" : "⬜"))
-      .join("");
-    const text = `Reel Connections ${puzzle.date}\n${score}/${total}\n${lines}\nptq.app/daily/reel-connections`;
-    if (navigator.share) {
-      void navigator.share({ text }).catch(() => void navigator.clipboard.writeText(text));
-    } else {
-      void navigator.clipboard.writeText(text);
-      toast({ title: "Copied to clipboard!" });
-    }
+    const livesLabel = lives === 1 ? "1 life remaining" : `${lives} lives remaining`;
+    const text = `I completed today's REEL CONNECTIONS! 🎬\n${score}/${total} connections - ${livesLabel}\nPlay at popthequestion.replit.app`;
+    void navigator.clipboard.writeText(text);
+    toast({ title: "Copied!" });
   }
 
   if (isLoading || !puzzle) {
