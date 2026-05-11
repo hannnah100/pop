@@ -12,3 +12,4 @@ export * from "./skinnyScores";
 export * from "./playerNames";
 export * from "./clockItScores";
 export * from "./users";
+export * from "./readTheRoom";

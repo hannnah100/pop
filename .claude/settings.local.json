@@ -43,7 +43,8 @@
       "Bash(pnpm -r --filter @workspace/pop-the-question build)",
       "Bash(pnpm -r --filter @workspace/pop-the-question typecheck)",
       "Bash(netstat -lnp)",
-      "Bash(ps -eo pid,etime,start,cmd)"
+      "Bash(ps -eo pid,etime,start,cmd)",
+      "Bash(pnpm --filter @workspace/api-server run build)"
     ]
   }
 }

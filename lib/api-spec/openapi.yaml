@@ -1551,7 +1551,7 @@ components:
       properties:
         gameType:
           type: string
-          enum: [pop-the-question, roast-roulette, pub-quiz, jeopardy, wheel-of-fortune, scattergories]
+          enum: [pop-the-question, roast-roulette, pub-quiz, jeopardy, wheel-of-fortune, scattergories, read-the-room]
         demo:
           type: boolean
         packId:

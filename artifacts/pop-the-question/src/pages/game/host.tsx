@@ -1459,13 +1459,11 @@ export default function GameHost() {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.18, ease: "easeOut" }}
-      className={`font-display font-black text-2xl uppercase px-6 py-4 border-[3px] border-black shadow-[4px_4px_0_#000] flex items-center gap-2
-        ${p.isBot
-          ? "bg-[#FFF8E7] text-black/50"
-          : "bg-white text-black"
-        }`}
+      className={`font-mono font-black text-xl md:text-2xl uppercase px-6 py-4 flex items-center gap-2
+        ${p.isBot ? "bg-yellow-50 text-black/60" : "bg-white text-black"}`}
+      style={{ border: "5px solid #000", boxShadow: "5px 5px 0 #000" }}
     >
-      {p.isBot && <Bot className="w-5 h-5 text-black/40" />}
+      {p.isBot && <Bot className="w-5 h-5 text-black/50" />}
       {p.name}
     </motion.div>
   );
@@ -1622,66 +1620,76 @@ export default function GameHost() {
     const joinUrl = "popthequestion.replit.app/join";
 
     return (
-      <div className="flex-1 flex flex-col items-center justify-center px-4 bg-[#FFF8E7]">
-        <div className="flex items-center gap-4 mb-6">
-          <DemoBadge />
-        </div>
-
-        {/* Join URL — the big instruction players see on the TV */}
-        <div className="mb-2 text-center">
-          <p className="font-display font-black text-black/40 text-xl uppercase tracking-[0.15em] mb-1">
-            Players join at:
-          </p>
-          <div className="inline-flex items-center gap-3 bg-black px-6 py-3 border-[3px] border-black shadow-[4px_4px_0_#FF1493] mb-2">
-            <span className="font-display font-black text-[#FFD700] text-2xl md:text-3xl tracking-wide">
-              {joinUrl}
-            </span>
+      <div className="flex-1 flex flex-col items-center px-4 py-10" style={{ background: "#F5F0E6" }}>
+        {isDemo && (
+          <div className="mb-6">
+            <DemoBadge />
           </div>
-          <p className="font-display font-black text-black/40 text-xl uppercase tracking-[0.15em]">
-            then enter code
-          </p>
-        </div>
+        )}
 
-        <motion.h1
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ type: "spring", stiffness: 180, damping: 26 }}
-          className="font-display font-black text-[8rem] sm:text-[10rem] md:text-[12rem] tracking-[0.18em] leading-none mb-4 text-black"
-        >
-          {roomCode}
-        </motion.h1>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="w-full max-w-5xl bg-white border-[4px] border-black shadow-[8px_8px_0_#000] p-8 mb-12"
-        >
-          <div className="flex items-center gap-4 mb-6 pb-4 border-b-[3px] border-black">
-            <Users className="w-8 h-8 text-black" />
-            <h2 className="font-display font-black text-black text-2xl md:text-3xl uppercase">
-              Players (<CountUp value={players.length} duration={0.4} />)
-              {isDemo && <span className="ml-3 text-lg font-sans font-normal text-black/50">· {players.filter(p => p.isBot).length} AI</span>}
-            </h2>
-          </div>
-
-          <motion.div
-            className="flex flex-wrap gap-4 min-h-[120px]"
-            variants={staggerContainer(0.06)}
-            initial="hidden"
-            animate="show"
+        <div className="w-full max-w-5xl grid md:grid-cols-2 gap-8 mb-10">
+          {/* Join instructions card */}
+          <div
+            className="bg-white p-8"
+            style={{ border: "5px solid #000", boxShadow: "8px 8px 0 #000" }}
           >
-            <AnimatePresence>
-              {players.length === 0 ? (
-                <div className="w-full flex items-center justify-center text-2xl text-black/40 font-display font-black uppercase animate-pulse">
-                  Waiting for players to join...
-                </div>
-              ) : (
-                players.map((p) => <PlayerChip key={p.id} p={p} />)
+            <p className="font-mono font-bold text-xl uppercase mb-2">Players join at</p>
+            <div
+              className="bg-black text-yellow-300 px-6 py-4 mb-6 font-mono font-black text-xl md:text-2xl break-all"
+              style={{ border: "5px solid #000", boxShadow: "8px 8px 0 #FF006E" }}
+            >
+              {joinUrl}
+            </div>
+            <p className="font-mono font-bold text-xl uppercase mb-2">Room code</p>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.92 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ type: "spring", stiffness: 180, damping: 24 }}
+              className="bg-yellow-300 px-4 py-6 font-mono font-black text-6xl md:text-7xl text-center tracking-widest"
+              style={{ border: "5px solid #000", boxShadow: "8px 8px 0 #000" }}
+            >
+              {roomCode}
+            </motion.div>
+          </div>
+
+          {/* Players card */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="bg-white p-8"
+            style={{ border: "5px solid #000", boxShadow: "8px 8px 0 #000" }}
+          >
+            <div className="flex items-center gap-3 mb-6">
+              <Users className="w-7 h-7 text-black" />
+              <h2 className="font-mono font-black text-2xl md:text-3xl uppercase">
+                Players (<CountUp value={players.length} duration={0.4} />)
+              </h2>
+              {isDemo && (
+                <span className="font-mono font-bold text-sm text-black/60 uppercase">
+                  · {players.filter(p => p.isBot).length} AI
+                </span>
               )}
-            </AnimatePresence>
+            </div>
+
+            <motion.div
+              className="flex flex-wrap gap-3 min-h-[120px]"
+              variants={staggerContainer(0.06)}
+              initial="hidden"
+              animate="show"
+            >
+              <AnimatePresence>
+                {players.length === 0 ? (
+                  <div className="w-full flex items-center justify-center text-xl text-black/50 font-mono font-black uppercase animate-pulse min-h-[120px]">
+                    Waiting for players to join…
+                  </div>
+                ) : (
+                  players.map((p) => <PlayerChip key={p.id} p={p} />)
+                )}
+              </AnimatePresence>
+            </motion.div>
           </motion.div>
-        </motion.div>
+        </div>
 
         {/* ===== Jeopardy pack picker ===== */}
         {gameType === "jeopardy" && (
@@ -3268,18 +3276,18 @@ export default function GameHost() {
         ? players.length >= 1
         : players.filter((p) => !p.isBot).length >= 3;
       return (
-        <Button
-          size="lg"
+        <button
           onClick={handleStartGame}
           disabled={!canStart}
-          className="text-xl px-8 py-6 font-bold gap-2"
+          className="bg-lime-400 px-8 py-5 font-mono font-black text-2xl uppercase disabled:bg-gray-300 disabled:cursor-not-allowed flex items-center gap-2"
+          style={{ border: "5px solid #000", boxShadow: "8px 8px 0 #000" }}
           data-testid="btn-start-game"
         >
           <Play className="w-5 h-5 fill-current" />
           {canStart
-            ? "Start Game"
+            ? "Start Game →"
             : `Need ${3 - players.filter((p) => !p.isBot).length} more`}
-        </Button>
+        </button>
       );
     }
     if (gameState === "finished") return null;

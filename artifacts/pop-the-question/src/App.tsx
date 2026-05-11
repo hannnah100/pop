@@ -23,6 +23,8 @@ import Host from "@/pages/host";
 import Join from "@/pages/join";
 import GameHost from "@/pages/game/host";
 import GamePlayer from "@/pages/game/player";
+import ReadTheRoomHost from "@/pages/game/read-the-room-host";
+import ReadTheRoomPlayer from "@/pages/game/read-the-room-player";
 import Stats from "@/pages/stats";
 import Archive from "@/pages/archive";
 import CreateGamePicker from "@/pages/create-game/index";
@@ -70,6 +72,8 @@ function AnimatedRoutes() {
           <Route path="/join" component={Join} />
           <Route path="/game/:roomCode/host" component={GameHost} />
           <Route path="/game/:roomCode/player" component={GamePlayer} />
+          <Route path="/read-the-room/:roomCode/host" component={ReadTheRoomHost} />
+          <Route path="/read-the-room/:roomCode/player" component={ReadTheRoomPlayer} />
           <Route path="/stats" component={Stats} />
           <Route path="/archive" component={Archive} />
           <Route path="/create-game" component={CreateGamePicker} />

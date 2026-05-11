@@ -102,6 +102,20 @@ import {
   TIMER_DURATIONS_MS,
 } from "./scattergories";
 import { pickCategories, BOT_ANSWER_POOL, CATEGORIES_PER_ROUND } from "../data/scattergories/categories";
+import {
+  type ReadTheRoomState,
+  type RtrAnswer,
+  type RtrDart,
+  ANSWER_PHASE_MS,
+  PLAYER_COLORS,
+  PRESET_QUESTIONS,
+  SCORE_SOLVER_CORRECT,
+  clearRtrTimer,
+  makeReadTheRoomState,
+  scoreReadTheRoomRound,
+  shuffle,
+  solverIdForRound,
+} from "./readTheRoom";
 
 interface Player {
   id: string;
@@ -122,7 +136,7 @@ interface HostSettingsBroadcast {
   answerMethod: "voice" | "text" | "both";
 }
 
-export type GameType = "pop-the-question" | "roast-roulette" | "pub-quiz" | "jeopardy" | "wheel-of-fortune" | "scattergories";
+export type GameType = "pop-the-question" | "roast-roulette" | "pub-quiz" | "jeopardy" | "wheel-of-fortune" | "scattergories" | "read-the-room";
 
 interface RoastCard {
   [color: string]: {
@@ -186,6 +200,12 @@ interface Room {
   scattergoriesPackId?: string;
   /** Custom payload when a custom Scattergories pack is selected (per-round letter+categories). */
   customScattergoriesPackPayload?: { id: string; title: string; description: string; rounds: Array<{ letter: string; categories: string[] }> };
+  /** Read the Room game state (only set when gameType === "read-the-room"). */
+  readTheRoom?: ReadTheRoomState;
+  /** Read the Room: per-player color, assigned at game start, persisted whole game. */
+  rtrPlayerColors?: Record<string, string>;
+  /** Read the Room: target total round count (host-configurable, default 5). */
+  rtrTotalRounds?: number;
   createdAt: number;
   lastActivity: number;
   hostSettings: HostSettingsBroadcast;
@@ -653,6 +673,13 @@ export function setupSocketIO(httpServer: HttpServer) {
         scattergoriesCategories: room.scattergories?.currentCategories ?? [],
         scattergoriesTimerEndAt: room.scattergories?.timerEndAt ?? 0,
         scattergoriesDifficultyActive: room.scattergories?.difficulty ?? null,
+        rtrTotalRounds: room.rtrTotalRounds ?? 5,
+        rtrPhase: room.readTheRoom?.phase ?? null,
+        rtrRound: room.readTheRoom?.currentRound ?? 0,
+        rtrQuestion: room.readTheRoom?.currentQuestion ?? "",
+        rtrSolverId: room.readTheRoom ? solverIdForRound(room.readTheRoom, room.readTheRoom.currentRound) : null,
+        rtrPlayerColors: room.rtrPlayerColors ?? {},
+        rtrTimerEndAt: room.readTheRoom?.timerEndAt ?? 0,
       });
     });
 
@@ -1152,6 +1179,40 @@ export function setupSocketIO(httpServer: HttpServer) {
 
         // Kick off round 1 immediately
         startScattergoriesRound(io, room);
+      } else if (room.gameType === "read-the-room") {
+        const nonHostPlayers = room.players.filter((p) => !p.isHost);
+        if (nonHostPlayers.length < 2) {
+          socket.emit("error", { message: "Need at least 2 players to start Read the Room." });
+          room.status = "lobby";
+          return;
+        }
+
+        const totalRounds = room.rtrTotalRounds ?? Math.min(7, Math.max(5, nonHostPlayers.length));
+        room.rtrTotalRounds = totalRounds;
+
+        // Assign colors (persist whole game)
+        const colors: Record<string, string> = {};
+        nonHostPlayers.forEach((p, i) => {
+          colors[p.id] = PLAYER_COLORS[i % PLAYER_COLORS.length]!;
+        });
+        room.rtrPlayerColors = colors;
+
+        // Reset scores
+        room.players.forEach((p) => { p.score = 0; });
+
+        const state = makeReadTheRoomState(totalRounds);
+        state.rotationOrder = shuffle(nonHostPlayers.map((p) => p.id));
+        room.readTheRoom = state;
+
+        io.to(roomCode).emit("game-started", {
+          gameType: room.gameType,
+          status: room.status,
+          isDemo: room.isDemo,
+          totalRounds,
+          playerColors: colors,
+          rotationOrder: state.rotationOrder,
+          presetQuestions: PRESET_QUESTIONS,
+        });
       }
     });
 
@@ -2127,6 +2188,245 @@ export function setupSocketIO(httpServer: HttpServer) {
         });
         if (nextPlayer?.isBot) scheduleBotRevealPicks(io, room, nextId);
       }
+    });
+
+    // ===========================================
+    // Read the Room: host configures total rounds (lobby only)
+    // ===========================================
+    socket.on("rtr-set-total-rounds", ({ roomCode, totalRounds }: { roomCode: string; totalRounds: number }) => {
+      const room = rooms.get(roomCode);
+      if (!room || room.status !== "lobby") return;
+      if (room.hostId !== socket.id) return;
+      if (room.gameType !== "read-the-room") return;
+      const clamped = Math.min(Math.max(Math.floor(totalRounds), 3), 10);
+      room.rtrTotalRounds = clamped;
+      io.to(roomCode).emit("rtr-total-rounds-changed", { totalRounds: clamped });
+    });
+
+    // ===========================================
+    // Read the Room: host picks a question and starts the answer phase
+    // ===========================================
+    socket.on("rtr-start-round", ({ roomCode, question }: { roomCode: string; question: string }) => {
+      const room = rooms.get(roomCode);
+      if (!room || !room.readTheRoom) return;
+      if (room.hostId !== socket.id) return;
+      const rtr = room.readTheRoom;
+      if (rtr.phase !== "lobby" && rtr.phase !== "round-end") return;
+      if (typeof question !== "string" || question.trim().length === 0) return;
+
+      clearRtrTimer(rtr);
+      rtr.currentRound += 1;
+      rtr.currentQuestion = question.trim().slice(0, 280);
+      rtr.currentAnswers = new Map();
+      rtr.submittedAnswerIds = new Set();
+      rtr.shuffledAnswerOrder = [];
+      rtr.solverMatches = {};
+      rtr.solverSubmitted = false;
+      rtr.revealIndex = 0;
+      rtr.phase = "answering";
+      rtr.timerEndAt = Date.now() + ANSWER_PHASE_MS;
+
+      const solverId = solverIdForRound(rtr, rtr.currentRound);
+
+      io.to(roomCode).emit("rtr-round-started", {
+        round: rtr.currentRound,
+        totalRounds: rtr.totalRounds,
+        question: rtr.currentQuestion,
+        solverId,
+        phase: "answering",
+        timerEndAt: rtr.timerEndAt,
+      });
+
+      const expiresAt = rtr.timerEndAt;
+      rtr.timerHandle = setTimeout(() => {
+        const live = rooms.get(roomCode);
+        if (!live?.readTheRoom) return;
+        if (live.readTheRoom.phase !== "answering") return;
+        if (live.readTheRoom.timerEndAt !== expiresAt) return;
+        finalizeRtrAnswerPhase(io, live);
+      }, ANSWER_PHASE_MS);
+    });
+
+    // ===========================================
+    // Read the Room: player submits answer (during answer phase)
+    // ===========================================
+    socket.on("rtr-submit-answer", ({ roomCode, answer }: { roomCode: string; answer: string }) => {
+      const room = rooms.get(roomCode);
+      if (!room || !room.readTheRoom) return;
+      const rtr = room.readTheRoom;
+      if (rtr.phase !== "answering") return;
+      const player = room.players.find((p) => p.id === socket.id);
+      if (!player || player.isHost) return;
+      if (typeof answer !== "string" || answer.trim().length === 0) return;
+
+      room.lastActivity = Date.now();
+      player.lastActivity = Date.now();
+
+      const trimmed = answer.trim().slice(0, 200);
+      const ans: RtrAnswer = {
+        id: `${rtr.currentRound}-${socket.id}`,
+        playerId: socket.id,
+        text: trimmed,
+      };
+      rtr.currentAnswers.set(socket.id, ans);
+      rtr.submittedAnswerIds.add(socket.id);
+
+      const nonHostPlayers = room.players.filter((p) => !p.isHost);
+      io.to(roomCode).emit("rtr-answer-progress", {
+        submitted: rtr.submittedAnswerIds.size,
+        total: nonHostPlayers.length,
+        submittedIds: [...rtr.submittedAnswerIds],
+      });
+
+      if (rtr.submittedAnswerIds.size >= nonHostPlayers.length) {
+        finalizeRtrAnswerPhase(io, room);
+      }
+    });
+
+    // ===========================================
+    // Read the Room: solver submits their full set of matches
+    // ===========================================
+    socket.on("rtr-submit-matches", ({ roomCode, matches }: { roomCode: string; matches: Record<string, string> }) => {
+      const room = rooms.get(roomCode);
+      if (!room || !room.readTheRoom) return;
+      const rtr = room.readTheRoom;
+      if (rtr.phase !== "solving") return;
+      const solverId = solverIdForRound(rtr, rtr.currentRound);
+      if (socket.id !== solverId) return;
+      if (rtr.solverSubmitted) return;
+      if (!matches || typeof matches !== "object") return;
+
+      rtr.solverMatches = { ...matches };
+      rtr.solverSubmitted = true;
+      clearRtrTimer(rtr);
+
+      rtr.phase = "reveal";
+      rtr.revealIndex = 0;
+      io.to(roomCode).emit("rtr-solving-complete", {
+        round: rtr.currentRound,
+        matches: rtr.solverMatches,
+        phase: "reveal",
+        revealIndex: 0,
+      });
+    });
+
+    // ===========================================
+    // Read the Room: spectator throws their one-per-game dart
+    // ===========================================
+    socket.on("rtr-throw-dart", ({ roomCode, answerId, targetPlayerId }: { roomCode: string; answerId: string; targetPlayerId: string }) => {
+      const room = rooms.get(roomCode);
+      if (!room || !room.readTheRoom) return;
+      const rtr = room.readTheRoom;
+      if (rtr.phase !== "solving") return;
+      const solverId = solverIdForRound(rtr, rtr.currentRound);
+      if (socket.id === solverId) return;
+      const player = room.players.find((p) => p.id === socket.id);
+      if (!player || player.isHost) return;
+      if (rtr.dartsByPlayer.has(socket.id)) return;
+      if (!rtr.currentAnswers.has(targetPlayerId) && rtr.shuffledAnswerOrder.findIndex((id) => id === answerId) === -1) return;
+      const answerOwner = [...rtr.currentAnswers.values()].find((a) => a.id === answerId);
+      if (!answerOwner) return;
+      const targetExists = room.players.some((p) => p.id === targetPlayerId && !p.isHost);
+      if (!targetExists) return;
+
+      const dart: RtrDart = {
+        playerId: socket.id,
+        answerId,
+        guessedPlayerId: targetPlayerId,
+        round: rtr.currentRound,
+      };
+      rtr.dartsByPlayer.set(socket.id, dart);
+
+      // Tell the thrower their dart was registered.
+      io.to(socket.id).emit("rtr-dart-registered", { dart });
+
+      // Tell the host (only) about the dart activity for the dashboard.
+      if (room.hostId) {
+        io.to(room.hostId).emit("rtr-dart-thrown", {
+          playerId: socket.id,
+          playerName: player.name,
+          round: rtr.currentRound,
+        });
+      }
+    });
+
+    // ===========================================
+    // Read the Room: host advances reveal one answer at a time
+    // ===========================================
+    socket.on("rtr-reveal-next", ({ roomCode }: { roomCode: string }) => {
+      const room = rooms.get(roomCode);
+      if (!room || !room.readTheRoom) return;
+      if (room.hostId !== socket.id) return;
+      const rtr = room.readTheRoom;
+      if (rtr.phase !== "reveal") return;
+      if (rtr.revealIndex >= rtr.shuffledAnswerOrder.length) return;
+
+      const answerId = rtr.shuffledAnswerOrder[rtr.revealIndex]!;
+      const answer = [...rtr.currentAnswers.values()].find((a) => a.id === answerId);
+      if (!answer) return;
+
+      const guessedPlayerId = rtr.solverMatches[answerId] ?? null;
+      const dartsOnThis = [...rtr.dartsByPlayer.values()].filter(
+        (d) => d.answerId === answerId && d.round === rtr.currentRound,
+      );
+      const solverCorrect = guessedPlayerId === answer.playerId;
+      const author = room.players.find((p) => p.id === answer.playerId);
+
+      io.to(roomCode).emit("rtr-answer-revealed", {
+        round: rtr.currentRound,
+        revealIndex: rtr.revealIndex,
+        totalReveals: rtr.shuffledAnswerOrder.length,
+        answer: { id: answer.id, text: answer.text, playerId: answer.playerId, playerName: author?.name ?? "Unknown" },
+        guessedPlayerId,
+        solverCorrect,
+        darts: dartsOnThis.map((d) => {
+          const thrower = room.players.find((p) => p.id === d.playerId);
+          const target = room.players.find((p) => p.id === d.guessedPlayerId);
+          return {
+            playerId: d.playerId,
+            playerName: thrower?.name ?? "Unknown",
+            guessedPlayerId: d.guessedPlayerId,
+            guessedPlayerName: target?.name ?? "Unknown",
+            hit: d.guessedPlayerId === answer.playerId,
+          };
+        }),
+      });
+
+      rtr.revealIndex += 1;
+
+      if (rtr.revealIndex >= rtr.shuffledAnswerOrder.length) {
+        finalizeRtrRound(io, room);
+      }
+    });
+
+    // ===========================================
+    // Read the Room: host advances to the next round
+    // ===========================================
+    socket.on("rtr-next-round", ({ roomCode }: { roomCode: string }) => {
+      const room = rooms.get(roomCode);
+      if (!room || !room.readTheRoom) return;
+      if (room.hostId !== socket.id) return;
+      const rtr = room.readTheRoom;
+      if (rtr.phase !== "round-end") return;
+      if (rtr.currentRound >= rtr.totalRounds) {
+        endRtrGame(io, room);
+        return;
+      }
+      // Reset to a state ready for host to pick the next question.
+      rtr.phase = "lobby";
+      const solverId = solverIdForRound(rtr, rtr.currentRound + 1);
+      io.to(roomCode).emit("rtr-awaiting-question", {
+        nextRound: rtr.currentRound + 1,
+        totalRounds: rtr.totalRounds,
+        nextSolverId: solverId,
+      });
+    });
+
+    socket.on("rtr-end-game", ({ roomCode }: { roomCode: string }) => {
+      const room = rooms.get(roomCode);
+      if (!room || !room.readTheRoom) return;
+      if (room.hostId !== socket.id) return;
+      endRtrGame(io, room);
     });
 
     socket.on("disconnect", () => {
@@ -3228,4 +3528,133 @@ function scheduleBotWofGuess(io: SocketIOServer, room: Room) {
       if (next?.isBot) scheduleBotWofTurn(io, live);
     }
   }, wofRand(800, 2200));
+}
+
+// ==============================================
+// Read the Room helper functions
+// ==============================================
+
+function rtrAnswerCardWire(a: RtrAnswer) {
+  return { id: a.id, text: a.text };
+}
+
+function finalizeRtrAnswerPhase(io: SocketIOServer, room: Room): void {
+  const rtr = room.readTheRoom;
+  if (!rtr) return;
+  clearRtrTimer(rtr);
+
+  // Anyone who didn't answer gets a blank placeholder so the round still flows.
+  const nonHostPlayers = room.players.filter((p) => !p.isHost);
+  for (const p of nonHostPlayers) {
+    if (!rtr.currentAnswers.has(p.id)) {
+      rtr.currentAnswers.set(p.id, {
+        id: `${rtr.currentRound}-${p.id}`,
+        playerId: p.id,
+        text: "(no answer)",
+      });
+    }
+  }
+
+  const allAnswers = [...rtr.currentAnswers.values()];
+  rtr.shuffledAnswerOrder = shuffle(allAnswers.map((a) => a.id));
+  rtr.phase = "solving";
+  rtr.solverMatches = {};
+  rtr.solverSubmitted = false;
+
+  const solverId = solverIdForRound(rtr, rtr.currentRound);
+  const playerNames: Record<string, string> = {};
+  nonHostPlayers.forEach((p) => { playerNames[p.id] = p.name; });
+
+  io.to(room.code).emit("rtr-solving-phase-start", {
+    round: rtr.currentRound,
+    totalRounds: rtr.totalRounds,
+    solverId,
+    answers: rtr.shuffledAnswerOrder.map((id) => {
+      const a = allAnswers.find((x) => x.id === id)!;
+      return rtrAnswerCardWire(a);
+    }),
+    playerIds: nonHostPlayers.map((p) => p.id),
+    playerNames,
+    phase: "solving",
+  });
+}
+
+function finalizeRtrRound(io: SocketIOServer, room: Room): void {
+  const rtr = room.readTheRoom;
+  if (!rtr) return;
+
+  const answers = [...rtr.currentAnswers.values()];
+  const dartsThisRound = [...rtr.dartsByPlayer.values()].filter((d) => d.round === rtr.currentRound);
+  const delta = scoreReadTheRoomRound(answers, rtr.solverMatches, dartsThisRound, rtr.currentRound);
+
+  // Solver scoring (handled here so we can use SCORE_SOLVER_CORRECT constant).
+  const solverId = solverIdForRound(rtr, rtr.currentRound);
+  if (solverId) {
+    let solverPoints = 0;
+    for (const a of answers) {
+      if (rtr.solverMatches[a.id] === a.playerId) solverPoints += SCORE_SOLVER_CORRECT;
+    }
+    delta[solverId] = (delta[solverId] ?? 0) + solverPoints;
+  }
+
+  for (const [pid, d] of Object.entries(delta)) {
+    const player = room.players.find((p) => p.id === pid);
+    if (player) player.score += d;
+  }
+
+  rtr.history.push({
+    round: rtr.currentRound,
+    question: rtr.currentQuestion,
+    solverId: solverId ?? "",
+    answers,
+    matches: { ...rtr.solverMatches },
+  });
+
+  rtr.phase = "round-end";
+
+  const nonHostPlayers = room.players.filter((p) => !p.isHost);
+  const leaderboard = [...nonHostPlayers]
+    .sort((a, b) => b.score - a.score)
+    .map((p, i) => ({
+      id: p.id,
+      name: p.name,
+      score: p.score,
+      isBot: p.isBot,
+      rank: i + 1,
+      color: room.rtrPlayerColors?.[p.id] ?? "#999",
+    }));
+
+  io.to(room.code).emit("rtr-round-end", {
+    round: rtr.currentRound,
+    totalRounds: rtr.totalRounds,
+    delta,
+    leaderboard,
+    isLastRound: rtr.currentRound >= rtr.totalRounds,
+  });
+}
+
+function endRtrGame(io: SocketIOServer, room: Room): void {
+  const rtr = room.readTheRoom;
+  if (!rtr) return;
+  clearRtrTimer(rtr);
+  rtr.phase = "finished";
+  room.status = "finished";
+
+  const nonHostPlayers = room.players.filter((p) => !p.isHost);
+  const finalScores = [...nonHostPlayers]
+    .sort((a, b) => b.score - a.score)
+    .map((p, i) => ({
+      id: p.id,
+      name: p.name,
+      score: p.score,
+      isBot: p.isBot,
+      rank: i + 1,
+      color: room.rtrPlayerColors?.[p.id] ?? "#999",
+    }));
+
+  io.to(room.code).emit("game-ended", {
+    players: room.players,
+    finalScores,
+    gameType: "read-the-room",
+  });
 }

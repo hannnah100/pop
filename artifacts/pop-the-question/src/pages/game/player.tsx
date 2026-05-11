@@ -1354,33 +1354,50 @@ export default function GamePlayer() {
   if (gameState === "lobby") {
     return (
       <>
-        <div className="flex flex-col min-h-[100dvh] bg-[#FFD700]">
-          <header className="bg-[#FF1493] border-b-[4px] border-black px-6 py-5">
-            <div className="flex items-start justify-between gap-2 mb-3">
-              <div className="inline-flex items-center gap-2 bg-[#FFD700] border-[3px] border-black shadow-[3px_3px_0_#000] px-4 py-1.5 font-display font-black text-black text-sm uppercase tracking-widest">
-                <span className="text-black/60">ROOM</span>
-                <span className="text-xl tracking-[0.3em]">{roomCode}</span>
+        <div className="flex flex-col min-h-[100dvh] px-4 py-6" style={{ background: "#F5F0E6" }}>
+          <div className="max-w-md w-full mx-auto">
+            <div className="flex items-center justify-between mb-6">
+              <div
+                className="bg-white px-4 py-2 font-mono font-black uppercase text-sm"
+                style={{ border: "3px solid #000", boxShadow: "4px 4px 0 #000" }}
+              >
+                <span className="text-black/60">ROOM</span>{" "}
+                <span className="tracking-[0.3em]">{roomCode}</span>
               </div>
               <button
                 onClick={() => setConfirmLeave(true)}
                 data-testid="btn-leave-game"
-                className="inline-flex items-center gap-1.5 bg-white border-[3px] border-black shadow-[4px_4px_0_#000] px-3 py-1.5 font-display font-black text-black text-xs uppercase tracking-wide hover:shadow-[2px_2px_0_#000] hover:translate-x-[2px] hover:translate-y-[2px] active:shadow-none active:translate-x-[4px] active:translate-y-[4px] transition-[box-shadow,transform] duration-75"
+                className="bg-white px-3 py-2 font-mono font-black text-xs uppercase"
+                style={{ border: "3px solid #000", boxShadow: "4px 4px 0 #000" }}
               >
-                <svg viewBox="0 0 24 24" fill="none" className="w-3.5 h-3.5 flex-shrink-0" aria-hidden>
-                  <path d="M19 12H5M5 12L11 6M5 12L11 18" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-                LEAVE
+                ← LEAVE
               </button>
             </div>
-            <h1 className="font-display font-black text-white text-4xl uppercase" style={{ textShadow: "3px 3px 0 #000" }}>You're in!</h1>
-          </header>
 
-          <div className="flex-1 flex flex-col items-center justify-center space-y-6 text-center px-6">
-            <div className="bg-white border-[3px] border-black shadow-[4px_4px_0_#000] w-24 h-24 flex items-center justify-center">
-              <Loader2 className="w-12 h-12 text-black animate-spin" />
+            <div
+              className="bg-white p-6 mb-6"
+              style={{ border: "5px solid #000", boxShadow: "8px 8px 0 #000" }}
+            >
+              <h1 className="font-mono font-black text-4xl uppercase mb-2">You're in!</h1>
+              <p className="font-mono font-bold text-lg">Waiting for the host to start…</p>
             </div>
-            <h2 className="font-display font-black text-black text-2xl uppercase">Waiting for host…</h2>
-            <p className="text-black/70 font-bold font-sans">Look at the big screen.</p>
+
+            <div
+              className="bg-yellow-300 px-6 py-8 font-mono font-black text-5xl text-center tracking-widest mb-6"
+              style={{ border: "5px solid #000", boxShadow: "8px 8px 0 #000" }}
+            >
+              {roomCode}
+            </div>
+
+            <div className="flex items-center justify-center gap-3 mb-2">
+              <div
+                className="bg-white w-14 h-14 flex items-center justify-center"
+                style={{ border: "5px solid #000", boxShadow: "5px 5px 0 #000" }}
+              >
+                <Loader2 className="w-7 h-7 text-black animate-spin" />
+              </div>
+              <p className="font-mono font-black uppercase text-xl">Look at the big screen</p>
+            </div>
           </div>
         </div>
 

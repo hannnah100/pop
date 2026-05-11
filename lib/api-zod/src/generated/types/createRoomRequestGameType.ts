@@ -16,4 +16,5 @@ export const CreateRoomRequestGameType = {
   jeopardy: "jeopardy",
   "wheel-of-fortune": "wheel-of-fortune",
   scattergories: "scattergories",
+  "read-the-room": "read-the-room",
 } as const;

@@ -941,6 +941,7 @@ export const CreateRoomBody = zod.object({
     "jeopardy",
     "wheel-of-fortune",
     "scattergories",
+    "read-the-room",
   ]),
   demo: zod.boolean().optional(),
   packId: zod.string().optional(),
