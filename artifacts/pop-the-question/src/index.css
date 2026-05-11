@@ -154,7 +154,7 @@
 
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--app-font-display);
-    letter-spacing: -0.01em;
+    letter-spacing: 0.03em;
     line-height: 1.1;
     font-weight: 900;
   }
@@ -162,7 +162,7 @@
 
 @layer utilities {
   .font-fun { font-family: var(--app-font-fun); }
-  .font-display { font-family: var(--app-font-display); }
+  .font-display { font-family: var(--app-font-display); letter-spacing: 0.03em; }
   .font-sans { font-family: var(--app-font-sans); }
   .font-handwriting { font-family: var(--app-font-handwriting); }
   .font-question-pop { font-family: var(--app-font-question-pop); }

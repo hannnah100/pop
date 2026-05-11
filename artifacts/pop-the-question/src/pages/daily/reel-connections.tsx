@@ -345,14 +345,14 @@ export default function ReelConnections() {
       !gameOver && (index === currentIdx || index === (currentIdx + 1) % actors.length);
     return (
       <div
-        className={`w-[28%] min-w-0 max-w-[200px] border-[3px] md:border-[4px] border-black shadow-[3px_3px_0_#000] md:shadow-[5px_5px_0_#000] px-2 py-2.5 md:px-3 md:py-3 text-center transition-colors ${
+        className={`shrink-0 grow-0 basis-[28%] min-w-0 max-w-[180px] border-[3px] md:border-[4px] border-black shadow-[3px_3px_0_#000] md:shadow-[5px_5px_0_#000] px-2 py-2.5 md:px-3 md:py-3 text-center overflow-hidden transition-colors ${
           involvedInCurrent ? "bg-[#FFD700]" : "bg-white"
         }`}
         data-testid={`actor-${index}`}
       >
         <p
-          className="font-display font-black text-black uppercase tracking-tight leading-tight"
-          style={{ fontSize: "clamp(0.8rem, 2.6vw, 1.25rem)" }}
+          className="font-display font-black text-black uppercase leading-tight break-words"
+          style={{ fontSize: "clamp(0.65rem, 2.2vw, 1.1rem)", letterSpacing: "0.075em" }}
         >
           {actors[index]}
         </p>
