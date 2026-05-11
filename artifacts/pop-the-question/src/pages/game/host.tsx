@@ -2584,58 +2584,110 @@ export default function GameHost() {
     const remainingMs = Math.max(0, pqTimerEndAt - pqNow);
     const totalMs = pqQuestion ? pqQuestion.durationMs : 30000;
     const secsLeft = Math.ceil(remainingMs / 1000);
+    const pqPlayerColor = (idx: number) => PTQ_NEON_PALETTE[idx % PTQ_NEON_PALETTE.length]!;
 
     // ---- Round summary screen (between rounds) ----
     if (pqRoundSummary) {
       const top = pqRoundSummary.leaderboard[0];
       return (
-        <div className="flex-1 flex flex-col relative overflow-hidden bg-[#00C853]">
+        <div className="flex-1 flex flex-col relative overflow-hidden bg-[#FFF5E7] p-6 md:p-10">
           {isDemo && <div className="absolute top-6 right-6 z-20"><DemoBadge /></div>}
-          <header className="flex justify-between items-center mb-8 relative z-10">
-            <div className="font-display font-black text-black text-xl bg-white border-[3px] border-black shadow-[3px_3px_0_#000] px-6 py-3 uppercase">
-              ROOM: <span className="text-[#FF1493]">{roomCode}</span>
+          <header className="flex justify-between items-center mb-8 gap-4 flex-wrap relative z-10">
+            <div
+              className="font-display font-black text-black text-xl bg-white border-[5px] border-black px-6 py-3 uppercase"
+              style={{ letterSpacing: "0.03em", boxShadow: "8px 8px 0 #000" }}
+            >
+              ROOM: <span className="text-[#00FF7F]">{roomCode}</span>
             </div>
-            <div className="font-display font-black text-black text-xl bg-white border-[3px] border-black shadow-[3px_3px_0_#000] px-6 py-3 uppercase">
-              Round <span className="text-[#FF1493]">{pqRoundSummary.roundIndex + 1}</span> / {pqRoundSummary.totalRounds}
+            <div
+              className="font-display font-black text-black text-xl bg-white border-[5px] border-black px-6 py-3 uppercase"
+              style={{ letterSpacing: "0.03em", boxShadow: "8px 8px 0 #000" }}
+            >
+              Round <span className="text-[#00FF7F]">{pqRoundSummary.roundIndex + 1}</span> / {pqRoundSummary.totalRounds}
             </div>
           </header>
 
-          <main className="flex-1 flex flex-col items-center justify-center max-w-5xl mx-auto w-full relative z-10">
-            <p className="font-display font-black text-white text-2xl uppercase tracking-widest mb-2" style={{ textShadow: "2px 2px 0 rgba(0,0,0,0.3)" }}>Round Complete</p>
-            <h1 className="font-display font-black text-white text-5xl md:text-7xl uppercase text-center mb-2" style={{ textShadow: "5px 5px 0 #000" }}>
-              {pqRoundSummary.roundName}
-            </h1>
-            <div className="h-1 w-20 bg-white border border-black mb-12" />
+          <main className="flex-1 flex flex-col items-center max-w-5xl mx-auto w-full relative z-10">
+            <div
+              className="bg-[#00FF7F] border-[6px] border-black px-8 py-6 mb-3"
+              style={{ boxShadow: "10px 10px 0 #000" }}
+            >
+              <p
+                className="font-display font-black text-black/70 text-base md:text-lg uppercase mb-1 text-center"
+                style={{ letterSpacing: "0.03em" }}
+              >
+                Round Complete
+              </p>
+              <h1
+                className="font-display font-black text-black text-4xl md:text-6xl uppercase text-center"
+                style={{ letterSpacing: "0.03em" }}
+              >
+                {pqRoundSummary.roundName}
+              </h1>
+            </div>
+            <p
+              className="font-display font-black text-black/40 uppercase text-sm mb-10"
+              style={{ letterSpacing: "0.03em" }}
+            >
+              Round {pqRoundSummary.roundIndex + 1} of {pqRoundSummary.totalRounds}
+            </p>
 
-            <div className="w-full max-w-3xl space-y-3 mb-12">
-              {pqRoundSummary.leaderboard.slice(0, 8).map((row, i) => (
-                <motion.div
-                  key={row.id}
-                  initial={{ opacity: 0, x: -30 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: i * 0.07, type: "spring", stiffness: 200, damping: 22 }}
-                  className={`flex items-center justify-between p-5 border-[3px] border-black ${
-                    i === 0 ? "bg-[#FFD700] shadow-[5px_5px_0_#000]" : "bg-white shadow-[3px_3px_0_#000]"
-                  }`}
-                >
-                  <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 bg-black flex items-center justify-center font-display font-black text-white text-xl">
-                      {i + 1}
+            <div
+              className="w-full max-w-3xl bg-white border-[6px] border-black p-6 mb-8"
+              style={{ boxShadow: "10px 10px 0 #000" }}
+            >
+              <h2
+                className="font-display font-black text-black text-2xl uppercase mb-4"
+                style={{ letterSpacing: "0.03em" }}
+              >
+                Leaderboard
+              </h2>
+              <div className="space-y-3">
+                {pqRoundSummary.leaderboard.slice(0, 8).map((row, i) => (
+                  <motion.div
+                    key={row.id}
+                    initial={{ opacity: 0, x: -30 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: i * 0.07, type: "spring", stiffness: 200, damping: 22 }}
+                    className="flex items-center justify-between gap-3 px-4 py-3 border-[5px] border-black"
+                    style={{
+                      background: i === 0 ? "#00FF7F" : "#fff",
+                      boxShadow: "6px 6px 0 #000",
+                    }}
+                  >
+                    <div className="flex items-center gap-3 min-w-0">
+                      <div
+                        className="w-11 h-11 border-[3px] border-black bg-black flex items-center justify-center font-display font-black text-white text-xl flex-shrink-0"
+                        style={{ boxShadow: "3px 3px 0 #000" }}
+                      >
+                        {i + 1}
+                      </div>
+                      {i === 0 && <Crown className="w-7 h-7 text-black flex-shrink-0" />}
+                      {row.isBot && <Bot className="w-5 h-5 text-black/40 flex-shrink-0" />}
+                      <span
+                        className="font-display font-black text-black text-xl md:text-2xl uppercase truncate"
+                        style={{ letterSpacing: "0.03em" }}
+                      >
+                        {row.name}
+                      </span>
                     </div>
-                    {i === 0 && <Crown className="w-7 h-7 text-black" />}
-                    {row.isBot && <Bot className="w-5 h-5 text-black/40" />}
-                    <span className="font-display font-black text-black text-2xl uppercase">{row.name}</span>
-                  </div>
-                  <div className="font-display font-black text-[#FF1493] text-3xl" style={{ textShadow: "1px 1px 0 #000" }}>
-                    <CountUp value={row.score} duration={1} />
-                  </div>
-                </motion.div>
-              ))}
+                    <div
+                      className="bg-black text-white px-4 py-2 border-[3px] border-black font-display font-black text-2xl md:text-3xl"
+                      style={{ letterSpacing: "0.03em", boxShadow: "3px 3px 0 #000" }}
+                    >
+                      <CountUp value={row.score} duration={1} />
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
             </div>
 
             {top && (
-              <p className="text-white/80 font-sans mt-2">
-                Leading: <span className="font-black">{top.name}</span> with {top.score} pts
+              <p
+                className="font-display font-black text-black/70 uppercase text-base"
+                style={{ letterSpacing: "0.03em" }}
+              >
+                Leading: <span className="text-black">{top.name}</span> · {top.score} pts
               </p>
             )}
           </main>
@@ -2646,32 +2698,49 @@ export default function GameHost() {
     // ---- Loading state ----
     if (!pqQuestion) {
       return (
-        <div className="flex-1 flex flex-col items-center justify-center relative bg-[#FFF8E7]">
+        <div className="flex-1 flex flex-col items-center justify-center relative bg-[#FFF5E7] p-6">
           {isDemo && <div className="absolute top-6 right-6"><DemoBadge /></div>}
-          <Beer className="w-20 h-20 text-black mb-6" />
-          <h1 className="font-display font-black text-black text-4xl uppercase">Loading next question…</h1>
+          <div
+            className="bg-white border-[6px] border-black px-10 py-8 flex flex-col items-center"
+            style={{ boxShadow: "10px 10px 0 #000" }}
+          >
+            <Beer className="w-16 h-16 text-black mb-4" />
+            <h1
+              className="font-display font-black text-black text-3xl md:text-4xl uppercase"
+              style={{ letterSpacing: "0.03em" }}
+            >
+              Loading next question…
+            </h1>
+          </div>
         </div>
       );
     }
 
     return (
-      <div className="flex-1 flex flex-col relative overflow-hidden bg-[#FFF8E7]">
+      <div className="flex-1 flex flex-col relative overflow-hidden bg-[#FFF5E7] p-6 md:p-10">
         {isDemo && <div className="absolute top-6 right-6 z-20"><DemoBadge /></div>}
 
-        <header className="flex justify-between items-center mb-6 relative z-10">
-          <div className="font-display font-black text-black text-xl bg-white border-[3px] border-black shadow-[3px_3px_0_#000] px-6 py-3 uppercase">
-            ROOM: <span className="text-[#FF1493]">{roomCode}</span>
+        <header className="flex justify-between items-center mb-6 gap-4 flex-wrap relative z-10">
+          <div
+            className="font-display font-black text-black text-xl bg-white border-[5px] border-black px-6 py-3 uppercase"
+            style={{ letterSpacing: "0.03em", boxShadow: "8px 8px 0 #000" }}
+          >
+            ROOM: <span className="text-[#00FF7F]">{roomCode}</span>
           </div>
-          <div className="font-display font-black text-black text-xl bg-[#00E5FF] border-[3px] border-black shadow-[3px_3px_0_#000] px-6 py-3 uppercase">
+          <div
+            className="font-display font-black text-black text-xl bg-[#00FF7F] border-[5px] border-black px-6 py-3 uppercase"
+            style={{ letterSpacing: "0.03em", boxShadow: "8px 8px 0 #000" }}
+          >
             <Beer className="w-5 h-5 inline mr-2 -mt-1" />
             {pqQuestion.roundName}
           </div>
-          <div className="font-display font-black text-black text-xl bg-white border-[3px] border-black shadow-[3px_3px_0_#000] px-6 py-3 uppercase">
-            Q <span className="text-[#FF1493]">{pqQuestion.questionIndex + 1}</span>
-            <span className="text-black/40">/{pqQuestion.questionsInRound}</span>
-            <span className="mx-3 text-black/30">·</span>
-            R <span className="text-[#FF1493]">{pqQuestion.roundIndex + 1}</span>
-            <span className="text-black/40">/{pqQuestion.totalRounds}</span>
+          <div
+            className="font-display font-black text-white text-xl bg-black border-[5px] border-black px-6 py-3 uppercase flex items-center gap-3"
+            style={{ letterSpacing: "0.03em", boxShadow: "8px 8px 0 #000" }}
+          >
+            <span>Q <span className="text-[#00FF7F]">{pqQuestion.questionIndex + 1}</span><span className="text-white/40">/{pqQuestion.questionsInRound}</span></span>
+            <span className="text-white/30">·</span>
+            <span>R <span className="text-[#00FF7F]">{pqQuestion.roundIndex + 1}</span><span className="text-white/40">/{pqQuestion.totalRounds}</span></span>
           </div>
         </header>
 
@@ -2679,21 +2748,33 @@ export default function GameHost() {
 
         <main className="flex-1 flex flex-col items-center justify-center relative z-10 max-w-6xl mx-auto w-full">
           <AnimatePresence mode="wait">
-            <motion.h2
+            <motion.div
               key={`pq-${pqQuestion.roundIndex}-${pqQuestion.questionIndex}`}
               initial={{ opacity: 0, y: 50, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -50, scale: 0.95 }}
               transition={{ type: "spring", stiffness: 180, damping: 22 }}
-              className="font-question-pq font-black text-4xl md:text-6xl leading-tight text-center mb-10 text-black"
+              className="w-full bg-white border-[6px] border-black px-8 md:px-12 py-10 md:py-14 mb-10 text-center"
+              style={{ boxShadow: "10px 10px 0 #000" }}
             >
-              {pqQuestion.prompt}
-            </motion.h2>
+              <p
+                className="font-display font-black text-black/50 uppercase text-base md:text-lg mb-3"
+                style={{ letterSpacing: "0.03em" }}
+              >
+                The Question
+              </p>
+              <h2
+                className="font-question-pq font-black text-3xl md:text-5xl leading-tight text-black uppercase"
+                style={{ letterSpacing: "0.03em" }}
+              >
+                {pqQuestion.prompt}
+              </h2>
+            </motion.div>
           </AnimatePresence>
 
           {/* Multiple choice */}
           {pqQuestion.type === "multiple-choice" && pqQuestion.options && (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-4xl mb-10">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 w-full max-w-4xl mb-10">
               {pqQuestion.options.map((opt, idx) => {
                 const isCorrect = pqReveal && pqReveal.correctOptionIndex === idx;
                 return (
@@ -2702,22 +2783,27 @@ export default function GameHost() {
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: idx * 0.06 }}
-                    className={`border-[3px] border-black p-6 font-display font-black text-2xl uppercase flex items-center gap-4 ${
-                      pqReveal
-                        ? isCorrect
-                          ? "bg-[#00C853] text-white shadow-[4px_4px_0_#000]"
-                          : "bg-white opacity-40"
-                        : "bg-white shadow-[4px_4px_0_#000]"
-                    }`}
+                    className="border-[5px] border-black p-6 font-display font-black text-xl md:text-2xl uppercase flex items-center gap-4 transition-all"
+                    style={{
+                      background: pqReveal ? (isCorrect ? "#00FF7F" : "#fff") : "#fff",
+                      opacity: pqReveal && !isCorrect ? 0.4 : 1,
+                      letterSpacing: "0.03em",
+                      boxShadow: pqReveal && !isCorrect ? "none" : "8px 8px 0 #000",
+                    }}
                   >
-                    <div className={`w-10 h-10 border-[2px] border-black flex items-center justify-center font-black text-sm flex-shrink-0 ${
-                      pqReveal && isCorrect ? "bg-white text-[#00C853]" : "bg-black text-white"
-                    }`}>
+                    <div
+                      className="w-12 h-12 border-[3px] border-black flex items-center justify-center font-black text-base flex-shrink-0"
+                      style={{
+                        background: pqReveal && isCorrect ? "#000" : "#000",
+                        color: pqReveal && isCorrect ? "#00FF7F" : "#fff",
+                        boxShadow: "3px 3px 0 #000",
+                      }}
+                    >
                       {String.fromCharCode(65 + idx)}
                     </div>
-                    <span className="flex-1">{opt}</span>
-                    {pqReveal && isCorrect && <Check className="w-7 h-7 flex-shrink-0" />}
-                    {pqReveal && !isCorrect && <X className="w-6 h-6 flex-shrink-0 opacity-40" />}
+                    <span className="flex-1 text-black">{opt}</span>
+                    {pqReveal && isCorrect && <Check className="w-7 h-7 flex-shrink-0 text-black" />}
+                    {pqReveal && !isCorrect && <X className="w-6 h-6 flex-shrink-0 opacity-50 text-black" />}
                   </motion.div>
                 );
               })}
@@ -2730,21 +2816,25 @@ export default function GameHost() {
               {[true, false].map((val) => {
                 const label = val ? "TRUE" : "FALSE";
                 const isCorrect = pqReveal && pqReveal.trueFalseAnswer === val;
+                const isRevealedWrong = pqReveal && !isCorrect;
                 return (
                   <div
                     key={label}
-                    className={`border-[3px] border-black p-12 text-center font-display font-black text-5xl uppercase ${
-                      pqReveal
-                        ? isCorrect
-                          ? "bg-[#00C853] text-white shadow-[6px_6px_0_#000]"
-                          : "bg-white opacity-40"
-                        : val
-                          ? "bg-[#00C853] text-white shadow-[4px_4px_0_#000]"
-                          : "bg-[#FF1493] text-white shadow-[4px_4px_0_#000]"
-                    }`}
+                    className="border-[6px] border-black p-12 text-center font-display font-black text-5xl md:text-6xl uppercase transition-all"
+                    style={{
+                      background: pqReveal && isCorrect ? "#00FF7F" : "#fff",
+                      opacity: isRevealedWrong ? 0.4 : 1,
+                      color: "#000",
+                      letterSpacing: "0.03em",
+                      boxShadow: isRevealedWrong ? "none" : "10px 10px 0 #000",
+                    }}
                   >
                     {label}
-                    {pqReveal && isCorrect && <div className="mt-3"><Check className="w-12 h-12 mx-auto" /></div>}
+                    {pqReveal && isCorrect && (
+                      <div className="mt-4">
+                        <Check className="w-14 h-14 mx-auto" />
+                      </div>
+                    )}
                   </div>
                 );
               })}
@@ -2758,19 +2848,41 @@ export default function GameHost() {
                 <motion.div
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  className="bg-[#00C853] border-[4px] border-black shadow-[6px_6px_0_#000] p-10 text-center"
+                  className="bg-[#00FF7F] border-[6px] border-black p-10 text-center"
+                  style={{ boxShadow: "10px 10px 0 #000" }}
                 >
-                  <p className="font-display font-black text-white text-lg uppercase tracking-widest mb-3" style={{ textShadow: "1px 1px 0 rgba(0,0,0,0.3)" }}>Answer</p>
-                  <p className="font-display font-black text-white text-5xl uppercase" style={{ textShadow: "3px 3px 0 #000" }}>{pqReveal.correctAnswer}</p>
+                  <p
+                    className="font-display font-black text-black/70 text-base md:text-lg uppercase mb-3"
+                    style={{ letterSpacing: "0.03em" }}
+                  >
+                    The Answer
+                  </p>
+                  <p
+                    className="font-display font-black text-black text-4xl md:text-5xl uppercase"
+                    style={{ letterSpacing: "0.03em" }}
+                  >
+                    {pqReveal.correctAnswer}
+                  </p>
                   {pqReveal.acceptedAnswers && pqReveal.acceptedAnswers.length > 1 && (
-                    <p className="text-white/70 font-sans text-sm mt-4">
+                    <p
+                      className="font-display font-bold text-black/70 mt-4 text-sm uppercase"
+                      style={{ letterSpacing: "0.03em" }}
+                    >
                       Also accepted: {pqReveal.acceptedAnswers.filter((a) => a !== pqReveal.correctAnswer).join(", ")}
                     </p>
                   )}
                 </motion.div>
               ) : (
-                <div className="bg-white border-[3px] border-black border-dashed p-10 text-center">
-                  <p className="font-display font-black text-black/40 text-2xl uppercase">Players are typing on their phones…</p>
+                <div
+                  className="bg-white border-[6px] border-black border-dashed p-10 text-center"
+                  style={{ boxShadow: "10px 10px 0 #000" }}
+                >
+                  <p
+                    className="font-display font-black text-black/40 text-xl md:text-2xl uppercase"
+                    style={{ letterSpacing: "0.03em" }}
+                  >
+                    Players are typing on their phones…
+                  </p>
                 </div>
               )}
             </div>
@@ -2779,56 +2891,111 @@ export default function GameHost() {
           {/* Bottom: timer + progress (pre-reveal) or live standings (post-reveal) */}
           {!pqReveal ? (
             <div className="w-full max-w-4xl flex flex-col items-center gap-6">
-              <div className="flex items-center justify-center gap-12">
-                <TimerRing
-                  value={remainingMs / 1000}
-                  total={totalMs / 1000}
-                  size={160}
-                  thickness={12}
-                  label={`${secsLeft}s`}
-                />
-                <div className="text-center">
-                  <div className="font-display font-black text-7xl text-black">
-                    <span className="text-[#FF1493]"><CountUp value={pqAnsweredCount} duration={0.4} /></span>
-                    <span className="text-black/40 text-5xl"> / {pqTotalAnswerers}</span>
+              <div className="flex items-center justify-center gap-8 md:gap-12 flex-wrap">
+                <div
+                  className="bg-white border-[6px] border-black p-4"
+                  style={{ boxShadow: "10px 10px 0 #000" }}
+                >
+                  <TimerRing
+                    value={remainingMs / 1000}
+                    total={totalMs / 1000}
+                    size={140}
+                    thickness={12}
+                    label={`${secsLeft}s`}
+                  />
+                </div>
+                <div
+                  className="bg-white border-[6px] border-black px-8 py-5 text-center"
+                  style={{ boxShadow: "10px 10px 0 #000" }}
+                >
+                  <p
+                    className="font-display font-black text-black/50 text-base uppercase mb-1"
+                    style={{ letterSpacing: "0.03em" }}
+                  >
+                    Answers In
+                  </p>
+                  <div
+                    className="font-display font-black text-6xl md:text-7xl text-black"
+                    style={{ letterSpacing: "0.03em" }}
+                  >
+                    <span className="text-[#00FF7F]" style={{ WebkitTextStroke: "2px #000" }}>
+                      <CountUp value={pqAnsweredCount} duration={0.4} />
+                    </span>
+                    <span className="text-black/40 text-4xl md:text-5xl"> / {pqTotalAnswerers}</span>
                   </div>
-                  <p className="font-display font-black text-black/50 text-xl uppercase tracking-widest mt-2">Answers In</p>
                 </div>
               </div>
             </div>
           ) : (
             <div className="w-full max-w-4xl">
-              <div className="bg-white border-[3px] border-black shadow-[4px_4px_0_#000] p-6">
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="font-display font-black text-black text-xl uppercase tracking-widest">Live Standings</h3>
-                  <div className="text-sm text-black/50 font-sans">
-                    {pqReveal.correctCount}/{pqReveal.totalAnswered} got it right
+              <div
+                className="bg-white border-[6px] border-black p-6"
+                style={{ boxShadow: "10px 10px 0 #000" }}
+              >
+                <div className="flex items-center justify-between mb-4 gap-3 flex-wrap">
+                  <h3
+                    className="font-display font-black text-black text-2xl uppercase"
+                    style={{ letterSpacing: "0.03em" }}
+                  >
+                    Live Standings
+                  </h3>
+                  <div
+                    className="bg-[#00FF7F] border-[3px] border-black px-3 py-1.5 font-display font-black text-black text-sm uppercase"
+                    style={{ letterSpacing: "0.03em", boxShadow: "3px 3px 0 #000" }}
+                  >
+                    {pqReveal.correctCount}/{pqReveal.totalAnswered} correct
                   </div>
                 </div>
-                <div className="space-y-2">
+                <div className="space-y-3">
                   {pqLeaderboard.slice(0, 6).map((row, i) => {
                     const ans = pqReveal.perPlayerAnswers.find((a) => a.playerId === row.id);
                     const isFirst = pqReveal.firstCorrectPlayerId === row.id;
+                    const playerColor = pqPlayerColor(i);
                     return (
-                      <div key={row.id} className={`flex items-center justify-between gap-4 px-4 py-3 border-[2px] border-black ${i === 0 ? "bg-[#FFD700]" : "bg-[#FFF8E7]"}`}>
+                      <div
+                        key={row.id}
+                        className="flex items-center justify-between gap-4 px-4 py-3 border-[4px] border-black"
+                        style={{
+                          background: i === 0 ? "#00FF7F" : "#fff",
+                          boxShadow: "5px 5px 0 #000",
+                        }}
+                      >
                         <div className="flex items-center gap-3 min-w-0">
-                          <div className="w-8 h-8 bg-black flex items-center justify-center font-display font-black text-white text-sm">
+                          <div
+                            className="w-9 h-9 bg-black flex items-center justify-center font-display font-black text-white text-sm flex-shrink-0 border-[2px] border-black"
+                            style={{ boxShadow: "2px 2px 0 #000" }}
+                          >
                             {i + 1}
                           </div>
+                          <div
+                            className="w-5 h-5 border-[2px] border-black flex-shrink-0"
+                            style={{ background: playerColor }}
+                          />
                           {row.isBot && <Bot className="w-4 h-4 text-black/40 flex-shrink-0" />}
-                          <span className="font-display font-black text-black text-lg uppercase truncate">{row.name}</span>
+                          <span
+                            className="font-display font-black text-black text-lg md:text-xl uppercase truncate"
+                            style={{ letterSpacing: "0.03em" }}
+                          >
+                            {row.name}
+                          </span>
                           {ans && (
                             ans.correct
-                              ? <Check className="w-5 h-5 text-[#00C853] flex-shrink-0" />
-                              : <X className="w-5 h-5 text-black/30 flex-shrink-0" />
+                              ? <Check className="w-5 h-5 text-black flex-shrink-0" />
+                              : <X className="w-5 h-5 text-black/40 flex-shrink-0" />
                           )}
                           {isFirst && (
-                            <span className="font-display font-black text-xs uppercase bg-[#FFD700] border border-black px-2 py-0.5 whitespace-nowrap">
+                            <span
+                              className="font-display font-black text-xs uppercase bg-white border-[3px] border-black px-2 py-1 whitespace-nowrap text-black"
+                              style={{ letterSpacing: "0.03em", boxShadow: "3px 3px 0 #000" }}
+                            >
                               +0.5 First
                             </span>
                           )}
                         </div>
-                        <div className="font-display font-black text-[#FF1493] text-2xl">
+                        <div
+                          className="bg-black text-white px-4 py-2 font-display font-black text-xl md:text-2xl border-[2px] border-black"
+                          style={{ letterSpacing: "0.03em", boxShadow: "2px 2px 0 #000" }}
+                        >
                           {row.score}
                         </div>
                       </div>
@@ -3506,45 +3673,47 @@ export default function GameHost() {
     }
 
     if (gameType === "pub-quiz") {
+      const pqBtn = "px-7 py-4 font-display font-black text-lg uppercase border-[5px] border-black inline-flex items-center gap-2 transition-colors duration-150";
+      const pqBtnStyle = { letterSpacing: "0.03em", boxShadow: "6px 6px 0 #000" } as const;
       // Round summary phase
       if (pqRoundSummary) {
         if (pqRoundSummary.isLastRound) {
           return (
-            <Button
-              size="lg"
+            <button
               onClick={handlePqEndGame}
-              className="text-lg px-6 py-5 font-bold gap-2 bg-primary hover:bg-primary/90"
+              className={`${pqBtn} bg-[#00FF7F] hover:bg-black hover:text-white text-black`}
+              style={pqBtnStyle}
               data-testid="btn-pq-end-bar"
             >
               <Trophy className="w-5 h-5" />
               Show Final Standings
-            </Button>
+            </button>
           );
         }
         return (
-          <Button
-            size="lg"
+          <button
             onClick={handlePqNextRound}
-            className="text-lg px-6 py-5 font-bold gap-2"
+            className={`${pqBtn} bg-[#00FF7F] hover:bg-black hover:text-white text-black`}
+            style={pqBtnStyle}
             data-testid="btn-pq-next-round-bar"
           >
             Next Round
             <ChevronRight className="w-5 h-5" />
-          </Button>
+          </button>
         );
       }
       // Reveal phase: advance to next question
       if (pqReveal) {
         return (
-          <Button
-            size="lg"
+          <button
             onClick={handlePqNext}
-            className="text-lg px-6 py-5 font-bold gap-2 bg-primary hover:bg-primary/90"
+            className={`${pqBtn} bg-[#00FF7F] hover:bg-black hover:text-white text-black`}
+            style={pqBtnStyle}
             data-testid="btn-pq-next-bar"
           >
             Next Question
             <ArrowRight className="w-5 h-5" />
-          </Button>
+          </button>
         );
       }
       // Question is live: reveal + skip
@@ -3553,26 +3722,25 @@ export default function GameHost() {
         const allAnswered = pqTotalAnswerers > 0 && pqAnsweredCount >= pqTotalAnswerers;
         return (
           <div className="flex gap-3">
-            <Button
-              size="lg"
-              variant="outline"
+            <button
               onClick={handlePqSkip}
-              className="text-lg px-5 py-5 font-bold gap-2"
+              className={`${pqBtn} bg-white hover:bg-black hover:text-white text-black`}
+              style={pqBtnStyle}
               data-testid="btn-pq-skip-bar"
             >
               <SkipForward className="w-5 h-5" />
               Skip
-            </Button>
-            <Button
-              size="lg"
+            </button>
+            <button
               onClick={handlePqReveal}
               disabled={pqAnsweredCount === 0 && !allAnswered && remainingMs > 1000}
-              className="text-lg px-6 py-5 font-bold gap-2 bg-accent hover:bg-accent/90 text-accent-foreground"
+              className={`${pqBtn} bg-[#00FF7F] hover:bg-black hover:text-white text-black disabled:bg-gray-300 disabled:cursor-not-allowed`}
+              style={pqBtnStyle}
               data-testid="btn-pq-reveal-bar"
             >
               <Eye className="w-5 h-5" />
               {allAnswered || remainingMs <= 0 ? "Reveal Answer" : "Reveal Now"}
-            </Button>
+            </button>
           </div>
         );
       }

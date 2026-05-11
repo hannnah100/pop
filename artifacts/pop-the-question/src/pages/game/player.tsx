@@ -1956,18 +1956,37 @@ export default function GamePlayer() {
     // Round summary intermission
     if (pqRoundSummary) {
       return (
-        <div className="flex flex-col min-h-[100dvh] bg-[#00C853] items-center justify-center text-center space-y-6 p-6">
+        <div className="flex flex-col min-h-[100dvh] bg-[#FFF5E7] items-center justify-center text-center space-y-6 p-6">
           <motion.div
             initial={{ scale: 0, rotate: -90 }}
             animate={{ scale: 1, rotate: 0 }}
             transition={{ type: "spring", stiffness: 180, damping: 26 }}
-            className="w-24 h-24 bg-white border-[3px] border-black shadow-[4px_4px_0_#000] flex items-center justify-center"
+            className="w-28 h-28 bg-[#00FF7F] border-[6px] border-black flex items-center justify-center"
+            style={{ boxShadow: "10px 10px 0 #000" }}
           >
-            <Beer className="w-12 h-12 text-black" />
+            <Beer className="w-14 h-14 text-black" />
           </motion.div>
-          <p className="text-xs font-black uppercase tracking-widest text-black/60">Round Complete</p>
-          <h1 className="font-display font-black text-3xl uppercase text-black">{pqRoundSummary.roundName}</h1>
-          <p className="text-black/70 max-w-sm font-sans">
+          <div
+            className="bg-white border-[6px] border-black px-8 py-6 max-w-md w-full"
+            style={{ boxShadow: "10px 10px 0 #000" }}
+          >
+            <p
+              className="font-display font-black uppercase text-sm text-black/60 mb-2"
+              style={{ letterSpacing: "0.03em" }}
+            >
+              Round Complete
+            </p>
+            <h1
+              className="font-display font-black text-3xl uppercase text-black"
+              style={{ letterSpacing: "0.03em" }}
+            >
+              {pqRoundSummary.roundName}
+            </h1>
+          </div>
+          <p
+            className="font-display font-bold text-black/70 uppercase text-sm max-w-sm"
+            style={{ letterSpacing: "0.03em" }}
+          >
             {pqRoundSummary.isLastRound
               ? "Final standings on the big screen!"
               : "Look at the big screen for round standings."}
@@ -1979,9 +1998,19 @@ export default function GamePlayer() {
     // Loading
     if (!pqQuestion) {
       return (
-        <div className="flex flex-col min-h-[100dvh] bg-[#FFF8E7] items-center justify-center p-6 space-y-4">
-          <Loader2 className="w-12 h-12 text-black animate-spin" />
-          <p className="text-black/60 font-sans">Loading next question…</p>
+        <div className="flex flex-col min-h-[100dvh] bg-[#FFF5E7] items-center justify-center p-6 space-y-4">
+          <div
+            className="bg-white border-[6px] border-black px-8 py-6 flex flex-col items-center gap-4"
+            style={{ boxShadow: "10px 10px 0 #000" }}
+          >
+            <Loader2 className="w-10 h-10 text-black animate-spin" />
+            <p
+              className="font-display font-black text-black uppercase text-base"
+              style={{ letterSpacing: "0.03em" }}
+            >
+              Loading next question…
+            </p>
+          </div>
         </div>
       );
     }
@@ -1995,38 +2024,80 @@ export default function GamePlayer() {
       const myAnswer = pqReveal.perPlayerAnswers.find((a) => a.playerId === me?.id);
       const wasCorrect = myAnswer?.correct ?? false;
       const wasFirst = pqReveal.firstCorrectPlayerId === me?.id;
+      const stripBg = wasCorrect ? "#00FF7F" : "#FF006E";
+      const headlineColor = wasCorrect ? "text-black" : "text-white";
 
       return (
-        <div className={`flex flex-col min-h-[100dvh] items-center justify-center text-center space-y-6 p-6 ${wasCorrect ? "bg-[#00C853]" : "bg-[#FF1493]"}`}>
-          <motion.div
-            initial={{ scale: 0, rotate: -90 }}
-            animate={{ scale: 1, rotate: 0 }}
-            transition={{ type: "spring", stiffness: 200, damping: 26 }}
-            className="w-28 h-28 bg-white border-[3px] border-black shadow-[5px_5px_0_#000] flex items-center justify-center"
+        <div className="flex flex-col min-h-[100dvh] bg-[#FFF5E7]">
+          <div
+            className="border-b-[6px] border-black px-5 py-8 flex flex-col items-center text-center space-y-4"
+            style={{ background: stripBg }}
           >
-            {wasCorrect
-              ? <Check className="w-14 h-14 text-[#00C853]" />
-              : <X className="w-14 h-14 text-[#FF1493]" />}
-          </motion.div>
-          <h1 className="font-display font-black text-white text-4xl uppercase" style={{ textShadow: "3px 3px 0 rgba(0,0,0,0.3)" }}>
-            {wasCorrect ? "Correct!" : myAnswer ? "Not quite" : "No answer"}
-          </h1>
-          {wasFirst && (
-            <div className="bg-[#FFD700] border-[3px] border-black shadow-[3px_3px_0_#000] px-4 py-2 font-display font-black text-black uppercase text-sm tracking-widest">
-              + 0.5 first-correct bonus
-            </div>
-          )}
-          <div className="bg-white border-[3px] border-black shadow-[4px_4px_0_#000] p-5 w-full max-w-sm">
-            <p className="text-xs font-black uppercase tracking-widest text-black/50 mb-1">Correct answer</p>
-            <p className="font-display font-black text-black text-2xl uppercase">{pqReveal.correctAnswer}</p>
-            {myAnswer && !wasCorrect && (
-              <>
-                <p className="text-xs font-black uppercase tracking-widest text-black/50 mt-3 mb-1">Your answer</p>
-                <p className="text-black/60 font-sans">{myAnswer.raw}</p>
-              </>
+            <motion.div
+              initial={{ scale: 0, rotate: -90 }}
+              animate={{ scale: 1, rotate: 0 }}
+              transition={{ type: "spring", stiffness: 200, damping: 26 }}
+              className="w-24 h-24 bg-white border-[6px] border-black flex items-center justify-center"
+              style={{ boxShadow: "8px 8px 0 #000" }}
+            >
+              {wasCorrect
+                ? <Check className="w-12 h-12 text-black" />
+                : <X className="w-12 h-12 text-black" />}
+            </motion.div>
+            <h1
+              className={`font-display font-black text-4xl uppercase ${headlineColor}`}
+              style={{
+                letterSpacing: "0.03em",
+                textShadow: wasCorrect ? "3px 3px 0 #000" : "3px 3px 0 #000",
+              }}
+            >
+              {wasCorrect ? "Correct!" : myAnswer ? "Not Quite" : "No Answer"}
+            </h1>
+            {wasFirst && (
+              <div
+                className="bg-white border-[5px] border-black px-5 py-2 font-display font-black text-black uppercase text-sm"
+                style={{ letterSpacing: "0.03em", boxShadow: "5px 5px 0 #000" }}
+              >
+                ⭐ +0.5 First-Correct Bonus
+              </div>
             )}
           </div>
-          <p className="text-white/70 text-sm font-sans">Look at the big screen for standings.</p>
+          <main className="flex-1 flex flex-col items-center text-center p-5 space-y-5">
+            <div
+              className="bg-white border-[6px] border-black p-5 w-full max-w-sm"
+              style={{ boxShadow: "10px 10px 0 #000" }}
+            >
+              <p
+                className="font-display font-black text-black/50 uppercase text-xs mb-2"
+                style={{ letterSpacing: "0.03em" }}
+              >
+                Correct Answer
+              </p>
+              <p
+                className="font-display font-black text-black text-2xl uppercase"
+                style={{ letterSpacing: "0.03em" }}
+              >
+                {pqReveal.correctAnswer}
+              </p>
+              {myAnswer && !wasCorrect && (
+                <>
+                  <p
+                    className="font-display font-black text-black/50 uppercase text-xs mt-4 mb-1"
+                    style={{ letterSpacing: "0.03em" }}
+                  >
+                    Your Answer
+                  </p>
+                  <p className="font-display font-bold text-black/70">{myAnswer.raw}</p>
+                </>
+              )}
+            </div>
+            <p
+              className="font-display font-bold text-black/60 uppercase text-sm"
+              style={{ letterSpacing: "0.03em" }}
+            >
+              Look at the big screen for standings.
+            </p>
+          </main>
         </div>
       );
     }
@@ -2034,101 +2105,153 @@ export default function GamePlayer() {
     // Answered, waiting for reveal
     if (pqAnswered) {
       const showResult = pqMyResult !== null;
-      const bgColor = showResult ? (pqMyResult.correct ? "#00C853" : "#FF1493") : "#FF6B35";
+      const stripBg = showResult ? (pqMyResult.correct ? "#00FF7F" : "#FF006E") : "#FFD60A";
       return (
-        <div className="flex flex-col min-h-[100dvh] items-center justify-center text-center space-y-6 p-6" style={{ backgroundColor: bgColor }}>
-          <motion.div
-            initial={{ scale: 0, rotate: -45 }}
-            animate={{ scale: 1, rotate: 0 }}
-            transition={{ type: "spring", stiffness: 220, damping: 28 }}
-            className="w-24 h-24 bg-white border-[3px] border-black shadow-[4px_4px_0_#000] flex items-center justify-center"
+        <div className="flex flex-col min-h-[100dvh] bg-[#FFF5E7]">
+          <div
+            className="border-b-[6px] border-black px-5 py-8 flex flex-col items-center text-center space-y-4"
+            style={{ background: stripBg }}
           >
-            {showResult ? (
-              pqMyResult.correct
-                ? <Check className="w-12 h-12 text-[#00C853]" />
-                : <X className="w-12 h-12 text-[#FF1493]" />
-            ) : (
-              <CheckCircle2 className="w-12 h-12 text-[#FF6B35]" />
+            <motion.div
+              initial={{ scale: 0, rotate: -45 }}
+              animate={{ scale: 1, rotate: 0 }}
+              transition={{ type: "spring", stiffness: 220, damping: 28 }}
+              className="w-24 h-24 bg-white border-[6px] border-black flex items-center justify-center"
+              style={{ boxShadow: "8px 8px 0 #000" }}
+            >
+              {showResult ? (
+                pqMyResult.correct
+                  ? <Check className="w-12 h-12 text-black" />
+                  : <X className="w-12 h-12 text-black" />
+              ) : (
+                <CheckCircle2 className="w-12 h-12 text-black" />
+              )}
+            </motion.div>
+            <h2
+              className={`font-display font-black text-3xl uppercase ${showResult && !pqMyResult.correct ? "text-white" : "text-black"}`}
+              style={{ letterSpacing: "0.03em", textShadow: "3px 3px 0 #000" }}
+            >
+              {showResult
+                ? pqMyResult.correct
+                  ? pqMyResult.bonus
+                    ? "First Correct!"
+                    : "Locked In!"
+                  : "Locked In"
+                : "Answer Sent!"}
+            </h2>
+            {pqMyResult?.bonus && (
+              <div
+                className="bg-white border-[5px] border-black px-5 py-2 font-display font-black text-black uppercase text-sm"
+                style={{ letterSpacing: "0.03em", boxShadow: "5px 5px 0 #000" }}
+              >
+                ⭐ +0.5 Bonus
+              </div>
             )}
-          </motion.div>
-          <h2 className="font-display font-black text-white text-3xl uppercase" style={{ textShadow: "2px 2px 0 rgba(0,0,0,0.3)" }}>
-            {showResult
-              ? pqMyResult.correct
-                ? pqMyResult.bonus
-                  ? "First correct!"
-                  : "Locked in!"
-                : "Locked in"
-              : "Answer sent!"}
-          </h2>
-          {pqMyResult?.bonus && (
-            <div className="bg-[#FFD700] border-[3px] border-black shadow-[3px_3px_0_#000] px-4 py-2 font-display font-black text-black uppercase text-sm tracking-widest">
-              + 0.5 bonus
+          </div>
+          <main className="flex-1 flex flex-col items-center justify-center text-center p-6 space-y-4">
+            <div
+              className="bg-white border-[6px] border-black px-6 py-5 max-w-sm w-full"
+              style={{ boxShadow: "10px 10px 0 #000" }}
+            >
+              <p
+                className="font-display font-bold text-black/70 uppercase text-sm"
+                style={{ letterSpacing: "0.03em" }}
+              >
+                Waiting for everyone else… the answer reveals on the big screen.
+              </p>
             </div>
-          )}
-          <p className="text-white/70 max-w-sm font-sans">
-            Waiting for everyone else… the answer reveals on the big screen.
-          </p>
-          <Loader2 className="w-6 h-6 text-white/60 animate-spin" />
+            <Loader2 className="w-7 h-7 text-black/60 animate-spin" />
+          </main>
         </div>
       );
     }
 
     // Active question — answer UI
     return (
-      <div className="flex flex-col min-h-[100dvh]">
-        <header className="bg-[#00E5FF] border-b-[4px] border-black px-4 py-4 flex items-center justify-between gap-4">
+      <div className="flex flex-col min-h-[100dvh] bg-[#FFF5E7]">
+        <header className="bg-[#00FF7F] border-b-[6px] border-black px-5 py-5 flex items-center justify-between gap-4">
           <div className="min-w-0 flex-1">
-            <p className="text-xs font-black uppercase tracking-widest text-black/60">
-              <Beer className="w-3.5 h-3.5 inline mr-1 -mt-0.5" />
+            <p
+              className="font-display font-black uppercase text-xs text-black flex items-center gap-1"
+              style={{ letterSpacing: "0.03em" }}
+            >
+              <Beer className="w-3.5 h-3.5" />
               {pqQuestion.roundName}
             </p>
-            <p className="text-xs text-black/50 mt-0.5 font-sans">
+            <p
+              className="font-display font-black uppercase text-xs text-black/70 mt-1"
+              style={{ letterSpacing: "0.03em" }}
+            >
               Q {pqQuestion.questionIndex + 1} of {pqQuestion.questionsInRound}
               <span className="mx-1.5">·</span>
               R {pqQuestion.roundIndex + 1}/{pqQuestion.totalRounds}
             </p>
           </div>
-          <TimerRing
-            value={remainingMs / 1000}
-            total={totalMs / 1000}
-            size={60}
-            thickness={6}
-            label={`${secsLeft}s`}
-          />
+          <div
+            className="bg-white border-[4px] border-black p-1"
+            style={{ boxShadow: "4px 4px 0 #000" }}
+          >
+            <TimerRing
+              value={remainingMs / 1000}
+              total={totalMs / 1000}
+              size={56}
+              thickness={6}
+              label={`${secsLeft}s`}
+            />
+          </div>
         </header>
 
-        <main className="flex-1 flex flex-col p-4 bg-[#FFF8E7]">
-          <Card className="p-5 mb-5 border-[3px] border-black shadow-[4px_4px_0_#000]">
-            <h2 className="font-question-pq font-bold text-black text-xl leading-snug">
+        <main className="flex-1 flex flex-col p-5 bg-[#FFF5E7]">
+          <div
+            className="bg-white border-[6px] border-black px-5 py-6 mb-6"
+            style={{ boxShadow: "8px 8px 0 #000" }}
+          >
+            <p
+              className="font-display font-black text-black/50 uppercase text-xs mb-2"
+              style={{ letterSpacing: "0.03em" }}
+            >
+              The Question
+            </p>
+            <h2
+              className="font-question-pq font-black text-black text-2xl leading-snug uppercase"
+              style={{ letterSpacing: "0.03em" }}
+            >
               {pqQuestion.prompt}
             </h2>
-          </Card>
+          </div>
 
           {/* Multiple choice */}
           {pqQuestion.type === "multiple-choice" && pqQuestion.options && (
             <motion.div
-              className="space-y-3 pb-6"
+              className="space-y-4 pb-6"
               initial="hidden"
               animate="show"
               variants={{ show: { transition: { staggerChildren: 0.06 } } }}
             >
               {pqQuestion.options.map((opt, idx) => (
-                <motion.div
+                <motion.button
                   key={idx}
+                  type="button"
                   variants={{ hidden: { opacity: 0, y: 12 }, show: { opacity: 1, y: 0 } }}
-                  whileTap={{ scale: 0.97 }}
+                  whileTap={{ scale: 0.97, boxShadow: "3px 3px 0 #000" }}
+                  onClick={() => handlePqPickOption(idx)}
+                  className="w-full bg-white hover:bg-[#00FF7F] border-[5px] border-black px-5 py-5 flex items-center gap-4 text-left transition-colors duration-150"
+                  style={{ boxShadow: "8px 8px 0 #000" }}
+                  data-testid={`btn-pq-option-${idx}`}
                 >
-                  <Button
-                    className="w-full min-h-16 text-left py-4 px-4 justify-start whitespace-normal h-auto"
-                    onClick={() => handlePqPickOption(idx)}
-                    data-testid={`btn-pq-option-${idx}`}
+                  <div
+                    className="w-11 h-11 bg-black text-white border-[3px] border-black flex items-center justify-center font-display font-black text-lg flex-shrink-0"
+                    style={{ boxShadow: "3px 3px 0 #000" }}
                   >
-                    <div className="w-8 h-8 bg-white border-[2px] border-black text-black flex items-center justify-center font-black mr-3 flex-shrink-0 text-sm">
-                      {String.fromCharCode(65 + idx)}
-                    </div>
-                    <span className="flex-1 font-display font-black uppercase text-sm">{opt}</span>
-                  </Button>
-                </motion.div>
+                    {String.fromCharCode(65 + idx)}
+                  </div>
+                  <span
+                    className="flex-1 font-display font-black text-black uppercase text-base"
+                    style={{ letterSpacing: "0.03em" }}
+                  >
+                    {opt}
+                  </span>
+                </motion.button>
               ))}
             </motion.div>
           )}
@@ -2136,36 +2259,39 @@ export default function GamePlayer() {
           {/* True / False */}
           {pqQuestion.type === "true-false" && (
             <div className="grid grid-cols-2 gap-4 pb-6">
-              <motion.div whileTap={{ scale: 0.96 }}>
-                <Button
-                  className="w-full min-h-32 font-display font-black text-3xl uppercase bg-[#00C853] text-white border-[3px] border-black shadow-[4px_4px_0_#000] hover:bg-[#00C853]/90"
-                  onClick={() => handlePqPickTrueFalse(true)}
-                  data-testid="btn-pq-true"
-                >
-                  TRUE
-                </Button>
-              </motion.div>
-              <motion.div whileTap={{ scale: 0.96 }}>
-                <Button
-                  className="w-full min-h-32 font-display font-black text-3xl uppercase bg-[#FF1493] text-white border-[3px] border-black shadow-[4px_4px_0_#000] hover:bg-[#FF1493]/90"
-                  onClick={() => handlePqPickTrueFalse(false)}
-                  data-testid="btn-pq-false"
-                >
-                  FALSE
-                </Button>
-              </motion.div>
+              <motion.button
+                type="button"
+                whileTap={{ scale: 0.96, boxShadow: "4px 4px 0 #000" }}
+                onClick={() => handlePqPickTrueFalse(true)}
+                className="min-h-36 font-display font-black text-3xl md:text-4xl uppercase bg-white hover:bg-[#00FF7F] text-black border-[6px] border-black transition-colors duration-150"
+                style={{ letterSpacing: "0.03em", boxShadow: "10px 10px 0 #000" }}
+                data-testid="btn-pq-true"
+              >
+                TRUE
+              </motion.button>
+              <motion.button
+                type="button"
+                whileTap={{ scale: 0.96, boxShadow: "4px 4px 0 #000" }}
+                onClick={() => handlePqPickTrueFalse(false)}
+                className="min-h-36 font-display font-black text-3xl md:text-4xl uppercase bg-white hover:bg-[#00FF7F] text-black border-[6px] border-black transition-colors duration-150"
+                style={{ letterSpacing: "0.03em", boxShadow: "10px 10px 0 #000" }}
+                data-testid="btn-pq-false"
+              >
+                FALSE
+              </motion.button>
             </div>
           )}
 
           {/* Open-ended */}
           {pqQuestion.type === "open-ended" && (
-            <div className="space-y-3 pb-6">
+            <div className="space-y-4 pb-6">
               <Input
                 value={pqOpenAnswerInput}
                 onChange={(e) => setPqOpenAnswerInput(e.target.value)}
                 placeholder="Type your answer…"
                 maxLength={120}
-                className="text-lg py-6 min-h-12"
+                className="bg-white border-[5px] border-black text-black font-display font-black text-xl py-7 px-5 rounded-none placeholder:text-black/40"
+                style={{ letterSpacing: "0.03em", boxShadow: "8px 8px 0 #000" }}
                 autoFocus
                 data-testid="input-pq-open"
                 onKeyDown={(e) => {
@@ -2175,18 +2301,21 @@ export default function GamePlayer() {
                   }
                 }}
               />
-              <p className="text-xs text-black/50 text-center font-sans">
-                Spelling counts loosely — typos and minor variations are accepted.
+              <p
+                className="font-display font-bold text-black/50 text-xs text-center uppercase"
+                style={{ letterSpacing: "0.03em" }}
+              >
+                Spelling counts loosely — typos are forgiven.
               </p>
-              <Button
-                size="lg"
-                className="w-full"
+              <button
                 onClick={handlePqSubmitOpen}
                 disabled={!pqOpenAnswerInput.trim()}
+                className="w-full bg-[#00FF7F] hover:bg-black hover:text-white disabled:bg-gray-300 disabled:cursor-not-allowed text-black border-[6px] border-black py-5 font-display font-black text-xl uppercase inline-flex items-center justify-center gap-2 transition-colors duration-150"
+                style={{ letterSpacing: "0.03em", boxShadow: "8px 8px 0 #000" }}
                 data-testid="btn-pq-submit-open"
               >
-                <Send className="w-5 h-5 mr-2" /> Submit
-              </Button>
+                <Send className="w-5 h-5" /> Submit
+              </button>
             </div>
           )}
         </main>

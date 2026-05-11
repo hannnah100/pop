@@ -2264,6 +2264,8 @@ export function setupSocketIO(httpServer: HttpServer) {
         if (live.readTheRoom.timerEndAt !== expiresAt) return;
         finalizeRtrAnswerPhase(io, live);
       }, ANSWER_PHASE_MS);
+
+      scheduleRtrBotAnswers(io, room);
     });
 
     // ===========================================
@@ -2327,6 +2329,8 @@ export function setupSocketIO(httpServer: HttpServer) {
         phase: "reveal",
         revealIndex: 0,
       });
+
+      if (room.isDemo) scheduleRtrAutoReveal(io, room);
     });
 
     // ===========================================
@@ -2376,46 +2380,7 @@ export function setupSocketIO(httpServer: HttpServer) {
       const room = rooms.get(roomCode);
       if (!room || !room.readTheRoom) return;
       if (room.hostId !== socket.id) return;
-      const rtr = room.readTheRoom;
-      if (rtr.phase !== "reveal") return;
-      if (rtr.revealIndex >= rtr.shuffledAnswerOrder.length) return;
-
-      const answerId = rtr.shuffledAnswerOrder[rtr.revealIndex]!;
-      const answer = [...rtr.currentAnswers.values()].find((a) => a.id === answerId);
-      if (!answer) return;
-
-      const guessedPlayerId = rtr.solverMatches[answerId] ?? null;
-      const dartsOnThis = [...rtr.dartsByPlayer.values()].filter(
-        (d) => d.answerId === answerId && d.round === rtr.currentRound,
-      );
-      const solverCorrect = guessedPlayerId === answer.playerId;
-      const author = room.players.find((p) => p.id === answer.playerId);
-
-      io.to(roomCode).emit("rtr-answer-revealed", {
-        round: rtr.currentRound,
-        revealIndex: rtr.revealIndex,
-        totalReveals: rtr.shuffledAnswerOrder.length,
-        answer: { id: answer.id, text: answer.text, playerId: answer.playerId, playerName: author?.name ?? "Unknown" },
-        guessedPlayerId,
-        solverCorrect,
-        darts: dartsOnThis.map((d) => {
-          const thrower = room.players.find((p) => p.id === d.playerId);
-          const target = room.players.find((p) => p.id === d.guessedPlayerId);
-          return {
-            playerId: d.playerId,
-            playerName: thrower?.name ?? "Unknown",
-            guessedPlayerId: d.guessedPlayerId,
-            guessedPlayerName: target?.name ?? "Unknown",
-            hit: d.guessedPlayerId === answer.playerId,
-          };
-        }),
-      });
-
-      rtr.revealIndex += 1;
-
-      if (rtr.revealIndex >= rtr.shuffledAnswerOrder.length) {
-        finalizeRtrRound(io, room);
-      }
+      revealNextRtrAnswer(io, room);
     });
 
     // ===========================================
@@ -2425,13 +2390,7 @@ export function setupSocketIO(httpServer: HttpServer) {
       const room = rooms.get(roomCode);
       if (!room || !room.readTheRoom) return;
       if (room.hostId !== socket.id) return;
-      const rtr = room.readTheRoom;
-      if (rtr.phase !== "round-end") return;
-      if (rtr.currentRound >= rtr.totalRounds) {
-        endRtrGame(io, room);
-        return;
-      }
-      startRtrQuestionPick(io, room, rtr.currentRound + 1);
+      advanceRtrToNextRound(io, room);
     });
 
     socket.on("rtr-end-game", ({ roomCode }: { roomCode: string }) => {
@@ -3576,6 +3535,8 @@ function startRtrQuestionPick(io: SocketIOServer, room: Room, nextRound: number)
       options,
     });
   }
+
+  scheduleRtrBotPickQuestion(io, room, nextRound);
 }
 
 function finalizeRtrAnswerPhase(io: SocketIOServer, room: Room): void {
@@ -3617,6 +3578,8 @@ function finalizeRtrAnswerPhase(io: SocketIOServer, room: Room): void {
     playerNames,
     phase: "solving",
   });
+
+  scheduleRtrBotSolvingActions(io, room);
 }
 
 function finalizeRtrRound(io: SocketIOServer, room: Room): void {
@@ -3697,4 +3660,342 @@ function endRtrGame(io: SocketIOServer, room: Room): void {
     finalScores,
     gameType: "read-the-room",
   });
+}
+
+/** Reveal one more answer in the Read the Room reveal phase. */
+function revealNextRtrAnswer(io: SocketIOServer, room: Room): void {
+  const rtr = room.readTheRoom;
+  if (!rtr) return;
+  if (rtr.phase !== "reveal") return;
+  if (rtr.revealIndex >= rtr.shuffledAnswerOrder.length) return;
+
+  const answerId = rtr.shuffledAnswerOrder[rtr.revealIndex]!;
+  const answer = [...rtr.currentAnswers.values()].find((a) => a.id === answerId);
+  if (!answer) return;
+
+  const guessedPlayerId = rtr.solverMatches[answerId] ?? null;
+  const dartsOnThis = [...rtr.dartsByPlayer.values()].filter(
+    (d) => d.answerId === answerId && d.round === rtr.currentRound,
+  );
+  const solverCorrect = guessedPlayerId === answer.playerId;
+  const author = room.players.find((p) => p.id === answer.playerId);
+
+  io.to(room.code).emit("rtr-answer-revealed", {
+    round: rtr.currentRound,
+    revealIndex: rtr.revealIndex,
+    totalReveals: rtr.shuffledAnswerOrder.length,
+    answer: { id: answer.id, text: answer.text, playerId: answer.playerId, playerName: author?.name ?? "Unknown" },
+    guessedPlayerId,
+    solverCorrect,
+    darts: dartsOnThis.map((d) => {
+      const thrower = room.players.find((p) => p.id === d.playerId);
+      const target = room.players.find((p) => p.id === d.guessedPlayerId);
+      return {
+        playerId: d.playerId,
+        playerName: thrower?.name ?? "Unknown",
+        guessedPlayerId: d.guessedPlayerId,
+        guessedPlayerName: target?.name ?? "Unknown",
+        hit: d.guessedPlayerId === answer.playerId,
+      };
+    }),
+  });
+
+  rtr.revealIndex += 1;
+
+  if (rtr.revealIndex >= rtr.shuffledAnswerOrder.length) {
+    finalizeRtrRound(io, room);
+    if (room.isDemo) scheduleRtrAutoNextRound(io, room);
+  } else if (room.isDemo) {
+    scheduleRtrAutoReveal(io, room);
+  }
+}
+
+/** Advance from round-end to either the next picking phase or game end. */
+function advanceRtrToNextRound(io: SocketIOServer, room: Room): void {
+  const rtr = room.readTheRoom;
+  if (!rtr) return;
+  if (rtr.phase !== "round-end") return;
+  if (rtr.currentRound >= rtr.totalRounds) {
+    endRtrGame(io, room);
+    return;
+  }
+  startRtrQuestionPick(io, room, rtr.currentRound + 1);
+}
+
+// ==============================================
+// Read the Room — demo-mode bot behavior
+// ==============================================
+
+const RTR_BOT_ANSWER_POOL: ReadonlyArray<string> = [
+  "Honestly, the silence.",
+  "Cargo shorts.",
+  "Texting back in under a minute.",
+  "Pineapple on pizza.",
+  "Wearing socks with sandals.",
+  "Saying 'literally' in every sentence.",
+  "Group chats with 12 people.",
+  "People who clap when the plane lands.",
+  "My ex's playlist still on shuffle.",
+  "Loud yawners.",
+  "Anyone who Venmos a $2 split.",
+  "Bluetooth speakers at the beach.",
+  "Open-mouth chewers.",
+  "People who don't return shopping carts.",
+  "Saying 'no offense, but…'",
+  "Posting your gym routine.",
+  "Wet socks.",
+  "Karens at Trader Joe's.",
+  "Talking during the movie.",
+  "Brunch lines longer than 20 minutes.",
+  "Capri pants.",
+  "People who say 'I'm a foodie'.",
+  "Hot takes from people who only watched the trailer.",
+  "Anyone with a Patagonia vest indoors.",
+  "Saying 'I don't watch TV' like it's a flex.",
+  "Couples who post daily selfies.",
+  "When someone replies 'k'.",
+  "Slow walkers in narrow hallways.",
+  "Talking to me before my coffee.",
+  "Crocs unironically.",
+];
+
+function rtrPickRandom<T>(arr: ReadonlyArray<T>): T | undefined {
+  if (arr.length === 0) return undefined;
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+
+/** If the round's solver is a bot, auto-pick one of the 3 options after a short delay. */
+function scheduleRtrBotPickQuestion(io: SocketIOServer, room: Room, nextRound: number): void {
+  if (!room.isDemo || !room.readTheRoom) return;
+  const rtr = room.readTheRoom;
+  const solverId = solverIdForRound(rtr, nextRound);
+  if (!solverId) return;
+  const solver = room.players.find((p) => p.id === solverId);
+  if (!solver?.isBot) return;
+
+  const options = [...rtr.questionOptions];
+  const delay = rand(2000, 3000);
+  setTimeout(() => {
+    const live = rooms.get(room.code);
+    if (!live?.readTheRoom) return;
+    const liveRtr = live.readTheRoom;
+    if (liveRtr.phase !== "picking-question") return;
+    if (solverIdForRound(liveRtr, liveRtr.currentRound + 1) !== solverId) return;
+    const choice = rtrPickRandom(options);
+    if (!choice || !liveRtr.questionOptions.includes(choice)) return;
+    rtrServerPickQuestion(io, live, choice);
+  }, delay);
+}
+
+/** Server-side equivalent of the rtr-pick-question socket handler, for bot solvers. */
+function rtrServerPickQuestion(io: SocketIOServer, room: Room, question: string): void {
+  const rtr = room.readTheRoom;
+  if (!rtr) return;
+  if (rtr.phase !== "picking-question") return;
+  const nextRound = rtr.currentRound + 1;
+  const solverId = solverIdForRound(rtr, nextRound);
+  if (!solverId) return;
+  if (!rtr.questionOptions.includes(question)) return;
+
+  consumeQuestionChoice(rtr, question);
+
+  clearRtrTimer(rtr);
+  rtr.currentRound = nextRound;
+  rtr.currentQuestion = question;
+  rtr.currentAnswers = new Map();
+  rtr.submittedAnswerIds = new Set();
+  rtr.shuffledAnswerOrder = [];
+  rtr.solverMatches = {};
+  rtr.solverSubmitted = false;
+  rtr.revealIndex = 0;
+  rtr.phase = "answering";
+  rtr.timerEndAt = Date.now() + ANSWER_PHASE_MS;
+
+  io.to(room.code).emit("rtr-round-started", {
+    round: rtr.currentRound,
+    totalRounds: rtr.totalRounds,
+    question: rtr.currentQuestion,
+    solverId,
+    phase: "answering",
+    timerEndAt: rtr.timerEndAt,
+  });
+
+  const expiresAt = rtr.timerEndAt;
+  rtr.timerHandle = setTimeout(() => {
+    const live = rooms.get(room.code);
+    if (!live?.readTheRoom) return;
+    if (live.readTheRoom.phase !== "answering") return;
+    if (live.readTheRoom.timerEndAt !== expiresAt) return;
+    finalizeRtrAnswerPhase(io, live);
+  }, ANSWER_PHASE_MS);
+
+  scheduleRtrBotAnswers(io, room);
+}
+
+/** Each bot submits a plausible answer after a 2-4s delay. */
+function scheduleRtrBotAnswers(io: SocketIOServer, room: Room): void {
+  if (!room.isDemo || !room.readTheRoom) return;
+  const rtr = room.readTheRoom;
+  const round = rtr.currentRound;
+  const bots = room.players.filter((p) => p.isBot && !p.isHost);
+  const used = new Set<string>();
+
+  bots.forEach((bot) => {
+    const delay = rand(2000, 4000);
+    setTimeout(() => {
+      const live = rooms.get(room.code);
+      if (!live?.readTheRoom) return;
+      const liveRtr = live.readTheRoom;
+      if (liveRtr.phase !== "answering") return;
+      if (liveRtr.currentRound !== round) return;
+      if (liveRtr.submittedAnswerIds.has(bot.id)) return;
+
+      let text = rtrPickRandom(RTR_BOT_ANSWER_POOL) ?? "Honestly, idk.";
+      // Best-effort uniqueness across bots in the same round.
+      for (let i = 0; i < 5 && used.has(text); i++) {
+        text = rtrPickRandom(RTR_BOT_ANSWER_POOL) ?? text;
+      }
+      used.add(text);
+
+      const ans: RtrAnswer = {
+        id: `${liveRtr.currentRound}-${bot.id}`,
+        playerId: bot.id,
+        text,
+      };
+      liveRtr.currentAnswers.set(bot.id, ans);
+      liveRtr.submittedAnswerIds.add(bot.id);
+      live.lastActivity = Date.now();
+
+      const nonHostPlayers = live.players.filter((p) => !p.isHost);
+      io.to(live.code).emit("rtr-answer-progress", {
+        submitted: liveRtr.submittedAnswerIds.size,
+        total: nonHostPlayers.length,
+        submittedIds: [...liveRtr.submittedAnswerIds],
+      });
+
+      if (liveRtr.submittedAnswerIds.size >= nonHostPlayers.length) {
+        finalizeRtrAnswerPhase(io, live);
+      }
+    }, delay);
+  });
+}
+
+/** Bot solver submits a random 1-to-1 matching after 10-15s; spectator bots may throw darts. */
+function scheduleRtrBotSolvingActions(io: SocketIOServer, room: Room): void {
+  if (!room.isDemo || !room.readTheRoom) return;
+  const rtr = room.readTheRoom;
+  const round = rtr.currentRound;
+  const solverId = solverIdForRound(rtr, round);
+  const solver = solverId ? room.players.find((p) => p.id === solverId) : null;
+  const nonHostPlayers = room.players.filter((p) => !p.isHost);
+
+  // Bot solver → schedule match submission
+  if (solver?.isBot) {
+    const delay = rand(10_000, 15_000);
+    setTimeout(() => {
+      const live = rooms.get(room.code);
+      if (!live?.readTheRoom) return;
+      const liveRtr = live.readTheRoom;
+      if (liveRtr.phase !== "solving") return;
+      if (liveRtr.currentRound !== round) return;
+      if (liveRtr.solverSubmitted) return;
+      if (solverIdForRound(liveRtr, liveRtr.currentRound) !== solverId) return;
+
+      const answerIds = liveRtr.shuffledAnswerOrder;
+      const playerIds = shuffle(nonHostPlayers.map((p) => p.id));
+      const matches: Record<string, string> = {};
+      answerIds.forEach((aid, i) => {
+        const pid = playerIds[i] ?? playerIds[playerIds.length - 1];
+        if (pid) matches[aid] = pid;
+      });
+
+      liveRtr.solverMatches = matches;
+      liveRtr.solverSubmitted = true;
+      clearRtrTimer(liveRtr);
+      liveRtr.phase = "reveal";
+      liveRtr.revealIndex = 0;
+      io.to(live.code).emit("rtr-solving-complete", {
+        round: liveRtr.currentRound,
+        matches: liveRtr.solverMatches,
+        phase: "reveal",
+        revealIndex: 0,
+      });
+
+      scheduleRtrAutoReveal(io, live);
+    }, delay);
+  }
+
+  // Spectator bots → maybe throw a dart (~30% chance per eligible bot)
+  const spectatorBots = nonHostPlayers.filter((p) => p.isBot && p.id !== solverId);
+  spectatorBots.forEach((bot) => {
+    if (rtr.dartsByPlayer.has(bot.id)) return;
+    if (Math.random() > 0.3) return;
+    const delay = rand(3000, 9000);
+    setTimeout(() => {
+      const live = rooms.get(room.code);
+      if (!live?.readTheRoom) return;
+      const liveRtr = live.readTheRoom;
+      if (liveRtr.phase !== "solving") return;
+      if (liveRtr.currentRound !== round) return;
+      if (liveRtr.dartsByPlayer.has(bot.id)) return;
+      if (liveRtr.solverSubmitted) return;
+
+      const answerIds = liveRtr.shuffledAnswerOrder;
+      const targetAnswerId = answerIds[Math.floor(Math.random() * answerIds.length)];
+      if (!targetAnswerId) return;
+      const targets = nonHostPlayers.filter((p) => p.id !== bot.id);
+      const target = targets[Math.floor(Math.random() * targets.length)];
+      if (!target) return;
+
+      const dart: RtrDart = {
+        playerId: bot.id,
+        answerId: targetAnswerId,
+        guessedPlayerId: target.id,
+        round: liveRtr.currentRound,
+      };
+      liveRtr.dartsByPlayer.set(bot.id, dart);
+
+      if (live.hostId) {
+        io.to(live.hostId).emit("rtr-dart-thrown", {
+          playerId: bot.id,
+          playerName: bot.name,
+          round: liveRtr.currentRound,
+        });
+      }
+    }, delay);
+  });
+}
+
+/** Schedule the next reveal step to fire automatically in demo mode. */
+function scheduleRtrAutoReveal(io: SocketIOServer, room: Room): void {
+  if (!room.isDemo || !room.readTheRoom) return;
+  const rtr = room.readTheRoom;
+  const round = rtr.currentRound;
+  const revealIndex = rtr.revealIndex;
+  const delay = rand(3500, 5000);
+  setTimeout(() => {
+    const live = rooms.get(room.code);
+    if (!live?.readTheRoom) return;
+    const liveRtr = live.readTheRoom;
+    if (liveRtr.phase !== "reveal") return;
+    if (liveRtr.currentRound !== round) return;
+    if (liveRtr.revealIndex !== revealIndex) return;
+    revealNextRtrAnswer(io, live);
+  }, delay);
+}
+
+/** Schedule automatic transition from round-end to the next round in demo mode. */
+function scheduleRtrAutoNextRound(io: SocketIOServer, room: Room): void {
+  if (!room.isDemo || !room.readTheRoom) return;
+  const rtr = room.readTheRoom;
+  const round = rtr.currentRound;
+  const delay = rand(5500, 7000);
+  setTimeout(() => {
+    const live = rooms.get(room.code);
+    if (!live?.readTheRoom) return;
+    const liveRtr = live.readTheRoom;
+    if (liveRtr.phase !== "round-end") return;
+    if (liveRtr.currentRound !== round) return;
+    advanceRtrToNextRound(io, live);
+  }, delay);
 }

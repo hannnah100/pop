@@ -525,8 +525,10 @@ export default function ReadTheRoomHost() {
                   "{lastReveal.answer.text}"
                 </div>
                 <div className="grid md:grid-cols-2 gap-4">
-                  <div className="p-6" style={{
-                    background: lastReveal.solverCorrect ? "#8AFF00" : "#FF6B00",
+                  <div className="p-6 text-black" style={{
+                    background: lastReveal.guessedPlayerId
+                      ? (playerColors[lastReveal.guessedPlayerId] ?? "#fff")
+                      : "#fff",
                     border: BORDER,
                     boxShadow: "6px 6px 0 #000",
                   }}>
