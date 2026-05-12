@@ -163,18 +163,29 @@ function normalizeTitle(s: string): string {
     .trim();
 }
 
-function titleFirstLetter(title: string): string | null {
+// Songs/titles starting with "The X" are intentionally indexed under BOTH
+// letters — T (for the literal "The") AND X (the next word's letter). This
+// gives players more flexibility when grouping cells by leading letter.
+// "A X" titles still strip the article (indexed under X only) — only "The"
+// gets the double-index treatment.
+function titleFirstLetters(title: string): string[] {
   let n = normalizeTitle(title);
-  if (n.startsWith("the ")) n = n.slice(4);
-  if (n.startsWith("a ")) n = n.slice(2);
+  const letters: string[] = [];
+  if (n.startsWith("the ")) {
+    letters.push("t");
+    n = n.slice(4);
+  } else if (n.startsWith("a ")) {
+    n = n.slice(2);
+  }
   const m = n.match(/[a-z]/);
-  return m ? m[0] : null;
+  if (m && !letters.includes(m[0])) letters.push(m[0]);
+  return letters;
 }
 
 function letterGroupMatches(group: string, title: string): boolean {
-  const letters = group.toLowerCase().split("-");
-  const fl = titleFirstLetter(title);
-  return fl != null && letters.includes(fl);
+  const groupLetters = group.toLowerCase().split("-");
+  const titleLetters = titleFirstLetters(title);
+  return titleLetters.some((l) => groupLetters.includes(l));
 }
 
 /**
