@@ -46,7 +46,10 @@
       "Bash(ps -eo pid,etime,start,cmd)",
       "Bash(pnpm --filter @workspace/api-server run build)",
       "Bash(npx vite *)",
-      "Bash(BASE_PATH=/ npx vite build --config vite.config.ts)"
+      "Bash(BASE_PATH=/ npx vite build --config vite.config.ts)",
+      "Bash(sort -k6,7)",
+      "Bash(pnpm --filter @workspace/api-server typecheck)",
+      "Bash(pnpm --filter @workspace/api-server test)"
     ]
   }
 }

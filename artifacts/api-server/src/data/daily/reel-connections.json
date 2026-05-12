@@ -15,7 +15,7 @@
     "id": "reel-connections-2026-05-12",
     "date": "2026-05-12",
     "actors": "[\"Emily Blunt\",\"John Krasinski\",\"Steve Carell\",\"Tina Fey\",\"Amy Poehler\",\"Chris Pratt\"]",
-    "validAnswers": "[[\"A Quiet Place\",\"A Quiet Place Part II\",\"A Quiet Place 2\"],[\"The Office\"],[\"Date Night\",\"The Four Seasons\"],[\"Sisters\",\"Mean Girls\",\"Baby Mama\",\"Wine Country\"],[\"Parks and Recreation\",\"Parks and Rec\"],[\"The Five-Year Engagement\",\"The Five Year Engagement\"]]"
+    "validAnswers": "[[\"A Quiet Place\",\"A Quiet Place Part II\",\"A Quiet Place 2\"],[\"The Office\"],[\"Date Night\",\"The Four Seasons\"],[\"Sisters\",\"Mean Girls\",\"Baby Mama\",\"Wine Country\",\"SNL\",\"Saturday Night Live\"],[\"Parks and Recreation\",\"Parks and Rec\"],[\"The Five-Year Engagement\",\"The Five Year Engagement\"]]"
   },
   {
     "id": "reel-connections-2026-05-13",
@@ -70,5 +70,35 @@
     "date": "2026-05-22",
     "actors": "[\"Tom Cruise\",\"Henry Cavill\",\"Ben Affleck\",\"Matt Damon\",\"George Clooney\",\"Brad Pitt\"]",
     "validAnswers": "[[\"Mission: Impossible – Fallout\",\"Mission: Impossible Fallout\",\"Mission Impossible Fallout\",\"Mission Impossible: Fallout\"],[\"Batman v Superman: Dawn of Justice\",\"Batman v Superman\",\"Batman vs Superman\",\"Batman vs. Superman\",\"Justice League\",\"Zack Snyder's Justice League\"],[\"Good Will Hunting\",\"Dogma\",\"The Last Duel\",\"Air\",\"Jay and Silent Bob Strike Back\"],[\"Ocean's Eleven\",\"Oceans Eleven\",\"Ocean's 11\",\"Oceans 11\",\"Ocean's Twelve\",\"Oceans Twelve\",\"Ocean's 12\",\"Oceans 12\",\"Ocean's Thirteen\",\"Oceans Thirteen\",\"Ocean's 13\",\"Oceans 13\",\"Syriana\",\"The Monuments Men\",\"Monuments Men\",\"Suburbicon\"],[\"Ocean's Eleven\",\"Oceans Eleven\",\"Ocean's 11\",\"Oceans 11\",\"Ocean's Twelve\",\"Oceans Twelve\",\"Ocean's 12\",\"Oceans 12\",\"Ocean's Thirteen\",\"Oceans Thirteen\",\"Ocean's 13\",\"Oceans 13\",\"Burn After Reading\",\"Wolfs\"],[\"Interview with the Vampire\",\"Interview with the Vampire: The Vampire Chronicles\",\"Interview with a Vampire\"]]"
+  },
+  {
+    "id": "reel-connections-2026-05-23",
+    "date": "2026-05-23",
+    "actors": "[\"Margot Robbie\",\"Ryan Gosling\",\"Emma Stone\",\"Jonah Hill\",\"Leonardo DiCaprio\",\"Brad Pitt\"]",
+    "validAnswers": "[[\"Barbie\"],[\"La La Land\",\"Crazy, Stupid, Love\",\"Crazy Stupid Love\",\"Gangster Squad\"],[\"Superbad\",\"Maniac\"],[\"The Wolf of Wall Street\",\"Wolf of Wall Street\",\"Don't Look Up\",\"Dont Look Up\"],[\"Once Upon a Time in Hollywood\",\"Once Upon a Time... in Hollywood\",\"Once Upon a Time In Hollywood\"],[\"Once Upon a Time in Hollywood\",\"Once Upon a Time... in Hollywood\",\"Once Upon a Time In Hollywood\",\"Babylon\",\"The Big Short\"]]"
+  },
+  {
+    "id": "reel-connections-2026-05-24",
+    "date": "2026-05-24",
+    "actors": "[\"Jon Hamm\",\"Tina Fey\",\"Amy Poehler\",\"Will Arnett\",\"Jason Bateman\",\"Jennifer Aniston\"]",
+    "validAnswers": "[[\"30 Rock\",\"Unbreakable Kimmy Schmidt\"],[\"SNL\",\"Saturday Night Live\",\"Mean Girls\",\"Baby Mama\",\"Sisters\",\"Wine Country\"],[\"Arrested Development\",\"BoJack Horseman\",\"Bojack Horseman\",\"Blades of Glory\",\"Horton Hears a Who!\",\"Horton Hears a Who\",\"Spring Breakdown\",\"Parks and Recreation\",\"Parks and Rec\"],[\"Arrested Development\"],[\"Horrible Bosses\",\"Horrible Bosses 2\",\"The Switch\",\"Office Christmas Party\"],[\"The Morning Show\"]]"
+  },
+  {
+    "id": "reel-connections-2026-05-25",
+    "date": "2026-05-25",
+    "actors": "[\"Tom Holland\",\"Jake Gyllenhaal\",\"Anne Hathaway\",\"Christian Bale\",\"Amy Adams\",\"Mark Wahlberg\"]",
+    "validAnswers": "[[\"Spider-Man: Far From Home\",\"Spider-Man Far From Home\",\"Spider-Man: Far from Home\",\"Spider-Man Far from Home\",\"Spiderman Far From Home\"],[\"Brokeback Mountain\",\"Love & Other Drugs\",\"Love and Other Drugs\"],[\"The Dark Knight Rises\",\"Dark Knight Rises\"],[\"American Hustle\",\"The Fighter\",\"Vice\"],[\"The Fighter\"],[\"Uncharted\"]]"
+  },
+  {
+    "id": "reel-connections-2026-05-26",
+    "date": "2026-05-26",
+    "actors": "[\"Frances McDormand\",\"George Clooney\",\"Brad Pitt\",\"Edward Norton\",\"Owen Wilson\",\"Bill Murray\"]",
+    "validAnswers": "[[\"Burn After Reading\"],[\"Ocean's Eleven\",\"Oceans Eleven\",\"Ocean's 11\",\"Oceans 11\",\"Ocean's Twelve\",\"Oceans Twelve\",\"Ocean's 12\",\"Oceans 12\",\"Ocean's Thirteen\",\"Oceans Thirteen\",\"Ocean's 13\",\"Oceans 13\",\"Burn After Reading\",\"Wolfs\"],[\"Fight Club\"],[\"The Grand Budapest Hotel\",\"Grand Budapest Hotel\",\"The French Dispatch\",\"French Dispatch\"],[\"The Royal Tenenbaums\",\"Royal Tenenbaums\",\"The Life Aquatic with Steve Zissou\",\"The Life Aquatic\",\"Life Aquatic\",\"The Darjeeling Limited\",\"Darjeeling Limited\",\"Fantastic Mr. Fox\",\"Fantastic Mr Fox\",\"Isle of Dogs\",\"The French Dispatch\",\"French Dispatch\",\"The Grand Budapest Hotel\",\"Grand Budapest Hotel\"],[\"Moonrise Kingdom\",\"Isle of Dogs\",\"The French Dispatch\",\"French Dispatch\"]]"
+  },
+  {
+    "id": "reel-connections-2026-05-27",
+    "date": "2026-05-27",
+    "actors": "[\"Florence Pugh\",\"Scarlett Johansson\",\"Mark Ruffalo\",\"Jesse Eisenberg\",\"Andrew Garfield\",\"Vince Vaughn\"]",
+    "validAnswers": "[[\"Black Widow\"],[\"The Avengers\",\"Avengers\",\"Avengers: Age of Ultron\",\"Avengers Age of Ultron\",\"Avengers: Infinity War\",\"Avengers Infinity War\",\"Avengers: Endgame\",\"Avengers Endgame\"],[\"Now You See Me\",\"Now You See Me 2\"],[\"The Social Network\"],[\"Hacksaw Ridge\"],[\"Fighting with My Family\"]]"
   }
 ]
