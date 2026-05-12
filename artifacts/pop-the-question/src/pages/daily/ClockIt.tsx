@@ -4,7 +4,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import {
   Calendar,
   Share2,
-  ChevronDown,
   Clock,
   Trophy,
   RotateCcw,
@@ -107,11 +106,10 @@ interface HintCardProps {
   index: number;
   text: string;
   revealed: boolean;
-  onReveal: () => void;
   reduced: boolean;
 }
 
-function HintCard({ index, text, revealed, onReveal, reduced }: HintCardProps) {
+function HintCard({ index, text, revealed, reduced }: HintCardProps) {
   const color = HINT_COLORS[index];
   const label = HINT_LABELS[index];
 
@@ -147,19 +145,15 @@ function HintCard({ index, text, revealed, onReveal, reduced }: HintCardProps) {
             <p className="font-sans text-base font-bold text-black leading-snug">{text}</p>
           </motion.div>
         ) : (
-          <motion.button
+          <div
             key="locked"
-            onClick={onReveal}
-            className="w-full px-4 py-5 flex items-center justify-center gap-3 cursor-pointer group"
-            whileHover={{ scale: 1.01 }}
-            whileTap={{ scale: 0.98 }}
+            className="w-full px-4 py-5 flex items-center justify-center gap-3"
           >
-            <Lock className="w-5 h-5 text-black/40 group-hover:text-black/60 transition-colors" />
-            <span className="font-display font-black text-sm uppercase tracking-wide text-black/50 group-hover:text-black/70 transition-colors">
-              Tap to Reveal
+            <Lock className="w-5 h-5 text-black/40" />
+            <span className="font-display font-black text-sm uppercase tracking-wide text-black/50">
+              Locked — guess to unlock
             </span>
-            <ChevronDown className="w-5 h-5 text-black/40 group-hover:text-black/60 transition-colors" />
-          </motion.button>
+          </div>
         )}
       </AnimatePresence>
     </motion.div>
@@ -222,7 +216,17 @@ export default function ClockIt() {
   const [finalYear, setFinalYear] = useState<number | null>(null);
   const [savedState, setSavedState] = useState<SavedState | null>(null);
   const [shakeKey, setShakeKey] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(false);
   const recordedRef = useRef(false);
+  const transitionTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (transitionTimeoutRef.current !== null) {
+        clearTimeout(transitionTimeoutRef.current);
+      }
+    };
+  }, []);
 
   useEffect(() => {
     // Re-fetch when the date rolls over (todayDate changes at midnight).
@@ -363,31 +367,8 @@ export default function ClockIt() {
     [storageKey, todayDate],
   );
 
-  const handleRevealHint = useCallback(
-    (index: number) => {
-      if (index !== hintsRevealed || phase !== "playing") return;
-      const next = index + 1;
-      setHintsRevealed(next);
-      setWrongMessage(null);
-      try {
-        const partial: SavedState = {
-          completed: false,
-          inProgress: true,
-          score: 0,
-          hintsUsed: next,
-          gaveUp: false,
-          date: todayDate,
-        };
-        localStorage.setItem(storageKey, JSON.stringify(partial));
-      } catch {
-        /* ignore */
-      }
-    },
-    [hintsRevealed, phase, storageKey, todayDate],
-  );
-
   const handleSubmit = useCallback(async () => {
-    if (!puzzle || phase !== "playing") return;
+    if (!puzzle || phase !== "playing" || isTransitioning) return;
     const year = parseInt(yearInput, 10);
     if (isNaN(year) || yearInput.length !== 4) {
       toast({
@@ -424,14 +405,47 @@ export default function ClockIt() {
         setShakeKey((k) => k + 1);
         playWrong();
         hapticWrong();
-        const msg = "Not quite — try again!";
-        setWrongMessage(msg);
         setYearInput("");
-        inputRef.current?.focus();
-        toast({
-          title: msg,
-          className: "border-[3px] border-black bg-[#FF6B35] text-white font-bold",
-        });
+        setIsTransitioning(true);
+
+        if (hintsRevealed >= 3) {
+          // All 3 hints used and still wrong — reveal answer with 0 points.
+          // puzzle.year is already on the client (returned by the GET endpoint),
+          // so no extra round-trip is needed.
+          setWrongMessage("Wrong! No more hints — revealing the answer…");
+          transitionTimeoutRef.current = setTimeout(() => {
+            setFinalScore(0);
+            setFinalYear(puzzle.year);
+            setPhase("failed");
+            saveResult(0, 3, true, puzzle.year);
+            setIsTransitioning(false);
+          }, 2000);
+        } else {
+          // Auto-advance to the next hint after a brief delay.
+          setWrongMessage("Wrong! Revealing next hint…");
+          const next = hintsRevealed + 1;
+          // Persist the increment immediately so a mid-transition refresh
+          // doesn't let the player re-guess the same hint.
+          try {
+            const partial: SavedState = {
+              completed: false,
+              inProgress: true,
+              score: 0,
+              hintsUsed: next,
+              gaveUp: false,
+              date: todayDate,
+            };
+            localStorage.setItem(storageKey, JSON.stringify(partial));
+          } catch {
+            /* ignore */
+          }
+          transitionTimeoutRef.current = setTimeout(() => {
+            setHintsRevealed(next);
+            setWrongMessage(null);
+            setIsTransitioning(false);
+            inputRef.current?.focus();
+          }, 2000);
+        }
       }
     } catch {
       toast({
@@ -439,10 +453,10 @@ export default function ClockIt() {
         variant: "destructive",
       });
     }
-  }, [puzzle, phase, yearInput, hintsRevealed, playCorrect, playWrong, playVictory, saveResult, toast]);
+  }, [puzzle, phase, yearInput, hintsRevealed, isTransitioning, playCorrect, playWrong, playVictory, saveResult, storageKey, todayDate, toast]);
 
   const handleGiveUp = useCallback(async () => {
-    if (!puzzle || phase !== "playing") return;
+    if (!puzzle || phase !== "playing" || isTransitioning) return;
     try {
       const resp = await fetch("/api/daily/clock-it/check", {
         method: "POST",
@@ -460,7 +474,7 @@ export default function ClockIt() {
     } catch {
       toast({ title: "Something went wrong", variant: "destructive" });
     }
-  }, [puzzle, phase, hintsRevealed, playWrong, saveResult, toast]);
+  }, [puzzle, phase, isTransitioning, hintsRevealed, playWrong, saveResult, toast]);
 
   const handleShare = useCallback(() => {
     if (!puzzle) return;
@@ -601,6 +615,13 @@ export default function ClockIt() {
                 </div>
               </div>
 
+              {/* Hint progression */}
+              <div className="flex items-center justify-center gap-2">
+                <span className="font-display font-black text-xs uppercase tracking-widest text-black/60">
+                  Hint {hintsRevealed} of 3
+                </span>
+              </div>
+
               {/* Hint cards */}
               {([0, 1, 2] as const).map((i) => (
                 <HintCard
@@ -608,7 +629,6 @@ export default function ClockIt() {
                   index={i}
                   text={puzzle.hints[i]}
                   revealed={i < hintsRevealed}
-                  onReveal={() => handleRevealHint(i)}
                   reduced={reduced}
                 />
               ))}
@@ -648,6 +668,7 @@ export default function ClockIt() {
                   pattern="[0-9]*"
                   placeholder="e.g. 2007"
                   value={yearInput}
+                  disabled={isTransitioning}
                   onChange={(e) => {
                     const v = e.target.value.replace(/\D/g, "").slice(0, 4);
                     setYearInput(v);
@@ -655,12 +676,12 @@ export default function ClockIt() {
                   onKeyDown={(e) => {
                     if (e.key === "Enter") void handleSubmit();
                   }}
-                  className="flex-1 border-[3px] border-black shadow-[3px_3px_0_#000] px-4 py-4 font-display font-black text-2xl text-center focus:outline-none focus:ring-0 focus:border-[#FF1493] bg-white [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                  className="flex-1 border-[3px] border-black shadow-[3px_3px_0_#000] px-4 py-4 font-display font-black text-2xl text-center focus:outline-none focus:ring-0 focus:border-[#FF1493] bg-white [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none disabled:opacity-50 disabled:cursor-not-allowed"
                   style={{ minHeight: 64 }}
                 />
                 <Button
                   onClick={() => void handleSubmit()}
-                  disabled={yearInput.length !== 4}
+                  disabled={yearInput.length !== 4 || isTransitioning}
                   className="h-auto px-6 font-display font-black text-base uppercase bg-[#FF1493] text-white border-[3px] border-black shadow-[4px_4px_0_#000] hover:shadow-[2px_2px_0_#000] hover:translate-x-[2px] hover:translate-y-[2px] active:shadow-none active:translate-x-[4px] active:translate-y-[4px] transition-all comic-headline disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:translate-x-0 disabled:hover:translate-y-0 disabled:hover:shadow-[4px_4px_0_#000]"
                 >
                   Guess!
@@ -670,7 +691,8 @@ export default function ClockIt() {
               {/* Give up */}
               <button
                 onClick={() => void handleGiveUp()}
-                className="text-center text-sm text-black/50 hover:text-black/80 font-bold uppercase tracking-wide transition-colors flex items-center justify-center gap-1"
+                disabled={isTransitioning}
+                className="text-center text-sm text-black/50 hover:text-black/80 font-bold uppercase tracking-wide transition-colors flex items-center justify-center gap-1 disabled:opacity-40 disabled:cursor-not-allowed"
               >
                 <RotateCcw className="w-4 h-4" />
                 Give up — show me the year

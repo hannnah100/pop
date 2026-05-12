@@ -49,7 +49,8 @@
       "Bash(BASE_PATH=/ npx vite build --config vite.config.ts)",
       "Bash(sort -k6,7)",
       "Bash(pnpm --filter @workspace/api-server typecheck)",
-      "Bash(pnpm --filter @workspace/api-server test)"
+      "Bash(pnpm --filter @workspace/api-server test)",
+      "Bash(./node_modules/.bin/vitest run *)"
     ]
   }
 }
