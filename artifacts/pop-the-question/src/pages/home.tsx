@@ -58,7 +58,6 @@ function MobileTile({
       <div
         className="relative aspect-square overflow-hidden cursor-pointer active:translate-y-[2px] transition-transform"
         style={{
-          background: color,
           border: "4px solid #000",
           boxShadow: "5px 5px 0 #000",
         }}
@@ -73,7 +72,7 @@ function MobileTile({
         ) : (
           <span
             className={`absolute inset-0 flex items-center justify-center p-3 font-mono font-black uppercase text-center leading-tight ${theme === "light" ? "text-black" : "text-white"}`}
-            style={{ fontSize: "clamp(13px, 4vw, 18px)", letterSpacing: "0.02em" }}
+            style={{ background: color, fontSize: "clamp(13px, 4vw, 18px)", letterSpacing: "0.02em" }}
           >
             {title}
           </span>
@@ -297,33 +296,76 @@ export default function Home() {
           marginTop: "calc(-1 * env(safe-area-inset-top))",
         }}
       >
-        <header
-          className="px-4 pb-4"
+        <main
+          className="flex-1"
           style={{
-            paddingTop: "calc(env(safe-area-inset-top) + 1rem)",
-            borderBottom: "4px solid #000",
-            background: "#FFD60A",
+            paddingTop: "calc(env(safe-area-inset-top) + 1.25rem)",
           }}
         >
-          <div className="flex items-center gap-3">
-            <span
-              className="inline-flex items-center justify-center w-9 h-9 bg-white"
-              style={{ border: "3px solid #000", boxShadow: "3px 3px 0 #000" }}
-              aria-hidden
-            >
-              <Zap className="w-5 h-5 text-[#FFD700] fill-[#FFD700]" />
-            </span>
-            <h1
-              className="font-mono text-2xl font-black text-black uppercase"
-              style={{ letterSpacing: "0.03em" }}
-            >
-              Daily Games
-            </h1>
+          {/* Daily Games speech-bubble banner (ported from desktop) */}
+          <div className="px-4 pb-10">
+            <div className="relative w-fit max-w-full mx-auto">
+              <div
+                className="bg-white px-5 py-4"
+                style={{ border: "5px solid #000", boxShadow: "8px 8px 0 #000" }}
+              >
+                <div className="flex flex-wrap items-center gap-2 mb-1.5">
+                  <span
+                    className="inline-flex items-center justify-center w-9 h-9 bg-white"
+                    style={{ border: "4px solid #000", boxShadow: "3px 3px 0 #000" }}
+                    aria-hidden
+                  >
+                    <Zap className="w-5 h-5 text-[#FFD700] fill-[#FFD700]" />
+                  </span>
+                  <h2
+                    className="font-mono text-2xl font-black text-black uppercase"
+                    style={{ letterSpacing: "0.03em" }}
+                  >
+                    Daily Games
+                  </h2>
+                  <span
+                    className="px-2 py-0.5 font-mono font-black text-[10px] uppercase bg-white text-black"
+                    style={{ border: "3px solid #000", boxShadow: "3px 3px 0 #000", letterSpacing: "0.03em" }}
+                  >
+                    Today
+                  </span>
+                </div>
+                <p
+                  className="font-mono font-bold text-black text-sm"
+                  style={{ letterSpacing: "0.03em" }}
+                >
+                  Fresh pop culture puzzles every day. Come back tomorrow for more!
+                </p>
+              </div>
+              {/* Speech bubble tail */}
+              <div
+                aria-hidden
+                className="absolute left-10"
+                style={{
+                  bottom: "-22px",
+                  width: 0,
+                  height: 0,
+                  borderLeft: "22px solid transparent",
+                  borderRight: "22px solid transparent",
+                  borderTop: "22px solid #000",
+                }}
+              />
+              <div
+                aria-hidden
+                className="absolute left-[46px]"
+                style={{
+                  bottom: "-12px",
+                  width: 0,
+                  height: 0,
+                  borderLeft: "14px solid transparent",
+                  borderRight: "14px solid transparent",
+                  borderTop: "14px solid #fff",
+                }}
+              />
+            </div>
           </div>
-        </header>
 
-        <main className="flex-1 px-4 py-5">
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-2 gap-5 max-w-[200px] mx-auto px-4 pb-8">
             <MobileTile
               title="Three Flops"
               href="/daily/three-flops"
