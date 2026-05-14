@@ -59,7 +59,9 @@
       "Bash(pnpm install *)",
       "Bash(timeout 1 bash -c '</dev/tcp/127.0.0.1/__TRACKED_VAR__')",
       "Bash(pnpm why *)",
-      "Bash(pnpm dev *)"
+      "Bash(pnpm dev *)",
+      "Bash(PORT=8083 pnpm dev)",
+      "Bash(pnpm --filter @workspace/pop-the-question run build:ios)"
     ]
   }
 }

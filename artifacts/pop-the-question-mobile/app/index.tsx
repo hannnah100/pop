@@ -1,77 +1,106 @@
-import React, { useState, useRef, useCallback } from "react";
+import React, {
+  useCallback,
+  useRef,
+  useState,
+  type ComponentType,
+  type Ref,
+} from "react";
 import {
+  ActivityIndicator,
+  BackHandler,
+  Platform,
   StyleSheet,
   View,
-  ActivityIndicator,
-  RefreshControl,
-  ScrollView,
-  Platform,
 } from "react-native";
-import { WebView } from "react-native-webview";
+import { useFocusEffect } from "expo-router";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import {
+  WebView as WebViewClass,
+  type WebViewNavigation,
+  type WebViewProps,
+} from "react-native-webview";
 
 const WEB_APP_URL = "https://poptq.com";
 
+type WebViewHandle = InstanceType<typeof WebViewClass>;
+const WebView = WebViewClass as unknown as ComponentType<
+  WebViewProps & { ref?: Ref<WebViewHandle> }
+>;
+
 export default function WebViewScreen() {
   const insets = useSafeAreaInsets();
-  const webViewRef = useRef<WebView>(null);
+  const webViewRef = useRef<WebViewHandle>(null);
   const [loading, setLoading] = useState(true);
-  const [refreshing, setRefreshing] = useState(false);
+  const [canGoBack, setCanGoBack] = useState(false);
 
-  const onLoadEnd = useCallback(() => {
-    setLoading(false);
-    setRefreshing(false);
+  useFocusEffect(
+    useCallback(() => {
+      if (Platform.OS !== "android") return;
+
+      const onBackPress = () => {
+        if (canGoBack && webViewRef.current) {
+          webViewRef.current.goBack();
+          return true;
+        }
+        return false;
+      };
+
+      const subscription = BackHandler.addEventListener(
+        "hardwareBackPress",
+        onBackPress,
+      );
+      return () => subscription.remove();
+    }, [canGoBack]),
+  );
+
+  const onNavStateChange = useCallback((navState: WebViewNavigation) => {
+    setCanGoBack(navState.canGoBack);
   }, []);
 
-  const onRefresh = useCallback(() => {
-    setRefreshing(true);
-    webViewRef.current?.reload();
-  }, []);
-
-  // On web (browser preview), use an iframe since WebView is native-only
   if (Platform.OS === "web") {
     return (
       <View style={[styles.container, { paddingTop: insets.top }]}>
-        {loading && (
-          <View style={styles.spinnerOverlay}>
-            <ActivityIndicator size="large" color="#FF1493" />
-          </View>
-        )}
         {/* @ts-ignore — iframe is valid in web React Native */}
         <iframe
           src={WEB_APP_URL}
           style={styles.iframe}
-          onLoad={onLoadEnd}
+          onLoad={() => setLoading(false)}
         />
+        {loading && (
+          <View style={styles.spinnerOverlay} pointerEvents="none">
+            <ActivityIndicator size="large" color="#FF1493" />
+          </View>
+        )}
       </View>
     );
   }
 
   return (
-    <View style={[styles.container, { paddingTop: insets.top }]}>
-      <ScrollView
-        contentContainerStyle={styles.scrollContent}
-        refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-        }
-      >
-        <WebView
-          ref={webViewRef}
-          source={{ uri: WEB_APP_URL }}
-          style={styles.webview}
-          onLoadEnd={onLoadEnd}
-          allowsBackForwardNavigationGestures
-          bounces={false}
-          overScrollMode="never"
-          mediaPlaybackRequiresUserAction={false}
-          javaScriptEnabled
-          domStorageEnabled
-          startInLoadingState={false}
-        />
-      </ScrollView>
-
-      {loading && !refreshing && (
-        <View style={styles.spinnerOverlay}>
+    <View
+      style={[
+        styles.container,
+        { paddingTop: insets.top, paddingBottom: insets.bottom },
+      ]}
+    >
+      <WebView
+        ref={webViewRef}
+        source={{ uri: WEB_APP_URL }}
+        style={styles.webview}
+        onLoadStart={() => setLoading(true)}
+        onLoadEnd={() => setLoading(false)}
+        onNavigationStateChange={onNavStateChange}
+        allowsBackForwardNavigationGestures
+        pullToRefreshEnabled
+        bounces
+        javaScriptEnabled
+        domStorageEnabled
+        sharedCookiesEnabled
+        thirdPartyCookiesEnabled
+        mediaPlaybackRequiresUserAction={false}
+        allowsInlineMediaPlayback
+      />
+      {loading && (
+        <View style={styles.spinnerOverlay} pointerEvents="none">
           <ActivityIndicator size="large" color="#FF1493" />
         </View>
       )}
@@ -84,12 +113,9 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#FFF8E7",
   },
-  scrollContent: {
-    flexGrow: 1,
-  },
   webview: {
     flex: 1,
-    minHeight: 400,
+    backgroundColor: "#FFF8E7",
   },
   iframe: {
     flex: 1,
@@ -98,7 +124,7 @@ const styles = StyleSheet.create({
   },
   spinnerOverlay: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: "#FFF8E7",
+    backgroundColor: "rgba(255, 248, 231, 0.85)",
     justifyContent: "center",
     alignItems: "center",
   },
