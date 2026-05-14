@@ -28,6 +28,25 @@ export default function WebViewScreen() {
     webViewRef.current?.reload();
   }, []);
 
+  // On web (browser preview), use an iframe since WebView is native-only
+  if (Platform.OS === "web") {
+    return (
+      <View style={[styles.container, { paddingTop: insets.top }]}>
+        {loading && (
+          <View style={styles.spinnerOverlay}>
+            <ActivityIndicator size="large" color="#FF1493" />
+          </View>
+        )}
+        {/* @ts-ignore — iframe is valid in web React Native */}
+        <iframe
+          src={WEB_APP_URL}
+          style={styles.iframe}
+          onLoad={onLoadEnd}
+        />
+      </View>
+    );
+  }
+
   return (
     <View style={[styles.container, { paddingTop: insets.top }]}>
       <ScrollView
@@ -47,8 +66,7 @@ export default function WebViewScreen() {
           mediaPlaybackRequiresUserAction={false}
           javaScriptEnabled
           domStorageEnabled
-          startInLoadingState
-          renderLoading={() => null}
+          startInLoadingState={false}
         />
       </ScrollView>
 
@@ -72,7 +90,11 @@ const styles = StyleSheet.create({
   webview: {
     flex: 1,
     minHeight: 400,
-    ...(Platform.OS === "web" ? { height: "100vh" } : {}),
+  },
+  iframe: {
+    flex: 1,
+    width: "100%",
+    borderWidth: 0,
   },
   spinnerOverlay: {
     ...StyleSheet.absoluteFillObject,
