@@ -20,7 +20,7 @@ import {
   type WebViewProps,
 } from "react-native-webview";
 
-const WEB_APP_URL = "https://poptq.com";
+const WEB_APP_URL = "https://popthequestion.replit.app";
 
 type WebViewHandle = InstanceType<typeof WebViewClass>;
 const WebView = WebViewClass as unknown as ComponentType<
