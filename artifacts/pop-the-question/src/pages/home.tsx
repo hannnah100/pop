@@ -17,12 +17,17 @@ import { useAuth } from "@/contexts/AuthContext";
 
 const isExpoWebView =
   typeof navigator !== "undefined" && /Expo/i.test(navigator.userAgent);
-const isNative = Capacitor.isNativePlatform() || isExpoWebView;
+const isMobileQueryOverride =
+  typeof window !== "undefined" &&
+  new URLSearchParams(window.location.search).get("mobile") === "true";
+const isNative =
+  Capacitor.isNativePlatform() || isExpoWebView || isMobileQueryOverride;
 
 if (typeof window !== "undefined") {
   console.log("[home.tsx] navigator.userAgent:", navigator.userAgent);
   console.log("[home.tsx] Capacitor.isNativePlatform():", Capacitor.isNativePlatform());
   console.log("[home.tsx] isExpoWebView:", isExpoWebView);
+  console.log("[home.tsx] isMobileQueryOverride:", isMobileQueryOverride);
   console.log("[home.tsx] isNative:", isNative);
 }
 
