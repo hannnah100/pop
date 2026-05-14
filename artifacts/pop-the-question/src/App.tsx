@@ -7,12 +7,12 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/not-found";
 import { AnimatedBackground } from "@/components/fx/AnimatedBackground";
+import { NeoDoodles } from "@/components/fx/NeoDoodles";
 import { MuteToggle } from "@/components/fx/MuteToggle";
 import { useUnlockOnFirstInteraction } from "@/lib/sfx";
 import { pageTransition } from "@/lib/motion";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { AuthModal } from "@/components/auth/AuthModal";
-import { MobileBackButton } from "@/components/MobileBackButton";
 
 import Home from "@/pages/home";
 import ThreeFlops from "@/pages/daily/three-flops";
@@ -107,8 +107,14 @@ function Router() {
   return (
     <div className={`relative min-h-[100dvh] flex flex-col w-full text-foreground${isNative ? " pt-safe pb-safe" : ""}`}>
       <AnimatedBackground />
+      <div
+        aria-hidden
+        className="fixed inset-0 pointer-events-none overflow-hidden"
+        style={{ zIndex: 0 }}
+      >
+        <NeoDoodles opacity={0.4} />
+      </div>
       <AnimatedRoutes />
-      <MobileBackButton />
       <MuteToggle />
       <AuthModal />
     </div>

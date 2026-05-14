@@ -101,14 +101,6 @@ export default function Crossword() {
     updateNameMutation.mutate({ data: { playerToken, playerName: trimmed } });
   }
 
-  const [isTouchDevice, setIsTouchDevice] = useState(false);
-  useEffect(() => {
-    const mq = window.matchMedia('(pointer: coarse)');
-    setIsTouchDevice(mq.matches);
-    const handler = (e: MediaQueryListEvent) => setIsTouchDevice(e.matches);
-    mq.addEventListener('change', handler);
-    return () => mq.removeEventListener('change', handler);
-  }, []);
   const todayDate = new Date().toISOString().split('T')[0];
 
   const rows = puzzle ? puzzle.grid.length : 0;
@@ -816,61 +808,6 @@ export default function Crossword() {
           </div>
         </div>
       </div>
-
-      {/* On-screen keyboard — visible only on touch devices, hidden on desktop */}
-      {!isCompleted && isTouchDevice && (
-        <div className="mt-6 lg:hidden select-none">
-          {(
-            [
-              ['Q','W','E','R','T','Y','U','I','O','P'],
-              ['A','S','D','F','G','H','J','K','L'],
-              ['Z','X','C','V','B','N','M'],
-            ] as string[][]
-          ).map((row, rowIdx) => (
-            <div key={rowIdx} className="flex justify-center gap-[3px] mb-[3px]">
-              {row.map((key) => (
-                <button
-                  key={key}
-                  onPointerDown={(e) => {
-                    e.preventDefault();
-                    processLetter(key);
-                  }}
-                  className="
-                    h-12 min-w-[2.1rem] flex-1 max-w-[2.6rem]
-                    bg-[#FFD700] border-[2.5px] border-black
-                    shadow-[2px_2px_0_#000]
-                    font-display font-black text-sm text-black uppercase
-                    active:shadow-none active:translate-x-[2px] active:translate-y-[2px]
-                    transition-transform duration-75
-                    rounded-none
-                  "
-                >
-                  {key}
-                </button>
-              ))}
-              {rowIdx === 2 && (
-                <button
-                  onPointerDown={(e) => {
-                    e.preventDefault();
-                    handleBackspace();
-                  }}
-                  className="
-                    h-12 min-w-[3.2rem] flex-[1.5]
-                    bg-[#FF1493] border-[2.5px] border-black
-                    shadow-[2px_2px_0_#000]
-                    font-display font-black text-xs text-white uppercase
-                    active:shadow-none active:translate-x-[2px] active:translate-y-[2px]
-                    transition-transform duration-75
-                    rounded-none
-                  "
-                >
-                  ⌫
-                </button>
-              )}
-            </div>
-          ))}
-        </div>
-      )}
 
       <p className="mt-4 text-center text-sm text-black/50 font-sans lg:hidden">
         Tap a cell to start typing · tap again to switch direction

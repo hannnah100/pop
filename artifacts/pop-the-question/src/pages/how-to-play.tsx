@@ -1,7 +1,9 @@
+import { useState } from "react";
+import { ChevronDown } from "lucide-react";
 import { BackArrow } from "@/components/ui/BackArrow";
 import { NeoDoodles } from "@/components/fx/NeoDoodles";
 
-interface GameRulesCardProps {
+interface GameRules {
   title: string;
   tagline: string;
   emoji: string;
@@ -10,6 +12,11 @@ interface GameRulesCardProps {
   steps: string[];
   scoring: string;
   share: string;
+}
+
+interface GameRulesCardProps extends GameRules {
+  open: boolean;
+  onToggle: () => void;
 }
 
 function GameRulesCard({
@@ -21,120 +28,148 @@ function GameRulesCard({
   steps,
   scoring,
   share,
+  open,
+  onToggle,
 }: GameRulesCardProps) {
   const textColor = theme === "light" ? "text-black" : "text-white";
-  const taglineColor = theme === "light" ? "text-black" : "text-white";
+  const panelId = `game-rules-${title.toLowerCase().replace(/\s+/g, "-")}`;
 
   return (
     <article
-      className="p-5 md:p-7"
       style={{
-        background: bg,
         border: "5px solid #000",
         boxShadow: "8px 8px 0 #000",
+        background: bg,
       }}
     >
-      <div className="flex items-center gap-3 mb-3">
+      <button
+        type="button"
+        onClick={onToggle}
+        aria-expanded={open}
+        aria-controls={panelId}
+        data-testid={`btn-toggle-${panelId}`}
+        className="w-full flex items-center gap-3 md:gap-4 px-4 md:px-6 py-4 md:py-5 text-left cursor-pointer"
+      >
         <span
-          className="inline-flex items-center justify-center w-12 h-12 md:w-14 md:h-14 bg-white text-2xl md:text-3xl shrink-0"
-          style={{ border: "4px solid #000", boxShadow: "4px 4px 0 #000" }}
-          aria-hidden="true"
+          className="inline-flex items-center justify-center w-11 h-11 md:w-12 md:h-12 bg-white text-2xl shrink-0"
+          style={{ border: "3px solid #000", boxShadow: "3px 3px 0 #000" }}
+          aria-hidden
         >
           {emoji}
         </span>
-        <h2
-          className={`font-mono font-black uppercase leading-none ${textColor}`}
-          style={{
-            fontSize: "clamp(1.5rem, 5vw, 2.25rem)",
-            letterSpacing: "0.03em",
-          }}
-        >
-          {title}
-        </h2>
-      </div>
-
-      <p
-        className={`font-mono font-bold uppercase text-xs md:text-sm mb-5 ${taglineColor}`}
-        style={{ letterSpacing: "0.03em", opacity: 0.85 }}
-      >
-        {tagline}
-      </p>
-
-      <div
-        className="bg-white p-4 md:p-5 mb-4"
-        style={{ border: "4px solid #000", boxShadow: "5px 5px 0 #000" }}
-      >
-        <h3
-          className="font-mono font-black text-black uppercase text-sm md:text-base mb-3"
-          style={{ letterSpacing: "0.03em" }}
-        >
-          How to Play
-        </h3>
-        <ol className="space-y-2.5 text-black">
-          {steps.map((step, i) => (
-            <li key={i} className="flex gap-3">
-              <span
-                className="flex items-center justify-center shrink-0 w-7 h-7 bg-black text-white font-mono font-black text-sm"
-                style={{ letterSpacing: "0.03em" }}
-                aria-hidden="true"
-              >
-                {i + 1}
-              </span>
-              <span
-                className="font-mono font-bold text-sm md:text-base leading-snug pt-0.5"
-                style={{ letterSpacing: "0.01em" }}
-              >
-                {step}
-              </span>
-            </li>
-          ))}
-        </ol>
-      </div>
-
-      <div
-        className="bg-black text-white p-4 mb-4"
-        style={{ border: "4px solid #000", boxShadow: "5px 5px 0 #000" }}
-      >
-        <h3
-          className="font-mono font-black uppercase text-sm md:text-base mb-2 text-[#FFD60A]"
-          style={{ letterSpacing: "0.03em" }}
-        >
-          Scoring &amp; Tips
-        </h3>
-        <p
-          className="font-mono font-bold text-sm md:text-base leading-snug"
-          style={{ letterSpacing: "0.01em" }}
-        >
-          {scoring}
-        </p>
-      </div>
-
-      <div
-        className="p-3 flex items-start gap-3"
-        style={{
-          background: "#FFD60A",
-          border: "4px solid #000",
-          boxShadow: "5px 5px 0 #000",
-        }}
-      >
+        <div className="flex-1 min-w-0">
+          <h2
+            className={`font-mono font-black uppercase leading-tight ${textColor}`}
+            style={{
+              fontSize: "clamp(1.1rem, 4vw, 1.75rem)",
+              letterSpacing: "0.03em",
+            }}
+          >
+            {title}
+          </h2>
+          <p
+            className={`font-mono font-bold uppercase text-[11px] md:text-xs mt-1 ${textColor}`}
+            style={{ letterSpacing: "0.03em", opacity: 0.85 }}
+          >
+            {tagline}
+          </p>
+        </div>
         <span
-          className="font-mono font-black text-black text-xs uppercase px-2 py-1 bg-white shrink-0"
-          style={{ border: "3px solid #000", letterSpacing: "0.03em" }}
+          className="inline-flex items-center justify-center w-10 h-10 md:w-11 md:h-11 bg-white shrink-0"
+          style={{ border: "3px solid #000", boxShadow: "3px 3px 0 #000" }}
+          aria-hidden
         >
-          Share
+          <ChevronDown
+            className="w-5 h-5 md:w-6 md:h-6 text-black"
+            style={{ transform: open ? "rotate(180deg)" : "rotate(0deg)" }}
+            strokeWidth={3}
+          />
         </span>
-        <p
-          className="font-mono font-bold text-black text-sm md:text-base leading-snug pt-0.5"
-          style={{ letterSpacing: "0.01em" }}
+      </button>
+
+      {open && (
+        <div
+          id={panelId}
+          className="bg-white p-4 md:p-6"
+          style={{ borderTop: "5px solid #000" }}
         >
-          {share}
-        </p>
-      </div>
+          <div
+            className="bg-white p-4 md:p-5 mb-4"
+            style={{ border: "4px solid #000", boxShadow: "5px 5px 0 #000" }}
+          >
+            <h3
+              className="font-mono font-black text-black uppercase text-sm md:text-base mb-3"
+              style={{ letterSpacing: "0.03em" }}
+            >
+              How to Play
+            </h3>
+            <ol className="space-y-2.5 text-black">
+              {steps.map((step, i) => (
+                <li key={i} className="flex gap-3">
+                  <span
+                    className="flex items-center justify-center shrink-0 w-7 h-7 bg-black text-white font-mono font-black text-sm"
+                    style={{ letterSpacing: "0.03em" }}
+                    aria-hidden
+                  >
+                    {i + 1}
+                  </span>
+                  <span
+                    className="font-mono font-bold text-sm md:text-base leading-snug pt-0.5"
+                    style={{ letterSpacing: "0.01em" }}
+                  >
+                    {step}
+                  </span>
+                </li>
+              ))}
+            </ol>
+          </div>
+
+          <div
+            className="bg-black text-white p-4 mb-4"
+            style={{ border: "4px solid #000", boxShadow: "5px 5px 0 #000" }}
+          >
+            <h3
+              className="font-mono font-black uppercase text-sm md:text-base mb-2 text-[#FFD60A]"
+              style={{ letterSpacing: "0.03em" }}
+            >
+              Scoring &amp; Tips
+            </h3>
+            <p
+              className="font-mono font-bold text-sm md:text-base leading-snug"
+              style={{ letterSpacing: "0.01em" }}
+            >
+              {scoring}
+            </p>
+          </div>
+
+          <div
+            className="p-3 flex items-start gap-3"
+            style={{
+              background: "#FFD60A",
+              border: "4px solid #000",
+              boxShadow: "5px 5px 0 #000",
+            }}
+          >
+            <span
+              className="font-mono font-black text-black text-xs uppercase px-2 py-1 bg-white shrink-0"
+              style={{ border: "3px solid #000", letterSpacing: "0.03em" }}
+            >
+              Share
+            </span>
+            <p
+              className="font-mono font-bold text-black text-sm md:text-base leading-snug pt-0.5"
+              style={{ letterSpacing: "0.01em" }}
+            >
+              {share}
+            </p>
+          </div>
+        </div>
+      )}
     </article>
   );
 }
 
-const GAMES: GameRulesCardProps[] = [
+const GAMES: GameRules[] = [
   {
     title: "Three Flops",
     tagline: "3 misses and you're out",
@@ -234,6 +269,8 @@ const GAMES: GameRulesCardProps[] = [
 ];
 
 export default function HowToPlay() {
+  const [openTitle, setOpenTitle] = useState<string | null>(null);
+
   return (
     <div
       className="flex-1 flex flex-col w-full overflow-x-hidden"
@@ -283,7 +320,7 @@ export default function HowToPlay() {
                 className="font-mono font-bold text-black"
                 style={{ letterSpacing: "0.03em" }}
               >
-                Six fresh pop culture puzzles every day. Here&apos;s how each one works.
+                Tap a game to see how it works. Six fresh pop culture puzzles every day.
               </p>
             </div>
 
@@ -316,14 +353,21 @@ export default function HowToPlay() {
         </div>
       </header>
 
-      {/* ===== GAME RULES ===== */}
+      {/* ===== GAME RULES ACCORDION ===== */}
       <section
         className="relative px-4 py-12 md:py-16"
         style={{ background: "#FFF5E7" }}
       >
-        <div className="max-w-3xl mx-auto flex flex-col gap-8 md:gap-10 relative z-10">
+        <div className="max-w-3xl mx-auto flex flex-col gap-5 md:gap-6 relative z-10">
           {GAMES.map((game) => (
-            <GameRulesCard key={game.title} {...game} />
+            <GameRulesCard
+              key={game.title}
+              {...game}
+              open={openTitle === game.title}
+              onToggle={() =>
+                setOpenTitle((cur) => (cur === game.title ? null : game.title))
+              }
+            />
           ))}
         </div>
       </section>
