@@ -1,19 +1,12 @@
 import { BackArrow } from "@/components/ui/BackArrow";
-import { RainbowText } from "@/components/fx";
-import {
-  StarDoodle,
-  LightningDoodle,
-  SmileyDoodle,
-  ConfettiDoodle,
-  FlowerDoodle,
-} from "@/components/fx/Doodles";
+import { NeoDoodles } from "@/components/fx/NeoDoodles";
 
 interface GameRulesCardProps {
   title: string;
   tagline: string;
   emoji: string;
   bg: string;
-  textColor?: string;
+  theme: "light" | "dark";
   steps: string[];
   scoring: string;
   share: string;
@@ -24,75 +17,120 @@ function GameRulesCard({
   tagline,
   emoji,
   bg,
-  textColor = "#000",
+  theme,
   steps,
   scoring,
   share,
 }: GameRulesCardProps) {
-  return (
-    <div
-      className="relative border-[4px] border-black shadow-[6px_6px_0_#000] p-6 md:p-8 overflow-hidden"
-      style={{ background: bg }}
-    >
-      <StarDoodle className="absolute top-3 right-4 w-8 h-8 text-black opacity-15" />
+  const textColor = theme === "light" ? "text-black" : "text-white";
+  const taglineColor = theme === "light" ? "text-black" : "text-white";
 
-      <div className="flex items-center gap-3 mb-2">
-        <span className="text-4xl md:text-5xl leading-none" aria-hidden="true">{emoji}</span>
+  return (
+    <article
+      className="p-5 md:p-7"
+      style={{
+        background: bg,
+        border: "5px solid #000",
+        boxShadow: "8px 8px 0 #000",
+      }}
+    >
+      <div className="flex items-center gap-3 mb-3">
+        <span
+          className="inline-flex items-center justify-center w-12 h-12 md:w-14 md:h-14 bg-white text-2xl md:text-3xl shrink-0"
+          style={{ border: "4px solid #000", boxShadow: "4px 4px 0 #000" }}
+          aria-hidden="true"
+        >
+          {emoji}
+        </span>
         <h2
-          className="font-display font-black uppercase tracking-tight comic-headline leading-none"
+          className={`font-mono font-black uppercase leading-none ${textColor}`}
           style={{
-            fontSize: "clamp(1.6rem, 5vw, 2.6rem)",
-            color: "#fff",
-            WebkitTextStroke: "2px #000",
-            paintOrder: "stroke fill",
+            fontSize: "clamp(1.5rem, 5vw, 2.25rem)",
+            letterSpacing: "0.03em",
           }}
         >
           {title}
         </h2>
       </div>
+
       <p
-        className="font-display font-bold uppercase text-sm md:text-base mb-5 tracking-wide"
-        style={{ color: textColor, opacity: 0.85 }}
+        className={`font-mono font-bold uppercase text-xs md:text-sm mb-5 ${taglineColor}`}
+        style={{ letterSpacing: "0.03em", opacity: 0.85 }}
       >
         {tagline}
       </p>
 
-      <div className="bg-white/95 border-[3px] border-black shadow-[3px_3px_0_#000] p-4 md:p-5 mb-4">
-        <h3 className="font-display font-black text-black uppercase text-base md:text-lg mb-3 tracking-wide">
-          How to play
+      <div
+        className="bg-white p-4 md:p-5 mb-4"
+        style={{ border: "4px solid #000", boxShadow: "5px 5px 0 #000" }}
+      >
+        <h3
+          className="font-mono font-black text-black uppercase text-sm md:text-base mb-3"
+          style={{ letterSpacing: "0.03em" }}
+        >
+          How to Play
         </h3>
-        <ol className="space-y-2 font-sans text-black text-sm md:text-base">
+        <ol className="space-y-2.5 text-black">
           {steps.map((step, i) => (
             <li key={i} className="flex gap-3">
               <span
-                className="flex items-center justify-center shrink-0 w-6 h-6 rounded-full bg-black text-white font-display font-black text-sm"
+                className="flex items-center justify-center shrink-0 w-7 h-7 bg-black text-white font-mono font-black text-sm"
+                style={{ letterSpacing: "0.03em" }}
                 aria-hidden="true"
               >
                 {i + 1}
               </span>
-              <span className="leading-snug pt-0.5">{step}</span>
+              <span
+                className="font-mono font-bold text-sm md:text-base leading-snug pt-0.5"
+                style={{ letterSpacing: "0.01em" }}
+              >
+                {step}
+              </span>
             </li>
           ))}
         </ol>
       </div>
 
-      <div className="bg-black text-white border-[3px] border-black shadow-[3px_3px_0_#000] p-4 mb-4">
-        <h3 className="font-display font-black uppercase text-sm md:text-base mb-1 tracking-wide text-[#FFD700]">
-          Scoring &amp; tips
+      <div
+        className="bg-black text-white p-4 mb-4"
+        style={{ border: "4px solid #000", boxShadow: "5px 5px 0 #000" }}
+      >
+        <h3
+          className="font-mono font-black uppercase text-sm md:text-base mb-2 text-[#FFD60A]"
+          style={{ letterSpacing: "0.03em" }}
+        >
+          Scoring &amp; Tips
         </h3>
-        <p className="font-sans text-sm md:text-base leading-snug">{scoring}</p>
+        <p
+          className="font-mono font-bold text-sm md:text-base leading-snug"
+          style={{ letterSpacing: "0.01em" }}
+        >
+          {scoring}
+        </p>
       </div>
 
       <div
-        className="border-[3px] border-black shadow-[3px_3px_0_#000] p-3 flex items-center gap-2"
-        style={{ background: "#FFD700" }}
+        className="p-3 flex items-start gap-3"
+        style={{
+          background: "#FFD60A",
+          border: "4px solid #000",
+          boxShadow: "5px 5px 0 #000",
+        }}
       >
-        <span className="text-xl shrink-0" aria-hidden="true">📣</span>
-        <p className="font-sans font-bold text-black text-sm md:text-base leading-snug">
+        <span
+          className="font-mono font-black text-black text-xs uppercase px-2 py-1 bg-white shrink-0"
+          style={{ border: "3px solid #000", letterSpacing: "0.03em" }}
+        >
+          Share
+        </span>
+        <p
+          className="font-mono font-bold text-black text-sm md:text-base leading-snug pt-0.5"
+          style={{ letterSpacing: "0.01em" }}
+        >
           {share}
         </p>
       </div>
-    </div>
+    </article>
   );
 }
 
@@ -101,7 +139,8 @@ const GAMES: GameRulesCardProps[] = [
     title: "Three Flops",
     tagline: "3 misses and you're out",
     emoji: "⚡",
-    bg: "#FF6B35",
+    bg: "#FFD60A",
+    theme: "light",
     steps: [
       "You'll see a pop-culture category with a hidden list of correct answers.",
       "Type a guess and submit. Matches don't have to be exact — close spellings count.",
@@ -113,25 +152,11 @@ const GAMES: GameRulesCardProps[] = [
     share: "Brag about how many you got — share your result with the group chat.",
   },
   {
-    title: "The Skinny",
-    tagline: "Pop culture crossword",
-    emoji: "🧩",
-    bg: "#00E5FF",
-    steps: [
-      "Tap a square to start a word, then type your answers using the Across and Down clues.",
-      "Letters that are correct as you type get a little pop animation as a confidence boost.",
-      "When you think the grid is done, hit \"Check Grid\" to see if you've solved it.",
-      "Beat the clock — there's a target time ticking down at the top of the puzzle.",
-    ],
-    scoring:
-      "There are no hints, just you and the clues. Solving under the target time is the flex — partial fills don't count, so finish the whole grid.",
-    share: "Finished it? Share your time and challenge a friend to beat it.",
-  },
-  {
     title: "Pop Box",
     tagline: "Match a celeb to each row × column",
     emoji: "🎬",
-    bg: "#FF1493",
+    bg: "#38BDF8",
+    theme: "light",
     steps: [
       "You'll see a 3×3 grid with a category on each row and each column.",
       "Tap a square and name a celebrity who fits BOTH that row and column.",
@@ -144,9 +169,10 @@ const GAMES: GameRulesCardProps[] = [
   },
   {
     title: "Pop or Drop",
-    tagline: "Higher or Lower — pop culture edition",
+    tagline: "Higher or lower — pop culture edition",
     emoji: "📈",
-    bg: "#00C853",
+    bg: "#50C878",
+    theme: "light",
     steps: [
       "You'll see two pop-culture items side by side comparing the same metric.",
       "The left card shows its real number. The right card is hidden behind ???.",
@@ -158,10 +184,27 @@ const GAMES: GameRulesCardProps[] = [
     share: "Post your streak and dare your friends to beat it.",
   },
   {
+    title: "The Skinny",
+    tagline: "Pop culture crossword",
+    emoji: "🧩",
+    bg: "#FF006E",
+    theme: "dark",
+    steps: [
+      "Tap a square to start a word, then type your answers using the Across and Down clues.",
+      "Letters that are correct as you type get a little pop animation as a confidence boost.",
+      "When you think the grid is done, hit \"Check Grid\" to see if you've solved it.",
+      "Beat the clock — there's a target time ticking down at the top of the puzzle.",
+    ],
+    scoring:
+      "There are no hints, just you and the clues. Solving under the target time is the flex — partial fills don't count, so finish the whole grid.",
+    share: "Finished it? Share your time and challenge a friend to beat it.",
+  },
+  {
     title: "Clock It",
     tagline: "3 pop culture hints — which year is it?",
     emoji: "📅",
-    bg: "#FFD700",
+    bg: "#9370DB",
+    theme: "dark",
     steps: [
       "You'll see 3 pop-culture facts from the same year. The first hint is shown straight away.",
       "Type a year and submit — wrong guesses don't end the game, so you can keep trying.",
@@ -175,8 +218,9 @@ const GAMES: GameRulesCardProps[] = [
   {
     title: "Reel Connections",
     tagline: "Link 6 actors around the loop",
-    emoji: "🎬",
-    bg: "#8A2BE2",
+    emoji: "🎞️",
+    bg: "#FF6B35",
+    theme: "dark",
     steps: [
       "You'll see 6 actors arranged in a loop. Name a movie or TV show that connects each adjacent pair.",
       "There are 6 connections total — the last actor connects back to the first to close the loop.",
@@ -191,38 +235,93 @@ const GAMES: GameRulesCardProps[] = [
 
 export default function HowToPlay() {
   return (
-    <div className="flex-1 flex flex-col w-full overflow-x-hidden">
+    <div
+      className="flex-1 flex flex-col w-full overflow-x-hidden"
+      style={{ background: "#FFF5E7" }}
+    >
       {/* ===== HERO ===== */}
-      <header className="relative bg-[#FFF8E7] border-b-[4px] border-black px-4 pt-6 pb-10 overflow-hidden">
-        <StarDoodle className="absolute top-4 left-6 w-10 h-10 text-[#FF1493] opacity-80" />
-        <LightningDoodle className="absolute top-8 right-8 w-8 h-12 text-[#FF6B35] opacity-70" />
-        <SmileyDoodle className="absolute bottom-6 left-10 w-10 h-10 text-[#00E5FF] opacity-60" />
-        <FlowerDoodle className="absolute bottom-4 right-6 w-12 h-12 text-[#FF1493] opacity-70" />
-        <ConfettiDoodle className="absolute bottom-2 left-1/2 -translate-x-1/2 w-16 h-16 opacity-60" />
+      <header
+        className="relative px-4 pt-6 md:pt-10 pb-12 md:pb-16 overflow-hidden"
+        style={{ background: "#FFF5E7", borderBottom: "5px solid #000" }}
+      >
+        <NeoDoodles opacity={0.9} />
 
-        <div className="relative z-10 max-w-4xl mx-auto">
-          <div className="mb-6">
+        <div className="relative z-10 max-w-3xl mx-auto">
+          <div className="mb-8">
             <BackArrow href="/" label="Back to home" displayText="Back" />
           </div>
 
-          <h1
-            className="font-display font-black leading-none tracking-tight comic-headline text-center"
-            style={{ fontSize: "clamp(2.4rem, 9vw, 5rem)" }}
-          >
-            <RainbowText
-              text="HOW TO PLAY"
-              palette={["#FF0054", "#FF6B35", "#FFD700", "#00C853", "#00E5FF", "#FF1493"]}
+          {/* Title block — neo-brutalism speech card */}
+          <div className="relative w-fit max-w-full mx-auto">
+            <div
+              className="bg-white px-5 py-5 md:px-8 md:py-7"
+              style={{ border: "5px solid #000", boxShadow: "8px 8px 0 #000" }}
+            >
+              <div className="flex flex-wrap items-center gap-3 mb-3">
+                <span
+                  className="px-3 py-1 font-mono font-black text-xs text-black uppercase"
+                  style={{
+                    background: "#FFD60A",
+                    border: "3px solid #000",
+                    boxShadow: "3px 3px 0 #000",
+                    letterSpacing: "0.03em",
+                  }}
+                >
+                  Rules
+                </span>
+                <h1
+                  className="font-mono font-black text-black uppercase leading-none"
+                  style={{
+                    fontSize: "clamp(2rem, 7vw, 3.75rem)",
+                    letterSpacing: "0.03em",
+                  }}
+                >
+                  How to Play
+                </h1>
+              </div>
+              <p
+                className="font-mono font-bold text-black"
+                style={{ letterSpacing: "0.03em" }}
+              >
+                Six fresh pop culture puzzles every day. Here&apos;s how each one works.
+              </p>
+            </div>
+
+            {/* Speech bubble tail */}
+            <div
+              aria-hidden
+              className="absolute left-10 md:left-14"
+              style={{
+                bottom: "-22px",
+                width: 0,
+                height: 0,
+                borderLeft: "22px solid transparent",
+                borderRight: "22px solid transparent",
+                borderTop: "22px solid #000",
+              }}
             />
-          </h1>
-          <p className="mt-4 text-center font-sans font-bold text-black/80 text-base md:text-lg max-w-xl mx-auto">
-            Six fresh pop culture puzzles every day. Here's how each one works.
-          </p>
+            <div
+              aria-hidden
+              className="absolute left-[52px] md:left-[72px]"
+              style={{
+                bottom: "-12px",
+                width: 0,
+                height: 0,
+                borderLeft: "14px solid transparent",
+                borderRight: "14px solid transparent",
+                borderTop: "14px solid #fff",
+              }}
+            />
+          </div>
         </div>
       </header>
 
       {/* ===== GAME RULES ===== */}
-      <section className="relative bg-[#FFF8E7] px-4 py-10">
-        <div className="max-w-3xl mx-auto flex flex-col gap-8">
+      <section
+        className="relative px-4 py-12 md:py-16"
+        style={{ background: "#FFF5E7" }}
+      >
+        <div className="max-w-3xl mx-auto flex flex-col gap-8 md:gap-10 relative z-10">
           {GAMES.map((game) => (
             <GameRulesCard key={game.title} {...game} />
           ))}
@@ -230,9 +329,12 @@ export default function HowToPlay() {
       </section>
 
       {/* ===== FOOTER BACK ===== */}
-      <footer className="bg-[#FFF8E7] border-t-[4px] border-black px-4 py-8">
+      <footer
+        className="px-4 py-10"
+        style={{ background: "#FFF5E7", borderTop: "5px solid #000" }}
+      >
         <div className="max-w-3xl mx-auto flex justify-center">
-          <BackArrow href="/" label="Back to home" displayText="Back to home" />
+          <BackArrow href="/" label="Back to home" displayText="Back to Home" />
         </div>
       </footer>
     </div>

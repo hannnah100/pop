@@ -12,6 +12,7 @@ import { useUnlockOnFirstInteraction } from "@/lib/sfx";
 import { pageTransition } from "@/lib/motion";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { AuthModal } from "@/components/auth/AuthModal";
+import { MobileBackButton } from "@/components/MobileBackButton";
 
 import Home from "@/pages/home";
 import ThreeFlops from "@/pages/daily/three-flops";
@@ -107,6 +108,7 @@ function Router() {
     <div className={`relative min-h-[100dvh] flex flex-col w-full text-foreground${isNative ? " pt-safe pb-safe" : ""}`}>
       <AnimatedBackground />
       <AnimatedRoutes />
+      <MobileBackButton />
       <MuteToggle />
       <AuthModal />
     </div>

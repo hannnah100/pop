@@ -78,8 +78,62 @@ function MobileTile({
           </span>
         )}
         {completed && (
+          <>
+            <div
+              aria-hidden
+              className="absolute inset-0 pointer-events-none"
+              style={{ background: "rgba(0, 0, 0, 0.6)" }}
+            />
+            <div
+              aria-hidden
+              className="absolute inset-0 flex items-center justify-center pointer-events-none"
+            >
+              <svg
+                viewBox="0 0 100 100"
+                className="w-[68%] h-[68%]"
+                style={{ transform: "rotate(-8deg)" }}
+              >
+                {/* Yellow star burst — top-left of checkmark */}
+                <path
+                  d="M 14 22 l 3 -7 l 3 7 l 7 3 l -7 3 l -3 7 l -3 -7 l -7 -3 z"
+                  fill="#FFD60A"
+                  stroke="#000"
+                  strokeWidth="2"
+                  strokeLinejoin="round"
+                />
+                {/* Yellow star burst — bottom-right of checkmark */}
+                <path
+                  d="M 82 68 l 2.5 -5.5 l 2.5 5.5 l 5.5 2.5 l -5.5 2.5 l -2.5 5.5 l -2.5 -5.5 l -5.5 -2.5 z"
+                  fill="#FFD60A"
+                  stroke="#000"
+                  strokeWidth="2"
+                  strokeLinejoin="round"
+                />
+                {/* Checkmark — thick black outline */}
+                <path
+                  d="M 22 52 L 44 76 L 82 28"
+                  fill="none"
+                  stroke="#000"
+                  strokeWidth="18"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                {/* Checkmark — white fill on top */}
+                <path
+                  d="M 22 52 L 44 76 L 82 28"
+                  fill="none"
+                  stroke="#fff"
+                  strokeWidth="10"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </div>
+          </>
+        )}
+        {completed && (
           <span
-            className={`absolute top-1 right-1 px-1.5 py-0.5 font-mono font-black text-[10px] uppercase ${badgeBg}`}
+            className={`absolute top-1 right-1 z-10 px-1.5 py-0.5 font-mono font-black text-[10px] uppercase ${badgeBg}`}
             style={{ border: "2px solid #000", letterSpacing: "0.03em" }}
           >
             {completedLabel ?? "Done ✓"}
@@ -99,8 +153,8 @@ function MobileBottomNav() {
     onClick?: () => void;
     testId: string;
   }> = [
-    { label: "How to Play", icon: <BookOpen className="w-5 h-5" />, href: "/how-to-play", testId: "mobile-nav-how-to-play" },
     { label: "Join Game", icon: <Users className="w-5 h-5" />, href: "/join", testId: "mobile-nav-join" },
+    { label: "How to Play", icon: <BookOpen className="w-5 h-5" />, href: "/how-to-play", testId: "mobile-nav-how-to-play" },
     { label: "Archive", icon: <ArchiveIcon className="w-5 h-5" />, href: "/archive", testId: "mobile-nav-archive" },
     {
       label: "Profile",
@@ -113,13 +167,13 @@ function MobileBottomNav() {
 
   return (
     <nav
-      className="sticky bottom-0 z-30 w-full bg-white pb-safe"
+      className="sticky bottom-0 z-30 w-full bg-[#FFD60A] pb-safe"
       style={{ borderTop: "4px solid #000" }}
     >
       <div className="grid grid-cols-4">
         {items.map((item) => {
           const content = (
-            <div className="flex flex-col items-center justify-center gap-1 py-2 active:bg-[#FFD60A] transition-colors">
+            <div className="flex flex-col items-center justify-center gap-1 py-2 active:bg-[#FF006E] transition-colors">
               <span className="text-black">{item.icon}</span>
               <span
                 className="font-mono font-black text-[10px] uppercase text-black text-center leading-tight"
@@ -365,7 +419,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-5 px-14 pb-8">
+          <div className="grid grid-cols-2 gap-5 px-16 pb-8">
             <MobileTile
               title="Three Flops"
               href="/daily/three-flops"
