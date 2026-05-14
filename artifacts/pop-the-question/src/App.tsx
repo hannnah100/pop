@@ -1,3 +1,5 @@
+import { Capacitor } from '@capacitor/core';
+const isNative = Capacitor.isNativePlatform();
 import { Switch, Route, Router as WouterRouter, useLocation } from "wouter";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { AnimatePresence, motion } from "framer-motion";
@@ -102,7 +104,7 @@ function AnimatedRoutes() {
 function Router() {
   useUnlockOnFirstInteraction();
   return (
-    <div className="relative min-h-[100dvh] flex flex-col w-full text-foreground">
+    <div className={`relative min-h-[100dvh] flex flex-col w-full text-foreground${isNative ? " pt-safe pb-safe" : ""}`}>
       <AnimatedBackground />
       <AnimatedRoutes />
       <MuteToggle />

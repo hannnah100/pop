@@ -51,7 +51,15 @@
       "Bash(pnpm --filter @workspace/api-server typecheck)",
       "Bash(pnpm --filter @workspace/api-server test)",
       "Bash(./node_modules/.bin/vitest run *)",
-      "Bash(pnpm -r --workspace-concurrency=1 run typecheck)"
+      "Bash(pnpm -r --workspace-concurrency=1 run typecheck)",
+      "Bash(npm view *)",
+      "Bash(BASE_PATH=./ pnpm build:ios)",
+      "Bash(npx cap *)",
+      "Read(//home/runner/.claude/**)",
+      "Bash(pnpm install *)",
+      "Bash(timeout 1 bash -c '</dev/tcp/127.0.0.1/__TRACKED_VAR__')",
+      "Bash(pnpm why *)",
+      "Bash(pnpm dev *)"
     ]
   }
 }

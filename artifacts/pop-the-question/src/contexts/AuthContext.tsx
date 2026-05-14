@@ -10,6 +10,7 @@ import {
 import {
   isAuthEnabled,
   signInWithGoogle as fbSignInWithGoogle,
+  signInWithApple as fbSignInWithApple,
   signInWithEmail as fbSignInWithEmail,
   createEmailAccount as fbCreateEmailAccount,
   signOut as fbSignOut,
@@ -38,6 +39,7 @@ interface AuthContextValue {
   openAuthModal: () => void;
   closeAuthModal: () => void;
   signInWithGoogle: () => Promise<void>;
+  signInWithApple: () => Promise<void>;
   signInWithEmail: (email: string, password: string) => Promise<void>;
   createEmailAccount: (email: string, password: string) => Promise<void>;
   signOut: () => Promise<void>;
@@ -133,6 +135,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setShowAuthModal(false);
   }, []);
 
+  const signInWithApple = useCallback(async () => {
+    await fbSignInWithApple();
+    setShowAuthModal(false);
+  }, []);
+
   const signInWithEmail = useCallback(async (email: string, password: string) => {
     await fbSignInWithEmail(email, password);
     setShowAuthModal(false);
@@ -202,6 +209,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       openAuthModal: () => setShowAuthModal(true),
       closeAuthModal: () => setShowAuthModal(false),
       signInWithGoogle,
+      signInWithApple,
       signInWithEmail,
       createEmailAccount,
       signOut,

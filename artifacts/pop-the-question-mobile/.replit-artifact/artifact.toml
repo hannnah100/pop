@@ -1,0 +1,27 @@
+kind = "mobile"
+previewPath = "/mobile/"
+title = "Pop: The Question (Mobile)"
+version = "1.0.0"
+id = "artifacts/pop-the-question-mobile"
+router = "expo-domain"
+
+[[integratedSkills]]
+name = "expo"
+version = "1.0.0"
+
+[[services]]
+ensurePreviewReachable = "/status"
+name = "expo"
+paths = [ "/mobile/" ]
+localPort = 18860
+
+[services.development]
+run = "pnpm --filter @workspace/pop-the-question-mobile run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/pop-the-question-mobile", "run", "build" ]
+run = [ "pnpm", "--filter", "@workspace/pop-the-question-mobile", "run", "serve" ]
+
+[services.env]
+PORT = "18860"
+BASE_PATH = "/mobile/"

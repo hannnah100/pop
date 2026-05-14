@@ -6,9 +6,14 @@
   "scripts": {
     "dev": "vite --config vite.config.ts --host 0.0.0.0",
     "build": "vite build --config vite.config.ts",
+    "build:ios": "BASE_PATH=./ vite build --config vite.config.ts",
     "serve": "vite preview --config vite.config.ts --host 0.0.0.0",
     "typecheck": "tsc -p tsconfig.json --noEmit",
-    "test": "vitest run --config vitest.config.ts"
+    "test": "vitest run --config vitest.config.ts",
+    "cap:add:ios": "cap add ios",
+    "cap:sync": "pnpm build:ios && cap sync ios",
+    "cap:open": "cap open ios",
+    "cap:run": "pnpm build:ios && cap run ios"
   },
   "devDependencies": {
     "@hookform/resolvers": "^3.10.0",
@@ -84,6 +89,16 @@
     "zod": "catalog:"
   },
   "dependencies": {
+    "@capacitor-firebase/authentication": "^8.2.0",
+    "@capacitor/app": "^8.1.0",
+    "@capacitor/cli": "^8.3.4",
+    "@capacitor/core": "^8.3.4",
+    "@capacitor/haptics": "^8.0.2",
+    "@capacitor/ios": "^8.3.4",
+    "@capacitor/push-notifications": "^8.0.4",
+    "@capacitor/share": "^8.0.1",
+    "@capacitor/splash-screen": "^8.0.1",
+    "@capacitor/status-bar": "^8.0.2",
     "firebase": "^12.13.0",
     "socket.io-client": "^4.8.3"
   }

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { X, Mail, Eye, EyeOff, Loader2 } from "lucide-react";
+import { X, Mail, Eye, EyeOff, Loader2, Apple } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -9,7 +9,7 @@ import { useToast } from "@/hooks/use-toast";
 type Tab = "choose" | "email-signin" | "email-signup";
 
 export function AuthModal() {
-  const { showAuthModal, closeAuthModal, signInWithGoogle, signInWithEmail, createEmailAccount } = useAuth();
+  const { showAuthModal, closeAuthModal, signInWithGoogle, signInWithApple, signInWithEmail, createEmailAccount } = useAuth();
   const { toast } = useToast();
 
   const [tab, setTab] = useState<Tab>("choose");
@@ -34,6 +34,8 @@ export function AuthModal() {
 
   function friendlyError(msg: string): string {
     if (msg.includes("popup-closed")) return "Sign-in window was closed.";
+    if (msg.includes("canceled") || msg.includes("cancelled")) return "Sign-in was canceled.";
+    if (msg.includes("apple") && msg.includes("not return")) return "Apple did not return credentials. Try again.";
     if (msg.includes("auth/invalid-email")) return "Invalid email address.";
     if (msg.includes("auth/wrong-password") || msg.includes("auth/invalid-credential")) return "Incorrect email or password.";
     if (msg.includes("auth/email-already-in-use")) return "An account with this email already exists.";
@@ -65,6 +67,16 @@ export function AuthModal() {
           {tab === "choose" && (
             <>
               <p className="font-sans text-sm text-black/70">Save your username, sync scores, and access your custom games from any device.</p>
+
+              {/* Apple — listed first per Apple HIG when Sign in with Apple is offered alongside other providers. */}
+              <button
+                onClick={() => handle(signInWithApple)}
+                disabled={loading}
+                className="w-full flex items-center gap-3 px-4 py-3 border-[3px] border-black bg-black text-white hover:bg-zinc-900 shadow-[3px_3px_0_#000] hover:shadow-[1px_1px_0_#000] hover:translate-x-[2px] hover:translate-y-[2px] transition-all font-display font-black text-base uppercase tracking-wide disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Apple className="w-5 h-5" />}
+                Continue with Apple
+              </button>
 
               {/* Google */}
               <button
