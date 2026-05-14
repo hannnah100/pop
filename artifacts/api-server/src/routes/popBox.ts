@@ -13,7 +13,6 @@ import {
   POP_BOX_CELEBRITIES,
   ARTIST_SONGS,
   ACTOR_FILMOGRAPHY,
-  STAR_CROSSED_GRIDS,
   entryCanonical,
   entryVariants,
   type PopBoxCelebrity,
@@ -79,12 +78,11 @@ function normalize(s: string): string {
 // Alphabet-mode helpers
 // ---------------------------------------------------------------------------
 
-type GridMode = "celebrity-categories" | "artist-alphabet" | "actor-alphabet" | "star-crossed" | "ball-knowers";
+type GridMode = "celebrity-categories" | "artist-alphabet" | "actor-alphabet" | "ball-knowers";
 
 function getGridMode(id: string): GridMode {
   if (id.startsWith("artist-alpha-")) return "artist-alphabet";
   if (id.startsWith("actor-alpha-")) return "actor-alphabet";
-  if (id.startsWith("star-crossed-")) return "star-crossed";
   if (id.startsWith("ball-knowers-")) return "ball-knowers";
   return "celebrity-categories";
 }
@@ -103,9 +101,9 @@ function isCategoryGridMode(mode: GridMode): boolean {
  * Weekly mode rotation. Every day of the week is locked to one Pop Box mode;
  * today's grid is selected from that mode's pool.
  *
- *   Sun → Ball Knowers     Wed → Celebrity Categories    Sat → Celebrity Categories
- *   Mon → Actor Alphabet   Thu → Star-Crossed
- *   Tue → Artist Alphabet  Fri → Artist Alphabet
+ *   Sun → Ball Knowers          Wed → Ball Knowers       Sat → Actor Alphabet
+ *   Mon → Artist Alphabet       Thu → Celebrity Categories
+ *   Tue → Actor Alphabet        Fri → Artist Alphabet
  *
  * Date is the local YYYY-MM-DD; we read day-of-week in UTC to keep the rotation
  * stable regardless of server timezone.
@@ -114,12 +112,12 @@ function modeForDate(dateStr: string): GridMode {
   const dow = new Date(dateStr + "T00:00:00Z").getUTCDay();
   switch (dow) {
     case 0: return "ball-knowers";
-    case 1: return "actor-alphabet";
-    case 2: return "artist-alphabet";
-    case 3: return "celebrity-categories";
-    case 4: return "star-crossed";
+    case 1: return "artist-alphabet";
+    case 2: return "actor-alphabet";
+    case 3: return "ball-knowers";
+    case 4: return "celebrity-categories";
     case 5: return "artist-alphabet";
-    case 6: return "celebrity-categories";
+    case 6: return "actor-alphabet";
     default: return "celebrity-categories";
   }
 }
@@ -129,7 +127,6 @@ function modeIdPrefix(mode: GridMode): string {
     case "actor-alphabet": return "actor-alpha-";
     case "artist-alphabet": return "artist-alpha-";
     case "ball-knowers": return "ball-knowers-";
-    case "star-crossed": return "star-crossed-";
     default: return "pop-box-"; // celebrity-categories
   }
 }
@@ -143,15 +140,6 @@ function epochDays(dateStr: string): number {
 const artistSongsMap = new Map(ARTIST_SONGS.map((a) => [a.id, a]));
 // Actor lookup: actorId → titles[]
 const actorFilmographyMap = new Map(ACTOR_FILMOGRAPHY.map((a) => [a.id, a]));
-// Star-Crossed: gridId → grid (with rowActors/colActors/cells)
-const starCrossedMap = new Map(STAR_CROSSED_GRIDS.map((g) => [g.id, g]));
-// Star-Crossed: actorId → name (across all grids)
-const starCrossedActorMap = new Map<string, string>();
-for (const g of STAR_CROSSED_GRIDS) {
-  for (const a of [...g.rowActors, ...g.colActors]) {
-    starCrossedActorMap.set(a.id, a.name);
-  }
-}
 
 function normalizeTitle(s: string): string {
   return s
@@ -293,25 +281,6 @@ function buildResponseFromRow(row: typeof popBoxGridsTable.$inferSelect) {
         const actor = actorFilmographyMap.get(id);
         return { id, label: actor?.name ?? id, group: "actor" };
       }),
-    });
-  }
-
-  if (mode === "star-crossed") {
-    return GetTodayPopBoxResponse.parse({
-      id: row.id,
-      date: row.date,
-      difficulty: row.difficulty,
-      mode,
-      rowCategories: rowIds.map((id) => ({
-        id,
-        label: starCrossedActorMap.get(id) ?? id,
-        group: "actor",
-      })),
-      columnCategories: colIds.map((id) => ({
-        id,
-        label: starCrossedActorMap.get(id) ?? id,
-        group: "actor",
-      })),
     });
   }
 
@@ -462,13 +431,6 @@ router.get("/daily/pop-box/:id/answers", async (req, res): Promise<void> => {
           .map((t) => entryCanonical(t))
           .filter((t) => letterGroupMatches(rowCat, t))
           .map((t) => ({ id: normalizeTitle(t).replace(/\s/g, "-"), name: t }));
-      } else if (mode === "star-crossed") {
-        const grid = starCrossedMap.get(row.id);
-        const cellTitles = grid?.cells?.[r]?.[c] ?? [];
-        validEntries = cellTitles
-          .map((t) => entryCanonical(t))
-          .filter((t): t is string => !!t)
-          .map((t) => ({ id: normalizeTitle(t).replace(/\s/g, "-"), name: t }));
       } else {
         validEntries = POP_BOX_CELEBRITIES.filter((celeb) =>
           celebMatchesCell(celeb.id, rowCat, colCat),
@@ -543,82 +505,6 @@ router.post("/daily/pop-box/:id/guess", async (req, res): Promise<void> => {
   const c = squareIndex % 3;
   const rowCat = rowIds[r];
   const colCat = colIds[c];
-
-  // ---- Star-Crossed mode validation ----
-  if (mode === "star-crossed") {
-    const grid = starCrossedMap.get(row.id);
-    const cellTitles = grid?.cells?.[r]?.[c] ?? [];
-    const matched = findAlphabetAnswer(cellTitles, guess);
-    if (!matched) {
-      // The guess isn't in this cell's intersection. To distinguish "wrong cell"
-      // (a real co-star title for a different cell) from "unknown", scan every
-      // cell of this grid; if found elsewhere, return wrong_cell.
-      let wrongCellMatch: string | null = null;
-      if (grid) {
-        for (let rr = 0; rr < 3 && !wrongCellMatch; rr++) {
-          for (let cc = 0; cc < 3 && !wrongCellMatch; cc++) {
-            if (rr === r && cc === c) continue;
-            wrongCellMatch = findAlphabetAnswer(grid.cells[rr]?.[cc] ?? [], guess);
-          }
-        }
-      }
-      res.json(
-        PopBoxGuessResponse.parse({
-          correct: false,
-          reason: wrongCellMatch ? "wrong_cell" : "unknown_celebrity",
-          celebrityId: null,
-          celebrityName: wrongCellMatch,
-          rarityPercent: null,
-        }),
-      );
-      return;
-    }
-
-    const answerId = normalizeTitle(matched).replace(/\s/g, "-");
-    let sessionId = req.cookies?.[POP_BOX_SESSION_COOKIE] as string | undefined;
-    if (!sessionId || typeof sessionId !== "string" || sessionId.length < 16) {
-      sessionId = randomBytes(16).toString("hex");
-      res.cookie(POP_BOX_SESSION_COOKIE, sessionId, {
-        httpOnly: true,
-        sameSite: "lax",
-        secure: req.secure,
-        maxAge: 1000 * 60 * 60 * 24 * 90,
-        path: "/",
-      });
-    }
-    const isTodayGrid = row.date === todayDate();
-    const shouldCount = isTodayGrid && recordCountedGuess(sessionId, row.id, squareIndex, answerId);
-    if (shouldCount) {
-      try {
-        await db
-          .insert(popBoxAnswerCountsTable)
-          .values({ gridId: row.id, squareIndex, celebrityId: answerId, count: 1 })
-          .onConflictDoUpdate({
-            target: [popBoxAnswerCountsTable.gridId, popBoxAnswerCountsTable.squareIndex, popBoxAnswerCountsTable.celebrityId],
-            set: { count: sql`${popBoxAnswerCountsTable.count} + 1`, updatedAt: new Date() },
-          });
-      } catch (err) {
-        req.log.warn({ err }, "Failed to increment pop box answer count");
-      }
-    }
-    const cellCounts = await db.select().from(popBoxAnswerCountsTable).where(
-      and(eq(popBoxAnswerCountsTable.gridId, row.id), eq(popBoxAnswerCountsTable.squareIndex, squareIndex)),
-    );
-    const total = cellCounts.reduce((s, c) => s + c.count, 0);
-    const myCount = cellCounts.find((c) => c.celebrityId === answerId)?.count ?? 1;
-    const rarityPercent = total <= 1 ? 50 : ((total - myCount) / total) * 100;
-
-    res.json(
-      PopBoxGuessResponse.parse({
-        correct: true,
-        reason: null,
-        celebrityId: answerId,
-        celebrityName: matched,
-        rarityPercent: Math.round(rarityPercent * 10) / 10,
-      }),
-    );
-    return;
-  }
 
   // ---- Alphabet mode validation ----
   if (mode === "artist-alphabet" || mode === "actor-alphabet") {

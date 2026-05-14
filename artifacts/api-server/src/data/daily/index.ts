@@ -15,7 +15,6 @@ import popBoxCategoriesJson from "./pop-box-categories.json" with { type: "json"
 import popBoxCelebritiesJson from "./pop-box-celebrities.json" with { type: "json" };
 import artistSongsJson from "./artist-songs.json" with { type: "json" };
 import actorFilmographyJson from "./actor-filmography.json" with { type: "json" };
-import starCrossedJson from "./star-crossed.json" with { type: "json" };
 import reelConnectionsJson from "./reel-connections.json" with { type: "json" };
 
 export interface ThreeFlopsSeed {
@@ -102,27 +101,6 @@ export const POP_BOX_CATEGORIES: PopBoxCategory[] = popBoxCategoriesJson as PopB
 export const POP_BOX_CELEBRITIES: PopBoxCelebrity[] = popBoxCelebritiesJson as PopBoxCelebrity[];
 export const ARTIST_SONGS: ArtistSongs[] = artistSongsJson as ArtistSongs[];
 export const ACTOR_FILMOGRAPHY: ActorFilmography[] = actorFilmographyJson as ActorFilmography[];
-
-/** A pair of actors and the projects they appeared in together (for Star-Crossed mode). */
-export interface StarCrossedActor {
-  id: string;
-  name: string;
-}
-
-/**
- * A 3×3 Star-Crossed grid. `rowActors` and `colActors` are length 3; `cells` is
- * indexed `[row][col]` and holds the canonical titles where both actors appeared
- * together. Each title may be a `TitleEntry` (string or `[canonical, ...aliases]`).
- */
-export interface StarCrossedGrid {
-  id: string;
-  label: string;
-  rowActors: StarCrossedActor[];
-  colActors: StarCrossedActor[];
-  cells: TitleEntry[][][];
-}
-
-export const STAR_CROSSED_GRIDS: StarCrossedGrid[] = starCrossedJson as StarCrossedGrid[];
 
 export interface ReelConnectionsSeed {
   id: string;

@@ -365,19 +365,14 @@ export default function PopBox() {
         setShakeKey((k) => k + 1);
         setShakeCellIdx(activeCell);
         const isAlpha = grid?.mode === "artist-alphabet" || grid?.mode === "actor-alphabet";
-        const isStarCrossed = grid?.mode === "star-crossed";
         const reasonText =
           result.reason === "wrong_cell"
             ? isAlpha
               ? `${result.celebrityName ?? guess} doesn't start with that letter.`
-              : isStarCrossed
-                ? `${result.celebrityName ?? guess} isn't in this pair's shared filmography.`
-                : `${result.celebrityName ?? guess} doesn't fit this cell.`
+              : `${result.celebrityName ?? guess} doesn't fit this cell.`
             : isAlpha
               ? `"${guess}" isn't in our database for this ${grid?.mode === "artist-alphabet" ? "artist" : "actor"}.`
-              : isStarCrossed
-                ? `These two actors don't appear together in "${guess}".`
-                : `Hmm, "${guess}" isn't a celeb we know.`;
+              : `Hmm, "${guess}" isn't a celeb we know.`;
         toast({
           title: "✗ Not a match",
           description: reasonText,
@@ -420,11 +415,9 @@ export default function PopBox() {
         ? "Artist Alphabet"
         : grid.mode === "actor-alphabet"
           ? "Actor Alphabet"
-          : grid.mode === "star-crossed"
-            ? "Star-Crossed"
-            : grid.mode === "ball-knowers"
-              ? "Ball Knowers"
-              : "Pop Box";
+          : grid.mode === "ball-knowers"
+            ? "Ball Knowers"
+            : "Pop Box";
     const text = [
       `Pop The Question – ${modeName} (${grid.date})`,
       `Score: ${correctCount}/9${avgRarity != null ? ` • Rarity ${avgRarity}%` : ""}`,
@@ -501,10 +494,6 @@ export default function PopBox() {
               <span className="inline-block bg-[#00E5FF] text-black text-xs font-black uppercase tracking-widest px-2 py-0.5 border-[3px] border-black shadow-[2px_2px_0_#000]">
                 Actor Alphabet
               </span>
-            ) : grid.mode === "star-crossed" ? (
-              <span className="inline-block bg-[#A855F7] text-white text-xs font-black uppercase tracking-widest px-2 py-0.5 border-[3px] border-black shadow-[2px_2px_0_#000]">
-                Star-Crossed
-              </span>
             ) : grid.mode === "ball-knowers" ? (
               <span className="inline-block bg-[#00C853] text-black text-xs font-black uppercase tracking-widest px-2 py-0.5 border-[3px] border-black shadow-[2px_2px_0_#000]">
                 Ball Knowers
@@ -516,11 +505,9 @@ export default function PopBox() {
               ? "Name a song that fits the intersection. 9 picks."
               : grid.mode === "actor-alphabet"
                 ? "Name a movie or TV show starring [Actor] that starts with [Letter Group]"
-                : grid.mode === "star-crossed"
-                  ? "Name a movie or TV show starring both actors. 9 picks."
-                  : grid.mode === "ball-knowers"
-                    ? "Name an athlete that fits both criteria. 9 picks."
-                    : "Find an answer for each intersection of the grid. 9 picks."}
+                : grid.mode === "ball-knowers"
+                  ? "Name an athlete that fits both criteria. 9 picks."
+                  : "Find an answer for each intersection of the grid. 9 picks."}
           </p>
         </div>
         <div className="flex items-center gap-2 bg-white border-[3px] border-black shadow-[3px_3px_0_#000] px-4 py-3 flex-shrink-0">
@@ -547,15 +534,11 @@ export default function PopBox() {
             className={`aspect-square overflow-hidden border-[3px] border-black shadow-[3px_3px_0_#000] p-1 flex items-center justify-center text-center ${
               grid.mode === "artist-alphabet" || grid.mode === "actor-alphabet"
                 ? "bg-[#FF6B35]"
-                : grid.mode === "star-crossed"
-                  ? "bg-[#A855F7] text-white"
-                  : "bg-[#00E5FF]"
+                : "bg-[#00E5FF]"
             }`}
           >
             <span
-              className={`font-display font-black text-base sm:text-3xl md:text-4xl leading-none uppercase tracking-widest ${
-                grid.mode === "star-crossed" ? "text-white" : "text-black"
-              }`}
+              className="font-display font-black text-base sm:text-3xl md:text-4xl leading-none uppercase tracking-widest text-black"
             >
               {cat.label}
             </span>
@@ -620,17 +603,6 @@ export default function PopBox() {
                           {grid.rowCategories[Math.floor(activeCell / 3)].label}
                         </span>
                       </>
-                    ) : grid.mode === "star-crossed" ? (
-                      <>
-                        {"Movie or TV show starring "}
-                        <span className="text-black">
-                          {grid.rowCategories[Math.floor(activeCell / 3)].label}
-                        </span>
-                        {" × "}
-                        <span className="text-black">
-                          {grid.columnCategories[activeCell % 3].label}
-                        </span>
-                      </>
                     ) : (
                       <>
                         Cell {Math.floor(activeCell / 3) + 1}-{(activeCell % 3) + 1}:{" "}
@@ -665,7 +637,7 @@ export default function PopBox() {
                     placeholder={
                       grid.mode === "artist-alphabet"
                         ? "Type a song title…"
-                        : grid.mode === "actor-alphabet" || grid.mode === "star-crossed"
+                        : grid.mode === "actor-alphabet"
                           ? "Type a film or show title…"
                           : "Type a celebrity name…"
                     }

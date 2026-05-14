@@ -50,7 +50,8 @@
       "Bash(sort -k6,7)",
       "Bash(pnpm --filter @workspace/api-server typecheck)",
       "Bash(pnpm --filter @workspace/api-server test)",
-      "Bash(./node_modules/.bin/vitest run *)"
+      "Bash(./node_modules/.bin/vitest run *)",
+      "Bash(pnpm -r --workspace-concurrency=1 run typecheck)"
     ]
   }
 }
