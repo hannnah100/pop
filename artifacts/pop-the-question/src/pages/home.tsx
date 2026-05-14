@@ -365,7 +365,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-5 max-w-[200px] mx-auto px-4 pb-8">
+          <div className="grid grid-cols-2 gap-5 px-8 pb-8">
             <MobileTile
               title="Three Flops"
               href="/daily/three-flops"
