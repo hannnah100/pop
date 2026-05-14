@@ -15,7 +15,9 @@ import navLogo from "@assets/67042e28-f0c8-47a2-b851-a1cbd0dbaa92-2_177852910335
 import { NeoDoodles } from "@/components/fx/NeoDoodles";
 import { useAuth } from "@/contexts/AuthContext";
 
-const isNative = Capacitor.isNativePlatform();
+const isExpoWebView =
+  typeof navigator !== "undefined" && /Expo/i.test(navigator.userAgent);
+const isNative = Capacitor.isNativePlatform() || isExpoWebView;
 
 type MobileTile = {
   title: string;
