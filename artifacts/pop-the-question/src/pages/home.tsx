@@ -19,6 +19,13 @@ const isExpoWebView =
   typeof navigator !== "undefined" && /Expo/i.test(navigator.userAgent);
 const isNative = Capacitor.isNativePlatform() || isExpoWebView;
 
+if (typeof window !== "undefined") {
+  console.log("[home.tsx] navigator.userAgent:", navigator.userAgent);
+  console.log("[home.tsx] Capacitor.isNativePlatform():", Capacitor.isNativePlatform());
+  console.log("[home.tsx] isExpoWebView:", isExpoWebView);
+  console.log("[home.tsx] isNative:", isNative);
+}
+
 type MobileTile = {
   title: string;
   href: string;
