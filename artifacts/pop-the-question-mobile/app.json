@@ -15,7 +15,10 @@
     },
     "ios": {
       "supportsTablet": false,
-      "bundleIdentifier": "com.poptq.app"
+      "bundleIdentifier": "com.poptq.app",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "package": "com.poptq.app",
@@ -34,6 +37,12 @@
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "e5519c9e-1ae3-4329-a493-d3a7e4ccbe66"
+      }
+    },
+    "owner": "hannah100"
   }
 }
