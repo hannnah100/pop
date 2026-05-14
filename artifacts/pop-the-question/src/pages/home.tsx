@@ -25,6 +25,7 @@ type MobileTile = {
   testId: string;
   completed: boolean;
   completedLabel?: string;
+  imageSrc?: string;
 };
 
 function MobileTile({
@@ -35,25 +36,34 @@ function MobileTile({
   testId,
   completed,
   completedLabel,
+  imageSrc,
 }: MobileTile) {
-  const textColor = theme === "light" ? "text-black" : "text-white";
   const badgeBg = theme === "light" ? "bg-black text-white" : "bg-white text-black";
   return (
     <Link href={href} data-testid={testId}>
       <div
-        className="relative aspect-square flex items-center justify-center p-3 cursor-pointer active:translate-y-[2px] transition-transform"
+        className="relative aspect-square overflow-hidden cursor-pointer active:translate-y-[2px] transition-transform"
         style={{
           background: color,
           border: "4px solid #000",
           boxShadow: "5px 5px 0 #000",
         }}
       >
-        <span
-          className={`font-mono font-black uppercase text-center leading-tight ${textColor}`}
-          style={{ fontSize: "clamp(13px, 4vw, 18px)", letterSpacing: "0.02em" }}
-        >
-          {title}
-        </span>
+        {imageSrc ? (
+          <img
+            src={imageSrc}
+            alt={title}
+            className="absolute inset-0 w-full h-full object-cover"
+            draggable={false}
+          />
+        ) : (
+          <span
+            className={`absolute inset-0 flex items-center justify-center p-3 font-mono font-black uppercase text-center leading-tight ${theme === "light" ? "text-black" : "text-white"}`}
+            style={{ fontSize: "clamp(13px, 4vw, 18px)", letterSpacing: "0.02em" }}
+          >
+            {title}
+          </span>
+        )}
         {completed && (
           <span
             className={`absolute top-1 right-1 px-1.5 py-0.5 font-mono font-black text-[10px] uppercase ${badgeBg}`}
@@ -307,6 +317,7 @@ export default function Home() {
               color="#FFD60A"
               theme="light"
               completed={tsCompleted}
+              imageSrc="/assets/icon_3_flops.png"
             />
             <MobileTile
               title="Pop Box"
@@ -315,6 +326,7 @@ export default function Home() {
               color="#38BDF8"
               theme="light"
               completed={pbCompleted}
+              imageSrc="/assets/icon_popbox.png"
             />
             <MobileTile
               title="Pop or Drop"
@@ -324,6 +336,7 @@ export default function Home() {
               theme="light"
               completed={podCompleted}
               completedLabel={podStreak > 0 ? `🔥 ${podStreak}` : "Done ✓"}
+              imageSrc="/assets/icon_popordrop.png"
             />
             <MobileTile
               title="The Skinny"
@@ -332,6 +345,7 @@ export default function Home() {
               color="#FF006E"
               theme="dark"
               completed={cwCompleted}
+              imageSrc="/assets/icontheskinny.png"
             />
             <MobileTile
               title="Clock It"
@@ -349,6 +363,7 @@ export default function Home() {
                       ? "⭐ Nice"
                       : "Done ✓"
               }
+              imageSrc="/assets/icon_clockit.png"
             />
             <MobileTile
               title="Reel Connections"
@@ -358,6 +373,7 @@ export default function Home() {
               theme="dark"
               completed={rcCompleted}
               completedLabel={rcScore !== null ? `${rcScore}/5` : "Done ✓"}
+              imageSrc="/assets/icon_reel.png"
             />
           </div>
         </main>
